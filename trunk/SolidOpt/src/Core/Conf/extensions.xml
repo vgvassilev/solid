@@ -1,0 +1,7 @@
+<extensions>
+	<extension>
+		<path>C:\</path>
+		<filename>x86.plugin.dll</filename>
+		<description>This plugin contains important system functionality</description>
+	</extension>
+</extensions>

@@ -31,5 +31,12 @@
   <ItemGroup>
     <Folder Include="Core" />
     <Folder Include="Core\Loader" />
+    <Folder Include="Core\Conf" />
+    <Folder Include="Core\Loader\cache" />
+    <Folder Include="Core\Plugins" />
+    <Compile Include="Core\Loader\AssemblyLoader.cs" />
+    <Compile Include="Core\Plugins\IPlugin.cs" />
+    <Compile Include="Core\Plugins\IPluginContainer.cs" />
+    <Compile Include="Core\Plugins\PluginContainer.cs" />
   </ItemGroup>
 </Project>
