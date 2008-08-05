@@ -3,7 +3,7 @@
     <ProjectGuid>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>SolidOpt</RootNamespace>
     <AssemblyName>SolidOpt</AssemblyName>
   </PropertyGroup>
@@ -33,10 +33,21 @@
     <Folder Include="Core\Loader" />
     <Folder Include="Core\Conf" />
     <Folder Include="Core\Loader\cache" />
-    <Folder Include="Core\Plugins" />
-    <Compile Include="Core\Loader\AssemblyLoader.cs" />
-    <Compile Include="Core\Plugins\IPlugin.cs" />
-    <Compile Include="Core\Plugins\IPluginContainer.cs" />
-    <Compile Include="Core\Plugins\PluginContainer.cs" />
+    <Folder Include="Core\Services" />
+    <Folder Include="Cache" />
+    <Compile Include="Cache\CacheManager.cs" />
+    <Compile Include="Cache\ISource.cs" />
+    <Compile Include="Cache\IStorage.cs" />
+    <Compile Include="Cache\IValidator.cs" />
+    <Compile Include="Cache\MemoryStorage.cs" />
+    <Compile Include="Core\Loader\Loader.cs" />
+    <Compile Include="Core\Services\AbstractService.cs" />
+    <Compile Include="Core\Services\AbstractServiceContainer.cs" />
+    <Compile Include="Core\Services\AbstractServiceProvider.cs" />
+    <Compile Include="Core\Services\IService.cs" />
+    <Compile Include="Core\Services\IServiceContainer.cs" />
+    <Compile Include="Core\Services\IServiceProvider.cs" />
+    <Compile Include="Core\Services\PluginServiceContainer.cs" />
+    <Compile Include="Core\Services\ServiceContainer.cs" />
   </ItemGroup>
 </Project>
