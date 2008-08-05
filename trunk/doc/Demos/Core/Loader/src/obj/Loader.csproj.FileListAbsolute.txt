@@ -1,0 +1,7 @@
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Loader\src\bin\Debug\Loader.exe
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Loader\src\bin\Debug\Loader.pdb
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Loader\src\bin\Debug\SolidOpt.dll
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Loader\src\bin\Debug\SolidOpt.pdb
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Loader\src\obj\Debug\ResolveAssemblyReference.cache
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Loader\src\obj\Debug\Loader.exe
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Loader\src\obj\Debug\Loader.pdb
