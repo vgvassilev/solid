@@ -1,0 +1,53 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{C3A89F18-EA13-4415-AC17-D8FC6D109303}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Cache1</RootNamespace>
+    <AssemblyName>Cache1</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ClassBuilder.cs" />
+    <Compile Include="ResultClass.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TestDefault.cs" />
+    <Compile Include="TestMem1.cs" />
+    <Compile Include="TestMem2.cs" />
+    <Compile Include="TestMemExpire.cs" />
+    <Compile Include="TestMemIsolatedStorage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\src\OpenF\Core\OpenF.Core.csproj">
+      <Project>{03565605-8C2B-4810-87EA-AC1AFD376177}</Project>
+      <Name>OpenF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\src\OpenF\Lib\Cache\OpenF.Lib.Cache.csproj">
+      <Project>{F40CD195-E622-4E88-8870-A9759BC80379}</Project>
+      <Name>OpenF.Lib.Cache</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
