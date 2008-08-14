@@ -25,6 +25,10 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="SolidOpt">
+      <HintPath>..\..\..\..\SolidOpt\src\bin\Debug\SolidOpt.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -39,15 +43,6 @@
     <Compile Include="TestMem2.cs" />
     <Compile Include="TestMemExpire.cs" />
     <Compile Include="TestMemIsolatedStorage.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\src\OpenF\Core\OpenF.Core.csproj">
-      <Project>{03565605-8C2B-4810-87EA-AC1AFD376177}</Project>
-      <Name>OpenF.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\src\OpenF\Lib\Cache\OpenF.Lib.Cache.csproj">
-      <Project>{F40CD195-E622-4E88-8870-A9759BC80379}</Project>
-      <Name>OpenF.Lib.Cache</Name>
-    </ProjectReference>
+    <Compile Include="TestMemIsolatedStorage1Collision.cs" />
   </ItemGroup>
 </Project>

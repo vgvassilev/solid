@@ -16,14 +16,14 @@ namespace Cache1
 	using System.IO;
 	using System.Threading;
 	using System.Runtime.Serialization.Formatters.Binary;
-	using OpenF.Lib.Cache;
+	using SolidOpt.Cache;
 	
 	/// <summary>
 	/// Description of TestBase.
 	/// </summary>
 	public class TestBase
 	{
-		protected CacheManager<int,ResultClass> cache;
+		protected TestCacheManager<int,ResultClass> cache;
 		
 		public TestBase()
 		{

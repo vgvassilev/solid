@@ -15,7 +15,7 @@ namespace Cache1
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Runtime.Serialization.Formatters.Binary;
-	using OpenF.Lib.Cache;
+	using SolidOpt.Cache;
 	
 	/// <summary>
 	/// Description of TestMem2.
@@ -24,27 +24,27 @@ namespace Cache1
 	{
 		public TestMem2(): base()
 		{
-			this.cache = new CacheManager<int,ResultClass>(
-				new CacheManager<int,ResultClass>.InitDelegate(Init),
-				new CacheManager<int,ResultClass>.TouchDelegate(Touch),
-				new CacheManager<int,ResultClass>.ValidateDelegate(Validate),
-				new CacheManager<int,ResultClass>.CalculateDelegate(Calculate),
-				new CacheManager<int,ResultClass>.UpdateDelegate(Update),
-				new CacheManager<int,ResultClass>.DeleteDelegate(Delete)
+			this.cache = new TestCacheManager<int,ResultClass>(
+				new TestCacheManager<int,ResultClass>.InitDelegate(Init),
+				new TestCacheManager<int,ResultClass>.TouchDelegate(Touch),
+				new TestCacheManager<int,ResultClass>.ValidateDelegate(Validate),
+				new TestCacheManager<int,ResultClass>.CalculateDelegate(Calculate),
+				new TestCacheManager<int,ResultClass>.UpdateDelegate(Update),
+				new TestCacheManager<int,ResultClass>.DeleteDelegate(Delete)
 			);
 		}
 		
-		public CacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
+		public TestCacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
 		{
-			return new CacheManager<int,ResultClass>.CacheItem(value);
+			return new TestCacheManager<int,ResultClass>.CacheItem(value);
 		}
 		
-		public CacheManager<int,ResultClass>.CacheItem Touch(CacheManager<int,ResultClass>.CacheItem item)
+		public TestCacheManager<int,ResultClass>.CacheItem Touch(int key, TestCacheManager<int,ResultClass>.CacheItem item)
 		{
 			return item;
 		}
 		
-		public bool Validate(int key, ResultClass value, CacheManager<int,ResultClass>.CacheItem item)
+		public bool Validate(int key, TestCacheManager<int,ResultClass>.CacheItem item)
 		{
 			return key != 1;
 		}
@@ -60,7 +60,7 @@ namespace Cache1
 			return old_value;
 		}
 		
-		public void Delete(CacheManager<int,ResultClass>.CacheItem item)
+		public void Delete(int key, TestCacheManager<int,ResultClass>.CacheItem item)
 		{
 			//
 		}

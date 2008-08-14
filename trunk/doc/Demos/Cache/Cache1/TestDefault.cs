@@ -15,7 +15,7 @@ namespace Cache1
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Runtime.Serialization.Formatters.Binary;
-	using OpenF.Lib.Cache;
+	using SolidOpt.Cache;
 	
 	/// <summary>
 	/// Description of TestDefault.
@@ -24,7 +24,7 @@ namespace Cache1
 	{
 		public TestDefault(): base()
 		{
-			this.cache = new CacheManager<int,ResultClass>();
+			this.cache = new TestCacheManager<int,ResultClass>();
 		}
 	}
 }

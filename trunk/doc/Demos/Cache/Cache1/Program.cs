@@ -12,7 +12,7 @@ namespace Cache1
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Runtime.Serialization.Formatters.Binary;
-	using OpenF.Lib.Cache;
+	using SolidOpt.Cache;
 	
 	class Program
 	{
@@ -23,7 +23,8 @@ namespace Cache1
 //			new TestMem1().Test();
 //			new TestMem2().Test();
 //			new TestMemExpire().Test();
-			new TestMemIsolatedStorage().Test();
+//			new TestMemIsolatedStorage().Test();
+			new TestMemIsolatedStorage1Collision().Test();
 			
 			Console.Write("Press any key to continue... ");
 			Console.ReadKey(true);

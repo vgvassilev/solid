@@ -15,7 +15,7 @@ namespace Cache1
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Runtime.Serialization.Formatters.Binary;
-	using OpenF.Lib.Cache;
+	using SolidOpt.Cache;
 	
 	/// <summary>
 	/// Description of TestMemExpire.
@@ -24,13 +24,13 @@ namespace Cache1
 	{
 		public TestMemExpire(): base()
 		{
-			this.cache = new CacheManager<int,ResultClass>(
-				new CacheManager<int,ResultClass>.InitDelegate(Init),
-				new CacheManager<int,ResultClass>.TouchDelegate(Touch),
-				new CacheManager<int,ResultClass>.ValidateDelegate(Validate),
-				new CacheManager<int,ResultClass>.CalculateDelegate(Calculate),
-				new CacheManager<int,ResultClass>.UpdateDelegate(Update),
-				new CacheManager<int,ResultClass>.DeleteDelegate(Delete)
+			this.cache = new TestCacheManager<int,ResultClass>(
+				new TestCacheManager<int,ResultClass>.InitDelegate(Init),
+				new TestCacheManager<int,ResultClass>.TouchDelegate(Touch),
+				new TestCacheManager<int,ResultClass>.ValidateDelegate(Validate),
+				new TestCacheManager<int,ResultClass>.CalculateDelegate(Calculate),
+				new TestCacheManager<int,ResultClass>.UpdateDelegate(Update),
+				new TestCacheManager<int,ResultClass>.DeleteDelegate(Delete)
 			);
 		}
 		
@@ -40,18 +40,18 @@ namespace Cache1
 			base.Test();
 		}
 		
-		public CacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
+		public TestCacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
 		{
 			return new CacheExpireItem(value, DateTime.UtcNow.AddSeconds(1));
 		}
 		
-		public CacheManager<int,ResultClass>.CacheItem Touch(CacheManager<int,ResultClass>.CacheItem item)
+		public TestCacheManager<int,ResultClass>.CacheItem Touch(int key, TestCacheManager<int,ResultClass>.CacheItem item)
 		{
 			((CacheExpireItem)item).ExpireAt = ((CacheExpireItem)item).ExpireAt.AddSeconds(1);
 			return item;
 		}
 		
-		public bool Validate(int key, ResultClass value, CacheManager<int,ResultClass>.CacheItem item)
+		public bool Validate(int key, TestCacheManager<int,ResultClass>.CacheItem item)
 		{
 			return ((CacheExpireItem)item).ExpireAt > DateTime.UtcNow;
 		}
@@ -67,13 +67,13 @@ namespace Cache1
 			return old_value;
 		}
 		
-		public void Delete(CacheManager<int,ResultClass>.CacheItem item)
+		public void Delete(int key, TestCacheManager<int,ResultClass>.CacheItem item)
 		{
 			//
 		}
 		
 		[Serializable]
-		public class CacheExpireItem: CacheManager<int,ResultClass>.CacheItem
+		public class CacheExpireItem: TestCacheManager<int,ResultClass>.CacheItem
 		{
 			private DateTime expireAt;
 				

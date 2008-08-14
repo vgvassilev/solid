@@ -15,7 +15,7 @@ namespace Cache1
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Runtime.Serialization.Formatters.Binary;
-	using OpenF.Lib.Cache;
+	using SolidOpt.Cache;
 	
 	/// <summary>
 	/// Description of TestMem1.
@@ -24,14 +24,14 @@ namespace Cache1
 	{
 		public TestMem1(): base()
 		{
-			this.cache = new CacheManager<int,ResultClass>(
-				new CacheManager<int,ResultClass>.ValidateDelegate(Validate),
-				new CacheManager<int,ResultClass>.CalculateDelegate(Calculate),
-				new CacheManager<int,ResultClass>.UpdateDelegate(Update)
+			this.cache = new TestCacheManager<int,ResultClass>(
+				new TestCacheManager<int,ResultClass>.ValidateDelegate(Validate),
+				new TestCacheManager<int,ResultClass>.CalculateDelegate(Calculate),
+				new TestCacheManager<int,ResultClass>.UpdateDelegate(Update)
 			);
 		}
 		
-		public bool Validate(int key, ResultClass value, CacheManager<int,ResultClass>.CacheItem item)
+		public bool Validate(int key, TestCacheManager<int,ResultClass>.CacheItem item)
 		{
 			return key != 1;
 		}

@@ -24,5 +24,10 @@ namespace Cache1
 		{
 			return new ResultClass("result" + i);
 		}
+		
+		public static ResultClass BuildResult(long i)
+		{
+			return new ResultClass("result" + i);
+		}
 	}
 }
