@@ -35,6 +35,7 @@
     <Folder Include="Core\Loader\cache" />
     <Folder Include="Core\Services" />
     <Folder Include="Cache" />
+    <Compile Include="Cache\Cache.cs" />
     <Compile Include="Cache\CacheManager.cs" />
     <Compile Include="Cache\ISource.cs" />
     <Compile Include="Cache\IStorage.cs" />

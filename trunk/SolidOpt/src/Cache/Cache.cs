@@ -6,7 +6,7 @@
  * 
  */
 
-namespace OpenF.Lib.Cache
+namespace SolidOpt.Cache
 {
 	using System;
 	using System.Collections.Generic;
@@ -20,14 +20,15 @@ namespace OpenF.Lib.Cache
 	/// </summary>
 	/// 
 	[Serializable]
-	public class CacheManager<TKey,TValue>
+	public class TestCacheManager<TKey,TValue>
 	{
 		public delegate CacheItem InitDelegate(TKey key, TValue value);
-		public delegate CacheItem TouchDelegate(CacheItem item);
-		public delegate bool ValidateDelegate(TKey key, TValue value, CacheItem item);
+		public delegate CacheItem TouchDelegate(TKey key, CacheItem item);
+		public delegate bool ValidateDelegate(TKey key, CacheItem item);
+		public delegate void DeleteDelegate(TKey key, CacheItem item);
+		
 		public delegate TValue CalculateDelegate(TKey key);
 		public delegate TValue UpdateDelegate(TKey key, TValue old_value);
-		public delegate void DeleteDelegate(CacheItem item);
 		
 		private Dictionary<TKey,CacheItem> storage;
 		
@@ -38,7 +39,7 @@ namespace OpenF.Lib.Cache
 		private UpdateDelegate updateDelegate;
 		private DeleteDelegate deleteDelegate;
 		
-		public CacheManager(params Delegate[] delegates)
+		public TestCacheManager(params Delegate[] delegates)
 		{
 			this.storage = new Dictionary<TKey,CacheItem>();
 
@@ -96,12 +97,12 @@ namespace OpenF.Lib.Cache
 			return new CacheItem(value);
 		}
 		
-		private CacheItem DefaultTouchDelegate(CacheItem item)
+		private CacheItem DefaultTouchDelegate(TKey key, CacheItem item)
 		{
 			return item;
 		}
 		
-		private bool DefaultValidateDelegate(TKey key, TValue value, CacheItem item)
+		private bool DefaultValidateDelegate(TKey key, CacheItem item)
 		{
 			return true;
 		}
@@ -116,7 +117,7 @@ namespace OpenF.Lib.Cache
 			return calculateDelegate(key);
 		}
 		
-		private void DefaultDeleteDelegate(CacheItem item)
+		private void DefaultDeleteDelegate(TKey key, CacheItem item)
 		{
 			//
 		}
@@ -138,7 +139,7 @@ namespace OpenF.Lib.Cache
 			CacheItem cacheItem;
 			
 			if (storage.TryGetValue(key, out cacheItem)) {
-				DeleteItem(cacheItem);
+				DeleteItem(key, cacheItem);
 				return storage.Remove(key);
 			} else {
 				return false;
@@ -166,16 +167,16 @@ namespace OpenF.Lib.Cache
 			return initDelegate(key, value);
 		}
 		
-		internal virtual CacheItem TouchItem(CacheItem item) {
+		internal virtual CacheItem TouchItem(TKey key, CacheItem item) {
 			string str_item = string.Format("{0}", item);
-			CacheItem result = touchDelegate(item);
+			CacheItem result = touchDelegate(key, item);
 			Console.WriteLine("TouchItem({0})->{1}", str_item, item);
 			return result;
 		}
 		
-		internal virtual bool ValidateItem(TKey key, TValue value, CacheItem item) {
-			bool result = validateDelegate(key, value, item);
-			Console.WriteLine("ValidateItem({0},{1},{2})->{3}", key, value, item, result);
+		internal virtual bool ValidateItem(TKey key, CacheItem item) {
+			bool result = validateDelegate(key, item);
+			Console.WriteLine("ValidateItem({0},{1},{2})->{3}", key, item.Value, item, result);
 			return result;
 		}
 		
@@ -192,9 +193,9 @@ namespace OpenF.Lib.Cache
 			return result;
 		}
 		
-		internal virtual void DeleteItem(CacheItem item) {
+		internal virtual void DeleteItem(TKey key, CacheItem item) {
 			Console.WriteLine("DeleteItem({0})", item);
-			deleteDelegate(item);
+			deleteDelegate(key, item);
 		}
 		
 		
@@ -227,14 +228,13 @@ namespace OpenF.Lib.Cache
 				CacheItem cacheItem;
 				
 				if (storage.TryGetValue(key, out cacheItem)) {
-					if (!ValidateItem(key, cacheItem.Value, cacheItem)) {
+					if (!ValidateItem(key, cacheItem)) {
 						cacheItem.Value = UpdateItem(key, cacheItem.Value);
 					}
 				} else {
-					cacheItem = storage[key] = InitItem(key, CalculateItem(key));
+					return (cacheItem = storage[key] = InitItem(key, CalculateItem(key))).Value;
 				}
-				
-				return TouchItem(cacheItem).Value;
+				return TouchItem(key, cacheItem).Value;
 			}
 			
 			set {
