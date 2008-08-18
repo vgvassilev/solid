@@ -30,17 +30,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core" />
+    <Folder Include="Core\Configurator\Loaders" />
+    <Folder Include="Core\Configurator\Savers" />
     <Folder Include="Core\Loader" />
-    <Folder Include="Core\Conf" />
     <Folder Include="Core\Loader\cache" />
+    <Folder Include="Core\Configurator" />
     <Folder Include="Core\Services" />
     <Folder Include="Cache" />
-    <Compile Include="Cache\Cache.cs" />
     <Compile Include="Cache\CacheManager.cs" />
-    <Compile Include="Cache\ISource.cs" />
-    <Compile Include="Cache\IStorage.cs" />
-    <Compile Include="Cache\IValidator.cs" />
-    <Compile Include="Cache\MemoryStorage.cs" />
+    <Compile Include="Core\Configurator\ConfigurationManager.cs" />
+    <Compile Include="Core\Configurator\IConfigLoader.cs" />
+    <Compile Include="Core\Configurator\IConfigSaver.cs" />
+    <Compile Include="Core\Configurator\Loaders\BinaryLoader.cs" />
+    <Compile Include="Core\Configurator\Savers\BinarySaver.cs" />
     <Compile Include="Core\Loader\Loader.cs" />
     <Compile Include="Core\Services\AbstractService.cs" />
     <Compile Include="Core\Services\AbstractServiceContainer.cs" />
