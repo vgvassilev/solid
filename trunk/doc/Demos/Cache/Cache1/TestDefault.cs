@@ -24,7 +24,7 @@ namespace Cache1
 	{
 		public TestDefault(): base()
 		{
-			this.cache = new TestCacheManager<int,ResultClass>();
+			this.cache = new CacheManager<int,ResultClass>();
 		}
 	}
 }

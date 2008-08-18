@@ -24,27 +24,26 @@ namespace Cache1
 	{
 		public TestMem1(): base()
 		{
-			this.cache = new TestCacheManager<int,ResultClass>(
-				new TestCacheManager<int,ResultClass>.ValidateDelegate(Validate),
-				new TestCacheManager<int,ResultClass>.CalculateDelegate(Calculate),
-				new TestCacheManager<int,ResultClass>.UpdateDelegate(Update)
+			this.cache = new CacheManager<int,ResultClass>(
+				new CacheManager<int,ResultClass>.ValidateDelegate(Validate),
+				new CacheManager<int,ResultClass>.CalculateDelegate(Calculate),
+				new CacheManager<int,ResultClass>.UpdateDelegate(Update)
 			);
 		}
 		
-		public bool Validate(int key, TestCacheManager<int,ResultClass>.CacheItem item)
+		public virtual bool Validate(int key, CacheManager<int,ResultClass>.CacheItem item)
 		{
 			return key != 1;
 		}
 		
-		public ResultClass Calculate(int key)
+		public virtual CacheManager<int,ResultClass>.CacheItem Calculate(int key)
 		{
-			return ClassBuilder.BuildResult(0); //key
+			return new CacheManager<int,ResultClass>.MemoryCacheItem(ClassBuilder.BuildResult(0)); //key
 		}
 		
-		public ResultClass Update(int key, ResultClass old_value)
+		public virtual void Update(int key, CacheManager<int,ResultClass>.CacheItem oldItem)
 		{
-			old_value.Text += "!";
-			return old_value;
+			oldItem.Value.Text += "!";
 		}
 	}
 }

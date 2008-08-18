@@ -28,13 +28,13 @@ namespace Cache1
 		public TestMemIsolatedStorage(): base()
 		{
 			isf.CreateDirectory("cache");
-			this.cache = new TestCacheManager<int,ResultClass>(
-				new TestCacheManager<int,ResultClass>.InitDelegate(Init),
-				new TestCacheManager<int,ResultClass>.TouchDelegate(Touch),
-				new TestCacheManager<int,ResultClass>.ValidateDelegate(Validate),
-				new TestCacheManager<int,ResultClass>.CalculateDelegate(Calculate),
-				new TestCacheManager<int,ResultClass>.UpdateDelegate(Update),
-				new TestCacheManager<int,ResultClass>.DeleteDelegate(Delete)
+			this.cache = new CacheManager<int,ResultClass>(
+				new CacheManager<int,ResultClass>.InitDelegate(Init),
+				new CacheManager<int,ResultClass>.TouchDelegate(Touch),
+				new CacheManager<int,ResultClass>.ValidateDelegate(Validate),
+				new CacheManager<int,ResultClass>.CalculateDelegate(Calculate),
+				new CacheManager<int,ResultClass>.UpdateDelegate(Update),
+				new CacheManager<int,ResultClass>.DeleteDelegate(Delete)
 			);
 		}
 		
@@ -44,44 +44,42 @@ namespace Cache1
 			base.Test();
 		}
 		
-		public TestCacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
+		public virtual CacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
 		{
 			return new CacheIsolatedStorageItem(value, isf, key, DateTime.UtcNow.AddSeconds(1));
 		}
 		
-		public TestCacheManager<int,ResultClass>.CacheItem Touch(int key, TestCacheManager<int,ResultClass>.CacheItem item)
+		public virtual CacheManager<int,ResultClass>.CacheItem Touch(int key, CacheManager<int,ResultClass>.CacheItem item)
 		{
 //			((CacheIsolatedStorageItem)item).ExpireAt = ((CacheIsolatedStorageItem)item).ExpireAt.AddSeconds(1);
 			return item;
 		}
 		
-		public bool Validate(int key, TestCacheManager<int,ResultClass>.CacheItem item)
+		public virtual bool Validate(int key, CacheManager<int,ResultClass>.CacheItem item)
 		{
 			//return ((CacheIsolatedStorageItem)item).ExpireAt > DateTime.UtcNow;
 			return true;
 		}
 		
-		public ResultClass Calculate(int key)
+		public virtual CacheManager<int,ResultClass>.CacheItem Calculate(int key)
 		{
-			return ClassBuilder.BuildResult(0); //key
+			return new CacheIsolatedStorageItem(ClassBuilder.BuildResult(0), isf, key, DateTime.UtcNow.AddSeconds(1)); //key
 		}
 		
-		public ResultClass Update(int key, ResultClass old_value)
+		public virtual void Update(int key, CacheManager<int,ResultClass>.CacheItem oldItem)
 		{
-			old_value.Text += "!";
-			return old_value;
+			oldItem.Value.Text += "!";
 		}
 		
-		public void Delete(int key, TestCacheManager<int,ResultClass>.CacheItem item)
+		public virtual void Delete(int key, CacheManager<int,ResultClass>.CacheItem item)
 		{
 			((CacheIsolatedStorageItem)item).Remove(key, isf);
 		}
 		
 		[Serializable]
-		public class CacheIsolatedStorageItem: TestCacheManager<int,ResultClass>.CacheItem
+		public class CacheIsolatedStorageItem: CacheManager<int,ResultClass>.MemoryCacheItem
 		{
 			[NonSerialized]
-			
 			private DateTime expireAt;			
 			public DateTime ExpireAt {
 				get { return expireAt; }

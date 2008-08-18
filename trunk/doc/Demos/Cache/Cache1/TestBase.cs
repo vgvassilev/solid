@@ -23,7 +23,7 @@ namespace Cache1
 	/// </summary>
 	public class TestBase
 	{
-		protected TestCacheManager<int,ResultClass> cache;
+		protected CacheManager<int,ResultClass> cache;
 		
 		public TestBase()
 		{

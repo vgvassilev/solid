@@ -19,12 +19,13 @@ namespace Cache1
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Cache1");
-//			new TestDefault().Test();
-//			new TestMem1().Test();
-//			new TestMem2().Test();
-//			new TestMemExpire().Test();
-//			new TestMemIsolatedStorage().Test();
+			new TestDefault().Test();
+			new TestMem1().Test();
+			new TestMem2().Test();
+			new TestMemExpire().Test();
+			new TestMemIsolatedStorage().Test();
 			new TestMemIsolatedStorage1Collision().Test();
+			
 			
 			Console.Write("Press any key to continue... ");
 			Console.ReadKey(true);

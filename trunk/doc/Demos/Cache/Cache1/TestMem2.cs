@@ -24,43 +24,42 @@ namespace Cache1
 	{
 		public TestMem2(): base()
 		{
-			this.cache = new TestCacheManager<int,ResultClass>(
-				new TestCacheManager<int,ResultClass>.InitDelegate(Init),
-				new TestCacheManager<int,ResultClass>.TouchDelegate(Touch),
-				new TestCacheManager<int,ResultClass>.ValidateDelegate(Validate),
-				new TestCacheManager<int,ResultClass>.CalculateDelegate(Calculate),
-				new TestCacheManager<int,ResultClass>.UpdateDelegate(Update),
-				new TestCacheManager<int,ResultClass>.DeleteDelegate(Delete)
+			this.cache = new CacheManager<int,ResultClass>(
+				new CacheManager<int,ResultClass>.InitDelegate(Init),
+				new CacheManager<int,ResultClass>.TouchDelegate(Touch),
+				new CacheManager<int,ResultClass>.ValidateDelegate(Validate),
+				new CacheManager<int,ResultClass>.CalculateDelegate(Calculate),
+				new CacheManager<int,ResultClass>.UpdateDelegate(Update),
+				new CacheManager<int,ResultClass>.DeleteDelegate(Delete)
 			);
 		}
 		
-		public TestCacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
+		public virtual CacheManager<int,ResultClass>.CacheItem Init(int key, ResultClass value)
 		{
-			return new TestCacheManager<int,ResultClass>.CacheItem(value);
+			return new CacheManager<int,ResultClass>.MemoryCacheItem(value);
 		}
 		
-		public TestCacheManager<int,ResultClass>.CacheItem Touch(int key, TestCacheManager<int,ResultClass>.CacheItem item)
+		public virtual CacheManager<int,ResultClass>.CacheItem Touch(int key, CacheManager<int,ResultClass>.CacheItem item)
 		{
 			return item;
 		}
 		
-		public bool Validate(int key, TestCacheManager<int,ResultClass>.CacheItem item)
+		public virtual bool Validate(int key, CacheManager<int,ResultClass>.CacheItem item)
 		{
 			return key != 1;
 		}
 		
-		public ResultClass Calculate(int key)
+		public virtual CacheManager<int,ResultClass>.CacheItem Calculate(int key)
 		{
-			return ClassBuilder.BuildResult(0); //key
+			return new CacheManager<int,ResultClass>.MemoryCacheItem(ClassBuilder.BuildResult(0)); //key
 		}
 		
-		public ResultClass Update(int key, ResultClass old_value)
+		public virtual void Update(int key,  CacheManager<int,ResultClass>.CacheItem oldItem)
 		{
-			old_value.Text += "!";
-			return old_value;
+			oldItem.Value.Text += "!";
 		}
 		
-		public void Delete(int key, TestCacheManager<int,ResultClass>.CacheItem item)
+		public virtual void Delete(int key, CacheManager<int,ResultClass>.CacheItem item)
 		{
 			//
 		}
