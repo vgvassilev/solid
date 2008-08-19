@@ -30,20 +30,31 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core" />
-    <Folder Include="Core\Configurator\Loaders" />
-    <Folder Include="Core\Configurator\Savers" />
+    <Folder Include="Core\Configurator\Parsers" />
+    <Folder Include="Core\Configurator\Builders" />
     <Folder Include="Core\Loader" />
     <Folder Include="Core\Loader\cache" />
     <Folder Include="Core\Configurator" />
+    <Folder Include="Core\Providers" />
+    <Folder Include="Core\Providers\StreamProvider" />
+    <Folder Include="Core\Providers\StreamProvider\Exporters" />
+    <Folder Include="Core\Providers\StreamProvider\Importers" />
     <Folder Include="Core\Services" />
     <Folder Include="Cache" />
     <Compile Include="Cache\CacheManager.cs" />
     <Compile Include="Core\Configurator\ConfigurationManager.cs" />
     <Compile Include="Core\Configurator\IConfigLoader.cs" />
     <Compile Include="Core\Configurator\IConfigSaver.cs" />
-    <Compile Include="Core\Configurator\Loaders\BinaryLoader.cs" />
-    <Compile Include="Core\Configurator\Savers\BinarySaver.cs" />
+    <Compile Include="Core\Configurator\Parsers\INIParser.cs" />
+    <Compile Include="Core\Configurator\Builders\INIBuilder.cs" />
     <Compile Include="Core\Loader\Loader.cs" />
+    <Compile Include="Core\Providers\AbstractResourceProvider.cs" />
+    <Compile Include="Core\Providers\IProvider.cs" />
+    <Compile Include="Core\Providers\StreamProvider\Exporters\FileExporter.cs" />
+    <Compile Include="Core\Providers\StreamProvider\IGetURI.cs" />
+    <Compile Include="Core\Providers\StreamProvider\Importers\FileImporter.cs" />
+    <Compile Include="Core\Providers\StreamProvider\ISetURI.cs" />
+    <Compile Include="Core\Providers\StreamProvider\URIManager.cs" />
     <Compile Include="Core\Services\AbstractService.cs" />
     <Compile Include="Core\Services\AbstractServiceContainer.cs" />
     <Compile Include="Core\Services\AbstractServiceProvider.cs" />
