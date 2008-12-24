@@ -10,40 +10,46 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator.Loaders
+using SolidOpt.Core.Providers.StreamProvider;
+
+namespace SolidOpt.Core.Configurator.Parsers
 {
 	/// <summary>
-	/// Description of BinaryLoader.
+	/// Creates IR from stream, i.e loads the configuration into the configuration manager.
 	/// </summary>
-	public class INIParser<TParamName> : IConfigLoader<TParamName>
+	public class INIParser<TParamName> : IConfigParser<TParamName>
 	{
-		private string filePath;
+		private URIManager uriManager = new URIManager();
 		
 		public INIParser()
 		{
 		}
 		
-		public INIParser(string filePath)
+		/// <summary>
+		/// Checks if the URI can be handled.
+		/// </summary>
+		/// <returns>Can be handled</returns>
+		public bool CanParse(Uri resource)
 		{
-			this.filePath = filePath;	
+			return !String.IsNullOrEmpty(resource.AbsolutePath);
 		}
 		
-		public bool CanLoad()
-		{
-			return !String.IsNullOrEmpty(filePath);
-		}
-		
-		public Dictionary<TParamName, object> LoadConfiguration()
+		/// <summary>
+		/// Iterates over the stream delivered by the Stream Provider Manager and creates the IR.
+		/// </summary>
+		/// <returns>IR</returns>
+		public Dictionary<TParamName, object> LoadConfiguration(Uri resource)
 		{
 			Dictionary<TParamName, object> result = new Dictionary<TParamName, object>();
-			FileStream fs = new FileStream(filePath, FileMode.Open);
-			StreamReader reader = new StreamReader(fs);
+			
+			Stream stream = uriManager.GetResource(resource);
+			StreamReader reader = new StreamReader(stream);
+		
 			string line;
 			string key,val;
 			int pos = 0;
 			while(!reader.EndOfStream){
 				line = reader.ReadLine();
-				
 				pos = line.IndexOf("=");
 				if (pos != -1){
 					key = line.Substring(0,pos);

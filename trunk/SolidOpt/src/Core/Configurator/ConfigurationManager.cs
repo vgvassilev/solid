@@ -9,9 +9,10 @@
 using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.IO;
 
-using SolidOpt.Core.Configurator.Loaders;
-using SolidOpt.Core.Configurator.Savers;
+using SolidOpt.Core.Configurator.Builders;
+using SolidOpt.Core.Configurator.Parsers;
 using SolidOpt.Cache;
 
 
@@ -30,17 +31,25 @@ namespace SolidOpt.Core.Configurator
 			get {return instance;}
 		}
 		
-		private List<IConfigSaver> savers = new List<IConfigSaver>();
-		private List<IConfigLoader<TParamName>> loaders = new List<IConfigLoader<TParamName>>();
+		private List<IConfigBuilder<TParamName>> savers = new List<IConfigBuilder<TParamName>>();
+		private List<IConfigParser<TParamName>> loaders = new List<IConfigParser<TParamName>>();
 		private Dictionary<TParamName, object> ir = new Dictionary<TParamName, object>();
+		public Dictionary<TParamName, object> IR {
+			get { return ir; }
+			set { ir = value; }
+		}
 		
 		private CacheManager<TParamName, object> cacheManager;
 		
 
 		public ConfigurationManager()
 		{
-			savers.Add(new INIBuilder());
-			loaders.Add(new INIParser<TParamName>(@"test.ini"));
+//			savers.Add(new INIBuilder<TParamName>());
+//			loaders.Add(new INIParser<TParamName>());
+//			savers.Add(new NMSPBuilder<TParamName>());
+			loaders.Add(new NMSPParser<TParamName>());
+			savers.Add(new Converters.IR2Assembly<TParamName>());
+			loaders.Add(new Converters.IR2Assembly<TParamName>());			
 		}
 		
 		public ConfigurationManager(CacheManager<TParamName, object> cacheManager) : this()
@@ -48,22 +57,24 @@ namespace SolidOpt.Core.Configurator
 			this.cacheManager = cacheManager;
 		}
 		
-		public bool SaveConfiguration()
+		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
+		public bool SaveConfiguration(Dictionary<TParamName, object> configRepresenation)
 		{
-			foreach (IConfigSaver s in savers){
-				if (s.CanSave()){
-					s.Save();
+			foreach (IConfigBuilder<TParamName> s in savers){
+				if (s.CanBuild()){
+					s.Build(configRepresenation);
 					return true;
 				}
 			}
 			return false;
 		}
 		
-		public Dictionary<TParamName, object> LoadConfiguration()
+		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
+		public Dictionary<TParamName, object> LoadConfiguration(Uri resource)
 		{
-			foreach (IConfigLoader<TParamName> l in loaders){
-				if (l.CanLoad()){
-					return l.LoadConfiguration();
+			foreach (IConfigParser<TParamName> l in loaders){
+				if (l.CanParse(resource)){
+					return l.LoadConfiguration(resource);
 				}
 			}
 			return new Dictionary<TParamName, object>();
@@ -72,7 +83,7 @@ namespace SolidOpt.Core.Configurator
 		public TParam GetParam<TParam>(TParamName name)
 		{
 			object result;
-			if (ir.TryGetValue(name, out result)){
+			if (IR.TryGetValue(name, out result)){
 				return (TParam)result;
 			}
 			else{
@@ -98,6 +109,5 @@ namespace SolidOpt.Core.Configurator
 		{
 			return GetParams<object>(names);
 		}
-		
 	}
 }
