@@ -7,16 +7,30 @@
  */
 
 using System;
+using System.IO;
 
 namespace SolidOpt.Core.Providers.StreamProvider.Importers
 {
 	/// <summary>
 	/// Description of FileImporter.
 	/// </summary>
-	public class FileImporter
+	public class FileImporter : IGetURI
 	{
 		public FileImporter()
 		{
+		}
+		
+		public bool CanImport(Uri resource)
+		{
+			if (resource.IsFile){
+				return true;
+			}
+			return false;
+		}
+		
+		public Stream Import(Uri resource)
+		{
+			return new FileStream(resource.AbsolutePath, FileMode.Open);
 		}
 	}
 }

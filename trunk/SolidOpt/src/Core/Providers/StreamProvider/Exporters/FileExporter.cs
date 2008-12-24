@@ -1,7 +1,7 @@
-/*
+﻿/*
  * Created by SharpDevelop.
  * User: Vassil Vassilev
- * Date: 19.8.2008 ?.
+ * Date: 19.8.2008 г.
  * Time: 14:01
  * 
  */
@@ -12,12 +12,22 @@ using System.IO;
 namespace SolidOpt.Core.Providers.StreamProvider.Exporters
 {
 	/// <summary>
-	/// Description of FileExporter.
+	/// Stores file on the local machine at given location.
 	/// </summary>
 	public class FileExporter : ISetURI
 	{
 		public FileExporter()
 		{
+		}
+		
+		internal void CopyStream(Stream source, Stream dest)
+		{
+			byte[] buffer = new byte[65536];
+			int read;
+			do{
+				read = source.Read(buffer, 0, buffer.Length);
+				dest.Write(buffer, 0, read);
+			} while (read != 0);
 		}
 		
 		public bool CanExport(Uri resource)
@@ -30,11 +40,21 @@ namespace SolidOpt.Core.Providers.StreamProvider.Exporters
 		
 		public bool Export(Stream stream, Uri resource)
 		{
-			FileStream fs = new FileStream(resource.AbsolutePath, FileMode.Truncate);
-			if (fs.CanWrite){
-				 
+			try{
+				stream.Flush();
+				stream.Seek(0, SeekOrigin.Begin);
+				
+				FileStream fs = new FileStream(resource.AbsolutePath, FileMode.Create);
+				CopyStream(stream, fs);
+				
+				fs.Close();
+				stream.Close();
+				
+				return true;
 			}
-			return true;//TODO: change logics
+			catch{
+				return false;
+			}
 		}
 	}
 }

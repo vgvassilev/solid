@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using SolidOpt.Core.Providers.StreamProvider.Exporters;
+using SolidOpt.Core.Providers.StreamProvider.Importers;
+
 
 
 namespace SolidOpt.Core.Providers.StreamProvider
@@ -24,6 +27,8 @@ namespace SolidOpt.Core.Providers.StreamProvider
 		
 		public URIManager()
 		{
+			importers.Add(new FileImporter());
+			exporters.Add(new FileExporter());
 		}
 		
 		public bool SetResource(Stream stream, Uri resource)

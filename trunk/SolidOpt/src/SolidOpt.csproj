@@ -25,11 +25,16 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="Mono.Cecil">
+      <HintPath>vendors\Mono.Cecil.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core" />
+    <Folder Include="Core\Configurator\Converters" />
     <Folder Include="Core\Configurator\Parsers" />
     <Folder Include="Core\Configurator\Builders" />
     <Folder Include="Core\Loader" />
@@ -42,11 +47,15 @@
     <Folder Include="Core\Services" />
     <Folder Include="Cache" />
     <Compile Include="Cache\CacheManager.cs" />
+    <Compile Include="Core\Configurator\Builders\NMSPBuilder.cs" />
     <Compile Include="Core\Configurator\ConfigurationManager.cs" />
-    <Compile Include="Core\Configurator\IConfigLoader.cs" />
-    <Compile Include="Core\Configurator\IConfigSaver.cs" />
+    <Compile Include="Core\Configurator\Converters\IR2Assembly.cs" />
+    <Compile Include="Core\Configurator\IConfigParser.cs" />
+    <Compile Include="Core\Configurator\IConfigBuilder.cs" />
+    <Compile Include="Core\Configurator\IConverter.cs" />
     <Compile Include="Core\Configurator\Parsers\INIParser.cs" />
     <Compile Include="Core\Configurator\Builders\INIBuilder.cs" />
+    <Compile Include="Core\Configurator\Parsers\NMSPParser.cs" />
     <Compile Include="Core\Loader\Loader.cs" />
     <Compile Include="Core\Providers\AbstractResourceProvider.cs" />
     <Compile Include="Core\Providers\IProvider.cs" />
