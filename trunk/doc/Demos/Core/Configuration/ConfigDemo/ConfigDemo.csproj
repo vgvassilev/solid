@@ -25,8 +25,12 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="Config3.modified">
+      <HintPath>bin\Debug\Config3.modified.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="SolidOpt">
-      <HintPath>..\..\..\..\..\..\SolidOpt\src\bin\Debug\SolidOpt.dll</HintPath>
+      <HintPath>..\..\..\..\..\SolidOpt\src\bin\Debug\SolidOpt.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
@@ -35,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Config1.cs" />
+    <Compile Include="Config2.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
 </Project>
