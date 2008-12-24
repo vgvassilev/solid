@@ -1,0 +1,8 @@
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\obj\Debug\ResolveAssemblyReference.cache
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\bin\Debug\NMSPFileFormat.exe
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\bin\Debug\NMSPFileFormat.pdb
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\bin\Debug\SolidOpt.dll
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\bin\Debug\Mono.Cecil.dll
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\bin\Debug\SolidOpt.pdb
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\obj\Debug\NMSPFileFormat.exe
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\NMSPFileFormat\src\obj\Debug\NMSPFileFormat.pdb

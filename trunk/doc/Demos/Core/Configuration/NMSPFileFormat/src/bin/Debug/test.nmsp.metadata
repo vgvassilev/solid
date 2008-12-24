@@ -1,0 +1,16 @@
+types{
+	a{
+		x1=int
+		b{
+			x2=int
+			x5=string
+			x4=class(object)
+			c{
+				x=structure(PointF)
+				d{
+					asd=10
+				}
+			}
+		}
+	}
+}
