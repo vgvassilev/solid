@@ -23,16 +23,31 @@ namespace SolidOpt.Core.Configurator
 	/// </summary>
 	public sealed class ConfigurationManager<TParamName>
 	{
-		
+		#region Singleton
+		/// <summary>
+		/// Makes class singleton
+		/// </summary>
 		private static ConfigurationManager<TParamName> instance = 
 										new ConfigurationManager<TParamName>();
 		
 		public static ConfigurationManager<TParamName> Instance {
 			get {return instance;}
 		}
+		#endregion
 		
-		private List<IConfigBuilder<TParamName>> savers = new List<IConfigBuilder<TParamName>>();
+		private List<IConfigBuilder<TParamName>> savers = new List<IConfigBuilder<TParamName>>();		
+		public List<IConfigBuilder<TParamName>> Savers {
+			get { return savers; }
+			set { savers = value; }
+		}
+		
 		private List<IConfigParser<TParamName>> loaders = new List<IConfigParser<TParamName>>();
+		public List<IConfigParser<TParamName>> Loaders {
+			get { return loaders; }
+			set { loaders = value; }
+		}
+		
+		
 		private Dictionary<TParamName, object> ir = new Dictionary<TParamName, object>();
 		public Dictionary<TParamName, object> IR {
 			get { return ir; }
@@ -44,12 +59,13 @@ namespace SolidOpt.Core.Configurator
 
 		public ConfigurationManager()
 		{
+//		TODO:delete
 //			savers.Add(new INIBuilder<TParamName>());
 //			loaders.Add(new INIParser<TParamName>());
 //			savers.Add(new NMSPBuilder<TParamName>());
-			loaders.Add(new NMSPParser<TParamName>());
-			savers.Add(new Converters.IR2Assembly<TParamName>());
-			loaders.Add(new Converters.IR2Assembly<TParamName>());			
+//			loaders.Add(new NMSPParser<TParamName>());
+//			savers.Add(new Converters.IR2Assembly<TParamName>());
+//			loaders.Add(new Converters.IR2Assembly<TParamName>());			
 		}
 		
 		public ConfigurationManager(CacheManager<TParamName, object> cacheManager) : this()
@@ -58,10 +74,10 @@ namespace SolidOpt.Core.Configurator
 		}
 		
 		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
-		public bool SaveConfiguration(Dictionary<TParamName, object> configRepresenation)
+		public bool SaveConfiguration(Dictionary<TParamName, object> configRepresenation, string fileFormat)
 		{
-			foreach (IConfigBuilder<TParamName> s in savers){
-				if (s.CanBuild()){
+			foreach (IConfigBuilder<TParamName> s in Savers){
+				if (s.CanBuild(fileFormat)){
 					s.Build(configRepresenation);
 					return true;
 				}
@@ -72,7 +88,7 @@ namespace SolidOpt.Core.Configurator
 		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
 		public Dictionary<TParamName, object> LoadConfiguration(Uri resource)
 		{
-			foreach (IConfigParser<TParamName> l in loaders){
+			foreach (IConfigParser<TParamName> l in Loaders){
 				if (l.CanParse(resource)){
 					return l.LoadConfiguration(resource);
 				}

@@ -31,7 +31,10 @@ namespace SolidOpt.Core.Configurator.Parsers
 		/// <returns>Can be handled</returns>
 		public bool CanParse(Uri resource)
 		{
-			return !String.IsNullOrEmpty(resource.AbsolutePath);
+			if (resource.IsFile && Path.GetExtension(resource.LocalPath).ToLower() == ".ini"){
+				return true;
+			}
+			return false;	
 		}
 		
 		/// <summary>

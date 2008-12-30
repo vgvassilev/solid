@@ -26,9 +26,9 @@ namespace SolidOpt.Core.Configurator.Builders
 		{
 		}
 		
-		public bool CanBuild()
+		public bool CanBuild(string fileFormat)
 		{
-			return true; //TODO: add logics
+			return fileFormat == "ini";
 		}
 		
 		/// <summary>

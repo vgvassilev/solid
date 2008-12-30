@@ -13,7 +13,7 @@ namespace SolidOpt.Core.Configurator
 	/// <summary>
 	/// Description of IConverter.
 	/// </summary>
-	public interface IConverter<TParamName> : IConfigBuilder<TParamName>, IConfigParser<TParamName>
+	public interface ITypeResolver
 	{
 		
 	}

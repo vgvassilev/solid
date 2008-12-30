@@ -41,9 +41,9 @@ namespace SolidOpt.Core.Configurator.Builders
 			this.commentSep = commentSep;
 		}
 		
-		public bool CanBuild()
+		public bool CanBuild(string fileFormat)
 		{
-			return true;
+			return fileFormat == "nmsp";
 		}
 		
 		/// <summary>

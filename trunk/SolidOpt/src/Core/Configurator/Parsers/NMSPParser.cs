@@ -28,7 +28,10 @@ namespace SolidOpt.Core.Configurator.Parsers
 		
 		public bool CanParse(Uri resource)
 		{
-			return !String.IsNullOrEmpty(resource.AbsolutePath);
+			if (resource.IsFile && Path.GetExtension(resource.LocalPath).ToLower() == ".nmsp"){
+				return true;
+			}
+			return false;
 		}
 		
 		/// <summary>
@@ -42,6 +45,30 @@ namespace SolidOpt.Core.Configurator.Parsers
 			Console.WriteLine(parser.AnalizeSyntax().ToString());
 			return parser.ConfigIR;
 		}
+	
+		/// <summary>
+		/// The example demonstrates the new config file format, which is hierarchical. Here is an example:
+		/// a1{
+		///		x1=5
+		///		b{
+		///			x2=13
+		///			x5=asd
+		///			x4=11
+		///			c{
+		///				x=2
+		///				d{
+		///					asd=10
+		///				}
+		///			}
+		/// 	}
+		/// }
+		/// x=14
+		/// y=opa
+		/// </summary>
+//		public string Exports()
+//		{
+//			return "nmsp";
+//		}
 	}
 
 	#region Lexem Hierarchy

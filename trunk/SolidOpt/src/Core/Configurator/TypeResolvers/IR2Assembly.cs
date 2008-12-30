@@ -3,7 +3,6 @@
  * User: Vassil Vassilev
  * Date: 13.10.2008 г.
  * Time: 17:49
- * 
  */
 
 using System;
@@ -23,7 +22,7 @@ namespace SolidOpt.Core.Configurator.Converters
 	/// <summary>
 	/// Description of IR2Assembly.
 	/// </summary>
-	public class IR2Assembly<TParamName> : IConverter<TParamName>
+	public class IR2Assembly<TParamName> : ITypeResolver<TParamName>
 	{
 		private ConfigurationManager<TParamName> configurator = ConfigurationManager<TParamName>.Instance;
 		public IR2Assembly()
@@ -31,16 +30,21 @@ namespace SolidOpt.Core.Configurator.Converters
 			
 		}
 		
-		public bool CanBuild()
+		public bool CanBuild(string fileFormat)
 		{
-			return true;
+			return fileFormat == "dll";
 		}
 		
 		public void Build(Dictionary<TParamName, object> configRepresenation)
 		{
-			Optimize(@"D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.dll",
+			Build(configRepresenation, @"D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.dll",
 			         @"D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.modified.dll");
 			         
+		}
+		
+		public void Build(Dictionary<TParamName, object> configRepresenation, string input, string output)
+		{
+			Optimize(input, output);
 		}
 		
 		public bool CanParse(Uri resource)
@@ -126,7 +130,7 @@ namespace SolidOpt.Core.Configurator.Converters
 			Trace.Unindent();
 			
 			
-			assembly.Name.Name = "Config3.modified";
+			assembly.Name.Name = "Config3.modified1";
 			
 			
 			AssemblyFactory.SaveAssembly(assembly, outputFileName);
