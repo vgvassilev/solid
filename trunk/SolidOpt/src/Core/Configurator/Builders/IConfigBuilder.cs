@@ -17,6 +17,6 @@ namespace SolidOpt.Core.Configurator
 	public interface IConfigBuilder<TParamName>
 	{
 		bool CanBuild(string fileFormat);
-		void Build(Dictionary<TParamName, object> configRepresenation);
+		void Build(Dictionary<TParamName, object> configRepresenation, Uri resourse);
 	}
 }

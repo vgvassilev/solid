@@ -41,8 +41,8 @@ namespace SolidOpt.Core.Configurator.Parsers
 		public Dictionary<TParamName, object> LoadConfiguration(Uri resource)
 		{
 			Stream stream = uriManager.GetResource(resource);
-			ConfigParser<TParamName> parser = new ConfigParser<TParamName>(stream);
-			Console.WriteLine(parser.AnalizeSyntax().ToString());
+			ConfigNMSPParser<TParamName> parser = new ConfigNMSPParser<TParamName>(stream);
+			parser.AnalizeSyntax();
 			return parser.ConfigIR;
 		}
 	
@@ -128,7 +128,8 @@ namespace SolidOpt.Core.Configurator.Parsers
 	#endregion	
 	
 	
-	internal class ConfigParser<TParamName>{
+	internal class ConfigNMSPParser<TParamName>
+	{
 		private char ch = ' ';
 		private Lexem lexem;
 		private Stream stream;
@@ -138,11 +139,11 @@ namespace SolidOpt.Core.Configurator.Parsers
 			get { return configIR; }
 			set { configIR = value; }
 		}
-		public ConfigParser()
+		public ConfigNMSPParser()
 		{
 			
 		}
-		public ConfigParser(Stream stream)
+		public ConfigNMSPParser(Stream stream)
 		{
 			this.stream = stream;	
 		}
@@ -182,7 +183,12 @@ namespace SolidOpt.Core.Configurator.Parsers
 				}
 				else if (char.IsWhiteSpace(ch)){
 //					Console.WriteLine("Whitespace" + ch.ToString());
-					ch = (char)stream.ReadByte();
+					try{
+						ch = (char)stream.ReadByte();
+					}
+					catch{
+					  ch = Char.MaxValue;
+					}
 				}
 				else if (ch == char.MaxValue){
 //					Console.WriteLine("Whitespace" + ch.ToString());
@@ -211,7 +217,7 @@ namespace SolidOpt.Core.Configurator.Parsers
 			dict = new Dictionary<TParamName, object>();
 			
 			while(true){
-				if (!(lexem is LexIdentifier)) return true;
+				if (!(lexem is LexIdentifier)) return false;
 				
 				nameLexem = lexem;
 				lexem = getLexem();

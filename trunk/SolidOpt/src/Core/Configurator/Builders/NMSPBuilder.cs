@@ -19,26 +19,11 @@ namespace SolidOpt.Core.Configurator.Builders
 	/// </summary>
 	public class NMSPBuilder<TParamName> : IConfigBuilder<TParamName>
 	{
-		private string namespaceOpenSep = "{";
-		private string namespaceCloseSep = "}";
-		private string keyValueSep = "=";
-		private string referenceSep = "#";
-		private string commentSep = ";";
-		
 		private URIManager uriManager = new URIManager();
+		private StreamWriter streamWriter = null;
 		
 		public NMSPBuilder()
 		{
-		}
-		
-		public NMSPBuilder(string namespaceOpenSep,string namespaceCloseSep, string keyValueSep,
-		                   string referenceSep, string commentSep)
-		{
-			this.namespaceOpenSep = namespaceOpenSep;
-			this.namespaceCloseSep = namespaceCloseSep;
-			this.keyValueSep = keyValueSep;
-			this.referenceSep = referenceSep;
-			this.commentSep = commentSep;
 		}
 		
 		public bool CanBuild(string fileFormat)
@@ -50,40 +35,35 @@ namespace SolidOpt.Core.Configurator.Builders
 		/// Builds configuration format and saves to given URI using Stream Provider Manager.
 		/// </summary>
 		/// <param name="configRepresenation">Intermediate Representation of the config params</param>
-		public void Build(Dictionary<TParamName, object> configRepresenation)
+		public void Build(Dictionary<TParamName, object> configRepresenation, Uri resourse)
 		{
-			StreamWriter streamWriter = new StreamWriter(new MemoryStream());
+			streamWriter = new StreamWriter(new MemoryStream());
 			
-			string key;
-			
-			foreach(KeyValuePair<TParamName, object> item in configRepresenation){
-				key = (string)Convert.ChangeType(item.Key,typeof (TParamName));
-				if(!key.Contains(".")){
-					
-				}
-				
-				
-				Console.WriteLine(key);
-				
-				
-				
-				
-				
-				
-//				streamWriter.WriteLine("{0}={1}", item.Key, item.Value);
-			}		
-			
-			
-			
-			
-			
+			Build(configRepresenation, "");
 			
 			streamWriter.Flush();
-			
-			Uri path = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test.modified.ini"));
-			uriManager.SetResource(streamWriter.BaseStream, path);
+			//TODO if uriManager.SetResource == false throw exception... Да се помисли за йерархия на изключенията
+			uriManager.SetResource(streamWriter.BaseStream, resourse);
 			
 			streamWriter.Close();
 		}
+		
+		internal void Build(Dictionary<TParamName, object> configRepresenation, string tab)
+		{
+			TParamName key;
+			
+			foreach(KeyValuePair<TParamName, object> item in configRepresenation){
+				key = (TParamName)Convert.ChangeType(item.Key, typeof (TParamName));
+				if (item.Value is Dictionary<TParamName, object>){
+					streamWriter.WriteLine("{0}{1} {2}", tab, key,"{");
+					Build(item.Value as Dictionary<TParamName, object>, tab + "  ");
+					streamWriter.WriteLine("{0}{1}", tab, "}");
+				}
+				else {
+					streamWriter.WriteLine("{0}{1} = {2}",tab, key, item.Value);
+				}
+			}
+		}
+		
 	}
 }
