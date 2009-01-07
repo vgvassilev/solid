@@ -14,7 +14,7 @@ using System.IO;
 using SolidOpt.Core.Configurator.Builders;
 using SolidOpt.Core.Configurator.Parsers;
 using SolidOpt.Cache;
-
+using SolidOpt.Core.Providers.StreamProvider;
 
 namespace SolidOpt.Core.Configurator
 {
@@ -55,17 +55,11 @@ namespace SolidOpt.Core.Configurator
 		}
 		
 		private CacheManager<TParamName, object> cacheManager;
+		private URIManager streamProvider = new URIManager();
 		
 
 		public ConfigurationManager()
-		{
-//		TODO:delete
-//			savers.Add(new INIBuilder<TParamName>());
-//			loaders.Add(new INIParser<TParamName>());
-//			savers.Add(new NMSPBuilder<TParamName>());
-//			loaders.Add(new NMSPParser<TParamName>());
-//			savers.Add(new Converters.IR2Assembly<TParamName>());
-//			loaders.Add(new Converters.IR2Assembly<TParamName>());			
+		{		
 		}
 		
 		public ConfigurationManager(CacheManager<TParamName, object> cacheManager) : this()
@@ -74,23 +68,22 @@ namespace SolidOpt.Core.Configurator
 		}
 		
 		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
-		public bool SaveConfiguration(Dictionary<TParamName, object> configRepresenation, string fileFormat)
+		public void SaveConfiguration(Dictionary<TParamName, object> configRepresenation, Uri resourse, string fileFormat)
 		{
 			foreach (IConfigBuilder<TParamName> s in Savers){
 				if (s.CanBuild(fileFormat)){
-					s.Build(configRepresenation);
-					return true;
+					s.Build(configRepresenation, resourse);
 				}
 			}
-			return false;
 		}
 		
 		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
-		public Dictionary<TParamName, object> LoadConfiguration(Uri resource)
+		public Dictionary<TParamName, object> LoadConfiguration(Uri resUri)
 		{
+			Stream resStream = streamProvider.GetResource(resUri);
 			foreach (IConfigParser<TParamName> l in Loaders){
-				if (l.CanParse(resource)){
-					return l.LoadConfiguration(resource);
+				if (l.CanParse(resUri, resStream)){
+					return l.LoadConfiguration(resStream);
 				}
 			}
 			return new Dictionary<TParamName, object>();

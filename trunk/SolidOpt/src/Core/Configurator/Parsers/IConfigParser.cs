@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace SolidOpt.Core.Configurator
@@ -16,7 +17,7 @@ namespace SolidOpt.Core.Configurator
 	/// </summary>
 	public interface IConfigParser<TParamName>
 	{
-		bool CanParse(Uri resource);
-		Dictionary<TParamName, object> LoadConfiguration(Uri resourse);
+		bool CanParse(Uri resUri, Stream resStream);
+		Dictionary<TParamName, object> LoadConfiguration(Stream resStream);
 	}
 }

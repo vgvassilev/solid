@@ -20,8 +20,6 @@ namespace SolidOpt.Core.Configurator.Parsers
 	/// </summary>
 	public class INIParser<TParamName> : IConfigParser<TParamName>
 	{
-		private URIManager uriManager = new URIManager();
-		
 		public INIParser()
 		{
 		}
@@ -30,22 +28,18 @@ namespace SolidOpt.Core.Configurator.Parsers
 		/// Checks if the URI can be handled.
 		/// </summary>
 		/// <returns>Can be handled</returns>
-		public bool CanParse(Uri resource)
+		public bool CanParse(Uri resUri, Stream resStream)
 		{
-			if (resource.IsFile && Path.GetExtension(resource.LocalPath).ToLower() == ".ini"){
-				return true;
-			}
-			return false;	
+			return resUri.IsFile && Path.GetExtension(resUri.LocalPath).ToLower() == ".ini";
 		}
 		
 		/// <summary>
 		/// Iterates over the stream delivered by the Stream Provider Manager and creates the IR.
 		/// </summary>
 		/// <returns>IR</returns>
-		public Dictionary<TParamName, object> LoadConfiguration(Uri resource)
+		public Dictionary<TParamName, object> LoadConfiguration(Stream resStream)
 		{
-			Stream stream = uriManager.GetResource(resource);
-			ConfigINIParser<TParamName> parser = new ConfigINIParser<TParamName>(stream);
+			ConfigINIParser<TParamName> parser = new ConfigINIParser<TParamName>(resStream);
 			parser.AnalizeSyntax();
 			return parser.ConfigIR;
 		}
