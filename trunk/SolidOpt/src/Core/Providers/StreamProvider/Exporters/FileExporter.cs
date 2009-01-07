@@ -52,7 +52,7 @@ namespace SolidOpt.Core.Providers.StreamProvider.Exporters
 				
 				return true;
 			}
-			catch{
+			catch {
 				return false;
 			}
 		}

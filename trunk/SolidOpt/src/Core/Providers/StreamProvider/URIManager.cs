@@ -23,23 +23,29 @@ namespace SolidOpt.Core.Providers.StreamProvider
 	public class URIManager : AbstractResourceProvider
 	{
 		private List<IGetURI> importers = new List<IGetURI>();
+		public List<IGetURI> Importers {
+			get { return importers; }
+			set { importers = value; }
+		}
+		
 		private List<ISetURI> exporters = new List<ISetURI>();
+		public List<ISetURI> Exporters {
+			get { return exporters; }
+			set { exporters = value; }
+		}
 		
 		public URIManager()
 		{
-			importers.Add(new FileImporter());
-			exporters.Add(new FileExporter());
 		}
 		
-		public bool SetResource(Stream stream, Uri resource)
+		public void SetResource(Stream stream, Uri resource)
 		{
 			foreach(ISetURI exporter in exporters){
 				if (exporter.CanExport(resource)){
 					exporter.Export(stream, resource);
-					return true;
 				}
 			}
-			return false;
+			throw new IOException("Resource cannot be exported.");
 		}
 		
 		public Stream GetResource(Uri resource)
@@ -49,7 +55,7 @@ namespace SolidOpt.Core.Providers.StreamProvider
 					return importer.Import(resource);
 				}
 			}
-			return null;
+			throw new IOException("Resource cannot be imported.");
 		}
 		
 	}
