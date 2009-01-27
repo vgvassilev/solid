@@ -1,8 +1,0 @@
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\bin\Release\Config3.dll
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\obj\Release\ResolveAssemblyReference.cache
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\obj\Release\Config3.dll
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\bin\Debug\Config3.dll
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\bin\Debug\Config3.pdb
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\obj\Debug\ResolveAssemblyReference.cache
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\obj\Debug\Config3.dll
-D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\Config3\obj\Debug\Config3.pdb
