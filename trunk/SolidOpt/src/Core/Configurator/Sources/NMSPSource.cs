@@ -13,35 +13,29 @@ using System.Text;
 
 using SolidOpt.Core.Providers.StreamProvider;
 
-namespace SolidOpt.Core.Configurator.Parsers
+namespace SolidOpt.Core.Configurator.Sources
 {
 	/// <summary>
 	/// Generates intermediate represenation (Dictionary) from the NMSP file format. 
 	/// </summary>
-	public class NMSPParser<TParamName> : IConfigParser<TParamName>
+	public class NMSPSource<TParamName> : IConfigSource<TParamName>
 	{
-		private URIManager uriManager = new URIManager();
-		
-		public NMSPParser()
+		public NMSPSource()
 		{
 		}
 		
-		public bool CanParse(Uri resource)
+		public bool CanParse(Uri resUri, Stream resStream)
 		{
-			if (resource.IsFile && Path.GetExtension(resource.LocalPath).ToLower() == ".nmsp"){
-				return true;
-			}
-			return false;
+			return resUri.IsFile && Path.GetExtension(resUri.LocalPath).ToLower() == ".nmsp";
 		}
 		
 		/// <summary>
 		/// Iterates over the stream delivered by the Stream Provider Manager and creates the IR.
 		/// </summary>
 		/// <returns>IR</returns>
-		public Dictionary<TParamName, object> LoadConfiguration(Uri resource)
+		public Dictionary<TParamName, object> LoadConfiguration(Stream resStream)
 		{
-			Stream stream = uriManager.GetResource(resource);
-			ConfigNMSPParser<TParamName> parser = new ConfigNMSPParser<TParamName>(stream);
+			ConfigNMSPParser<TParamName> parser = new ConfigNMSPParser<TParamName>(resStream);
 			parser.AnalizeSyntax();
 			return parser.ConfigIR;
 		}
