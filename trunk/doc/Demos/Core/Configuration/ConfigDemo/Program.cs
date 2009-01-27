@@ -11,6 +11,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 using SolidOpt.Core.Configurator;
+using SolidOpt.Core.Configurator.Converters;
 
 namespace ConfigDemo
 {
@@ -69,7 +70,11 @@ namespace ConfigDemo
 			
 			ConfigurationManager<string> configurator = new ConfigurationManager<string>();
 			
-			configurator.SaveConfiguration(null);
+			IR2Assembly<string> ir2asm = new IR2Assembly<string>();
+			configurator.Loaders.Add(ir2asm);
+			configurator.Savers.Add(ir2asm);
+			
+			configurator.SaveConfiguration(null, "dll");
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);

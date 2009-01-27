@@ -19,3 +19,4 @@ D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo
 D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\obj\Debug\ResolveAssemblyReference.cache
 D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\obj\Debug\ConfigDemo.exe
 D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\obj\Debug\ConfigDemo.pdb
+D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.dll

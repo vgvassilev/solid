@@ -25,8 +25,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Reference Include="Config3.modified">
-      <HintPath>bin\Debug\Config3.modified.dll</HintPath>
+    <Reference Include="Config3">
+      <HintPath>..\Config3\bin\Release\Config3.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="SolidOpt">
