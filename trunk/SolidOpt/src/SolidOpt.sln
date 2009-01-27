@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-# SharpDevelop 2.2.1.2648
+# SharpDevelop 3.0.0.3683
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt", "SolidOpt.csproj", "{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "..\..\Documentation\Demos\Core\Loader\src\Loader.csproj", "{A37B3085-8AA2-4889-B7E6-5AE93840436A}"

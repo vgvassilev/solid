@@ -17,6 +17,6 @@ namespace SolidOpt.Core.Providers.StreamProvider
 	public interface ISetURI
 	{
 		bool CanExport(Uri resource);
-		bool Export(Stream stream, Uri resource);
+		void Export(Stream stream, Uri resource);
 	}
 }

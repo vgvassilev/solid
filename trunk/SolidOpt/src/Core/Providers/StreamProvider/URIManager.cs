@@ -40,9 +40,10 @@ namespace SolidOpt.Core.Providers.StreamProvider
 		
 		public void SetResource(Stream stream, Uri resource)
 		{
-			foreach(ISetURI exporter in exporters){
+			foreach(ISetURI exporter in Exporters){
 				if (exporter.CanExport(resource)){
 					exporter.Export(stream, resource);
+					return;
 				}
 			}
 			throw new IOException("Resource cannot be exported.");
@@ -50,7 +51,7 @@ namespace SolidOpt.Core.Providers.StreamProvider
 		
 		public Stream GetResource(Uri resource)
 		{
-			foreach(IGetURI importer in importers){
+			foreach(IGetURI importer in Importers){
 				if (importer.CanImport(resource)){
 					return importer.Import(resource);
 				}

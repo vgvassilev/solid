@@ -38,23 +38,17 @@ namespace SolidOpt.Core.Providers.StreamProvider.Exporters
 			return false;
 		}
 		
-		public bool Export(Stream stream, Uri resource)
+		public void Export(Stream stream, Uri resource)
 		{
-			try{
-				stream.Flush();
-				stream.Seek(0, SeekOrigin.Begin);
+			stream.Flush();
+			stream.Seek(0, SeekOrigin.Begin);
+			
+			FileStream fs = new FileStream(resource.AbsolutePath, FileMode.Create);
+			CopyStream(stream, fs);
+			
+			fs.Close();
+			stream.Close();
 				
-				FileStream fs = new FileStream(resource.AbsolutePath, FileMode.Create);
-				CopyStream(stream, fs);
-				
-				fs.Close();
-				stream.Close();
-				
-				return true;
-			}
-			catch {
-				return false;
-			}
 		}
 	}
 }

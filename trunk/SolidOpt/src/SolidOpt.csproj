@@ -6,6 +6,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SolidOpt</RootNamespace>
     <AssemblyName>SolidOpt</AssemblyName>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -34,9 +35,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core" />
-    <Folder Include="Core\Configurator\Converters" />
-    <Folder Include="Core\Configurator\Parsers" />
-    <Folder Include="Core\Configurator\Builders" />
+    <Folder Include="Core\Configurator\Sources\Generators" />
+    <Folder Include="Core\Configurator\TypeResolvers" />
+    <Folder Include="Core\Configurator\Mappers" />
+    <Folder Include="Core\Configurator\Sources" />
+    <Folder Include="Core\Configurator\Targets" />
     <Folder Include="Core\Loader" />
     <Folder Include="Core\Loader\cache" />
     <Folder Include="Core\Configurator" />
@@ -47,22 +50,34 @@
     <Folder Include="Core\Services" />
     <Folder Include="Cache" />
     <Compile Include="Cache\CacheManager.cs" />
-    <Compile Include="Core\Configurator\Builders\NMSPBuilder.cs" />
+    <Compile Include="Core\Configurator\Mappers\INIMaper.cs" />
+    <Compile Include="Core\Configurator\Mappers\MapManager.cs" />
+    <Compile Include="Core\Configurator\Targets\IConfigTarget.cs" />
+    <Compile Include="Core\Configurator\Targets\ILTarget.cs" />
+    <Compile Include="Core\Configurator\Targets\NMSPTarget.cs" />
     <Compile Include="Core\Configurator\ConfigurationManager.cs" />
-    <Compile Include="Core\Configurator\Converters\IR2Assembly.cs" />
-    <Compile Include="Core\Configurator\IConfigParser.cs" />
-    <Compile Include="Core\Configurator\IConfigBuilder.cs" />
-    <Compile Include="Core\Configurator\IConverter.cs" />
-    <Compile Include="Core\Configurator\Parsers\INIParser.cs" />
-    <Compile Include="Core\Configurator\Builders\INIBuilder.cs" />
-    <Compile Include="Core\Configurator\Parsers\NMSPParser.cs" />
+    <Compile Include="Core\Configurator\Sources\ILSource.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\EntryPoint.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\FloatResolver.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\IntResolver.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\ITypeResolver.cs" />
+    <Compile Include="Core\Configurator\Mappers\CustomMapperGroup.cs" />
+    <Compile Include="Core\Configurator\Mappers\IConfigMapper.cs" />
+    <Compile Include="Core\Configurator\Mappers\IdentityMapper.cs" />
+    <Compile Include="Core\Configurator\Mappers\Mapper.cs" />
+    <Compile Include="Core\Configurator\Sources\IConfigSource.cs" />
+    <Compile Include="Core\Configurator\Sources\INISource.cs" />
+    <Compile Include="Core\Configurator\Targets\INITarget.cs" />
+    <Compile Include="Core\Configurator\Sources\NMSPSource.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\StringResolver.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\TypeManager.cs" />
     <Compile Include="Core\Loader\Loader.cs" />
     <Compile Include="Core\Providers\AbstractResourceProvider.cs" />
     <Compile Include="Core\Providers\IProvider.cs" />
     <Compile Include="Core\Providers\StreamProvider\Exporters\FileExporter.cs" />
-    <Compile Include="Core\Providers\StreamProvider\IGetURI.cs" />
+    <Compile Include="Core\Providers\StreamProvider\Exporters\ISetURI.cs" />
     <Compile Include="Core\Providers\StreamProvider\Importers\FileImporter.cs" />
-    <Compile Include="Core\Providers\StreamProvider\ISetURI.cs" />
+    <Compile Include="Core\Providers\StreamProvider\Importers\IGetURI.cs" />
     <Compile Include="Core\Providers\StreamProvider\URIManager.cs" />
     <Compile Include="Core\Services\AbstractService.cs" />
     <Compile Include="Core\Services\AbstractServiceContainer.cs" />
