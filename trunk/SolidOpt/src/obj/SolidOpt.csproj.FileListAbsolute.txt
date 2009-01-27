@@ -1,6 +1,0 @@
-D:\FMI\Diplomna\SolidOpt\trunk\SolidOpt\src\bin\Debug\SolidOpt.dll
-D:\FMI\Diplomna\SolidOpt\trunk\SolidOpt\src\bin\Debug\SolidOpt.pdb
-D:\FMI\Diplomna\SolidOpt\trunk\SolidOpt\src\bin\Debug\Mono.Cecil.dll
-D:\FMI\Diplomna\SolidOpt\trunk\SolidOpt\src\obj\Debug\ResolveAssemblyReference.cache
-D:\FMI\Diplomna\SolidOpt\trunk\SolidOpt\src\obj\Debug\SolidOpt.dll
-D:\FMI\Diplomna\SolidOpt\trunk\SolidOpt\src\obj\Debug\SolidOpt.pdb
