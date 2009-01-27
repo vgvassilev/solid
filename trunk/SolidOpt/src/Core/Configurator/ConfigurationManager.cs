@@ -11,10 +11,12 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 
-using SolidOpt.Core.Configurator.Builders;
-using SolidOpt.Core.Configurator.Parsers;
 using SolidOpt.Cache;
+using SolidOpt.Core.Configurator.Targets;
+using SolidOpt.Core.Configurator.Sources;
 using SolidOpt.Core.Providers.StreamProvider;
+using SolidOpt.Core.Configurator.Mappers;
+using SolidOpt.Core.Configurator.TypeResolvers;
 
 namespace SolidOpt.Core.Configurator
 {
@@ -35,16 +37,16 @@ namespace SolidOpt.Core.Configurator
 		}
 		#endregion
 		
-		private List<IConfigBuilder<TParamName>> savers = new List<IConfigBuilder<TParamName>>();		
-		public List<IConfigBuilder<TParamName>> Savers {
-			get { return savers; }
-			set { savers = value; }
+		private List<IConfigTarget<TParamName>> targets = new List<IConfigTarget<TParamName>>();		
+		public List<IConfigTarget<TParamName>> Targets {
+			get { return targets; }
+			set { targets = value; }
 		}
 		
-		private List<IConfigParser<TParamName>> loaders = new List<IConfigParser<TParamName>>();
-		public List<IConfigParser<TParamName>> Loaders {
-			get { return loaders; }
-			set { loaders = value; }
+		private List<IConfigSource<TParamName>> sources = new List<IConfigSource<TParamName>>();
+		public List<IConfigSource<TParamName>> Sources {
+			get { return sources; }
+			set { sources = value; }
 		}
 		
 		
@@ -54,25 +56,59 @@ namespace SolidOpt.Core.Configurator
 			set { ir = value; }
 		}
 		
+		#region Managers
 		private CacheManager<TParamName, object> cacheManager;
-		private URIManager streamProvider = new URIManager();
+		public CacheManager<TParamName, object> CacheManager {
+			get { return cacheManager; }
+			set { cacheManager = value; }
+		}
 		
+		private URIManager streamProvider;
+		public URIManager StreamProvider {
+			get { return streamProvider; }
+			set { streamProvider = value; }
+		}
+		
+		private MapManager<TParamName> mapManager;
+		public MapManager<TParamName> MapManager {
+			get { return mapManager; }
+			set { mapManager = value; }
+		}
+		
+		private TypeManager<TParamName> typeManager;
+		public TypeManager<TParamName> TypeManager {
+			get { return typeManager; }
+			set { typeManager = value; }
+		}
+		#endregion
 
 		public ConfigurationManager()
 		{		
 		}
 		
-		public ConfigurationManager(CacheManager<TParamName, object> cacheManager) : this()
+		public void SaveConfiguration(Uri resourse, string fileFormat)
 		{
-			this.cacheManager = cacheManager;
+//			Dictionary<TParamName, object> repres;
+			if (MapManager != null) {
+				IR = MapManager.Map(IR);
+			}
+//			else
+//				repres = IR;
+			
+			if (TypeManager != null)
+				IR = TypeManager.ResolveTypes(IR);
+			
+			SaveConfiguration(IR, resourse, fileFormat);
 		}
 		
 		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
 		public void SaveConfiguration(Dictionary<TParamName, object> configRepresenation, Uri resourse, string fileFormat)
 		{
-			foreach (IConfigBuilder<TParamName> s in Savers){
+			if (StreamProvider == null) throw new AccessViolationException("Stream Provider not set!");
+			
+			foreach (IConfigTarget<TParamName> s in Targets){
 				if (s.CanBuild(fileFormat)){
-					s.Build(configRepresenation, resourse);
+					StreamProvider.SetResource(s.Build(configRepresenation), resourse);
 				}
 			}
 		}
@@ -80,13 +116,19 @@ namespace SolidOpt.Core.Configurator
 		//TODO:Да се прегледат методите, които определят дали може да бъде обработен обекта
 		public Dictionary<TParamName, object> LoadConfiguration(Uri resUri)
 		{
-			Stream resStream = streamProvider.GetResource(resUri);
-			foreach (IConfigParser<TParamName> l in Loaders){
+			if (StreamProvider == null) throw new AccessViolationException("Stream Provider not set!");
+			
+			Stream resStream = StreamProvider.GetResource(resUri);
+			foreach (IConfigSource<TParamName> l in Sources){
 				if (l.CanParse(resUri, resStream)){
-					return l.LoadConfiguration(resStream);
+					if (MapManager != null)
+						IR = MapManager.UnMap(l.LoadConfiguration(resStream));
+					else
+						IR = l.LoadConfiguration(resStream);
 				}
 			}
-			return new Dictionary<TParamName, object>();
+			
+			return IR;
 		}
 		
 		public TParam GetParam<TParam>(TParamName name)

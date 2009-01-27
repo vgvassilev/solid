@@ -7,14 +7,15 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace SolidOpt.Core.Configurator
 {
 	/// <summary>
-	/// Description of IConverter.
+	/// 
 	/// </summary>
 	public interface ITypeResolver
 	{
-		
+		object TryResolve(object paramValue);
 	}
 }
