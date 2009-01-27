@@ -1,12 +1,12 @@
-a1{
+level1{
 	x1=5
-	b{
+	level2{
 		x2=13
 		x5=asd
 		x4=11
-		c{
-			x=2
-			d{
+		level3{
+			x7=2
+			level4{
 				asd=10
 			}
 		}
@@ -14,17 +14,3 @@ a1{
 }
 x=14
 y=opa
-a2{
-	x1=5
-	b{
-		x2=13
-		x5=asd
-		x4=11
-		c{
-			x=2
-			d{
-				asd=10
-			}
-		}
-	}
-}

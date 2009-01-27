@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.IO;
 
 using SolidOpt.Core.Configurator;
+using SolidOpt.Core.Configurator.Parsers;
+using SolidOpt.Core.Configurator.Builders;
 
 namespace NMSPFileFormat
 {
@@ -57,10 +59,75 @@ namespace NMSPFileFormat
 
 			ConfigurationManager<string> configurator = new ConfigurationManager<string>();
 			
+//			//Adding Loaders (Parsers) to the config manager
+//			NMSPParser<string> nmspParser = new NMSPParser<string>();
+//			configurator.Loaders.Add(nmspParser);
+//			
+//			//Adding Savers (Builders) to the config manager
+//			NMSPBuilder<string> nmspBuilder = new NMSPBuilder<string>();
+//			configurator.Savers.Add(nmspBuilder);
+//			
+//			
+//			Dictionary<string, object> testDict  = configurator.LoadConfiguration(new Uri(
+//				Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test.nmsp")));
+//			
+//			ViewIR(testDict);
+//			
+//			configurator.SaveConfiguration(testDict, new Uri(Path.Combine(
+//				AppDomain.CurrentDomain.BaseDirectory,"test.modified.nmsp")), "nmsp");
+			
+			
+//			//Adding Loaders (Parsers) to the config manager
+//			NMSPParser<string> nmspParser = new NMSPParser<string>();
+//			configurator.Loaders.Add(nmspParser);
+//			
+//			//Adding Savers (Builders) to the config manager
+//			INIBuilder<string> iniBuilder = new INIBuilder<string>();
+//			configurator.Savers.Add(iniBuilder);
+//			
+//			
+//			Dictionary<string, object> testDict  = configurator.LoadConfiguration(new Uri(
+//				Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test.nmsp")));
+//			
+//			ViewIR(testDict);
+//			
+//			configurator.SaveConfiguration(testDict, new Uri(Path.Combine(
+//				AppDomain.CurrentDomain.BaseDirectory,"test.modified.ini")), "ini");
+//			
+//			configurator.Loaders.Remove(nmspParser);
+//			configurator.Loaders.Add(new INIParser<string>());
+//			
+//			testDict  = configurator.LoadConfiguration(new Uri(
+//				Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test.modified.ini")));
+//			
+//			ViewIR(testDict);
+			
+			//Adding Loaders (Parsers) to the config manager
+			NMSPParser<string> nmspParser = new NMSPParser<string>();
+			configurator.Loaders.Add(nmspParser);
+			
+			//Adding Savers (Builders) to the config manager
+			ILBuilder<string> ilBuilder = new ILBuilder<string>();
+			configurator.Savers.Add(ilBuilder);
+			
+			
 			Dictionary<string, object> testDict  = configurator.LoadConfiguration(new Uri(
 				Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test.nmsp")));
 			
 			ViewIR(testDict);
+			
+			configurator.SaveConfiguration(testDict, new Uri(Path.Combine(
+				AppDomain.CurrentDomain.BaseDirectory,"test.modified.dll")), "dll");
+
+			configurator.Loaders.Remove(nmspParser);
+			configurator.Loaders.Add(new ILParser<string>());
+			
+			ViewIR(configurator.LoadConfiguration(new Uri(
+				Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test.modified.dll"))));
+			
+			
+			
+			
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
