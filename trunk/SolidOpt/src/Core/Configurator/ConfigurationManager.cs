@@ -121,9 +121,9 @@ namespace SolidOpt.Core.Configurator
 			Stream resStream = StreamProvider.GetResource(resUri);
 			foreach (IConfigSource<TParamName> l in Sources){
 				if (l.CanParse(resUri, resStream)){
-					if (MapManager != null)
-						IR = MapManager.UnMap(l.LoadConfiguration(resStream));
-					else
+//					if (MapManager != null)
+//						IR = MapManager.UnMap(l.LoadConfiguration(resStream));
+//					else
 						IR = l.LoadConfiguration(resStream);
 				}
 			}

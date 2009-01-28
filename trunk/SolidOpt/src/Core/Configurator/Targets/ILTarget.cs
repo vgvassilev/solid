@@ -181,7 +181,30 @@ namespace SolidOpt.Core.Configurator.Targets
 						case "System.Int64" : 
 							instr = cil.Create(OpCodes.Ldc_I8, (Int64)currentValue);
 							break;
+							
+						case "System.Int32" : 
+							switch ((Int32)currentValue) {
+								case -1 : instr = cil.Create(OpCodes.Ldc_I4_M1, -1); break;
+								case 0 : instr = cil.Create(OpCodes.Ldc_I4_0); break;
+								case 1 : instr = cil.Create(OpCodes.Ldc_I4_1); break;
+								case 2 : instr = cil.Create(OpCodes.Ldc_I4_2); break;
+								case 3 : instr = cil.Create(OpCodes.Ldc_I4_3); break;
+								case 4 : instr = cil.Create(OpCodes.Ldc_I4_4); break;
+								case 5 : instr = cil.Create(OpCodes.Ldc_I4_5); break;
+								case 6 : instr = cil.Create(OpCodes.Ldc_I4_6); break;
+								case 7 : instr = cil.Create(OpCodes.Ldc_I4_7); break;
+								case 8 : instr = cil.Create(OpCodes.Ldc_I4_8); break;
+								default : instr = cil.Create(OpCodes.Ldc_I4, (Int32)currentValue); break;
+							}
+						break;
 						
+						case "System.Single" : 
+							instr = cil.Create(OpCodes.Ldc_R4, (Single)currentValue);
+							break;
+							
+						case "System.Double" : 
+							instr = cil.Create(OpCodes.Ldc_R8, (Double)currentValue);
+							break;
 				}
 				if (instr != null)
 					cil.Append(instr);

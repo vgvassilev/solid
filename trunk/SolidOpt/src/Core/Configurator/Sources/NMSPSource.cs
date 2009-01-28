@@ -124,6 +124,7 @@ namespace SolidOpt.Core.Configurator.Sources
 	
 	internal class ConfigNMSPParser<TParamName>
 	{
+		private bool isValue = false;
 		private char ch = ' ';
 		private Lexem lexem;
 		private Stream stream;
@@ -145,7 +146,17 @@ namespace SolidOpt.Core.Configurator.Sources
 		public Lexem getLexem()
 		{
 			while(true){
-				if (char.IsLetterOrDigit(ch)){
+				if (isValue) {
+					StringBuilder sb = new StringBuilder();
+					while(ch != '\n' && ch != '\r'){
+						sb.Append(ch);
+						ch = (char)stream.ReadByte();
+					}
+					isValue = false;
+//					Console.WriteLine("Identifier" + sb.ToString());
+					return new LexValue(sb.ToString());
+				}
+				else if (char.IsLetterOrDigit(ch)){
 					StringBuilder sb = new StringBuilder();
 					while(char.IsLetterOrDigit(ch)){
 						sb.Append(ch);
@@ -154,16 +165,28 @@ namespace SolidOpt.Core.Configurator.Sources
 //					Console.WriteLine("Identifier" + sb.ToString());
 					return new LexIdentifier(sb.ToString());
 				}
-				if (char.IsDigit(ch)){
-					StringBuilder sb = new StringBuilder();
-					while(char.IsDigit(ch)){
-						sb.Append(ch);
-						ch = (char)stream.ReadByte();
-					}
-//					Console.WriteLine("Number" + sb.ToString());
-					return new LexIntValue(sb.ToString());
-				}
+//				else if (char.IsDigit(ch)){
+//					StringBuilder sb = new StringBuilder();
+//					while(char.IsDigit(ch)){
+//						sb.Append(ch);
+//						ch = (char)stream.ReadByte();
+//						if (ch == '.') {
+//							sb.Append('.');
+//							ch = (char)stream.ReadByte();
+//							while(char.IsDigit(ch)) {
+//								sb.Append(ch);
+//								ch = (char)stream.ReadByte();
+//							}
+//						}
+//					}
+////					Console.WriteLine("Number" + sb.ToString());
+//					return new LexIntValue(sb.ToString());
+//				}
 				else if (ch == '=' || ch == '{' || ch == '}'){
+					if (ch == '=') {
+						isValue = true;
+					}
+					
 					char ch1 = ch;
 					try{
 						ch = (char)stream.ReadByte();
