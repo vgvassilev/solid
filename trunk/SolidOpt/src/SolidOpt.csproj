@@ -57,7 +57,9 @@
     <Compile Include="Core\Configurator\Targets\NMSPTarget.cs" />
     <Compile Include="Core\Configurator\ConfigurationManager.cs" />
     <Compile Include="Core\Configurator\Sources\ILSource.cs" />
-    <Compile Include="Core\Configurator\TypeResolvers\EntryPoint.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\CannotResolve.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\ChainResolver.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\IdentityResolver.cs" />
     <Compile Include="Core\Configurator\TypeResolvers\FloatResolver.cs" />
     <Compile Include="Core\Configurator\TypeResolvers\IntResolver.cs" />
     <Compile Include="Core\Configurator\TypeResolvers\ITypeResolver.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Core\Configurator\Sources\INISource.cs" />
     <Compile Include="Core\Configurator\Targets\INITarget.cs" />
     <Compile Include="Core\Configurator\Sources\NMSPSource.cs" />
+    <Compile Include="Core\Configurator\TypeResolvers\Resolver.cs" />
     <Compile Include="Core\Configurator\TypeResolvers\StringResolver.cs" />
     <Compile Include="Core\Configurator\TypeResolvers\TypeManager.cs" />
     <Compile Include="Core\Loader\Loader.cs" />

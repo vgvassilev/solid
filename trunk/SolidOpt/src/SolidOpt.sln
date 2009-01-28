@@ -4,8 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # SharpDevelop 3.0.0.3683
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt", "SolidOpt.csproj", "{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "..\..\Documentation\Demos\Core\Loader\src\Loader.csproj", "{A37B3085-8AA2-4889-B7E6-5AE93840436A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,9 +14,5 @@ Global
 		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A37B3085-8AA2-4889-B7E6-5AE93840436A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A37B3085-8AA2-4889-B7E6-5AE93840436A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A37B3085-8AA2-4889-B7E6-5AE93840436A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A37B3085-8AA2-4889-B7E6-5AE93840436A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal
