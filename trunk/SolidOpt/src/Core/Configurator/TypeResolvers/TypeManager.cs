@@ -15,9 +15,12 @@ namespace SolidOpt.Core.Configurator.TypeResolvers
 	/// </summary>
 	public class TypeManager<TParamName>
 	{
-//		private	Dictionary<TParamName, object> CIR = new Dictionary<TParamName, object>();
 
-		private ITypeResolver resolvers = new EntryPoint();
+		private ITypeResolver resolver;
+		public ITypeResolver Resolver {
+			get { return resolver; }
+			set { resolver = value; }
+		}
 		
 		public TypeManager()
 		{	
@@ -32,7 +35,7 @@ namespace SolidOpt.Core.Configurator.TypeResolvers
 					dict[item.Key] = Build(item.Value as Dictionary<TParamName, object>);
 				}
 				else {
-					dict[item.Key] = resolvers.TryResolve(item.Value);
+					dict[item.Key] = Resolver.TryResolve(item.Value);
 				}
 			}
 			return dict;
@@ -46,7 +49,7 @@ namespace SolidOpt.Core.Configurator.TypeResolvers
 					Result[item.Key] = Build(item.Value as Dictionary<TParamName, object>);;
 				}
 				else {
-					Result[item.Key] = resolvers.TryResolve(item.Value);
+					Result[item.Key] = Resolver.TryResolve(item.Value);
 				}
 			}
 			return Result;

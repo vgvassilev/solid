@@ -6,13 +6,14 @@
  * 
  */
 using System;
+using System.Globalization;
 
 namespace SolidOpt.Core.Configurator.TypeResolvers
 {
 	/// <summary>
 	/// Description of FloatResolver.
 	/// </summary>
-	public class FloatResolver : StringResolver
+	public class FloatResolver : Resolver
 	{
 		public FloatResolver()
 		{
@@ -20,14 +21,17 @@ namespace SolidOpt.Core.Configurator.TypeResolvers
 		
 		public override object TryResolve(object paramValue)
 		{
-			try {
-				return Convert.ChangeType(paramValue, TypeCode.Single);
+			Single SingleResult;
+			if (Single.TryParse(paramValue.ToString(), NumberStyles.Float,
+			                    NumberFormatInfo.InvariantInfo, out SingleResult)) {
+				return SingleResult;
 			}
-			catch {
-				try {
-					return Convert.ChangeType(paramValue, TypeCode.Double);
-				}
-				catch {
+			else {
+				Double DoubleResult;
+				if (Double.TryParse(paramValue.ToString(), NumberStyles.Float,
+			                    NumberFormatInfo.InvariantInfo, out DoubleResult))
+					return DoubleResult;
+				else {
 					return base.TryResolve(paramValue);
 				}
 			}

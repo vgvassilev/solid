@@ -6,26 +6,22 @@
  * 
  */
 using System;
+using System.Text;
 
 namespace SolidOpt.Core.Configurator.TypeResolvers
 {
 	/// <summary>
 	/// Description of StringResolver.
 	/// </summary>
-	public class StringResolver : ITypeResolver
+	public class StringResolver : Resolver
 	{
 		public StringResolver()
 		{
 		}
 		
-		public virtual object TryResolve(object paramValue)
+		public override object TryResolve(object paramValue)
 		{
-			try {
-				return Convert.ChangeType(paramValue, TypeCode.String);
-			}
-			catch {
-				return null;
-			}
+			return paramValue.ToString();
 		}
 	}
 }

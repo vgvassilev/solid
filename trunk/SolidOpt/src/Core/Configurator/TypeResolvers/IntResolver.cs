@@ -14,7 +14,7 @@ namespace SolidOpt.Core.Configurator.TypeResolvers
 	/// <summary>
 	/// Description of IntResolver.
 	/// </summary>
-	public class IntResolver : FloatResolver
+	public class IntResolver : Resolver
 	{
 //		[DllImport("kernel32.dll", SetLastError=true)] static extern void DebugBreak ();
 		
@@ -24,12 +24,17 @@ namespace SolidOpt.Core.Configurator.TypeResolvers
 		
 		public override object TryResolve(object paramValue)
 		{
-			try {
-//				DebugBreak();
-				return (Int64) Convert.ChangeType(paramValue, TypeCode.Int64);
+			Int32 Int32result;
+			if (Int32.TryParse(paramValue.ToString(), out Int32result)) {
+				return Int32result;
 			}
-			catch {
-				return base.TryResolve(paramValue);
+			else {
+				Int64 Int64result;
+				if (Int64.TryParse(paramValue.ToString(), out Int64result))
+					return Int64result;
+				else {
+					return base.TryResolve(paramValue);
+				}
 			}
 		}
 		

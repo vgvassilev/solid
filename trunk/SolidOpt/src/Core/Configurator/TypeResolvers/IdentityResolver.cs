@@ -13,15 +13,15 @@ namespace SolidOpt.Core.Configurator.TypeResolvers
 	/// <summary>
 	/// Description of EntryPoint.
 	/// </summary>
-	public class EntryPoint : IntResolver
+	public class IdentityResolver : ITypeResolver
 	{
-		public EntryPoint()
+		public IdentityResolver()
 		{
 		}
 		
-		public override object TryResolve(object paramValue)
+		public object TryResolve(object paramValue)
 		{
-			return base.TryResolve(paramValue);
+			return paramValue;
 		}
 		
 	}
