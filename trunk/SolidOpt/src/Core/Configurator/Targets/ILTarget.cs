@@ -45,10 +45,10 @@ namespace SolidOpt.Core.Configurator.Targets
 			dict = configRepresenation;
 			
 			AssemblyDefinition assembly =
-					AssemblyFactory.DefineAssembly("ConfigAssembly", AssemblyKind.Dll);
+					AssemblyFactory.DefineAssembly("Config", AssemblyKind.Dll);
 
-			assembly.Name.Name ="Config Assembly";
-			assembly.Name.Version = new Version(1,0,0);
+			assembly.Name.Name ="Config";
+			assembly.Name.Version = new Version(1,0,0,0);
 			assembly.MainModule.Accept(new StructureVisitor<TParamName>());
 			
             // Save the assembly and verify the result
@@ -94,7 +94,8 @@ namespace SolidOpt.Core.Configurator.Targets
 			{
 				if (ILTarget<TParamName>.dict.Count > 0){
 					TypeDefinition type = new TypeDefinition("Global", "Config",
-				                                         Mono.Cecil.TypeAttributes.Public, null);
+					                                         Mono.Cecil.TypeAttributes.Public,
+					                                         module.Import(typeof(object)));
 					module.Types.Add(type);
 					FillConfigValues(ILTarget<TParamName>.dict, module, type);
 					
@@ -127,6 +128,7 @@ namespace SolidOpt.Core.Configurator.Targets
 				                                              Mono.Cecil.MethodAttributes.Static,
 					                                          returnType);
 							baseType.Constructors.Add(cctor);
+							baseType.Constructors.Add(InsertObjectCtor(module));
 						}
 					
 						AppendToCCtor(cctor, field, item.Value);
@@ -142,8 +144,9 @@ namespace SolidOpt.Core.Configurator.Targets
 				TParamName key;
 				TypeDefinition type;
 				
-				if (baseType != null)
+				if (baseType != null) {
 					FillConfigValues(dict, module, baseType);
+				}
 				
 				foreach(KeyValuePair<TParamName, object> item in dict){
 					if (item.Value is Dictionary<TParamName, object>){
@@ -151,13 +154,22 @@ namespace SolidOpt.Core.Configurator.Targets
 						key = (TParamName)Convert.ChangeType(item.Key, typeof (TParamName));
 						
 						if (baseType != null) {
-							type = new TypeDefinition(key.ToString(), "Config", 
-						                          Mono.Cecil.TypeAttributes.NestedPublic, null);
+							type = new TypeDefinition(key.ToString(), "", 
+						                          Mono.Cecil.TypeAttributes.NestedPublic |
+						                          Mono.Cecil.TypeAttributes.BeforeFieldInit,
+						                         module.Import(typeof(object)));
+			
+// Adding link to System.Object constructor							
+//							baseType.Constructors.Add(InsertObjectCtor(module));
+							
 							baseType.NestedTypes.Add(type);
 						}
 						else {
+							// Да се внимава с неймспейса Config защото може би не трябва да го има.
 							type = new TypeDefinition(key.ToString(), "Config", 
-						                          Mono.Cecil.TypeAttributes.Public, null);
+						                          Mono.Cecil.TypeAttributes.Public |
+						                          Mono.Cecil.TypeAttributes.BeforeFieldInit,
+						                         module.Import(typeof(object)));
 						}
 						
 						module.Types.Add(type);
@@ -165,6 +177,25 @@ namespace SolidOpt.Core.Configurator.Targets
 						FillConfigTypes(item.Value as Dictionary<TParamName, object>, module, type);
 					}
 				}
+			}
+			
+			private MethodDefinition InsertObjectCtor(ModuleDefinition module)
+			{
+				TypeReference returnType = new TypeReference("System.Void","", null, false);
+							
+				MethodDefinition ctor = new MethodDefinition(".ctor", 
+		                                              Mono.Cecil.MethodAttributes.Public |
+		                                              Mono.Cecil.MethodAttributes.HideBySig |
+		                                              Mono.Cecil.MethodAttributes.SpecialName |
+		                                              Mono.Cecil.MethodAttributes.RTSpecialName,
+			                                          returnType);
+				MethodReference objectCtor = module.Import(typeof(object).GetConstructor(new Type[]{}));
+				CilWorker cil = ctor.Body.CilWorker;
+				cil.Append(cil.Create(OpCodes.Ldarg_0));
+				cil.Append(cil.Create(OpCodes.Call, objectCtor));
+				cil.Append(cil.Create(OpCodes.Ret));
+				
+				return ctor;
 			}
 			
 			private void AppendToCCtor(MethodDefinition cctor, FieldDefinition field, object currentValue)
