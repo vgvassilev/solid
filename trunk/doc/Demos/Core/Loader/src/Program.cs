@@ -1,13 +1,16 @@
 /*
  * Created by SharpDevelop.
  * User: Vassil Vassilev
- * Date: 05.8.2008 ?.
+ * Date: 05.8.2008 ã.
  * Time: 11:07
  * 
  */
 using System;
 
-using SolidOpt.Core.Loading;
+using SolidOpt.Core.Loader;
+using SolidOpt.Core.Services;
+
+using TestPluginService;
 
 namespace Load
 {
@@ -17,8 +20,22 @@ namespace Load
 		{
 			
 			Console.WriteLine("Start...");
-			return (new Loader()).Run(args);
-
+			
+			Loader l = new Loader();
+			int result = l.Run(args);
+			foreach (IService srv in l.servicesContainer.services) {
+				Console.WriteLine(srv.GetType());
+			}
+			
+			IAddService addition = (IAddService) l.servicesContainer.GetService(typeof(IAddService));
+			Console.WriteLine(addition.Add(1, 2));
+			
+			IService[] additionArr = (IService[]) l.servicesContainer.GetServices(typeof(IAddService));
+			foreach (IAddService srv in additionArr)
+				Console.WriteLine(srv.Add(1, 2));
+			
+			Console.ReadKey();
+			return result;
 		}
 	}
 }
