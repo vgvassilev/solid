@@ -2,7 +2,7 @@ using System;
 
 using SolidOpt.Core.Services;
 
-namespace SolidOpt.Core.Loading
+namespace SolidOpt.Core.Loader
 {
 	public class Loader
 	{
