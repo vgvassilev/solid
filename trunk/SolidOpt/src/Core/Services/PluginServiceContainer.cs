@@ -24,6 +24,8 @@ using System.Reflection;
 using System.Collections;
 using System.Runtime.Remoting;
 
+using System.Threading;
+
 namespace SolidOpt.Core.Services
 {
 	public class PluginServiceContainer : ServiceContainer
@@ -92,14 +94,25 @@ namespace SolidOpt.Core.Services
 		{
 			this.fullName = Path.GetFullPath(fileName);
 			this.status = Status.UnLoaded;
+			
 		}
 
 		public void Load() {
 			if (status == Status.UnLoaded) {
 				try {
 					//MessageBox.Show(fullName,"Load...");
-					AppDomainSetup appDomainSetup = new System.AppDomainSetup();
-					appDomainSetup.PrivateBinPath = appDomainSetup.PrivateBinPath + Path.GetDirectoryName(fullName);
+					AppDomain.CurrentDomain.AppendPrivatePath(Path.GetDirectoryName(fullName));
+					
+//					Thread.GetDomain().SetupInformation.PrivateBinPath = Path.GetDirectoryName(fullName);
+//					AppDomain.CurrentDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
+//					AppDomainSetup appDomainSetup = new AppDomainSetup();
+//					appDomainSetup.ApplicationName = "Plugins";
+//					appDomainSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
+//					appDomainSetup.PrivateBinPath += Path.GetDirectoryName(fullName);
+//					appDomainSetup.PrivateBinPath += Path.PathSeparator + AppDomain.CurrentDomain.BaseDirectory;
+					
+//					appDomain = AppDomain.CreateDomain("Plugins", null, appDomainSetup);
+					
 					//AppDomain.CurrentDomain.AppendPrivatePath(Path.GetDirectoryName(fullName));
 					assembly = Assembly.LoadFrom(fullName);
 					if (assembly == null) assembly = Assembly.Load(fullName);
@@ -120,10 +133,10 @@ namespace SolidOpt.Core.Services
 				if (type.IsClass && !type.IsAbstract && type.GetInterface(typeof(IService).FullName) != null)
 					try {
 						//MessageBox.Show(type.ToString(),"Provider...");
-						service = (IService)(Activator.CreateInstance(assembly.FullName, type.FullName)).Unwrap();
+						service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
 						if (service != null)
 							serviceContainer.AddService(service);
-					} catch {} // catch (Exception e) {MessageBox.Show(e.ToString(),"Error...");}
+					} catch (Exception e) {Console.WriteLine("Error:{0}", e.ToString());}
 			status = Status.Created;
 		}
 		
