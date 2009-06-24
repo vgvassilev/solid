@@ -1,7 +1,7 @@
 level1{
-	xx1=5
+	xx1=11.2
 	level2{
-		x2=13
+		x2=13,0
 		x5=asd
 		x4=11
 		level3{

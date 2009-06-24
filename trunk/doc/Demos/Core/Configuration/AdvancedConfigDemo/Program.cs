@@ -64,6 +64,10 @@ namespace AdvancedConfigDemo
 			
 			TypeManager<string> typeManager = new TypeManager<string>();
 			configurator.TypeManager = typeManager;
+			typeManager.Resolver = new ChainResolver()
+				.Add(new IntResolver())
+				.Add(new FloatResolver())
+				.Add(new StringResolver());
 			
 			configurator.SaveConfiguration(new Uri(
 				Path.Combine(resourcePath,"test.modified.dll")), "dll");
@@ -92,6 +96,10 @@ namespace AdvancedConfigDemo
 			
 			configurator.LoadConfiguration((new Uri(
 				Path.Combine(resourcePath,"test.ini"))));
+			
+//			TypeManager<string> typeManager = new TypeManager<string>();
+//			configurator.TypeManager = typeManager;
+//			
 //			configurator.SaveConfiguration(new Uri(
 //				Path.Combine(resourcePath,"test.map_modified.dll")), "dll");
 			
@@ -140,9 +148,11 @@ namespace AdvancedConfigDemo
 			configurator.MapManager = mapManager;
 			
 			configurator.LoadConfiguration((new Uri(
-				Path.Combine(resourcePath,"test.modified.dll"))));
+				Path.Combine(resourcePath,"test.map_modified.dll"))));
 			configurator.SaveConfiguration(new Uri(
 				Path.Combine(resourcePath,"test.ini")), "ini");
+			
+			ViewCurrentCIR(configurator.IR,"");
 			
 			ViewCurrentCIR(configurator.MapManager.MmCIR,"");
 			Console.WriteLine("Successfully converted and mapped from IL to ini!");
