@@ -27,7 +27,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\..\vendors\Mono.Cecil\current\bin\Debug\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
