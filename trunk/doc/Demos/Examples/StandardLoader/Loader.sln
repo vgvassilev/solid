@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 3.0.0.3683
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Loader\Loader.csproj", "{39655872-F4B6-4698-B326-81B3DA707192}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loadee", "Loadee\Loadee.csproj", "{7CCE9049-76C5-4D92-9731-FB375C60F9B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NopRemover", "..\NopRemover\NopRemover.csproj", "{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39655872-F4B6-4698-B326-81B3DA707192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39655872-F4B6-4698-B326-81B3DA707192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39655872-F4B6-4698-B326-81B3DA707192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39655872-F4B6-4698-B326-81B3DA707192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CCE9049-76C5-4D92-9731-FB375C60F9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CCE9049-76C5-4D92-9731-FB375C60F9B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CCE9049-76C5-4D92-9731-FB375C60F9B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CCE9049-76C5-4D92-9731-FB375C60F9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
