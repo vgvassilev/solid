@@ -25,12 +25,15 @@ namespace NopRemover
 		
 		public MethodDefinition Transform(MethodDefinition source)
 		{
+			Instruction instruction;
 			
-			CilWorker cil = source.Body.CilWorker;
-			foreach (Instruction instr in source.Body.Instructions) {
-				if (instr.OpCode == OpCodes.Nop)
-					cil.Remove(instr);
+			for (int i = 0; i < source.Body.Instructions.Count; i++) {
+				instruction = source.Body.Instructions[i] as Instruction;
+				if (instruction.OpCode == OpCodes.Nop) {
+					source.Body.CilWorker.Remove(instruction);
+				}
 			}
+						
 			return source;
 		}
 	}
