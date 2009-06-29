@@ -70,7 +70,9 @@ namespace SolidOpt.Core.Services
 				if (service is IServiceProvider)
 					foundServices.AddRange((service as IServiceProvider).GetServices(serviceType));
 				else 
-					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
+//					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
+					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
+						foundServices.Add(service);
 			}
 			
 			if (parent != null)
