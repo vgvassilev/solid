@@ -6,6 +6,7 @@
  * 
  */
 using System;
+using System.Collections.Generic;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -25,15 +26,30 @@ namespace NopRemover
 		
 		public MethodDefinition Transform(MethodDefinition source)
 		{
-			Instruction instruction;
-			
-			for (int i = 0; i < source.Body.Instructions.Count; i++) {
-				instruction = source.Body.Instructions[i] as Instruction;
-				if (instruction.OpCode == OpCodes.Nop) {
-					source.Body.CilWorker.Remove(instruction);
+			HashSet<Instruction> removed = new HashSet<Instruction>();
+			CilWorker cil = source.Body.CilWorker;
+//			for (int i = source.Body.Instructions.Count-1; i >= 0; i--) {
+//				Instruction instruction = source.Body.Instructions[i];
+//				if (instruction.OpCode == OpCodes.Nop) {
+//					removed.Add(instruction);
+//					cil.Remove(instruction);
+//				}
+//			}
+			Instruction instruction1 = source.Body.Instructions[source.Body.Instructions.Count-1];
+			while (instruction1 != null) {
+				if (instruction1.OpCode == OpCodes.Nop) {
+					removed.Add(instruction1);
+					cil.Remove(instruction1);
 				}
+				instruction1 = instruction1.Previous;
 			}
-						
+			foreach (Instruction instruction in source.Body.Instructions) {
+				while (removed.Contains(instruction.Operand as Instruction))
+					instruction.Operand = (instruction.Operand as Instruction).Next;
+			}
+			
+			source.Body.Optimize();
+			
 			return source;
 		}
 	}
