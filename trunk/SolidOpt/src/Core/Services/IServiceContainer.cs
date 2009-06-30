@@ -19,11 +19,9 @@
 // 01.01.2003 Initial version. A.Penev (alexander_penev@yahoo.com)
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace SolidOpt.Core.Services
 {
-	[GuidAttribute("F867F5D9-296F-4913-9CB3-41299B6A8E56")]
 	public interface IServiceContainer : IServiceProvider
 	{
 		bool AddService(IService service);

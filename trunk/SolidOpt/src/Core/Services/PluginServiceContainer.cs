@@ -89,6 +89,7 @@ namespace SolidOpt.Core.Services
 		public string fullName;
 		public Status status;
 		public Assembly assembly;
+//		private AppDomain appDomain;
 
 		public PluginInfo(string fileName)
 		{
@@ -100,23 +101,19 @@ namespace SolidOpt.Core.Services
 		public void Load() {
 			if (status == Status.UnLoaded) {
 				try {
-					//MessageBox.Show(fullName,"Load...");
+					AppDomain.CurrentDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
 					AppDomain.CurrentDomain.AppendPrivatePath(Path.GetDirectoryName(fullName));
 					
-//					Thread.GetDomain().SetupInformation.PrivateBinPath = Path.GetDirectoryName(fullName);
-//					AppDomain.CurrentDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
 //					AppDomainSetup appDomainSetup = new AppDomainSetup();
 //					appDomainSetup.ApplicationName = "Plugins";
 //					appDomainSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
-//					appDomainSetup.PrivateBinPath += Path.GetDirectoryName(fullName);
-//					appDomainSetup.PrivateBinPath += Path.PathSeparator + AppDomain.CurrentDomain.BaseDirectory;
-					
+////					appDomainSetup.PrivateBinPath += Path.GetDirectoryName(fullName);
+////					appDomainSetup.PrivateBinPath += Path.PathSeparator + AppDomain.CurrentDomain.BaseDirectory;
 //					appDomain = AppDomain.CreateDomain("Plugins", null, appDomainSetup);
+//					appDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
 					
-					//AppDomain.CurrentDomain.AppendPrivatePath(Path.GetDirectoryName(fullName));
 					assembly = Assembly.LoadFrom(fullName);
-					if (assembly == null) assembly = Assembly.Load(fullName);
-//					if (assembly == null) assembly = Assembly.LoadWithPartialName(fullName);
+					if (assembly == null) assembly = Assembly.LoadWithPartialName(fullName);
 					status = Status.Loaded;
 				} catch { assembly = null; }
 				if (assembly == null) status = Status.Error;
@@ -130,10 +127,10 @@ namespace SolidOpt.Core.Services
 
 			IService service;
 			foreach (Type type in assembly.GetTypes())
-				if (type.IsClass && !type.IsAbstract && type.GetInterface(typeof(IService).FullName) != null)
+				if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
 					try {
-						//MessageBox.Show(type.ToString(),"Provider...");
 						service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
+						////service = (IService)(appDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
 						if (service != null)
 							serviceContainer.AddService(service);
 					} catch (Exception e) {Console.WriteLine("Error:{0}", e.ToString());}

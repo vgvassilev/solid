@@ -19,16 +19,32 @@
 // 01.01.2003 Initial version. A.Penev (alexander_penev@yahoo.com)
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace SolidOpt.Core.Services
 {
 	public abstract class AbstractServiceProvider : AbstractService, IServiceProvider
 	{
+		public virtual Service GetService<Service>() where Service: class
+		{
+			return this as Service;
+		}
+		
+		public virtual List<Service> GetServices<Service>() where Service: class
+		{
+			Service found = GetService<Service>();
+			List<Service> result = new List<Service>();
+			if (found != default(Service))
+				result.Add(found);
+			return result;
+		}
+		
+		//TODO: Check implementation.
 		public virtual IService GetService(Type serviceType) {
 			return serviceType.IsInstanceOfType(this) ? this : null;
 		}
 		
+		//TODO: Check implementation.
 		public virtual IService[] GetServices(Type serviceType) {
 			IService found = GetService(serviceType);
 			return (found != null) ? new IService[1] {found} : new IService[0];

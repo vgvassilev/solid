@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace SolidOpt.Core.Services
 {
@@ -41,6 +42,41 @@ namespace SolidOpt.Core.Services
 			this.parent = parent;
 		}
 		
+		public override List<Service> GetServices<Service>()
+		{
+			List<Service> foundServices = new List<Service>();
+			
+			Console.WriteLine(">>>search: "+typeof(Service));
+				
+			foreach (object service in services) {
+				Console.WriteLine(">>>test: "+service.ToString());
+				
+				if (service is IServiceProvider) {
+					Console.WriteLine(">>>found: IServiceProvider");
+					foundServices.AddRange((service as IServiceProvider).GetServices<Service>());
+				}
+				else {
+					Service s = service as Service;
+					if (s != default(Service)) {
+						Console.WriteLine(">>>found: "+typeof(Service));
+						foundServices.Add(service as Service);
+					}
+				}
+				
+//					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
+//					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
+//						foundServices.Add(service);
+//					if (service.GetType().IsInstanceOfType(serviceType))
+//						foundServices.Add(service);
+			}
+			
+			if (parent != null)
+				foundServices.AddRange(parent.GetServices<Service>());
+			
+			return foundServices;
+		}
+		
+		//TODO: Check implementation.
 		public override IService GetService(Type serviceType)
 		{
 			IService found = base.GetService(serviceType);
@@ -62,16 +98,22 @@ namespace SolidOpt.Core.Services
 			return null;
 		}
 
+		//TODO: Check implementation.
 		public override IService[] GetServices(Type serviceType)
 		{
 			ArrayList foundServices = new ArrayList();
 			
 			foreach (IService service in services) {
+				
+				Console.WriteLine(">>>"+serviceType);
+				
 				if (service is IServiceProvider)
 					foundServices.AddRange((service as IServiceProvider).GetServices(serviceType));
 				else 
 //					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
-					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
+//					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
+//						foundServices.Add(service);
+					if (service.GetType().IsInstanceOfType(serviceType))
 						foundServices.Add(service);
 			}
 			

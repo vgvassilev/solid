@@ -19,11 +19,9 @@
 // 01.01.2003 Initial version. A.Penev (alexander_penev@yahoo.com)
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace SolidOpt.Core.Services
 {
-	[GuidAttribute("456F500D-C58E-4B7C-A839-FD2643BB3581")]
 	public interface IService
 	{
 	}

@@ -19,13 +19,14 @@
 // 01.01.2003 Initial version. A.Penev (alexander_penev@yahoo.com)
 
 using System;
-using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace SolidOpt.Core.Services
 {
-	[GuidAttribute("691C2B5C-7055-45CA-9BFB-DE360385F7D0")]
 	public interface IServiceProvider : IService
 	{
+		Service GetService<Service>() where Service : class;
+		List<Service> GetServices<Service>() where Service : class;
 		IService GetService(Type serviceType);
 		IService[] GetServices(Type serviceType);
 	}

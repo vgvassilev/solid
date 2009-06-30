@@ -19,9 +19,6 @@
 // 01.01.2003 Initial version. A.Penev (alexander_penev@yahoo.com)
 
 using System;
-using System.IO;
-using System.Reflection;
-using System.Collections;
 
 namespace SolidOpt.Core.Services
 {
