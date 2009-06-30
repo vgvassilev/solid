@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
+//using System.Runtime.Remoting;
 
 using Mono.Cecil.Cil;
 using Mono.Cecil;
@@ -33,32 +35,34 @@ namespace SolidOpt.Core.Loader
 			ServicesContainer.AddPlugins(AppDomain.CurrentDomain.BaseDirectory + "core");
 			ServicesContainer.AddPlugins(AppDomain.CurrentDomain.BaseDirectory + "plugins");
 						
-			foreach(PluginInfo p in ServicesContainer.plugins) Trace.WriteLine(p.fullName);
+			foreach(PluginInfo p in ServicesContainer.plugins)
+				 Trace.WriteLine(p.fullName);
+			
 			Trace.WriteLine("Load plugins...");
 			ServicesContainer.LoadPlugins();
+			
 			Trace.WriteLine("Configure plugins...");
 			Optimize(args);
-			//
+			
 			return 0;
 		}
 		
 		internal void Optimize(string[] args)
 		{
-			
-			IService[] transformers = (IService[]) ServicesContainer.GetServices(typeof(ITransform<MethodBody>));
+			//IService[] transformers = (IService[]) ServicesContainer.GetServices(typeof(ITransform<MethodDefinition>));
+			List<ITransform<MethodDefinition>> transformers = ServicesContainer.GetServices<ITransform<MethodDefinition>>();
+			Trace.WriteLine("Transformers.Count: " + transformers.Count);
 			
 			AssemblyDefinition assembly = AssemblyFactory.GetAssembly(args[0]);
 			assembly.MainModule.Accept(new StructureVisitor(transformers));
-			AssemblyFactory.SaveAssembly(assembly, Path.ChangeExtension(args[0],
-			                                                            ".modified" + Path.GetExtension(args[0])));
-			
+			AssemblyFactory.SaveAssembly(assembly, Path.ChangeExtension(args[0], ".modified" + Path.GetExtension(args[0])));
 		}
 		
 		internal class StructureVisitor: BaseStructureVisitor
 		{
-			private IService[] transformers;
+			private List<ITransform<MethodDefinition>> transformers;
 			
-			public StructureVisitor(IService[] transformers) : base()
+			public StructureVisitor(List<ITransform<MethodDefinition>> transformers) : base()
 			{
 				this.transformers = transformers;
 			}
@@ -71,9 +75,9 @@ namespace SolidOpt.Core.Loader
 	
 		internal class ReflectionVisitor: BaseReflectionVisitor
 		{
-			private IService[] transformers;
+			private List<ITransform<MethodDefinition>> transformers;
 			
-			public ReflectionVisitor(IService[] transformers) : base()
+			public ReflectionVisitor(List<ITransform<MethodDefinition>> transformers) : base()
 			{
 				this.transformers = transformers;
 			}
@@ -103,8 +107,14 @@ namespace SolidOpt.Core.Loader
 				base.VisitMethodDefinition(method);
 				Trace.WriteLine(method.Name);
 				
-				foreach (ITransform<MethodDefinition> transformer in transformers)
+				foreach (ITransform<MethodDefinition> transformer in transformers) {
+//					if (RemotingServices.IsTransparentProxy(transformer))
+//						Trace.WriteLine("Proxy");
+//					else
+//						Trace.WriteLine("NoProxy");
 					method = transformer.Transform(method);
+				}
+					
 			}		
 		}
 		
