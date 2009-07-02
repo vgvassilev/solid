@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3800
+# SharpDevelop 3.0.0.3683
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Loader\Loader.csproj", "{39655872-F4B6-4698-B326-81B3DA707192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loadee", "Loadee\Loadee.csproj", "{7CCE9049-76C5-4D92-9731-FB375C60F9B1}"
@@ -11,6 +11,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt", "..\..\..\..\SolidOpt\src\SolidOpt.csproj", "{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverflowArithmeticRemover", "..\OverflowArithmeticRemover\OverflowArithmeticRemover.csproj", "81991372-639D-4EED-904E-960B666CC714"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILtoAST", "..\ILtoAST\ILtoAST.csproj", "79B42389-27F8-460B-9CDF-65342EA6699C"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,5 +40,9 @@ Global
 		81991372-639D-4EED-904E-960B666CC714.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		81991372-639D-4EED-904E-960B666CC714.Release|Any CPU.Build.0 = Release|Any CPU
 		81991372-639D-4EED-904E-960B666CC714.Release|Any CPU.ActiveCfg = Release|Any CPU
+		79B42389-27F8-460B-9CDF-65342EA6699C.Debug|Any CPU.Build.0 = Debug|Any CPU
+		79B42389-27F8-460B-9CDF-65342EA6699C.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		79B42389-27F8-460B-9CDF-65342EA6699C.Release|Any CPU.Build.0 = Release|Any CPU
+		79B42389-27F8-460B-9CDF-65342EA6699C.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal
