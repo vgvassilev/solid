@@ -93,6 +93,5 @@
     <Compile Include="Core\Services\ServiceContainer.cs" />
     <Compile Include="Optimizer\Transformers\ITransform.cs" />
     <Content Include="SolidOpt.cd" />
-    <None Include="Core\Configurator\Sources\SolidOpt.sln" />
   </ItemGroup>
 </Project>
