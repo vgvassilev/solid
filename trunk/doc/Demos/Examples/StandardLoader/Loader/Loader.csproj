@@ -30,6 +30,12 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="Cecil.Decompiler">
+      <HintPath>..\..\..\..\..\..\vendors\Cecil.Decompiler\current\Cecil.Decompiler\bin\Debug\Cecil.Decompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\..\..\..\..\vendors\Mono.Cecil\current\bin\Debug\Mono.Cecil.dll</HintPath>
+    </Reference>
     <Reference Include="SolidOpt">
       <HintPath>..\..\..\..\..\SolidOpt\src\bin\Debug\SolidOpt.dll</HintPath>
     </Reference>
@@ -49,5 +55,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransformLoader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AstMethodDefinitionModel\AstMethodDefinitionModel.csproj">
+      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
+      <Name>AstMethodDefinitionModel</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

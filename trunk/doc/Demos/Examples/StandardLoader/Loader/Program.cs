@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Loader
+namespace TransformLoader
 {
 	class Program
 	{
@@ -18,7 +18,7 @@ namespace Loader
 			
 			Trace.Listeners.Add(new ConsoleTraceListener());
 			
-			int result = new SolidOpt.Core.Loader.Loader().Run(args);
+			int result = new TransformLoader().Run(args);
 			
 			Console.ReadKey(true);
 			return result;
