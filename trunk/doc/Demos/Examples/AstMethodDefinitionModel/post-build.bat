@@ -1,0 +1,1 @@
+copy "*.*" "..\..\..\StandardLoader\Loader\bin\Debug\plugins\" /y
