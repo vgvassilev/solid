@@ -76,6 +76,37 @@ namespace SolidOpt.Core.Services
 			return foundServices;
 		}
 		
+		public override Service GetService<Service>()
+		{			
+			Console.WriteLine(">>>search: "+typeof(Service));
+				
+			Service found = base.GetService<Service>();
+			if (found != default(Service)) return found;
+			
+			foreach (object service in services) {
+				if (service is IServiceProvider) {
+					Console.WriteLine(">>>found: IServiceProvider");
+					found = (service as IServiceProvider).GetService<Service>();
+				}
+				else {
+					found = service as Service;
+						
+				}
+				
+				if (found != default(Service)) {
+					Console.WriteLine(">>>found: "+typeof(Service));
+					return found;
+				}
+			}
+
+			if (parent != null) {
+				found = parent.GetService<Service>();
+				if (found != default(Service)) return found;
+			}
+			
+			return default(Service);
+		}
+		
 		//TODO: Check implementation.
 		public override IService GetService(Type serviceType)
 		{
