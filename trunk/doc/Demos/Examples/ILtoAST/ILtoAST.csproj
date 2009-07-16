@@ -48,11 +48,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AstMethodDefinition.cs" />
     <Compile Include="ILtoASTTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>..\..\post-build.bat</PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AstMethodDefinitionModel\AstMethodDefinitionModel.csproj">
+      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
+      <Name>AstMethodDefinitionModel</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
