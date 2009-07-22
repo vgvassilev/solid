@@ -27,7 +27,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\vendors\Mono.Cecil\current\bin\Debug\Mono.Cecil.dll</HintPath>
+      <HintPath>vendors\Mono.Cecil\bin\$(Configuration)\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -92,6 +92,5 @@
     <Compile Include="Core\Services\PluginServiceContainer.cs" />
     <Compile Include="Core\Services\ServiceContainer.cs" />
     <Compile Include="Optimizer\Transformers\ITransform.cs" />
-    <Content Include="SolidOpt.cd" />
   </ItemGroup>
 </Project>
