@@ -30,10 +30,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="Cecil.Decompiler">
-      <HintPath>..\..\..\..\..\vendors\Cecil.Decompiler\current\Cecil.Decompiler\bin\Debug\Cecil.Decompiler.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\vendors\Cecil.Decompiler\Cecil.Decompiler\bin\$(Configuration)\Cecil.Decompiler.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\..\vendors\Mono.Cecil\current\bin\Debug\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\bin\$(Configuration)\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -60,6 +60,6 @@
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>..\..\post-build.bat</PostBuildEvent>
+    <PostBuildEvent>..\..\post-build-$(Configuration).bat</PostBuildEvent>
   </PropertyGroup>
 </Project>

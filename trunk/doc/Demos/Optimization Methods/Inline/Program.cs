@@ -80,7 +80,7 @@ namespace Inline
 		{
 			int a = 5;
 			int b = a + 2;
-			int c = SubAB(a + b, b);
+			int c = 1 + SubAB(a + b, b) + 2;
 			if (c > 10)
 				Console.Write(c);
 			else
@@ -91,5 +91,80 @@ namespace Inline
 		{
 			return a - b;
 		}
+		
+/*
+ 		public static void Inliner()
+		{
+			int a = 5;
+			int b = a + 2;
+			
+			// int temp1 = 1;
+			// int temp2 = SubAB(a + b, b);
+			// int c = temp1 + temp2 + 2;
+
+			int temp1 = 1;
+			int temp2 = a + b - b;
+			int c = temp1 + temp2 + 2;
+			
+			if (c > 10)
+				Console.Write(c);
+			else
+				Console.Write(a + b + c);
+		}		
+ */
+		public static void Inliner2()
+		{
+			int a = 5;
+			int b = a + 2;
+			int c = 1 + SubAB2(a + b, b) + 2;
+			if (c > 10)
+				Console.Write(c);
+			else
+				Console.Write(a + b + c);
+		}
+		
+		public static int SubAB2(int a, int b)
+		{
+			if (a > 2)
+				return a - b;
+			else
+				return a + b;
+		}
+		
+/*
+ 		public static void Inliner2()
+		{
+			int a = 5;
+			int b = a + 2;
+
+			// int temp1 = 1;
+			// int temp2 = SubAB(a + b, b);
+			// int c = temp1 + temp2 + 2;
+
+			// int temp1 = 1;
+			// if (a + b > 2)
+			// 	temp2 = a + b - b;
+			// else
+			// 	temp2 = a + b + b;
+			// int c = temp1 + temp2 + 2;
+
+			int temp1 = 1;
+			int temp_p1 = a + b;
+			int temp_p2 = b;
+			if (temp_p1 > 2)
+				temp2 = temp_p1 - temp_p2;
+				goto e1;
+			else
+				temp2 = temp_p1 + temp_p2;
+				goto e1;
+			e1:
+			int c = temp1 + temp2 + 2;
+
+			if (c > 10)
+				Console.Write(c);
+			else
+				Console.Write(a + b + c);
+		}		
+ */
 	}
 }

@@ -41,10 +41,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\..\vendors\Mono.Cecil\current\bin\Debug\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\bin\$(Configuration)\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="SolidOpt">
-      <HintPath>..\..\..\..\SolidOpt\src\bin\Debug\SolidOpt.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\bin\$(Configuration)\SolidOpt.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -60,6 +60,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>..\..\post-build.bat</PostBuildEvent>
+    <PostBuildEvent>..\..\post-build-$(Configuration).bat</PostBuildEvent>
   </PropertyGroup>
 </Project>

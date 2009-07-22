@@ -26,7 +26,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="SolidOpt">
-      <HintPath>..\..\..\..\SolidOpt\src\bin\Debug\SolidOpt.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\bin\$(Configuration)\SolidOpt.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />

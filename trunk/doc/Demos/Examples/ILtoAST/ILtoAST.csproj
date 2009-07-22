@@ -30,13 +30,13 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="Cecil.Decompiler">
-      <HintPath>..\..\..\..\..\vendors\Cecil.Decompiler\current\Cecil.Decompiler\bin\Debug\Cecil.Decompiler.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\vendors\Cecil.Decompiler\Cecil.Decompiler\bin\$(Configuration)\Cecil.Decompiler.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\bin\Debug\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\bin\$(Configuration)\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="SolidOpt">
-      <HintPath>..\..\..\..\SolidOpt\src\bin\Debug\SolidOpt.dll</HintPath>
+      <HintPath>..\..\..\..\SolidOpt\src\bin\$(Configuration)\SolidOpt.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -52,7 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>..\..\post-build.bat</PostBuildEvent>
+    <PostBuildEvent>..\..\post-build-$(Configuration).bat</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\AstMethodDefinitionModel\AstMethodDefinitionModel.csproj">
