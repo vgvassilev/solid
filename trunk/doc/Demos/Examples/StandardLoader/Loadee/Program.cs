@@ -32,6 +32,31 @@ namespace Loadee
 			Console.WriteLine("Area is {0}", S);
 		}
 		
+		public static void PostTestLoop()
+		{
+			int a;
+			int b;
+			int s = 0;
+			do {
+				a = 5;
+				b = 8;
+				s = a + b;
+			} while (a == 100);
+		}
+		
+		public static void PreTestLoop()
+		{
+			int a = 150;
+//			int b;
+			double s = 0;
+			while (a >= 100) {
+				a --;
+				int b = 8;
+				s = Math.Sqrt(a + b);
+			} 
+			Console.WriteLine(s);
+		}
+		
 		public static void Triangle1()
 		{
 			int a;

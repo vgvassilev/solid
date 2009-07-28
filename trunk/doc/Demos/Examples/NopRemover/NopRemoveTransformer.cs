@@ -63,8 +63,8 @@ namespace NopRemover
 				}
 			}
 			
-			//Instruction instruction1 = source.Body.Instructions[source.Body.Instructions.Count-1];
-			Instruction instruction1 = source.Body.Instructions[1];
+			Instruction instruction1 = source.Body.Instructions[source.Body.Instructions.Count-1];
+//			Instruction instruction1 = source.Body.Instructions[1];
 			while (instruction1 != null) {
 				if (instruction1.OpCode == OpCodes.Nop) {
 //					int i = source.Body.Instructions.IndexOf(instruction1);
