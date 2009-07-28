@@ -427,9 +427,61 @@ namespace Cecil.Decompiler.Debug {
 			}
 		}
 
+		//_______________
+		
+		public static void PostTestLoop()
+		{
+			int a;
+			int b;
+			int s = 0;
+			do {
+				a = 5;
+				b = 8;
+				s = a + b;
+			} while (a == 100);
+		}
+		
+		public static void PreTestLoop()
+		{
+			int a = 150;
+//			int b;
+			double s = 0;
+			while (a >= 100) {
+				a --;
+				int b = 8;
+				s = Math.Sqrt(a + b);
+			} 
+			Console.WriteLine(s);
+		}
+		
+		public static void Triangle1()
+		{
+			int a;
+			int b;
+			int c;
+			int P;
+			do {
+				a = 5;
+				b = 8;
+				c = 10;
+				P = a + b + c;
+				Console.WriteLine("Perimeter is {0}", P);
+				
+				int p = P/2;
+				double S = Math.Sqrt(p * (p-a) * (p-b) * (p-c));
+				if (S == 0)
+					Console.WriteLine("Area is Zero");
+				else
+					Console.WriteLine("Area is {0}", S);
+			} while (a == 5);
+		}
+		
+		//-------------
+		
+		
 		static void Main (string [] args)
 		{
-			var method = GetProgramMethod ("ForeachForeach");
+			var method = GetProgramMethod ("Triangle1");
 
 			var cfg = ControlFlowGraph.Create (method);
 
@@ -447,6 +499,8 @@ namespace Cecil.Decompiler.Debug {
 			var writer = language.GetWriter (new PlainTextFormatter (Console.Out));
 
 			writer.Write (method);
+			
+			Console.ReadKey();
 		}
 
 		public static void PrintAnnotations (MethodDefinition method, AnnotationStore store)

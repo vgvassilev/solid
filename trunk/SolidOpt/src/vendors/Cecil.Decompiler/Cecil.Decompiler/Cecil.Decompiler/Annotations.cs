@@ -32,7 +32,6 @@ using Mono.Cecil.Cil;
 
 using Cecil.Decompiler;
 using Cecil.Decompiler.Cil;
-using Cecil.Decompiler.Cil;
 
 namespace Cecil.Decompiler {
 
@@ -701,8 +700,17 @@ namespace Cecil.Decompiler {
 		void ProcessLoop (InstructionBlock block)
 		{
 			var start = block.Successors [0];
-			var before = cfg.Blocks [start.Index - 1];
-
+			
+			//Problem with branch to the beginning of a method (L_0000) fixed.
+			var before = (start.Index==0) ? start : cfg.Blocks [start.Index - 1];
+//			InstructionBlock before;
+//			if (start.Index == 0) {
+//				before = start;
+//			}
+//			else {
+//				before = cfg.Blocks [start.Index - 1];
+//			}
+			
 			var annotation = IsPreTestedLoop (before, block) ?
 				Annotation.PreTestedLoop : Annotation.PostTestedLoop;
 
@@ -718,8 +726,8 @@ namespace Cecil.Decompiler {
 
 		static bool IsPreTestedLoop (InstructionBlock before, InstructionBlock block)
 		{
-			return before.Successors [0] == block
-				&& before.Last.OpCode.FlowControl == FlowControl.Branch;
+			return 	before.Successors [0] == block
+			         && before.Last.OpCode.FlowControl == FlowControl.Branch;
 		}
 
 		void ProcessCondition (InstructionBlock block)
