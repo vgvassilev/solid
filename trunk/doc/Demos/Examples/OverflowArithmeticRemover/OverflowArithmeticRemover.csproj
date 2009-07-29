@@ -40,12 +40,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\bin\$(Configuration)\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="SolidOpt">
-      <HintPath>..\..\..\..\SolidOpt\src\bin\$(Configuration)\SolidOpt.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -62,4 +56,14 @@
   <PropertyGroup>
     <PostBuildEvent>..\..\post-build-$(Configuration).bat</PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SolidOpt\src\SolidOpt.csproj">
+      <Project>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</Project>
+      <Name>SolidOpt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

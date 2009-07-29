@@ -29,12 +29,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Reference Include="Cecil.Decompiler">
-      <HintPath>..\..\..\..\SolidOpt\src\vendors\Cecil.Decompiler\Cecil.Decompiler\bin\$(Configuration)\Cecil.Decompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\bin\$(Configuration)\Mono.Cecil.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -47,8 +41,18 @@
   <ItemGroup>
     <Compile Include="AstMethodDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>  
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>..\..\post-build-$(Configuration).bat</PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SolidOpt\src\vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj">
+      <Project>{ED1BE103-1699-4116-A732-616BEB142EB2}</Project>
+      <Name>Cecil.Decompiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
