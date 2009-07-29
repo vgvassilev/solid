@@ -1,0 +1,74 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AAB186A4-FA3D-404D-AD78-7EB5BB861655}</ProjectGuid>
+    <RootNamespace>NUnit.Gui</RootNamespace>
+    <AssemblyName>nunit</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="App.ico" />
+    <Compile Include="assemblyinfo.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\GuiRunner\nunit-gui\nunit-gui.csproj">
+      <Project>{3FF340D5-D3B4-4DF0-BAF1-98B3C00B6148}</Project>
+      <Name>nunit-gui</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitExtensions\core\nunit.core.extensions.dll.csproj">
+      <Project>{98B10E98-003C-45A0-9587-119142E39986}</Project>
+      <Name>nunit.core.extensions.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\ClientUtilities\util\nunit.util.dll.csproj">
+      <Project>{61CE9CE5-943E-44D4-A381-814DC1406767}</Project>
+      <Name>nunit.util.dll</Name>
+      <Private />
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
