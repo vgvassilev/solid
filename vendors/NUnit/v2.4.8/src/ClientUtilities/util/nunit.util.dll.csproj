@@ -1,0 +1,132 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{61CE9CE5-943E-44D4-A381-814DC1406767}</ProjectGuid>
+    <RootNamespace>NUnit.Util</RootNamespace>
+    <AssemblyName>nunit.util</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>618</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>618</NoWarn>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Data.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.XML.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AggregatingTestRunner.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AssemblyList.cs" />
+    <Compile Include="AssemblyWatcher.cs" />
+    <Compile Include="CategoryExpression.cs" />
+    <Compile Include="CategoryManager.cs" />
+    <Compile Include="CommandLineOptions.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ConsoleWriter.cs" />
+    <Compile Include="ISettings.cs" />
+    <Compile Include="ITestEvents.cs" />
+    <Compile Include="ITestLoader.cs" />
+    <Compile Include="MemorySettingsStorage.cs" />
+    <Compile Include="MultipleTestDomainRunner.cs" />
+    <Compile Include="NUnitProject.cs" />
+    <Compile Include="NUnitRegistry.cs" />
+    <Compile Include="PathUtils.cs" />
+    <Compile Include="ProcessRunner.cs" />
+    <Compile Include="ProjectConfig.cs" />
+    <Compile Include="ProjectConfigCollection.cs" />
+    <Compile Include="ProjectFormatException.cs" />
+    <Compile Include="RecentFileEntry.cs" />
+    <Compile Include="RecentFiles.cs" />
+    <Compile Include="RecentFilesCollection.cs" />
+    <Compile Include="RegistrySettingsStorage.cs" />
+    <Compile Include="RemoteTestAgent.cs" />
+    <Compile Include="ResultSummarizer.cs" />
+    <Compile Include="ServerBase.cs" />
+    <Compile Include="ServerUtilities.cs" />
+    <Compile Include="Services.cs" />
+    <Compile Include="SettingsGroup.cs" />
+    <Compile Include="SettingsStorage.cs" />
+    <Compile Include="StackTraceFilter.cs" />
+    <Compile Include="SummaryVisitor.cs" />
+    <Compile Include="TestAgent.cs" />
+    <Compile Include="TestDomain.cs" />
+    <Compile Include="TestEventArgs.cs" />
+    <Compile Include="TestEventDispatcher.cs" />
+    <Compile Include="TestExceptionHandler.cs" />
+    <Compile Include="TestLoader.cs" />
+    <Compile Include="TestObserver.cs" />
+    <Compile Include="TestResultItem.cs" />
+    <Compile Include="TestServer.cs" />
+    <EmbeddedResource Include="Transform.resx" />
+    <Compile Include="VSProject.cs" />
+    <Compile Include="VSProjectConfig.cs" />
+    <Compile Include="VSProjectConfigCollection.cs" />
+    <Compile Include="XmlResultTransform.cs" />
+    <Compile Include="XmlResultVisitor.cs" />
+    <Compile Include="XmlSettingsStorage.cs" />
+    <Compile Include="Services\AddinManager.cs" />
+    <Compile Include="Services\AddinRegistry.cs" />
+    <Compile Include="Services\DomainManager.cs" />
+    <Compile Include="Services\RecentFilesService.cs" />
+    <Compile Include="Services\ServiceManager.cs" />
+    <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Services\TestAgency.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
+      <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
+      <Name>nunit.core.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
+      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
+      <Name>nunit.core.interfaces.dll</Name>
+      <Private />
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

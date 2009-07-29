@@ -1,0 +1,176 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DD758D21-E5D5-4D40-9450-5F65A32F359C}</ProjectGuid>
+    <RootNamespace>NUnit.Core.Tests</RootNamespace>
+    <AssemblyName>nunit.core.tests</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>618</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Data.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.XML.dll</HintPath>
+      <Private />
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AllTests.cs" />
+    <Compile Include="AssemblyReaderTests.cs" />
+    <Compile Include="AssemblyResolverTests.cs" />
+    <Compile Include="AssemblyTests.cs" />
+    <Compile Include="AssemblyVersionFixture.cs" />
+    <Compile Include="AttributeDescriptionFixture.cs" />
+    <Compile Include="AttributeInheritance.cs" />
+    <Compile Include="BasicRunnerTests.cs" />
+    <Compile Include="CallContextTests.cs" />
+    <Compile Include="CategoryAttributeTests.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="CoreExtensionsTests.cs" />
+    <Compile Include="CultureSettingAndDetectionTests.cs" />
+    <Compile Include="DirectorySwapperTests.cs" />
+    <Compile Include="EventQueueTests.cs" />
+    <Compile Include="EventTestFixture.cs" />
+    <Compile Include="ExpectExceptionTest.cs" />
+    <Compile Include="FailFixture.cs" />
+    <Compile Include="FixtureSetupTearDownTest.cs" />
+    <Compile Include="IgnoreFixture.cs" />
+    <Compile Include="LegacySuiteTests.cs" />
+    <Compile Include="MockTestRunner.cs" />
+    <Compile Include="NameFilterTest.cs" />
+    <Compile Include="NamespaceAssemblyTests.cs" />
+    <Compile Include="PlatformDetectionTests.cs" />
+    <Compile Include="PropertyAttributeTests.cs" />
+    <Compile Include="ReflectTests.cs" />
+    <Compile Include="RemoteRunnerTests.cs" />
+    <EmbeddedResource Include="..\core\Results.xsd">
+      <Link>Results.xsd</Link>
+    </EmbeddedResource>
+    <None Include="..\core\Results.xsx">
+      <Link>Results.xsx</Link>
+      <DependentUpon>Results.xsd</DependentUpon>
+    </None>
+    <Compile Include="SerializationBug.cs" />
+    <Compile Include="SetUpFixtureTests.cs" />
+    <Compile Include="SetUpTest.cs" />
+    <Compile Include="SimpleNameFilterTests.cs" />
+    <Compile Include="SimpleTestRunnerTests.cs" />
+    <Compile Include="StackOverflowTestFixture.cs" />
+    <Compile Include="SuiteBuilderTests.cs" />
+    <Compile Include="SuiteBuilderTests_Multiple.cs" />
+    <Compile Include="TestAssemblyBuilderTests.cs" />
+    <Compile Include="TestCaseResultFixture.cs" />
+    <Compile Include="TestCaseTest.cs" />
+    <Compile Include="TestConsole.cs" />
+    <Compile Include="TestContextTests.cs" />
+    <Compile Include="TestDelegateFixture.cs" />
+    <Compile Include="TestFixtureBuilderTests.cs" />
+    <Compile Include="TestFixtureExtension.cs" />
+    <Compile Include="TestFixtureTests.cs" />
+    <Compile Include="TestFrameworkTests.cs" />
+    <Compile Include="TestIdTests.cs" />
+    <Compile Include="TestInfoTests.cs" />
+    <Compile Include="TestNameTests.cs" />
+    <Compile Include="TestNodeTests.cs" />
+    <Compile Include="TestRunnerThreadTests.cs" />
+    <Compile Include="TestSuiteResultFixture.cs" />
+    <Compile Include="TestSuiteTest.cs" />
+    <Compile Include="ThreadedTestRunnerTests.cs" />
+    <Compile Include="UnhandledExceptionTests.cs" />
+    <Compile Include="XmlTest.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
+      <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
+      <Name>nunit.core.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\tests\nonamespace-assembly\nonamespace-assembly.csproj">
+      <Project>{5110F0D2-8E50-46F8-9E17-7C8EBFECCA9D}</Project>
+      <Name>nonamespace-assembly</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\ClientUtilities\util\nunit.util.dll.csproj">
+      <Project>{61CE9CE5-943E-44D4-A381-814DC1406767}</Project>
+      <Name>nunit.util.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\tests\mock-assembly\mock-assembly.csproj">
+      <Project>{2E368281-3BA8-4050-B05E-0E0E43F8F446}</Project>
+      <Name>mock-assembly</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitMocks\mocks\nunit.mocks.csproj">
+      <Project>{EEE7C98B-23E6-472D-9036-C2D53B0DFE7C}</Project>
+      <Name>nunit.mocks</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\tests\test-utilities\test-utilities.csproj">
+      <Project>{3E63AD0F-24D4-46BE-BEE4-5A3299847D86}</Project>
+      <Name>test-utilities</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\tests\test-assembly\test-assembly.csproj">
+      <Project>{1960CAC4-9A82-47C5-A9B3-55BC37572C3C}</Project>
+      <Name>test-assembly</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
+      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
+      <Name>nunit.core.interfaces.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\tests\notestfixtures-assembly\notestfixtures-assembly.csproj">
+      <Project>{8D330DE4-B980-4A57-9F07-E9F7A7A33F4F}</Project>
+      <Name>notestfixtures-assembly</Name>
+      <Private />
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
