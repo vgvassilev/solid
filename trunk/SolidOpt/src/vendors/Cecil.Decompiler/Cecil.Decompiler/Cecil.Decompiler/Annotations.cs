@@ -702,7 +702,10 @@ namespace Cecil.Decompiler {
 			var start = block.Successors [0];
 			
 			//Problem with branch to the beginning of a method (L_0000) fixed.
-			var before = (start.Index==0) ? start : cfg.Blocks [start.Index - 1];
+//			var before = (start.Index==0) ? start : cfg.Blocks [start.Index - 1];
+			
+			
+			
 //			InstructionBlock before;
 //			if (start.Index == 0) {
 //				before = start;
@@ -711,7 +714,10 @@ namespace Cecil.Decompiler {
 //				before = cfg.Blocks [start.Index - 1];
 //			}
 			
-			var annotation = IsPreTestedLoop (before, block) ?
+//			var annotation = IsPreTestedLoop (before, block) ?
+//				Annotation.PreTestedLoop : Annotation.PostTestedLoop;
+
+			var annotation = IsPreTestedLoop (block) ?
 				Annotation.PreTestedLoop : Annotation.PostTestedLoop;
 
 			var data = new LoopData (start, cfg.Blocks [block.Index + 1]);
@@ -724,10 +730,20 @@ namespace Cecil.Decompiler {
 			Process (block.Successors [1]);
 		}
 
-		static bool IsPreTestedLoop (InstructionBlock before, InstructionBlock block)
+		bool IsPreTestedLoop (InstructionBlock block)
 		{
-			return 	before.Successors [0] == block
-			         && before.Last.OpCode.FlowControl == FlowControl.Branch;
+			int i = block.Successors[0].Index;
+			InstructionBlock before;
+			
+			while (i != 0) {
+				before = cfg.Blocks[--i];
+				if (before.Successors [0] == block && before.Last.OpCode.FlowControl == FlowControl.Branch)
+					return true;
+				//...
+			}
+			
+			return false;
+
 		}
 
 		void ProcessCondition (InstructionBlock block)
