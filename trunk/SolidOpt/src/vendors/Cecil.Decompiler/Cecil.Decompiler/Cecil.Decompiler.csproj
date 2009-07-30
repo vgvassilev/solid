@@ -160,6 +160,7 @@
     <Compile Include="Cecil.Decompiler.Languages\PlainTextFormatter.cs" />
     <Compile Include="Cecil.Decompiler.Pattern\PatternMatching.cs" />
     <Compile Include="Cecil.Decompiler.Steps\CanCastStep.cs" />
+    <Compile Include="Cecil.Decompiler.Steps\DeclareVariables.cs" />
     <Compile Include="Cecil.Decompiler.Steps\OperatorStep.cs" />
     <Compile Include="Cecil.Decompiler.Steps\PropertyStep.cs" />
     <Compile Include="Cecil.Decompiler.Steps\TypeOfStep.cs" />
