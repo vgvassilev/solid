@@ -30,7 +30,7 @@ using Cecil.Decompiler.Ast;
 
 namespace Cecil.Decompiler.Steps {
 
-	abstract class Matcher : Ast.BaseCodeVisitor {
+	public abstract class Matcher : Ast.BaseCodeVisitor {
 
 		bool @continue = true;
 		bool match = false;

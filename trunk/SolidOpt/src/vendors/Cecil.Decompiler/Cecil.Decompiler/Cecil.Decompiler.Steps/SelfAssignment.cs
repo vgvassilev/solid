@@ -34,11 +34,11 @@ using Cecil.Decompiler.Ast;
 
 namespace Cecil.Decompiler.Steps {
 
-	class VariableComparer : IEqualityComparer {
+	public class VariableComparer : IEqualityComparer {
 
 		public static readonly IEqualityComparer Instance = new VariableComparer ();
 
-		public bool Equals (object x, object y)
+		public new bool Equals (object x, object y)
 		{
 			if (x == y)
 				return true;
@@ -67,7 +67,7 @@ namespace Cecil.Decompiler.Steps {
 		}
 	}
 
-	class SelfAssignement : BaseCodeTransformer, IDecompilationStep {
+	public class SelfAssignement : BaseCodeTransformer, IDecompilationStep {
 
 		public static readonly IDecompilationStep Instance = new SelfAssignement ();
 
