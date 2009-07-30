@@ -21,6 +21,10 @@ using SolidOpt.Core.Loader;
 
 using AstMethodDefinitionModel;
 
+//
+using System.Collections;
+using Cecil.Decompiler.Ast;
+
 namespace TransformLoader
 {
 	/// <summary>
@@ -57,14 +61,17 @@ namespace TransformLoader
 						Console.WriteLine(method.Name);
 						foreach (ITransform<MethodDefinition> transformer in IL2ILTransformers) {
 							method = transformer.Transform(method);
-							foreach (Instruction instruction in method.Body.Instructions) {
+							
+						}
+						foreach (Instruction instruction in method.Body.Instructions) {
 								Console.Write ("\t\t");
 								Cecil.Decompiler.Cil.Formatter.WriteInstruction (Console.Out, instruction);
 								Console.WriteLine ();
-							}
 						}
 						
 						AstMethodDefinition ast = IL2ASTtransformer.Transform(method);
+						
+						WriteAST(ast.Block);
 						
 						foreach (ITransform<AstMethodDefinition> transformer in AST2ASTTransformers) {
 							ast = transformer.Transform(ast);
@@ -84,6 +91,26 @@ namespace TransformLoader
 			AssemblyFactory.SaveAssembly(assembly, Path.ChangeExtension(args[0], ".modified" + Path.GetExtension(args[0])));
 		}
 		
+		private void WriteAST(Cecil.Decompiler.Ast.Statement stmt)
+		{
+			CodeVisitor codeVisitor = new CodeVisitor();
+			codeVisitor.Visit(stmt);
+		}
 		
+		public class CodeVisitor : Cecil.Decompiler.Ast.BaseCodeVisitor {
+
+			public override void Visit (ICodeNode node)
+			{
+				if (null == node)
+					return;
+				
+				
+				System.Diagnostics.Trace.WriteLine(node.CodeNodeType.ToString());
+				
+				System.Diagnostics.Trace.Indent();
+				base.Visit(node);
+				System.Diagnostics.Trace.Unindent();
+			}
+		}
 	}
 }
