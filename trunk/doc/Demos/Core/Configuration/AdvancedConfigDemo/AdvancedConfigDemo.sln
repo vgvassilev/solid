@@ -1,8 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3683
+# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedConfigDemo", "AdvancedConfigDemo.csproj", "{D54146BB-B87A-4AA8-AD63-7D9AF1A28BC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{531FC292-EC49-41F1-ABF6-E1D007E117D8}"
+	ProjectSection(SolutionItems) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt", "..\..\..\..\..\SolidOpt\src\SolidOpt.csproj", "{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,5 +20,9 @@ Global
 		{D54146BB-B87A-4AA8-AD63-7D9AF1A28BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D54146BB-B87A-4AA8-AD63-7D9AF1A28BC3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D54146BB-B87A-4AA8-AD63-7D9AF1A28BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

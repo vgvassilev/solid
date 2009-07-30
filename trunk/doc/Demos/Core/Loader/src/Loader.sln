@@ -1,12 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3683
+# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Loader.csproj", "{A37B3085-8AA2-4889-B7E6-5AE93840436A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPluginService", "..\..\..\Optimization Methods\TestPluginService\TestPluginService.csproj", "{7B763290-3229-4558-8611-C49EDC4CEA61}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPluginService1", "..\..\..\Optimization Methods\TestPluginService1\TestPluginService1.csproj", "B205C500-8D40-47C8-BDE0-E0AAC202A27A"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,9 +20,5 @@ Global
 		{7B763290-3229-4558-8611-C49EDC4CEA61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B763290-3229-4558-8611-C49EDC4CEA61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B763290-3229-4558-8611-C49EDC4CEA61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		B205C500-8D40-47C8-BDE0-E0AAC202A27A.Debug|Any CPU.Build.0 = Debug|Any CPU
-		B205C500-8D40-47C8-BDE0-E0AAC202A27A.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		B205C500-8D40-47C8-BDE0-E0AAC202A27A.Release|Any CPU.Build.0 = Release|Any CPU
-		B205C500-8D40-47C8-BDE0-E0AAC202A27A.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -23,14 +23,14 @@ namespace Load
 			
 			Loader l = new Loader();
 			int result = l.Run(args);
-			foreach (IService srv in l.servicesContainer.services) {
+			foreach (IService srv in l.ServicesContainer.services) {
 				Console.WriteLine(srv.GetType());
 			}
 			
-			IAddService addition = (IAddService) l.servicesContainer.GetService(typeof(IAddService));
+			IAddService addition = (IAddService) l.ServicesContainer.GetService(typeof(IAddService));
 			Console.WriteLine(addition.Add(1, 2));
 			
-			IService[] additionArr = (IService[]) l.servicesContainer.GetServices(typeof(IAddService));
+			IService[] additionArr = (IService[]) l.ServicesContainer.GetServices(typeof(IAddService));
 			foreach (IAddService srv in additionArr)
 				Console.WriteLine(srv.Add(1, 2));
 			
