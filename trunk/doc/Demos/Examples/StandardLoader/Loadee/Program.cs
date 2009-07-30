@@ -46,7 +46,7 @@ namespace Loadee
 		
 		public static void PreTestLoop()
 		{
-			int a = 150;
+			int a = (int)Math.Sqrt(150*150);
 //			int b;
 			double s = 0;
 			while (a >= 100) {
@@ -57,12 +57,23 @@ namespace Loadee
 			Console.WriteLine(s);
 		}
 		
+		public static void PreTestLoop1()
+		{
+			while (new Random().Next() > 0.5) {
+				int b = 8;
+				b --;
+				
+				Console.WriteLine(b);
+			} 
+		}
+		
 		public static void Triangle1()
 		{
 			int a;
 			int b;
 			int c;
 			int P;
+//			Console.WriteLine("a");
 			do {
 				a = 5;
 				b = 8;
@@ -77,6 +88,10 @@ namespace Loadee
 				else
 					Console.WriteLine("Area is {0}", S);
 			} while (a == 5);
+			a++;
+			Console.WriteLine(a);
+			b++;
+			Console.WriteLine(b);
 		}
 	}
 }
