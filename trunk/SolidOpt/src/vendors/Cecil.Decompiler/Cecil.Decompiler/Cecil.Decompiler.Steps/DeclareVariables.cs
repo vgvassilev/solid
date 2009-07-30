@@ -6,6 +6,7 @@
  * 
  */
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Mono.Cecil.Cil;
@@ -23,7 +24,7 @@ namespace Cecil.Decompiler.Steps
 		public static readonly IDecompilationStep Instance = new DeclareVariables ();
 
 		DecompilationContext context;
-		Dictionary<string, BlockStatement> variables = new Dictionary<string, BlockStatement>(8);
+		Dictionary<string, Stack<BlockStatement>> variables = new Dictionary<string, Stack<BlockStatement>>(8);
 		Stack<BlockStatement> blockStack = new Stack<BlockStatement>();
 		
 		public override ICodeNode VisitBlockStatement(BlockStatement node)
@@ -34,23 +35,30 @@ namespace Cecil.Decompiler.Steps
 			return node;
 		}
 		
-		
-//		public override ICodeNode VisitVariableReferenceExpression (VariableReferenceExpression node)
-//		{
-//			var variable = (VariableDefinition) node.Variable;
-//
-//			if (!TryDiscardVariable (variable))
-//				return node;
-//
-//			return new VariableDeclarationExpression (variable);
-//		}
-//
-//		public override ICodeNode VisitVariableDeclarationExpression (VariableDeclarationExpression node)
-//		{
-//			TryDiscardVariable (node.Variable);
-//			
-//			return node;
-//		}
+		public override ICodeNode VisitVariableReferenceExpression (VariableReferenceExpression node)
+		{
+			var variable = (VariableDefinition) node.Variable;
+			
+			if (variables[variable.Name] == null) {
+				blockStack.CopyTo(variables[variable.Name].ToArray(), 0);
+			}
+			else {
+				var blockStackArray = blockStack.ToArray();
+				var varStackArray = variables[variable.Name].ToArray();
+				for (int i = 0; i < Math.Min(blockStackArray.Count(), varStackArray.Count()); i++) {
+					if (blockStackArray[i] != varStackArray[i])
+						blockStackArray[i].Statements.Insert(0, new VariableDeclarationExpression(variable));
+				}
+			}
+			
+			return node;
+		}
+
+		public override ICodeNode VisitVariableDeclarationExpression (VariableDeclarationExpression node)
+		{
+			
+			return node;
+		}
 //		
 //		
 //
