@@ -18,6 +18,8 @@ using Cecil.Decompiler.Languages;
 
 using AstMethodDefinitionModel;
 
+using Cecil.Decompiler.Steps;
+
 using SolidOpt.Optimizer.Transformers;
 
 namespace ILtoAST
@@ -34,7 +36,20 @@ namespace ILtoAST
 		public AstMethodDefinition Transform(MethodDefinition source)
 		{
 			ILanguage csharpLang = CSharp.GetLanguage(CSharpVersion.V1);//new CSharp();
-			DecompilationPipeline pipeline = csharpLang.CreatePipeline();
+//			DecompilationPipeline pipeline = csharpLang.CreatePipeline();
+			DecompilationPipeline pipeline = new DecompilationPipeline (
+				new StatementDecompiler (BlockOptimization.Detailed),
+				RemoveLastReturn.Instance,
+//				PropertyStep.Instance,
+//				CanCastStep.Instance,
+//				RebuildForStatements.Instance,
+//				RebuildForeachStatements.Instance,
+//				DeclareVariablesOnFirstAssignment.Instance,
+//				DeclareTopLevelVariables.Instance,
+				DeclareVariables.Instance
+//				SelfAssignement.Instance,
+//				OperatorStep.Instance
+			);
 			pipeline.Run(source.Body);
 			
 			
