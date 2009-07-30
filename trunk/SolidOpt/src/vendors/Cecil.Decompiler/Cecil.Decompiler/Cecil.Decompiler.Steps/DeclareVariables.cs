@@ -40,14 +40,20 @@ namespace Cecil.Decompiler.Steps
 			var variable = (VariableDefinition) node.Variable;
 			
 			if (variables[variable.Name] == null) {
-				blockStack.CopyTo(variables[variable.Name].ToArray(), 0);
+				variables[variable.Name] = blockStack.Take(blockStack.Count);
+				//blockStack.CopyTo(variables[variable.Name].ToArray(), 0);
 			}
 			else {
 				var blockStackArray = blockStack.ToArray();
 				var varStackArray = variables[variable.Name].ToArray();
-				for (int i = 0; i < Math.Min(blockStackArray.Count(), varStackArray.Count()); i++) {
-					if (blockStackArray[i] != varStackArray[i])
-						blockStackArray[i].Statements.Insert(0, new VariableDeclarationExpression(variable));
+				int max = Math.Min(blockStackArray.Count(), varStackArray.Count());
+				for (int i = 0; i < max; i++) {
+					if (blockStackArray[i] != varStackArray[i]) {
+						variables[variable.Name] = variables[variable.Name].Take(i);
+						break;
+						
+						//blockStackArray[i].Statements.Insert(0, new VariableDeclarationExpression(variable));
+					}
 				}
 			}
 			
