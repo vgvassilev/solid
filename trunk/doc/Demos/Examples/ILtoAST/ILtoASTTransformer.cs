@@ -46,6 +46,7 @@ namespace ILtoAST
 //				RebuildForeachStatements.Instance,
 //				DeclareVariablesOnFirstAssignment.Instance,
 //				DeclareTopLevelVariables.Instance,
+				NiceVariableNames.Instance,
 				DeclareVariables.Instance
 //				SelfAssignement.Instance,
 //				OperatorStep.Instance
@@ -70,7 +71,7 @@ namespace ILtoAST
 
 			var writer = csharpLang.GetWriter (new PlainTextFormatter (Console.Out));
 
-			writer.Write (source);
+			writer.Write (pipeline.Body);
 			
 			
 			
