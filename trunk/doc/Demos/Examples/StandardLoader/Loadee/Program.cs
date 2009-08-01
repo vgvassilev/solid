@@ -6,6 +6,7 @@
  * 
  */
 using System;
+using System.Collections.Generic;
 
 namespace Loadee
 {
@@ -41,13 +42,13 @@ namespace Loadee
 				a = 5;
 				b = 8;
 				s = a + b;
+				s = b;
 			} while (a == 100);
 		}
 		
 		public static void PreTestLoop()
 		{
 			int a = (int)Math.Sqrt(150*150);
-//			int b;
 			double s = 0;
 			while (a >= 100) {
 				a --;
@@ -92,6 +93,22 @@ namespace Loadee
 			Console.WriteLine(a);
 			b++;
 			Console.WriteLine(b);
+		}
+		
+		public static void OutParamAssign()
+		{
+			Dictionary<int, string> dict = new Dictionary<int, string>();
+			dict[0] = "abc";
+			string s;
+			if (!dict.TryGetValue(0, out s)){
+				s = "10";
+			}
+			Console.WriteLine(s);
+			
+			string s1;
+			dict.TryGetValue(0, out s1);
+			s1 = "11";
+			Console.WriteLine(s1);
 		}
 	}
 }
