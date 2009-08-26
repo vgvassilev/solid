@@ -56,6 +56,7 @@ namespace TransformLoader
 			foreach (ModuleDefinition module in assembly.Modules)
 				foreach (TypeDefinition type in module.Types) 
 					for (int i = 0; i < type.Methods.Count; i++) {
+						Console.WriteLine("----------------------------------------");
 //						if ( i != 1 ) continue;
 						MethodDefinition method = type.Methods[i];
 						Console.WriteLine(method.Name);
@@ -71,11 +72,15 @@ namespace TransformLoader
 						
 						AstMethodDefinition ast = IL2ASTtransformer.Transform(method);
 						
+						Console.WriteLine("Before AST2ASTTransformation");
 						WriteAST(ast.Block);
 						
 						foreach (ITransform<AstMethodDefinition> transformer in AST2ASTTransformers) {
 							ast = transformer.Transform(ast);
 						}
+						
+						Console.WriteLine("After AST2ASTTransformation");
+						WriteAST(ast.Block);
 						
 						method = AST2ILtransformer.Transform(ast);
 						
@@ -88,13 +93,20 @@ namespace TransformLoader
 			
 			
 //			assembly.MainModule.Accept(new StructureVisitor(transformers));
-			AssemblyFactory.SaveAssembly(assembly, Path.ChangeExtension(args[0], ".modified" + Path.GetExtension(args[0])));
+//			AssemblyFactory.SaveAssembly(assembly, Path.ChangeExtension(args[0], ".modified" + Path.GetExtension(args[0])));
 		}
 		
 		private void WriteAST(Cecil.Decompiler.Ast.Statement stmt)
 		{
 			CodeVisitor codeVisitor = new CodeVisitor();
 			codeVisitor.Visit(stmt);
+			
+			Cecil.Decompiler.Languages.ILanguage csharpLang = Cecil.Decompiler.Languages.CSharp.GetLanguage(
+				Cecil.Decompiler.Languages.CSharpVersion.V1);
+			
+			var writer = csharpLang.GetWriter (new Cecil.Decompiler.Languages.PlainTextFormatter (Console.Out));
+
+			writer.Write (stmt);
 		}
 		
 		public class CodeVisitor : Cecil.Decompiler.Ast.BaseCodeVisitor {

@@ -56,4 +56,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MethodInliner\MethodInliner.csproj">
+      <Project>{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}</Project>
+      <Name>MethodInliner</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
