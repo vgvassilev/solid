@@ -120,10 +120,10 @@ namespace ASTtoIL
 			 
 		}
 
-////		public override void VisitExpressionStatement (ExpressionStatement node)
-////		{
-////			Visit (node.Expression);
-////		}
+//		public override void VisitExpressionStatement (ExpressionStatement node)
+//		{
+//			Visit (node.Expression);
+//		}
 //
 //		public override void VisitThrowStatement (ThrowStatement node)
 //		{
@@ -226,9 +226,7 @@ namespace ASTtoIL
 				else {
 					cil.Emit(OpCodes.Call, methRefExp.Method);
 				}
-				
 			}
-			
 		}
 
 		public override void VisitMethodReferenceExpression (MethodReferenceExpression node)
@@ -295,18 +293,28 @@ namespace ASTtoIL
 					
 				case UnaryOperator.PostDecrement : 
 					//TODO: Expression--;
+					cil.Emit(OpCodes.Ldc_I4_1);
+					cil.Emit(OpCodes.Sub);
 					break;
 					
 				case UnaryOperator.PreDecrement : 
 					//TODO: --Expression;
+					cil.Emit(OpCodes.Ldc_I4_1);
+					cil.Emit(OpCodes.Sub);
+					cil.Emit(OpCodes.Dup);
 					break;
 					
 				case UnaryOperator.PostIncrement : 
 					//TODO: Expression++;
+					cil.Emit(OpCodes.Ldc_I4_1);
+					cil.Emit(OpCodes.Add);
 					break;
 					
 				case UnaryOperator.PreIncrement : 
 					//TODO: ++Expression;
+					cil.Emit(OpCodes.Ldc_I4_1);
+					cil.Emit(OpCodes.Add);
+					cil.Emit(OpCodes.Dup);
 					break;
 			}
 		}
