@@ -46,9 +46,9 @@ namespace ILtoAST
 //				RebuildForeachStatements.Instance,
 //				DeclareVariablesOnFirstAssignment.Instance,
 //				DeclareTopLevelVariables.Instance,
-				NiceVariableNames.Instance,
+//				NiceVariableNames.Instance,
 				DeclareVariables.Instance
-//				SelfAssignement.Instance,
+//				SelfAssignement.Instance
 //				OperatorStep.Instance
 			);
 			pipeline.Run(source.Body);
@@ -58,6 +58,7 @@ namespace ILtoAST
 			var cfg = ControlFlowGraph.Create (source);
 
 			FormatControlFlowGraph (Console.Out, cfg);
+			
 
 //			Console.WriteLine ("--------------------");
 
