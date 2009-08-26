@@ -235,9 +235,9 @@ namespace Cecil.Decompiler {
 
 		public override void OnDup (Instruction instruction)
 		{
-			// var expression = Pop ();
-			// Push (expression);
-			// Push (expression);
+//			 var expression = Pop ();
+//			 Push (expression);
+//			 Push (expression);
 		}
 
 		public override void OnPop (Instruction instruction)
@@ -256,14 +256,50 @@ namespace Cecil.Decompiler {
 		{
 			PushBinaryExpression (BinaryOperator.Add);
 		}
+		
+		public override void OnAdd_Ovf(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushBinaryExpression (BinaryOperator.Add);
+		}
+		
+		public override void OnAdd_Ovf_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
+			PushBinaryExpression (BinaryOperator.Add);
+		}
 
 		public override void OnSub (Instruction instruction)
 		{
 			PushBinaryExpression (BinaryOperator.Subtract);
 		}
-
+		
+		public override void OnSub_Ovf(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushBinaryExpression (BinaryOperator.Subtract);
+		}
+		
+		public override void OnSub_Ovf_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
+			PushBinaryExpression (BinaryOperator.Subtract);
+		}
+		
 		public override void OnMul (Instruction instruction)
 		{
+			PushBinaryExpression (BinaryOperator.Multiply);
+		}
+		
+		public override void OnMul_Ovf(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushBinaryExpression (BinaryOperator.Multiply);
+		}
+		
+		public override void OnMul_Ovf_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
 			PushBinaryExpression (BinaryOperator.Multiply);
 		}
 
@@ -572,9 +608,33 @@ namespace Cecil.Decompiler {
 		{
 			PushCastExpression (typeof (IntPtr));
 		}
+		
+		public override void OnConv_Ovf_I(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (IntPtr));
+		}
+		
+		public override void OnConv_Ovf_I_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
+			PushCastExpression (typeof (IntPtr));
+		}
 
 		public override void OnConv_I1 (Instruction instruction)
 		{
+			PushCastExpression (typeof (sbyte));
+		}
+		
+		public override void OnConv_Ovf_I1(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (sbyte));
+		}
+		
+		public override void OnConv_Ovf_I1_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
 			PushCastExpression (typeof (sbyte));
 		}
 
@@ -582,9 +642,33 @@ namespace Cecil.Decompiler {
 		{
 			PushCastExpression (typeof (short));
 		}
+		
+		public override void OnConv_Ovf_I2(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (short));
+		}
+		
+		public override void OnConv_Ovf_I2_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
+			PushCastExpression (typeof (short));
+		}
 
 		public override void OnConv_I4 (Instruction instruction)
 		{
+			PushCastExpression (typeof (int));
+		}
+		
+		public override void OnConv_Ovf_I4(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (int));
+		}
+		
+		public override void OnConv_Ovf_I4_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
 			PushCastExpression (typeof (int));
 		}
 
@@ -592,9 +676,33 @@ namespace Cecil.Decompiler {
 		{
 			PushCastExpression (typeof (long));
 		}
-
+		
+		public override void OnConv_Ovf_I8(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (long));
+		}
+		
+		public override void OnConv_Ovf_I8_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
+			PushCastExpression (typeof (long));
+		}
+		
 		public override void OnConv_U (Instruction instruction)
 		{
+			PushCastExpression (typeof (UIntPtr));
+		}
+		
+		public override void OnConv_Ovf_U(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (UIntPtr));
+		}
+		
+		public override void OnConv_Ovf_U_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
 			PushCastExpression (typeof (UIntPtr));
 		}
 
@@ -602,9 +710,33 @@ namespace Cecil.Decompiler {
 		{
 			PushCastExpression (typeof (byte));
 		}
+		
+		public override void OnConv_Ovf_U1(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (byte));
+		}
+		
+		public override void OnConv_Ovf_U1_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
+			PushCastExpression (typeof (byte));
+		}
 
 		public override void OnConv_U2 (Instruction instruction)
 		{
+			PushCastExpression (typeof (ushort));
+		}
+		
+		public override void OnConv_Ovf_U2(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (ushort));
+		}
+		
+		public override void OnConv_Ovf_U2_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
 			PushCastExpression (typeof (ushort));
 		}
 
@@ -612,9 +744,33 @@ namespace Cecil.Decompiler {
 		{
 			PushCastExpression (typeof (uint));
 		}
+		
+		public override void OnConv_Ovf_U4(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (uint));
+		}
+		
+		public override void OnConv_Ovf_U4_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
+			PushCastExpression (typeof (uint));
+		}
 
 		public override void OnConv_U8 (Instruction instruction)
 		{
+			PushCastExpression (typeof (ulong));
+		}
+		
+		public override void OnConv_Ovf_U8(Instruction instruction)
+		{
+			//TODO: Overflow Check
+			PushCastExpression (typeof (ulong));
+		}
+		
+		public override void OnConv_Ovf_U8_Un(Instruction instruction)
+		{
+			//TODO: Unsigned Overflow Check
 			PushCastExpression (typeof (ulong));
 		}
 
@@ -622,7 +778,7 @@ namespace Cecil.Decompiler {
 		{
 			PushCastExpression (typeof (float));
 		}
-
+		
 		public override void OnConv_R4 (Instruction instruction)
 		{
 			PushCastExpression (typeof (float));
