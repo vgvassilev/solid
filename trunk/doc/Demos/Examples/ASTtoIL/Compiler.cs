@@ -58,7 +58,7 @@ namespace ASTtoIL
 				cil.Emit(OpCodes.Ret);
 			
 			foreach (KeyValuePair<Instruction, string> pair in fixupLabels) {
-				pair.Key.Operand = labels[pair.Value];
+				pair.Key.Operand = body.Instructions[labels[pair.Value]];
 			}
 			
 			foreach (KeyValuePair<Instruction, int> pair in fixupBranches) {
