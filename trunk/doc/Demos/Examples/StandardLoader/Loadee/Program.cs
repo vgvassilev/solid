@@ -101,42 +101,71 @@ namespace Loadee
 
 		public static void InlineTest()
 		{
-			int a = 0;
+//			int a = 0;
+//			Random rnd = new Random();
+//			
+////			Inlinee(a + rnd.Next(), a + 18);
+//			Console.WriteLine(a);
+//			Inlinee1(0, 1, 2);
+			byte f = 2;
+			OutTest(ref f);
+			Console.WriteLine(f);
+		}
+		public static void OutTest(ref byte p) {
+			p = 5;
 			
-			
-			Console.WriteLine(a);
 		}
 		
-		[MethodInliner.InlineAttribute]
-		public static void OutParamAssign()
+//		[MethodInliner.InlineAttribute]
+//		public static void OutParamAssign()
+//		{
+//			Dictionary<int, string> dict = new Dictionary<int, string>();
+//			dict[0] = "abc";
+//			string s;
+//			if (!dict.TryGetValue(0, out s)){
+//				s = "10";
+//			}
+//			Console.WriteLine(s);
+//			
+//			string s1;
+//			dict.TryGetValue(0, out s1);
+//			s1 = "11";
+//			Console.WriteLine(s1);
+//		}
+		
+		[MethodInliner.InlineableAttribute]
+		public static void Inlinee(int p, float q)
 		{
-			Dictionary<int, string> dict = new Dictionary<int, string>();
-			dict[0] = "abc";
-			string s;
-			if (!dict.TryGetValue(0, out s)){
-				s = "10";
+			int x = 5;
+			if (x == 6) {
+				Console.WriteLine(x);
+				
 			}
-			Console.WriteLine(s);
-			
-			string s1;
-			dict.TryGetValue(0, out s1);
-			s1 = "11";
-			Console.WriteLine(s1);
+			else {
+				Console.WriteLine(p+q);
+				return;
+			}
+			int v;
+			Console.WriteLine(x);
+			return;
 		}
 		
-//		[MethodInliner.InlineAttribute]
-//		public static void Inlinee()
+//		[MethodInliner.Inlineable]
+//		public static void Inlinee1(params byte [] ints)
 //		{
-//			int x = 5;
-//			int v;
-//			Console.WriteLine(s);
+//			int sum = 0;
+//			for (int i = 0; i < ints.Length; i++) {
+//				sum += ints[i];
+//			}
+//			return;
 //		}
-//		
-//		[MethodInliner.InlineAttribute]
-//		public static void Inlinee1()
-//		{
-//			int s = 5;
-//			Console.WriteLine(s);
-//		}
+		[MethodInliner.Inlineable]
+		public static void Inlinee1(params object [] ints)
+		{
+			for (int i = 0; i < ints.Length; i++) {
+				Console.WriteLine(ints[i]);
+			}
+			return;
+		}
 	}
 }

@@ -82,11 +82,11 @@ namespace TransformLoader
 						Console.WriteLine("After AST2ASTTransformation");
 						WriteAST(ast.Block);
 						
-						method = AST2ILtransformer.Transform(ast);
-						
-						foreach (ITransform<MethodDefinition> transformer in IL2ILTransformers) {
-							method = transformer.Transform(method);
-						}
+//						method = AST2ILtransformer.Transform(ast);
+//						
+//						foreach (ITransform<MethodDefinition> transformer in IL2ILTransformers) {
+//							method = transformer.Transform(method);
+//						}
 						
 						type.Methods[i] = method;
 					}
