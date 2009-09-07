@@ -220,7 +220,13 @@ namespace Cecil.Decompiler.Steps
 		private void FixUpVariables() 
 		{
 			foreach (KeyValuePair<VariableDefinition, FirstAssignmentInfo> pair in firstAssignment.Reverse()) {
-				BlockStatement block = variables[pair.Key].Peek();
+				
+				Stack<BlockStatement> stack = variables[pair.Key];
+				
+				if (stack == null)
+					continue;
+				
+				BlockStatement block = stack.Peek();
 				
 				if (pair.Value != ignoreFirstAssignment  && 
 				    block.Equals(firstAssignment[pair.Key].inBlock)) {
