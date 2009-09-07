@@ -94,6 +94,13 @@ namespace MethodInliner
 			new Dictionary<ParameterDefinition, VariableDefinition>();
 		
 		private AstFinalFixer fixer = new AstFinalFixer();
+		
+		private static VariableReference returnVariable;
+		public static VariableReference ReturnVariable {
+			get { return returnVariable; }
+			set { returnVariable = value; }
+		}
+		
 		#endregion
 		
 		#region Constructors
@@ -187,44 +194,65 @@ namespace MethodInliner
 			
 			AstPreInsertFixer preFixer = new AstPreInsertFixer();
 			
-			int vLastIndex = source.Method.Body.Variables.Count;
-			VariableDefinition newVariable;
 			for (int i = 0; i < blocks.Count; i++) {
-				mInvoke = expressions[i].Expression as MethodInvocationExpression;
-				mRef = mInvoke.Method as MethodReferenceExpression;
-				mDef = mRef.Method.Resolve();
-				
-//				ast = preFixer.FixUp(il2astTransformer.Transform(mDef), paramVarSubstitution);
-				
 				expressionIndex = blocks[i].Statements.IndexOf(expressions[i]);
 				
 				//При рекурсивно извикване на inline-вания метод в себе си се получава -1!!!
 				if (expressionIndex >= 0) {
-					
 					blocks[i].Statements.RemoveAt(expressionIndex);
+					
+					mInvoke = expressions[i].Expression as MethodInvocationExpression;
+					//отчитаме случая само когато резултатът от метода е присвоен на променлива
+					//TODO: Извикване на y(f(x), 5) -> да се види в този случай...
+					if (mInvoke == null) {
+						mInvoke = (expressions[i].Expression as AssignExpression).Expression as MethodInvocationExpression;
+					}
+						
+					mRef = mInvoke.Method as MethodReferenceExpression;
+					mDef = mRef.Method.Resolve();
+					
+					//Използване на променливата, на която е присвоен резултатът от метода за
+					//междинните резултати преди всеки return
+					if (mDef.ReturnType.ReturnType.Name != "Void") {
+						AssignExpression assign = expressions[i].Expression as AssignExpression;
+						if (assign != null) {
+							var varRefExp = assign.Target as VariableReferenceExpression;
+							if (varRefExp != null) {
+								ReturnVariable = varRefExp.Variable;
+							}
+							else {
+								var varDeclExp = (assign.Target as VariableDeclarationExpression).Variable;
+								if (varDeclExp != null) {
+									ReturnVariable = varDeclExp;
+									blocks[i].Statements.Insert(expressionIndex, new ExpressionStatement(
+										new VariableDeclarationExpression(ReturnVariable.Resolve())));
+									expressionIndex++;									
+								}
+							}
+						}
+					}
 					
 					Expression arg;
 					ParameterDefinition paramDef;
 					for (int current = mInvoke.Arguments.Count - 1; current >= 0 ; current--) {
 						paramDef = mRef.Method.Parameters[current];
-						
 						arg = mInvoke.Arguments[current];
-						newVariable = new VariableDefinition(paramDef.ParameterType);
-						newVariable.Method = source.Method;
-						newVariable.Index = vLastIndex++;
-						newVariable.Name = newVariable.ToString();
-						paramVarSubstitution[paramDef] = newVariable;
-						
-						source.Method.Body.Variables.Add(newVariable);
-							
+
+						VariableDefinition @var = RegisterVariable(paramDef.ParameterType, source.Method);
+						paramVarSubstitution[paramDef] = @var;
 						blocks[i].Statements.Insert(expressionIndex, new ExpressionStatement(
-								new AssignExpression(new VariableDeclarationExpression(newVariable), arg)));
+								new AssignExpression(new VariableDeclarationExpression(@var), arg)));
 						expressionIndex++;
 					}
-					
 				}
 				else {
-					break;
+					continue;
+				}
+				
+				if (mDef.Body.Variables.Count != 0 && (!localVarSubstitution.ContainsKey(mDef.Body.Variables[0]))) {
+					foreach (VariableDefinition variable in mDef.Body.Variables) {
+						localVarSubstitution[variable] = RegisterVariable(variable.VariableType, source.Method);
+					}
 				}
 				
 				ast = preFixer.FixUp(il2astTransformer.Transform(mDef), paramVarSubstitution);
@@ -232,22 +260,24 @@ namespace MethodInliner
 				for (int j = ast.Block.Statements.Count - 1; j >= 0; j-- ) {
 					blocks[i].Statements.Insert(expressionIndex, ast.Block.Statements[j]);
 				}
-				
-				if (mDef.Body.Variables.Count != 0 && (!localVarSubstitution.ContainsKey(mDef.Body.Variables[0]))) {
-					
-					foreach (VariableDefinition variable in mDef.Body.Variables) {
-						newVariable = new VariableDefinition(variable.VariableType);
-						newVariable.Method = source.Method;
-						newVariable.Index = vLastIndex++;
-						newVariable.Name = newVariable.ToString();
-						localVarSubstitution[variable] = newVariable;
-						
-						source.Method.Body.Variables.Add(variable);
-					}
-				}
-					
 			}
+		}
 		
+		/// <summary>
+		/// Добавя новата променлива към тялото на зададен метод
+		/// </summary>
+		/// <param name="type">Тип на променливата</param>
+		/// <param name="method">Методът, където ще бъде добавена</param>
+		/// <returns>Новата променлива</returns>
+		internal VariableDefinition RegisterVariable(TypeReference type, MethodDefinition method)
+		{
+			VariableDefinition variable = new VariableDefinition(type);
+			variable.Method = method;
+			variable.Index = method.Body.Variables.Count;
+			variable.Name = variable.ToString();
+			method.Body.Variables.Add(variable);
+			
+			return variable;
 		}
 		
 		
@@ -263,6 +293,7 @@ namespace MethodInliner
 			private AstMethodDefinition source;
 			private LabeledStatement exitLabel;
 			private static int exitNumber = 0;
+			private BlockStatement currentBlock;
 			
 			#endregion
 			
@@ -290,8 +321,8 @@ namespace MethodInliner
 				
 				if (exitLabel == null) {
 					this.exitLabel = new LabeledStatement("@_exit" + exitNumber);
-					this.source.Block = (BlockStatement) Visit(this.source.Block);	
 					this.source.Block.Statements.Add(exitLabel);
+					this.source.Block = (BlockStatement) Visit(this.source.Block);
 				}
 				else {
 					this.source.Block = (BlockStatement) Visit(this.source.Block);	
@@ -302,12 +333,35 @@ namespace MethodInliner
 			
 			#region Model Transformers
 			
+			
+			public override ICodeNode VisitBlockStatement(BlockStatement node)
+			{
+				currentBlock = node;
+				return base.VisitBlockStatement(node);
+			}
+			
+			
 			/// <summary>
 			/// Заменя срещанията на return с goto в края на метода.
 			/// </summary>
 			public override ICodeNode VisitReturnStatement(ReturnStatement node)
 			{
-				return new GotoStatement(exitLabel.Label);
+				GotoStatement @goto = new GotoStatement(exitLabel.Label);
+				if (node.Expression != null) {
+					BlockStatement block = new BlockStatement();
+					block.Statements.Add(new ExpressionStatement(
+						new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
+					block.Statements.Add(@goto);
+					return (BlockStatement) Visit(block);
+					
+//					currentBlock.Statements.Add(new ExpressionStatement(
+//						new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
+//					currentBlock.Statements.Add(@goto);
+//					
+//					return null;
+				}
+				
+				return @goto;
 			}
 			
 			/// <summary>

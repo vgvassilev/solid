@@ -101,20 +101,21 @@ namespace Loadee
 
 		public static void InlineTest()
 		{
-//			int a = 0;
-//			Random rnd = new Random();
-//			
-////			Inlinee(a + rnd.Next(), a + 18);
-//			Console.WriteLine(a);
-//			Inlinee1(0, 1, 2);
-			byte f = 2;
-			OutTest(ref f);
-			Console.WriteLine(f);
-		}
-		public static void OutTest(ref byte p) {
-			p = 5;
+			int a = 0;
+			Random rnd = new Random();
 			
+			int p = Inlinee(a + rnd.Next(), a + 18);
+			Console.WriteLine(a);
+			Console.WriteLine(p);
+//			Inlinee1(0, 1, 2);
+//			byte f = 2;
+//			OutTest(ref f);
+//			Console.WriteLine(f);
 		}
+//		public static void OutTest(ref byte p) {
+//			p = 5;
+//			
+//		}
 		
 //		[MethodInliner.InlineAttribute]
 //		public static void OutParamAssign()
@@ -134,20 +135,21 @@ namespace Loadee
 //		}
 		
 		[MethodInliner.InlineableAttribute]
-		public static void Inlinee(int p, float q)
+		public static int Inlinee(int p, int q)
 		{
-			int x = 5;
+			byte x = 5;
 			if (x == 6) {
 				Console.WriteLine(x);
+				return p + q;
 				
 			}
 			else {
 				Console.WriteLine(p+q);
-				return;
+				
 			}
-			int v;
+			byte v;
 			Console.WriteLine(x);
-			return;
+			return 10;
 		}
 		
 //		[MethodInliner.Inlineable]
