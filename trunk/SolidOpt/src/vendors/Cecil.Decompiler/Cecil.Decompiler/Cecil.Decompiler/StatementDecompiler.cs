@@ -437,16 +437,35 @@ namespace Cecil.Decompiler {
 
 		void MoveStatementsToBlock (InstructionBlock start, InstructionBlock limit, BlockStatement block)
 		{
-			for (int i = start.Index; i < limit.Index; i++) {
-				ProcessBlock (cfg.Blocks [i]);
+			foreach (var child in GetChildTree(cfg.Blocks[start.Index])) {
+				if (child.Index == limit.Index)
+					break;
+				
+				ProcessBlock (child);
 
-				var block_statements = this.statements [i];
+				var block_statements = this.statements [child.Index];
 				if (block_statements == null)
 					continue;
 
 				AddRangeToBlock (block, block_statements);
 
 				block_statements.Clear ();
+			}
+		}
+		
+		internal static IEnumerable<InstructionBlock> GetChildTree (InstructionBlock block)
+		{
+			yield return block;
+
+			var successors = block.Successors;
+
+			if (successors.Length == 0)
+				yield break;
+
+			for (int i = 0; i < successors.Length; i++) {
+				if (successors [i].Index > block.Index)
+					foreach (var nested in GetChildTree (successors [i]))
+						yield return nested;
 			}
 		}
 
