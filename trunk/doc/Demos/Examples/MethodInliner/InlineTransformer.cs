@@ -141,11 +141,11 @@ namespace MethodInliner
 		/// <summary>
 		/// Записва текущия израз, който се обхожда.
 		/// </summary>
-		public override ICodeNode VisitExpressionStatement(ExpressionStatement node)
-		{
-			currentExpression = node;
-			return base.VisitExpressionStatement(node);
-		}
+//		public override ICodeNode VisitExpressionStatement(ExpressionStatement node)
+//		{
+//			currentExpression = node;
+//			return base.VisitExpressionStatement(node);
+//		}
 		
 		/// <summary>
 		/// Ако извикването на метод е подходящо за inline-ване се записват текущия блок и израз.
@@ -160,6 +160,49 @@ namespace MethodInliner
 			}
 			return base.VisitMethodInvocationExpression(node);
 		}
+		
+		public override ICodeNode VisitAssignExpression(AssignExpression node)
+		{
+			CodeNodeCollection<Expression> collection = new CodeNodeCollection<Expression>();
+			collection.Add(node.Expression);
+			collection = (CodeNodeCollection<Expression>) Visit (collection);
+			
+			if (collection.Count > 0 && collection[0].Equals(node.Expression)) {
+				return node;
+			}
+			
+			return collection;
+		}
+		
+		public override ICodeNode VisitExpressionStatement(ExpressionStatement node)
+		{
+			ICodeNode result = (ICodeNode) Visit (node.Expression);
+			CodeNodeCollection<Expression> original = result as CodeNodeCollection<Expression>;
+			
+			if (original != null) {
+				var collection = new CodeNodeCollection<Statement>();
+				
+				for (int i = 0; i < original.Count - 1; i++) {
+					collection.Add(new ExpressionStatement(original[i]));
+				}
+				node.Expression =  original[original.Count - 1];
+				collection.Add(node);
+				
+				return collection;
+			}
+			
+			node.Expression = (Expression) result;
+			return node;
+		}
+		
+		
+		
+		
+		public override ICodeNode VisitIfStatement(IfStatement node)
+		{
+			return base.VisitIfStatement(node);
+		}
+		
 		
 		#endregion
 		
@@ -176,6 +219,22 @@ namespace MethodInliner
 				}
 			}
 			return false;
+		}
+		
+		private bool HasSideEffects(MethodReference method)
+		{
+			foreach (CustomAttribute ca in method.Resolve().CustomAttributes) {
+				if (ca.Constructor.DeclaringType.FullName == (typeof(SideEffectsAttribute).FullName)) {
+					bool a = (bool) ca.ConstructorParameters[0];
+					return a;
+				}
+			}
+			return true;
+		}
+		
+		private void InlineInCollection(CodeNodeCollection<Statement> collection)
+		{
+			
 		}
 		
 		/// <summary>
@@ -202,14 +261,16 @@ namespace MethodInliner
 					blocks[i].Statements.RemoveAt(expressionIndex);
 					
 					mInvoke = expressions[i].Expression as MethodInvocationExpression;
+					
 					//отчитаме случая само когато резултатът от метода е присвоен на променлива
 					//TODO: Извикване на y(f(x), 5) -> да се види в този случай...
 					if (mInvoke == null) {
 						mInvoke = (expressions[i].Expression as AssignExpression).Expression as MethodInvocationExpression;
 					}
-						
+					
 					mRef = mInvoke.Method as MethodReferenceExpression;
 					mDef = mRef.Method.Resolve();
+					HasSideEffects(mDef);
 					
 					//Използване на променливата, на която е присвоен резултатът от метода за
 					//междинните резултати преди всеки return
@@ -348,11 +409,17 @@ namespace MethodInliner
 			{
 				GotoStatement @goto = new GotoStatement(exitLabel.Label);
 				if (node.Expression != null) {
-					BlockStatement block = new BlockStatement();
-					block.Statements.Add(new ExpressionStatement(
-						new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
-					block.Statements.Add(@goto);
-					return (BlockStatement) Visit(block);
+//					BlockStatement block = new BlockStatement();
+//					block.Statements.Add(new ExpressionStatement(new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
+//					block.Statements.Add(@goto);
+					CodeNodeCollection<Statement> collection = new CodeNodeCollection<Statement>();
+					collection.Add((new ExpressionStatement(
+						new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression))));
+					collection.Add(@goto);
+					return Visit<CodeNodeCollection<Statement>, Statement>(collection);
+//					return collection;
+					
+//					return (BlockStatement) Visit(block);
 					
 //					currentBlock.Statements.Add(new ExpressionStatement(
 //						new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
@@ -506,4 +573,16 @@ namespace MethodInliner
 	{
 		
 	}
+	
+	public class SideEffectsAttribute : Attribute
+	{
+		public bool HasSideEffects = false;
+		
+		public SideEffectsAttribute(bool HasSideEffects)
+		{
+			this.HasSideEffects = HasSideEffects;
+		}
+	}
 }
+
+

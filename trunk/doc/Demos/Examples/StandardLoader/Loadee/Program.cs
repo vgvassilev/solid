@@ -103,10 +103,10 @@ namespace Loadee
 		{
 			int a = 0;
 			Random rnd = new Random();
-			
-			int p = Inlinee(a + rnd.Next(), a + 18);
+			int p = 4;
+			p = Inlinee(p, 18);
 			Console.WriteLine(a);
-			Console.WriteLine(p);
+//			Console.WriteLine(p);
 //			Inlinee1(0, 1, 2);
 //			byte f = 2;
 //			OutTest(ref f);
@@ -134,10 +134,14 @@ namespace Loadee
 //			Console.WriteLine(s1);
 //		}
 		
-		[MethodInliner.InlineableAttribute]
+		[MethodInliner.Inlineable]
+		[MethodInliner.SideEffects(true)]
 		public static int Inlinee(int p, int q)
 		{
 			byte x = 5;
+			int y = 2;
+//			p=5;
+//			q=6;
 			if (x == 6) {
 				Console.WriteLine(x);
 				return p + q;
@@ -145,11 +149,12 @@ namespace Loadee
 			}
 			else {
 				Console.WriteLine(p+q);
-				
+				return 10;
 			}
-			byte v;
-			Console.WriteLine(x);
-			return 10;
+////			byte v;
+////			Console.WriteLine(x);
+//			return 1;
+			return p+q;
 		}
 		
 //		[MethodInliner.Inlineable]
@@ -161,13 +166,13 @@ namespace Loadee
 //			}
 //			return;
 //		}
-		[MethodInliner.Inlineable]
-		public static void Inlinee1(params object [] ints)
-		{
-			for (int i = 0; i < ints.Length; i++) {
-				Console.WriteLine(ints[i]);
-			}
-			return;
-		}
+//		[MethodInliner.Inlineable]
+//		public static void Inlinee1(params object [] ints)
+//		{
+//			for (int i = 0; i < ints.Length; i++) {
+//				Console.WriteLine(ints[i]);
+//			}
+//			return;
+//		}
 	}
 }
