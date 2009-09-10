@@ -76,7 +76,8 @@ namespace Cecil.Decompiler.Ast {
 		ArrayIndexerExpression,
 		ObjectCreationExpression,
 		PropertyReferenceExpression,
-		TypeReferenceExpression
+		TypeReferenceExpression,
+		CodeNodeCollection
 	}
 }
 

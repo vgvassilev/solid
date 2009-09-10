@@ -147,7 +147,25 @@ namespace Cecil.Decompiler.Ast {
 			TCollection collection = null;
 
 			for (int i = 0; i < original.Count; i++) {
-				var element = (TElement) Visit (original [i]);
+				var node = (ICodeNode) Visit ((ICodeNode) original [i]);
+				
+				// Composite Node Added
+				var compositeNode = node as CodeNodeCollection<TElement>;
+				if (compositeNode != null) {
+					if (collection == null) {
+						collection = new TCollection ();
+						for (int j = 0; j < i; j++) {
+							collection.Add (original [j]);
+						}
+					}
+		
+					for (int k = 0; k < compositeNode.Count; k++) {
+						collection.Add(compositeNode[k]);
+					}
+					continue;
+				}
+				
+				var element = (TElement) node;
 
 				if (collection != null) {
 					if (element != null)

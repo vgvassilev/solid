@@ -94,6 +94,7 @@
     <Compile Include="Cecil.Decompiler.Ast\CastExpression.cs" />
     <Compile Include="Cecil.Decompiler.Ast\CatchClause.cs" />
     <Compile Include="Cecil.Decompiler.Ast\CatchClauseCollection.cs" />
+    <Compile Include="Cecil.Decompiler.Ast\CodeNodeCollection.cs" />
     <Compile Include="Cecil.Decompiler.Ast\CodeNodeType.cs" />
     <Compile Include="Cecil.Decompiler.Ast\ConditionCase.cs" />
     <Compile Include="Cecil.Decompiler.Ast\ConditionExpression.cs" />
