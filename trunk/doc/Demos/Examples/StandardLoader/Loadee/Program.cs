@@ -135,7 +135,7 @@ namespace Loadee
 //		}
 		
 		[MethodInliner.Inlineable]
-		[MethodInliner.SideEffects(true)]
+//		[MethodInliner.SideEffects(true)]
 		public static int Inlinee(int p, int q)
 		{
 			byte x = 5;

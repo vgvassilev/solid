@@ -90,8 +90,8 @@ namespace MethodInliner
 		/// Структура, в която се съхраняват новите локални променливи, които ще заменят параметрите.
 		/// Целта е да се променят всички референции към параметър с локални променливи.
 		/// </summary>
-		private Dictionary<ParameterDefinition, VariableDefinition> paramVarSubstitution =
-			new Dictionary<ParameterDefinition, VariableDefinition>();
+		private Dictionary<ParameterDefinition, Expression> paramVarSubstitution =
+			new Dictionary<ParameterDefinition, Expression>();
 		
 		private AstFinalFixer fixer = new AstFinalFixer();
 		
@@ -100,6 +100,16 @@ namespace MethodInliner
 			get { return returnVariable; }
 			set { returnVariable = value; }
 		}
+		private static ParameterReference returnParameter;
+		public static ParameterReference ReturnParameter {
+			get { return returnParameter; }
+			set { returnParameter = value; }
+		}
+		
+		private AstMethodDefinition source;
+		
+		private List<SideEffectInfo> sideEffects = new List<SideEffectInfo>();
+		private SideEffectInfo currentSideEffect = new SideEffectInfo();
 		
 		#endregion
 		
@@ -119,7 +129,7 @@ namespace MethodInliner
 			expressions.Clear();
 			blocks.Clear();
 			localVarSubstitution.Clear();
-			
+			this.source = source;
 			source.Block = (BlockStatement) Visit(source.Block);
 			FixUpMethodCalls(source);
 			source = fixer.FixUp(source, localVarSubstitution);
@@ -132,11 +142,11 @@ namespace MethodInliner
 		/// <summary>
 		/// Записва текущия блок, който се обхожда.
 		/// </summary>
-		public override ICodeNode VisitBlockStatement(BlockStatement node)
-		{
-			currentBlock = node;
-			return base.VisitBlockStatement(node);
-		}
+//		public override ICodeNode VisitBlockStatement(BlockStatement node)
+//		{
+//			currentBlock = node;
+//			return base.VisitBlockStatement(node);
+//		}
 		
 		/// <summary>
 		/// Записва текущия израз, който се обхожда.
@@ -147,6 +157,193 @@ namespace MethodInliner
 //			return base.VisitExpressionStatement(node);
 //		}
 		
+		
+		
+//		public override ICodeNode VisitAssignExpression(AssignExpression node)
+//		{
+//			CodeNodeCollection<Expression> collection = new CodeNodeCollection<Expression>();
+//			collection.Add(node.Expression);
+//			collection = (CodeNodeCollection<Expression>) Visit (collection);
+//			
+//			if (collection.Count > 0 && collection[0].Equals(node.Expression)) {
+//				return node;
+//			}
+//			
+//			node.Expression = collection[collection.Count - 1];
+//			collection[collection.Count - 1] = node;
+//			return collection;
+//		}
+		
+		public override ICodeNode VisitExpressionStatement(ExpressionStatement node)
+		{
+			sideEffects.Clear();
+			currentSideEffect = new SideEffectInfo();
+			
+			ICodeNode result = (ICodeNode) Visit (node.Expression);
+			CodeNodeCollection<Expression> original = result as CodeNodeCollection<Expression>;
+			
+			if (original != null) {
+				var collection = new CodeNodeCollection<Statement>();
+				
+				for (int i = 0; i < original.Count; i++) {
+					collection.Add(new ExpressionStatement(original[i]));
+				}
+				
+				return (CodeNodeCollection<Statement>) Visit(collection);
+			}
+			else {
+				node.Expression = (Expression) result;
+				
+				var assignExp = result as AssignExpression;
+				if (assignExp != null) {
+					var mInvoke = assignExp.Expression as MethodInvocationExpression;
+					if (mInvoke != null && IsSimpleInlineCase(mInvoke)) {
+						return InlineExpansion(mInvoke, assignExp.Target, source);
+					}
+					else {
+						return node;
+					}
+				}
+				else {
+					SideEffectInfo row;
+					MethodInvocationExpression mInvoke;
+					MethodReferenceExpression mRef;
+					var expansion = new CodeNodeCollection<Statement>();
+					
+					for (int i = 0; i < sideEffects.Count; i++) {
+						row = sideEffects[i];
+						VariableDefinition @var;
+						
+						for (int j = 0; j < row.SideEffectsInNode.Count; j++) {
+							mInvoke = row.SideEffectsInNode[j];
+							mRef = mInvoke.Method as MethodReferenceExpression;
+							if (mRef.Method.ReturnType.ReturnType.Name != "Void") {
+								expansion.Add(new ExpressionStatement(new AssignExpression(
+									new VariableReferenceExpression(row.SideEffectsInNodeVar[j]), mInvoke)));
+							}
+							else {
+								expansion.Add(new ExpressionStatement(mInvoke));
+							}
+						}
+						mRef = row.mInvokeNode.Method as MethodReferenceExpression;
+						for (int j = 0; j < row.mInvokeNode.Arguments.Count; j++) {
+							ParameterDefinition paramDef = mRef.Method.Parameters[j];
+							@var = RegisterVariable(paramDef.ParameterType, source.Method);
+							
+							expansion.Add(new ExpressionStatement(new AssignExpression(
+								new VariableReferenceExpression(@var), row.mInvokeNode.Arguments[j])));
+							row.mInvokeNode.Arguments[j] = new VariableReferenceExpression(@var);
+						}
+						
+						//TODO: Трябва да се оптимизира в случая когато има странични ефекти, а няма инлайн
+						//или има странични ефекти останали след последния инлайн.
+						for (int j = 0; j < currentSideEffect.SideEffectsInNode.Count; j++) {
+							mInvoke = currentSideEffect.SideEffectsInNode[j];
+							mRef = mInvoke.Method as MethodReferenceExpression;
+							expansion.Add(new ExpressionStatement(new AssignExpression(
+								new VariableReferenceExpression(currentSideEffect.SideEffectsInNodeVar[j]), mInvoke)));
+						}
+						//endtodo.
+						
+						mRef = row.mInvokeNode.Method as MethodReferenceExpression;
+						
+						if (mRef.Method.ReturnType.ReturnType.Name != "Void") {
+							expansion.Add(new ExpressionStatement(new AssignExpression(
+									new VariableReferenceExpression(row.mInvokeNodeVar), row.mInvokeNode)));
+						}
+						else {
+							expansion.Add(new ExpressionStatement(row.mInvokeNode));
+						}
+					}
+					
+					expansion.Add(node);
+					
+					if (expansion.Count > 1) {
+						return (CodeNodeCollection<Statement>) Visit(expansion);
+					}
+					else {
+						return node;
+					}
+				}
+			}
+		}
+		
+		public override ICodeNode VisitAssignExpression(AssignExpression node)
+		{
+			ICodeNode result;
+			if (node.Expression is MethodInvocationExpression) {
+				var oldExpression = node.Expression;
+				
+				result = (ICodeNode) base.VisitAssignExpression(node);
+				
+				AssignExpression assign = (AssignExpression) result;
+				var varRef = assign.Expression as VariableReferenceExpression;
+				if (varRef != null) {
+					assign.Expression = oldExpression;
+					return assign;
+				}
+			}
+			else {
+				result = (ICodeNode) base.VisitAssignExpression(node);
+			}
+			return result;
+		}
+		
+		public override ICodeNode VisitBinaryExpression(BinaryExpression node)
+		{
+			ICodeNode currentLeft = (ICodeNode) Visit(node.Left);
+			ICodeNode currentRight = (ICodeNode) Visit(node.Right);
+			
+			var argExpand = new CodeNodeCollection<Expression>();
+			
+			var argAsCollection = currentLeft as CodeNodeCollection<Expression>;
+			if (argAsCollection != null) {
+				for (int j = 0; j < argAsCollection.Count - 1; j++) {
+					argExpand.Add(argAsCollection[j]);
+				}
+				node.Left = argAsCollection[argAsCollection.Count - 1];
+			}
+			else {
+				node.Left = (Expression) currentLeft;
+			}
+			
+			argAsCollection = currentRight as CodeNodeCollection<Expression>;
+			if (argAsCollection != null) {
+				for (int j = 0; j < argAsCollection.Count - 1; j++) {
+					argExpand.Add(argAsCollection[j]);
+				}
+				node.Right = argAsCollection[argAsCollection.Count - 1];
+			}
+			else {
+				node.Right = (Expression) currentRight;
+			}
+			
+			if (argExpand.Count > 0) {
+				argExpand.Add(node);
+				return argExpand;
+			}
+			else {
+				return node;
+			}
+		}
+		
+		public override ICodeNode VisitUnaryExpression(UnaryExpression node)
+		{
+			ICodeNode currentOperand = (ICodeNode) Visit(node.Operand);
+			
+			var argAsCollection = currentOperand as CodeNodeCollection<Expression>;
+			if (argAsCollection != null) {
+				node.Operand = argAsCollection[argAsCollection.Count - 1];
+				argAsCollection[argAsCollection.Count - 1] = node;
+				return argAsCollection;
+			}
+			else {
+				node.Operand = (Expression) currentOperand;
+				return node;
+			}
+		}
+		
+		
 		/// <summary>
 		/// Ако извикването на метод е подходящо за inline-ване се записват текущия блок и израз.
 		/// На втори пас се замества с реалния код на целевия метод.
@@ -154,48 +351,47 @@ namespace MethodInliner
 		public override ICodeNode VisitMethodInvocationExpression(MethodInvocationExpression node)
 		{
 			MethodReferenceExpression methodRef = (MethodReferenceExpression) node.Method;
+				
 			if (IsInlineable(methodRef.Method)) {
-				blocks.Add(currentBlock);
-				expressions.Add(currentExpression);
+				currentSideEffect.mInvokeNode = node;
+				currentSideEffect.mInvokeNodeVar = RegisterVariable(methodRef.Method.ReturnType.ReturnType, source.Method);
+				VariableReferenceExpression varRefExp = new VariableReferenceExpression(currentSideEffect.mInvokeNodeVar);
+				sideEffects.Add(currentSideEffect);
+				currentSideEffect = new SideEffectInfo();
+				return varRefExp;
+				
 			}
-			return base.VisitMethodInvocationExpression(node);
-		}
-		
-		public override ICodeNode VisitAssignExpression(AssignExpression node)
-		{
-			CodeNodeCollection<Expression> collection = new CodeNodeCollection<Expression>();
-			collection.Add(node.Expression);
-			collection = (CodeNodeCollection<Expression>) Visit (collection);
+//			else if (HasSideEffects(methodRef.Method)) {
+//				currentSideEffect.SideEffectsInNode.Add(node);
+//				VariableDefinition @var = RegisterVariable(methodRef.Method.ReturnType.ReturnType, source.Method);
+//				currentSideEffect.SideEffectsInNodeVar.Add(@var);
+//				return new VariableReferenceExpression(@var);
+//				
+//			}
 			
-			if (collection.Count > 0 && collection[0].Equals(node.Expression)) {
+			//node.Method = (Expression) Visit(node.Method);
+			
+			var argExpand = new CodeNodeCollection<Expression>();
+			
+			for (int i = 0; i < node.Arguments.Count; i++) {
+				ICodeNode currentArgument = (ICodeNode) Visit(node.Arguments[i]); 
+				var argAsCollection = currentArgument as CodeNodeCollection<Expression>;
+				
+				if (argAsCollection != null) {
+					for (int j = 0; j < argAsCollection.Count - 1; j++) {
+						argExpand.Add(argAsCollection[j]);
+					}
+					node.Arguments[i] = argAsCollection[argAsCollection.Count - 1];
+				}
+			}
+			if (argExpand.Count > 0) {
+				argExpand.Add(node);
+				return argExpand;
+			}
+			else {
 				return node;
 			}
-			
-			return collection;
 		}
-		
-		public override ICodeNode VisitExpressionStatement(ExpressionStatement node)
-		{
-			ICodeNode result = (ICodeNode) Visit (node.Expression);
-			CodeNodeCollection<Expression> original = result as CodeNodeCollection<Expression>;
-			
-			if (original != null) {
-				var collection = new CodeNodeCollection<Statement>();
-				
-				for (int i = 0; i < original.Count - 1; i++) {
-					collection.Add(new ExpressionStatement(original[i]));
-				}
-				node.Expression =  original[original.Count - 1];
-				collection.Add(node);
-				
-				return collection;
-			}
-			
-			node.Expression = (Expression) result;
-			return node;
-		}
-		
-		
 		
 		
 		public override ICodeNode VisitIfStatement(IfStatement node)
@@ -232,9 +428,69 @@ namespace MethodInliner
 			return true;
 		}
 		
-		private void InlineInCollection(CodeNodeCollection<Statement> collection)
+		private bool IsSimpleInlineCase(MethodInvocationExpression mInvoke)
 		{
+			foreach (Expression arg in mInvoke.Arguments) {
+				if (!(arg is ArgumentReferenceExpression || arg is VariableReferenceExpression
+				    || arg is LiteralExpression)) {
+					return false;
+				}
+			}
 			
+			return true;
+		}
+		
+		private CodeNodeCollection<Statement> InlineExpansion(MethodInvocationExpression mInvoke, Expression target, AstMethodDefinition source)
+		{
+			ILtoASTTransformer il2astTransformer = new ILtoASTTransformer();
+			AstMethodDefinition ast;
+			
+			AstPreInsertFixer preFixer = new AstPreInsertFixer();
+			
+			MethodReferenceExpression mRef = mInvoke.Method as MethodReferenceExpression;
+			MethodDefinition mDef = mRef.Method.Resolve();
+			var result = new CodeNodeCollection<Statement> ();
+			ParameterDefinition paramDef;
+			Expression arg;
+			
+			ReturnVariable = null;
+			ReturnParameter = null;
+			if (target == null) {
+				if (mDef.ReturnType.ReturnType.Name != "Void") {
+					ReturnVariable = RegisterVariable(mDef.ReturnType.ReturnType, source.Method);
+				}
+			} else if (target is VariableReferenceExpression) {
+				ReturnVariable = (target as VariableReferenceExpression).Variable;
+			} else if (target is ArgumentReferenceExpression) {
+				ReturnParameter = (target as ArgumentReferenceExpression).Parameter;
+			}
+			
+			for (int current = mInvoke.Arguments.Count - 1; current >= 0 ; current--) {
+				paramDef = mRef.Method.Parameters[current];
+				arg = mInvoke.Arguments[current];
+				paramVarSubstitution[paramDef] = arg;
+			}
+		
+			//Ако вече е inline-вано
+			if (mDef.Body.Variables.Count != 0 && (!localVarSubstitution.ContainsKey(mDef.Body.Variables[0]))) {
+				foreach (VariableDefinition variable in mDef.Body.Variables) {
+					localVarSubstitution[variable] = RegisterVariable(variable.VariableType, source.Method);
+				}
+			}
+			
+//			foreach (KeyValuePair<VariableDefinition, VariableDefinition> pair in localVarSubstitution) {
+//				Console.WriteLine("!!! {0} -> {1}", pair.Key.Name, pair.Value.Name);
+//			}
+			
+			ast = preFixer.FixUp(il2astTransformer.Transform(mDef), paramVarSubstitution);
+			
+			
+		
+			for (int i = 0; i < ast.Block.Statements.Count; i++ ) {
+				result.Add(ast.Block.Statements[i]);
+			}
+			
+			return result;
 		}
 		
 		/// <summary>
@@ -243,85 +499,85 @@ namespace MethodInliner
 		/// </summary>
 		private void FixUpMethodCalls(AstMethodDefinition source)
 		{
-			ILtoASTTransformer il2astTransformer = new ILtoASTTransformer();
-			AstMethodDefinition ast;
-			int expressionIndex;
-			
-			MethodInvocationExpression mInvoke;
-			MethodReferenceExpression mRef;
-			MethodDefinition mDef;
-			
-			AstPreInsertFixer preFixer = new AstPreInsertFixer();
-			
-			for (int i = 0; i < blocks.Count; i++) {
-				expressionIndex = blocks[i].Statements.IndexOf(expressions[i]);
-				
-				//При рекурсивно извикване на inline-вания метод в себе си се получава -1!!!
-				if (expressionIndex >= 0) {
-					blocks[i].Statements.RemoveAt(expressionIndex);
-					
-					mInvoke = expressions[i].Expression as MethodInvocationExpression;
-					
-					//отчитаме случая само когато резултатът от метода е присвоен на променлива
-					//TODO: Извикване на y(f(x), 5) -> да се види в този случай...
-					if (mInvoke == null) {
-						mInvoke = (expressions[i].Expression as AssignExpression).Expression as MethodInvocationExpression;
-					}
-					
-					mRef = mInvoke.Method as MethodReferenceExpression;
-					mDef = mRef.Method.Resolve();
-					HasSideEffects(mDef);
-					
-					//Използване на променливата, на която е присвоен резултатът от метода за
-					//междинните резултати преди всеки return
-					if (mDef.ReturnType.ReturnType.Name != "Void") {
-						AssignExpression assign = expressions[i].Expression as AssignExpression;
-						if (assign != null) {
-							var varRefExp = assign.Target as VariableReferenceExpression;
-							if (varRefExp != null) {
-								ReturnVariable = varRefExp.Variable;
-							}
-							else {
-								var varDeclExp = (assign.Target as VariableDeclarationExpression).Variable;
-								if (varDeclExp != null) {
-									ReturnVariable = varDeclExp;
-									blocks[i].Statements.Insert(expressionIndex, new ExpressionStatement(
-										new VariableDeclarationExpression(ReturnVariable.Resolve())));
-									expressionIndex++;									
-								}
-							}
-						}
-					}
-					
-					Expression arg;
-					ParameterDefinition paramDef;
-					for (int current = mInvoke.Arguments.Count - 1; current >= 0 ; current--) {
-						paramDef = mRef.Method.Parameters[current];
-						arg = mInvoke.Arguments[current];
-
-						VariableDefinition @var = RegisterVariable(paramDef.ParameterType, source.Method);
-						paramVarSubstitution[paramDef] = @var;
-						blocks[i].Statements.Insert(expressionIndex, new ExpressionStatement(
-								new AssignExpression(new VariableDeclarationExpression(@var), arg)));
-						expressionIndex++;
-					}
-				}
-				else {
-					continue;
-				}
-				
-				if (mDef.Body.Variables.Count != 0 && (!localVarSubstitution.ContainsKey(mDef.Body.Variables[0]))) {
-					foreach (VariableDefinition variable in mDef.Body.Variables) {
-						localVarSubstitution[variable] = RegisterVariable(variable.VariableType, source.Method);
-					}
-				}
-				
-				ast = preFixer.FixUp(il2astTransformer.Transform(mDef), paramVarSubstitution);
-				
-				for (int j = ast.Block.Statements.Count - 1; j >= 0; j-- ) {
-					blocks[i].Statements.Insert(expressionIndex, ast.Block.Statements[j]);
-				}
-			}
+//			ILtoASTTransformer il2astTransformer = new ILtoASTTransformer();
+//			AstMethodDefinition ast;
+//			int expressionIndex;
+//			
+//			MethodInvocationExpression mInvoke;
+//			MethodReferenceExpression mRef;
+//			MethodDefinition mDef;
+//			
+//			AstPreInsertFixer preFixer = new AstPreInsertFixer();
+//			
+//			for (int i = 0; i < blocks.Count; i++) {
+//				expressionIndex = blocks[i].Statements.IndexOf(expressions[i]);
+//				
+//				//При рекурсивно извикване на inline-вания метод в себе си се получава -1!!!
+//				if (expressionIndex >= 0) {
+//					blocks[i].Statements.RemoveAt(expressionIndex);
+//					
+//					mInvoke = expressions[i].Expression as MethodInvocationExpression;
+//					
+//					//отчитаме случая само когато резултатът от метода е присвоен на променлива
+//					//TODO: Извикване на y(f(x), 5) -> да се види в този случай...
+//					if (mInvoke == null) {
+//						mInvoke = (expressions[i].Expression as AssignExpression).Expression as MethodInvocationExpression;
+//					}
+//					
+//					mRef = mInvoke.Method as MethodReferenceExpression;
+//					mDef = mRef.Method.Resolve();
+//					HasSideEffects(mDef);
+//					
+//					//Използване на променливата, на която е присвоен резултатът от метода за
+//					//междинните резултати преди всеки return
+//					if (mDef.ReturnType.ReturnType.Name != "Void") {
+//						AssignExpression assign = expressions[i].Expression as AssignExpression;
+//						if (assign != null) {
+//							var varRefExp = assign.Target as VariableReferenceExpression;
+//							if (varRefExp != null) {
+//								ReturnVariable = varRefExp.Variable;
+//							}
+//							else {
+//								var varDeclExp = (assign.Target as VariableDeclarationExpression).Variable;
+//								if (varDeclExp != null) {
+//									ReturnVariable = varDeclExp;
+//									blocks[i].Statements.Insert(expressionIndex, new ExpressionStatement(
+//										new VariableDeclarationExpression(ReturnVariable.Resolve())));
+//									expressionIndex++;									
+//								}
+//							}
+//						}
+//					}
+//					
+//					Expression arg;
+//					ParameterDefinition paramDef;
+//					for (int current = mInvoke.Arguments.Count - 1; current >= 0 ; current--) {
+//						paramDef = mRef.Method.Parameters[current];
+//						arg = mInvoke.Arguments[current];
+//
+//						VariableDefinition @var = RegisterVariable(paramDef.ParameterType, source.Method);
+//						paramVarSubstitution[paramDef] = @var;
+//						blocks[i].Statements.Insert(expressionIndex, new ExpressionStatement(
+//								new AssignExpression(new VariableDeclarationExpression(@var), arg)));
+//						expressionIndex++;
+//					}
+//				}
+//				else {
+//					continue;
+//				}
+//				
+//				if (mDef.Body.Variables.Count != 0 && (!localVarSubstitution.ContainsKey(mDef.Body.Variables[0]))) {
+//					foreach (VariableDefinition variable in mDef.Body.Variables) {
+//						localVarSubstitution[variable] = RegisterVariable(variable.VariableType, source.Method);
+//					}
+//				}
+//				
+//				ast = preFixer.FixUp(il2astTransformer.Transform(mDef), paramVarSubstitution);
+//				
+//				for (int j = ast.Block.Statements.Count - 1; j >= 0; j-- ) {
+//					blocks[i].Statements.Insert(expressionIndex, ast.Block.Statements[j]);
+//				}
+//			}
 		}
 		
 		/// <summary>
@@ -350,7 +606,7 @@ namespace MethodInliner
 		{
 			#region Fields
 			
-			private Dictionary<ParameterDefinition, VariableDefinition> paramVarSubstitution;
+			private Dictionary<ParameterDefinition, Expression> paramVarSubstitution;
 			private AstMethodDefinition source;
 			private LabeledStatement exitLabel;
 			private static int exitNumber = 0;
@@ -372,7 +628,7 @@ namespace MethodInliner
 			/// Добавя уникални етикети, за да може да се осъществи от return към goto в 
 			/// края на inline-вания метод.
 			/// </summary>
-			public AstMethodDefinition FixUp(AstMethodDefinition source, Dictionary<ParameterDefinition, VariableDefinition> paramVarSubstitution)
+			public AstMethodDefinition FixUp(AstMethodDefinition source, Dictionary<ParameterDefinition, Expression> paramVarSubstitution)
 			{
 				this.source = source;
 				this.paramVarSubstitution = paramVarSubstitution;
@@ -413,8 +669,17 @@ namespace MethodInliner
 //					block.Statements.Add(new ExpressionStatement(new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
 //					block.Statements.Add(@goto);
 					CodeNodeCollection<Statement> collection = new CodeNodeCollection<Statement>();
-					collection.Add((new ExpressionStatement(
-						new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression))));
+					if (ReturnVariable != null) {
+						collection.Add(new ExpressionStatement(
+							new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
+					}
+					else if (ReturnParameter != null) {
+						collection.Add(new ExpressionStatement(
+							new AssignExpression(new ArgumentReferenceExpression(ReturnParameter), node.Expression)));
+					}
+					else {
+						collection.Add(new ExpressionStatement(node.Expression));
+					}
 					collection.Add(@goto);
 					return Visit<CodeNodeCollection<Statement>, Statement>(collection);
 //					return collection;
@@ -452,9 +717,9 @@ namespace MethodInliner
 			
 			public override ICodeNode VisitArgumentReferenceExpression(ArgumentReferenceExpression node)
 			{
-				VariableDefinition varDef;
-				if (paramVarSubstitution.TryGetValue(node.Parameter.Resolve(), out varDef)) {
-					return new VariableReferenceExpression(varDef);
+				Expression exp;
+				if (paramVarSubstitution.TryGetValue(node.Parameter.Resolve(), out exp)) {
+					return exp;
 				}
 				return base.VisitArgumentReferenceExpression(node);
 			}
@@ -581,6 +846,28 @@ namespace MethodInliner
 		public SideEffectsAttribute(bool HasSideEffects)
 		{
 			this.HasSideEffects = HasSideEffects;
+		}
+	}
+	
+	internal class SideEffectInfo
+	{
+		public MethodInvocationExpression mInvokeNode = null;
+		public VariableDefinition mInvokeNodeVar = null;
+		public List<MethodInvocationExpression> SideEffectsInNode = new List<MethodInvocationExpression>();
+		public List<VariableDefinition> SideEffectsInNodeVar = new List<VariableDefinition>();
+		
+		
+		public SideEffectInfo ()
+		{
+		}
+
+		public SideEffectInfo (MethodInvocationExpression mInvokeNode, VariableDefinition mInvokeNodeVar,
+		                       List<MethodInvocationExpression> SideEffectsInNode, List<VariableDefinition> SideEffectsInNodeVar)
+		{
+			this.mInvokeNode = mInvokeNode;
+			this.mInvokeNodeVar = mInvokeNodeVar;
+			this.SideEffectsInNode = SideEffectsInNode;
+			this.SideEffectsInNodeVar = SideEffectsInNodeVar;
 		}
 	}
 }
