@@ -135,6 +135,16 @@ namespace Cecil.Decompiler.Ast {
 				return VisitPropertyReferenceExpression ((PropertyReferenceExpression) node);
 			case CodeNodeType.TypeReferenceExpression:
 				return VisitTypeReferenceExpression ((TypeReferenceExpression) node);
+			case CodeNodeType.CodeNodeCollection:
+				if (node is CodeNodeCollection<Expression>) {
+					return Visit<CodeNodeCollection<Expression>, Expression> ((CodeNodeCollection<Expression>) node);	
+				}
+				else if (node is CodeNodeCollection<Statement>) {
+					return Visit<CodeNodeCollection<Statement>, Statement> ((CodeNodeCollection<Statement>) node);	
+				}
+				else {
+					throw new ArgumentException ();
+				}
 			default:
 				throw new ArgumentException ();
 			}
