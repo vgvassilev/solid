@@ -1,8 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3683
+# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test.csproj", "{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{58DD339F-46EC-4C26-8AC7-76EBC767C701}"
+	ProjectSection(SolutionItems) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,5 +20,12 @@ Global
 		{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382} = {58DD339F-46EC-4C26-8AC7-76EBC767C701}
 	EndGlobalSection
 EndGlobal

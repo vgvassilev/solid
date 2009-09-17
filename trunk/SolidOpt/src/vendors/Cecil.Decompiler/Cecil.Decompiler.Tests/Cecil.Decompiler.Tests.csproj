@@ -130,9 +130,9 @@
       <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
       <Name>nunit.core.interfaces.dll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj">
+    <ProjectReference Include="..\..\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework.dll</Name>
+      <Name>nunit.framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

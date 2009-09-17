@@ -1,0 +1,107 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</ProjectGuid>
+    <RootNamespace>NUnit.Framework</RootNamespace>
+    <AssemblyName>nunit.framework</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractAsserter.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Assert.cs" />
+    <Compile Include="Assertion.cs" />
+    <Compile Include="AssertionException.cs" />
+    <Compile Include="AssertionFailureMessage.cs" />
+    <Compile Include="AssertionHelper.cs" />
+    <Compile Include="CategoryAttribute.cs" />
+    <Compile Include="CollectionAssert.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DescriptionAttribute.cs" />
+    <Compile Include="ExpectedExceptionAttribute.cs" />
+    <Compile Include="ExplicitAttribute.cs" />
+    <Compile Include="FileAssert.cs" />
+    <Compile Include="IAsserter.cs" />
+    <Compile Include="IExpectException.cs" />
+    <Compile Include="IgnoreAttribute.cs" />
+    <Compile Include="IgnoreException.cs" />
+    <Compile Include="IncludeExcludeAttributes.cs" />
+    <Compile Include="MessageWriter.cs" />
+    <Compile Include="MsgUtils.cs" />
+    <Compile Include="OldTestCase.cs" />
+    <Compile Include="PropertyAttribute.cs" />
+    <Compile Include="SetCultureAttribute.cs" />
+    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="SetUpAttribute.cs" />
+    <Compile Include="SetUpFixtureAttribute.cs" />
+    <Compile Include="StringAssert.cs" />
+    <Compile Include="SuiteAttribute.cs" />
+    <Compile Include="TearDownAttribute.cs" />
+    <Compile Include="TestAttribute.cs" />
+    <Compile Include="TestFixtureAttribute.cs" />
+    <Compile Include="TestFixtureSetUpAttribute.cs" />
+    <Compile Include="TestFixtureTearDownAttribute.cs" />
+    <Compile Include="TextMessageWriter.cs" />
+    <Compile Include="Constraints\BinaryOperations.cs" />
+    <Compile Include="Constraints\CollectionConstraints.cs" />
+    <Compile Include="Constraints\ComparisonConstraints.cs" />
+    <Compile Include="Constraints\Constraint.cs" />
+    <Compile Include="Constraints\ConstraintBuilder.cs" />
+    <Compile Include="Constraints\ContainsConstraint.cs" />
+    <Compile Include="Constraints\EmptyConstraint.cs" />
+    <Compile Include="Constraints\EqualConstraint.cs" />
+    <Compile Include="Constraints\Numerics.cs" />
+    <Compile Include="Constraints\PrefixConstraints.cs" />
+    <Compile Include="Constraints\PropertyConstraint.cs" />
+    <Compile Include="Constraints\SameAsConstraint.cs" />
+    <Compile Include="Constraints\StringConstraints.cs" />
+    <Compile Include="Constraints\TypeConstraints.cs" />
+    <Compile Include="SyntaxHelpers\Has.cs" />
+    <Compile Include="SyntaxHelpers\Is.cs" />
+    <Compile Include="SyntaxHelpers\List.cs" />
+    <Compile Include="SyntaxHelpers\ListMapper.cs" />
+    <Compile Include="SyntaxHelpers\Text.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
