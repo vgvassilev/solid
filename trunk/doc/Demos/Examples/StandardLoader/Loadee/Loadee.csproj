@@ -43,20 +43,20 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\SolidOpt\src\SolidOpt.csproj">
+      <Project>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</Project>
+      <Name>SolidOpt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MethodInliner\MethodInliner.csproj">
       <Project>{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}</Project>
       <Name>MethodInliner</Name>

@@ -101,11 +101,20 @@ namespace Loadee
 
 		public static void InlineTest()
 		{
-			int a = 0;
-			Random rnd = new Random();
+//			int a = 0;
+//			Random rnd = new Random();
 			int p = 4;
-			p = Inlinee(p, 18);
-			Console.WriteLine(a);
+			p = Inlinee(2, 18);
+			Console.WriteLine(p);
+//			TestThis.Inc();
+//			TestThis.Inc(6);
+//			TestThis td = new TestThis();
+//			int t = td.Test();
+//			Console.WriteLine(t);
+//			int f = 5;
+//			float f1 = 5.5f;
+//			Console.WriteLine(f + f1);
+			
 //			Console.WriteLine(p);
 //			Inlinee1(0, 1, 2);
 //			byte f = 2;
@@ -176,3 +185,26 @@ namespace Loadee
 //		}
 	}
 }
+	class TestThis
+	{
+		private static int number = 0;
+		
+		[MethodInliner.Inlineable]
+		public int Test()
+		{
+			Console.WriteLine("This is this");
+			return 0;
+		}
+		
+		[MethodInliner.Inlineable]
+		public static int Inc ()
+		{
+			return number + 1;
+		}
+		
+		[MethodInliner.Inlineable]
+		public static int Inc (int number)
+		{
+			return TestThis.number + number;
+		}
+	}

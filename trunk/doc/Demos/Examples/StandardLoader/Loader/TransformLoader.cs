@@ -53,6 +53,8 @@ namespace TransformLoader
 			
 			AssemblyDefinition assembly = AssemblyFactory.GetAssembly(args[0]);
 			
+//			assembly.MainModule.LoadSymbols();
+			
 			foreach (ModuleDefinition module in assembly.Modules)
 				foreach (TypeDefinition type in module.Types) 
 					for (int i = 0; i < type.Methods.Count; i++) {
@@ -75,9 +77,19 @@ namespace TransformLoader
 						Console.WriteLine("Before AST2ASTTransformation");
 						WriteAST(ast.Block);
 						
-						foreach (ITransform<AstMethodDefinition> transformer in AST2ASTTransformers) {
-							ast = transformer.Transform(ast);
+//						AST2ASTTransformers.Reverse();
+						List<string> list = new List<string>(){"InlineTransformer", "ConstantFoldingTransformer"};
+						foreach (string s in list) {
+							foreach (ITransform<AstMethodDefinition> transformer in AST2ASTTransformers) {
+								Console.WriteLine(transformer.GetType().Name);
+								if (transformer.GetType().Name == s) {
+									
+									ast = transformer.Transform(ast);
+								}
+							}
+							
 						}
+						
 						
 						Console.WriteLine("After AST2ASTTransformation");
 						WriteAST(ast.Block);
