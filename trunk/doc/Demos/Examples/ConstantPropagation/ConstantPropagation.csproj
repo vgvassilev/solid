@@ -47,6 +47,10 @@
       <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AstMethodDefinitionModel\AstMethodDefinitionModel.csproj">
+      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
+      <Name>AstMethodDefinitionModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ILtoAST\ILtoAST.csproj">
       <Project>79B42389-27F8-460B-9CDF-65342EA6699C</Project>
       <Name>ILtoAST</Name>

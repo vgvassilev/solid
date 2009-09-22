@@ -25,7 +25,7 @@ namespace ConstantPropagation
 	public class ConstantPropagationTransformer : BaseCodeTransformer, ITransform<AstMethodDefinition>
 	{
 		
-		private var substitutions = new Dictionary<Expression, Expression>();
+		private Dictionary<Expression, Expression> substitutions = new Dictionary<Expression, Expression>();
 		
 		public ConstantPropagationTransformer()
 		{
@@ -39,7 +39,7 @@ namespace ConstantPropagation
 		
 		public override ICodeNode VisitAssignExpression(AssignExpression node)
 		{
-			base.VisitAssignExpression(node);
+			return base.VisitAssignExpression(node);
 //			if (node.Target is VariableReferenceExpression ||)
 			
 			

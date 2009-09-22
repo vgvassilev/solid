@@ -74,14 +74,13 @@ namespace TransformLoader
 						
 						AstMethodDefinition ast = IL2ASTtransformer.Transform(method);
 						
-						Console.WriteLine("Before AST2ASTTransformation");
-						WriteAST(ast.Block);
+//						Console.WriteLine("Before AST2ASTTransformation");
+//						WriteAST(ast.Block);
 						
-//						AST2ASTTransformers.Reverse();
 						List<string> list = new List<string>(){"InlineTransformer", "ConstantFoldingTransformer"};
 						foreach (string s in list) {
 							foreach (ITransform<AstMethodDefinition> transformer in AST2ASTTransformers) {
-								Console.WriteLine(transformer.GetType().Name);
+//								Console.WriteLine(transformer.GetType().Name);
 								if (transformer.GetType().Name == s) {
 									
 									ast = transformer.Transform(ast);
@@ -91,8 +90,11 @@ namespace TransformLoader
 						}
 						
 						
-						Console.WriteLine("After AST2ASTTransformation");
-						WriteAST(ast.Block);
+//						Console.WriteLine("After AST2ASTTransformation");
+//						WriteAST(ast.Block);
+						
+						Console.WriteLine(method.ToString());
+						WriteCode(ast.Block);
 						
 //						method = AST2ILtransformer.Transform(ast);
 //						
@@ -112,11 +114,14 @@ namespace TransformLoader
 		{
 			CodeVisitor codeVisitor = new CodeVisitor();
 			codeVisitor.Visit(stmt);
-			
+		}
+		
+		private void WriteCode(Cecil.Decompiler.Ast.Statement stmt)
+		{
 			Cecil.Decompiler.Languages.ILanguage csharpLang = Cecil.Decompiler.Languages.CSharp.GetLanguage(
 				Cecil.Decompiler.Languages.CSharpVersion.V1);
 			
-			var writer = csharpLang.GetWriter (new Cecil.Decompiler.Languages.PlainTextFormatter (Console.Out));
+			var writer = csharpLang.GetWriter (new Cecil.Decompiler.Languages.ColoredConsoleFormatter());
 
 			writer.Write (stmt);
 		}
