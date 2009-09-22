@@ -150,6 +150,7 @@
     <Compile Include="Cecil.Decompiler.Cil\InstructionData.cs" />
     <Compile Include="Cecil.Decompiler.Cil\InstructionDispatcher.cs" />
     <Compile Include="Cecil.Decompiler.Languages\BaseLanguageWriter.cs" />
+    <Compile Include="Cecil.Decompiler.Languages\ColoredConsoleFormatter.cs" />
     <Compile Include="Cecil.Decompiler.Languages\CSharp.cs" />
     <Compile Include="Cecil.Decompiler.Languages\CSharpWriter.cs" />
     <Compile Include="Cecil.Decompiler.Languages\IFormatter.cs" />
