@@ -77,7 +77,7 @@ namespace TransformLoader
 //						Console.WriteLine("Before AST2ASTTransformation");
 //						WriteAST(ast.Block);
 						
-						List<string> list = new List<string>(){"InlineTransformer", "ConstantFoldingTransformer"};
+						List<string> list = new List<string>(){"InlineTransformer", "SimplifyExpressionTransformer", "ConstantFoldingTransformer"};
 						foreach (string s in list) {
 							foreach (ITransform<AstMethodDefinition> transformer in AST2ASTTransformers) {
 //								Console.WriteLine(transformer.GetType().Name);

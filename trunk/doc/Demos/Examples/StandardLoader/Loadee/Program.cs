@@ -205,6 +205,7 @@ namespace Loadee
 		[MethodInliner.Inlineable]
 		public static int Inc (int number)
 		{
-			return TestThis.number + number;
+			return (TestThis.number + number + 1) * (number + TestThis.number + 1);
+			//return (TestThis.number + number + 1) * (1 + number + TestThis.number);
 		}
 	}

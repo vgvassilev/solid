@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3683
+# SharpDevelop 3.1.0.4977
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Loader\Loader.csproj", "{39655872-F4B6-4698-B326-81B3DA707192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loadee", "Loadee\Loadee.csproj", "{7CCE9049-76C5-4D92-9731-FB375C60F9B1}"
@@ -43,6 +43,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantFolding", "..\ConstantFolding\ConstantFolding.csproj", "{68F2A166-BED6-44F3-9440-3DDF412F4BA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantPropagation", "..\ConstantPropagation\ConstantPropagation.csproj", "{1E227DA0-76C7-499C-BFB2-D11E6F212445}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplifyExpresson", "..\SimplifyExpresson\SimplifyExpresson.csproj", "{29CE04D4-BB40-4638-800F-5EBADAB52B69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,6 +120,10 @@ Global
 		{1E227DA0-76C7-499C-BFB2-D11E6F212445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1E227DA0-76C7-499C-BFB2-D11E6F212445}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1E227DA0-76C7-499C-BFB2-D11E6F212445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CE04D4-BB40-4638-800F-5EBADAB52B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CE04D4-BB40-4638-800F-5EBADAB52B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CE04D4-BB40-4638-800F-5EBADAB52B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CE04D4-BB40-4638-800F-5EBADAB52B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ED1BE103-1699-4116-A732-616BEB142EB2} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
