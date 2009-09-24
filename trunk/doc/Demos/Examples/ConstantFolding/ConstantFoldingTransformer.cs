@@ -210,7 +210,57 @@ namespace ConstantFolding
 		
 		public override ICodeNode VisitUnaryExpression(UnaryExpression node)
 		{
-			return base.VisitUnaryExpression(node);
+			base.VisitUnaryExpression(node);
+			
+			var operand = node.Operand as LiteralExpression;
+			CastExpression operandCast = null;
+			if (operand == null && node.Operand is CastExpression) {
+				operandCast = node.Operand as CastExpression;
+				operand = operandCast.Expression as LiteralExpression;
+			}
+			
+			if (operand != null) {
+				if (operandCast != null) {
+					operand.Value = Cast(operand.Value, operandCast.TargetType);
+				}
+				switch (node.Operator) {
+					#region Arithmetic
+					case UnaryOperator.Negate :
+						if (operand.Value is Int32) return new LiteralExpression (-(Int32)operand.Value);
+						if (operand.Value is Int64) return new LiteralExpression (-(Int64)operand.Value);
+						if (operand.Value is UInt32) return new LiteralExpression (-(UInt32)operand.Value);
+//						if (operand.Value is UInt64) return new LiteralExpression (-(UInt64)operand.Value);
+						if (operand.Value is Single) return new LiteralExpression (-(Single)operand.Value);
+						if (operand.Value is Double) return new LiteralExpression (-(Double)operand.Value);
+						throw new NotImplementedException();
+						
+//					case UnaryOperator.PostDecrement :
+//					case UnaryOperator.PostIncrement :
+//					case UnaryOperator.PreDecrement :
+//					case UnaryOperator.PreIncrement :
+//					case UnaryOperator.PreIncrement :
+						
+					#endregion
+					
+					#region Bitwise
+					case UnaryOperator.BitwiseNot :
+						if (operand.Value is Int32) return new LiteralExpression (~(Int32)operand.Value);
+						if (operand.Value is Int64) return new LiteralExpression (~(Int64)operand.Value);
+						if (operand.Value is UInt32) return new LiteralExpression (~(UInt32)operand.Value);
+						if (operand.Value is UInt64) return new LiteralExpression (~(UInt64)operand.Value);
+						throw new NotImplementedException();
+					#endregion
+					
+					#region Logical
+					case UnaryOperator.LogicalNot :
+						if (operand.Value is Boolean) return new LiteralExpression (!(Boolean)operand.Value);
+						throw new NotImplementedException();
+					#endregion
+				}
+			}
+			
+			return node;
+			
 		}
 		
 		private object Cast(object value, TypeReference targetType)
