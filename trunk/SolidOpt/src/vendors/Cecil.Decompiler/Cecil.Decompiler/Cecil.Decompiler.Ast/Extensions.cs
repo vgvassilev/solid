@@ -37,7 +37,8 @@ namespace Cecil.Decompiler.Ast {
 		{
 			var writer = new StringWriter ();
 			var language = CSharp.GetLanguage (CSharpVersion.None).GetWriter (
-				new PlainTextFormatter (writer));
+//				new PlainTextFormatter (writer));
+				new ColoredConsoleFormatter());
 
 			language.Write (expression);
 

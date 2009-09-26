@@ -44,6 +44,7 @@ namespace Cecil.Decompiler.Languages
         public void WriteToken(string token)
         {
             Console.ForegroundColor = TokenColor;
+            WriteIndent();
             Console.Write(token);
         }
 
