@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator.Mappers
+namespace SolidOpt.Services.Subsystems.Configurator.Mappers
 {
 	/// <summary>
 	/// Единичният (прозрачният) mapper. Използва се за тестване и демонстрация какво би трябвало

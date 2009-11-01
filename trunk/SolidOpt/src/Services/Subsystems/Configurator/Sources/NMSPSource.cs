@@ -11,9 +11,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
-using SolidOpt.Core.Providers.StreamProvider;
+using SolidOpt.Services.Subsystems.HetAccess;
 
-namespace SolidOpt.Core.Configurator.Sources
+namespace SolidOpt.Services.Subsystems.Configurator.Sources
 {
 	/// <summary>
 	/// Generates intermediate represenation (Dictionary) from the NMSP file format. 

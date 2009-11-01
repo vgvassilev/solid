@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator.Mappers
+namespace SolidOpt.Services.Subsystems.Configurator.Mappers
 {
 	/// <summary>
 	/// Базовия клас на шаблона композиция, който третира листата и върховете на структурата по

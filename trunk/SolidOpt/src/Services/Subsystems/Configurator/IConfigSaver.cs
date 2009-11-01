@@ -8,7 +8,7 @@
 
 using System;
 
-namespace SolidOpt.Core.Configurator
+namespace SolidOpt.Services.Subsystems.Configurator
 {
 	/// <summary>
 	/// Description of IConfigSaver.

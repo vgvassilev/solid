@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator.Sources
+namespace SolidOpt.Services.Subsystems.Configurator.Sources
 {
 	/// <summary>
 	/// Description of IConfigLoader.

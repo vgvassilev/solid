@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator
+namespace SolidOpt.Services.Subsystems.Configurator
 {
 	/// <summary>
 	/// 

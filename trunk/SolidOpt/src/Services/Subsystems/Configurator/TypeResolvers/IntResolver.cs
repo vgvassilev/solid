@@ -9,7 +9,7 @@ using System;
 
 //using System.Runtime.InteropServices;
 
-namespace SolidOpt.Core.Configurator.TypeResolvers
+namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
 	/// Description of IntResolver.

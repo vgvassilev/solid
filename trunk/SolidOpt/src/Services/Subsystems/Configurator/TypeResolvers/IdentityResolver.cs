@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator.TypeResolvers
+namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
 	/// Description of EntryPoint.

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 using SolidOpt.Core.Services;
 
-namespace SolidOpt.Optimizer.Transformers
+namespace SolidOpt.Services.Transformations
 {
 	/// <summary>
 	/// Description of ITransform.

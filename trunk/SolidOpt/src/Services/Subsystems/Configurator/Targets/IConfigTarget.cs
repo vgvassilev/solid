@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator.Targets
+namespace SolidOpt.Services.Subsystems.Configurator.Targets
 {
 	/// <summary>
 	/// Description of IConfigSaver.

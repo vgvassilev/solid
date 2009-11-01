@@ -6,7 +6,7 @@
  * 
  */
 
-namespace SolidOpt.Cache
+namespace SolidOpt.Services.Subsystems.Cache
 {
 	using System;
 	using System.Collections.Generic;

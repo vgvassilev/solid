@@ -13,12 +13,12 @@ using System.IO;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-using SolidOpt.Core.Providers.StreamProvider;
+using SolidOpt.Services.Subsystems.HetAccess;
 
 using System.Reflection;
 using System.Diagnostics;
 
-namespace SolidOpt.Core.Configurator.Targets
+namespace SolidOpt.Services.Subsystems.Configurator.Targets
 {
 	/// <summary>
 	/// This class is used to build assemblies from the Config IR (CIR). It uses Mono.Cecil to 

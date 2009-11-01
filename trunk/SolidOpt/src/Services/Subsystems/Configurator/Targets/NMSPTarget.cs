@@ -10,9 +10,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-using SolidOpt.Core.Providers.StreamProvider;
+using SolidOpt.Services.Subsystems.HetAccess;
 
-namespace SolidOpt.Core.Configurator.Targets
+namespace SolidOpt.Services.Subsystems.Configurator.Targets
 {
 	/// <summary>
 	/// Description of NMSPBuilder.

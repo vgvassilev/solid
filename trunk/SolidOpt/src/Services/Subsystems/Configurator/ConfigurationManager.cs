@@ -11,14 +11,14 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 
-using SolidOpt.Cache;
-using SolidOpt.Core.Configurator.Targets;
-using SolidOpt.Core.Configurator.Sources;
-using SolidOpt.Core.Providers.StreamProvider;
-using SolidOpt.Core.Configurator.Mappers;
-using SolidOpt.Core.Configurator.TypeResolvers;
+using SolidOpt.Services.Subsystems.Cache;
+using SolidOpt.Services.Subsystems.Configurator.Targets;
+using SolidOpt.Services.Subsystems.Configurator.Sources;
+using SolidOpt.Services.Subsystems.HetAccess;
+using SolidOpt.Services.Subsystems.Configurator.Mappers;
+using SolidOpt.Services.Subsystems.Configurator.TypeResolvers;
 
-namespace SolidOpt.Core.Configurator
+namespace SolidOpt.Services.Subsystems.Configurator
 {
 	/// <summary>
 	/// Description of CofigurationManager.

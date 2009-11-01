@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-using SolidOpt.Core.Providers.StreamProvider;
+using SolidOpt.Services.Subsystems.HetAccess;
 
 using System.Diagnostics;
 using System.Reflection;
@@ -43,7 +43,7 @@ using System.Reflection;
 //?    Ldtoken,
 
 
-namespace SolidOpt.Core.Configurator.Sources
+namespace SolidOpt.Services.Subsystems.Configurator.Sources
 {
 	/// <summary>
 	/// Generates CIR (Dictionary) from assembly.

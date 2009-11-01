@@ -9,7 +9,7 @@
 using System;
 using System.IO;
 
-namespace SolidOpt.Core.Providers.StreamProvider
+namespace SolidOpt.Services.Subsystems.HetAccess.Importers
 {
 	/// <summary>
 	/// Description of IGetURI.

@@ -10,12 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using SolidOpt.Core.Providers.StreamProvider.Exporters;
-using SolidOpt.Core.Providers.StreamProvider.Importers;
+using SolidOpt.Services.Subsystems.HetAccess.Exporters;
+using SolidOpt.Services.Subsystems.HetAccess.Importers;
 
 
 
-namespace SolidOpt.Core.Providers.StreamProvider
+namespace SolidOpt.Services.Subsystems.HetAccess
 {
 	/// <summary>
 	/// Description of URIManager.

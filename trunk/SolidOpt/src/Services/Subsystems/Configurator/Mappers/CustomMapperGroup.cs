@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Configurator.Mappers
+namespace SolidOpt.Services.Subsystems.Configurator.Mappers
 {
 	/// <summary>
 	/// Групата CustomMapperGroup е част от шаблона композиция и би трябвало да се използва тогава,

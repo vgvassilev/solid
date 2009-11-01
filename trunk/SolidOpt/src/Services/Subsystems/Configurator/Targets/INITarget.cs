@@ -11,10 +11,10 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-using SolidOpt.Core.Providers.StreamProvider;
-using SolidOpt.Core.Configurator.Mappers;
+using SolidOpt.Services.Subsystems.HetAccess;
+using SolidOpt.Services.Subsystems.Configurator.Mappers;
 
-namespace SolidOpt.Core.Configurator.Targets
+namespace SolidOpt.Services.Subsystems.Configurator.Targets
 {
 	/// <summary>
 	/// This class builds ini file format from the intermediate representation

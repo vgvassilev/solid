@@ -11,9 +11,9 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-using SolidOpt.Core.Providers.StreamProvider;
+using SolidOpt.Services.Subsystems.HetAccess;
 
-namespace SolidOpt.Core.Configurator.Sources
+namespace SolidOpt.Services.Subsystems.Configurator.Sources
 {
 	/// <summary>
 	/// Creates CIR from stream, i.e loads the configuration into the configuration manager.

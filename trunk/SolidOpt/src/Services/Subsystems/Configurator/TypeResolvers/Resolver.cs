@@ -7,7 +7,7 @@
  */
 using System;
 
-namespace SolidOpt.Core.Configurator.TypeResolvers
+namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
 	/// Description of Resolver.
