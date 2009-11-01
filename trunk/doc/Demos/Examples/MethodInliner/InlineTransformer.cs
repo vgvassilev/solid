@@ -16,7 +16,7 @@ using Cecil.Decompiler.Ast;
 using AstMethodDefinitionModel;
 using ILtoAST;
 
-using SolidOpt.Optimizer.Transformers;
+using SolidOpt.Services.Transformations;
 
 namespace MethodInliner
 {
@@ -564,6 +564,7 @@ namespace MethodInliner
 			private static int exitNumber = 0;
 			private BlockStatement currentBlock;
 			private Expression thisSubstitution;
+			private GotoStatement lastGoTo;
 			
 			#endregion
 			
@@ -618,10 +619,8 @@ namespace MethodInliner
 			public override ICodeNode VisitReturnStatement(ReturnStatement node)
 			{
 				GotoStatement @goto = new GotoStatement(exitLabel.Label);
+					
 				if (node.Expression != null) {
-//					BlockStatement block = new BlockStatement();
-//					block.Statements.Add(new ExpressionStatement(new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
-//					block.Statements.Add(@goto);
 					CodeNodeCollection<Statement> collection = new CodeNodeCollection<Statement>();
 					if (ReturnVariable != null) {
 						collection.Add(new ExpressionStatement(
@@ -636,15 +635,6 @@ namespace MethodInliner
 					}
 					collection.Add(@goto);
 					return Visit<CodeNodeCollection<Statement>, Statement>(collection);
-//					return collection;
-					
-//					return (BlockStatement) Visit(block);
-					
-//					currentBlock.Statements.Add(new ExpressionStatement(
-//						new AssignExpression(new VariableReferenceExpression(ReturnVariable), node.Expression)));
-//					currentBlock.Statements.Add(@goto);
-//					
-//					return null;
 				}
 				
 				return @goto;
@@ -655,6 +645,12 @@ namespace MethodInliner
 			/// </summary>
 			public override ICodeNode VisitGotoStatement(GotoStatement node)
 			{
+//				LabeledStatement lbl = currentBlock.Statements[currentBlock.Statements.IndexOf(node)+1] as LabeledStatement;
+//				if (lbl != null && lbl.Label == node.Label) {
+//					return null;
+//				}
+//				
+//				lastGoTo = node;
 				node.Label = "@_" + source.Method.Name + "@" + exitNumber + node.Label;
 				return base.VisitGotoStatement(node);
 			}
@@ -666,6 +662,12 @@ namespace MethodInliner
 			public override ICodeNode VisitLabeledStatement(LabeledStatement node)
 			{
 				node.Label = "@_" + source.Method.Name + "@" + exitNumber + node.Label;
+				
+//				if (lastGoTo.Label == node.Label) {
+//					currentBlock.Statements.Remove(lastGoTo);
+//					return null;
+//				}
+					
 				return base.VisitLabeledStatement(node);
 			}
 			
@@ -719,6 +721,7 @@ namespace MethodInliner
 			private Dictionary<VariableDefinition, VariableDefinition> localVarSubstitution;
 			private HashSet<VariableDefinition> isVariableDefined = new HashSet<VariableDefinition>();
 			private AssignExpression lastAssignment;
+			private BlockStatement currentBlock;
 			
 			#endregion
 			

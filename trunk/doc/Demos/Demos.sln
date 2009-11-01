@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3800
+# SharpDevelop 3.0.0.3683
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Core\Loader\src\Loader.csproj", "{A37B3085-8AA2-4889-B7E6-5AE93840436A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Config3", "Core\Configuration\Config3\Config3.csproj", "{846CAC53-FF82-4133-A03F-F214B48790B1}"

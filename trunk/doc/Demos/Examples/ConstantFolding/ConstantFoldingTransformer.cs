@@ -15,7 +15,7 @@ using Cecil.Decompiler.Ast;
 using AstMethodDefinitionModel;
 using ILtoAST;
 
-using SolidOpt.Optimizer.Transformers;
+using SolidOpt.Services.Transformations;
 
 namespace ConstantFolding
 {

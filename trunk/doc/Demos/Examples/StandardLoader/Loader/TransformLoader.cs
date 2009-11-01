@@ -15,7 +15,7 @@ using Mono.Cecil.Cil;
 using Mono.Cecil;
 
 using SolidOpt.Core.Services;
-using SolidOpt.Optimizer.Transformers;
+using SolidOpt.Services.Transformations;
 
 using SolidOpt.Core.Loader;
 
@@ -61,11 +61,11 @@ namespace TransformLoader
 						Console.WriteLine("----------------------------------------");
 //						if ( i != 1 ) continue;
 						MethodDefinition method = type.Methods[i];
-						Console.WriteLine(method.Name);
-						foreach (ITransform<MethodDefinition> transformer in IL2ILTransformers) {
-							method = transformer.Transform(method);
-							
-						}
+						Console.WriteLine(method.ToString());
+//						foreach (ITransform<MethodDefinition> transformer in IL2ILTransformers) {
+//							method = transformer.Transform(method);
+//							
+//						}
 						foreach (Instruction instruction in method.Body.Instructions) {
 								Console.Write ("\t\t");
 								Cecil.Decompiler.Cil.Formatter.WriteInstruction (Console.Out, instruction);
@@ -74,8 +74,8 @@ namespace TransformLoader
 						
 						AstMethodDefinition ast = IL2ASTtransformer.Transform(method);
 						
-//						Console.WriteLine("Before AST2ASTTransformation");
-//						WriteAST(ast.Block);
+						Console.WriteLine("{0}", ast.Method.ToString());
+						WriteAST(ast.Block);
 						
 						List<string> list = new List<string>(){"InlineTransformer", "SimplifyExpressionTransformer", "ConstantFoldingTransformer"};
 						foreach (string s in list) {
@@ -90,11 +90,12 @@ namespace TransformLoader
 						}
 						
 						
-//						Console.WriteLine("After AST2ASTTransformation");
-//						WriteAST(ast.Block);
 						
 						Console.WriteLine(method.ToString());
 						WriteCode(ast.Block);
+						Console.WriteLine("Abstract Syntax Tree");
+						WriteAST(ast.Block);
+						
 						
 //						method = AST2ILtransformer.Transform(ast);
 //						
@@ -122,7 +123,6 @@ namespace TransformLoader
 				Cecil.Decompiler.Languages.CSharpVersion.V1);
 			
 			var writer = csharpLang.GetWriter (new Cecil.Decompiler.Languages.ColoredConsoleFormatter());
-
 			writer.Write (stmt);
 		}
 		

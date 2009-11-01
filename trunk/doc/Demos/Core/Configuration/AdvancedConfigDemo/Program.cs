@@ -9,17 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using SolidOpt.Core.Configurator;
-using SolidOpt.Core.Configurator.Sources;
-using SolidOpt.Core.Configurator.Targets;
+using SolidOpt.Services.Subsystems.Configurator;
+using SolidOpt.Services.Subsystems.Configurator.Sources;
+using SolidOpt.Services.Subsystems.Configurator.Targets;
 
-using SolidOpt.Core.Configurator.TypeResolvers;
+using SolidOpt.Services.Subsystems.Configurator.TypeResolvers;
 
-using SolidOpt.Core.Providers.StreamProvider;
-using SolidOpt.Core.Providers.StreamProvider.Importers;
-using SolidOpt.Core.Providers.StreamProvider.Exporters;
+using SolidOpt.Services.Subsystems.HetAccess;
+using SolidOpt.Services.Subsystems.HetAccess.Importers;
+using SolidOpt.Services.Subsystems.HetAccess.Exporters;
 
-using SolidOpt.Core.Configurator.Mappers;
+using SolidOpt.Services.Subsystems.Configurator.Mappers;
 
 namespace AdvancedConfigDemo
 {

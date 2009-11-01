@@ -13,7 +13,7 @@ using Cecil.Decompiler.Ast;
 
 using AstMethodDefinitionModel;
 
-using SolidOpt.Optimizer.Transformers;
+using SolidOpt.Services.Transformations;
 
 
 namespace SimplifyExpression

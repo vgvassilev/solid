@@ -20,7 +20,7 @@ using AstMethodDefinitionModel;
 
 using Cecil.Decompiler.Steps;
 
-using SolidOpt.Optimizer.Transformers;
+using SolidOpt.Services.Transformations;
 
 namespace ILtoAST
 {
@@ -57,7 +57,7 @@ namespace ILtoAST
 			
 			var cfg = ControlFlowGraph.Create (source);
 
-			FormatControlFlowGraph (Console.Out, cfg);
+//			FormatControlFlowGraph (Console.Out, cfg);
 			
 
 //			Console.WriteLine ("--------------------");
@@ -70,7 +70,9 @@ namespace ILtoAST
 
 			//var body = method.Body.Decompile (language);
 
-			var writer = csharpLang.GetWriter (new PlainTextFormatter (Console.Out));
+//			var writer = csharpLang.GetWriter (new PlainTextFormatter (Console.Out));
+			Console.WriteLine(source.ToString());
+			var writer = csharpLang.GetWriter (new ColoredConsoleFormatter ());
 
 			writer.Write (pipeline.Body);
 			

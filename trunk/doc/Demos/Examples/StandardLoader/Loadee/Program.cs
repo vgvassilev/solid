@@ -45,11 +45,14 @@ namespace Loadee
 //				s = b;
 //			} while (a == 100);
 //		}
-		
+//		
 //		public static void PreTestLoop()
 //		{
 //			int a = (int)Math.Sqrt(150*150);
 //			double s = 0;
+//			;
+//			;
+//			;
 //			while (a >= 100) {
 //				a ++;
 //				int b = 8;
@@ -103,9 +106,21 @@ namespace Loadee
 		{
 //			int a = 0;
 //			Random rnd = new Random();
-			int p = 4;
-			p = Inlinee(2, 18);
-			Console.WriteLine(p);
+//			int p = 4;
+//			p = Inlinee(2, 18);
+			double s, a, b, c;
+			a = 1;
+//			a = 1 + 2;
+//			b = (2 + 7) * 5;
+//			c = 3/2;
+//			Random rnd = new Random();
+//			a = Math.Sqrt(25.25);
+//			b = 8.2d;
+//			c = 1d;
+			s = CalculateArea(a, 1 + 2, 1 + 2 + 3);
+			Console.WriteLine(s);
+			
+//			Console.WriteLine(p);
 //			TestThis.Inc();
 //			TestThis.Inc(6);
 //			TestThis td = new TestThis();
@@ -125,6 +140,23 @@ namespace Loadee
 //			p = 5;
 //			
 //		}
+		
+//		public static void CalculateAreas()
+//		{
+//			double s;
+//			Random rnd = new Random();
+//			do {
+//				s = CalculateArea(rnd.Next(), rnd.Next(), rnd.Next());
+//			} while (s < 100);
+// 		}
+		
+		[MethodInliner.Inlineable]
+//		[MethodInliner.SideEffects(false)]
+		public static double CalculateArea(double a, double b, double c)
+		{
+			double p = (a + b + c) / 2 ;
+			return Math.Sqrt(p * (p-a) * (p-b) * (p-c));
+		}
 		
 //		[MethodInliner.InlineAttribute]
 //		public static void OutParamAssign()
