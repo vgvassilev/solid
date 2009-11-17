@@ -95,6 +95,9 @@
     <Compile Include="Services\Subsystems\HetAccess\IProvider.cs" />
     <Compile Include="Services\Subsystems\HetAccess\URIManager.cs" />
     <Compile Include="Services\Transformations\ITransform.cs" />
+    <Compile Include="Services\Transformations\Multimodel\ICompile.cs" />
+    <Compile Include="Services\Transformations\Multimodel\IDecompile.cs" />
+    <Compile Include="Services\Transformations\Optimizations\IOptimize.cs" />
     <ProjectReference Include="vendors\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
       <Name>Mono.Cecil</Name>

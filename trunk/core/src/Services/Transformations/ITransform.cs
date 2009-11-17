@@ -17,10 +17,6 @@ namespace SolidOpt.Services.Transformations
 	/// </summary>
 	public interface ITransform<Source, Target> : IService
 	{
-		Target Transform(Source source);
-	}
-	
-	public interface ITransform<Target> : ITransform<Target, Target>
-	{
+//		Target Transform(Source source);
 	}
 }

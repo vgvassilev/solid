@@ -179,23 +179,24 @@ namespace Cecil.Decompiler.Steps
 	
 	#endregion
 	
-	#region Private Methods and Classes
+	/// <summary>
+	/// Методът е входна точка за декомпилационната стъпка. Извиква метод за запълване на полетата, 
+	/// активира Visitor-а и декларира на променливите.
+	/// </summary>
+	/// <param name="context">Декомпилационен контекст</param>
+	/// <param name="block">Конкретния блок</param>
+	/// <returns>Новогенериран блок</returns>
+	public BlockStatement Process (DecompilationContext context, BlockStatement block)
+	{
+		this.context = context;
+		PopulateVariables ();
+		var result = (BlockStatement) VisitBlockStatement (block);
+		FixUpVariables();
+		return result;
+	}
 	
-		/// <summary>
-		/// Методът е входна точка за декомпилационната стъпка. Извиква метод за запълване на полетата, 
-		/// активира Visitor-а и декларира на променливите.
-		/// </summary>
-		/// <param name="context">Декомпилационен контекст</param>
-		/// <param name="block">Конкретния блок</param>
-		/// <returns>Новогенериран блок</returns>
-		public BlockStatement Process (DecompilationContext context, BlockStatement block)
-		{
-			this.context = context;
-			PopulateVariables ();
-			var result = (BlockStatement) VisitBlockStatement (block);
-			FixUpVariables();
-			return result;
-		}
+	
+	#region Private Methods and Classes
 		
 		/// <summary>
 		/// Зарежда нужната информация в стуктурите от данни.
