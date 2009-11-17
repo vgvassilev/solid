@@ -20,20 +20,20 @@ using AstMethodDefinitionModel;
 
 using Cecil.Decompiler.Steps;
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Multimodel;
 
 namespace ILtoAST
 {
 	/// <summary>
 	/// Description of NopRemoveTransformer.
 	/// </summary>
-	public class ILtoASTTransformer : ITransform<MethodDefinition, AstMethodDefinition>
+	public class ILtoASTTransformer : IDecompile<MethodDefinition, AstMethodDefinition>
 	{
 		public ILtoASTTransformer()
 		{
 		}
 
-		public AstMethodDefinition Transform(MethodDefinition source)
+		public AstMethodDefinition Decompile(MethodDefinition source)
 		{
 			ILanguage csharpLang = CSharp.GetLanguage(CSharpVersion.V1);//new CSharp();
 //			DecompilationPipeline pipeline = csharpLang.CreatePipeline();

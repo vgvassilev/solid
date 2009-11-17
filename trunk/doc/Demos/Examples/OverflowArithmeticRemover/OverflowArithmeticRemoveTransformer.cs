@@ -11,20 +11,20 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Optimizations;
 
 namespace OverflowArithmeticRemover
 {
 	/// <summary>
 	/// Description of OverflowArithmeticRemoveTransformer.
 	/// </summary>
-	public class OverflowArithmeticRemoveTransformer : ITransform<MethodDefinition>
+	public class OverflowArithmeticRemoveTransformer : IOptimize<MethodDefinition>
 	{
 		public OverflowArithmeticRemoveTransformer()
 		{
 		}
 		
-		public MethodDefinition Transform(MethodDefinition source)
+		public MethodDefinition Optimize(MethodDefinition source)
 		{
 			source.Body.Simplify();
 			foreach (Instruction instruction in source.Body.Instructions) {

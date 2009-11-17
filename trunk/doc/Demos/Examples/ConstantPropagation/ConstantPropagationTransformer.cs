@@ -15,14 +15,14 @@ using Cecil.Decompiler.Ast;
 using AstMethodDefinitionModel;
 using ILtoAST;
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Optimizations;
 
 namespace ConstantPropagation
 {
 	/// <summary>
 	/// Description of ConstantPropagationTransformer.
 	/// </summary>
-	public class ConstantPropagationTransformer : BaseCodeTransformer, ITransform<AstMethodDefinition>
+	public class ConstantPropagationTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
 	{
 		
 		private Dictionary<Expression, Expression> substitutions = new Dictionary<Expression, Expression>();
@@ -31,7 +31,7 @@ namespace ConstantPropagation
 		{
 		}
 		
-		public AstMethodDefinition Transform(AstMethodDefinition source)
+		public AstMethodDefinition Optimize(AstMethodDefinition source)
 		{
 			source.Block = (BlockStatement) Visit(source.Block);
 			return source;

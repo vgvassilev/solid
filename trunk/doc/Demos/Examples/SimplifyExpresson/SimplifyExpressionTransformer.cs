@@ -13,7 +13,7 @@ using Cecil.Decompiler.Ast;
 
 using AstMethodDefinitionModel;
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Optimizations;
 
 
 namespace SimplifyExpression
@@ -21,7 +21,7 @@ namespace SimplifyExpression
 	/// <summary>
 	/// Description of SimplifyExpressionTransformer.
 	/// </summary>
-	public class SimplifyExpressionTransformer : BaseCodeTransformer, ITransform<AstMethodDefinition>
+	public class SimplifyExpressionTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
 	{
 		#region Fields
 		private Dictionary<Expression, int> expressionNumbers = new Dictionary<Expression, int>();
@@ -36,7 +36,7 @@ namespace SimplifyExpression
 		
 		#endregion
 		
-		public AstMethodDefinition Transform(AstMethodDefinition source)
+		public AstMethodDefinition Optimize(AstMethodDefinition source)
 		{
 			expressionNumbers.Clear();
 			expressionCnt = 0;

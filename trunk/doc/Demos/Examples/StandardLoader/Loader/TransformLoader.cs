@@ -15,7 +15,8 @@ using Mono.Cecil.Cil;
 using Mono.Cecil;
 
 using SolidOpt.Core.Services;
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Optimizations;
+using SolidOpt.Services.Transformations.Multimodel;
 
 using SolidOpt.Core.Loader;
 
@@ -39,15 +40,15 @@ namespace TransformLoader
 		public override void Transform(string[] args)
 		{
 //			IService[] transformers = (IService[]) ServicesContainer.GetServices(typeof(ITransform<MethodDefinition>));
-			List<ITransform<MethodDefinition>> IL2ILTransformers = 
-				ServicesContainer.GetServices<ITransform<MethodDefinition>>();
-			ITransform<MethodDefinition, AstMethodDefinition> IL2ASTtransformer = 
-				ServicesContainer.GetService<ITransform<MethodDefinition, AstMethodDefinition>>();
+			List<IOptimize<MethodDefinition>> IL2ILTransformers = 
+				ServicesContainer.GetServices<IOptimize<MethodDefinition>>();
+			IDecompile<MethodDefinition, AstMethodDefinition> IL2ASTtransformer = 
+				ServicesContainer.GetService<IDecompile<MethodDefinition, AstMethodDefinition>>();
 			
-			List<ITransform<AstMethodDefinition>> AST2ASTTransformers = 
-				ServicesContainer.GetServices<ITransform<AstMethodDefinition>>();
-			ITransform<AstMethodDefinition, MethodDefinition> AST2ILtransformer = 
-				ServicesContainer.GetService<ITransform<AstMethodDefinition, MethodDefinition>>();
+			List<IOptimize<AstMethodDefinition>> AST2ASTTransformers = 
+				ServicesContainer.GetServices<IOptimize<AstMethodDefinition>>();
+			ICompile<AstMethodDefinition, MethodDefinition> AST2ILtransformer = 
+				ServicesContainer.GetService<ICompile<AstMethodDefinition, MethodDefinition>>();
 			
 			
 			
@@ -72,18 +73,18 @@ namespace TransformLoader
 								Console.WriteLine ();
 						}
 						
-						AstMethodDefinition ast = IL2ASTtransformer.Transform(method);
+						AstMethodDefinition ast = IL2ASTtransformer.Decompile(method);
 						
 						Console.WriteLine("{0}", ast.Method.ToString());
 						WriteAST(ast.Block);
 						
 						List<string> list = new List<string>(){"InlineTransformer", "SimplifyExpressionTransformer", "ConstantFoldingTransformer"};
 						foreach (string s in list) {
-							foreach (ITransform<AstMethodDefinition> transformer in AST2ASTTransformers) {
+							foreach (IOptimize<AstMethodDefinition> transformer in AST2ASTTransformers) {
 //								Console.WriteLine(transformer.GetType().Name);
 								if (transformer.GetType().Name == s) {
 									
-									ast = transformer.Transform(ast);
+									ast = transformer.Optimize(ast);
 								}
 							}
 							

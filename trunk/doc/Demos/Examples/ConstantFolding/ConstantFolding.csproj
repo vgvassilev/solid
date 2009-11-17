@@ -39,15 +39,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SolidOpt\src\SolidOpt.csproj">
+    <ProjectReference Include="..\..\..\..\core\src\SolidOpt.csproj">
       <Project>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</Project>
       <Name>SolidOpt</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\SolidOpt\src\vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj">
+    <ProjectReference Include="..\..\..\..\core\src\vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj">
       <Project>{ED1BE103-1699-4116-A732-616BEB142EB2}</Project>
       <Name>Cecil.Decompiler</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
+    <ProjectReference Include="..\..\..\..\core\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>

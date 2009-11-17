@@ -17,20 +17,20 @@ using Cecil.Decompiler.Languages;
 
 using AstMethodDefinitionModel; 
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Multimodel;
 
 namespace ASTtoIL 
 {
 	/// <summary>
 	/// Description of ASTtoILTransformer.
 	/// </summary>
-	public class ASTtoILTransformer : ITransform<AstMethodDefinition, MethodDefinition>
+	public class ASTtoILTransformer : ICompile<AstMethodDefinition, MethodDefinition>
 	{
 		public ASTtoILTransformer()
 		{
 		}
 		
-		public MethodDefinition Transform(AstMethodDefinition source)
+		public MethodDefinition Compile(AstMethodDefinition source)
 		{
 			Compiler compiler = new Compiler(source.Block, source.Method.Body.CilWorker);
 			compiler.Compile();

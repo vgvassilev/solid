@@ -11,20 +11,20 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Optimizations;
 
 namespace NopRemover
 {
 	/// <summary>
 	/// Description of NopRemoveTransformer.
 	/// </summary>
-	public class NopRemoveTransformer : ITransform<MethodDefinition>
+	public class NopRemoveTransformer : IOptimize<MethodDefinition>
 	{
 		public NopRemoveTransformer()
 		{
 		}
 		
-		public MethodDefinition Transform(MethodDefinition source)
+		public MethodDefinition Optimize(MethodDefinition source)
 		{
 //			HashSet<Instruction> removed = new HashSet<Instruction>();
 //			CilWorker cil = source.Body.CilWorker;

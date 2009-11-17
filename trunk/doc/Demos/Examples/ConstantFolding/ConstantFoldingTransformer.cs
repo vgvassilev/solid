@@ -15,20 +15,20 @@ using Cecil.Decompiler.Ast;
 using AstMethodDefinitionModel;
 using ILtoAST;
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Optimizations;
 
 namespace ConstantFolding
 {
 	/// <summary>
 	/// Description of ConstantFoldingTransformer.
 	/// </summary>
-	public class ConstantFoldingTransformer : BaseCodeTransformer, ITransform<AstMethodDefinition>
+	public class ConstantFoldingTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
 	{
 		public ConstantFoldingTransformer()
 		{
 		}
 		
-		public AstMethodDefinition Transform(AstMethodDefinition source)
+		public AstMethodDefinition Optimize(AstMethodDefinition source)
 		{
 			source.Block = (BlockStatement) Visit(source.Block);
 			return source;

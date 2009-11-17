@@ -16,7 +16,7 @@ using Cecil.Decompiler.Ast;
 using AstMethodDefinitionModel;
 using ILtoAST;
 
-using SolidOpt.Services.Transformations;
+using SolidOpt.Services.Transformations.Optimizations;
 
 namespace MethodInliner
 {
@@ -54,7 +54,7 @@ namespace MethodInliner
 	/// }	
 	/// </code>
 	/// </summary>
-	public class InlineTransformer : BaseCodeTransformer, ITransform<AstMethodDefinition>
+	public class InlineTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
 	{
 		#region Fields
 		/// <summary>
@@ -123,7 +123,7 @@ namespace MethodInliner
 		
 		#endregion
 		
-		public AstMethodDefinition Transform(AstMethodDefinition source)
+		public AstMethodDefinition Optimize(AstMethodDefinition source)
 		{
 //			if (source.Method.Name == "OutParamAssign")
 //				return source;
@@ -517,7 +517,7 @@ namespace MethodInliner
 //				Console.WriteLine("!!! {0} -> {1}", pair.Key.Name, pair.Value.Name);
 //			}
 			
-			ast = preFixer.FixUp(il2astTransformer.Transform(mDef), paramVarSubstitution, thisSubstitution);
+			ast = preFixer.FixUp(il2astTransformer.Decompile(mDef), paramVarSubstitution, thisSubstitution);
 			
 			
 			//this
