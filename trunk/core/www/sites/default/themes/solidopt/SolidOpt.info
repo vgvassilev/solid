@@ -1,0 +1,17 @@
+name = SolidOptTheme
+description = SolidOpt main theme.
+version = VERSION
+core = 6.x
+engine = phptemplate
+
+stylesheets[all][] = css/menu.css
+stylesheets[all][] = css/layout.css
+stylesheets[all][] = css/highlighter.css
+stylesheets[all][] = css/home.css
+stylesheets[all][] = css/text.css
+stylesheets[all][] = css/wiki.css
+stylesheets[print][] = commonPrint.css
+
+regions[header] = Header
+regions[topmost] = Top region
+regions[left] = Left sidebar

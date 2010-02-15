@@ -1,0 +1,79 @@
+<?php
+
+if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+   
+      $nodeout = node_view($node);     
+
+     $toc = array();
+
+        // $i = index of header level being processed
+        // $matches[0][$i] -> Whole string matched
+        // $matches[1][$i] -> First heading level
+        // $matches[2][$i] -> Whole string of attributes
+        // $matches[3][$i] -> id attibute, used for anchor
+        // $matches[4][$i] -> Text of id attribute
+        // $matches[5][$i] -> Text inside of h tag
+        // $matches[6][$i] -> Close heading level, should be equal to open level
+        $matches = array();
+
+        //get all headers of current level, case insensitive
+        $pattern = '/<h([1-4])( .*?(id="([^"]+)" ?.*?))?>(.*?)<\/h([1-4])>/is';
+         
+        $matches = array();
+        preg_match_all($pattern, $nodeout, $matches, PREG_PATTERN_ORDER);
+       
+        $anchors = array();
+        for ($i = 0; $i < sizeof($matches[0]); $i++) {
+
+          // Strip HTML and non alphanumerics
+          $level = $matches[1][$i];
+          $heading = strip_tags($matches[5][$i]);
+          $anchor = $matches[4][$i];
+          array_push($toc, array(
+            'level' => $level,
+            'heading' => $heading,
+            'anchor' => $anchor)
+          );
+        }
+        // Build HTML for the Table of Contents
+        $toc_html = "<div id=\"toc-parent\">\n<div class=\"toc-list\">\n<ul>\n";
+
+        $depth = 2;
+        foreach ($toc as $index=>$title) {
+
+          // process nested lists
+          $curdepth = $title['level'];
+          if ($curdepth <= 4) {
+            // Close list items but not before no items have been added
+            if ($curdepth == $depth && $index != 0) $toc_html .= "</li>\n";
+            // Be sure to deal with skipping between non-adjacent h levels
+            while ($curdepth != $depth) {
+              if ($curdepth > $depth) {
+                $toc_html .= "\n<ul>\n";
+                $depth++;
+              }
+              else if ($curdepth < $depth) {
+                $toc_html .= "</li>\n</ul>\n";
+                $depth--;
+                if ($curdepth == $depth) $toc_html .= "</li>\n";
+              }
+            }
+
+            // insert the li element
+            $toc_html .= "\t<li><a href=\"#".$title['anchor']."\">".$title['heading']."</a>";
+          }
+        }
+        // Did we recurse back out? If not, close open lists.
+        while ($depth > 2) {
+          $toc_html .= "</li>\n</ul>\n";
+          $depth = $depth -1;
+        }
+        $toc_html .= "</li>\n";
+       
+        $toc_html .= "</ul>\n</div>\n</div>";
+
+
+print $toc_html; 
+}
+?>

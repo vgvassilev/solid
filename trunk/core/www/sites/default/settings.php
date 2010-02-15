@@ -89,7 +89,7 @@
  *   $db_url = 'mysqli://username:password@localhost/databasename';
  *   $db_url = 'pgsql://username:password@localhost/databasename';
  */
-$db_url = 'mysql://root:mysqlroot32@localhost/sandbox-solidopt-core-db';
+$db_url = 'mysql://remoteroot:remoteroot32@solidopt.org/sandbox-solidopt-core-db';
 $db_prefix = '';
 
 /**
