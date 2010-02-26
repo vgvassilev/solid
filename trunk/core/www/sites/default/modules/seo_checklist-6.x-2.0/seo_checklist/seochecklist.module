@@ -1,0 +1,184 @@
+<?php
+// $Id: seochecklist.module,v 1.2 2009/08/07 22:43:10 eclipsegc Exp $
+
+/**
+ * @file
+ * SEO Checklist module allows users to track important SEO techniques on the website.
+ */
+
+/**
+ * Implementation of hook_perm().
+ */
+function seochecklist_perm() {
+  return array('access seochecklist content');
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function seochecklist_menu() {
+  $items = array();
+
+  $items['admin/settings/seochecklist'] = array(
+    'title' => 'SEO Checklist',
+    'description' => t('Keep track of your Drupal Search Engine Optimization tasks.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('seochecklist_admin_settings'),
+    'type' => MENU_NORMAL_ITEM,
+    'access arguments' => array('access seochecklist content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Define the settings form.
+ */
+function seochecklist_admin_settings() {
+  drupal_add_css(drupal_get_path('module', 'seochecklist') .'/css/seochecklist.css');
+  $form['save'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+  $form['frm_Check_title'] = array(
+    '#type' => 'item',
+    '#value' => '<strong>' . t('Check off each SEO-related task as you complete it. Don\'t forget to click "Save".') . '</strong>',
+    );
+  $form['frm_Check_existing'] = array(
+    '#type' => 'submit',
+    '#value' => t('Check for already Installed Modules'),
+  );
+
+  // Fetch modules and groups from database.
+  $query = "SELECT id, name, description FROM {seo_group} ORDER BY id";
+
+  $result = db_query($query);
+  $group_id = 0;
+
+  // Every group is a fieldset.
+  while ($data = db_fetch_object($result)) {
+    $group_id = intval($data->id);
+
+    $form['group_' . $group_id] = array(
+      '#type' => 'fieldset',
+      '#title' => check_plain(t($data->name)),
+      '#collapsible' => TRUE,
+      '#description' => check_plain(t($data->description)),
+    );
+
+    $res = db_query("SELECT download, enable, configure, module, option_checked, date_changed, id, name FROM {seo_checklist} WHERE group_id = %d ORDER BY order_id", $group_id);
+    while ($row = db_fetch_object($res)) {
+      // Service links.
+      $links = array();
+      if ($row->download) {
+        $links[] = l(t('Download'), $row->download, array('attributes' => array('target' => '_blank')));
+      }
+      if ($row->enable) {
+        $links[] = l(t('Enable'), $row->enable);
+      }
+      if ($row->configure && module_exists(strtolower($row->module))) {
+        $links[] = l(t('Configure'), $row->configure);
+      }
+      if ($row->option_checked) {
+        $links[] = t('Date completed: %date', array('%date' => format_date(strtotime($row->date_changed), 'small')));
+      }
+      $form['group_' . $group_id]['seochecklist_nodetypes_' . intval($row->id)] = array(
+        '#type' => 'checkbox',
+        '#return_value' => intval($row->id),
+        '#title' => t($row->name),
+        '#default_value' => ($row->option_checked) ? 1 : 0,
+        '#prefix' => '<div class="seochecklist_item">',
+        '#suffix' => '<div class="seochecklist_links">' . join(', ', $links) . '</div></div>',
+      );
+      if (substr($row->name, 0, 10) == 'Clean URLs') {
+        $form['group_' . $group_id]['seochecklist_nodetypes_' . intval($row->id)]['#default_value'] = variable_get('clean_url', 0);
+      }
+    }
+  }
+
+  $form['bottom_code'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Extras'),
+    '#collapsible' => TRUE,
+  );
+  $form['bottom_code']['Bottom_code'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Link to Volacci to thank them for this awesome module. <strong>Don't forget to click Save!</strong>"),
+    '#description' => t("A small link will appear at the very bottom of your website. You can disable it at any time by un-checking this box. We really appreciate it!!!"),
+    '#default_value' => variable_get('seo_checklist_link', 0),
+  );
+  $form['bottom_code']['Bottom_code_more'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Link to us then send us feedback on the Drupal 6 SEO Checklist module or just say \"Thanks!\" and we will link to you from our website. Send your feedback and link information to !email. (If you don't know why you should link with other websites, read this: !link.)", array('!email' => l('seochecklist@volacci.com', 'mailto:seochecklist@volacci.com'), '!link' => l('Why links help SEO', 'http://www.volacci.com/why-links-help-seo'))),
+    '#default_value' => variable_get('seo_checklist_thanks', 0),
+  );
+  $form['bottom_code']['Bottom_code_podcast'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Listen to the Volacci Drupal SEO Podcast for more tips and tricks about Drupal SEO: !link", array('!link' => l('http://www.volacci.com/podcast', 'http://www.volacci.com/podcast'))),
+    '#default_value' => variable_get('seo_checklist_podcast', 0),
+  );
+
+  $form['save1'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save')
+  );
+
+  return $form;
+}
+
+/**
+ * Submit callback for seochecklist_admin_settings().
+ */
+function seochecklist_admin_settings_submit($form, &$form_state) {
+  // Saving checked modules.
+  if($form_state['values']['op'] == t('Save')) {
+    $checked[] = array(0);
+    foreach($form_state['values'] as $key => $value) {
+      if (preg_match('/seochecklist_nodetypes/', $key)) {
+        $key = explode('_', $key);
+        $key = $key[2];
+        // Module $value is checked.
+        $existing = db_result(db_query("SELECT option_checked FROM {seo_checklist} WHERE id= %d", $key));
+        if ($existing) {
+          db_query("UPDATE {seo_checklist} SET date_changed = '%s', option_checked = %d WHERE id = %d", date("Y-m-d H:i:s"), $value, $key);
+        }
+        else {
+          db_query("update {seo_checklist} set option_checked = %d WHERE id = %d", $value, $key);
+        }
+        $checked[] = $value;
+      }
+    }
+    // Special values not in database.
+    variable_set('seo_checklist_link', intval($form_state['values']['Bottom_code']));
+    variable_set('seo_checklist_thanks', intval($form_state['values']['Bottom_code_more']));
+    variable_set('seo_checklist_podcast', intval($form_state['values']['Bottom_code_podcast']));
+
+    // Store zero for all unchecked items.
+    
+    db_query("UPDATE {seo_checklist} SET option_checked = 0 WHERE id NOT IN (" . db_placeholders($checked) . ")", $checked);
+  }
+
+  // Check for already installed modules.
+  if($form_state['values']['op'] == t('Check for already Installed Modules')) {
+    $result=db_query("SELECT * FROM {seo_checklist} WHERE module != ''");
+    while ($data = db_fetch_object($result)) {
+      if(module_exists(strtolower($data->module))) {
+        db_query("UPDATE {seo_checklist} SET option_checked = %d, date_changed = '%s' where id = %d", $data->id, date('Y-m-d H:i:s'), $data->id);
+      }
+      else {
+        db_query("UPDATE {seo_checklist} SET option_checked = %d where id = %d", 0, $data->id);
+      }
+    }
+  }
+}
+
+/**
+ * Implementation of hook_footer().
+ */
+function seochecklist_footer($main = 0) {
+  if (variable_get('seo_checklist_link', 0)) {
+    $file_contents = '<div align="center"><a href="http://www.volacci.com/" target="_blank">Drupal SEO</a></div>';
+    return $file_contents;
+  }
+}

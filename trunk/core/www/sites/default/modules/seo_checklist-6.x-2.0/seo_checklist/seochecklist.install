@@ -1,0 +1,280 @@
+<?php
+// $Id: seochecklist.install,v 1.2 2009/08/07 22:43:10 eclipsegc Exp $
+
+
+
+/**
+ * Implementation of hook_schema().
+ */
+
+
+function seochecklist_schema() {
+  $schema = array();
+
+  $schema['seo_group'] = array(
+      'fields' => array(
+        'id' => array(
+          'type' => 'serial',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'description' => 'id',
+          'disp-width' => '4'
+        ),
+        'name' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not null' => TRUE,
+          'description' => 'name',
+          'default' => ''
+        ),
+        'description' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not null' => TRUE,
+          'description' => 'description',
+          'default' => ''
+        ),
+      ),
+      'primary key' => array('id'),
+      'description' => 'seo_group',
+    );
+    $schema['seo_checklist'] = array(
+      'fields' => array(
+        'id' => array(
+          'type' => 'serial',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'description' =>
+          'id', 'disp-width' => '2'
+        ),
+        'group_id' => array(
+          'type' => 'int',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'group_id',
+          'disp-width' => '4'
+        ),
+        'subgroup_id' => array(
+          'type' => 'int',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'subgroup_id',
+          'disp-width' => '4'
+        ),
+        'name' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not null' => TRUE,
+          'description' => 'name',
+          'default' => ''
+        ),
+        'module' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not null' => TRUE,
+          'description' => 'module',
+          'default' => ''
+        ),
+        'option_checked' => array(
+          'type' => 'int',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'description' => 'option checked',
+          'default' => 0,
+          'disp-width' => '1'
+        ),
+        'date_changed' => array(
+          'type' => 'datetime',
+          'not null' => TRUE,
+          'description' => 'date changed',
+          'default' => '0000-00-00 00:00:00'
+        ),
+        'checked_module' => array(
+          'type' => 'int',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'description' => 'checked module',
+          'default' => 0,
+          'disp-width' => '1'
+        ),
+        'download' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not null' => TRUE,
+          'description' => 'download',
+          'default' => ''
+        ),
+        'enable' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not null' => TRUE,
+          'description' => 'enable',
+          'default' => ''
+        ),
+        'configure' => array(
+          'type' => 'varchar',
+          'length' => '255',
+          'not null' => TRUE,
+          'description' => 'configure',
+          'default' => ''
+        ),
+        'order_id' => array(
+          'type' => 'int',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'description' => 'order id',
+          'default' => 0,
+          'disp-width' => '2'
+        ),
+      ),
+      'primary key' => array('id'),
+      'description' => 'seo_checklist',
+      );
+    return $schema;
+}
+
+/**
+ * Implementation of hook_install().
+ */
+function seochecklist_install() {
+  drupal_install_schema('seochecklist');
+
+db_query("INSERT INTO {seo_group} VALUES (1, 'Page Titles', 'The single most important thing you can do for on-site SEO.'),
+
+(2, 'URL paths', 'The second most important thing you can do.'),
+
+(3, 'Create Search Engine Accounts', 'Set yourself up with the search engines.'),
+
+(4, 'Track your visitors', 'Know where your visitors are coming from and what they do while visiting your site.'),
+
+(5, 'Page content', 'Take control of your page content.'),
+
+(6, 'Clean code', 'Well written markup is very important to the search engine spiders.'),
+
+(7, 'Submit your Site to the search engines.', 'Now that you''ve got your site ready for the search engines, tell them about it!'),
+
+(8, 'Social Tracking', 'Using Social news sites, blogs, etc? Consider these:'),
+
+(9, 'Protect your site from Spam', 'If your site will get heavy use from visitors creating accounts, commenting and/or creating content then consider these. NOTE: Most sites just need Mollom. The other modules are here in case Mollom does not work for you for some reason.')");
+
+
+db_query("INSERT INTO {seo_checklist} (`id`, `group_id`, `subgroup_id`, `name`, `module`, `download`, `enable`, `configure`, `order_id`) VALUES (1, 1, 0, 'Page Title Module', 'page_title', 'http://drupal.org/project/page_title', 'admin/build/modules', 'admin/content/page_title', 2),
+
+(2, 2, 0, 'Clean URLs - Activate (Usually automatic. Please <a href = ''admin/settings/clean-urls''>double-check</a>!)', '', '', '', '', 1),
+
+(5, 2, 0, 'Pathauto Module', 'pathauto', 'http://drupal.org/project/pathauto', 'admin/build/modules', 'admin/build/path/pathauto', 2),
+
+(6, 2, 0, 'Global Redirect Module', 'globalredirect', 'http://drupal.org/project/globalredirect', 'admin/build/modules', '', 3),
+
+(7, 3, 0, 'Get a Google Account - You''ll need this for several of the steps that follow - <a href=''https://www.google.com/accounts/NewAccount''>https://www.google.com/accounts/NewAccount</a>', '', '', '', '', 1),
+
+(8, 3, 0, 'Get a Yahoo Account - You''ll need this for steps that follow - <a href=''http://www.yahoo.com/r/m7''>http://www.yahoo.com/r/m7</a>', '', '', '', '', 2),
+
+(44, 3, 0, 'Get a Live Account - You''ll need this for steps that follow - <a href=''https://accountservices.passport.net/reg.srf''>https://accountservices.passport.net/reg.srf</a>', '', '', '', '', 2),
+
+(9, 4, 0, 'Google Analytics Module', 'googleanalytics', 'http://drupal.org/project/google_analytics', 'admin/build/modules', 'admin/settings/googleanalytics', 1),
+
+(10, 4, 0, 'Sign in to your Google Analytics Account - <a href=''http://www.google.com/analytics''>http://www.google.com/analytics</a>', '', '', '', '', 2),
+
+(11, 4, 0, 'Create an Analytics for your website', '', '', '', '', 3),
+
+(12, 4, 0, 'Paste Google Analytics code into Google Analytics Module', '', '', '', '', 4),
+
+(13, 4, 0, 'Authenticate your site with Google Analytics', '', '', '', '', 5),
+
+(15, 5, 0, 'Meta Tags Module (AKA Nodewords)', 'nodewords', 'http://drupal.org/project/nodewords', 'admin/build/modules', 'admin/content/nodewords', 2),
+
+(16, 5, 0, 'Scheduler Module', 'scheduler', 'http://drupal.org/project/scheduler', 'admin/build/modules', 'admin/settings/scheduler', 3),
+
+(17, 5, 0, 'HTML Purifier Module', 'htmlpurifier', 'http://drupal.org/project/htmlpurifier', 'admin/build/modules', 'admin/settings/filters/1', 4),
+
+(45, 5, 0, '<a href=''/sites/all/modules/htmlpurifier/INSTALL.txt''>READ THE INSTALL INSTRUCTIONS!</a> then Download HTML Purifier. You will need
+  3.1.0rc1 or later. - <a href=''http://htmlpurifier.org/''>http://htmlpurifier.org/</a>', '', '', '', '', 5),
+
+(18, 5, 0, 'Search 404 Module', 'search404', 'http://drupal.org/project/search404', 'admin/build/modules', 'admin/settings/search404', 5),
+
+(19, 6, 0, 'Validate your site - <a href=''http://validator.w3.org/''>http://validator.w3.org/</a>', '', '', '', '', 1),
+
+(20, 6, 0, 'Check your links - <a href=''http://validator.w3.org/checklink''>http://validator.w3.org/checklink</a>', '', '', '', '', 2),
+
+(21, 7, 0, 'XML Sitemap Module', 'gsitemap', 'http://drupal.org/project/xmlsitemap', 'admin/build/modules', 'admin/settings/xmlsitemap', 1),
+
+(46, 7, 0, 'Site Map Module - a plain text sitemap', 'site_map', 'http://drupal.org/project/site_map', 'admin/build/modules', 'admin/settings/sitemap', 3),
+
+(22, 7, 0, 'Login to Google Webmaster Tools - <a href=''http://www.google.com/webmasters/tools''>http://www.google.com/webmasters/tools</a>', '', '', '', '', 5),
+
+(23, 7, 0, 'Authenticate your site with Google', '', '', '', '', 7),
+
+(24, 7, 0, 'Submit your XML Sitemap to Google - <a href=''http://www.google.com/webmasters/sitemaps/''>http://www.google.com/webmasters/sitemaps/</a>', '', '', '', '', 9),
+
+(25, 7, 0, 'Login to Yahoo Site Explorer Account - <a href=''https://siteexplorer.search.yahoo.com/''>https://siteexplorer.search.yahoo.com/</a>', '', '', '', '', 11),
+
+(26, 7, 0, 'Authenticate your site with Yahoo', '', '', '', '', 13),
+
+(27, 7, 0, 'Submit your XML Sitemap to Yahoo - <a href=''https://siteexplorer.search.yahoo.com/submit''>https://siteexplorer.search.yahoo.com/submit</a>', '', '', '', '', 15),
+
+(43, 7, 0, 'Authenticate your site with Live - <a href=''https://siteexplorer.search.yahoo.com/submit''>https://siteexplorer.search.yahoo.com/submit</a>', '', '', '', '', 17),
+
+(42, 7, 0, 'Login to Live', '', '', '', '', 19),
+
+(28, 7, 0, 'Submit your XML Sitemap to Live - <a href=''http://webmaster.live.com/webmaster/WebmasterAddSitesPage.aspx''>http://webmaster.live.com/webmaster/WebmasterAddSitesPage.aspx</a>', '', '', '', '', 21),
+
+(29, 7, 0, 'If appropriate, submit your company to Google Local - <a href=''https://www.google.com/webmasters/sitemaps/''>https://www.google.com/local/add/login</a>', '', '', '', '', 23),
+
+(30, 8, 0, 'Digg This Module', 'diggthis', 'http://drupal.org/project/diggthis', 'admin/build/modules', 'admin/settings/diggthis', 1),
+
+(31, 8, 0, 'Service Links Module', 'service_links', 'http://drupal.org/project/service_links', 'admin/build/modules', 'admin/settings/service_links', 2),
+
+(32, 8, 0, 'Trackback Module', 'trackback', 'http://drupal.org/project/trackback', 'admin/build/modules', 'admin/settings/trackback', 3),
+
+(33, 9, 2, 'Captcha Module', 'captcha', 'http://drupal.org/project/captcha', 'admin/build/modules', 'admin/user/captcha', 2),
+
+(34, 9, 2, 'Akismet Module', 'akismet', 'http://drupal.org/project/akismet', 'admin/build/modules', 'admin/settings/akismet', 3),
+
+(36, 9, 2, 'Spam Module', 'spam', 'http://drupal.org/project/spam', 'admin/build/modules', 'admin/settings/spam', 4),
+
+(38, 2, 0, 'Path Redirect Module', 'path_redirect', 'http://drupal.org/project/path_redirect', 'admin/build/modules', '', 4),
+
+(39, 9, 1, 'HIGHLY RECOMMENDED: Mollom Module', 'Mollom', 'http://drupal.org/project/mollom', 'admin/build/modules', 'admin/settings/mollom', 1),
+
+(41, 1, 0, 'Token (required for other modules to function)', 'Token', 'http://drupal.org/project/token', 'admin/build/modules', '', 1),
+
+(40, 9, 1, 'HIGHLY RECOMMENDED: Sign up for Mollom\'s free service and get Mollom code - <a href=''http://mollom.com/user/register''> http://mollom.com/user/register</a>', '', '', '', '', 0	)");
+
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function seochecklist_uninstall() {
+  drupal_uninstall_schema('seochecklist');
+}
+
+/**
+  * Implementation of hook_update_N().
+  *
+  * Move linked_seo, extra2, extra3 columns to Drupal variables since they are
+  * representing 1 value only. Remove subgroup from seo_group since we don't use it anymore.
+  */
+function seochecklist_update_6001() {
+
+  $query = db_query("SELECT linked_seo FROM {seo_checklist} ORDER BY id DESC LIMIT 1");
+  $result = db_fetch_object($query);
+  variable_set('seo_checklist_link', intval($result->linked_seo));
+
+  $query = db_query("SELECT extra2, extra3 FROM {seo_checklist} WHERE id = 1");
+  $result = db_fetch_object($query);
+  variable_set('seo_checklist_thanks', intval($result->extra2));
+  variable_set('seo_checklist_podcast', intval($result->extra3));
+
+  $ret = array();
+  db_drop_field($ret, 'seo_checklist', 'extra2');
+  db_drop_field($ret, 'seo_checklist', 'extra3');
+  db_drop_field($ret, 'seo_checklist', 'linked_seo');
+
+  db_drop_field($ret, 'seo_group', 'subgroup');
+
+  return $ret;
+}
