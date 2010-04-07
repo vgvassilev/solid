@@ -1,4 +1,4 @@
-# $Id: hu.po,v 1.1.2.1 2008/10/21 12:42:58 aries Exp $
+# $Id: hu.po,v 1.2 2008/11/11 19:05:59 freso Exp $
 #
 # Hungarian translation of Drupal module languageicons
 # Copyright Balogh Zoltán <zly@bernathegyi.info>

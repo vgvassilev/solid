@@ -1,17 +1,17 @@
-# $Id: languageicons.pot,v 1.1.2.1 2008/08/26 18:40:22 freso Exp $
+# $Id: languageicons.pot,v 1.3 2010/02/02 22:53:15 freso Exp $
 #
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  languageicons.admin.inc,v 1.1.2.2 2008/08/11 17:25:55 freso
-#  languageicons.module,v 1.2.2.3 2008/08/16 13:16:24 freso
+#  languageicons.admin.inc,v 1.6 2010/02/02 21:10:46 freso
+#  languageicons.module,v 1.9 2010/02/02 21:10:46 freso
 #  languageicons.info: n/a
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-08-26 20:39+0200\n"
+"POT-Creation-Date: 2010-02-02 23:50+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -20,96 +20,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: languageicons.admin.inc:18
+#: languageicons.admin.inc:20
 msgid "Add language icons"
 msgstr ""
 
-#: languageicons.admin.inc:19
+#: languageicons.admin.inc:21
 msgid "Link types to add language icons."
 msgstr ""
 
-#: languageicons.admin.inc:23
+#: languageicons.admin.inc:25
 msgid "Node links"
 msgstr ""
 
-#: languageicons.admin.inc:28
+#: languageicons.admin.inc:30
 msgid "Language switcher block"
 msgstr ""
 
-#: languageicons.admin.inc:33
+#: languageicons.admin.inc:35
 msgid "Icon placement"
 msgstr ""
 
-#: languageicons.admin.inc:34
-msgid "Before"
+#: languageicons.admin.inc:37
+msgid "Before link"
 msgstr ""
 
-#: languageicons.admin.inc:34
-msgid "After"
+#: languageicons.admin.inc:38
+msgid "After link"
 msgstr ""
 
-#: languageicons.admin.inc:34
-msgid "Replace"
+#: languageicons.admin.inc:39
+msgid "Replace link"
 msgstr ""
 
-#: languageicons.admin.inc:36
+#: languageicons.admin.inc:42
 msgid "Where to display the icon, relative to the link title."
 msgstr ""
 
-#: languageicons.admin.inc:40
+#: languageicons.admin.inc:46
 msgid "Icons file path"
 msgstr ""
 
-#: languageicons.admin.inc:44
-msgid "Path for language icons, relative to Drupal installation. '*' is a placeholder for language code."
+#: languageicons.admin.inc:50
+msgid "Path for language icons, relative to Drupal installation. \"*\" is a placeholder for language code."
 msgstr ""
 
-#: languageicons.admin.inc:48
+#: languageicons.admin.inc:54
 msgid "Image size"
 msgstr ""
 
-#: languageicons.admin.inc:52
+#: languageicons.admin.inc:58
 msgid "Image size for language icons, in the form \"width x height\"."
 msgstr ""
 
-#: languageicons.module:33
+#: languageicons.module:35
 msgid "This module manages language icons for multilingual sites:"
 msgstr ""
 
-#: languageicons.module:35
-msgid "Automatically adds icons to language links"
-msgstr ""
-
-#: languageicons.module:36
-msgid "Provides related theme functions"
+#: languageicons.module:37
+msgid "Automatically adds icons to language links."
 msgstr ""
 
 #: languageicons.module:38
-msgid "For more information please read the <a href=\"@i18n\">on-line help pages</a>."
+msgid "Provides related theme functions."
 msgstr ""
 
-#: languageicons.module:41
-msgid "To enable multilingual support for specific content types go to !configure_content_types."
+#: languageicons.module:40
+msgid "For more information, please see <a href=\"@handbook\">the online handbook section</a>."
 msgstr ""
 
-#: languageicons.module:41
-msgid "configure content types"
+#: languageicons.module:43
+msgid "To enable multilingual support for specific content types go to <a href=\"@configure_content_types\">configure content types</a>."
 msgstr ""
 
-#: languageicons.module:51
-msgid "Configure"
-msgstr ""
-
-#: languageicons.module:58
+#: languageicons.module:53
 msgid "Icons"
 msgstr ""
 
-#: languageicons.module:0
-msgid "languageicons"
-msgstr ""
-
 #: languageicons.info:0
-msgid "Language Icons"
+msgid "Language icons"
 msgstr ""
 
 #: languageicons.info:0

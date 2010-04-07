@@ -34,8 +34,6 @@
 			<!-- END SIDE CONTENT -->
 			<div id="content">
 			<!-- BEGIN MAIN CONTENT -->
-				<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
-				<?php if ($tabs2): print '<ul class="tabs secondary">'. $tabs2 .'</ul>'; endif; ?>
 				<?php print $content; ?>
 			<!-- END MAIN CONTENT -->
 			</div><!--#content-->

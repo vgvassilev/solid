@@ -1,13 +1,11 @@
 <?php
-// $Id: languageicons.module,v 1.2.2.4 2009/02/02 20:11:22 freso Exp $
+// $Id: languageicons.module,v 1.10 2010/02/22 17:47:17 freso Exp $
 
 /**
  * @file
  * Icons for language links.
  *
  * This is a spin off from the Internationalization (i18n) package.
- *
- * @author Jose A. Reyero, 2007
  */
 
 /**
@@ -26,19 +24,21 @@ function languageicons_theme() {
 
 /**
  * Implementation of hook_help().
+ *
+ * @todo The @handbook link needs to change to a module specific one.
  */
 function languageicons_help($path, $arg) {
   switch ($path) {
     case 'admin/help#languageicons' :
       $output = '<p>'. t('This module manages language icons for multilingual sites:') .'</p>';
       $output .= '<ul>';
-      $output .= '<li>'. t('Automatically adds icons to language links') .'</li>';
-      $output .= '<li>'. t('Provides related theme functions') .'</li>';
+      $output .= '<li>'. t('Automatically adds icons to language links.') .'</li>';
+      $output .= '<li>'. t('Provides related theme functions.') .'</li>';
       $output .= '</ul>';
-      $output .= '<p>'. t('For more information please read the <a href="@i18n">on-line help pages</a>.', array('@i18n' => 'http://drupal.org/node/31631')) .'</p>';
+      $output .= '<p>'. t('For more information, please see <a href="@handbook">the online handbook section</a>.', array('@handbook' => 'http://drupal.org/node/133977')) .'</p>';
       return $output;
     case 'admin/settings/languageicons':
-      $output .= '<p>'. t('To enable multilingual support for specific content types go to !configure_content_types.', array('!configure_content_types' => l(t('configure content types'), 'admin/content/types'))) .'</p>';
+      $output .= '<p>'. t('To enable multilingual support for specific content types go to <a href="@configure_content_types">configure content types</a>.', array('@configure_content_types' => url('admin/content/types'))) .'</p>';
       return $output;
   }
 }
@@ -47,18 +47,7 @@ function languageicons_help($path, $arg) {
  * Implementation of hook_menu().
  */
 function languageicons_menu() {
-  // Direct copy of the Configure tab from locale module to
-  // make space for the "Localization sharing" tab below.
-  $items['admin/settings/language/configure/language'] = array(
-    'title' => 'Language negotiation',
-    'page callback' => 'locale_inc_callback',
-    'page arguments' => array('drupal_get_form', 'locale_languages_configure_form'),
-    'access arguments' => array('administer languages'),
-    'weight' => -10,
-    'type' => MENU_DEFAULT_LOCAL_TASK,
-  );
-
-  $items['admin/settings/language/configure/icons'] = array(
+  $items['admin/settings/language/icons'] = array(
     'title' => 'Icons',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('languageicons_admin_settings'),
@@ -71,7 +60,7 @@ function languageicons_menu() {
 }
 
 /**
- * Implementation of hook_alter_translation_link().
+ * Implementation of hook_translation_link_alter().
  *
  * Adds language icons to normal translation links.
  */
@@ -123,7 +112,11 @@ function theme_languageicons_icon($language, $title = NULL) {
   if ($path = variable_get('languageicons_path', drupal_get_path('module', 'languageicons') .'/flags/*.png')) {
     $src = base_path() . str_replace('*', $language->language, $path);
     $title = $title ? $title : $language->native;
-    $attribs = array('class' => 'language-icon', 'alt' => $title);
+    $attribs = array(
+      'class' => 'language-icon',
+      'alt' => $title,
+      'title' => $title,
+    );
     if ($size = variable_get('languageicons_size', '16x12')) {
       list($width, $height) = explode('x', $size);
       $attribs += array('width' => $width, 'height' => $height);

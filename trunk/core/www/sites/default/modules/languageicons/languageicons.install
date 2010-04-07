@@ -1,5 +1,5 @@
 <?php
-// $Id: languageicons.install,v 1.1.2.2 2008/08/19 17:40:25 freso Exp $
+// $Id: languageicons.install,v 1.4 2010/02/02 21:10:46 freso Exp $
 
 /**
  * @file
@@ -25,6 +25,7 @@ function languageicons_uninstall() {
     'languageicons_placement',
     'languageicons_path',
     'languageicons_size',
+    'languageicons_show_tooltip',
   );
   foreach ($variables as $variable) {
     variable_del($variable);
@@ -64,5 +65,15 @@ function _languageicons_convert_i18n_icon_variables() {
  */
 function languageicons_update_6000() {
   _languageicons_convert_i18n_icon_variables();
+  return array();
+}
+
+/**
+ * Remove variable used for a short time during development of 6.x-2.x.
+ *
+ * @todo Remove this after the release of 6.x-2.0.
+ */
+function languageicons_update_6200() {
+  variable_del('languageicons_show_tooltip');
   return array();
 }
