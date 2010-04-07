@@ -20,6 +20,9 @@
 			<a href="<?php print $front_page; ?>"><img id="logo_title" src="<?php print $logo; ?>" alt="Logo"/></a>
 			<a href="<?php print $front_page; ?>"><h1><?php print $site_slogan; ?></h1></a>
 			<?php print $header; ?>
+			<?php if (isset($primary_links)) : ?>
+				<?php print theme('links', $primary_links, array('class' => 'links primary-links')) ?>
+			<?php endif; ?>
 		</div>
 		
 	    <div id="content-header">
@@ -34,6 +37,8 @@
 			<!-- END SIDE CONTENT -->
 			<div id="content">
 			<!-- BEGIN MAIN CONTENT -->
+				<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
+				<?php if ($tabs2): print '<ul class="tabs secondary">'. $tabs2 .'</ul>'; endif; ?>
 				<?php print $content; ?>
 			<!-- END MAIN CONTENT -->
 			</div><!--#content-->
