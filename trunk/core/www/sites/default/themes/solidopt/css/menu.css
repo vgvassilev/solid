@@ -31,7 +31,10 @@ ul.primary-links li a {
 
 #header > ul a { width: auto; }
 /* IE5 Mac hide \*/
-#header a { float: none; }
+#header a {
+	float: none;
+	padding-bottom: 9px !important;
+}
 /* End */
 
 #header .active {
@@ -41,7 +44,7 @@ ul.primary-links li a {
 
 #header .active a {
 	background-position: 100% -220px !important;
-	padding-bottom: 9px !important;
+	
     color: #fff !important;
 }
 

@@ -45,7 +45,9 @@ img {
 
 #header a img {
     border: none;
-}#search input.text {
+}
+
+#search input.text {
     font-size:.85em;
     padding:4px;
     -moz-border-radius:4px;
@@ -292,4 +294,39 @@ div.i18n>ul li a {
 	color: black;
 	display: block;
 }
-/* end */
+
+/* css rule affecting the table found in the subprojects page */
+#content .node div table {
+	border: solid 1px gray;
+	background-color: rgb(249, 249, 249);
+	background-image: none;
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-position: 0% 50%;
+	-moz-background-size: auto auto;
+	border-collapse: collapse;
+	font-size: 95%;
+	-moz-background-clip: -moz-initial;
+	-moz-background-origin: -moz-initial;
+	-moz-background-inline-policy: -moz-initial;
+	width: 100%;
+	margin: 1em;
+}
+
+#content .node div table th {
+	border: solid 1px;
+	text-align: center;
+}
+
+#content .node div table td {
+	border: solid 1px;
+}
+
+/* css rule affecting the headings in the subprojects page */
+div .content h1 a {
+	font-weight: normal;
+}
+
+div .content h1 a:hover {
+	text-decoration: underline;
+}
