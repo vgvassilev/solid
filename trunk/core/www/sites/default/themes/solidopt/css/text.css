@@ -82,9 +82,10 @@ h1 {
 
 
 /* css rule affecting the heading in the primary menu pages */
-h1.heading {
-	font-size: 1.5em;
+h1.heading a {
+	font-size: 0.8em;
 	margin-top: 1em;
+	font-weight: normal;
 }
 
 h2 {
