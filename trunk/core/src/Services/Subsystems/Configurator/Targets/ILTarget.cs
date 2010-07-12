@@ -12,6 +12,7 @@ using System.IO;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 using SolidOpt.Services.Subsystems.HetAccess;
 
@@ -44,18 +45,20 @@ namespace SolidOpt.Services.Subsystems.Configurator.Targets
 			streamWriter = new StreamWriter(new MemoryStream());
 			dict = configRepresenation;
 			
-			AssemblyDefinition assembly =
-					AssemblyFactory.DefineAssembly("Config", AssemblyKind.Dll);
-
-			assembly.Name.Name ="Config";
-			assembly.Name.Version = new Version(1,0,0,0);
+			//Mono 0.9 migration: AssemblyDefinition assembly = AssemblyFactory.DefineAssembly("Config", AssemblyKind.Dll);
+			//Mono 0.9 migration: assembly.Name.Name = "Config";
+			//Mono 0.9 migration: assembly.Name.Version = new Version(1,0,0,0);
+			AssemblyDefinition assembly = AssemblyDefinition.CreateAssembly(
+				new AssemblyNameDefinition("Config", new Version(1,0,0,0)),
+				"Config",
+				AssemblyKind.Dll);
+			
 			assembly.MainModule.Accept(new StructureVisitor<TParamName>());
 			
             // Save the assembly and verify the result
-            byte[] asm;
-            AssemblyFactory.SaveAssembly(assembly, out asm);
-            
-            streamWriter.BaseStream.Write(asm, 0, asm.Length);
+            //Mono 0.9 migration: byte[] asm;
+            //Mono 0.9 migration: AssemblyFactory.SaveAssembly(assembly, out asm);
+            assembly.Write(streamWriter.BaseStream);
             
             return streamWriter.BaseStream;
 //			uriManager.SetResource(streamWriter.BaseStream, resourse);
@@ -135,8 +138,12 @@ namespace SolidOpt.Services.Subsystems.Configurator.Targets
 					}
 				}
 				
-				if (cctor != null)
-					cctor.Body.CilWorker.Append(cctor.Body.CilWorker.Create(OpCodes.Ret));
+				//Mono 0.9 migration: if (cctor != null)
+				//Mono 0.9 migration: cctor.Body.CilWorker.Append(cctor.Body.CilWorker.Create(OpCodes.Ret));
+				if (cctor != null) {
+					ILProcessor il = cctor.Body.GetILProcessor();
+					il.Append(il.Create(OpCodes.Ret));
+				}
 			}
 			
 			internal void FillConfigTypes(Dictionary<TParamName, object> dict, ModuleDefinition module, TypeDefinition baseType)
@@ -190,7 +197,8 @@ namespace SolidOpt.Services.Subsystems.Configurator.Targets
 		                                              Mono.Cecil.MethodAttributes.RTSpecialName,
 			                                          returnType);
 				MethodReference objectCtor = module.Import(typeof(object).GetConstructor(new Type[]{}));
-				CilWorker cil = ctor.Body.CilWorker;
+				//Mono 0.9 migration: CilWorker cil = ctor.Body.CilWorker;
+				ILProcessor cil = ctor.Body.GetILProcessor();
 				cil.Append(cil.Create(OpCodes.Ldarg_0));
 				cil.Append(cil.Create(OpCodes.Call, objectCtor));
 				cil.Append(cil.Create(OpCodes.Ret));
@@ -200,11 +208,13 @@ namespace SolidOpt.Services.Subsystems.Configurator.Targets
 			
 			private void AppendToCCtor(MethodDefinition cctor, FieldDefinition field, object currentValue)
 			{
-				CilWorker cil = cctor.Body.CilWorker;
+				//Mono 0.9 migration: CilWorker cil = cctor.Body.CilWorker;
+				ILProcessor cil = cctor.Body.GetILProcessor();
 				
 				Instruction instr = null; 
 				
-				switch (field.FieldType.GetOriginalType().FullName) {
+				//Mono 0.9 migration: switch (field.FieldType.GetOriginalType().FullName) {
+				switch (field.FieldType.GetElementType().FullName) {
 						case "System.String" : 
 							instr = cil.Create(OpCodes.Ldstr, (String)currentValue);
 							break;

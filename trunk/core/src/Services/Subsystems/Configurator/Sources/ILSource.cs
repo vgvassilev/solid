@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 using SolidOpt.Services.Subsystems.HetAccess;
 
@@ -64,7 +65,8 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 		
 		public Dictionary<TParamName, object> LoadConfiguration(Stream resStream)
 		{
-			AssemblyDefinition assembly = AssemblyFactory.GetAssembly(resStream);
+			//Mono 0.9 migration: AssemblyDefinition assembly = AssemblyFactory.GetAssembly(resStream);
+			AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(resStream);
 			assembly.MainModule.Accept(new StructureVisitor<TParamName>());
 			
 			return dict;
@@ -84,7 +86,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 	{
 		internal bool isFirstLevel = true;
 		
-		public override void VisitTypeDefinitionCollection(TypeDefinitionCollection types)
+		public override void VisitTypeDefinitionCollection(Collection<TypeDefinition> types)
 		{
 			base.VisitCollection(types);
 		}
@@ -108,7 +110,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 		{
 			foreach (FieldDefinition field in type.Fields) {
 				dict[(TParamName)Convert.ChangeType(
-					field.Name, typeof(TParamName))] = GetFieldValue(type.Constructors, field);
+					field.Name, typeof(TParamName))] = GetFieldValue(type.Methods, field);
 			}
 			
 			foreach (TypeDefinition t in type.NestedTypes) {
@@ -118,10 +120,11 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 			}
 		}
 		
-		internal object GetFieldValue(ConstructorCollection collection, FieldDefinition field)
+		//Mono 0.9 migration
+		internal object GetFieldValue(Collection<MethodReference> collection, FieldDefinition field)
 		{
 			foreach (MethodDefinition cctor in collection) {
-				if (cctor.IsStatic && cctor.IsSpecialName && cctor.IsHideBySig) {
+				if (cctor.IsConstructor && cctor.IsStatic && /*cctor.IsSpecialName*/ && cctor.IsHideBySig) {
 					foreach (Instruction instr in cctor.Body.Instructions) {
 						if (instr.Next.Operand != null && 
 						    (instr.Next.OpCode == OpCodes.Stsfld &&
