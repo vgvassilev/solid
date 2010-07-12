@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
@@ -26,7 +27,8 @@ namespace OverflowArithmeticRemover
 		
 		public MethodDefinition Optimize(MethodDefinition source)
 		{
-			source.Body.Simplify();
+			//Mono.Cecil 0.9.3 migration: source.Body.Simplify();
+			source.Body.SimplifyMacros();
 			foreach (Instruction instruction in source.Body.Instructions) {
 				if (instruction.OpCode == OpCodes.Add_Ovf) {
 					instruction.OpCode = OpCodes.Add;
@@ -159,7 +161,8 @@ namespace OverflowArithmeticRemover
 				}
 			*/
 			}
-			source.Body.Optimize();
+			//Mono.Cecil 0.9.3 migration: source.Body.Optimize();
+			source.Body.OptimizeMacros();
 			
 			return source;
 		}

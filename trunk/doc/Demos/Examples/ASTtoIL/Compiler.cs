@@ -23,7 +23,8 @@ namespace ASTtoIL
 	public class Compiler : Cecil.Decompiler.Ast.BaseCodeVisitor
 	{
 		private BlockStatement ast;
-		private CilWorker cil;
+		//Mono.Cecil 0.9.3 migration: private CilWorker cil;
+		private ILProcessor cil;
 		private MethodBody body;
 		
 		private Dictionary<string, int> labels = new Dictionary<string, int>();
@@ -32,11 +33,12 @@ namespace ASTtoIL
 		
 		private Instruction branchToFix;
 		
-		public Compiler(BlockStatement ast, CilWorker cil)
+		//Mono.Cecil 0.9.3 migration: public Compiler(BlockStatement ast, CilWorker cil)
+		public Compiler(BlockStatement ast, ILProcessor cil, MethodBody body)
 		{
 			this.ast = ast;
 			this.cil = cil;
-			this.body = cil.GetBody();
+			this.body = body;
 			this.branchToFix = cil.Create(OpCodes.Nop);
 		}
 		
@@ -55,7 +57,7 @@ namespace ASTtoIL
 			Visit(ast);
 			
 			if (body.Instructions[body.Instructions.Count - 1].OpCode != OpCodes.Ret)
-				cil.Emit(OpCodes.Ret);
+				cil.EmitInstruction(OpCodes.Ret);
 			
 			foreach (KeyValuePair<Instruction, string> pair in fixupLabels) {
 				pair.Key.Operand = body.Instructions[labels[pair.Value]];
@@ -77,17 +79,17 @@ namespace ASTtoIL
 		public override void VisitReturnStatement (ReturnStatement node)
 		{
 			Visit (node.Expression);
-			cil.Emit(OpCodes.Ret);
+			cil.EmitInstruction(OpCodes.Ret);
 		}
 
 		public override void VisitGotoStatement (GotoStatement node)
 		{
 			int instructionIndex;
 			if (labels.TryGetValue(node.Label, out instructionIndex)) {
-				cil.Emit(OpCodes.Br, body.Instructions[instructionIndex]);
+				cil.EmitInstruction(OpCodes.Br, body.Instructions[instructionIndex]);
 			}
 			else {
-				fixupLabels.Add(new KeyValuePair<Instruction, string>(cil.Emit(OpCodes.Br, branchToFix), node.Label));
+				fixupLabels.Add(new KeyValuePair<Instruction, string>(cil.EmitInstruction(OpCodes.Br, branchToFix), node.Label));
 			}
 		}
 
@@ -101,12 +103,12 @@ namespace ASTtoIL
 			Visit (node.Condition);
 			
 
-			Instruction conditionalBranch = cil.Emit(OpCodes.Brfalse, branchToFix);
+			Instruction conditionalBranch = cil.EmitInstruction(OpCodes.Brfalse, branchToFix);
 			
 			Visit (node.Then);
 			
 			if (node.Else != null) {
-				Instruction branch = cil.Emit(OpCodes.Br, branchToFix);
+				Instruction branch = cil.EmitInstruction(OpCodes.Br, branchToFix);
 				int index = body.Instructions.Count;
 				
 				Visit (node.Else);
@@ -135,11 +137,11 @@ namespace ASTtoIL
 			int index = body.Instructions.Count;
 			Visit (node.Condition);
 			
-			Instruction conditionalBranch = cil.Emit(OpCodes.Brfalse, branchToFix);
+			Instruction conditionalBranch = cil.EmitInstruction(OpCodes.Brfalse, branchToFix);
 			
 			Visit (node.Body);
 			
-			Instruction branch = cil.Emit(OpCodes.Br, body.Instructions[index]);
+			Instruction branch = cil.EmitInstruction(OpCodes.Br, body.Instructions[index]);
 			fixupBranches.Add(new KeyValuePair<Instruction, int>(conditionalBranch, body.Instructions.Count));				
 		}
 
@@ -151,7 +153,7 @@ namespace ASTtoIL
 			
 			Visit (node.Condition);
 			
-			cil.Emit(OpCodes.Brtrue, body.Instructions[index]);
+			cil.EmitInstruction(OpCodes.Brtrue, body.Instructions[index]);
 		}
 
 //		public override void VisitBreakStatement (BreakStatement node)
@@ -221,10 +223,10 @@ namespace ASTtoIL
 			MethodReferenceExpression methRefExp = node.Method as MethodReferenceExpression;
 			if (methRefExp != null) {
 				if (methRefExp.Method.Resolve().IsVirtual) {
-					cil.Emit(OpCodes.Callvirt, methRefExp.Method);
+					cil.EmitInstruction(OpCodes.Callvirt, methRefExp.Method);
 				}
 				else {
-					cil.Emit(OpCodes.Call, methRefExp.Method);
+					cil.EmitInstruction(OpCodes.Call, methRefExp.Method);
 				}
 			}
 		}
@@ -248,25 +250,25 @@ namespace ASTtoIL
 		public override void VisitLiteralExpression (LiteralExpression node)
 		{
 			if (node.Value == null) {
-				cil.Emit(OpCodes.Ldnull);
+				cil.EmitInstruction(OpCodes.Ldnull);
 			}
 			else {
 				switch (node.Value.GetType().FullName) {
-					case "System.Int64" : cil.Emit(OpCodes.Ldc_I8, (Int64)node.Value); break;
-					case "System.Int32" : cil.Emit(OpCodes.Ldc_I4, (Int32)node.Value); break;
-					case "System.Int16" : cil.Emit(OpCodes.Ldc_I4, (Int16)node.Value); break;
+					case "System.Int64" : cil.EmitInstruction(OpCodes.Ldc_I8, (Int64)node.Value); break;
+					case "System.Int32" : cil.EmitInstruction(OpCodes.Ldc_I4, (Int32)node.Value); break;
+					case "System.Int16" : cil.EmitInstruction(OpCodes.Ldc_I4, (Int16)node.Value); break;
 					
-					case "System.Single" : cil.Emit(OpCodes.Ldc_R4, (Single)node.Value); break;
-					case "System.Double" : cil.Emit(OpCodes.Ldc_R8, (Double)node.Value); break;
+					case "System.Single" : cil.EmitInstruction(OpCodes.Ldc_R4, (Single)node.Value); break;
+					case "System.Double" : cil.EmitInstruction(OpCodes.Ldc_R8, (Double)node.Value); break;
 					
-					case "System.String" : cil.Emit(OpCodes.Ldstr, (String)node.Value); break;
+					case "System.String" : cil.EmitInstruction(OpCodes.Ldstr, (String)node.Value); break;
 					
 					case "System.Boolean" : 
 						if ((Boolean)node.Value) {
-							cil.Emit(OpCodes.Ldc_I4_1);
+							cil.EmitInstruction(OpCodes.Ldc_I4_1);
 						}
 						else {
-							cil.Emit(OpCodes.Ldc_I4_0);
+							cil.EmitInstruction(OpCodes.Ldc_I4_0);
 						}
 					break;
 					
@@ -279,42 +281,42 @@ namespace ASTtoIL
 			Visit (node.Operand);
 			switch(node.Operator) {
 				case UnaryOperator.BitwiseNot : 
-					cil.Emit(OpCodes.Not);
+					cil.EmitInstruction(OpCodes.Not);
 					break;	
 				
 				case UnaryOperator.LogicalNot : 
-					cil.Emit(OpCodes.Ldc_I4_0);
-					cil.Emit(OpCodes.Ceq);
+					cil.EmitInstruction(OpCodes.Ldc_I4_0);
+					cil.EmitInstruction(OpCodes.Ceq);
 					break;
 					
 				case UnaryOperator.Negate : 
-					cil.Emit(OpCodes.Neg);
+					cil.EmitInstruction(OpCodes.Neg);
 					break;
 					
 				case UnaryOperator.PostDecrement : 
 					//TODO: Expression--;
-					cil.Emit(OpCodes.Ldc_I4_1);
-					cil.Emit(OpCodes.Sub);
+					cil.EmitInstruction(OpCodes.Ldc_I4_1);
+					cil.EmitInstruction(OpCodes.Sub);
 					break;
 					
 				case UnaryOperator.PreDecrement : 
 					//TODO: --Expression;
-					cil.Emit(OpCodes.Ldc_I4_1);
-					cil.Emit(OpCodes.Sub);
-					cil.Emit(OpCodes.Dup);
+					cil.EmitInstruction(OpCodes.Ldc_I4_1);
+					cil.EmitInstruction(OpCodes.Sub);
+					cil.EmitInstruction(OpCodes.Dup);
 					break;
 					
 				case UnaryOperator.PostIncrement : 
 					//TODO: Expression++;
-					cil.Emit(OpCodes.Ldc_I4_1);
-					cil.Emit(OpCodes.Add);
+					cil.EmitInstruction(OpCodes.Ldc_I4_1);
+					cil.EmitInstruction(OpCodes.Add);
 					break;
 					
 				case UnaryOperator.PreIncrement : 
 					//TODO: ++Expression;
-					cil.Emit(OpCodes.Ldc_I4_1);
-					cil.Emit(OpCodes.Add);
-					cil.Emit(OpCodes.Dup);
+					cil.EmitInstruction(OpCodes.Ldc_I4_1);
+					cil.EmitInstruction(OpCodes.Add);
+					cil.EmitInstruction(OpCodes.Dup);
 					break;
 			}
 		}
@@ -329,65 +331,65 @@ namespace ASTtoIL
 			switch(node.Operator) {
 				case BinaryOperator.Add : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Add);
+					cil.EmitInstruction(OpCodes.Add);
 					break;	
 				
 				case BinaryOperator.BitwiseAnd : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.And);
+					cil.EmitInstruction(OpCodes.And);
 					break;
 					
 				case BinaryOperator.BitwiseOr : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Or);
+					cil.EmitInstruction(OpCodes.Or);
 					break;
 					
 				case BinaryOperator.BitwiseXor : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Xor);
+					cil.EmitInstruction(OpCodes.Xor);
 					break;
 					
 				case BinaryOperator.Divide : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Div);
+					cil.EmitInstruction(OpCodes.Div);
 					break;
 					
 				case BinaryOperator.GreaterThan : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Cgt);
+					cil.EmitInstruction(OpCodes.Cgt);
 					break;
 					
 				case BinaryOperator.GreaterThanOrEqual : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Clt);
-					cil.Emit(OpCodes.Ldc_I4_0);
-					cil.Emit(OpCodes.Ceq);
+					cil.EmitInstruction(OpCodes.Clt);
+					cil.EmitInstruction(OpCodes.Ldc_I4_0);
+					cil.EmitInstruction(OpCodes.Ceq);
 					break;
 				
 				case BinaryOperator.LeftShift : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Shl);
+					cil.EmitInstruction(OpCodes.Shl);
 					break;	
 				
 				case BinaryOperator.LessThan : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Clt);
+					cil.EmitInstruction(OpCodes.Clt);
 					break;
 					
 				case BinaryOperator.LessThanOrEqual : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Cgt);
-					cil.Emit(OpCodes.Ldc_I4_0);
-					cil.Emit(OpCodes.Ceq);
+					cil.EmitInstruction(OpCodes.Cgt);
+					cil.EmitInstruction(OpCodes.Ldc_I4_0);
+					cil.EmitInstruction(OpCodes.Ceq);
 					break;
 				
 				case BinaryOperator.LogicalAnd : 
-					negBranch = cil.Emit(OpCodes.Brfalse, branchToFix);
+					negBranch = cil.EmitInstruction(OpCodes.Brfalse, branchToFix);
 						
 					Visit (node.Right);
-					posBranch = cil.Emit(OpCodes.Br, branchToFix);
+					posBranch = cil.EmitInstruction(OpCodes.Br, branchToFix);
 					
-					negBranch.Operand = cil.Emit(OpCodes.Ldc_I4_0);
+					negBranch.Operand = cil.EmitInstruction(OpCodes.Ldc_I4_0);
 					
 					fixupBranches.Add(new KeyValuePair<Instruction, int>
 					           					(posBranch, body.Instructions.Count));
@@ -395,12 +397,12 @@ namespace ASTtoIL
 					break;
 				
 				case BinaryOperator.LogicalOr : 
-					posBranch = cil.Emit(OpCodes.Brtrue, branchToFix);
+					posBranch = cil.EmitInstruction(OpCodes.Brtrue, branchToFix);
 						
 					Visit (node.Right);
-					negBranch = cil.Emit(OpCodes.Br, branchToFix);
+					negBranch = cil.EmitInstruction(OpCodes.Br, branchToFix);
 					
-					posBranch.Operand = cil.Emit(OpCodes.Ldc_I4_1);
+					posBranch.Operand = cil.EmitInstruction(OpCodes.Ldc_I4_1);
 					
 					fixupBranches.Add(new KeyValuePair<Instruction, int>
 					           					(negBranch, body.Instructions.Count));
@@ -409,34 +411,34 @@ namespace ASTtoIL
 					
 				case BinaryOperator.Modulo : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Rem);
+					cil.EmitInstruction(OpCodes.Rem);
 					break;
 				
 				case BinaryOperator.Multiply : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Mul);
+					cil.EmitInstruction(OpCodes.Mul);
 					break;
 					
 				case BinaryOperator.RightShift : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Shr);
+					cil.EmitInstruction(OpCodes.Shr);
 					break;
 					
 				case BinaryOperator.Subtract : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Sub);
+					cil.EmitInstruction(OpCodes.Sub);
 					break;
 				
 				case BinaryOperator.ValueEquality : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Ceq);
+					cil.EmitInstruction(OpCodes.Ceq);
 					break;
 				
 				case BinaryOperator.ValueInequality : 
 					Visit (node.Right);
-					cil.Emit(OpCodes.Ceq);
-					cil.Emit(OpCodes.Ldc_I4_0);
-					cil.Emit(OpCodes.Ceq);
+					cil.EmitInstruction(OpCodes.Ceq);
+					cil.EmitInstruction(OpCodes.Ldc_I4_0);
+					cil.EmitInstruction(OpCodes.Ceq);
 					break;
 			}
 		}
@@ -449,14 +451,14 @@ namespace ASTtoIL
 				case CodeNodeType.VariableReferenceExpression :
 					Visit (node.Expression);
 				
-					cil.Emit(OpCodes.Stloc, ((VariableReferenceExpression) node.Target).Variable.Index);
+					cil.EmitInstruction(OpCodes.Stloc, ((VariableReferenceExpression) node.Target).Variable.Index);
 					
 					break;
 				
 				case CodeNodeType.ArgumentReferenceExpression :
 					Visit (node.Expression);
 				
-					cil.Emit(OpCodes.Starg, ((ArgumentReferenceExpression) node.Target).Parameter.Sequence);
+					cil.EmitInstruction(OpCodes.Starg, ((ArgumentReferenceExpression) node.Target).Parameter.Index+1);
 					
 					break;
 				
@@ -467,10 +469,10 @@ namespace ASTtoIL
 					//TODO: fldRefExp.Target!
 					FieldDefinition fld = fldRefExp.Field.Resolve();
 					if ((fld.Attributes & FieldAttributes.Static) != 0) {
-						cil.Emit(OpCodes.Stsfld, fld);
+						cil.EmitInstruction(OpCodes.Stsfld, fld);
 					}
 					else {
-						cil.Emit(OpCodes.Stfld, fld);
+						cil.EmitInstruction(OpCodes.Stfld, fld);
 					}
 					
 					break;
@@ -479,12 +481,12 @@ namespace ASTtoIL
 
 		public override void VisitArgumentReferenceExpression (ArgumentReferenceExpression node)
 		{
-			cil.Emit(OpCodes.Ldarg, node.Parameter.Sequence);
+			cil.EmitInstruction(OpCodes.Ldarg, node.Parameter.Index+1);
 		}
 
 		public override void VisitVariableReferenceExpression (VariableReferenceExpression node)
 		{
-			cil.Emit(OpCodes.Ldloc, node.Variable.Index);
+			cil.EmitInstruction(OpCodes.Ldloc, node.Variable.Index);
 		}
 
 //		public override void VisitVariableDeclarationExpression (VariableDeclarationExpression node)
@@ -506,10 +508,10 @@ namespace ASTtoIL
 			FieldReference fldRef = (FieldReference) node.Field;
 			FieldDefinition fld = fldRef.Resolve();
 			if ((fld.Attributes & FieldAttributes.Static) != 0) {
-				cil.Emit(OpCodes.Ldsfld, fld);
+				cil.EmitInstruction(OpCodes.Ldsfld, fld);
 			}
 			else {
-				cil.Emit(OpCodes.Ldfld, fld);
+				cil.EmitInstruction(OpCodes.Ldfld, fld);
 			}
 		}
 
@@ -536,12 +538,12 @@ namespace ASTtoIL
 		{
 			Visit (node.Condition);
 			
-			Instruction conditionalBranch = cil.Emit(OpCodes.Brfalse, branchToFix);
+			Instruction conditionalBranch = cil.EmitInstruction(OpCodes.Brfalse, branchToFix);
 			
 			Visit (node.Then);
 			
 			if (node.Else != null) {
-				Instruction branch = cil.Emit(OpCodes.Br, branchToFix);
+				Instruction branch = cil.EmitInstruction(OpCodes.Br, branchToFix);
 				int index = body.Instructions.Count;
 				
 				Visit (node.Else);
@@ -601,5 +603,122 @@ namespace ASTtoIL
 //		public override void VisitTypeReferenceExpression (TypeReferenceExpression node)
 //		{
 //		}
+	}
+
+	//Mono.Cecil 0.9.3 migration
+	public static class ILProcessorExtenstions 
+	{
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode)
+		{
+			Instruction result = cil.Create (opcode);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, TypeReference type)
+		{
+			Instruction result = cil.Create (opcode, type);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, MethodReference method)
+		{
+			Instruction result = cil.Create (opcode, method);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, CallSite site)
+		{
+			Instruction result = cil.Create (opcode, site);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, FieldReference field)
+		{
+			Instruction result = cil.Create (opcode, field);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, string value)
+		{
+			Instruction result = cil.Create (opcode, value);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, byte value)
+		{
+			Instruction result = cil.Create (opcode, value);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, sbyte value)
+		{
+			Instruction result = cil.Create (opcode, value);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, int value)
+		{
+			Instruction result = cil.Create (opcode, value);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, long value)
+		{
+			Instruction result = cil.Create (opcode, value);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, float value)
+		{
+			Instruction result = cil.Create (opcode, value);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, double value)
+		{
+			Instruction result = cil.Create (opcode, value);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, Instruction target)
+		{
+			Instruction result = cil.Create (opcode, target);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, Instruction [] targets)
+		{
+			Instruction result = cil.Create (opcode, targets);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, VariableDefinition variable)
+		{
+			Instruction result = cil.Create (opcode, variable);
+			cil.Append(result);
+			return result;
+		}
+
+		public static Instruction EmitInstruction(this ILProcessor cil, OpCode opcode, ParameterDefinition parameter)
+		{
+			Instruction result = cil.Create (opcode, parameter);
+			cil.Append(result);
+			return result;
+		}
+
 	}
 }

@@ -32,7 +32,8 @@ namespace ASTtoIL
 		
 		public MethodDefinition Compile(AstMethodDefinition source)
 		{
-			Compiler compiler = new Compiler(source.Block, source.Method.Body.CilWorker);
+			//Mono.Cecil 0.9.3 migration: Compiler compiler = new Compiler(source.Block, source.Method.Body.CilWorker);
+			Compiler compiler = new Compiler(source.Block, source.Method.Body.GetILProcessor(), source.Method.Body);
 			compiler.Compile();
 			return source.Method;
 		}

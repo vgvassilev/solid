@@ -28,6 +28,7 @@ using System;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 using Cecil.Decompiler.Cil;
 
@@ -37,7 +38,7 @@ namespace Cecil.Decompiler {
 
 		MethodDefinition method;
 		MethodBody body;
-		VariableDefinitionCollection variables;
+		Collection<VariableDefinition> variables;
 		ControlFlowGraph cfg;
 
 		public MethodDefinition Method {
@@ -48,7 +49,7 @@ namespace Cecil.Decompiler {
 			get { return body; }
 		}
 
-		public VariableDefinitionCollection Variables {
+		public Collection<VariableDefinition> Variables {
 			get { return variables; }
 		}
 
@@ -78,9 +79,9 @@ namespace Cecil.Decompiler {
 			variables.RemoveAt (index);
 		}
 
-		static VariableDefinitionCollection CloneCollection (VariableDefinitionCollection variables)
+		static Collection<VariableDefinition> CloneCollection (Collection<VariableDefinition> variables)
 		{
-			var collection = new VariableDefinitionCollection (variables.Container);
+			var collection = new Collection<VariableDefinition> (variables.Count);
 
 			foreach (VariableDefinition variable in variables)
 				collection.Add (variable);

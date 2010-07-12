@@ -56,8 +56,8 @@ namespace Cecil.Decompiler {
 			this.annotations = annotations;
 			this.array_length = new PropertyDefinition (
 				"Length",
-				new TypeReference ("Int32", "System", null, true),
-				PropertyAttributes.SpecialName | PropertyAttributes.RTSpecialName);
+				PropertyAttributes.SpecialName | PropertyAttributes.RTSpecialName,
+				new TypeReference ("Int32", "System", null, true));
 		}
 
 		public IEnumerable<VariableReference> GetRegisters ()
@@ -825,7 +825,7 @@ namespace Cecil.Decompiler {
 			case CodeNodeType.MethodInvocationExpression:
 				var reference = ((MethodInvocationExpression) expression).Method as MethodReferenceExpression;
 				if (reference != null)
-					return reference.Method.ReturnType.ReturnType.FullName == Constants.Boolean;
+					return reference.Method.ReturnType.FullName == Constants.Boolean;
 
 				break;
 			}
@@ -1038,12 +1038,12 @@ namespace Cecil.Decompiler {
 
 		public override void OnLdarg (Instruction instruction)
 		{
-			PushArgumentReference (((ParameterDefinition) instruction.Operand).Sequence);
+			PushArgumentReference (((ParameterDefinition) instruction.Operand).Index+1);
 		}
 
 		public override void OnLdarga (Instruction instruction)
 		{
-			PushArgumentReference (((ParameterDefinition) instruction.Operand).Sequence);
+			PushArgumentReference (((ParameterDefinition) instruction.Operand).Index+1);
 			PushAddressOf ();
 		}
 

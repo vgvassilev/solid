@@ -51,8 +51,8 @@ namespace TransformLoader
 				ServicesContainer.GetService<ICompile<AstMethodDefinition, MethodDefinition>>();
 			
 			
-			
-			AssemblyDefinition assembly = AssemblyFactory.GetAssembly(args[0]);
+			//Mono.Cecil 0.9.3 migration: AssemblyDefinition assembly = AssemblyFactory.GetAssembly(args[0]);
+			AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(args[0]);
 			
 //			assembly.MainModule.LoadSymbols();
 			

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
@@ -49,7 +50,7 @@ namespace NopRemover
 //			}
 //			
 			
-			CilWorker cil = source.Body.CilWorker;
+			ILProcessor cil = source.Body.GetILProcessor();
 			
 			foreach (Instruction instruction in source.Body.Instructions) {
 				if (instruction.OpCode.FlowControl == FlowControl.Branch || 
@@ -80,9 +81,9 @@ namespace NopRemover
 				instruction1 = instruction1.Previous;
 			}
 			
-			source.Body.Optimize();
+			source.Body.OptimizeMacros();
 			
 			return source;
 		}
-	}
+	}	
 }

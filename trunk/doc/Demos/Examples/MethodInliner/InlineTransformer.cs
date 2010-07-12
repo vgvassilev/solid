@@ -218,7 +218,8 @@ namespace MethodInliner
 						for (int j = 0; j < row.SideEffectsInNode.Count; j++) {
 							mInvoke = row.SideEffectsInNode[j];
 							mRef = mInvoke.Method as MethodReferenceExpression;
-							if (mRef.Method.ReturnType.ReturnType.Name != "Void") {
+							//Mono.Cecil 0.9.3 migration: if (mRef.Method.ReturnType.ReturnType.Name != "Void") {
+							if (mRef.Method.ReturnType.Name != "Void") {
 								expansion.Add(new ExpressionStatement(new AssignExpression(
 									new VariableReferenceExpression(row.SideEffectsInNodeVar[j]), mInvoke)));
 							}
@@ -259,7 +260,8 @@ namespace MethodInliner
 						
 						mRef = row.mInvokeNode.Method as MethodReferenceExpression;
 						
-						if (mRef.Method.ReturnType.ReturnType.Name != "Void") {
+						//Mono.Cecil 0.9.3 migration: if (mRef.Method.ReturnType.ReturnType.Name != "Void") {
+						if (mRef.Method.ReturnType.Name != "Void") {
 							expansion.Add(new ExpressionStatement(new AssignExpression(
 									new VariableReferenceExpression(row.mInvokeNodeVar), row.mInvokeNode)));
 						}
@@ -374,8 +376,10 @@ namespace MethodInliner
 			if (IsInlineable(methodRef.Method)) {
 				currentSideEffect.mInvokeNode = node;
 				VariableReferenceExpression varRefExp = null;
-				if (methodRef.Method.ReturnType.ReturnType.FullName != "System.Void") {
-					currentSideEffect.mInvokeNodeVar = RegisterVariable(methodRef.Method.ReturnType.ReturnType, source.Method);
+				//Mono.Cecil 0.9.3 migration: if (methodRef.Method.ReturnType.ReturnType.FullName != "System.Void") {
+				//Mono.Cecil 0.9.3 migration: 	currentSideEffect.mInvokeNodeVar = RegisterVariable(methodRef.Method.ReturnType.ReturnType, source.Method);
+				if (methodRef.Method.ReturnType.FullName != "System.Void") {
+					currentSideEffect.mInvokeNodeVar = RegisterVariable(methodRef.Method.ReturnType, source.Method);
 					varRefExp = new VariableReferenceExpression(currentSideEffect.mInvokeNodeVar);
 				}
 				sideEffects.Add(currentSideEffect);
@@ -443,7 +447,8 @@ namespace MethodInliner
 		{
 			foreach (CustomAttribute ca in method.Resolve().CustomAttributes) {
 				if (ca.Constructor.DeclaringType.FullName == (typeof(SideEffectsAttribute).FullName)) {
-					bool a = (bool) ca.ConstructorParameters[0];
+					//Mono.Cecil 0.9.3 migration: bool a = (bool) ca.ConstructorParameters[0];
+					bool a = (bool) ca.ConstructorArguments[0].Value;
 					return a;
 				}
 			}
@@ -479,13 +484,16 @@ namespace MethodInliner
 			ReturnVariable = null;
 			ReturnParameter = null;
 			if (target == null) {
-				if (mDef.ReturnType.ReturnType.FullName != "System.Void") {
-					ReturnVariable = RegisterVariable(mDef.ReturnType.ReturnType, source.Method);
+				//Mono.Cecil 0.9.3 migration: if (mDef.ReturnType.ReturnType.FullName != "System.Void") {
+				//Mono.Cecil 0.9.3 migration: 	ReturnVariable = RegisterVariable(mDef.ReturnType.ReturnType, source.Method);
+				if (mDef.ReturnType.FullName != "System.Void") {
+					ReturnVariable = RegisterVariable(mDef.ReturnType, source.Method);
 				}
 			} else if (target is VariableReferenceExpression) {
 				ReturnVariable = (target as VariableReferenceExpression).Variable;
 			} else if (target is VariableDeclarationExpression) {
-				ReturnVariable = RegisterVariable(mDef.ReturnType.ReturnType, source.Method);
+				//Mono.Cecil 0.9.3 migration: ReturnVariable = RegisterVariable(mDef.ReturnType.ReturnType, source.Method);
+				ReturnVariable = RegisterVariable(mDef.ReturnType, source.Method);
 			} else if (target is ArgumentReferenceExpression) {
 				ReturnParameter = (target as ArgumentReferenceExpression).Parameter;
 			}
@@ -494,7 +502,9 @@ namespace MethodInliner
 			
 			if (mRef.Target != null) {
 				thisSubstitution = new VariableReferenceExpression(
-												RegisterVariable(mDef.This.ParameterType, source.Method));
+					//Mono.Cecil 0.9.3 migration: RegisterVariable(mDef.This.ParameterType, source.Method));
+					//new ParameterDefinition ("this", (ParameterAttributes) 0, null);
+					RegisterVariable(null, source.Method));
 			}
 			else {
 				thisSubstitution = null;
@@ -541,8 +551,9 @@ namespace MethodInliner
 		internal VariableDefinition RegisterVariable(TypeReference type, MethodDefinition method)
 		{
 			VariableDefinition variable = new VariableDefinition(type);
-			variable.Method = method;
-			variable.Index = method.Body.Variables.Count;
+			//Mono.Cecil 0.9.3 migration: variable.Method = method;
+			//variable.Method = method;
+			//variable.Index = method.Body.Variables.Count;
 			variable.Name = variable.ToString();
 			method.Body.Variables.Add(variable);
 			

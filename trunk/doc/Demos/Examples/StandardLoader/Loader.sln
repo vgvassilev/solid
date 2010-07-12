@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.0.0.3683
+# SharpDevelop 3.0.0.3800
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loader", "Loader\Loader.csproj", "{39655872-F4B6-4698-B326-81B3DA707192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loadee", "Loadee\Loadee.csproj", "{7CCE9049-76C5-4D92-9731-FB375C60F9B1}"
@@ -20,15 +20,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{ABC4
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecil.Decompiler", "..\..\..\..\core\src\vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj", "{ED1BE103-1699-4116-A732-616BEB142EB2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\core\src\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.dll", "..\..\..\..\core\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj", "{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.interfaces.dll", "..\..\..\..\core\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj", "{435428F8-5995-4CE4-8022-93D595A8CC0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.dll", "..\..\..\..\core\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.interfaces.dll", "..\..\..\..\core\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj", "{435428F8-5995-4CE4-8022-93D595A8CC0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.dll", "..\..\..\..\core\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj", "{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\core\src\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecil.Decompiler", "..\..\..\..\core\src\vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj", "{ED1BE103-1699-4116-A732-616BEB142EB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil.Rocks", "..\..\..\..\core\src\vendors\Mono.Cecil\rocks\Mono.Cecil.Rocks.csproj", "{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodInliner", "..\MethodInliner\MethodInliner.csproj", "{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}"
 EndProject
@@ -124,13 +126,18 @@ Global
 		{435428F8-5995-4CE4-8022-93D595A8CC0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{435428F8-5995-4CE4-8022-93D595A8CC0F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{435428F8-5995-4CE4-8022-93D595A8CC0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{435428F8-5995-4CE4-8022-93D595A8CC0F} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
-		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
-		{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
 		{ED1BE103-1699-4116-A732-616BEB142EB2} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
+		{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
+		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
+		{435428F8-5995-4CE4-8022-93D595A8CC0F} = {ABC432FE-AAB2-43DE-9AEB-1B75BCA012AD}
 		7F39D2AF-BE05-4A7D-8A2E-B210F10BF72F = {F3AFF30D-5C64-4C7C-8ECC-37308950C64C}
 	EndGlobalSection
 EndGlobal

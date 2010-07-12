@@ -30,6 +30,7 @@ using System.Collections.Generic;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 using Cecil.Decompiler.Ast;
 using Cecil.Decompiler.Cil;
@@ -46,7 +47,7 @@ namespace Cecil.Decompiler {
 
 		ExpressionDecompiler expression_decompiler;
 		MethodBody body;
-		VariableDefinitionCollection variables;
+		Collection<VariableDefinition> variables;
 		ControlFlowGraph cfg;
 		BlockOptimization optimization;
 

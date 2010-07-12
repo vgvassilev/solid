@@ -63,9 +63,9 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 		
 		public Dictionary<TParamName, object> LoadConfiguration(Stream resStream)
 		{
-			//Mono 0.9 migration: AssemblyDefinition assembly = AssemblyFactory.GetAssembly(resStream);
+			//Mono.Cecil 0.9.3 migration: AssemblyDefinition assembly = AssemblyFactory.GetAssembly(resStream);
 			AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(resStream);
-			//Mono 0.9 migration: assembly.MainModule.Accept(new StructureVisitor<TParamName>());
+			//Mono.Cecil 0.9.3 migration: assembly.MainModule.Accept(new StructureVisitor<TParamName>());
 			Dictionary<TParamName, object> dict = new Dictionary<TParamName, object>();
 			foreach(ModuleDefinition module in assembly.Modules) {
 				foreach(TypeDefinition type in module.Types) {
@@ -148,7 +148,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 		}
 	}
 	
-	//Mono 0.9 migration: 
+	//Mono.Cecil 0.9.3 migration: 
 	/*
 	#region Visitors
 	internal class StructureVisitor<TParamName>: BaseStructureVisitor
