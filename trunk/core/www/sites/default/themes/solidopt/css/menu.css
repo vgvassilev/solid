@@ -1,8 +1,8 @@
 ul.primary-links {
-	margin: 0;
+	margin: 36px 0 0 0;
 	bottom: 0;
-	right: 0;
-	position: absolute;
+	position: relative;
+	float: right;
 	padding: 10px 10px 0;
 	list-style: none;
 	
@@ -15,7 +15,7 @@ ul.primary-links {
 ul.primary-links li {
 	float: left;
 	background: url("images/menu-left.png") no-repeat left top;
-    margin: 0 1px 0 0;
+        margin: 0 1px 0 0;
 	padding: 0 0 0 13px;
 }
 

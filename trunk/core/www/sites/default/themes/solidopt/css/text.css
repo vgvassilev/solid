@@ -4,13 +4,13 @@ body {
     line-height: 1.5em;
 }
 
-#content-header h2 {
+#navigation h2 {
     font: 22px "Myriad", "Calibri", "DejaVu Sans", "Bitstream Vera Sans", Verdana, sans-serif !important;
     font-weight: bold !important;
     margin: 0 !important;
     color: #c6d8ed !important;
     border: none !important;
-    padding: 12px 0 0 10px !important;
+    padding: 15px 0 0 10px !important;
     white-space: nowrap !important;
 }
 
@@ -198,11 +198,11 @@ blockquote {
 
 /* Sidebar */
 
-#sidebar {
+#rightsidebar {
     font-size: 0.80em;
 }
 
-#sidebar h2 {
+#rightsidebar h2 {
     font-size: 1.3em;
     font-weight: bold;
     margin: 1.5em 0 .75em 0;
@@ -211,7 +211,7 @@ blockquote {
     border-bottom: 1px solid #c8daee;
 }
 
-#sidebar h5:first-child {
+#rightsidebar h5:first-child {
     margin-top: 0 !important;
 }
 
