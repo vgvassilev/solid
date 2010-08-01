@@ -11,8 +11,8 @@
 # 3. Compares if there are no differences tell nothing to do database is up to date and exit				#
 #########################################################################################################################
 
-MyUSER="root"     		 	# USERNAME
-MyPASS="mysqlroot32"      	 	# PASSWORD
+MyUSER="remoteroot"     		 	# USERNAME
+MyPASS="remoteroot32"      	 	# PASSWORD
 MyHOST="localhost"         	 	# Hostname
 MyDB="sandbox-solidopt-core-db"  	# Database to dump
 NewDB="sandbox-solidopt-core-db.sql"	# New database file
