@@ -15,3 +15,4 @@ stylesheets[print][] = commonPrint.css
 regions[header] = Header
 regions[topmost] = Top region
 regions[left] = Left sidebar
+regions[right] = Right sidebar

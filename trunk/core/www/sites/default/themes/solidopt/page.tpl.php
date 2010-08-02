@@ -51,7 +51,7 @@
 			<div class="holder" id="right">
 				<!-- BEGIN RIGHT SIDE CONTENT -->
 				<div id="rightsidebar">
-					<div><?php print $left; ?></div>
+					<div><?php print $right; ?></div>
 				</div>	
 				<!-- END RIGHT SIDE CONTENT -->
 			</div>
