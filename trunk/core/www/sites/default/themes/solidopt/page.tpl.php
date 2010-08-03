@@ -31,7 +31,7 @@
 				<h2><?php print $title; ?></h2>
 			</div>	
 
-			<div class="holder" id="center">
+			<div id="center">
 				<div id="content">
 				<!-- BEGIN MAIN CONTENT -->
 					<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
@@ -41,22 +41,24 @@
 				</div><!--#content-->
 			</div>
 		
-			<div class="holder" id="left">
+			<div id="left">
 				<!-- BEGIN LEFT SIDE CONTENT -->
 				<div id="leftsidebar">
 					<div><?php print $left; ?></div>
 				</div>	
 				<!-- END LEFT SIDE CONTENT -->
 			</div>
-			<div class="holder" id="right">
+			<?php if ($right): ?>
+			<div id="right">
 				<!-- BEGIN RIGHT SIDE CONTENT -->
 				<div id="rightsidebar">
 					<div><?php print $right; ?></div>
 				</div>	
 				<!-- END RIGHT SIDE CONTENT -->
-			</div>
-				  	    
+			</div>			
+			<?php ; endif ?>	  	    
 		</div><!--#wrapper-->
+		<div class="clear"></div>
 		<div id="footer">
 			<ul id="footer-menu">
 				<?php print $footer_message; ?>
