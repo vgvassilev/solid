@@ -4,8 +4,8 @@
 # The purpose is to perform automatic import of the new database if possible while updating from subversion control	#
 #########################################################################################################################
 
-MyUSER="root"     		 	# USERNAME
-MyPASS="mysqlroot32"      	 	# PASSWORD
+MyUSER="remoteroot"    		 	# USERNAME
+MyPASS="remoteroot32"      	 	# PASSWORD
 MyHOST="localhost"         	 	# Hostname
 MyDB="sandbox-solidopt-core-db"  	# Database to dump
 NewDB="sandbox-solidopt-core-db.sql"	# New database file
@@ -15,15 +15,10 @@ MyImportVars="--default-character-set=utf8"
  
 # Linux bin paths, change this if it can not be autodetected via which command
 MYSQL="$(which mysql)"
-GREP="$(which grep)"
 
 # Check all expected is there
 if [ "$MYSQL" == "" ] ; then 
 	echo "Error: MYSQL not detected. Please install it or edit the script." 
-	exit -1 
-fi
-if [ "$GREP" == "" ] ; then
-	echo "Error: GREP not detected. Please install it or edit the script." 
 	exit -1 
 fi
  
