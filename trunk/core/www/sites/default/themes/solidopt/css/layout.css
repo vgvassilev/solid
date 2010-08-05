@@ -330,4 +330,19 @@ div .content h1 a:hover {
 .clear {
 	clear: both;
 }
+/* End clear */
 
+/* Author information */
+.submitted {
+	background:none repeat scroll 0 0 #EEEEEE;
+	font-size:11px;
+ 	margin:4px 0 12px;
+	padding:3px 6px;
+	position:relative;
+}
+.submitted span {
+	position:absolute;
+	right:6px;
+	top:3px;
+}
+/* End Author information */
