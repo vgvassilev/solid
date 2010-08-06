@@ -35,20 +35,23 @@ img {
     padding: 0; 
 }
 
-#header h1 {
+
+#logo a h1 {
     display: block;
     color: #C6D8ED !important;
-    position: absolute;
-    left :70px;
+    position: relative;
+    float: left;
+    margin-top: 0.8em;
     font-family: "Trebuchet MS";
 }
 
-#header img {
-    position: absolute;
-    left: 0; top: 15px;
+#logo a img {
+    position: relative;
+    float: left;
+    margin-left: 1em;
 }
 
-#header a img {
+#logo a img {
     border: none;
 }
 

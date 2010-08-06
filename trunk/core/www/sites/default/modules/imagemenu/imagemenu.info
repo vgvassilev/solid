@@ -1,0 +1,12 @@
+; $Id: imagemenu.info,v 1.2.2.1 2010/03/08 13:33:52 rayvaughn Exp $
+name = Imagemenu
+description = Module to create menus from image files.
+core = 6.x
+package = Menu
+
+; Information added by drupal.org packaging script on 2010-05-24
+version = "6.x-1.2"
+core = "6.x"
+project = "imagemenu"
+datestamp = "1274700907"
+

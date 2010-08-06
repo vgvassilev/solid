@@ -1,0 +1,63 @@
+<?php
+// $Id: imagemenu.install,v 1.3.2.2 2010/05/09 16:39:09 rayvaughn Exp $
+
+/**
+ * @file
+ * 
+ * Install file for the imagemenu module
+ */
+
+
+/**
+ * Implementation of hook_schema().
+ */
+function imagemenu_schema() {
+  $schema['imagemenu'] = array(
+    'fields' => array(
+      'mid'         => array('type' => 'serial', 'not null' => TRUE, 'unsigned' => TRUE),
+      'pid'         => array('type' => 'int', 'not null' => TRUE, 'default' => 0, 'unsigned' => TRUE),
+      'path'        => array('type' => 'varchar', 'not null' => TRUE, 'default' => '', 'length' => 255),
+      'imagepath'   => array('type' => 'varchar', 'not null' => TRUE, 'default' => '', 'length' => 255),
+      'mouseover'   => array('type' => 'varchar', 'not null' => TRUE, 'default' => '', 'length' => 255),
+      'title'       => array('type' => 'varchar', 'not null' => TRUE, 'default' => '', 'length' => 255),
+      'alt'         => array('type' => 'varchar', 'not null' => TRUE, 'default' => '', 'length' => 255),
+      'weight'      => array('type' => 'int', 'not null' => TRUE, 'default' => 0, 'size' => 'tiny'),
+      'enabled'     => array('type' => 'int', 'not null' => TRUE, 'default' => 1, 'size' => 'tiny'),
+      'type'        => array('type' => 'int', 'not null' => TRUE, 'default' => 0),
+      'description' => array('type' => 'text', 'not null' => FALSE),
+      'target'      => array('type' => 'int', 'not null' => TRUE, 'default' => 0, 'size' => 'tiny'),
+    ),
+    'primary key' => array('mid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implementation of hook_install().
+ */
+function imagemenu_install() {
+  // Create imagemenu tables.
+  drupal_install_schema('imagemenu');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function imagemenu_uninstall() {
+  // Delete imagemenu tables.
+  drupal_uninstall_schema('imagemenu');
+}
+
+function imagemenu_update_6001() {
+  $ret = array();   
+  $target_field = array(
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,
+      'size' => 'tiny'
+  );
+  db_add_field($ret, 'imagemenu', 'target', $target_field );
+  
+  return $ret;
+}

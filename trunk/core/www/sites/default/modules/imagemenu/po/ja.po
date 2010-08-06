@@ -1,0 +1,326 @@
+# $Id: ja.po,v 1.1 2007/05/09 11:55:34 imagine Exp $
+# -----------------------------------------------------------------------------
+# Japanese translation of Drupal (imagemenu.module)
+#
+# Copyright (c) 2006-2007  Drupal Japan  ( http://drupal.jp/ )  /
+#                          Drupal Nippon ( http://drupon.org/ ) /
+#                          Takafumi      ( jp.drupal@imagine **reverse order**)
+#
+# Generated from file:
+#  imagemenu.module,v 1.5 2007/03/20 11:44:07 pobster
+#  imagemenu.info,v 1.1 2007/03/20 11:33:46 pobster
+#  imagemenu.install,v 1.1 2007/03/19 18:45:05 pobster
+#
+# -----------------------------------------------------------------------------
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2007-05-09 19:50+0900\n"
+"Last-Translator: Takafumi <jp.drupal@imagine **reverse order**>\n"
+"Language-Team: Drupal Japan / Drupal Nippon\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: imagemenu.module:10
+msgid "Enter the name for your new menu."
+msgstr "新しいメニューの名称を入力してください。"
+
+#: imagemenu.module:19
+msgid ""
+"You can embed imagemenus into your nodes using the following syntax:<br>\n"
+"              [imagemenu:<em>menu_id</em>]<br>\n"
+"              Ensure that you don't have two of the same menus on the screen at any one\n"
+"              time else the rollover links will not work correctly (as the images will have\n"
+"              the same name tag)."
+msgstr ""
+"以下の文法を使用して、ノードにイメージメニューを挿入することができます：<br>\n"
+"[imagemenu:<em>menu_id</em>]<br>\n"
+"常に、同一メニューを複数表示しないようにしてください。 そうでないと、画像が同じ名前のタグを持つため、ロールオーバーリンクが正しく機能しません。"
+
+#: imagemenu.module:26
+msgid ""
+"You can embed imagemenus into your nodes using the following syntax:<br>\n"
+"              [imagemenu:<em>menu_id</em>]"
+msgstr ""
+"以下の文法を使用して、ノードにイメージメニューを挿入することができます：<br>\n"
+"[imagemenu:<em>menu_id</em>]"
+
+#: imagemenu.module:37;39
+msgid "Imagemenu filter"
+msgstr "イメージメニューフィルタ"
+
+#: imagemenu.module:43
+msgid "Allows a user to insert an imagemenu into a node."
+msgstr "ノードにイメージメニューを挿入できるようにします。"
+
+#: imagemenu.module:70
+msgid "imagemenu list"
+msgstr "イメージメニューリスト"
+
+#: imagemenu.module:76
+msgid "add imagemenu"
+msgstr "イメージメニューの追加"
+
+#: imagemenu.module:82
+msgid "Edit the name for your menu here."
+msgstr "ここでメニューの名称を編集してください。"
+
+#: imagemenu.module:93
+msgid "add imagemenu item"
+msgstr "イメージメニューアイテムの追加"
+
+#: imagemenu.module:114
+msgid "imagemenu settings"
+msgstr "イメージメニューの設定"
+
+# ----------
+#: imagemenu.module:133
+msgid "Menu item"
+msgstr "メニュー項目"
+
+# ----------
+#: imagemenu.module:133;265
+msgid "Expanded"
+msgstr "展開"
+
+# ----------
+#: imagemenu.module:133
+msgid "Operations"
+msgstr "操作"
+
+# ----------
+#: imagemenu.module:138;175
+msgid "edit"
+msgstr "編集"
+
+# ----------
+#: imagemenu.module:139;175
+msgid "delete"
+msgstr "削除"
+
+#: imagemenu.module:140
+msgid "add item"
+msgstr "アイテムの追加"
+
+#: imagemenu.module:141
+msgid "menu id: "
+msgstr "メニューID： "
+
+#: imagemenu.module:144
+msgid "No rows created yet"
+msgstr "今のところ項目はありません"
+
+#: imagemenu.module:150
+msgid "No menus present."
+msgstr "メニューはありません。"
+
+#: imagemenu.module:167
+msgid "(disabled)"
+msgstr "（無効）"
+
+# ----------
+#: imagemenu.module:195;236;534
+msgid "Title"
+msgstr "タイトル"
+
+# ----------
+#: imagemenu.module:197;536
+msgid "The name of the menu."
+msgstr "メニューの名称を入力してください。"
+
+# ----------
+#: imagemenu.module:200;282;543
+msgid "Submit"
+msgstr "送信"
+
+#: imagemenu.module:208
+msgid "New menu successfully added."
+msgstr "新しいメニューは正常に追加されました。"
+
+#: imagemenu.module:209
+msgid "imagemenu: added new menu '<em>%menu</em>'"
+msgstr "イメージメニュー： 新規メニュー '<em>%menu</em>' が追加されました"
+
+#: imagemenu.module:218
+msgid "You need to create a menu to add items to first."
+msgstr "はじめに、アイテムを追加するメニューを作成する必要があります。"
+
+#: imagemenu.module:238
+msgid "The name of the menu item (displayed when hovering over a menu image)."
+msgstr "メニューアイテムの名称を入力してください。 この名称はマウスオーバーした際に表示されます。"
+
+#: imagemenu.module:242;248
+msgid "Image Path"
+msgstr "画像パス"
+
+#: imagemenu.module:244
+msgid "The path to the image."
+msgstr "画像のパスを入力してください。"
+
+#: imagemenu.module:250
+msgid "Optional. The path to an image to display on mouseover."
+msgstr "任意で、マウスオーバー時に表示する画像のパスを入力してください。"
+
+# ----------
+#: imagemenu.module:253
+msgid "Path"
+msgstr "パス"
+
+# ----------
+#: imagemenu.module:255
+msgid "The path this menu item links to. This can be an internal Drupal path such as %add-node or an external URL such as %drupal. Enter %front to link to the front page."
+msgstr "このメニュー項目がリンクするパスを入力してください。 パスには %add-node のようなDrupalの内部パスや、 %drupal のような外部のURLを指定できます。 %front と入力するとフロントページへのリンクとなります。"
+
+# ----------
+#: imagemenu.module:259
+msgid "Description"
+msgstr "説明"
+
+#: imagemenu.module:261
+msgid "The ALT tag for the image if its not displayed."
+msgstr "画像が表示されない場合の代替テキスト（ALT タグ）を入力してください。"
+
+# ----------
+#: imagemenu.module:267
+msgid "If selected and this menu item has children, the menu will always appear expanded."
+msgstr "このメニュー項目の下位にサブメニューがあり、常にそれを展開した状態で表示したい場合はここにチェックを入れてください。"
+
+# ----------
+#: imagemenu.module:272
+msgid "Parent item"
+msgstr "上位の項目"
+
+# ----------
+#: imagemenu.module:277
+msgid "Weight"
+msgstr "優先順位"
+
+# ----------
+#: imagemenu.module:279
+msgid "Optional. In the menu, the heavier items will sink and the lighter items will be positioned nearer the top."
+msgstr "メニューの表示順位を指定してください。 メニューでは優先順位が高い（数値が小さい）項目ほど上部に、優先順位が低い（数値が大きい）項目ほど下部に配置されます。"
+
+#: imagemenu.module:289;291
+msgid "File not found."
+msgstr "ファイルが見つかりませんでした。"
+
+#: imagemenu.module:299
+msgid "Menu item successfully added."
+msgstr "メニューアイテムが正常に追加されました。"
+
+#: imagemenu.module:300
+msgid "imagemenu: added new item to menu '<em>%menu</em>'"
+msgstr "イメージメニュー： メニュー '<em>%menu</em>' に新しいアイテムが追加されました"
+
+#: imagemenu.module:304
+msgid "Menu item successfully updated."
+msgstr "メニューアイテムが正常に更新されました。"
+
+#: imagemenu.module:305
+msgid "imagemenu: updated item in menu '<em>%menu</em>'"
+msgstr "イメージメニュー： メニュー '<em>%menu</em>' のアイテムが更新されました"
+
+#: imagemenu.module:324
+msgid "<base>"
+msgstr "<最上位>"
+
+#: imagemenu.module:362
+msgid "ImageMenu Block"
+msgstr "イメージメニューブロック"
+
+#: imagemenu.module:407
+msgid "Administration Screen Settings:"
+msgstr "表示設定の管理"
+
+#: imagemenu.module:414
+msgid "Menu Block"
+msgstr "メニューブロック"
+
+#: imagemenu.module:415
+msgid "No menus created"
+msgstr "作成されたメニューはありません"
+
+#: imagemenu.module:417
+msgid "Which menu to display in the imagemenu block."
+msgstr "イメージメニューブロックで表示するメニューを指定してください。"
+
+#: imagemenu.module:421
+msgid "Layout"
+msgstr "レイアウト"
+
+#: imagemenu.module:422
+msgid "vertical"
+msgstr "垂直"
+
+#: imagemenu.module:422
+msgid "horizontal"
+msgstr "水平"
+
+#: imagemenu.module:424
+msgid "The orientation of the menu."
+msgstr "メニューの方向を指定してください。"
+
+#: imagemenu.module:446
+msgid "Are you sure you want to delete menu '<em>%menu</em>'?"
+msgstr "本当に、メニュー '<em>%menu</em>' を削除してもよろしいですか？"
+
+# ----------
+#: imagemenu.module:446;480
+msgid "Delete"
+msgstr "削除"
+
+# ----------
+#: imagemenu.module:446;480;543
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: imagemenu.module:458
+msgid "Menu and menu items successfully deleted."
+msgstr "メニューとメニューアイテムが正常に削除されました。"
+
+#: imagemenu.module:459
+msgid "imagemenu: deleted menu '<em>%menu</em>'"
+msgstr "イメージメニュー： メニュー '<em>%menu</em>' が削除されました"
+
+#: imagemenu.module:480
+msgid "Are you sure you want to delete menu item '<em>%item</em>'?"
+msgstr "本当に、メニューアイテム '<em>%item</em>' を削除してもよろしいですか？"
+
+#: imagemenu.module:485
+msgid "Menu item successfully deleted."
+msgstr "メニューアイテムが正常に削除されました。"
+
+#: imagemenu.module:486
+msgid "imagemenu: deleted menu item '<em>%item</em>'"
+msgstr "イメージメニュー： メニューアイテム '<em>%item</em>' が削除されました"
+
+#: imagemenu.module:543
+msgid "Edit menu name."
+msgstr "メニュー名を編集してください。"
+
+#: imagemenu.module:209;300;305;459;486;0
+#: imagemenu.info:0
+msgid "imagemenu"
+msgstr "imagemenu"
+
+#: imagemenu.module:129
+msgid "administer imagemenu"
+msgstr "イメージメニューの管理"
+
+#: imagemenu.install:50
+msgid "imagemenu module installed successfully."
+msgstr "イメージメニューモジュールが正常にインストールされました。"
+
+#: imagemenu.install:53
+msgid "Table installation for the imagemenu module was unsuccessful. The tables may need to be installed by hand. See imagemenu.install file for a list of the installation queries."
+msgstr "イメージメニューモジュールのテーブルのインストールに失敗しました。 imagemenu.install ファイルでインストールするクエリのリストを参照し、手作業でテーブルをインストールしてください。"
+
+#: imagemenu.info:0
+msgid "Imagemenu"
+msgstr "イメージメニュー"
+
+#: imagemenu.info:0
+msgid "Module to create menus from image files."
+msgstr "画像ファイルからメニューを作成します。"
+

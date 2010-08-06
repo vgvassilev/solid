@@ -1,0 +1,17 @@
+/*
+  Use the following css styles to configure imagemenu.
+  NOTE: to hide markers (that appear left to menu item
+  like in core menu) use "background: none;"
+*/
+
+.imagemenu .leaf {
+    /*background: none;*/
+}
+
+.imagemenu .expanded {
+    /*background: none;*/
+}
+
+.imagemenu .collapsed {
+    /*background: none;*/
+}

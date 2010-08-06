@@ -57,6 +57,45 @@ ul.primary-links li a {
 	background-position: 100% -110px;
 }
 
+/* Quick start menu*/
+
+#quicklinks {
+	height: 100%;
+}
+
+#quicklinks span {
+	float: left;
+	padding: 20px 0 0 10px;
+	color: #C6D8ED;
+}
+div#block-imagemenu-1 {
+	width: auto;
+	float: left;
+}
+ul.imagemenu {
+	margin: 14px 0 0 0;
+	bottom: 0;
+	position: relative;
+	float: left;
+	padding: 0px 10px 0;
+	list-style: none;
+	
+	/* Text */
+	letter-spacing: -.05em;
+	text-transform: lowercase;
+	color: white;
+}
+ul.imagemenu li {
+	display:block;
+	float:left;
+	margin:0;
+	padding:0;
+	text-align:center;
+	width:52px;
+}
+
+/*end Quick start menu*/
+
 /* SIDE MENU */
 
 #sidebar .menu ul {

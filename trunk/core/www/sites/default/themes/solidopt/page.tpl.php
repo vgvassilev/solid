@@ -14,21 +14,29 @@
 	<div id="page">	  
 		<div id="wrapper">
 			<div id="topmost">
-				<?php print $topmost; ?>
+				<?php print $lang; ?>
 			</div>
-		
 			<div id="header">
-				<a href="<?php print $front_page; ?>"><img id="logo_title" src="<?php print $logo; ?>" alt="Logo"/></a>
-				<a href="<?php print $front_page; ?>"><h1><?php print $site_slogan; ?></h1></a>
 				<?php print $header; ?>
+				<div class="clear"></div>
+				<div id="logo">
+					<a href="<?php print $front_page; ?>"><img id="logo_title" src="<?php print $logo; ?>" alt="Logo"/></a>
+					<a href="<?php print $front_page; ?>"><h1><?php print $site_slogan; ?></h1></a>
+				</div>
 				<?php if (isset($primary_links)) : ?>
-					<div class="clear"></div>
 					<?php print theme('links', $primary_links, array('class' => 'links primary-links')) ?>
 				<?php endif; ?>
+				
 			</div>
 	
 			<div id="navigation">
-				<h2><?php print $title; ?></h2>
+				<div id="quicklinks">
+					<?php 
+					print "<span>" . t("Quick start:") . "</span>"; 
+					print $quickstart; 
+					?>
+				</div>
+				
 			</div>	
 
 			<div id="center">

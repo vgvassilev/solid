@@ -1,0 +1,639 @@
+<?php
+// $Id: imagemenu.module,v 1.7.2.10 2010/05/11 09:53:36 rayvaughn Exp $
+
+/**
+ * Implementation of hook_help (2008/02/25 updated for Drupal 6.x compatibility)
+ */
+function imagemenu_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#imagemenu':
+      $help_strings = array(
+        'A simple module which allows you to create menus from image files. Supports title (displayed when 
+          hovering over a menu item), alt text, weights and optional mouseover behaviour.',
+        'This module is loosely based on Drupals own menu module.',
+        'Upload your image files first to an appropriate location (e.g. sites/default/files/menu_images) and include the full path
+          in the "Image Path:" field when editing the menu e.g. sites/default/files/menu_images/home.jpg',
+        "You're not restricted to only displaying an imagemenu within the supplied block, you can also 
+          enable a filter in admin/filters and display several different imagemenus within a page/ node without any conflicts 
+          for the mouseovers (note that if you display two or more of the same imagemenu on one page then the mouseovers will 
+          NOT work as the image name tags will conflict).",
+      );
+      foreach ($help_strings as $string) {
+        $help .= '<p>'. t($string) .'</p>';
+      }
+      return $help;
+    case 'admin/build/menu/imagemenu':
+      return '<p>'. t('A simple module which allows you to create menus from image files. Supports title (displayed when 
+      hovering over a menu item), alt text, weights and optional mouseover behaviour.') .'</p>';
+    case 'admin/build/menu/imagemenu/add':
+      return '<p>'. t('Enter the name for your new menu. Remember to enable the newly created block in the 
+        <a href="@blocks">blocks administration page</a>.', array('@blocks' => url('admin/build/block'))) .'</p>';
+    case 'admin/build/menu/imagemenu-customize/%':
+      return '<p>'. t('To rearrange menu items, grab a drag-and-drop handle under the <em>Menu item</em> column and drag 
+        the items (or group of items) to a new location in the list. (Grab a handle by clicking and holding the mouse while 
+        hovering over a handle icon.) Remember that your changes will not be saved until you click the 
+        <em>Save configuration</em> button at the bottom of the page.') .'</p>';
+    case 'admin/build/menu/imagemenu-customize/%/add':
+      return '<p>'. t('Enter the title and image path for your new menu item. Leave <em>Path</em> field empty to add menu 
+        delimiter.') .'</p>';
+  }
+}
+
+/**
+ * Implementation of hook_filter_tips().
+ */
+function imagemenu_filter_tips($delta, $format, $long = FALSE) {
+  if ($long) {
+    return t('You can embed imagemenus into your nodes using the following syntax:<br />
+              [imagemenu:<em>menu_id</em>]<br />
+              Ensure that you don\'t have two of the same menus on the screen at any one
+              time else the rollover links will not work correctly (as the images will have
+              the same name tag).');
+  }
+  else {
+    return t('You can embed imagemenus into your nodes using the following syntax:<br />
+              [imagemenu:<em>menu_id</em>]');
+  }
+}
+
+/**
+ * Implementation of hook_filter().
+ */
+function imagemenu_filter($op, $delta = 0, $format = -1, $text = '') {
+  switch ($op) {
+    case 'list':
+      return (array(0 => t('Imagemenu filter')));
+    case 'name':
+      return t('Imagemenu filter');
+    case 'no cache':
+      return TRUE;
+    case 'description':
+      return t('Allows a user to insert an imagemenu into a node.');
+    case 'process':
+      return _imagemenu_process_text($text);
+    default:
+      return $text;
+  }
+}
+
+function _imagemenu_process_text($text) {
+  $pattern = "/\[imagemenu:(\d+)\]/i";
+  if (preg_match_all($pattern, $text, $matches)) {
+    foreach ($matches[1] as $no => $match) {
+      $text = str_replace($matches[0][$no], imagemenu_display($matches[1][$no]), $text);
+    }
+  }
+  return $text;
+}
+
+/**
+ * Implementation of hook_menu (2008/02/25 updated for Drupal 6.x compatibility)
+ */
+function imagemenu_menu() {
+  $items = array();
+  $admin_access = array('administer imagemenu');
+
+  $items['admin/build/menu/imagemenu'] = array(
+    'title' => 'Imagemenus',
+    'page callback' => 'imagemenu_overview_page',
+    'access arguments' => $admin_access,
+    'file' => 'imagemenu.admin.inc',
+    'weight' => -1,
+  );
+  $items['admin/build/menu/imagemenu/list'] = array(
+    'title' => 'List menus',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+  $items['admin/build/menu/imagemenu/add'] = array(
+    'title' => 'Add menu',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_edit_menu', 'add'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+  $items['admin/build/menu/imagemenu/settings'] = array(
+    'title' => 'Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_configure'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 5,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+  $items['admin/build/menu/imagemenu-customize/%imagemenu'] = array(
+    'title' => 'Customize menu',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_overview_form', 4),
+    'title callback' => 'imagemenu_overview_title',
+    'title arguments' => array(4),
+    'access arguments' => $admin_access,
+    'type' => MENU_CALLBACK,
+    'file' => 'imagemenu.admin.inc',
+  );
+  $items['admin/build/menu/imagemenu-customize/%imagemenu/list'] = array(
+    'title' => 'List items',
+    'weight' => -10,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+  $items['admin/build/menu/imagemenu-customize/%imagemenu/add'] = array(
+    'title' => 'Add item',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_edit_item', 'add', NULL, 4),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+  $items['admin/build/menu/imagemenu-customize/%imagemenu/edit'] = array(
+    'title' => 'Edit menu',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_edit_menu', 'edit', 4),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+  $items['admin/build/menu/imagemenu-customize/%imagemenu/delete'] = array(
+    'title' => 'Delete menu',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_delete_menu_confirm', 4),
+    'type' => MENU_CALLBACK,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+
+
+  $items['admin/build/menu/imagemenu/item/%imagemenu_link/edit'] = array(
+    'title' => 'Edit menu item',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_edit_item', 'edit', 5, NULL),
+    'type' => MENU_CALLBACK,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+  $items['admin/build/menu/imagemenu/item/%imagemenu_link/delete'] = array(
+    'title' => 'Delete menu item',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemenu_item_delete_form', 5),
+    'type' => MENU_CALLBACK,
+    'file' => 'imagemenu.admin.inc',
+    'access arguments' => $admin_access,
+  );
+
+  return $items;
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function imagemenu_perm() {
+  return array('administer imagemenu');
+}
+
+/**
+ * Implementation of hook_block().
+ */
+function imagemenu_block($op = 'list', $delta = 0) {
+  $menus = imagemenu_base_rows();
+  if ($op == 'list') {
+    $blocks = array();
+    if (!empty($menus)) {
+      foreach ($menus as $mid => $title) {
+        $blocks[$mid]['info'] = check_plain($title);
+        $blocks[$mid]['cache'] = BLOCK_NO_CACHE;
+      }
+    }
+    return $blocks;
+  }
+  elseif ($op == 'view') {
+    $data['subject'] = check_plain($menus[$delta]);
+    $data['content'] = imagemenu_display($delta);
+    return $data;
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ *
+ * @return unknown
+ */
+function imagemenu_theme() {
+  return array(
+    'imagemenu_overview_form' => array(
+      'file' => 'imagemenu.admin.inc',
+      'arguments' => array('form' => NULL),
+    ),
+    'imagemenu_item' => array(
+      'arguments' => array('item', 'has_children', 'prefix' => '', 'layout' => 'vertical', 'menu' => ''),
+    ),
+    'imagemenu_tree' => array(
+      'arguments' => array('tree' => NULL),
+    ),
+  );
+}
+
+/**
+ * Title callback for the menu overview page and links.
+ */
+function imagemenu_overview_title($menu) {
+  return check_plain($menu['title']);
+}
+
+/**
+ * Load the data for a single menu.
+ */
+function imagemenu_load($mid) {
+  if (!is_numeric($mid) || (!($menu = imagemenu_display($mid, TRUE)) && !imagemenu_exists($mid))) {
+    drupal_not_found();
+    return;
+  }
+  return db_fetch_array(db_query("SELECT mid, title, description FROM {imagemenu} WHERE mid = %d", $mid));
+}
+
+/**
+ * Load the data for a single menu item.
+ */
+function imagemenu_link_load($mid) {
+  if (!is_numeric($mid) || (!imagemenu_exists($mid))) {
+    drupal_not_found();
+    return;
+  }
+  return db_fetch_array(db_query("SELECT * FROM {imagemenu} WHERE mid = %d", $mid));
+}
+
+function imagemenu_base_rows() {
+  $query = db_query('SELECT mid, title FROM {imagemenu} WHERE pid = %d ORDER BY weight, title', 0);
+  while ($menu = db_fetch_object($query)) {
+    $output[$menu->mid] = $menu->title;
+  }
+  return $output;
+}
+
+function imagemenu_display($mid, $full = FALSE) {  
+  if (!$mid || !is_numeric($mid)) {
+    return FALSE;
+  }
+  $menus = imagemenu_tree_data($mid, FALSE);  
+  $output = imagemenu_build_output($menus, variable_get('imagemenu_layout', 'vertical'));  
+  return $output;
+}
+
+/**
+ * Returns TRUE if menu with given menu id exists.
+ */
+function imagemenu_exists($mid) {
+  if (!$mid) return FALSE;
+  $query = db_fetch_object(db_query('SELECT mid FROM {imagemenu} WHERE mid = %d', $mid));
+  if ($query) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+function imagemenu_fetch_rows($pid = 0, $full = FALSE, $depth = 0, $output = array()) {
+  $entries = imagemenu_return_row($pid, $depth);
+  $depth++;
+  foreach ($entries as $mid => $entry) {
+    if ($entry['enabled'] || $full) {
+      $output[$mid] = $entry;
+      if (imagemenu_check_children($mid)) {
+        unset($visible_tree);
+        $output[$mid]['has_children'] = TRUE;
+        $visible = imagemenu_show_visible_tree($mid);
+        if (array_key_exists($mid, $visible)) $visible_tree = TRUE;
+        foreach ($visible as $no => $tmp) {
+          if (in_array($mid, $tmp)) $visible_tree = TRUE;
+        }
+        if ($entry['type'] || $full || $visible_tree) {
+          $output = imagemenu_fetch_rows($mid, $full, $depth, $output);
+        }
+      }
+    }
+  }
+  return $output;
+}
+
+function imagemenu_return_row($pid, $depth = 0) {
+  $output = array();
+  $query = db_query('SELECT * FROM {imagemenu} WHERE pid = %d ORDER BY weight, title', $pid);
+  while ($item = db_fetch_object($query)) {
+    $output[$item->mid] = array(
+      'mid' => $item->mid, 
+      'pid' => $item->pid, 
+      'title' => $item->title, 
+      'alt' => $item->alt, 
+      'mouseover' => $item->mouseover, 
+      'description' => $item->description, 
+      'path' => $item->path, 
+      'imagepath' => $item->imagepath, 
+      'enabled' => $item->enabled, 
+      'type' => $item->type, 
+      'weight' => $item->weight, 
+      'depth' => $depth,
+      'target' => $item->target
+    );
+  }
+  return $output;
+}
+
+function imagemenu_check_children($parent) {
+  $query = db_query('SELECT mid FROM {imagemenu} WHERE pid = %d ORDER BY weight, title', $parent);
+  while ($item = db_fetch_object($query)) {
+    return $item->mid;
+  }
+  return FALSE;
+}
+
+function imagemenu_show_visible_tree() {
+  $path = $_GET['q'];
+  $output = array();
+  $mids = array();
+  if ($path == 'node' || !$path) $path = '<front>';
+  $query = db_query("SELECT mid FROM {imagemenu} WHERE path = '%s' ORDER BY mid", $path);
+  while ($tmp = db_fetch_object($query)) {
+    $mids[] = $tmp->mid;
+  }
+  foreach ($mids as $mid) {
+    $array = array();
+    $tmp = $mid;
+    while ($item = _imagemenu_return_parent($tmp)) {
+      $tmp = $item;
+      $array[] = $item;
+    }
+    $output[$mid] = $array;
+  }
+  return $output;
+}
+
+function _imagemenu_return_parent($mid) {
+  $query = db_fetch_object(db_query("SELECT pid FROM {imagemenu} WHERE mid = %d", $mid));
+  return $query->pid;
+}
+
+function imagemenu_parents($mid = 0) {
+  if (arg(6) == "edit") {
+    $mid = imagemenu_find_parent($mid);
+  }
+  elseif (!$mid) {
+    // Okay we're here because we need to show ALL the menus
+    // so here goes;
+    $menus = imagemenu_base_rows();
+    foreach ($menus as $mid => $title) {
+      $output[$mid] = imagemenu_parents($mid);
+    }
+    return $output;
+  }
+  $output[$mid] = '<' . imagemenu_fetch_title($mid) . '>';
+  $menus = imagemenu_fetch_rows($mid, TRUE);
+  // Prefix was updated to look like original menu parents prefix
+  foreach ($menus as $menu) {
+    $temp = imagemenu_fetch_mid($menu['mid']);
+    $prefix = '--';
+    if ($menu['depth']) {
+      $prefix .= '--';
+      for ($i = 1; $i < $menu['depth']; $i++) {
+        $prefix .= '--';
+      }
+    }
+    $prefix .= ' ';
+    $output[$menu['mid']] = $prefix . $temp['title'];
+  }
+  return $output;
+}
+
+/**
+ * Load menu by given menu id.
+ */
+function imagemenu_fetch_mid($mid) {
+  $query = db_query('SELECT * FROM {imagemenu} WHERE mid = %d', $mid);
+  $output = db_fetch_array($query);
+  return $output ? $output : FALSE;
+}
+
+/**
+ * Returns menu title by given menu id.
+ */
+function imagemenu_fetch_title($mid) {
+  $query = db_query('SELECT title FROM {imagemenu} WHERE mid = %d', $mid);
+  $item = db_fetch_object($query);
+  return $item->title;
+}
+
+function imagemenu_find_parent($pid) {
+  $query = db_query('SELECT mid FROM {imagemenu} WHERE pid = %d', 0);
+  while ($menus = db_fetch_array($query)) {
+    $menu = imagemenu_fetch_rows($menus['mid']);
+    foreach ($menu as $item) {
+      if ($item['mid'] == $pid || !$pid) return $menus['mid'];
+    }
+  }
+  return FALSE;
+}
+
+function imagemenu_build_output($menus, $layout) { 
+  foreach ($menus as $menu) {
+    $has_children = empty($menu['link']['has_children']) ? 0 : $menu['link']['has_children'];
+    if ($menu['below']) {
+      $output .= theme('imagemenu_item', $menu['link'], $has_children, $mid, $layout, imagemenu_build_output($menu['below'], $layout));
+    }
+    else {
+      $output .= theme('imagemenu_item', $menu['link'], $has_children, $mid, $layout, '');
+    }
+  }
+  return $output ? theme('imagemenu_tree', $output) : '';
+}
+
+/**
+ * Generate the HTML output for a imagemenu item
+ */
+function theme_imagemenu_item($item, $has_children, $prefix = '', $layout = 'vertical', $menu = '') {
+  
+  $li_class = ($menu ? 'expanded ' : ($has_children ? 'collapsed ' : 'leaf '));
+  $li_class .= $item['class'];
+  switch ($layout) {
+    case 'vertical':
+      $listyle = '';
+      break;
+    case 'horizontal':
+      $listyle = ' style="float:left;"';
+      break;
+  }
+  // Set active menu item by checking for path alias, then drupal path, then plain path.
+  $active_path = drupal_lookup_path("alias", $_GET["q"]) ? drupal_lookup_path("alias", $_GET["q"]) : (drupal_lookup_path("source", $_GET["q"]) ? drupal_lookup_path("source", $_GET["q"]) :  $_GET["q"]);
+  // Check for the menu item, whether it corresponds with the active item
+  if ($item['path'] == '<front>') {
+    $item['path'] = variable_get('site_frontpage', 'node');
+  }
+  $item_path = $active_path == $item['path'] ? 
+    $item['path'] : ($active_path == drupal_lookup_path("alias", $item['path']) ? 
+      $active_path : ($active_path == drupal_lookup_path("source", $item['path']) ? 
+        $active_path : $item['path']));
+  
+  if ($item_path == $active_path) {
+    $li_class .= ' active-trail';
+    $a_class = "active";
+    if ($item['mouseover']) {
+      if (variable_get('imagemenu_active_state', FALSE)) {
+        $item['imagepath'] = $item['mouseover'];
+      }
+    }
+  }
+  
+  $script = $item['mouseover'] ? ' onmouseover="this.src=\''. base_path(). 
+    $item['mouseover'] .'\'" onmouseout="this.src=\''. base_path() . $item['imagepath'] .'\'"' : '';
+  $script .= $item['target'] ? ' onclick="window.open(\''. url($item['path']) .'\'); return false;"' : '';
+  $script .= variable_get('imagemenu_new_window', FALSE) ? ' target="_blank"' : '';
+  
+  if (!empty($item['path'])) {
+    $output = '<li class="'. $li_class .'"'. $listyle .'><a href="'. url($item['path']) .'" class="'. $a_class .'"><img src="'. 
+    base_path() . $item['imagepath'] .'" alt="'. check_plain($item['alt']) .'" title="'. check_plain($item['title']) 
+    .'" name="imagemenu_'. $prefix .'_'. $item['mid'] .'"'. $script .' /></a>'. $menu .'</li>';
+  }
+  else {
+    $output = '<li class="delimiter"'. $listyle .'><img src="'. base_path() . $item['imagepath'] .'" />'. $menu .'</li>';
+  }
+  return $output;
+}
+
+/**
+ * Generate the HTML output for a imagemenu tree
+ */
+function theme_imagemenu_tree($tree) {  
+  $output = '<ul class="imagemenu">'. $tree .'</ul>';
+  return $output;
+}
+
+/**
+ * Build the data representing a menu tree.
+ */
+function imagemenu_tree_data($mid, $full = TRUE) {
+  $depth = 0;
+  list(, $tree) = _imagemenu_tree_data($mid, $depth, $full);
+  _imagemenu_prune_tree($tree);
+  return $tree;
+}
+
+/**
+ * Recursive helper function to build the data representing a menu tree.
+ */
+function _imagemenu_tree_data($mid, $depth, $full = TRUE, $previous_element = '', $parsed = 0) {
+  $remnant = NULL;
+  $tree = array();
+  $menus = imagemenu_fetch_rows($mid, $full);
+  array_splice($menus, 0, $parsed);
+
+  foreach ($menus as $tmid => $item) {
+    // The current item is the first in a new submenu.
+    if ($item['depth'] > $depth) {
+      // _menu_tree returns an item and the menu tree structure.
+      list($item, $below) = _imagemenu_tree_data($mid, $item['depth'], $full, $item, $parsed);
+      if ($previous_element) {
+        $tree[$previous_element['mid']] = array(
+          'link' => $previous_element,
+          'below' => $below,
+        );
+      }
+      else {
+        $tree = $below;
+      }
+      // We need to fall back one level.
+      if (!isset($item) || $item['depth'] < $depth) {
+        return array($item, $tree);
+      }
+      // This will be the link to be output in the next iteration.
+      $previous_element = $item;
+    }
+    // We are at the same depth, so we use the previous element.
+    elseif ($item['depth'] == $depth) {
+      if ($previous_element) {
+        // Only the first time.
+        $tree[$previous_element['mid']] = array(
+          'link' => $previous_element,
+          'below' => FALSE,
+        );
+      }
+      // This will be the link to be output in the next iteration.
+      $previous_element = $item;
+    }
+    // The submenu ended with the previous item, so pass back the current item.
+    else {
+      $remnant = $item;
+      break;
+    }
+
+      $parsed++;
+  }
+  if ($previous_element) {
+    // We have one more link dangling.
+    $tree[$previous_element['mid']] = array(
+      'link' => $previous_element,
+      'below' => FALSE,
+    );
+  }
+  return array($remnant, $tree);
+}
+
+/**
+ * Recursive function to prune branches from the menu tree that the current user does not have access to
+ * Also we add classes here.
+ */
+function _imagemenu_prune_tree(&$tree) {
+  global $user;
+  $n = 1;    
+  foreach ($tree as $key => &$branch) {
+    $branch['link']['class'] = "imagemenu-item-".$branch['link']['mid'];
+    if ($n == 1) {
+      $branch['link']['class'] .= " first";
+    }
+    $branch['link']['class'] .= $n % 2 ? ' odd' : ' even';
+    if (!imagemenu_check_path_access($branch['link']['path'])) {
+      unset($tree[$key]);
+    }
+    else {
+      if ($branch['below']) {
+        _imagemenu_prune_tree($branch['below']);
+      }
+    }
+    if ($n == count($tree)) {
+      $branch['link']['class'] .= " last";
+    }
+    $n++;
+  }
+  return $has_children;
+}
+
+/**
+ * Check path access (taken from menu_valid_path)
+ */
+function imagemenu_check_path_access($path) {
+  global $menu_admin;
+  $item = array();
+  
+  // We indicate that a menu administrator is running the menu access check.
+  $menu_admin = TRUE;
+  if ($path == '<front>' || menu_path_is_external($path)) {
+    return TRUE;
+  }
+  elseif (preg_match('/\/\%/', $path)) {
+    // Path is dynamic (ie 'user/%'), so check directly against menu_router table.
+    if ($item = db_fetch_array(db_query("SELECT * FROM {menu_router} where path = '%s' ", $path))) {
+      $item['link_path']  = $form_item['link_path'];
+      $item['link_title'] = $form_item['link_title'];
+      $item['external']   = FALSE;
+      $item['options'] = '';
+      _menu_link_translate($item);
+    }
+  }
+  else {
+    $item = menu_get_item($path);
+  }
+  $menu_admin = FALSE;
+  if ($item['access'] === FALSE) return FALSE;
+  else return TRUE;
+}
