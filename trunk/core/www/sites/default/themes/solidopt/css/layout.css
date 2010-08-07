@@ -219,9 +219,9 @@ img {
 /*Searching*/
 #search {
     position: absolute;
-    right: 0;
-    top: 0;
-    margin-top: 1em;
+    top: 100px;
+    right: 5px;
+    margin-top: 14px;
 }
 
 #search input[type="text"],
@@ -241,7 +241,7 @@ img {
     width:150px;
 }
 
-#search input.button {
+#search input.form-submit {
     font-size:.85em;
     padding:2px;
     -moz-border-radius:4px;

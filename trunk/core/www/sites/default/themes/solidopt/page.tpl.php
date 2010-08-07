@@ -24,7 +24,8 @@
 					<a href="<?php print $front_page; ?>"><h1><?php print $site_slogan; ?></h1></a>
 				</div>
 				<?php if (isset($primary_links)) : ?>
-					<?php print theme('links', $primary_links, array('class' => 'links primary-links')) ?>
+
+					<?php print $mainmenu ?>
 				<?php endif; ?>
 				
 			</div>
@@ -34,6 +35,11 @@
 					<?php 
 					print "<span>" . t("Quick start:") . "</span>"; 
 					print $quickstart; 
+					?>
+				</div>
+				<div id="search">
+					<?php 				
+					print $searchbar;
 					?>
 				</div>
 				
@@ -48,7 +54,8 @@
 				<!-- END MAIN CONTENT -->
 				</div><!--#content-->
 			</div>
-		
+			
+			<?php if ($left): ?>
 			<div id="left">
 				<!-- BEGIN LEFT SIDE CONTENT -->
 				<div id="leftsidebar">
@@ -56,6 +63,8 @@
 				</div>	
 				<!-- END LEFT SIDE CONTENT -->
 			</div>
+			<?php ; endif ?>	
+
 			<?php if ($right): ?>
 			<div id="right">
 				<!-- BEGIN RIGHT SIDE CONTENT -->

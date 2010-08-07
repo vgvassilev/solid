@@ -7,6 +7,7 @@ function phptemplate_menu_item_link($link) {
 }
 
 function SolidOptTheme_preprocess_node_submitted($node) {
-
 }
+
+
 ?>

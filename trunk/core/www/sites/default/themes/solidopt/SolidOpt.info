@@ -10,9 +10,10 @@ stylesheets[all][] = css/text.css
 stylesheets[all][] = css/wiki.css
 stylesheets[print][] = commonPrint.css
 
-regions[header] = Header
-regions[Logo] = Logo
-regions[lang] = Lang
-regions[quickstart] = Quick start
-regions[left] = Left sidebar
-regions[right] = Right sidebar
+regions[header] = Header block
+regions[lang] = Language block
+regions[mainmenu] = Main menu block
+regions[quickstart] = Quick start block
+regions[searchbar] = Search block
+regions[left] = Left sidebar block
+regions[right] = Right sidebar block

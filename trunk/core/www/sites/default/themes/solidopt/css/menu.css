@@ -1,5 +1,8 @@
-ul.primary-links {
+/* Main menu (Tabs) */
+#block-menu-primary-links {
 	margin: 36px 0 0 0;
+}
+#block-menu-primary-links ul {
 	bottom: 0;
 	position: relative;
 	float: right;
@@ -12,55 +15,54 @@ ul.primary-links {
 	font-weight: bold;
 }
 
-ul.primary-links li {
+#block-menu-primary-links ul li {
+	list-style-image: none;
+	list-style-type: none;
+
 	float: left;
 	background: url("images/menu-left.png") no-repeat left top;
         margin: 0 1px 0 0;
 	padding: 0 0 0 13px;
 }
 
-ul.primary-links li a {
+#block-menu-primary-links ul li a {
 	float: left;
 	display: block;
-	width: .1em;
+	width: auto;
 	background: url("images/menu-right.png") no-repeat right top;
-	padding: 5px 13px 4px 0px;
+	padding: 5px 13px 9px 0px;
 	text-decoration: none;
 	color: #a1bfe2;
 }
 
-#header > ul a { width: auto; }
-/* IE5 Mac hide \*/
-#header a {
-	float: none;
-	padding-bottom: 9px !important;
-}
-/* End */
-
-#header .active {
+#block-menu-primary-links .active-trail {
 	background-position: 0 -220px !important;
 	border-width: 0 !important;
 }
 
-#header .active a {
+#block-menu-primary-links .active-trail a {
 	background-position: 100% -220px !important;
 	
     color: #fff !important;
 }
 
-#header li:hover, #header li:hover a {
-	background-position: 0% -110px;
+#block-menu-primary-links li:hover, #block-menu-primary-links li:hover a {
+	background-position: 0% -220px;
 	color: #fff;
 }
 
-#header li:hover a {
-	background-position: 100% -110px;
+#block-menu-primary-links li:hover a {
+	background-position: 100% -220px;
 }
+
+/* End Main menu (Tabs) */
+
 
 /* Quick start menu*/
 
 #quicklinks {
-	height: 100%;
+	float: left;
+	height: 60px;
 }
 
 #quicklinks span {
@@ -71,6 +73,7 @@ ul.primary-links li a {
 div#block-imagemenu-1 {
 	width: auto;
 	float: left;
+	height: 100%;
 }
 ul.imagemenu {
 	margin: 14px 0 0 0;
