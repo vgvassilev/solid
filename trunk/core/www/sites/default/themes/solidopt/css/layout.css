@@ -83,16 +83,19 @@ img {
 }
 
 #center {
-    background: #fff;
+    background: url("images/center-top-right.png") no-repeat scroll right top #fff;
+    margin-top: 10px;
     display: inline;
     margin-left: 20%;
     overflow: hidden;
     float: left;
     width: 58%;
-    padding-top: .5em;
+
 }
-#content {
-    padding: 15px 15px 70px 15px;
+#center #content {
+    padding: 15px 5px 70px 15px;
+    margin-right: 10px;
+    background: url("images/center-top-left.png") no-repeat scroll left top #fff;
 }
 
 #left{
@@ -101,14 +104,24 @@ img {
     width: 20%;
     background-color: #112338;
 }
-#leftsidebar {
-    margin: 0;
+#leftsidebar > div > div h2, #rightsidebar > div > div h2 {
+    padding: 1em 0 0 1em;
+    background: url("images/menu/menu-top-left.png") no-repeat left top transparent;
     
-    padding: 8px;
-    background-color: #a1bfe2;
+}
+#leftsidebar > div > div, #rightsidebar > div > div {
+
+    background: url("images/menu/menu-top-right.png") no-repeat right top #A1BFE2;
+    margin: 10px 2px 0px 2px;
+}
+#leftsidebar .content, #rightsidebar .content {
+    background: url("images/menu/menu-bottom-left.png") no-repeat left bottom #A1BFE2;
+    padding: 0 0 2em 1em;
+
 }
 
-#leftsidebar .box ul {
+
+#leftsidebar div .box ul {
     padding-bottom: 1em;
 }
 
@@ -117,15 +130,6 @@ img {
     display: inline-block;
     width:22%;
     background-color: #112338;
-}
-#rightsidebar {
-    margin: 0;
-    padding: 8px;
-    background-color: #a1bfe2;
-}
-
-#rightsidebar .box ul {
-    padding-bottom: 1em;
 }
 
 

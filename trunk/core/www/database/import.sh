@@ -8,7 +8,7 @@ MyUSER="remoteroot"    		 	# USERNAME
 MyPASS="remoteroot32"      	 	# PASSWORD
 MyHOST="localhost"         	 	# Hostname
 MyDB="sandbox-solidopt-core-db"  	# Database to dump
-NewDB="sandbox-solidopt-core-db.sql"	# New database file
+NewDB="sandbox-solidopt-core-db.mysql"	# New database file
 
 # Extra variables for the dump if you want to add another use: MyExportVars="--add-drop-database=TRUE --another-var=(TRUE|FALSE)"
 MyImportVars="--default-character-set=utf8"

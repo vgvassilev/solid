@@ -12,7 +12,7 @@ set MyHOST="localhost"
 rem Database to dump
 set MyDB="sandbox-solidopt-core-db"
 rem New database file
-set NewDB="sandbox-solidopt-core-db.sql"
+set NewDB="sandbox-solidopt-core-db.mysql"
 
 rem Extra variables for the dump if you want to add another use: MyExportVars="--add-drop-database=TRUE --another-var=(TRUE|FALSE)"
 set MyImportVars="--default-character-set=utf8"
