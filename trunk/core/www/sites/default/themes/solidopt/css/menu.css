@@ -100,7 +100,17 @@ ul.imagemenu li {
 /*end Quick start menu*/
 
 /* SIDE MENU */
+#leftsidebar > div > div h2, #rightsidebar > div > div h2 {
+    padding: 1em 0 0 1em;
+    background: url("images/menu/menu-top-left.png") no-repeat left top transparent;
+    
+}
+#leftsidebar > div > div, #rightsidebar > div > div {
 
+    background: url("images/menu/menu-top-right.png") no-repeat right top #A1BFE2;
+    margin: 10px 2px 0px 2px;
+}
+/*
 #sidebar .menu ul {
     list-style: none;
     font-size: .85em;
@@ -119,9 +129,45 @@ ul.imagemenu li {
 #sidebar .menu ul li.current_page_item a {
     color: #333;
 }
-
-
-/*
-translation flags class
 */
+
+/* Language menu */
+div.i18n {
+
+}
+
+div.i18n > ul {
+	float: right;
+	font-weight: normal;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	
+	margin: 0;
+	padding: 0;
+}
+
+div.i18n>ul li {
+	background-image: none;
+	border: medium none;
+	float: right;
+	
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+
+	margin: 1px;
+	margin-right: 5px;
+	padding-left: 0;
+	padding-right: 0;
+
+	font-size: 0.9em;
+	white-space: nowrap;
+}
+div.i18n>ul li a {
+	display: block;
+
+	color: black;
+}
+/* End Language flags */
 
