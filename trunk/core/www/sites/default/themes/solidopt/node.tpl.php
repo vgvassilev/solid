@@ -22,7 +22,6 @@
       <div class="terms"><?php print $terms ?></div>
     <?php endif;?>
     </div>
-
     <?php if ($links): ?>
       <div class="links"><?php print $links; ?></div>
     <?php endif; ?>

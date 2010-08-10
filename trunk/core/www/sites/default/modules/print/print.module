@@ -588,7 +588,7 @@ function theme_print_format_link() {
   $print_html_show_link = variable_get('print_html_show_link', PRINT_HTML_SHOW_LINK_DEFAULT);
   $print_html_link_text = filter_xss(variable_get('print_html_link_text', t('Printer-friendly version')));
 
-  $img = drupal_get_path('module', 'print') .'/icons/print_icon.gif';
+  $img = drupal_get_path('module', 'print') .'/icons/print_icon.png';
   $title = t('Display a printer-friendly version of this page.');
   $class = strip_tags($print_html_link_class);
   $new_window = $print_html_new_window;
