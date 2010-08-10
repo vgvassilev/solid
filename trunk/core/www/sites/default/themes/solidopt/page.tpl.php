@@ -45,16 +45,6 @@
 				
 			</div>	
 
-			<div id="center">
-				<div id="content">
-				<!-- BEGIN MAIN CONTENT -->
-					<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
-					<?php if ($tabs2): print '<ul class="tabs secondary">'. $tabs2 .'</ul>'; endif; ?>
-					<?php print $content; ?>
-				<!-- END MAIN CONTENT -->
-				</div><!--#content-->
-			</div>
-			
 			<?php if ($left): ?>
 			<div id="left">
 				<!-- BEGIN LEFT SIDE CONTENT -->
@@ -63,7 +53,7 @@
 				</div>	
 				<!-- END LEFT SIDE CONTENT -->
 			</div>
-			<?php ; endif ?>	
+			<?php ; endif ?>
 
 			<?php if ($right): ?>
 			<div id="right">
@@ -73,7 +63,19 @@
 				</div>	
 				<!-- END RIGHT SIDE CONTENT -->
 			</div>			
-			<?php ; endif ?>	  	    
+			<?php ; endif ?>
+			
+			<div id="center">
+				<div id="content">
+				<!-- BEGIN MAIN CONTENT -->
+					<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
+					<?php if ($tabs2): print '<ul class="tabs secondary">'. $tabs2 .'</ul>'; endif; ?>
+					<?php print $content; ?>
+				<!-- END MAIN CONTENT -->
+				</div><!--#content-->
+			</div>	
+
+				  	    
 		</div><!--#wrapper-->
 		<div class="clear"></div>
 		<div id="footer">

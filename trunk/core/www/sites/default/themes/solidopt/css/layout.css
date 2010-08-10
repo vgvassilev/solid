@@ -114,12 +114,11 @@ img {
 
 #center {
     background: url("images/center-top-right.png") no-repeat scroll right top #fff;
-    display: inline;
-    float: left;
+    display: block;
+    float: none;
     overflow: hidden;
     width: 58%;
 
-    margin-left: 20%;
     margin-top: 10px;
 }
 #center #content {
@@ -140,8 +139,6 @@ img {
     background-color: #112338;
     float: left;
     width: 20%;
-
-    margin-left: -78%;
 }
 
 #leftsidebar .content, #rightsidebar .content {
@@ -157,8 +154,8 @@ img {
 
 #right {
     background-color: #112338;
-    display: inline-block;
-    float: left;
+    display: block;
+    float: right;
     width:22%;
 }
 
@@ -170,6 +167,8 @@ img {
     border-color: #070f19;
     height: 100px;
     position:relative;/*stack footer above #content demo BG color*/
+
+    margin-top: 10px;
 }
 
 /*
@@ -238,21 +237,22 @@ img {
     color: #ce7b00;
 }
 
-/*
+
 .notes-line {
 	border-color: #CCCCBB -moz-use-text-color -moz-use-text-color;
 	border-style: dashed none none;
 	border-width: 1px medium medium;
+
 	margin: 2em 0pt 0pt 0pt;
 }
 .notes {
 	margin: 0;
-	float: right;
+
+	text-indent: 0;
 	color: #CCCCBB;
-	font-weight: bold;
 	font-size: 12px;
 }
-*/
+
 /* Clear */
 .clear {
 	clear: both;
@@ -315,3 +315,15 @@ div .content h1 a:hover {
 	top:3px;
 }
 /* End Author information */
+
+/* Override system styles */
+
+.profile {
+	margin: 0;
+}
+
+.book-navigation {
+	margin-top: 5em;
+}
+
+/* End Override system styles */

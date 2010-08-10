@@ -110,6 +110,11 @@ ul.imagemenu li {
     background: url("images/menu/menu-top-right.png") no-repeat right top #A1BFE2;
     margin: 10px 2px 0px 2px;
 }
+
+/* Exclude the drupal backend helpers */
+#leftsidebar > div > div.block-region, #rightsidebar > div > div.block-region {
+	background-color: #FFFF66;
+}
 /*
 #sidebar .menu ul {
     list-style: none;

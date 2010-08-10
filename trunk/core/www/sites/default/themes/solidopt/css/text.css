@@ -21,11 +21,10 @@ body {
 a {
     color: #0d71c0;
     text-decoration: none;
-    font-weight: bold;
 }
 
 a:hover {
-    color: #ce7b00;
+    color: #112338;
 }
 
 #content ul {
