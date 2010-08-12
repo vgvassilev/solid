@@ -112,8 +112,31 @@ img {
     height: 15px !important;
 }
 
+/* Corners for the center content */
+
+
+.corners {
+	width: 100%; 
+	height: 15px;
+}
+
+.cl, .cr {
+	height: 15px;
+	width: 15px;
+}
+
+.cl{float: left; }
+
+.cr{float: right;}
+
+.ctl-white{background: url("images/center-top-left.png") no-repeat scroll transparent; }
+.ctr-white{background: url("images/center-top-right.png") no-repeat scroll transparent; }
+.cbl-white{background: url("images/center-bottom-left.png") no-repeat scroll transparent; }
+
+/* End Corners for the center content */
+
 #center {
-    background: url("images/center-top-right.png") no-repeat scroll right top #fff;
+    background-color: #fff;
     display: block;
     float: none;
     overflow: hidden;
@@ -122,16 +145,6 @@ img {
     margin-top: 10px;
 }
 #center #content {
-    background: url("images/center-top-left.png") no-repeat scroll left top #fff;
-
-    margin-right: 10px;
-    padding-top: 10px;
-
-}
-
-#center #content > div {
-    background: url("images/center-bottom-left.png") no-repeat scroll left bottom #fff;
-
     padding: 15px 5px 70px 15px;
 }
 
@@ -326,4 +339,13 @@ div .content h1 a:hover {
 	margin-top: 5em;
 }
 
+#user-login-form {
+	text-align: left;
+}
+
 /* End Override system styles */
+
+/* Test styles */
+
+
+/* End Test styles */

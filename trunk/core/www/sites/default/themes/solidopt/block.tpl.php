@@ -27,18 +27,14 @@
  */
 ?>
 <div id="block-<?php print $block->module .'-'. $block->delta; ?>" class="block block-<?php print $block->module ?>">
-<?php 
- 	$mystring = $block->subject;
-        $findme  = '!!hide!!';
-        $pos = strpos($mystring, $findme);
 
-        // Note our use of ===.  Simply == would not work as expected
-        // because the position of 'a' was the 0th (first) character.
-        if ($pos === false)
-		if ($block->subject): ?>
-		   <h2><?php print $block->subject ?></h2>
-		<?php endif;?>
+<?php if ($block->subject): ?>	
+  
+  <h2><?php print $block->subject ?></h2>
+<?php endif;?>
+
   <div class="content">
     <?php print $block->content ?>
   </div>
 </div>
+

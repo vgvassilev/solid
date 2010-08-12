@@ -66,6 +66,10 @@
 			<?php ; endif ?>
 			
 			<div id="center">
+				<div class="corners">
+					<span class="cl ctl-white"></span>
+					<span class="cr ctr-white"></span>										
+				</div>
 				<div id="content">
 				<!-- BEGIN MAIN CONTENT -->
 					<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
@@ -73,6 +77,10 @@
 					<?php print $content; ?>
 				<!-- END MAIN CONTENT -->
 				</div><!--#content-->
+
+				<div class="corners">
+					<span class="cl cbl-white"></span>										
+				</div>
 			</div>	
 
 				  	    
