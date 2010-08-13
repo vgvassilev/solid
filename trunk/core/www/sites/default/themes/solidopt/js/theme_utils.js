@@ -9,12 +9,14 @@ function ShowMore() {
 		elemRightStyle.display = 'block';
 
 		image.src = "/sites/default/themes/solidopt/css/images/menu/more.png";
+		image.alt = ">>";
 	}
 	else {
 		elemCenterStyle.width = 'auto';
 		elemRightStyle.display = 'none';
 
 		image.src = "/sites/default/themes/solidopt/css/images/menu/less.png";
+		image.alt = "<<";
 	}
 
 	return true;
