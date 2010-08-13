@@ -65,15 +65,25 @@
 			</div>			
 			<?php ; endif ?>
 			
-			<div id="center">
+			<div id="center" style="width: 58%;">
 				<div class="corners">
 					<span class="cl ctl-white"></span>
 					<span class="cr ctr-white"></span>										
 				</div>
 				<div id="content">
-				<!-- BEGIN MAIN CONTENT -->
+				<!-- BEGIN MAIN CONTENT -->					
 					<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
 					<?php if ($tabs2): print '<ul class="tabs secondary">'. $tabs2 .'</ul>'; endif; ?>
+					<!-- BEGIN Building the toolbar -->
+						<div id="toolbar">
+							<span>
+								<a href="javascript:void(0);" onclick="ShowMore('center');"> 
+									<img id="showmore" height="22" width="22" alt=">>" src="/sites/default/themes/solidopt/css/images/menu/more.png">
+								</a>
+							</span>
+							<?php if ($contenttoolbar): print $contenttoolbar ; endif; ?>
+						</div>
+					<!-- END Building the toolbar -->
 					<?php print $content; ?>
 				<!-- END MAIN CONTENT -->
 				</div><!--#content-->

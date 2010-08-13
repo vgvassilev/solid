@@ -4,6 +4,8 @@ version = VERSION
 core = 6.x
 engine = phptemplate
 
+scripts[]=js/theme_utils.js
+
 stylesheets[all][] = css/menu.css
 stylesheets[all][] = css/layout.css
 stylesheets[all][] = css/text.css
@@ -17,3 +19,4 @@ regions[quickstart] = Quick start block
 regions[searchbar] = Search block
 regions[left] = Left sidebar block
 regions[right] = Right sidebar block
+regions[contenttoolbar] = Toolbar for the main column
