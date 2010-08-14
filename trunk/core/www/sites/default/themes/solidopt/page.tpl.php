@@ -77,7 +77,7 @@
 					<!-- BEGIN Building the toolbar -->
 						<div id="toolbar">
 							<span>
-								<a href="javascript:void(0);" onclick="ShowMore('center');"> 
+								<a href="javascript:void(0);" onclick="ShowMore();"> 
 									<img id="showmore" height="22" width="22" alt=">>" src="/sites/default/themes/solidopt/css/images/menu/more.png">
 								</a>
 							</span>
@@ -97,10 +97,20 @@
 		</div><!--#wrapper-->
 		<div class="clear"></div>
 		<div id="footer">
-			<ul id="footer-menu">
-				<?php print $footer_message; ?>
-				<?php if (!empty($footer)): print $footer; endif; ?>
-			</ul>
+			<div id="fleft">
+				<div>&nbsp;</div>
+			</div>
+
+			<div id="fright">
+				<div>&nbsp;</div>
+			</div>			
+			<div id="fcenter">
+				<ul id="footer-menu">
+					<?php print $footer_message; ?>
+					<?php if (!empty($footer)): print $footer; endif; ?>
+					<?php if (!empty($footermap)): print $footermap; endif; ?>
+				</ul>
+			</div>
 		</div>
 	</div><!--#page-->
 

@@ -1,0 +1,12 @@
+; $Id: footermap.info,v 1.1.6.3 2009/11/19 19:37:35 mradcliffe Exp $
+name = footermap
+description = Recursively generates and displays basic site map of non-hidden menu items in the footer.  Optionally uses path.module.
+core = 6.x
+php = 5.x
+
+; Information added by drupal.org packaging script on 2010-07-12
+version = "6.x-1.6"
+core = "6.x"
+project = "footermap"
+datestamp = "1278963610"
+

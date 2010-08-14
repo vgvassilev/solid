@@ -103,7 +103,7 @@ img {
 /* End Search */
 
 #navigation {
-    background: #112338 url("images/header-bar.png") repeat-x;
+    background: url("images/header-bar.png") repeat-x transparent;
     height: 60px;
     vertical-align: middle;
 }
@@ -135,7 +135,7 @@ img {
 
 /* End Corners for the center content */
 
-#center {
+#center, #fcenter {
     background-color: #fff;
     display: block;
     float: none;
@@ -147,8 +147,8 @@ img {
     padding: 15px 15px 70px 15px;
 }
 
-#left{
-    background-color: #112338;
+#left, #fleft{
+    background-color: transparent;
     float: left;
     width: 20%;
 }
@@ -164,8 +164,8 @@ img {
     padding-bottom: 1em;
 }
 
-#right {
-    background-color: #112338;
+#right, #fright {
+    background-color: transparent;
     display: block;
     float: right;
     width:22%;
@@ -177,10 +177,16 @@ img {
     border-width: 1px 0;
     border-style: solid;
     border-color: #070f19;
-    height: 100px;
+    width: 100%;
     position:relative;/*stack footer above #content demo BG color*/
+    float: left;
 
     margin-top: 10px;
+}
+
+#fcenter {
+	width: 58%;
+	background-color: transparent;
 }
 
 /*
@@ -196,7 +202,13 @@ img {
 }
 */
 
-#footer-menu,
+#footer-menu {
+	height: 100%;
+	float: left;
+
+	padding: 2em 0;
+	
+}
 #footer-menu ul {
 	list-style-type: none;
 	left: auto;
@@ -205,7 +217,7 @@ img {
 	padding: 0;
 
 }
-#footer-menu li {
+/*#footer-menu li {
 	background: none;
 	display: inline;
 	float: left;
@@ -223,7 +235,7 @@ img {
 #footer-menu li ul {
 	margin: 0.5em 0 2em 0;
 }
-
+*/
 #footer-menu ul li {
 	display: block;
 	width: auto;
@@ -237,16 +249,17 @@ img {
 }
 
 #footer-menu li a {
-	font-weight: bold;
+	font-weight: normal;
 	color: #A1BFE2;
 }
 
-#footer-menu li ul a {
-	font-weight: normal;
+
+#footer-menu li.first a {
+	font-weight: bold;
 }
 
 #footer-menu li a:hover {
-    color: #ce7b00;
+	color: #ce7b00;
 }
 
 

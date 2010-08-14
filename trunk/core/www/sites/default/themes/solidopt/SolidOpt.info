@@ -20,3 +20,4 @@ regions[searchbar] = Search block
 regions[left] = Left sidebar block
 regions[right] = Right sidebar block
 regions[contenttoolbar] = Toolbar for the main column
+regions[footermap] = Sitemap for the footer

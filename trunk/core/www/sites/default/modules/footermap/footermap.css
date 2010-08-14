@@ -1,0 +1,27 @@
+
+div.footermap 
+{
+  height: 100%;
+  display: inline;
+  margin: 0 auto;
+  width: 600px;
+}
+
+div.footermap-col
+{
+  float: left;
+  margin: 0 0 0 20px;
+  text-align: left;
+}
+
+ul.footermap-item {
+  margin: 0;
+  padding: 0;
+}
+
+ul.footermap-item li {
+  list-style-type: none;
+  margin: 0 0 5px;
+  padding: 0px;
+  display: block;
+}
