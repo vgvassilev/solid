@@ -140,6 +140,7 @@ img {
     display: block;
     float: none;
     overflow: hidden;
+    width: 58%;
 
     margin-top: 10px;
 }
@@ -185,7 +186,6 @@ img {
 }
 
 #fcenter {
-	width: 58%;
 	background-color: transparent;
 }
 

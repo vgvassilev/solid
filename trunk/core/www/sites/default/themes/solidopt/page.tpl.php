@@ -65,7 +65,7 @@
 			</div>			
 			<?php ; endif ?>
 			
-			<div id="center" style="width: 58%;">
+			<div id="center">
 				<div class="corners">
 					<span class="cl ctl-white"></span>
 					<span class="cr ctr-white"></span>										

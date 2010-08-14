@@ -6,6 +6,7 @@ function ShowMore() {
 
 	if (elemCenterStyle.width == 'auto') {
 		elemCenterStyle.width = '58%';
+		elemCenterStyle.marginRight = '0';
 		elemRightStyle.display = 'block';
 
 		image.src = "/sites/default/themes/solidopt/css/images/menu/more.png";
@@ -13,6 +14,7 @@ function ShowMore() {
 	}
 	else {
 		elemCenterStyle.width = 'auto';
+		elemCenterStyle.marginRight = '10px';
 		elemRightStyle.display = 'none';
 
 		image.src = "/sites/default/themes/solidopt/css/images/menu/less.png";
