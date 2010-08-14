@@ -209,6 +209,16 @@ img {
 	padding: 2em 0;
 	
 }
+
+#footer-menu a {
+	font-weight: normal;
+	color: #A1BFE2;
+}
+
+#footer-menu a:hover {
+	color: #CE7B00;
+}
+
 #footer-menu ul {
 	list-style-type: none;
 	left: auto;
@@ -248,19 +258,26 @@ img {
 	font-size: 85%;
 }
 
-#footer-menu li a {
-	font-weight: normal;
-	color: #A1BFE2;
-}
-
-
 #footer-menu li.first a {
 	font-weight: bold;
 }
 
-#footer-menu li a:hover {
-	color: #ce7b00;
+#message {
+	border-top: 1px solid #A1BFE2;
+
+	margin-top: 2em;
+	padding-top: 2em;	
 }
+
+#message p {
+	color: #A1BFE2;
+	
+	font-weight: normal;
+	font-size: 85%;	
+	text-align: center;
+	text-indent: 0;
+}
+
 
 
 .notes-line {

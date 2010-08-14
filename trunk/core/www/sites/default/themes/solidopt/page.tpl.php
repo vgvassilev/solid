@@ -106,10 +106,15 @@
 			</div>			
 			<div id="fcenter">
 				<ul id="footer-menu">
-					<?php print $footer_message; ?>
 					<?php if (!empty($footer)): print $footer; endif; ?>
 					<?php if (!empty($footermap)): print $footermap; endif; ?>
 				</ul>
+				<div class="clear"></div>
+				<?php if (!empty($footer_message)):?>
+				<div id="message">
+					<p><?php print $footer_message; ?></p>
+				</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div><!--#page-->
