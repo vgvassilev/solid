@@ -6,6 +6,7 @@
  * 
  */
 using System;
+using System.Collections.Generic;
 
 using SolidOpt.Services.Transformations.Multimodel;
 
@@ -16,22 +17,32 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	/// <summary>
 	/// Description of CilToControlFlowGraph.
 	/// </summary>
-	public class CilToControlFlowGraph : IDecompile<MethodBody, InstructionBlock []>
-	{
+	public class CilToControlFlowGraph : DecompilationStep
+	{		
+		#region Constructors
 		
-		#region Fields & Properties
-		
+		public CilToControlFlowGraph ()
+		{
+		}
 		
 		#endregion
 		
-		
-		public CilToControlFlowGraph()
+		public override object Process (object codeModel)
 		{
+			return Process (codeModel as MethodBody);
 		}
 		
-		public InstructionBlock[] Decompile(MethodBody source)
+
+		public ControlFlowGraph Process (MethodBody source)
 		{
-			throw new NotImplementedException();
+			if (source == null)
+				throw new ArgumentNullException ("method");
+			if (!source.Method.HasBody)
+				throw new ArgumentException ();
+
+			var builder = new ControlFlowGraphBuilder (source.Method);
+			return builder.CreateGraph ();
 		}
+		
 	}
 }

@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{0A77
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decompiler", "..\..\..\..\..\..\doc\Demos\Decompiler\Decompiler.csproj", "{06EBABB7-B440-4180-8EAE-8EC4410723C4}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt", "..\..\..\..\SolidOpt.csproj", "{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}"
 EndProject
 Global
@@ -17,6 +19,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06EBABB7-B440-4180-8EAE-8EC4410723C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06EBABB7-B440-4180-8EAE-8EC4410723C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06EBABB7-B440-4180-8EAE-8EC4410723C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06EBABB7-B440-4180-8EAE-8EC4410723C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,9 +42,11 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486} = {0A77BD9B-F53F-4A10-B882-7BCE5CCCA94B}
-		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0} = {0A77BD9B-F53F-4A10-B882-7BCE5CCCA94B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = CilToControlFlowGraph.csproj
+		StartupItem = ..\..\..\..\..\..\doc\Demos\Decompiler\Decompiler.csproj
+		Policies = $0
+		$0.StandardHeader = $1
+		$1.inheritsSet = LGPLv3License
 	EndGlobalSection
 EndGlobal
