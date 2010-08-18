@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,6 +9,8 @@
     <AssemblyName>SolidOpt</AssemblyName>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -25,39 +28,27 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core" />
-    <Folder Include="Core\Loader" />
-    <Folder Include="Core\Loader\cache" />
-    <Folder Include="Core\Services" />
-    <Folder Include="Services" />
-    <Folder Include="Services\GUI" />
-    <Folder Include="Services\Models" />
-    <Folder Include="Services\Subsystems" />
-    <Folder Include="Services\Subsystems\Cache" />
-    <Folder Include="Services\Subsystems\Configurator" />
-    <Folder Include="Services\Subsystems\Configurator\Mappers" />
-    <Folder Include="Services\Subsystems\Configurator\Sources" />
-    <Folder Include="Services\Subsystems\Configurator\Sources\Generators" />
-    <Folder Include="Services\Subsystems\Configurator\Targets" />
-    <Folder Include="Services\Subsystems\Configurator\TypeResolvers" />
-    <Folder Include="Services\Subsystems\HetAccess" />
-    <Folder Include="Services\Subsystems\HetAccess\Exporters" />
-    <Folder Include="Services\Subsystems\HetAccess\Importers" />
-    <Folder Include="Services\Transformations" />
-    <Folder Include="Services\Transformations\Multimodel" />
-    <Folder Include="Services\Transformations\Optimizations" />
     <Compile Include="Core\Loader\Loader.cs" />
     <Compile Include="Core\Services\AbstractService.cs" />
     <Compile Include="Core\Services\AbstractServiceContainer.cs" />
@@ -106,8 +97,111 @@
     <Compile Include="Services\Transformations\Multimodel\IDecompile.cs" />
     <Compile Include="Services\Transformations\Optimizations\IOptimize.cs" />
     <ProjectReference Include="vendors\Mono.Cecil\Mono.Cecil.csproj">
-      <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
+    <Folder Include="Core\" />
+    <Folder Include="Core\Loader\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\Sources\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
+    <Folder Include="Services\Transformations\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
+    <Compile Include="Services\Transformations\IPipeline.cs" />
+    <Compile Include="Services\Transformations\IStep.cs" />
+    <Compile Include="Services\Transformations\Pipeline.cs" />
+    <Compile Include="Services\Transformations\Step.cs" />
+    <Compile Include="Services\Transformations\Multimodel\DecompilationPipeline.cs" />
+    <Compile Include="Services\Transformations\Multimodel\CompilationPipeline.cs" />
+    <Compile Include="Services\Transformations\Multimodel\DecompilationStep.cs" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\Configurator\" />
+    <Folder Include="Services\Subsystems\" />
+    <Folder Include="Services\Subsystems\HetAccess\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Transformations\" />
   </ItemGroup>
 </Project>
