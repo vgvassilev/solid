@@ -31,9 +31,11 @@ using System.Collections.Generic;
 
 using Mono.Cecil.Cil;
 
-namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph {
+namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph 
+{
 
-	public class InstructionBlock : IEnumerable<Instruction>, IComparable<InstructionBlock> {
+	public class InstructionBlock : IEnumerable<Instruction>, IComparable<InstructionBlock> 
+	{
 
 		static readonly InstructionBlock [] NoSuccessors = new InstructionBlock [0];
 
@@ -44,26 +46,26 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph {
 
 		public int Index {
 			get { return index; }
-			internal set { index = value; }
+			set { index = value; }
 		}
 
 		public Instruction First {
 			get { return first; }
-			internal set { first = value; }
+			set { first = value; }
 		}
 
 		public Instruction Last {
 			get { return last; }
-			internal set { last = value; }
+			set { last = value; }
 
 		}
 
 		public InstructionBlock [] Successors {
 			get { return successors; }
-			internal set { successors = value; }
+			set { successors = value; }
 		}
 
-		internal InstructionBlock (Instruction first)
+		public InstructionBlock (Instruction first)
 		{
 			if (first == null)
 				throw new ArgumentNullException ("first");
