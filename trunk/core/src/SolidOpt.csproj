@@ -203,5 +203,7 @@
     <Folder Include="Services\Subsystems\HetAccess\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Transformations\" />
+    <Folder Include="Services\Compatibility\" />
+    <Compile Include="Services\Compatibility\FixEnumerableVariance.cs" />
   </ItemGroup>
 </Project>

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 
+using SolidOpt.Services.Compatibility;
 using SolidOpt.Services.Transformations;
 using SolidOpt.Services.Transformations.Multimodel;
 
@@ -35,8 +36,8 @@ namespace SolidOpt.Services.Transformations.Multimodel
 	{
 		
 		//TODO: make enumerator of the subclass. You have to do enumeration type casting
-		public DecompilationPipeline (IEnumerable<IStep> steps) 
-				: base (steps)
+		public DecompilationPipeline (IEnumerable<DecompilationStep> steps) 
+				: base (FixEnumerableVariance.Convert<DecompilationStep, IStep>(steps))
 		{		
 		}
 			
