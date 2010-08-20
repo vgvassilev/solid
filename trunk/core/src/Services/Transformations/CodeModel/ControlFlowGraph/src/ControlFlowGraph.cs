@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 using Mono.Cecil;
@@ -73,17 +74,36 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 				return false;
 
 			return exception_objects_offsets.Contains (offset);
-		}
-
-		public static ControlFlowGraph Create (MethodDefinition method)
+		}	
+		
+		public override string ToString ()
 		{
-			if (method == null)
-				throw new ArgumentNullException ("method");
-			if (!method.HasBody)
-				throw new ArgumentException ();
-
-			var builder = new ControlFlowGraphBuilder (method);
-			return builder.CreateGraph ();
+			StringWriter writer = new StringWriter ();
+			FormatControlFlowGraph (writer);
+			return writer.ToString ();
 		}
+
+		public void FormatControlFlowGraph (TextWriter writer)
+		{
+			foreach (InstructionBlock block in Blocks) {
+				writer.WriteLine ("block {0}:", block.Index);
+				writer.WriteLine ("\tbody:");
+				foreach (Instruction instruction in block) {
+					writer.Write ("\t\t");
+					var data = GetData (instruction);
+					writer.Write ("[{0}:{1}] ", data.StackBefore, data.StackAfter);
+					writer.Write(instruction);
+					writer.WriteLine ();
+				}
+				InstructionBlock [] successors = block.Successors;
+				if (successors.Length > 0) {
+					writer.WriteLine ("\tsuccessors:");
+					foreach (InstructionBlock successor in successors) {
+						writer.WriteLine ("\t\tblock {0}", successor.Index);
+					}
+				}
+			}
+		}
+		
 	}
 }

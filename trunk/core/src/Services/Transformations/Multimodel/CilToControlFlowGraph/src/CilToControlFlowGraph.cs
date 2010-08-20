@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 
 using SolidOpt.Services.Transformations.Multimodel;
+using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
 using Mono.Cecil.Cil;
 
-namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
+namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 {
 	/// <summary>
 	/// Description of CilToControlFlowGraph.

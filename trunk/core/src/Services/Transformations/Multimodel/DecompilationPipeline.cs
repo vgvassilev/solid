@@ -24,7 +24,6 @@ using System.Collections.Generic;
 
 using SolidOpt.Services.Compatibility;
 using SolidOpt.Services.Transformations;
-using SolidOpt.Services.Transformations.Multimodel;
 
 namespace SolidOpt.Services.Transformations.Multimodel
 {
@@ -45,7 +44,7 @@ namespace SolidOpt.Services.Transformations.Multimodel
 
 		public Target Decompile (Source source)
 		{
-			throw new System.NotImplementedException();
+			return Run (source);
 		}		
 		
 		#endregion

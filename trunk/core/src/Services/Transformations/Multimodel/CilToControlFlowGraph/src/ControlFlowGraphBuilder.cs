@@ -29,7 +29,9 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Metadata;
 
-namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
+using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
+
+namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 {
 
 
