@@ -71,7 +71,12 @@
 					<span class="cr ctr-white"></span>										
 				</div>
 				<div id="content">
-				<!-- BEGIN MAIN CONTENT -->					
+				<!-- BEGIN MAIN CONTENT -->	
+					<?php if ($breadcrumb): ?>
+					       <div id="postpath">
+						  <?php print $breadcrumb; ?>
+						</div><!-- /postpath --> 
+					<?php endif ?>				
 					<?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul>'; endif; ?>
 					<?php if ($tabs2): print '<ul class="tabs secondary">'. $tabs2 .'</ul>'; endif; ?>
 					<!-- BEGIN Building the toolbar -->

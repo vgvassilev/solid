@@ -4,6 +4,11 @@
     display: block;
 }
 
+.toc {
+    background: none;
+    border: none;
+}
+
 #toc div.tocindent {
     padding-left: 10px;
 }
@@ -17,7 +22,7 @@
     color: #000;
 }
 
-#toc .number {
+#toc .toc-number {
     background: #b6cee9;
     color: #5d91cd;
     -moz-border-radius: 3px;
@@ -26,9 +31,13 @@
     padding: 1px 3px;
 }
 
-#toc a:hover .number {
+#toc a:hover .toc-number {
     color: #b6cee9;
     background: #5d91cd;
+}
+
+.toc-list {
+    line-height: 1.3em;
 }
 
 /* Utility Bar for Logged in Users */
@@ -182,3 +191,31 @@ div.tleft {
     margin-right:0.5em;
     border-width: 0.5em 1.4em 0.8em 0;
 }
+
+/* css rule affecting the table found in the subprojects page */
+#content .node div table {
+	border: solid 1px gray;
+	background-color: rgb(249, 249, 249);
+	background-image: none;
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-position: 0% 50%;
+	-moz-background-size: auto auto;
+	border-collapse: collapse;
+	font-size: 95%;
+	-moz-background-clip: -moz-initial;
+	-moz-background-origin: -moz-initial;
+	-moz-background-inline-policy: -moz-initial;
+	width: 100%;
+	margin: 1em;
+}
+
+#content .node div table th {
+	border: solid 1px;
+	text-align: center;
+}
+
+#content .node div table td {
+	border: solid 1px;
+}
+/* end css rule affecting the table found in the subprojects page */

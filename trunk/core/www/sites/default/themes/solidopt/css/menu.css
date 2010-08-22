@@ -171,12 +171,16 @@ ul.imagemenu li {
 /* End Main column toolbar */
 
 /* SIDE MENU */
-#leftsidebar > div > div h2, #rightsidebar > div > div h2 {
+#leftsidebar > div > div h2, 
+#rightsidebar > div > div h2,
+.block-tableofcontents_block h2 {
     padding: 1em 0 0 1em;
     background: url("images/menu/menu-top-left.png") no-repeat left top transparent;
     
 }
-#leftsidebar > div > div, #rightsidebar > div > div {
+#leftsidebar > div > div, 
+#rightsidebar > div > div,
+.block-tableofcontents_block {
 
     background: url("images/menu/menu-top-right.png") no-repeat right top #A1BFE2;
     margin: 10px 2px 0px 2px;

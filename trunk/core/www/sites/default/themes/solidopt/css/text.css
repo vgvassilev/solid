@@ -1,5 +1,7 @@
 body {
     /* 0.8125em */
+    background: #112338;
+    
     font: 0.85em "DejaVu Sans", "Bitstream Vera Sans", Verdana, sans-serif;
     line-height: 1.5em;
 }
@@ -25,6 +27,11 @@ a {
 
 a:hover {
     color: #112338;
+}
+
+#logo a h1 {
+    font-family: "Trebuchet MS";
+    color: #C6D8ED !important;
 }
 
 #content ul {
@@ -205,7 +212,6 @@ blockquote {
     font-size: 1.3em;
     font-weight: bold;
     margin: 1.5em 0 .75em 0;
-    padding: 0;
     color: #152d47;
     border-bottom: 1px solid #c8daee;
 }
@@ -222,8 +228,68 @@ blockquote {
 	padding-bottom: 0.20em;
 }
 
-/* css rule affecting the image markings in the content/models page */
+/* css rule affecting the image markings in the content/models page 
 div.content ul li span {
 	font-style: italic;
 	font-weight: bold;
 }
+*/
+/* Search */
+
+#search input.form-submit {
+    font-size:.85em;    
+    color:#c6d8ed;
+}
+
+#search input[type="text"],
+#search input.text {
+    vertical-align:top;
+    padding:4px;
+    margin-right:6px;
+
+    color:#c6d8ed;
+    font-size:.85em;
+}
+
+
+/* End Search */
+
+/* Footer */
+#footer-menu a {
+	font-weight: normal;
+	color: #A1BFE2;
+}
+
+#footer-menu a:hover {
+	color: #CE7B00;
+}
+
+#footer-menu ul li {
+	font-weight: normal;
+	font-size: 85%;
+}
+
+#footer-menu li.first a {
+	font-weight: bold;
+}
+
+
+#footer #message p {
+	color: #A1BFE2;
+	
+	font-weight: normal;
+	font-size: 85%;	
+	text-align: center;
+	text-indent: 0;
+}
+
+/* End Footer */
+
+/* Override system styles */
+
+#user-login-form {
+	text-align: left;
+}
+
+/* End Override system styles */
+
