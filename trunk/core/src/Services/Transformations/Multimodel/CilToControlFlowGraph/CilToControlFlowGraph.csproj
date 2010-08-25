@@ -60,7 +60,6 @@
       <Name>ControlFlowGraph</Name>
     </ProjectReference>
     <Compile Include="src\ControlFlowGraphBuilder.cs" />
-    <Compile Include="src\ControlFlowGraph.cs" />
     <Compile Include="src\Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
