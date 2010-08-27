@@ -95,19 +95,19 @@ h1.heading a {
 }
 
 h2 {
-    color: #436a00;
+    color: #274e80;
     font-weight: normal;
-    font-size: 1.4em;
+    font-size: 1.8em;
     margin-top: 1.15em;
     line-height: 1.5em;
-	margin-bottom: 0.35em;
+    margin-bottom: 0.35em;
 }
 
 h3 {
     color: #274e80;
-    font-weight: bold;
-    font-size: 1.2em;
-	margin-bottom: 0.35em;
+    font-weight: normal;
+    font-size: 1.4em;
+    margin-bottom: 0.35em;
 }
 
 h5 {

@@ -40,8 +40,37 @@
     line-height: 1.3em;
 }
 
-/* Utility Bar for Logged in Users */
+/* Node css */
 
+.node h2 {
+    text-align: center;
+    margin-top: 50px !important;
+}
+
+.node ul {
+    padding-left: 3em;
+    
+}
+
+	/* Author information */
+.submitted {
+	background:none repeat scroll 0 0 #EEEEEE;
+	font-size:11px;
+ 	margin:4px 0 12px;
+	padding:3px 6px;
+	position:relative;
+}
+.submitted span {
+	position:absolute;
+	right:6px;
+	top:3px;
+}
+	/* End Author information */
+
+/* End Node css */
+
+/* Utility Bar for Logged in Users */
+/*
 #utility-bar {
     display: block;
     position: absolute;
@@ -98,9 +127,9 @@
 #utility-bar a:hover {
     text-decoration: underline;
 }
-
+*/
 /* Random MediaWiki Crap */
-
+/*
 .urlexpansion {
     display: none;
 }
@@ -119,21 +148,21 @@
 	display: table;
 	margin-left: 5px;
 }
-
+*/
 /* MeidaWiki images */
 
 
-/* images */
+/* images *//*
 div.floatright, table.floatright {
     clear: right;
     float: right;
     position: relative;
     margin: 0 0 0.5em 0.5em;
     border: 0
-/*
+
     border: 0.5em solid White;
     border-width: 0.5em 0 0.8em 1.4em;
-*/
+
 }
 div.floatright p { font-style: italic; }
 div.floatleft, table.floatleft {
@@ -145,11 +174,11 @@ div.floatleft, table.floatleft {
     margin: 0.3em 0.5em 0.5em 0;
     border: 0.5em solid White;
     border-width: 0.5em 1.4em 0.8em 0;
-*/
+*//*
 }
 div.floatleft p { font-style: italic; }
-/* thumbnails */
-div.thumb {
+/* thumbnails */*/
+/*div.thumb {
     margin-bottom: 0.5em;
     border-style: solid; border-color: White;
     width: auto;
@@ -191,9 +220,9 @@ div.tleft {
     margin-right:0.5em;
     border-width: 0.5em 1.4em 0.8em 0;
 }
-
+*/
 /* css rule affecting the table found in the subprojects page */
-#content .node div table {
+/*#content .node div table {
 	border: solid 1px gray;
 	background-color: rgb(249, 249, 249);
 	background-image: none;
@@ -217,5 +246,5 @@ div.tleft {
 
 #content .node div table td {
 	border: solid 1px;
-}
+}*/
 /* end css rule affecting the table found in the subprojects page */
