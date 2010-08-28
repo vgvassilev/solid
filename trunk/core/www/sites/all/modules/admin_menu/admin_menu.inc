@@ -100,11 +100,11 @@ function admin_menu_link_save($item) {
 /**
  * Implementation of hook_admin_menu().
  *
- * @param &$deleted
+ * @param $deleted
  *   Array of links under admin/* that were removed by admin_menu_adjust_items().
  *   If one of these links is added back, it should be removed from the array.
  */
-function admin_menu_admin_menu(&$deleted) {
+function admin_menu_admin_menu($deleted) {
   $links = array();
   $icon_path = '<front>';
 
@@ -295,7 +295,7 @@ function admin_menu_admin_menu(&$deleted) {
  * @return
  *   An array of links that were removed from $menu_links.
  */
-function admin_menu_adjust_items(&$menu_links, &$sort) {
+function admin_menu_adjust_items($menu_links, $sort) {
   global $user;
   $links = array();
   $deleted = array();
@@ -415,7 +415,7 @@ function admin_menu_wipe() {
  *
  * Extends Devel module with Administration Menu developer settings.
  */
-function _admin_menu_devel_settings_form_alter(&$form, $form_state) {
+function _admin_menu_devel_settings_form_alter($form, $form_state) {
   // Shift system_settings_form buttons.
   $weight = isset($form['buttons']['#weight']) ? $form['buttons']['#weight'] : 0;
   $form['buttons']['#weight'] = $weight + 1;
