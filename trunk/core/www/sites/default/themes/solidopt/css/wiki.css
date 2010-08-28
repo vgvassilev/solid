@@ -43,8 +43,10 @@
 /* Node css */
 
 .node h2 {
-    text-align: center;
+    text-align: left;
     margin-top: 50px !important;
+    margin-bottom: 0;
+    border-bottom: 1px solid #000;
 }
 
 .node ul {
@@ -52,18 +54,23 @@
     
 }
 
+.sticky {
+    background-color: #EEE;
+    padding: 0 5px 0 5px;
+}
+
 	/* Author information */
 .submitted {
-	background:none repeat scroll 0 0 #EEEEEE;
-	font-size:11px;
- 	margin:4px 0 12px;
-	padding:3px 6px;
-	position:relative;
+	background: none repeat scroll 0 0 #EEEEEE;
+	font-size: 11px;
+ 	margin: 0px 0 12px;
+	padding: 3px 6px;
+	position: relative;
 }
 .submitted span {
-	position:absolute;
-	right:6px;
-	top:3px;
+	position: absolute;
+	right: 6px;
+	top: 3px;
 }
 	/* End Author information */
 
