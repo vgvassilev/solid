@@ -16,9 +16,9 @@
 			<div id="topmost">
 				<?php print $lang; ?>
 			</div>
+			<div class="clear"></div>
 			<div id="header">
 				<?php print $header; ?>
-				<div class="clear"></div>
 				<div id="logo">
 					<a href="<?php print $front_page; ?>"><img id="logo_title" src="<?php print $logo; ?>" alt="Logo"/></a>
 					<a href="<?php print $front_page; ?>"><h1><?php print $site_slogan; ?></h1></a>
