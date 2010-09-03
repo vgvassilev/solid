@@ -44,7 +44,7 @@
 
 .node h2 {
     text-align: left;
-    margin-top: 50px !important;
+
     margin-bottom: 0;
     border-bottom: 1px solid #000;
 }
@@ -52,11 +52,6 @@
 .node ul {
     padding-left: 3em;
     
-}
-
-.view-content .sticky {
-    background-color: #EEE;
-    padding: 0 5px 0 5px;
 }
 
 	/* Author information */
@@ -75,6 +70,34 @@
 	/* End Author information */
 
 /* End Node css */
+
+/* Views */
+
+.views-row {
+	margin: 50px 0;
+	clear: both;
+}
+
+.view-content .sticky {
+    background-color: #EEE;
+    border: 1px solid #CCC;
+    padding: 5px;
+}
+
+/* End Views */
+
+/* Links in nodes */
+
+div.links {
+    border-top: 1px dotted #CCC;
+    margin-top: 10px;
+}
+
+.clear-block ul.links {
+    float: right;
+}
+
+/* Links in nodes */
 
 /* Utility Bar for Logged in Users */
 /*

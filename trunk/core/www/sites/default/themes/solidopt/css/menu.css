@@ -47,7 +47,7 @@ div.i18n>ul li a {
 	bottom: 0;
 	position: relative;
 	float: right;
-	padding: 10px 10px 0;
+	padding: 8px 10px 0;
 	list-style: none;
 	
 	/* Text */
@@ -143,9 +143,9 @@ ul.imagemenu li {
 /* Main column toolbar */
 
 #toolbar{	
-	background: #D3D3D3;
+	background: #F1F7F7;
+	border: 1px solid #CCC;
 	display: block;
-	width: 100%;
 	height: 32px;
 
 	
@@ -185,6 +185,15 @@ ul.imagemenu li {
     background: url("images/menu/menu-top-right.png") no-repeat right top #A1BFE2;
     margin: 10px 2px 0px 2px;
 }
+
+/* Override system styles */
+
+ul.primary {
+    padding: 0;
+    text-align: center;
+}
+
+/* End Override system styles */
 
 /* Exclude the drupal backend helpers */
 #leftsidebar > div > div.block-region, #rightsidebar > div > div.block-region {
