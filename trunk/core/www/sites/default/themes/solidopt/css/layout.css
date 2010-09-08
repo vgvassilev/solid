@@ -279,13 +279,25 @@ div .content h1 a:hover {
 	margin: 0;
 }
 
+.profile .picture {
+	float: left;
+}
+
+.profile dl {
+	clear: both;
+	margin: 0;
+}
+
+.profile dd {
+	margin: 0 0 4em;
+}
+
+.profile-profile_cv p {
+	text-indent: 0;
+}
+
 .book-navigation {
 	margin-top: 5em;
 }
 
 /* End Override system styles */
-
-/* Test styles */
-
-
-/* End Test styles */
