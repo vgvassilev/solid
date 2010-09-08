@@ -1,5 +1,5 @@
 <?php
-// $Id: i18nstrings.module,v 1.8.2.55 2010/06/09 13:55:08 mirodietiker Exp $
+// $Id: i18nstrings.module,v 1.8.2.56 2010/08/12 02:06:20 mirodietiker Exp $
 
 /**
  * @file
@@ -331,7 +331,7 @@ function i18nstrings_add_l10n_client($langcode, $string, $translation, $context,
     else {
       // Additional checking for input format, if its a dangerous one we ignore the string
       $source = $source ? $source : i18nstrings_get_source($context, $string);
-      if ($source && (i18nstrings_allowed_format($source->format) || filter_access($source->format))) {
+      if (!empty($source) && (i18nstrings_allowed_format($source->format) || filter_access($source->format))) {
         l10_client_add_string_to_page($string, $translation, $context->textgroup);
       }
     }
@@ -1205,6 +1205,7 @@ function i18nstrings_update($name, $string, $format = NULL) {
 function i18nstrings_remove($name, $string = NULL) {
   $status = i18nstrings_remove_string($name, $string);
   // Log status message
+  $context = i18nstrings_context($name, $string);
   $params = i18nstrings_params($context, $string);
   switch ($status) {
     case SAVED_DELETED;

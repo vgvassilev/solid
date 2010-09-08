@@ -1,5 +1,5 @@
 <?php
-// $Id: i18ncontent.module,v 1.1.2.19 2010/03/04 11:51:54 jareyero Exp $
+// $Id: i18ncontent.module,v 1.1.2.20 2010/07/30 01:14:03 mirodietiker Exp $
 
 /**
  * @file
@@ -32,7 +32,9 @@ function i18ncontent_help($path, $arg) {
   // Add translated help text for node add pages
   if (!menu_get_object() && $arg[1] == 'add' && $arg[2]) {
     $type = str_replace('-', '_', $arg[2]);
-    if ($help = i18nstrings_ts("nodetype:type:$type:help")) {
+    // Fetch default language node type help
+    $source = i18ncontent_node_help_source($type);
+    if ($help = i18nstrings("nodetype:type:$type:help", $source->source)) {
       return '<p>'. filter_xss_admin($help) .'</p>';
     }
   }
@@ -79,10 +81,11 @@ function i18ncontent_form_alter(&$form, $form_state, $form_id) {
       // Replace the help text default value in the node type form with data from
       // i18nstrings. Help text is handled in hook_node_type() and hook_help().
       $type = $form['#node_type']->type;
-      // Use the default language for this.
-      $language = language_default('language');
       if ($type) {
-        $form['submission']['help']['#default_value'] = i18nstrings_ts("nodetype:type:$type:help", $form['submission']['help']['#default_value'], $language);
+        // Fetch default language node type help
+        $source = i18ncontent_node_help_source($type);
+        // We dont need to pass the value through i18nstrings_ts()
+        $form['submission']['help']['#default_value'] = $source->source;
       }
       break;
 
@@ -204,4 +207,13 @@ function i18ncontent_node_add($type) {
   }
 
   return $output;
+}
+
+/**
+ * Fetch default source for node type help
+ */
+function i18ncontent_node_help_source($type) {
+  $context = i18nstrings_context("nodetype:type:$type:help");
+  $source = i18nstrings_get_source($context);
+  return $source;
 }

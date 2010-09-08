@@ -1,5 +1,5 @@
 <?php
-// $Id: i18ntaxonomy.module,v 1.5.2.46 2010/06/08 19:42:34 jareyero Exp $
+// $Id: i18ntaxonomy.module,v 1.5.2.49 2010/08/12 02:06:20 mirodietiker Exp $
 
 /**
  * @file
@@ -172,6 +172,48 @@ function i18ntaxonomy_translation_link_alter(&$links, $path) {
       }
     }
   }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function i18ntaxonomy_theme() {
+  return array(
+    'i18ntaxonomy_term_page' => array(
+      'arguments' => array('tids' => array(), 'result' => NULL),
+      'file' => 'taxonomy.pages.inc',
+    ),
+  );
+}
+
+/**
+ * Translate term name
+ * 
+ * @param $tid
+ *   Term id or term object
+ * @param $name
+ *   Filtered default(untranslated) name
+ */
+function i18ntaxonomy_translate_term_name($tid, $name = '', $langcode = NULL) {
+  // If it is a term object we check for vocabulary options
+  if (is_object($tid)) {
+    return i18ntaxonomy_vocabulary($tid->vid) == I18N_TAXONOMY_LOCALIZE ? i18nstrings_string("taxonomy:term:$tid->tid:name", $tid->name, $langcode, TRUE) : check_plain($tid->name);
+  }
+  else {
+    return i18nstrings_string("taxonomy:term:$tid:name", $name, $langcode);
+  }
+}
+
+/**
+ * Translate vocabulary name
+ * 
+ * @param $vid
+ *   Vocabulary id or vocabulary object
+ * @param $name
+ *   Filtered default(untranslated) name
+ */
+function i18ntaxonomy_translate_vocabulary_name($vid, $name = '', $langcode = NULL) {
+  return is_object($vid) ? i18nstrings_string("taxonomy:vocabulary:$vid->vid:name", $vid->name, $langcode, TRUE) : i18nstrings_string("taxonomy:vocabulary:$vid:name", $name, $langcode);
 }
 
 /**
@@ -464,7 +506,7 @@ function i18ntaxonomy_form_all_localize(&$item) {
   foreach (taxonomy_get_vocabularies() as $vid => $vocabulary) {
     if (!empty($options[$vocabulary->name])) {
       // Localize vocabulary name if translated
-      $vname = i18nstrings("taxonomy:vocabulary:$vid:name", $vocabulary->name);
+      $vname = i18ntaxonomy_translate_vocabulary_name($vocabulary->name);
       if ($vname != $vocabulary->name) {
         $options[$vname] = $options[$vocabulary->name];
         unset($options[$vocabulary->name]);
@@ -474,7 +516,7 @@ function i18ntaxonomy_form_all_localize(&$item) {
         if ($tree && (count($tree) > 0)) {
           foreach ($tree as $term) {
             if (isset($options[$vname][$term->tid])) {
-              $options[$vname][$term->tid] = str_repeat('-', $term->depth) . i18nstrings("taxonomy:term:$term->tid:name", $term->name);
+              $options[$vname][$term->tid] = str_repeat('-', $term->depth) . i18n_taxonomy_translate_term_name($term->tid, $term->name);
             }
           }
         }
@@ -488,6 +530,9 @@ function i18ntaxonomy_form_all_localize(&$item) {
  */
 function i18ntaxonomy_node_form(&$form) {
   $node = $form['#node'];
+  if (!isset($node->vid)) {
+    return;
+  }
   if (!isset($node->taxonomy)) {
     $terms = taxonomy_node_get_terms($node);
   }
@@ -502,7 +547,7 @@ function i18ntaxonomy_node_form(&$form) {
       foreach (element_children($form['taxonomy']['tags']) as $vid) {
         $type = i18ntaxonomy_vocabulary($vid);
         if ($type == I18N_TAXONOMY_LOCALIZE || $type == I18N_TAXONOMY_TRANSLATE) {
-          $form['taxonomy']['tags'][$vid]['#title'] = i18nstrings_string("taxonomy:vocabulary:$vid:name", $form['taxonomy']['tags'][$vid]['#title']);
+          $form['taxonomy']['tags'][$vid]['#title'] = i18ntaxonomy_translate_vocabulary_name($vid, $form['taxonomy']['tags'][$vid]['#title']);
           $form['taxonomy']['tags'][$vid]['#description'] = i18nstrings("taxonomy:vocabulary:$vid:help", $form['taxonomy']['tags'][$vid]['#description']);    
         }
         if ($type == I18N_TAXONOMY_LOCALIZE) {
@@ -528,7 +573,7 @@ function i18ntaxonomy_node_form(&$form) {
     elseif (is_numeric($vid) && i18ntaxonomy_vocabulary($vid) == I18N_TAXONOMY_TRANSLATE) {
       // Rebuild this vocabulary's form.
       $vocabulary = taxonomy_vocabulary_load($vid);
-      $form['taxonomy'][$vid]['#title'] = i18nstrings_string("taxonomy:vocabulary:$vid:name", $vocabulary->name);
+      $form['taxonomy'][$vid]['#title'] = i18ntaxonomy_translate_vocabulary_name($vid, $vocabulary->name);
       $form['taxonomy'][$vid]['#description'] = i18nstrings("taxonomy:vocabulary:$vid:help", $vocabulary->help);
     }
   }
@@ -549,7 +594,7 @@ function i18ntaxonomy_vocabulary_form($vid, $value = 0, $help = NULL) {
     $blank = ($vocabulary->required) ? 0 : t('- None -');
   }
   $tree = i18ntaxonomy_localize_terms(taxonomy_get_tree($vid));
-  return _i18ntaxonomy_term_select(check_plain(i18nstrings("taxonomy:vocabulary:$vid:name", $vocabulary->name)), $value, $tree, $help, intval($vocabulary->multiple), $blank);
+  return _i18ntaxonomy_term_select(i18ntaxonomy_translate_vocabulary_name($vocabulary), $value, $tree, $help, intval($vocabulary->multiple), $blank);
 }
 
 /**
@@ -1022,14 +1067,13 @@ function i18ntaxonomy_preprocess_forums(&$variables) {
 
     $vocabulary = taxonomy_vocabulary_load($vid);
     // Translate the page title.
-    $title = !empty($vocabulary->name) ? $vocabulary->name : '';
-    $title = check_plain(i18nstrings("taxonomy:vocabulary:$vid:name", $title));
+    $title = !empty($vocabulary->name) ? i18ntaxonomy_translate_vocabulary_name($vocabulary) : '';
     drupal_set_title($title);
 
     // Translate the breadcrumb.
     $breadcrumb = array();
     $breadcrumb[] = l(t('Home'), NULL);
-    $breadcrumb[] = l(i18nstrings("taxonomy:vocabulary:$vid:name", $vocabulary->name), 'forum');
+    $breadcrumb[] = l($title, 'forum');
     drupal_set_breadcrumb($breadcrumb);
   }
 }

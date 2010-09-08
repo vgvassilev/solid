@@ -1,4 +1,19 @@
-// $Id: CHANGELOG.txt,v 1.15.4.93 2010/06/10 11:56:24 jareyero Exp $
+// $Id: CHANGELOG.txt,v 1.15.4.98 2010/09/05 10:18:17 jareyero Exp $
+
+6.x-1.5 to 6.x-1.6
+-----------------
+- Fixed: issues with i18nvariables, do not check anymore i18n_variables on initialization, by Jose, #850708
+- Fixed: Menu item's language is lost after node update, by neochief, #514630
+- Fixed: PHP notices, by eMPee584, #769318
+- Delete description on menu item delete, #844208 by plach
+- Fixed: Node type help not translated, by NaX, #685788
+- Some improvements to i18nmenu API, by plach, #386372 
+- Renamed theme_taxonomy_term_page() to theme_i18ntaxonomy_term_page() to avoid namespace conflicts
+- Added some taxonomy API functions: i18ntaxonomy_translate_term_name()....
+- Fixed: Access denied to database query (LOCK TABLES) on i18n_variable_set(), #769260
+- Reworked variable initialization to fix multiple issues (front page, etc), #826774
+- Some changes to variables API, added new function: i18n_variable_get()
+- Fixed: Node type help not translated, by NaX, #685788
 
 6.x-1.4 to 6.x-1.5
 ------------------
