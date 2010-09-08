@@ -1,5 +1,5 @@
 <?php
-// $Id: admin_menu.inc,v 1.11.2.25 2009/06/09 18:21:29 sun Exp $
+// $Id: admin_menu.inc,v 1.11.2.26 2009/12/24 15:45:50 sun Exp $
 
 /**
  * The key function that builds the menu links whenever there is a menu rebuild.
@@ -32,7 +32,11 @@ function _admin_menu_rebuild_links() {
   // Allow modules to add more links. If you want to alter links saved by
   // admin_menu, use hook_menu_link_alter() and look for
   // $item['module'] == 'admin_menu'
-  $links = module_invoke_all('admin_menu', $deleted);
+  $links = array();
+  foreach (module_implements('admin_menu') as $module) {
+    $function = $module . '_admin_menu';
+    $links = array_merge_recursive($links, $function($deleted));
+  }
   foreach ($links as $item) {
     admin_menu_link_save($item);
   }
@@ -100,11 +104,11 @@ function admin_menu_link_save($item) {
 /**
  * Implementation of hook_admin_menu().
  *
- * @param $deleted
+ * @param &$deleted
  *   Array of links under admin/* that were removed by admin_menu_adjust_items().
  *   If one of these links is added back, it should be removed from the array.
  */
-function admin_menu_admin_menu($deleted) {
+function admin_menu_admin_menu(&$deleted) {
   $links = array();
   $icon_path = '<front>';
 
@@ -295,7 +299,7 @@ function admin_menu_admin_menu($deleted) {
  * @return
  *   An array of links that were removed from $menu_links.
  */
-function admin_menu_adjust_items($menu_links, $sort) {
+function admin_menu_adjust_items(&$menu_links, &$sort) {
   global $user;
   $links = array();
   $deleted = array();
@@ -415,7 +419,7 @@ function admin_menu_wipe() {
  *
  * Extends Devel module with Administration Menu developer settings.
  */
-function _admin_menu_devel_settings_form_alter($form, $form_state) {
+function _admin_menu_devel_settings_form_alter(&$form, $form_state) {
   // Shift system_settings_form buttons.
   $weight = isset($form['buttons']['#weight']) ? $form['buttons']['#weight'] : 0;
   $form['buttons']['#weight'] = $weight + 1;
