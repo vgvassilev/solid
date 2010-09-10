@@ -1,5 +1,5 @@
 <?php
-/* $Id: footermap.module,v 1.11.2.28 2010/03/16 14:49:20 mradcliffe Exp $ */
+/* $Id: footermap.module,v 1.11.2.31 2010/08/11 20:02:08 mradcliffe Exp $ */
 
 /*
  * @file
@@ -9,7 +9,6 @@
  * copyright Matthew Radcliffe, Kosada Inc.
  *
  */
-
 
 /*
  * Implementation of hook_help
@@ -156,7 +155,7 @@ function footermap_footer()
 
   $o = _footermap_render();
 
-  if (variable_get('footer_cache', 0) == 0)
+  if (variable_get('footer_cache', 0) == 1)
     cache_set('footermap', $o, 'cache', CACHE_TEMPORARY);
 
   return $o;
@@ -201,6 +200,7 @@ function _footermap_render()
 {
   $recurse = variable_get('recurse_limit', 0);
   $base = variable_get('top_menu', 0);
+  $menus = menu_get_menus(TRUE);
   $mapref = array();
   $disp_heading = variable_get('footermap_heading', 0);
   $o = '';
@@ -210,7 +210,7 @@ function _footermap_render()
   $n = 0;
   foreach ($mapref as $key => $block)
   {
-    $heading = ($disp_heading == 1) ? $key : '';
+    $heading = ($disp_heading == 1) ? $menus[$key] : '';
     $o .= '<div class="footermap-col" id="footermap-col-'.$n.' footermap-col-'.$key.'">';
     if ($heading <> '')
       $o .= '<h3>'.$heading.'</h3>';
@@ -268,7 +268,7 @@ function footermap_get_menu($mlid, &$mapref, $recurse, $level)
       $args = menu_unserialize($h->access_arguments, $map);
       if ($h->access_callback == 'user_access')
       {
-        if ((count($args) == 1) ? user_access($args[0]) : user_access($args[0], $args[1]))
+        if (! ((count($args) == 1) ? user_access($args[0]) : user_access($args[0], $args[1])))
           continue;
       }
       else if ($h->access_callback == 'node_access')
@@ -283,7 +283,11 @@ function footermap_get_menu($mlid, &$mapref, $recurse, $level)
       }
       
     }
+global $language;
 
+//echo $language->language;
+
+//print_r($h); echo '\n\n';
     $mapref[$h->menu_name]['menu-'.$h->mlid] = array(
       'href' => $h->link_path,
       'title' => $h->link_title,
@@ -330,4 +334,24 @@ function _footermap_check_menu_item($avail_menus, $item)
       return TRUE;
   }
   return FALSE;
+}
+
+/* from footer_sitemap.module
+*  
+*  
+*/
+function footer_sitemap_menu_display ($menu_name) {
+  if ($menu_name == NULL) {
+    return '';
+  }
+  
+  $tree = menu_tree_all_data($menu_name);
+  if (variable_get('footer_sitemap_show_home', 'show') == 'hide') {
+    foreach ($tree as &$item) {
+      if ($item['link']['href'] == '<front>') {
+        $item = NULL;
+      }
+    }
+  }
+  return menu_tree_output($tree);
 }
