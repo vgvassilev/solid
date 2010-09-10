@@ -279,8 +279,10 @@ div .content h1 a:hover {
 	margin: 0;
 }
 
-.profile .picture {
+.profile .picture,
+  .views-field-picture {
 	float: left;
+	margin: 0 1em 1em 0;
 }
 
 .profile dl {
@@ -292,7 +294,8 @@ div .content h1 a:hover {
 	margin: 0 0 4em;
 }
 
-.profile-profile_cv p {
+.profile-profile_cv p,
+  .views-field-value p {
 	text-indent: 0;
 }
 

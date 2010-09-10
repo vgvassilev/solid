@@ -15,12 +15,16 @@
  * @see template_preprocess_user_picture()
  */
 ?>
+
 <?php 
-  global $vvpic; 
-  $vvpic = $picture; 
+if ($picture):
+  if ( $account->content['Personal Info']['profile_cv'] ) :
+    global $vvpic; 
+    $vvpic = $picture; 
+  else :
 ?>
-<?php /*
-<div class="picture">
-  <?php print $picture; ?>
-</div>
-*/?>
+  <div class="picture">
+    <?php print $picture; ?> 
+  </div>
+  <?php endif; ?>
+<?php endif; ?>
