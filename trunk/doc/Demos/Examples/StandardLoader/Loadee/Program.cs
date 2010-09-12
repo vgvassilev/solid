@@ -109,7 +109,7 @@ namespace Loadee
 //			Random rnd = new Random();
 //			int p = 4;
 //			p = Inlinee(2, 18);
-			double s, a, b, c;
+			double s, a, b, c, x;
 			a = 1;
 //			a = 1 + 2;
 //			b = (2 + 7) * 5;
@@ -151,10 +151,13 @@ namespace Loadee
 //			} while (s < 100);
 // 		}
 		
-		[MethodInliner.Inlineable]
+//		[MethodInliner.Inlineable]
+		[MethodInlineIL.Inlineable]
 //		[MethodInliner.SideEffects(false)]
 		public static double CalculateArea(double a, double b, double c)
 		{
+			if (a==0 || b==0 || c==0) return 0;
+			
 			double p = (a + b + c) / 2 ;
 			return Math.Sqrt(p * (p-a) * (p-b) * (p-c));
 		}
@@ -176,7 +179,8 @@ namespace Loadee
 //			Console.WriteLine(s1);
 //		}
 		
-		[MethodInliner.Inlineable]
+//		[MethodInliner.Inlineable]
+		[MethodInlineIL.Inlineable]
 //		[MethodInliner.SideEffects(true)]
 		public static int Inlinee(int p, int q)
 		{
@@ -222,20 +226,23 @@ namespace Loadee
 	{
 		private static int number = 0;
 		
-		[MethodInliner.Inlineable]
+//		[MethodInliner.Inlineable]
+		[MethodInlineIL.Inlineable]
 		public int Test()
 		{
 			Console.WriteLine("This is this");
 			return 0;
 		}
 		
-		[MethodInliner.Inlineable]
+//		[MethodInliner.Inlineable]
+		[MethodInlineIL.Inlineable]
 		public static int Inc ()
 		{
 			return number + 1;
 		}
 		
-		[MethodInliner.Inlineable]
+//		[MethodInliner.Inlineable]
+		[MethodInlineIL.Inlineable]
 		public static int Inc (int number)
 		{
 			return (TestThis.number + number + 1) * (number + TestThis.number + 1);

@@ -63,11 +63,10 @@ namespace TransformLoader
 //						if ( i != 1 ) continue;
 						MethodDefinition method = type.Methods[i];
 						Console.WriteLine(method.ToString());
-//						foreach (ITransform<MethodDefinition> transformer in IL2ILTransformers) {
-//							method = transformer.Transform(method);
-//							
-//						}
-						foreach (Instruction instruction in method.Body.Instructions) {
+						foreach (IOptimize<MethodDefinition> transformer in IL2ILTransformers) {
+							method = transformer.Optimize(method);
+						}
+/* 						foreach (Instruction instruction in method.Body.Instructions) {
 								Console.Write ("\t\t");
 								Cecil.Decompiler.Cil.Formatter.WriteInstruction (Console.Out, instruction);
 								Console.WriteLine ();
@@ -96,7 +95,7 @@ namespace TransformLoader
 						WriteCode(ast.Block);
 						Console.WriteLine("Abstract Syntax Tree");
 						WriteAST(ast.Block);
-						
+*/						
 						
 //						method = AST2ILtransformer.Transform(ast);
 //						
@@ -110,6 +109,7 @@ namespace TransformLoader
 			
 //			assembly.MainModule.Accept(new StructureVisitor(transformers));
 //			AssemblyFactory.SaveAssembly(assembly, Path.ChangeExtension(args[0], ".modified" + Path.GetExtension(args[0])));
+			assembly.Write(Path.ChangeExtension(args[0], ".modified" + Path.GetExtension(args[0])));
 		}
 		
 		private void WriteAST(Cecil.Decompiler.Ast.Statement stmt)
