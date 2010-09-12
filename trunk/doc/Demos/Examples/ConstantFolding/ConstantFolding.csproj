@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{68F2A166-BED6-44F3-9440-3DDF412F4BA4}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,6 +11,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -27,7 +30,7 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -48,19 +51,27 @@
       <Name>Cecil.Decompiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\core\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
-      <Project>{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}</Project>
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
     <ProjectReference Include="..\AstMethodDefinitionModel\AstMethodDefinitionModel.csproj">
       <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
       <Name>AstMethodDefinitionModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ILtoAST\ILtoAST.csproj">
-      <Project>79B42389-27F8-460B-9CDF-65342EA6699C</Project>
-      <Name>ILtoAST</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>..\..\post-build-$(Configuration).bat</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 </Project>

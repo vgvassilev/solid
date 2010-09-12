@@ -126,7 +126,7 @@ namespace SolidOpt.Core.Services
 			if (status != Status.Loaded) return;
 
 			IService service;
-			foreach (Type type in assembly.GetTypes())
+		foreach (Type type in assembly.GetTypes())
 				if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
 					try {
 						service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));

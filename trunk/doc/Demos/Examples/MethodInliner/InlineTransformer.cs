@@ -1,4 +1,4 @@
-﻿/*
+/*
  * 
  *
  * User: Vassil Vassilev

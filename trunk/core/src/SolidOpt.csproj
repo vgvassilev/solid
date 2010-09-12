@@ -139,7 +139,6 @@
     <Compile Include="Services\Transformations\Multimodel\DecompilationStep.cs" />
     <Folder Include="Services\Transformations\CodeModel\" />
     <Folder Include="Services\Transformations\CodeModel\ControlFlowGraph\" />
-
     <Folder Include="Core\" />
     <Folder Include="Services\" />
     <Folder Include="Services\" />

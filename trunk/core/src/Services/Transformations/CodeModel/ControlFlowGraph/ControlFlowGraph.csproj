@@ -50,7 +50,6 @@
     <Folder Include="src\Properties\" />
     <Folder Include="doc\" />
     <Folder Include="meta\" />
-    <Folder Include="helper\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Core" />

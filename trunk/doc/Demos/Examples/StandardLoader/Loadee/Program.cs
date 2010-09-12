@@ -16,7 +16,8 @@ namespace Loadee
 		{
 //			Triangle();
 //			Triangle1();
-			
+			Console.WriteLine("test");
+			InlineTest();
 			Console.ReadKey(true);
 		}
 		
