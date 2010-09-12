@@ -1,2 +1,6 @@
 *.userprefs
 *.pidb
+bin
+obj
+bin/*.*
+obj/*.*
