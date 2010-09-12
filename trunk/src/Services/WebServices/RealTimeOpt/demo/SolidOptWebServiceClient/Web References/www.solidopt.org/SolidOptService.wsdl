@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:s0="http://www.solidopt.org/ws/SolidOptService.asmx" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" name="SolidOptService" targetNamespace="http://www.solidopt.org/ws/SolidOptService.asmx" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.solidopt.org/ws/SolidOptService.asmx" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xs:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xs:element name="Login">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="userName" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoginResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="LoginResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Logout">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="LogoutResponse">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="GetTransformMethods">
+        <xs:complexType />
+      </xs:element>
+      <xs:complexType name="TransformMethods">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="TransformMethod" type="s0:TransformMethod" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TransformMethod">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Caption" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Version" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Status" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="ConfigParamsDef" type="s0:ConfigParamsDef" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfigParamsDef">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ConfigParamDef" type="s0:ConfigParamDef" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfigParamDef">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Caption" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Value" />
+          <xs:element minOccurs="0" maxOccurs="1" name="DefaultValue" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfigParam">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Value" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfigParams">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ConfigParam" type="s0:ConfigParam" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetTransformMethodsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetTransformMethodsResult" type="s0:TransformMethods" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NewOptimization">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="NewOptimizationResponse">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="AddOptimizationURI">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="uri" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddOptimizationURIResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="AddOptimizationURIResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddOptimizationFile">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="binary" type="xs:base64Binary" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddOptimizationFileResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="AddOptimizationFileResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetOptimizationParams">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="config" type="s0:ConfigParams" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetOptimizationParamsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="SetOptimizationParamsResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Optimize">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="OptimizeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="OptimizeResult" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetResultURI">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="result" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetResultURIResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetResultURIResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="boolean" type="xs:boolean" />
+      <xs:element name="TransformMethods" nillable="true" type="s0:TransformMethods" />
+      <xs:element name="int" type="xs:int" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+    </xs:schema>
+  </types>
+  <message name="LoginSoapIn">
+    <part name="parameters" element="s0:Login" />
+  </message>
+  <message name="LoginSoapOut">
+    <part name="parameters" element="s0:LoginResponse" />
+  </message>
+  <message name="LogoutSoapIn">
+    <part name="parameters" element="s0:Logout" />
+  </message>
+  <message name="LogoutSoapOut">
+    <part name="parameters" element="s0:LogoutResponse" />
+  </message>
+  <message name="GetTransformMethodsSoapIn">
+    <part name="parameters" element="s0:GetTransformMethods" />
+  </message>
+  <message name="GetTransformMethodsSoapOut">
+    <part name="parameters" element="s0:GetTransformMethodsResponse" />
+  </message>
+  <message name="NewOptimizationSoapIn">
+    <part name="parameters" element="s0:NewOptimization" />
+  </message>
+  <message name="NewOptimizationSoapOut">
+    <part name="parameters" element="s0:NewOptimizationResponse" />
+  </message>
+  <message name="AddOptimizationURISoapIn">
+    <part name="parameters" element="s0:AddOptimizationURI" />
+  </message>
+  <message name="AddOptimizationURISoapOut">
+    <part name="parameters" element="s0:AddOptimizationURIResponse" />
+  </message>
+  <message name="AddOptimizationFileSoapIn">
+    <part name="parameters" element="s0:AddOptimizationFile" />
+  </message>
+  <message name="AddOptimizationFileSoapOut">
+    <part name="parameters" element="s0:AddOptimizationFileResponse" />
+  </message>
+  <message name="SetOptimizationParamsSoapIn">
+    <part name="parameters" element="s0:SetOptimizationParams" />
+  </message>
+  <message name="SetOptimizationParamsSoapOut">
+    <part name="parameters" element="s0:SetOptimizationParamsResponse" />
+  </message>
+  <message name="OptimizeSoapIn">
+    <part name="parameters" element="s0:Optimize" />
+  </message>
+  <message name="OptimizeSoapOut">
+    <part name="parameters" element="s0:OptimizeResponse" />
+  </message>
+  <message name="GetResultURISoapIn">
+    <part name="parameters" element="s0:GetResultURI" />
+  </message>
+  <message name="GetResultURISoapOut">
+    <part name="parameters" element="s0:GetResultURIResponse" />
+  </message>
+  <message name="LoginHttpGetIn">
+    <part name="userName" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="LoginHttpGetOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="LogoutHttpGetIn" />
+  <message name="LogoutHttpGetOut" />
+  <message name="GetTransformMethodsHttpGetIn" />
+  <message name="GetTransformMethodsHttpGetOut">
+    <part name="Body" element="s0:TransformMethods" />
+  </message>
+  <message name="NewOptimizationHttpGetIn" />
+  <message name="NewOptimizationHttpGetOut" />
+  <message name="AddOptimizationURIHttpGetIn">
+    <part name="uri" type="s:string" />
+  </message>
+  <message name="AddOptimizationURIHttpGetOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="AddOptimizationFileHttpGetIn">
+    <part name="binary" type="s:base64Binary" />
+  </message>
+  <message name="AddOptimizationFileHttpGetOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="OptimizeHttpGetIn" />
+  <message name="OptimizeHttpGetOut">
+    <part name="Body" element="s0:int" />
+  </message>
+  <message name="GetResultURIHttpGetIn">
+    <part name="result" type="s:int" />
+  </message>
+  <message name="GetResultURIHttpGetOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <message name="LoginHttpPostIn">
+    <part name="userName" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="LoginHttpPostOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="LogoutHttpPostIn" />
+  <message name="LogoutHttpPostOut" />
+  <message name="GetTransformMethodsHttpPostIn" />
+  <message name="GetTransformMethodsHttpPostOut">
+    <part name="Body" element="s0:TransformMethods" />
+  </message>
+  <message name="NewOptimizationHttpPostIn" />
+  <message name="NewOptimizationHttpPostOut" />
+  <message name="AddOptimizationURIHttpPostIn">
+    <part name="uri" type="s:string" />
+  </message>
+  <message name="AddOptimizationURIHttpPostOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="AddOptimizationFileHttpPostIn">
+    <part name="binary" type="s:base64Binary" />
+  </message>
+  <message name="AddOptimizationFileHttpPostOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="OptimizeHttpPostIn" />
+  <message name="OptimizeHttpPostOut">
+    <part name="Body" element="s0:int" />
+  </message>
+  <message name="GetResultURIHttpPostIn">
+    <part name="result" type="s:int" />
+  </message>
+  <message name="GetResultURIHttpPostOut">
+    <part name="Body" element="s0:string" />
+  </message>
+  <portType name="SolidOptServiceSoap">
+    <operation name="Login">
+      <input message="s0:LoginSoapIn" />
+      <output message="s0:LoginSoapOut" />
+    </operation>
+    <operation name="Logout">
+      <input message="s0:LogoutSoapIn" />
+      <output message="s0:LogoutSoapOut" />
+    </operation>
+    <operation name="GetTransformMethods">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization methods info.</wsdl:documentation>
+      <input message="s0:GetTransformMethodsSoapIn" />
+      <output message="s0:GetTransformMethodsSoapOut" />
+    </operation>
+    <operation name="NewOptimization">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Start new optimization.</wsdl:documentation>
+      <input message="s0:NewOptimizationSoapIn" />
+      <output message="s0:NewOptimizationSoapOut" />
+    </operation>
+    <operation name="AddOptimizationURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add URI to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationURISoapIn" />
+      <output message="s0:AddOptimizationURISoapOut" />
+    </operation>
+    <operation name="AddOptimizationFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add binary data to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationFileSoapIn" />
+      <output message="s0:AddOptimizationFileSoapOut" />
+    </operation>
+    <operation name="SetOptimizationParams">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set optimization methods params.</wsdl:documentation>
+      <input message="s0:SetOptimizationParamsSoapIn" />
+      <output message="s0:SetOptimizationParamsSoapOut" />
+    </operation>
+    <operation name="Optimize">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Optimize files.</wsdl:documentation>
+      <input message="s0:OptimizeSoapIn" />
+      <output message="s0:OptimizeSoapOut" />
+    </operation>
+    <operation name="GetResultURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization results.</wsdl:documentation>
+      <input message="s0:GetResultURISoapIn" />
+      <output message="s0:GetResultURISoapOut" />
+    </operation>
+  </portType>
+  <portType name="SolidOptServiceSoap12">
+    <operation name="Login">
+      <input message="s0:LoginSoapIn" />
+      <output message="s0:LoginSoapOut" />
+    </operation>
+    <operation name="Logout">
+      <input message="s0:LogoutSoapIn" />
+      <output message="s0:LogoutSoapOut" />
+    </operation>
+    <operation name="GetTransformMethods">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization methods info.</wsdl:documentation>
+      <input message="s0:GetTransformMethodsSoapIn" />
+      <output message="s0:GetTransformMethodsSoapOut" />
+    </operation>
+    <operation name="NewOptimization">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Start new optimization.</wsdl:documentation>
+      <input message="s0:NewOptimizationSoapIn" />
+      <output message="s0:NewOptimizationSoapOut" />
+    </operation>
+    <operation name="AddOptimizationURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add URI to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationURISoapIn" />
+      <output message="s0:AddOptimizationURISoapOut" />
+    </operation>
+    <operation name="AddOptimizationFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add binary data to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationFileSoapIn" />
+      <output message="s0:AddOptimizationFileSoapOut" />
+    </operation>
+    <operation name="SetOptimizationParams">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set optimization methods params.</wsdl:documentation>
+      <input message="s0:SetOptimizationParamsSoapIn" />
+      <output message="s0:SetOptimizationParamsSoapOut" />
+    </operation>
+    <operation name="Optimize">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Optimize files.</wsdl:documentation>
+      <input message="s0:OptimizeSoapIn" />
+      <output message="s0:OptimizeSoapOut" />
+    </operation>
+    <operation name="GetResultURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization results.</wsdl:documentation>
+      <input message="s0:GetResultURISoapIn" />
+      <output message="s0:GetResultURISoapOut" />
+    </operation>
+  </portType>
+  <portType name="SolidOptServiceHttpGet">
+    <operation name="Login">
+      <input message="s0:LoginHttpGetIn" />
+      <output message="s0:LoginHttpGetOut" />
+    </operation>
+    <operation name="Logout">
+      <input message="s0:LogoutHttpGetIn" />
+      <output message="s0:LogoutHttpGetOut" />
+    </operation>
+    <operation name="GetTransformMethods">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization methods info.</wsdl:documentation>
+      <input message="s0:GetTransformMethodsHttpGetIn" />
+      <output message="s0:GetTransformMethodsHttpGetOut" />
+    </operation>
+    <operation name="NewOptimization">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Start new optimization.</wsdl:documentation>
+      <input message="s0:NewOptimizationHttpGetIn" />
+      <output message="s0:NewOptimizationHttpGetOut" />
+    </operation>
+    <operation name="AddOptimizationURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add URI to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationURIHttpGetIn" />
+      <output message="s0:AddOptimizationURIHttpGetOut" />
+    </operation>
+    <operation name="AddOptimizationFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add binary data to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationFileHttpGetIn" />
+      <output message="s0:AddOptimizationFileHttpGetOut" />
+    </operation>
+    <operation name="Optimize">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Optimize files.</wsdl:documentation>
+      <input message="s0:OptimizeHttpGetIn" />
+      <output message="s0:OptimizeHttpGetOut" />
+    </operation>
+    <operation name="GetResultURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization results.</wsdl:documentation>
+      <input message="s0:GetResultURIHttpGetIn" />
+      <output message="s0:GetResultURIHttpGetOut" />
+    </operation>
+  </portType>
+  <portType name="SolidOptServiceHttpPost">
+    <operation name="Login">
+      <input message="s0:LoginHttpPostIn" />
+      <output message="s0:LoginHttpPostOut" />
+    </operation>
+    <operation name="Logout">
+      <input message="s0:LogoutHttpPostIn" />
+      <output message="s0:LogoutHttpPostOut" />
+    </operation>
+    <operation name="GetTransformMethods">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization methods info.</wsdl:documentation>
+      <input message="s0:GetTransformMethodsHttpPostIn" />
+      <output message="s0:GetTransformMethodsHttpPostOut" />
+    </operation>
+    <operation name="NewOptimization">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Start new optimization.</wsdl:documentation>
+      <input message="s0:NewOptimizationHttpPostIn" />
+      <output message="s0:NewOptimizationHttpPostOut" />
+    </operation>
+    <operation name="AddOptimizationURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add URI to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationURIHttpPostIn" />
+      <output message="s0:AddOptimizationURIHttpPostOut" />
+    </operation>
+    <operation name="AddOptimizationFile">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add binary data to optimization files.</wsdl:documentation>
+      <input message="s0:AddOptimizationFileHttpPostIn" />
+      <output message="s0:AddOptimizationFileHttpPostOut" />
+    </operation>
+    <operation name="Optimize">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Optimize files.</wsdl:documentation>
+      <input message="s0:OptimizeHttpPostIn" />
+      <output message="s0:OptimizeHttpPostOut" />
+    </operation>
+    <operation name="GetResultURI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get optimization results.</wsdl:documentation>
+      <input message="s0:GetResultURIHttpPostIn" />
+      <output message="s0:GetResultURIHttpPostOut" />
+    </operation>
+  </portType>
+  <binding name="SolidOptServiceSoap" type="s0:SolidOptServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Login">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/Login" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="Logout">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/Logout" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetTransformMethods">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/GetTransformMethods" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="NewOptimization">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/NewOptimization" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AddOptimizationURI">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/AddOptimizationURI" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AddOptimizationFile">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/AddOptimizationFile" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SetOptimizationParams">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/SetOptimizationParams" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="Optimize">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/Optimize" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetResultURI">
+      <soap:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/GetResultURI" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SolidOptServiceSoap12" type="s0:SolidOptServiceSoap12">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Login">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/Login" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="Logout">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/Logout" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetTransformMethods">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/GetTransformMethods" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="NewOptimization">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/NewOptimization" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AddOptimizationURI">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/AddOptimizationURI" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AddOptimizationFile">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/AddOptimizationFile" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SetOptimizationParams">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/SetOptimizationParams" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="Optimize">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/Optimize" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetResultURI">
+      <soap12:operation soapAction="http://www.solidopt.org/ws/SolidOptService.asmx/GetResultURI" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SolidOptServiceHttpGet" type="s0:SolidOptServiceHttpGet">
+    <http:binding verb="GET" />
+    <operation name="Login">
+      <http:operation location="/Login" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="Logout">
+      <http:operation location="/Logout" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output />
+    </operation>
+    <operation name="GetTransformMethods">
+      <http:operation location="/GetTransformMethods" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="NewOptimization">
+      <http:operation location="/NewOptimization" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output />
+    </operation>
+    <operation name="AddOptimizationURI">
+      <http:operation location="/AddOptimizationURI" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="AddOptimizationFile">
+      <http:operation location="/AddOptimizationFile" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="Optimize">
+      <http:operation location="/Optimize" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetResultURI">
+      <http:operation location="/GetResultURI" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SolidOptServiceHttpPost" type="s0:SolidOptServiceHttpPost">
+    <http:binding verb="POST" />
+    <operation name="Login">
+      <http:operation location="/Login" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="Logout">
+      <http:operation location="/Logout" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output />
+    </operation>
+    <operation name="GetTransformMethods">
+      <http:operation location="/GetTransformMethods" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="NewOptimization">
+      <http:operation location="/NewOptimization" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output />
+    </operation>
+    <operation name="AddOptimizationURI">
+      <http:operation location="/AddOptimizationURI" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="AddOptimizationFile">
+      <http:operation location="/AddOptimizationFile" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="Optimize">
+      <http:operation location="/Optimize" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetResultURI">
+      <http:operation location="/GetResultURI" />
+      <input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <service name="SolidOptService">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This is a SolidOpt Web Service.</wsdl:documentation>
+    <port name="SolidOptServiceSoap" binding="s0:SolidOptServiceSoap">
+      <soap:address location="http://www.solidopt.org/ws/SolidOptService.asmx" />
+    </port>
+    <port name="SolidOptServiceSoap12" binding="s0:SolidOptServiceSoap12">
+      <soap12:address location="http://www.solidopt.org/ws/SolidOptService.asmx" />
+    </port>
+    <port name="SolidOptServiceHttpGet" binding="s0:SolidOptServiceHttpGet">
+      <http:address location="http://www.solidopt.org/ws/SolidOptService.asmx" />
+    </port>
+    <port name="SolidOptServiceHttpPost" binding="s0:SolidOptServiceHttpPost">
+      <http:address location="http://www.solidopt.org/ws/SolidOptService.asmx" />
+    </port>
+  </service>
+</definitions>

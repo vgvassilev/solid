@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 3.0.0.3800
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOptWebService", "SolidOptWebService.csproj", "{4FEB715D-6814-40DE-A20D-AE816879DDF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt", "..\..\..\core\src\SolidOpt.csproj", "{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\core\src\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOptWebServiceClient", "..\SolidOptWebServiceClient\SolidOptWebServiceClient.csproj", "{ED08E9DA-EFFC-4922-8D76-35FC9671A381}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8F63DFF-5230-43E4-9AB2-DA6E721A1FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

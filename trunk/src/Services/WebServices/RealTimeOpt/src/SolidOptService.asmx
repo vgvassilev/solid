@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="SolidOptService.asmx.cs" Class="SolidOpt.SolidOptService" %>
