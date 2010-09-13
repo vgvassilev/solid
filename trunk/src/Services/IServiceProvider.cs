@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Services
+namespace SolidOpt.Services
 {
 	public interface IServiceProvider : IService
 	{

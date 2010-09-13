@@ -11,12 +11,12 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Cecil.Decompiler.Ast;
 
-using AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
 
-namespace SimplifyExpression
+namespace SolidOpt.Services.Transformations.Optimizations.SimplifyExpression
 {
 	/// <summary>
 	/// Description of SimplifyExpressionTransformer.

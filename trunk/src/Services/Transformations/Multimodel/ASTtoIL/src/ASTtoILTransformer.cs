@@ -15,11 +15,11 @@ using Cecil.Decompiler;
 using Cecil.Decompiler.Cil;
 using Cecil.Decompiler.Languages;
 
-using AstMethodDefinitionModel; 
+using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel; 
 
 using SolidOpt.Services.Transformations.Multimodel;
 
-namespace ASTtoIL 
+namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL 
 {
 	/// <summary>
 	/// Description of ASTtoILTransformer.

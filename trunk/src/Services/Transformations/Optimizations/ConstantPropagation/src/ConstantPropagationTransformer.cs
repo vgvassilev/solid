@@ -12,12 +12,12 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Cecil.Decompiler.Ast;
 
-using AstMethodDefinitionModel;
-using ILtoAST;
+using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.Multimodel.ILtoAST;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace ConstantPropagation
+namespace SolidOpt.Services.Transformations.Optimizations.ConstantPropagation
 {
 	/// <summary>
 	/// Description of ConstantPropagationTransformer.

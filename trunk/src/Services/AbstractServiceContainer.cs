@@ -22,7 +22,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SolidOpt.Core.Services
+namespace SolidOpt.Services
 {
 	public abstract class AbstractServiceContainer : AbstractServiceProvider, IServiceContainer
 	{

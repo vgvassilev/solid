@@ -7,7 +7,7 @@ using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace MethodInlineIL
+namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 {
 	/// <summary>
 	/// Description of MethodInlineILTransformer.

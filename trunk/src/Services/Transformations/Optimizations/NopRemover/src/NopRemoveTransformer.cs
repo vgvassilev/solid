@@ -14,7 +14,7 @@ using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace NopRemover
+namespace SolidOpt.Services.Transformations.Optimizations.NopRemover
 {
 	/// <summary>
 	/// Description of NopRemoveTransformer.

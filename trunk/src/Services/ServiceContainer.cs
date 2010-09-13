@@ -20,12 +20,11 @@
 
 using System;
 
-namespace SolidOpt.Core.Services
+namespace SolidOpt.Services
 {
 	public class ServiceContainer : AbstractServiceContainer
 	{
-		
+	
 	}
 	
 }
-

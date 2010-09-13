@@ -21,7 +21,7 @@ using SolidOpt.Services.Subsystems.HetAccess.Exporters;
 
 using SolidOpt.Services.Subsystems.Configurator.Mappers;
 
-namespace AdvancedConfigDemo
+namespace SolidOpt.Services.Subsystems.Configurator.Demo.AdvancedConfigDemo
 {
 	class Program
 	{

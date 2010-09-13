@@ -6,7 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-namespace Cache1
+namespace SolidOpt.Services.Subsystems.Cache.Demo.Cache1
 {
 	using System;
 	using System.Collections.Generic;

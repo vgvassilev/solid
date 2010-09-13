@@ -26,7 +26,7 @@ using System.Runtime.Remoting;
 
 using System.Threading;
 
-namespace SolidOpt.Core.Services
+namespace SolidOpt.Services
 {
 	public class PluginServiceContainer : ServiceContainer
 	{

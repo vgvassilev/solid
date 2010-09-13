@@ -13,12 +13,12 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Cecil.Decompiler.Ast;
 
-using AstMethodDefinitionModel;
-using ILtoAST;
+using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.Multimodel.ILtoAST;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace MethodInliner
+namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 {
 	/// <summary>
 	/// Замества извикване на метод с директното му разписване. За коректното заместване е необходимо

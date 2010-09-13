@@ -15,7 +15,7 @@ using Cecil.Decompiler.Ast;
 
 using AstMethodDefinitionModel;
 
-namespace ASTtoIL
+namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
 {
 	/// <summary>
 	/// Description of Compiler.

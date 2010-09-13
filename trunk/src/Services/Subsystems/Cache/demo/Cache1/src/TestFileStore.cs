@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Cache1
+namespace SolidOpt.Services.Subsystems.Cache.Demo.Cache1
 {
 	using System;
 	using System.Collections.Generic;
@@ -20,9 +20,9 @@ namespace Cache1
 	/// <summary>
 	/// Description of TestMem1.
 	/// </summary>
-	public class TestMem1: TestBase
+	public class TestMem3: TestBase
 	{
-		public TestMem1(): base()
+		public TestMem3(): base()
 		{
 			this.cache = new CacheManager<int,ResultClass>(
 				new CacheManager<int,ResultClass>.ValidateDelegate(Validate),

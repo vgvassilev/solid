@@ -14,15 +14,15 @@ using System.Diagnostics;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Cecil.Binary;
+using Mono.Cecil.PE;
 using Mono.Cecil.Metadata;
 
-namespace SolidOpt.Core.Configurator.Converters
+namespace SolidOpt.Services.Subsystems.Configurator
 {
 	/// <summary>
 	/// Description of IR2Assembly.
 	/// </summary>
-	public class IR2Assembly<TParamName> : ITypeResolver<TParamName>
+	public class IR2Assembly<TParamName> : ITypeResolver
 	{
 		private ConfigurationManager<TParamName> configurator = ConfigurationManager<TParamName>.Instance;
 		public IR2Assembly()

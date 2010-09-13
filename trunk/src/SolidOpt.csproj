@@ -8,9 +8,9 @@
     <RootNamespace>SolidOpt</RootNamespace>
     <AssemblyName>SolidOpt</AssemblyName>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -47,51 +47,11 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Loader\Loader.cs" />
-    <Compile Include="Core\Services\AbstractService.cs" />
-    <Compile Include="Core\Services\AbstractServiceContainer.cs" />
-    <Compile Include="Core\Services\AbstractServiceProvider.cs" />
-    <Compile Include="Core\Services\IService.cs" />
-    <Compile Include="Core\Services\IServiceContainer.cs" />
-    <Compile Include="Core\Services\IServiceProvider.cs" />
-    <Compile Include="Core\Services\PluginServiceContainer.cs" />
-    <Compile Include="Core\Services\ServiceContainer.cs" />
-    <Compile Include="Services\Subsystems\Cache\CacheManager.cs" />
-    <Compile Include="Services\Subsystems\Configurator\ConfigurationManager.cs" />
-    <Compile Include="Services\Subsystems\Configurator\IConfigLoader.cs" />
-    <Compile Include="Services\Subsystems\Configurator\IConfigSaver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Mappers\CustomMapperGroup.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Mappers\IConfigMapper.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Mappers\IdentityMapper.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Mappers\INIMaper.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Mappers\MapManager.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Mappers\Mapper.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Sources\IConfigSource.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Sources\ILSource.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Sources\INISource.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Sources\NMSPSource.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Targets\IConfigTarget.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Targets\ILTarget.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Targets\INITarget.cs" />
-    <Compile Include="Services\Subsystems\Configurator\Targets\NMSPTarget.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\CannotResolve.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\ChainResolver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\FloatResolver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\IdentityResolver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\IntResolver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\ITypeResolver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\Resolver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\StringResolver.cs" />
-    <Compile Include="Services\Subsystems\Configurator\TypeResolvers\TypeManager.cs" />
-    <Compile Include="Services\Subsystems\HetAccess\AbstractResourceProvider.cs" />
-    <Compile Include="Services\Subsystems\HetAccess\Exporters\FileExporter.cs" />
-    <Compile Include="Services\Subsystems\HetAccess\Exporters\ISetURI.cs" />
-    <Compile Include="Services\Subsystems\HetAccess\Importers\FileImporter.cs" />
-    <Compile Include="Services\Subsystems\HetAccess\Importers\IGetURI.cs" />
-    <Compile Include="Services\Subsystems\HetAccess\IProvider.cs" />
-    <Compile Include="Services\Subsystems\HetAccess\URIManager.cs" />
     <Compile Include="Services\Transformations\ITransform.cs" />
     <Compile Include="Services\Transformations\Multimodel\ICompile.cs" />
     <Compile Include="Services\Transformations\Multimodel\IDecompile.cs" />
@@ -110,7 +70,6 @@
     <Folder Include="Services\Subsystems\" />
     <Folder Include="Services\Subsystems\Configurator\" />
     <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\Sources\" />
     <Folder Include="Services\Subsystems\Configurator\" />
     <Folder Include="Services\Subsystems\Configurator\" />
     <Folder Include="Services\Subsystems\" />
@@ -207,5 +166,147 @@
     <Folder Include="Services\Transformations\" />
     <Folder Include="Services\Compatibility\" />
     <Compile Include="Services\Compatibility\FixEnumerableVariance.cs" />
+    <Compile Include="Services\Subsystems\Cache\src\CacheManager.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\ClassBuilder.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\Program.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\ResultClass.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestBase.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestDefault.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestFileStore.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestMem1.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestMem2.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestMemExpire.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestMemIsolatedStorage.cs" />
+    <Compile Include="Services\Subsystems\Cache\demo\Cache1\src\TestMemIsolatedStorage1Collision.cs" />
+    <Compile Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\Program.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Mappers\CustomMapperGroup.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Mappers\IConfigMapper.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Mappers\IdentityMapper.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Mappers\INIMaper.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Mappers\MapManager.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Mappers\Mapper.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Sources\IConfigSource.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Sources\ILSource.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Sources\INISource.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Sources\NMSPSource.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Targets\IConfigTarget.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Targets\ILTarget.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Targets\INITarget.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\Targets\NMSPTarget.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\CannotResolve.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\ChainResolver.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\FloatResolver.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\IdentityResolver.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\IntResolver.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\IR2Assembly.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\ITypeResolver.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\Resolver.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\StringResolver.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\TypeResolvers\TypeManager.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\ConfigurationManager.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\IConfigLoader.cs" />
+    <Compile Include="Services\Subsystems\Configurator\src\IConfigSaver.cs" />
+    <Compile Include="Services\Subsystems\HetAccess\src\Exporters\FileExporter.cs" />
+    <Compile Include="Services\Subsystems\HetAccess\src\Exporters\ISetURI.cs" />
+    <Compile Include="Services\Subsystems\HetAccess\src\Importers\FileImporter.cs" />
+    <Compile Include="Services\Subsystems\HetAccess\src\Importers\IGetURI.cs" />
+    <Compile Include="Services\Subsystems\HetAccess\src\AbstractResourceProvider.cs" />
+    <Compile Include="Services\Subsystems\HetAccess\src\IProvider.cs" />
+    <Compile Include="Services\Subsystems\HetAccess\src\URIManager.cs" />
+    <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\BlockRange.cs" />
+    <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\ControlFlowGraph.cs" />
+    <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\ExceptionHandlerData.cs" />
+    <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\InstructionBlock.cs" />
+    <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\InstructionData.cs" />
+    <Compile Include="Services\Transformations\Multimodel\AstMethodDefinitionModel\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Multimodel\AstMethodDefinitionModel\src\AstMethodDefinition.cs" />
+    <Compile Include="Services\Transformations\Multimodel\ASTtoIL\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Multimodel\ASTtoIL\src\ASTtoILTransformer.cs" />
+    <Compile Include="Services\Transformations\Multimodel\ASTtoIL\src\Compiler.cs" />
+    <Compile Include="Services\Transformations\Multimodel\CilToControlFlowGraph\src\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Multimodel\CilToControlFlowGraph\src\CilToControlFlowGraph.cs" />
+    <Compile Include="Services\Transformations\Multimodel\CilToControlFlowGraph\src\ControlFlowGraphBuilder.cs" />
+    <Compile Include="Services\Transformations\Multimodel\ILtoAST\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Multimodel\ILtoAST\src\ILtoASTTransformer.cs" />
+    <Compile Include="Services\Transformations\Optimizations\ConstantFolding\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Optimizations\ConstantFolding\src\ConstantFoldingTransformer.cs" />
+    <Compile Include="Services\Transformations\Optimizations\ConstantPropagation\src\ConstantPropagationTransformer.cs" />
+    <Compile Include="Services\Transformations\Optimizations\MethodInlineIL\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Optimizations\MethodInlineIL\src\MethodInlineILTransformer.cs" />
+    <Compile Include="Services\Transformations\Optimizations\MethodInliner\src\InlineTransformer.cs" />
+    <Compile Include="Services\Transformations\Optimizations\NopRemover\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Optimizations\NopRemover\src\NopRemoveTransformer.cs" />
+    <Compile Include="Services\Transformations\Optimizations\OverflowArithmeticRemover\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Optimizations\OverflowArithmeticRemover\src\OverflowArithmeticRemoveTransformer.cs" />
+    <Compile Include="Services\Transformations\Optimizations\SimplifyExpression\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Transformations\Optimizations\SimplifyExpression\src\SimplifyExpressionTransformer.cs" />
+    <Compile Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Web References\www.solidopt.org\Reference.cs" />
+    <Compile Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Program.cs" />
+    <Compile Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\WebServices\RealTimeOpt\src\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\WebServices\RealTimeOpt\src\SolidOprService.asmx.cs" />
+    <Compile Include="Services\AbstractService.cs" />
+    <Compile Include="Services\AbstractServiceContainer.cs" />
+    <Compile Include="Services\AbstractServiceProvider.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IServiceContainer.cs" />
+    <Compile Include="Services\IServiceProvider.cs" />
+    <Compile Include="Services\PluginServiceContainer.cs" />
+    <Compile Include="Services\ServiceContainer.cs" />
+    <Compile Include="Services\Subsystems\Configurator\demo\SeparateConfig\src\Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Subsystems\Configurator\demo\SeparateConfig\src\Config3.cs" />
+    <ProjectReference Include="vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj">
+      <Project>{ED1BE103-1699-4116-A732-616BEB142EB2}</Project>
+      <Name>Cecil.Decompiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="vendors\Mono.Cecil\rocks\Mono.Cecil.Rocks.csproj">
+      <Project>{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}</Project>
+      <Name>Mono.Cecil.Rocks</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.ini" />
+    <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.map_modified.dll" />
+    <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.modified.dll" />
+    <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.modified.nmsp" />
+    <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.nmsp" />
+    <None Include="Services\Transformations\Multimodel\AstMethodDefinitionModel\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Multimodel\AstMethodDefinitionModel\post-build-Release.bat" />
+    <None Include="Services\Transformations\Multimodel\ASTtoIL\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Multimodel\ASTtoIL\post-build-Release.bat" />
+    <None Include="Services\Transformations\Multimodel\ILtoAST\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Multimodel\ILtoAST\post-build-Release.bat" />
+    <None Include="Services\Transformations\Optimizations\ConstantFolding\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Optimizations\ConstantFolding\post-build-Release.bat" />
+    <None Include="Services\Transformations\Optimizations\ConstantPropagation\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Optimizations\ConstantPropagation\post-build-Release.bat" />
+    <None Include="Services\Transformations\Optimizations\MethodInlineIL\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Optimizations\MethodInlineIL\post-build-Release.bat" />
+    <None Include="Services\Transformations\Optimizations\MethodInliner\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Optimizations\MethodInliner\post-build-Release.bat" />
+    <None Include="Services\Transformations\Optimizations\NopRemover\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Optimizations\NopRemover\post-build-Release.bat" />
+    <None Include="Services\Transformations\Optimizations\OverflowArithmeticRemover\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Optimizations\OverflowArithmeticRemover\post-build-Release.bat" />
+    <None Include="Services\Transformations\Optimizations\SimplifyExpression\post-build-Debug.bat" />
+    <None Include="Services\Transformations\Optimizations\SimplifyExpression\post-build-Release.bat" />
+    <None Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Web References\www.solidopt.org\Reference.map" />
+    <None Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Web References\www.solidopt.org\SolidOptService.disco" />
+    <None Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Web References\www.solidopt.org\SolidOptService.wsdl" />
+    <None Include="Services\WebServices\RealTimeOpt\src\SolidOptService.asmx" />
+    <None Include="Services\WebServices\RealTimeOpt\src\Web.config" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileFormatDefault" />
+          <StandardHeader Text="&#xA; ${FileName} is created by ${AuthorName} &lt;${AuthorEmail}&gt; .&#xA;&#xA;It is part of the SolidOpt Copyrigth Policy &#xA;&#xA;Copyright (c) ${Year} ${CopyrightHolder}&#xA;&#xA;For further details see the nearest to ${FileName} License.txt&#xA;" inheritsSet="Apache2License" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

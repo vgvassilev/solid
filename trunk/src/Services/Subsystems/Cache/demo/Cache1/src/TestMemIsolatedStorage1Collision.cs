@@ -7,17 +7,16 @@
  */
 
 using System;
-
-namespace Cache1
-{
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.IO.IsolatedStorage;
-	using System.Threading;
-	using System.Runtime.Serialization.Formatters.Binary;
-	using SolidOpt.Cache;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.IsolatedStorage;
+using System.Threading;
+using System.Runtime.Serialization.Formatters.Binary;
 	
+//using SolidOpt.Cache;
+
+namespace SolidOpt.Services.Subsystems.Cache.Demo.Cache1
+{
 	/// <summary>
 	/// Description of TestMemIsolatedStorage.
 	/// </summary>

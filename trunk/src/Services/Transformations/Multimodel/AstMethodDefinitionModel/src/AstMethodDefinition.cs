@@ -11,7 +11,7 @@ using Mono.Cecil;
 
 using Cecil.Decompiler.Ast;
 
-namespace AstMethodDefinitionModel
+namespace SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel
 {
 	/// <summary>
 	/// Description of AstMethodDefinition.

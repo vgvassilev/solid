@@ -8,14 +8,14 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Cache1
-{
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Runtime.Serialization.Formatters.Binary;
-	using SolidOpt.Cache;
+//using SolidOpt.Cache;
+
+namespace SolidOpt.Services.Subsystems.Cache.Demo.Cache1
+{	
 	
 	/// <summary>
 	/// Description of TestMemExpire.

@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Cache1
+namespace SolidOpt.Services.Subsystems.Cache.Demo.Cache1
 {
 	/// <summary>
 	/// Description of ClassBuilder.

@@ -14,7 +14,7 @@ using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace OverflowArithmeticRemover
+namespace SolidOpt.Services.Transformations.Optimizations.OverflowArithmeticRemover
 {
 	/// <summary>
 	/// Description of OverflowArithmeticRemoveTransformer.
