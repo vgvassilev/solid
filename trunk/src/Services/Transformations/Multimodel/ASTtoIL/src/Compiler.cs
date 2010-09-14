@@ -13,7 +13,7 @@ using Mono.Cecil.Cil;
 
 using Cecil.Decompiler.Ast;
 
-using AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
 {

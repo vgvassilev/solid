@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-using SolidOpt.Core.Services;
+using SolidOpt.Services;
 
 namespace SolidOpt.Services.Transformations
 {

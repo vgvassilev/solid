@@ -6,12 +6,13 @@
  * 
  */
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace SolidOpt.Services.Subsystems.Cache
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Text;
-	
+
 	/// <summary>
 	/// CacheManager makes the resource avaliable. If there is cached copy and the invalidation is ok then
 	/// returns the cached one.

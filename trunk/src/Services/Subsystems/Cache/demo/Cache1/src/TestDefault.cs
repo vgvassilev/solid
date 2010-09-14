@@ -15,7 +15,7 @@ namespace SolidOpt.Services.Subsystems.Cache.Demo.Cache1
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Runtime.Serialization.Formatters.Binary;
-	using SolidOpt.Cache;
+	using SolidOpt.Services.Subsystems.Cache;
 	
 	/// <summary>
 	/// Description of TestDefault.

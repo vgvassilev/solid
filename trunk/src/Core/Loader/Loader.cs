@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-using SolidOpt.Core.Services;
+using SolidOpt.Services;
 
 namespace SolidOpt.Core.Loader
 {
