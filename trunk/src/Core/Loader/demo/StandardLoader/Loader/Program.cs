@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics;
 
-namespace TransformLoader
+namespace SolidOpt.Core.Loader.Demo.TransformLoader
 {
 	class Program
 	{

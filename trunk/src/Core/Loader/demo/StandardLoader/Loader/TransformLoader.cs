@@ -14,19 +14,19 @@ using System.Collections.Generic;
 using Mono.Cecil.Cil;
 using Mono.Cecil;
 
-using SolidOpt.Core.Services;
+using SolidOpt.Services;
 using SolidOpt.Services.Transformations.Optimizations;
 using SolidOpt.Services.Transformations.Multimodel;
 
 using SolidOpt.Core.Loader;
 
-using AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 
 //
 using System.Collections;
 using Cecil.Decompiler.Ast;
 
-namespace TransformLoader
+namespace SolidOpt.Core.Loader.Demo.TransformLoader
 {
 	/// <summary>
 	/// Description of TransformLoader.

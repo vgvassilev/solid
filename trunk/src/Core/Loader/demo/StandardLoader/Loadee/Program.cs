@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Loadee
+namespace SolidOpt.Core.Loader.Demo.Loadee
 {
 	class Program
 	{
@@ -152,7 +152,7 @@ namespace Loadee
 // 		}
 		
 //		[MethodInliner.Inlineable]
-		[MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
 //		[MethodInliner.SideEffects(false)]
 		public static double CalculateArea(double a, double b, double c)
 		{
@@ -180,7 +180,7 @@ namespace Loadee
 //		}
 		
 //		[MethodInliner.Inlineable]
-		[MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
 //		[MethodInliner.SideEffects(true)]
 		public static int Inlinee(int p, int q)
 		{
@@ -227,7 +227,7 @@ namespace Loadee
 		private static int number = 0;
 		
 //		[MethodInliner.Inlineable]
-		[MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
 		public int Test()
 		{
 			Console.WriteLine("This is this");
@@ -235,14 +235,14 @@ namespace Loadee
 		}
 		
 //		[MethodInliner.Inlineable]
-		[MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
 		public static int Inc ()
 		{
 			return number + 1;
 		}
 		
 //		[MethodInliner.Inlineable]
-		[MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
 		public static int Inc (int number)
 		{
 			return (TestThis.number + number + 1) * (number + TestThis.number + 1);

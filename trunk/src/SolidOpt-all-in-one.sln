@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt", "SolidOpt.csproj", "{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{01198755-68C9-442C-8389-4DA3039FFDF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "vendors\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecil.Decompiler", "vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj", "{ED1BE103-1699-4116-A732-616BEB142EB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil.Rocks", "vendors\Mono.Cecil\rocks\Mono.Cecil.Rocks.csproj", "{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED1BE103-1699-4116-A732-616BEB142EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED1BE103-1699-4116-A732-616BEB142EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED1BE103-1699-4116-A732-616BEB142EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED1BE103-1699-4116-A732-616BEB142EB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486} = {01198755-68C9-442C-8389-4DA3039FFDF0}
+		{ED1BE103-1699-4116-A732-616BEB142EB2} = {01198755-68C9-442C-8389-4DA3039FFDF0}
+		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC} = {01198755-68C9-442C-8389-4DA3039FFDF0}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SolidOpt.csproj
+	EndGlobalSection
+EndGlobal

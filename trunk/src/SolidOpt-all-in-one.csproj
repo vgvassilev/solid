@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Loader\Loader.cs" />
     <Compile Include="Services\Transformations\ITransform.cs" />
     <Compile Include="Services\Transformations\Multimodel\ICompile.cs" />
     <Compile Include="Services\Transformations\Multimodel\IDecompile.cs" />
@@ -252,10 +253,6 @@
       <Project>{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}</Project>
       <Name>Mono.Cecil.Rocks</Name>
     </ProjectReference>
-    <Compile Include="Core\Loader\src\Loader.cs" />
-    <Compile Include="Core\Loader\demo\StandardLoader\Loadee\Program.cs" />
-    <Compile Include="Core\Loader\demo\StandardLoader\Loader\Program.cs" />
-    <Compile Include="Core\Loader\demo\StandardLoader\Loader\TransformLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.ini" />
@@ -302,8 +299,6 @@
     <None Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Properties\AssemblyInfo.cs" />
     <None Include="Services\WebServices\RealTimeOpt\src\Properties\AssemblyInfo.cs" />
     <None Include="Services\Subsystems\Configurator\demo\SeparateConfig\src\Properties\AssemblyInfo.cs" />
-    <None Include="Core\Loader\demo\StandardLoader\Loadee\Properties\AssemblyInfo.cs" />
-    <None Include="Core\Loader\demo\StandardLoader\Loader\Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
