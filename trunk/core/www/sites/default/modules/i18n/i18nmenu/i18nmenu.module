@@ -347,7 +347,7 @@ function _i18nmenu_update_item($item) {
  * Helper function: load the menu item associated to the current node.
  */
 function _i18nmenu_node_prepare($node) {
-  module_invoke('menu', 'nodeapi', $node, 'prepare');
+  menu_nodeapi($node, 'prepare');
 }
 
 /**
