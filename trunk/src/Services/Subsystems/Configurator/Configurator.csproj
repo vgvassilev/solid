@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{fa31ff3a-8fa8-43b7-92c3-322b9d7255a6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <AssemblyName>Configurator</AssemblyName>
+    <RootNamespace>Configurator</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="demo\AdvancedConfigDemo\src\Program.cs" />
+    <Compile Include="demo\SeparateConfig\src\Config3.cs" />
+    <Compile Include="src\Mappers\CustomMapperGroup.cs" />
+    <Compile Include="src\Mappers\IConfigMapper.cs" />
+    <Compile Include="src\Mappers\IdentityMapper.cs" />
+    <Compile Include="src\Mappers\INIMaper.cs" />
+    <Compile Include="src\Mappers\MapManager.cs" />
+    <Compile Include="src\Mappers\Mapper.cs" />
+    <Compile Include="src\Sources\IConfigSource.cs" />
+    <Compile Include="src\Sources\ILSource.cs" />
+    <Compile Include="src\Sources\INISource.cs" />
+    <Compile Include="src\Sources\NMSPSource.cs" />
+    <Compile Include="src\Targets\IConfigTarget.cs" />
+    <Compile Include="src\Targets\ILTarget.cs" />
+    <Compile Include="src\Targets\INITarget.cs" />
+    <Compile Include="src\Targets\NMSPTarget.cs" />
+    <Compile Include="src\TypeResolvers\CannotResolve.cs" />
+    <Compile Include="src\TypeResolvers\ChainResolver.cs" />
+    <Compile Include="src\TypeResolvers\FloatResolver.cs" />
+    <Compile Include="src\TypeResolvers\IdentityResolver.cs" />
+    <Compile Include="src\TypeResolvers\IntResolver.cs" />
+    <Compile Include="src\TypeResolvers\IR2Assembly.cs" />
+    <Compile Include="src\TypeResolvers\ITypeResolver.cs" />
+    <Compile Include="src\TypeResolvers\Resolver.cs" />
+    <Compile Include="src\TypeResolvers\StringResolver.cs" />
+    <Compile Include="src\TypeResolvers\TypeManager.cs" />
+    <Compile Include="src\ConfigurationManager.cs" />
+    <Compile Include="src\IConfigLoader.cs" />
+    <Compile Include="src\IConfigSaver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="demo\AdvancedConfigDemo\src\TestResources\test.ini" />
+    <None Include="demo\AdvancedConfigDemo\src\TestResources\test.map_modified.dll" />
+    <None Include="demo\AdvancedConfigDemo\src\TestResources\test.modified.dll" />
+    <None Include="demo\AdvancedConfigDemo\src\TestResources\test.modified.nmsp" />
+    <None Include="demo\AdvancedConfigDemo\src\TestResources\test.nmsp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cache\Cache.csproj">
+      <Project>{de4555cc-c32c-46d2-aa99-e196e5779c43}</Project>
+      <Name>Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HetAccess\HetAccess.csproj">
+      <Project>{2806b750-e3fd-43ed-a395-0961f952314c}</Project>
+      <Name>HetAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
