@@ -52,7 +52,7 @@ namespace SolidOpt.Services.Transformations
 				
 			object currentCodeModel = source;
 				
-			foreach (Multimodel.DecompilationStep step in steps) {
+			foreach (Step step in steps) {
 				currentCodeModel = step.Process(currentCodeModel);
 			}
 			

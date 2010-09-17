@@ -253,9 +253,9 @@
       <Name>Mono.Cecil.Rocks</Name>
     </ProjectReference>
     <Compile Include="Core\Loader\src\Loader.cs" />
-    <Compile Include="Core\Loader\demo\StandardLoader\Loadee\Program.cs" />
     <Compile Include="Core\Loader\demo\StandardLoader\Loader\Program.cs" />
     <Compile Include="Core\Loader\demo\StandardLoader\Loader\TransformLoader.cs" />
+    <Compile Include="Core\Loader\demo\StandardLoader\Loadee\Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.ini" />
@@ -302,8 +302,8 @@
     <None Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Properties\AssemblyInfo.cs" />
     <None Include="Services\WebServices\RealTimeOpt\src\Properties\AssemblyInfo.cs" />
     <None Include="Services\Subsystems\Configurator\demo\SeparateConfig\src\Properties\AssemblyInfo.cs" />
-    <None Include="Core\Loader\demo\StandardLoader\Loadee\Properties\AssemblyInfo.cs" />
     <None Include="Core\Loader\demo\StandardLoader\Loader\Properties\AssemblyInfo.cs" />
+    <None Include="Core\Loader\demo\StandardLoader\Loadee\Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

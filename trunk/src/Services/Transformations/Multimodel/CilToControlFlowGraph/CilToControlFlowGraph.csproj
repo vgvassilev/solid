@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}</ProjectGuid>
@@ -42,14 +42,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SolidOpt.csproj">
-      <Project>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</Project>
-      <Name>SolidOpt</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
@@ -61,6 +56,14 @@
     </ProjectReference>
     <Compile Include="src\ControlFlowGraphBuilder.cs" />
     <Compile Include="src\Properties\AssemblyInfo.cs" />
+    <ProjectReference Include="..\..\Transformations.csproj">
+      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
+      <Name>Transformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Multimodel.csproj">
+      <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
+      <Name>Multimodel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="test\" />
