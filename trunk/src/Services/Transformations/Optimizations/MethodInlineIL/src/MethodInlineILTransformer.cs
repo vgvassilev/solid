@@ -20,29 +20,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 		
 		public MethodDefinition Optimize(MethodDefinition source)
 		{
-//			HashSet<Instruction> removed = new HashSet<Instruction>();
-//			CilWorker cil = source.Body.CilWorker;
-////			for (int i = source.Body.Instructions.Count-1; i >= 0; i--) {
-////				Instruction instruction = source.Body.Instructions[i];
-////				if (instruction.OpCode == OpCodes.Nop) {
-////					removed.Add(instruction);
-////					cil.Remove(instruction);
-////				}
-////			}
-//			Instruction instruction1 = source.Body.Instructions[source.Body.Instructions.Count-1];
-//			while (instruction1 != null) {
-//				if (instruction1.OpCode == OpCodes.Nop) {
-//					removed.Add(instruction1);
-//					cil.Remove(instruction1);
-//				}
-//				instruction1 = instruction1.Previous;
-//			}
-//			foreach (Instruction instruction in source.Body.Instructions) {
-//				while (removed.Contains(instruction.Operand as Instruction))
-//					instruction.Operand = (instruction.Operand as Instruction).Next;
-//			}
-//			
-			
 			ILProcessor cil = source.Body.GetILProcessor();
 			
 			Instruction instruction = source.Body.Instructions[0];
@@ -51,6 +28,12 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 					MethodDefinition inlineMethod = ((MethodReference)instruction.Operand).Resolve();
 					if (IsInlineable(inlineMethod)) {
 						Console.WriteLine(source.FullName + " call inline " + inlineMethod.FullName);
+						
+						// Clone inlinee method
+						//TODO: crate clone method
+						inlineMethod.Body = null;
+						
+						//TODO: Think about inlineMethod.Body.SimplifyMacros();
 						
 						// Create temporary local variables for arguments
 						List<VariableDefinition> tempVarArgList = new List<VariableDefinition>();
@@ -73,7 +56,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 						}
 						
 						// Clone body and fixup instructions
-						inlineMethod.Body = null;
 						foreach (Instruction instruction1 in inlineMethod.Body.Instructions) {
 							if (instruction1.OpCode == OpCodes.Ldarg || instruction1.OpCode == OpCodes.Ldarg_S) {
 								instruction1.OpCode = OpCodes.Ldloc;
@@ -147,6 +129,11 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 							}
 							
 							cil.InsertBefore(instruction, instruction1);
+						}
+						
+						// Clone exception handler
+						foreach (ExceptionHandler handler in inlineMethod.Body.ExceptionHandlers) {
+							source.Body.ExceptionHandlers.Add(handler);
 						}
 						
 						instruction.OpCode = OpCodes.Nop;

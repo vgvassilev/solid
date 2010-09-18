@@ -120,6 +120,8 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 //			c = 1d;
 			s = CalculateArea(a, 1 + 2, 1 + 2 + 3);
 			Console.WriteLine(s);
+			s = CalculateArea1(9, 8, 7);
+			Console.WriteLine(s);
 			
 //			Console.WriteLine(p);
 //			TestThis.Inc();
@@ -160,6 +162,20 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 			
 			double p = (a + b + c) / 2 ;
 			return Math.Sqrt(p * (p-a) * (p-b) * (p-c));
+		}
+		
+		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
+		public static double CalculateArea1(double a, double b, double c)
+		{
+			try {
+				if (a==0 || b==0 || c==0) return 0;
+				
+				double p = (a + b + c) / 2 ;
+				return Math.Sqrt(p * (p-a) * (p-b) * (p-c));
+			}
+			catch {
+				return -1;
+			}
 		}
 		
 //		[MethodInliner.InlineAttribute]
