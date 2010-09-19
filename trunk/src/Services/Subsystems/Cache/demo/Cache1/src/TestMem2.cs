@@ -1,10 +1,7 @@
 /*
- * Created by SharpDevelop.
- * User: Sasho
- * Date: 11.8.2008
- * Time: 11:50
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
  */
 
 using System;

@@ -1,10 +1,9 @@
 ﻿/*
- * Created by SharpDevelop.
- * User: Vassil Vassilev
- * Date: 24.6.2009 г.
- * Time: 17:23
- * 
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
  */
+
 using System;
 using System.Collections.Generic;
 
@@ -52,6 +51,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.NopRemover
 			
 			ILProcessor cil = source.Body.GetILProcessor();
 			
+			// Fix branch targets
 			foreach (Instruction instruction in source.Body.Instructions) {
 				if (instruction.OpCode.FlowControl == FlowControl.Branch || 
 	    			instruction.OpCode.FlowControl == FlowControl.Cond_Branch) {
@@ -61,9 +61,21 @@ namespace SolidOpt.Services.Transformations.Optimizations.NopRemover
 							break;
 						instruction.Operand = ((Instruction)instruction.Operand).Next;
 					}
+					
 				}
 			}
 			
+			// Fix exception handlers
+			foreach (ExceptionHandler handler in source.Body.ExceptionHandlers) {
+				while (handler.TryStart.OpCode == OpCodes.Nop) handler.TryStart = handler.TryStart.Next;
+				while (handler.FilterStart.OpCode == OpCodes.Nop) handler.FilterStart = handler.FilterStart.Next;
+				while (handler.HandlerStart.OpCode == OpCodes.Nop) handler.HandlerStart = handler.HandlerStart.Next;
+				while (handler.TryEnd.OpCode == OpCodes.Nop) handler.TryEnd = handler.TryEnd.Previous;
+				while (handler.FilterEnd.OpCode == OpCodes.Nop) handler.FilterEnd = handler.FilterEnd.Previous;
+				while (handler.HandlerEnd.OpCode == OpCodes.Nop) handler.HandlerEnd = handler.HandlerEnd.Previous;
+			}
+			
+			// Remove Nop instructions
 			Instruction instruction1 = source.Body.Instructions[source.Body.Instructions.Count-1];
 //			Instruction instruction1 = source.Body.Instructions[1];
 			while (instruction1 != null) {

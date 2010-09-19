@@ -1,11 +1,9 @@
 /*
- * 
- *
- * User: Vassil Vassilev
- * Date: 04.8.2009 г.
- * Time: 11:06
- * 
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
  */
+
 using System;
 using System.Collections.Generic;
 

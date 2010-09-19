@@ -1,9 +1,7 @@
 /*
- * Created by SharpDevelop.
- * User: Alexander Penev
- * Date: 08.8.2008
- * Time: 09:04
- * 
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
  */
 
 using System;

@@ -1,11 +1,9 @@
 ﻿/*
- * Created by SharpDevelop.
- * User: Vassil Vassilev
- * Date: 02.1.2009 г.
- * Time: 19:23
- * 
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
  */
- 
+
 using System;
 using System.Collections.Generic;
 using System.IO;
