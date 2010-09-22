@@ -16,7 +16,7 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.NopRemover
 {
 	/// <summary>
-	/// Description of NopRemoveTransformer.
+	/// Simple method, which removes the nop instructions. 
 	/// </summary>
 	public class NopRemoveTransformer : IOptimize<MethodDefinition>
 	{

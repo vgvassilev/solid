@@ -16,7 +16,7 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.OverflowArithmeticRemover
 {
 	/// <summary>
-	/// Description of OverflowArithmeticRemoveTransformer.
+	/// Simple method, which removes the arithmetic overflow checks.
 	/// </summary>
 	public class OverflowArithmeticRemoveTransformer : IOptimize<MethodDefinition>
 	{

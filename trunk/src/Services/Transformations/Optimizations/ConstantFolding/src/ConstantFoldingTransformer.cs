@@ -19,7 +19,11 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.ConstantFolding
 {
 	/// <summary>
-	/// Description of ConstantFoldingTransformer.
+	/// It folds constants.
+	/// For example:
+	/// <code>int I = 60 * 60 * 60;</code>
+	/// becomes:
+	/// <code>int I = 216000;</code>
 	/// </summary>
 	public class ConstantFoldingTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
 	{

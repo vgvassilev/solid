@@ -19,7 +19,7 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.SimplifyExpression
 {
 	/// <summary>
-	/// Description of SimplifyExpressionTransformer.
+	/// Sasho comment your plugin, please...
 	/// </summary>
 	public class SimplifyExpressionTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
 	{
