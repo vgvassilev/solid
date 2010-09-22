@@ -19,9 +19,10 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 {
 	/// <summary>
-	/// Замества извикване на метод с директното му разписване. За коректното заместване е необходимо
-	/// методът който ще се разписва да бъде маркиран с атрибута Inlineable и да няма странични ефекти 
-	/// върху системата. Т.е. да променя единствено съдържанието единствено в себе си. Например
+	/// Replaces method invokation with the invoked method itself. For correct replacement we need the method,
+	/// which is going to be inlined to be maked with the attribute "Inlineable". The method should be pure, which 
+	/// means that it shouldn't contain any side-effects.
+	/// Inlining method example:
 	/// <code>
 	/// [Inlineable]
 	/// int Inlinee (a, b)
@@ -38,7 +39,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 	/// 	int sum = Inlinee(5, 8);
 	/// }
 	/// </code>
-	/// След трансформацията Inliner придобива вида:
+	/// After the transformation Inliner becomes:
 	/// <code>
 	/// void Inliner ()
 	/// {
@@ -55,38 +56,38 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 	public class InlineTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
 	{
 		#region Fields
+		
 		/// <summary>
-		/// Поле, в което ще се съхраняват блокове, които съдържат извиквания на метод,
-		/// които ще бъде inline-ван.
+		/// Field, where the blocks, containing the method invokations of the inlined method, are stored.
 		/// </summary>
 		private List<BlockStatement> blocks = new List<BlockStatement>();
 		
 		/// <summary>
-		/// Поле, в което ще се съхраняват изрази, които съдържат извиквания на метод,
-		/// които ще бъде inline-ван.
+		/// Field, where expressions, containing invokations of the inline candidate are stored.
 		/// </summary>
 		private List<ExpressionStatement> expressions = new List<ExpressionStatement>();
 		
 		/// <summary>
-		/// Поле, в което ще се съхранява текущият блок, съдържащ извикването на метод.
+		/// Field, which stores the current block, containing the method invokation.
 		/// </summary>
 		private BlockStatement currentBlock;
 		
 		/// <summary>
-		/// Поле, в което ще се съхранява текущия израз, съдържащ извикването на метод.
+		/// Field, which stores the current expression, containing the method invokation.
 		/// </summary>
 		private ExpressionStatement currentExpression;
 		
 		/// <summary>
-		/// Структура, в която се съхраняват новите локални променливи, които ще заменят старите.
+		/// Structure, where new local variables are stored. The new local variables are going to replace
+		/// the old ones. There shouldn't be local variable, which overlaps with variable of the inlined method.
 		/// Целта е да не съвпадне локална променлива с тази от inline-вания метод.
 		/// </summary>
 		private Dictionary<VariableDefinition, VariableDefinition> localVarSubstitution =
 			new Dictionary<VariableDefinition, VariableDefinition>();
 		
 		/// <summary>
-		/// Структура, в която се съхраняват новите локални променливи, които ще заменят параметрите.
-		/// Целта е да се променят всички референции към параметър с локални променливи.
+		/// Structure, where new local variables are stored. The new local variables are going to replace
+		/// the arguments of the inlined method. All arguments should be mapped to new local variables.
 		/// </summary>
 		private Dictionary<ParameterDefinition, Expression> paramVarSubstitution =
 			new Dictionary<ParameterDefinition, Expression>();
@@ -100,6 +101,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			get { return returnVariable; }
 			set { returnVariable = value; }
 		}
+		
 		private static ParameterReference returnParameter;
 		public static ParameterReference ReturnParameter {
 			get { return returnParameter; }
@@ -279,7 +281,17 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 				}
 			}
 		}
-		
+		/// <summary>
+		/// This handles the case Expr '=' MethodInvokationExpr ';'
+		/// For example:
+		/// <code>sometype somevar = Inlinee(...)</code>
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="AssignExpression"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="ICodeNode"/>
+		/// </returns>
 		public override ICodeNode VisitAssignExpression(AssignExpression node)
 		{
 			ICodeNode result;
@@ -308,6 +320,23 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			return result;
 		}
 		
+		/// <summary>
+		/// This handles the cases MethodInvokationExpr BinaryOp MethodInvokationExpr.
+		/// For example:
+		/// <code>MethodInv1(...) == MethodInv2(...)</code>
+		/// We make the substitution
+		/// <code>
+		/// sometype1 somevar1 = MethodInv1(...);
+		/// sometype2 somevar2 = MethodInv2(...);
+		/// somevar1 == somevar2
+		/// </code>
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="BinaryExpression"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="ICodeNode"/>
+		/// </returns>
 		public override ICodeNode VisitBinaryExpression(BinaryExpression node)
 		{
 			ICodeNode currentLeft = (ICodeNode) Visit(node.Left);
@@ -346,6 +375,22 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			}
 		}
 		
+		/// <summary>
+		/// This handles the cases UnaryOperator MethodInvokationExpr.
+		/// For example:
+		/// <code>!MethodInv(...)</code>
+		/// We make the substitution:
+		/// <code>
+		/// sometype somevar = MethodInv(...);
+		/// !somevar
+		/// </code>
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="UnaryExpression"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="ICodeNode"/>
+		/// </returns>
 		public override ICodeNode VisitUnaryExpression(UnaryExpression node)
 		{
 			ICodeNode currentOperand = (ICodeNode) Visit(node.Operand);
@@ -362,11 +407,24 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			}
 		}
 		
-		
 		/// <summary>
-		/// Ако извикването на метод е подходящо за inline-ване се записват текущия блок и израз.
-		/// На втори пас се замества с реалния код на целевия метод.
+		/// This handles the case MethodInvokationExpr(...).
+		/// If the MethodInvokationExpr is appropriate for inlining then we inline it or if it is not appropriate
+		/// we check if there is in the arguments something to be inlined.
+		/// For example:
+		/// <code> MethodInv1(somearg1, Inlinee(...), someargs...) </code>
+		/// In that case we make the substitution:
+		/// <code>
+		/// sometype somevar = Inlinee(...);//here we inline the actual code of the method
+		/// MethodInv1(somearg1, somevar, someargs...)
+		/// </code>
 		/// </summary>
+		/// <param name="node">
+		/// A <see cref="MethodInvocationExpression"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="ICodeNode"/>
+		/// </returns>
 		public override ICodeNode VisitMethodInvocationExpression(MethodInvocationExpression node)
 		{
 			MethodReferenceExpression methodRef = (MethodReferenceExpression) node.Method;
@@ -427,10 +485,14 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		#endregion
 		
 		/// <summary>
-		/// Проверява дали методът съдържа подходящ атрибут, посочващ дали може да бъде inline-ван
+		/// Checks if the method is appropriate for inlining. 
 		/// </summary>
-		/// <param name="method">Методът, който е кандидат за inline</param>
-		/// <returns></returns>
+		/// <param name="method">
+		/// A <see cref="MethodReference"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		private bool IsInlineable(MethodReference method)
 		{
 			foreach (CustomAttribute ca in method.Resolve().CustomAttributes) {
@@ -441,6 +503,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			return false;
 		}
 		
+		/// <summary>
+		/// Check if the method is pure. I.e has no side-effects. 
+		/// </summary>
+		/// <param name="method">
+		/// A <see cref="MethodReference"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		private bool HasSideEffects(MethodReference method)
 		{
 			foreach (CustomAttribute ca in method.Resolve().CustomAttributes) {
@@ -453,6 +524,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			return true;
 		}
 		
+		/// <summary>
+		/// Checks if the case is the trivial one, where there is no MethodInvokationExpr in the arguments. 
+		/// </summary>
+		/// <param name="mInvoke">
+		/// A <see cref="MethodInvocationExpression"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		private bool IsSimpleInlineCase(MethodInvocationExpression mInvoke)
 		{
 			foreach (Expression arg in mInvoke.Arguments) {
@@ -465,7 +545,23 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			return true;
 		}
 		
-		private CodeNodeCollection<Statement> InlineExpansion(MethodInvocationExpression mInvoke, Expression target, AstMethodDefinition source)
+		/// <summary>
+		///  Performs the actual inline.
+		/// </summary>
+		/// <param name="mInvoke">
+		/// A <see cref="MethodInvocationExpression"/>
+		/// </param>
+		/// <param name="target">
+		/// A <see cref="Expression"/>
+		/// </param>
+		/// <param name="source">
+		/// A <see cref="AstMethodDefinition"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="CodeNodeCollection<Statement>"/>
+		/// </returns>
+		private CodeNodeCollection<Statement> 
+			InlineExpansion(MethodInvocationExpression mInvoke, Expression target, AstMethodDefinition source)
 		{
 			ILtoASTTransformer il2astTransformer = new ILtoASTTransformer();
 			AstMethodDefinition ast;
@@ -541,11 +637,17 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 		
 		/// <summary>
-		/// Добавя новата променлива към тялото на зададен метод
+		/// Adds new variable to the given MethodBody. 
 		/// </summary>
-		/// <param name="type">Тип на променливата</param>
-		/// <param name="method">Методът, където ще бъде добавена</param>
-		/// <returns>Новата променлива</returns>
+		/// <param name="type">
+		/// A <see cref="TypeReference"/>
+		/// </param>
+		/// <param name="method">
+		/// A <see cref="MethodDefinition"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="VariableDefinition"/>
+		/// </returns>
 		internal VariableDefinition RegisterVariable(TypeReference type, MethodDefinition method)
 		{
 			VariableDefinition variable = new VariableDefinition(type);
@@ -560,8 +662,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		
 		
 		/// <summary>
-		/// Извършва предварителни трансформации върху inline-вания метод, 
-		/// за да го подготви за вграждане в извикващия метод.
+		/// Performs preliminary transformations upon the inlined method to prepare it for the actual inlining. 
 		/// </summary>
 		internal class AstPreInsertFixer : BaseCodeTransformer 
 		{
@@ -586,12 +687,25 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			
 			#endregion
 			
-			
 			/// <summary>
-			/// Добавя уникални етикети, за да може да се осъществи от return към goto в 
-			/// края на inline-вания метод.
+			/// Adds unique lables to the method in which the inline is performed. This is necessary when we have
+			/// return statements. It replaces the return with goto specific unique label
 			/// </summary>
-			public AstMethodDefinition FixUp(AstMethodDefinition source, Dictionary<ParameterDefinition, Expression> paramVarSubstitution, Expression thisSubstitution)
+			/// <param name="source">
+			/// A <see cref="AstMethodDefinition"/>
+			/// </param>
+			/// <param name="paramVarSubstitution">
+			/// A <see cref="Dictionary<ParameterDefinition, Expression>"/>
+			/// </param>
+			/// <param name="thisSubstitution">
+			/// A <see cref="Expression"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="AstMethodDefinition"/>
+			/// </returns>
+			public AstMethodDefinition 
+				FixUp(AstMethodDefinition source, Dictionary<ParameterDefinition, 
+				      Expression> paramVarSubstitution, Expression thisSubstitution)
 			{
 				this.source = source;
 				this.paramVarSubstitution = paramVarSubstitution;
@@ -614,7 +728,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			
 			#region Model Transformers
 			
-			
+			/// <summary>
+			/// Stores the current block in field. 
+			/// </summary>
+			/// <param name="node">
+			/// A <see cref="BlockStatement"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitBlockStatement(BlockStatement node)
 			{
 				currentBlock = node;
@@ -623,8 +745,14 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			
 			
 			/// <summary>
-			/// Заменя срещанията на return с goto в края на метода.
+			/// Replaces the return statements with goto in the end of the inlined method. 
 			/// </summary>
+			/// <param name="node">
+			/// A <see cref="ReturnStatement"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitReturnStatement(ReturnStatement node)
 			{
 				GotoStatement @goto = new GotoStatement(exitLabel.Label);
@@ -650,8 +778,14 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			}
 			
 			/// <summary>
-			/// Прави преходите да бъдат към новите, уникални етикиети.
+			/// Makes the branches pointing to the new labels 
 			/// </summary>
+			/// <param name="node">
+			/// A <see cref="GotoStatement"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitGotoStatement(GotoStatement node)
 			{
 //				LabeledStatement lbl = currentBlock.Statements[currentBlock.Statements.IndexOf(node)+1] as LabeledStatement;
@@ -665,9 +799,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			}
 			
 			/// <summary>
-			/// Прави уникални етикетите на другите goto констрикции, защото може да има съвпадение
-			/// между тези на метода и тези на inline-вания метод.
+			/// Makes other goto constructions unique, because they may overlap the existing goto in the method, 
+			/// where we are inlining
 			/// </summary>
+			/// <param name="node">
+			/// A <see cref="LabeledStatement"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitLabeledStatement(LabeledStatement node)
 			{
 				node.Label = "@_" + source.Method.Name + "@" + exitNumber + node.Label;
@@ -689,6 +829,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 				return base.VisitArgumentReferenceExpression(node);
 			}
 			
+			/// <summary>
+			/// Replaces this pointer if there is one in the inlined method. 
+			/// </summary>
+			/// <param name="node">
+			/// A <see cref="FieldReferenceExpression"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitFieldReferenceExpression(FieldReferenceExpression node)
 			{
 				if (thisSubstitution != null && node.Target == null
@@ -700,6 +849,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 				return base.VisitFieldReferenceExpression(node);
 			}
 			
+			/// <summary>
+			/// Replaces this pointer if there is one in the inlined method. 
+			/// </summary>
+			/// <param name="node">
+			/// A <see cref="MethodReferenceExpression"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitMethodReferenceExpression(MethodReferenceExpression node)
 			{
 				if (thisSubstitution != null && node.Target == null
@@ -711,6 +869,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 				return base.VisitMethodReferenceExpression(node);
 			}
 			
+			/// <summary>
+			/// The actual substitution of the this pointer. 
+			/// </summary>
+			/// <param name="node">
+			/// A <see cref="ThisReferenceExpression"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitThisReferenceExpression(ThisReferenceExpression node)
 			{
 				return thisSubstitution;
@@ -720,7 +887,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 		
 		/// <summary>
-		/// Извършва трансформации в края на процеса по inline-ване на методи
+		/// Performs transformations at the end of the process.
 		/// </summary>
 		internal class AstFinalFixer : BaseCodeTransformer
 		{
@@ -742,7 +909,9 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			
 			#endregion
 			
-			public AstMethodDefinition FixUp(AstMethodDefinition source, Dictionary<VariableDefinition, VariableDefinition> localVarSubstitution)
+			public AstMethodDefinition 
+				FixUp(AstMethodDefinition source, Dictionary<VariableDefinition, 
+				      VariableDefinition> localVarSubstitution)
 			{
 				isVariableDefined.Clear();
 				
@@ -757,8 +926,14 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			#region Model Transformations
 			
 			/// <summary>
-			/// 
+			/// Just checking for empty expressions. 
 			/// </summary>
+			/// <param name="node">
+			/// A <see cref="ExpressionStatement"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitExpressionStatement(ExpressionStatement node)
 			{
 				var result = base.VisitExpressionStatement(node);
@@ -769,8 +944,14 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			}
 			
 			/// <summary>
-			/// Съхранява последното присвояване
+			/// Stores the last visited AssignmentExpr. 
 			/// </summary>
+			/// <param name="node">
+			/// A <see cref="AssignExpression"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitAssignExpression(AssignExpression node)
 			{
 				lastAssignment = node;
@@ -778,8 +959,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			}
 			
 			/// <summary>
-			/// При срещане на референция към променлива се прилага споменатата субституция.
+			/// If it encouters variable reference, belonging to the inlined method it is substituted with the 
+			/// new variable definition.
 			/// </summary>
+			/// <param name="node">
+			/// A <see cref="VariableReferenceExpression"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitVariableReferenceExpression(VariableReferenceExpression node)
 			{
 				VariableDefinition varDef;
@@ -788,11 +976,17 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 				}
 				return base.VisitVariableReferenceExpression(node);
 			}
-			
+
 			/// <summary>
-			/// Прави субституция ако променливата е вече дефинирана и заменя декларацията на променлива
-			/// с референция.
+			/// Checks if the variable is already defined and replaces the VariableDefinition with 
+			/// VariableReference
 			/// </summary>
+			/// <param name="node">
+			/// A <see cref="VariableDeclarationExpression"/>
+			/// </param>
+			/// <returns>
+			/// A <see cref="ICodeNode"/>
+			/// </returns>
 			public override ICodeNode VisitVariableDeclarationExpression(VariableDeclarationExpression node)
 			{
 				VariableDefinition varDef;
@@ -823,9 +1017,9 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 	}
 	
 	/// <summary>
-	/// Атрибут, използван за обозначаване на това, че методът може да бъде inline-нат.
-	/// TODO: Класът трябва да бъде преместен в специална отделна библиотека за атрибути
+	/// Attribute with which the appropriate methods for inline are marked. 
 	/// </summary>
+	//TODO: Класът трябва да бъде преместен в специална отделна библиотека за атрибути
 	public class InlineableAttribute : Attribute
 	{
 		
@@ -854,7 +1048,8 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 
 		public SideEffectInfo (MethodInvocationExpression mInvokeNode, VariableDefinition mInvokeNodeVar,
-		                       List<MethodInvocationExpression> SideEffectsInNode, List<VariableDefinition> SideEffectsInNodeVar)
+		                       List<MethodInvocationExpression> SideEffectsInNode, 
+		                       List<VariableDefinition> SideEffectsInNodeVar)
 		{
 			this.mInvokeNode = mInvokeNode;
 			this.mInvokeNodeVar = mInvokeNodeVar;
@@ -863,5 +1058,3 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 	}
 }
-
-
