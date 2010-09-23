@@ -1,4 +1,4 @@
-/*
+﻿/*
  * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
@@ -19,7 +19,7 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 {
 	/// <summary>
-	/// Replaces method invokation with the invoked method itself. For correct replacement we need the method,
+	/// Replaces method invocation with the invoked method itself. For correct replacement we need the method,
 	/// which is going to be inlined to be maked with the attribute "Inlineable". The method should be pure, which 
 	/// means that it shouldn't contain any side-effects.
 	/// Inlining method example:
@@ -58,22 +58,22 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		#region Fields
 		
 		/// <summary>
-		/// Field, where the blocks, containing the method invokations of the inlined method, are stored.
+		/// Field, where the blocks, containing the method invocations of the inlined method, are stored.
 		/// </summary>
 		private List<BlockStatement> blocks = new List<BlockStatement>();
 		
 		/// <summary>
-		/// Field, where expressions, containing invokations of the inline candidate are stored.
+		/// Field, where expressions, containing invocations of the inline candidate are stored.
 		/// </summary>
 		private List<ExpressionStatement> expressions = new List<ExpressionStatement>();
 		
 		/// <summary>
-		/// Field, which stores the current block, containing the method invokation.
+		/// Field, which stores the current block, containing the method invocation.
 		/// </summary>
 		private BlockStatement currentBlock;
 		
 		/// <summary>
-		/// Field, which stores the current expression, containing the method invokation.
+		/// Field, which stores the current expression, containing the method invocation.
 		/// </summary>
 		private ExpressionStatement currentExpression;
 		
@@ -282,7 +282,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			}
 		}
 		/// <summary>
-		/// This handles the case Expr '=' MethodInvokationExpr ';'
+		/// This handles the case Expr '=' MethodInvocationExpr ';'
 		/// For example:
 		/// <code>sometype somevar = Inlinee(...)</code>
 		/// </summary>
@@ -321,7 +321,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 		
 		/// <summary>
-		/// This handles the cases MethodInvokationExpr BinaryOp MethodInvokationExpr.
+		/// This handles the cases MethodInvocationExpr BinaryOp MethodInvocationExpr.
 		/// For example:
 		/// <code>MethodInv1(...) == MethodInv2(...)</code>
 		/// We make the substitution
@@ -376,7 +376,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 		
 		/// <summary>
-		/// This handles the cases UnaryOperator MethodInvokationExpr.
+		/// This handles the cases UnaryOperator MethodInvocationExpr.
 		/// For example:
 		/// <code>!MethodInv(...)</code>
 		/// We make the substitution:
@@ -408,8 +408,8 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 		
 		/// <summary>
-		/// This handles the case MethodInvokationExpr(...).
-		/// If the MethodInvokationExpr is appropriate for inlining then we inline it or if it is not appropriate
+		/// This handles the case MethodInvocationExpr(...).
+		/// If the MethodInvocationExpr is appropriate for inlining then we inline it or if it is not appropriate
 		/// we check if there is in the arguments something to be inlined.
 		/// For example:
 		/// <code> MethodInv1(somearg1, Inlinee(...), someargs...) </code>
@@ -525,7 +525,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		}
 		
 		/// <summary>
-		/// Checks if the case is the trivial one, where there is no MethodInvokationExpr in the arguments. 
+		/// Checks if the case is the trivial one, where there is no MethodInvocationExpr in the arguments. 
 		/// </summary>
 		/// <param name="mInvoke">
 		/// A <see cref="MethodInvocationExpression"/>

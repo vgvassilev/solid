@@ -16,7 +16,7 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 {
 	/// <summary>
-	/// Replaces method invokation with the invoked method itself. For correct replacement we need the method,
+	/// Replaces method invocation with the invoked method itself. For correct replacement we need the method,
 	/// which is going to be inlined to be maked with the attribute "Inlineable". The method should be pure, which 
 	/// means that it shouldn't contain any side-effects.
 	/// The action takes place at the level of IL. CALL is replaced by the inlinee method body. Before inlinee insert

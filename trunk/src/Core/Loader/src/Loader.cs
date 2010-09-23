@@ -30,7 +30,7 @@ namespace SolidOpt.Core.Loader
 			LoadServices(args);
 			Transform(args);
 			
-			//TODO: Cache invokation
+			//TODO: Cache invocation
 			
 			return 0;
 		}
