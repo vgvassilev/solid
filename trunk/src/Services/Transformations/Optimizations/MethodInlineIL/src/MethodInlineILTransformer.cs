@@ -24,6 +24,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 	/// and changed the instructions for reading and writing from/to the new local variables. Copy inlinee method
 	/// instructions makes the relevant substitutions. RET instructions are replaced by unconditional branch at the
 	/// end of the insertion of the method body. Inline make also copy of exception handlers.
+	///
 	/// Inlining method example:
 	/// <code>
 	/// [Inlineable]
@@ -222,6 +223,5 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 	//TODO: Класът трябва да бъде преместен в специална отделна библиотека за атрибути
 	public class InlineableAttribute : Attribute
 	{
-		
 	}
 }
