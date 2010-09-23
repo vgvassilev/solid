@@ -16,7 +16,46 @@ using SolidOpt.Services.Transformations.Optimizations;
 namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 {
 	/// <summary>
-	/// Description of MethodInlineILTransformer.
+	/// Replaces method invokation with the invoked method itself. For correct replacement we need the method,
+	/// which is going to be inlined to be maked with the attribute "Inlineable". The method should be pure, which 
+	/// means that it shouldn't contain any side-effects.
+	/// The action takes place at the level of IL. CALL is replaced by the inlinee method body. Before inlinee insert
+	/// instruction that store actual parameters in a temporary local variables. The inlinee method body is copied
+	/// and changed the instructions for reading and writing from/to the new local variables. Copy inlinee method
+	/// instructions makes the relevant substitutions. RET instructions are replaced by unconditional branch at the
+	/// end of the insertion of the method body. Inline make also copy of exception handlers.
+	/// Inlining method example:
+	/// <code>
+	/// [Inlineable]
+	/// int Inlinee (a, b)
+	/// {
+	/// 	if (a &lt;= b)
+	/// 		return a * b;
+	/// 	else
+	///		 return a + b;
+	/// }
+	/// 
+	/// void Inliner ()
+	/// {
+	/// 	...
+	/// 	int sum = Inlinee(5, 8);
+	/// }
+	/// </code>
+	/// After the transformation Inliner becomes:
+	/// <code>
+	/// void Inliner ()
+	/// {
+	/// 	...
+	/// 	int temp_result;
+	///	int temp_param_1 = 5;
+	///	int temp_param_2= 8;
+	/// 	if (temp_param_1 &lt;= temp_param_2)
+	/// 		result = temp_param_1 * temp_param_2;
+	/// 	else
+	///		 result = temp_param_1 + temp_param_2;
+	/// 	int sum = result;
+	/// }	
+	/// </code>
 	/// </summary>
 	public class MethodInlineILTransformer : IOptimize<MethodDefinition>
 	{
@@ -158,10 +197,14 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 		}
 		
 		/// <summary>
-		/// Проверява дали методът съдържа подходящ атрибут, посочващ дали може да бъде inline-ван
+		/// Checks if the method is appropriate for inlining. 
 		/// </summary>
-		/// <param name="method">Методът, който е кандидат за inline</param>
-		/// <returns></returns>
+		/// <param name="method">
+		/// A <see cref="MethodReference"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		private bool IsInlineable(MethodReference method)
 		{
 			foreach (CustomAttribute ca in method.Resolve().CustomAttributes) {
@@ -174,9 +217,9 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 	}	
 	
 	/// <summary>
-	/// Атрибут, използван за обозначаване на това, че методът може да бъде inline-нат.
-	/// TODO: Класът трябва да бъде преместен в специална отделна библиотека за атрибути
+	/// Attribute with which the appropriate methods for inline are marked. 
 	/// </summary>
+	//TODO: Класът трябва да бъде преместен в специална отделна библиотека за атрибути
 	public class InlineableAttribute : Attribute
 	{
 		
