@@ -25,7 +25,7 @@ namespace SolidOpt.Services.Subsystems.Cache
 		
 		#region Cache System Delegates
 		/// <summary>
-		/// Creates new cache item. 
+		/// Creates new cache item.
 		/// </summary>
 		/// <param name="key">Cache item name (key)</param>
 		/// <param name="value">Cache item value</param>
@@ -80,12 +80,15 @@ namespace SolidOpt.Services.Subsystems.Cache
 		
 		
 		#region Constructors
-		
+
 		/// <summary>
 		/// Attach default methods to the delegates. If there isn't specified concrete methods the default 
 		/// are executed. There is no difference in the parameter order.
 		/// </summary>
-		/// <param name="delegates">Methods to handle the cache system functionality.</param>
+		/// <param name="delegates">
+		/// A <see cref="Delegate[]"/>
+		/// Methods to handle the cache system functionality.
+		/// </param>
 		public CacheManager(params Delegate[] delegates)
 		{
 			this.storage = new Dictionary<TKey,CacheItem>();
@@ -115,12 +118,20 @@ namespace SolidOpt.Services.Subsystems.Cache
 		/// </summary>
 
 		#region Delegates default implementation
+
 		/// <summary>
 		/// The basic idea is a memory cache to be created. 
-		/// If the delegate methods remains unchanged in the memory will have values which are constantly valid.
+		/// If the delegate methods remains unchanged in the memory will have values which are constantly valid. 
 		/// </summary>
-		
-		
+		/// <param name="key">
+		/// A <see cref="TKey"/>
+		/// </param>
+		/// <param name="value">
+		/// A <see cref="TValue"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="CacheItem"/>
+		/// </returns>
 		protected virtual CacheItem DefaultInitDelegate(TKey key, TValue value)
 		{
 			return new MemoryCacheItem(value);
@@ -246,8 +257,11 @@ namespace SolidOpt.Services.Subsystems.Cache
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets cache item object.
+		/// Gets or sets cache item object. 
 		/// </summary>
+		/// <param name="key">
+		/// A <see cref="TKey"/>
+		/// </param>
 		public TValue this[TKey key]
 		{
 			get {
@@ -286,7 +300,7 @@ namespace SolidOpt.Services.Subsystems.Cache
 		/// <summary>
 		/// We do not want to serialize all the delegates. 
 		/// When serializing we simply serialize the dictionary of the class. 
-		/// This way we omit unnecessary data.
+		/// This way we omit unnecessary data. 
 		/// </summary>
 		public object State
 		{
@@ -302,7 +316,7 @@ namespace SolidOpt.Services.Subsystems.Cache
 		
 		/// <summary>
 		/// Base class for all cache items.
-		/// The idea of the cache items is to store information for the value of the cached object.
+		/// The idea of the cache items is to store information for the value of the cached object. 
 		/// </summary>
 		[Serializable]
 		public abstract class CacheItem
@@ -341,8 +355,6 @@ namespace SolidOpt.Services.Subsystems.Cache
 				get { return value; }//TODO: Add more memory cache logics. Include weak pointers
 				set { this.value = value; }
 			}
-		}
-		
-		
+		}	
 	}
 }

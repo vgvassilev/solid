@@ -10,6 +10,18 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services.Compatibility
 {
+	/// <summary>
+	/// The problem is that we cannot convert derivative into the base class in Enumerations.
+	/// For example: 
+	/// <code>
+	/// List<string> strings = new List<string>();
+	/// strings.Add( "hello" );
+	/// strings.Add( "goodbye" );
+	/// List<object> objects = new List<object>();
+	/// objects.AddRange( strings );// Here we have compiler error. But why since string is derivative of object?
+	/// </code>
+	/// The problem is fixed in C# 4.0, but we want backward compatibility...
+	/// </summary>
 	public static class FixEnumerableVariance
 	{
 	
@@ -18,8 +30,7 @@ namespace SolidOpt.Services.Compatibility
 	    public static void Add<S, D>(List<S> source, List<D> destination)
 	        where S : D
 	    {
-	        foreach (S sourceElement in source)
-	        {
+	        foreach (S sourceElement in source) {
 	            destination.Add(sourceElement);
 	        }
 	    }
@@ -31,10 +42,12 @@ namespace SolidOpt.Services.Compatibility
 	    {
 	        return new EnumerableWrapper<S, D>(source);
 	    }
-	
+		
 	    private class EnumerableWrapper<S, D> : IEnumerable<D>
 	        where S : D
 	    {
+			private IEnumerable<S> source;
+			
 	        public EnumerableWrapper(IEnumerable<S> source)
 	        {
 	            this.source = source;
@@ -84,8 +97,6 @@ namespace SolidOpt.Services.Compatibility
 	                this.source.Reset();
 	            }
 	        }
-	
-	        private IEnumerable<S> source;
 	    }
 	
 	    // Workaround for interface
@@ -102,6 +113,8 @@ namespace SolidOpt.Services.Compatibility
 	        : EnumerableWrapper<S, D>, ICollection<D>
 	        where S : D
 	    {
+	        private ICollection<S> source;
+			
 	        public CollectionWrapper(ICollection<S> source)
 	            : base(source)
 	        {
@@ -131,20 +144,15 @@ namespace SolidOpt.Services.Compatibility
 	        public bool Contains(D item)
 	        {
 	            if (item is S)
-	            {
 	                return this.source.Contains((S)item);
-	            }
 	            else
-	            {
 	                return false;
-	            }
 	        }
 	
 	        // variance going the right way ... 
 	        public void CopyTo(D[] array, int arrayIndex)
 	        {
-	            foreach (S src in this.source)
-	            {
+	            foreach (S src in this.source) {
 	                array[arrayIndex++] = src;
 	            }
 	        }
@@ -164,16 +172,10 @@ namespace SolidOpt.Services.Compatibility
 	        public bool Remove(D item)
 	        {
 	            if (item is S)
-	            {
 	                return this.source.Remove((S)item);
-	            }
 	            else
-	            {
 	                return false;
-	            }
 	        }
-	        
-	        private ICollection<S> source;
 	    }
 	
 	    // Workaround for interface
@@ -187,6 +189,8 @@ namespace SolidOpt.Services.Compatibility
 	    private class ListWrapper<S, D> : CollectionWrapper<S, D>, IList<D>
 	        where S : D
 	    {
+	        private IList<S> source;
+			
 	        public ListWrapper(IList<S> source) : base(source)
 	        {
 	            this.source = source;
@@ -195,13 +199,9 @@ namespace SolidOpt.Services.Compatibility
 	        public int IndexOf(D item)
 	        {
 	            if (item is S)
-	            {
 	                return this.source.IndexOf((S) item);
-	            }
 	            else
-	            {
 	                return -1;
-	            }
 	        }
 	
 	        // variance the wrong way ...
@@ -209,13 +209,9 @@ namespace SolidOpt.Services.Compatibility
 	        public void Insert(int index, D item)
 	        {
 	            if (item is S)
-	            {
 	                this.source.Insert(index, (S)item);
-	            }
 	            else
-	            {
 	                throw new Exception("Invalid type exception");
-	            }
 	        }
 	    
 	        public void RemoveAt(int index)
@@ -225,20 +221,14 @@ namespace SolidOpt.Services.Compatibility
 	
 	        public D this[int index]
 	        {
-	            get
-	            {
-	                return this.source[index];
-	            }
-	            set
-	            {
+	            get { return this.source[index]; }
+	            set {
 	                if (value is S)
 	                    this.source[index] = (S)value;
 	                else
 	                    throw new Exception("Invalid type exception.");
 	            }
 	        }
-	        
-	        private IList<S> source;
 	    }
 	}
 

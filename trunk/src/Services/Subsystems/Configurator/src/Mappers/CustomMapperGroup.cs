@@ -48,8 +48,6 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
 		public override void RemoveMapper(Mapper<TParamName> mapper)
 		{
 			mapperList.Remove(mapper);
-		}
-		
-		
+		}	
 	}
 }

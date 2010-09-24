@@ -9,9 +9,6 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services.Subsystems.Configurator
 {
-	/// <summary>
-	/// Description of IConfigLoader.
-	/// </summary>
 	public interface IConfigLoader<TParamName>
 	{
 		bool CanLoad();

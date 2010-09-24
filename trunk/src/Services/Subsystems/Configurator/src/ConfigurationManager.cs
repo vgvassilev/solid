@@ -18,9 +18,6 @@ using SolidOpt.Services.Subsystems.Configurator.TypeResolvers;
 
 namespace SolidOpt.Services.Subsystems.Configurator
 {
-	/// <summary>
-	/// Description of CofigurationManager.
-	/// </summary>
 	public sealed class ConfigurationManager<TParamName>
 	{
 		#region Singleton

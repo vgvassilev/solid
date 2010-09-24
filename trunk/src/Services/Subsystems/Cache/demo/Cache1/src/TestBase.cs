@@ -11,7 +11,6 @@ using System.IO;
 using System.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
 
-//using SolidOpt.Cache;
 
 namespace SolidOpt.Services.Subsystems.Cache.Demo.Cache1
 {
