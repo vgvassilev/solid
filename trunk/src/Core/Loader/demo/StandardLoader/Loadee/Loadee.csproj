@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{7CCE9049-76C5-4D92-9731-FB375C60F9B1}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Loadee</RootNamespace>
+    <RootNamespace>SolidOpt.Core.Loader.Demo.Loadee</RootNamespace>
     <AssemblyName>Loadee</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -62,21 +62,29 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\core\src\SolidOpt.csproj">
-      <Project>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</Project>
-      <Name>SolidOpt</Name>
+    <ProjectReference Include="..\..\..\..\..\Services\Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\core\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
-      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
-      <Name>Mono.Cecil</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\MethodInlineIL\MethodInlineIL.csproj">
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\MethodInlineIL\MethodInlineIL.csproj">
       <Project>{9DFD76F4-C25D-4AB8-BC5F-ED932767B84D}</Project>
       <Name>MethodInlineIL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MethodInliner\MethodInliner.csproj">
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\MethodInliner\MethodInliner.csproj">
       <Project>{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}</Project>
       <Name>MethodInliner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\Optimizations.csproj">
+      <Project>{cccc9966-8ceb-4451-8ad4-fe48d7ad04bb}</Project>
+      <Name>Optimizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Transformations.csproj">
+      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
+      <Name>Transformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

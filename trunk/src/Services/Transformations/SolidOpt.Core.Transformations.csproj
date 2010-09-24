@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{846d2563-5af8-4459-81c6-59a9da174849}</ProjectGuid>
+    <ProjectGuid>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <RootNamespace>SolidOpt.Core.Transformations</RootNamespace>
+    <AssemblyName>SolidOpt.Core.Transformations</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <AssemblyName>Compatibility</AssemblyName>
-    <RootNamespace>Compatibility</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,11 +32,16 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="FixEnumerableVariance.cs" />
+    <Compile Include="IPipeline.cs" />
+    <Compile Include="IStep.cs" />
+    <Compile Include="ITransform.cs" />
+    <Compile Include="Pipeline.cs" />
+    <Compile Include="Step.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <ProjectReference Include="..\Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

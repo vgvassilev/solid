@@ -233,4 +233,3 @@ namespace SolidOpt.Services.Compatibility
 	}
 
 }
-
