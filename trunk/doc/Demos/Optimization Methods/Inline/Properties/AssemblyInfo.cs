@@ -15,12 +15,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Inline")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SolidOpt.Documentation.Samples.Inline")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. Inline demo program.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Inline")]
-[assembly: AssemblyCopyright("Copyright 2009")]
+[assembly: AssemblyCompany("SolidOpt.org")]
+[assembly: AssemblyProduct("SolidOpt")]
+[assembly: AssemblyCopyright("Copyright 2009-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -4,11 +4,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>SolidOptWebService</RootNamespace>
-    <AssemblyName>SolidOptWebService</AssemblyName>
+    <RootNamespace>SolidOpt.Services.WebServices.SolidOptWebService</RootNamespace>
+    <AssemblyName>SolidOpt.Services.WebServices.SolidOptWebService</AssemblyName>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OutputPath>bin\</OutputPath>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21}%3b{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Sasho\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>True</DebugSymbols>
@@ -35,16 +36,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolidOprService.asmx.cs">
-      <DependentUpon>SolidOprService.asmx</DependentUpon>
-    </Compile>
-    <None Include="SolidOprService.asmx" />
+    <Compile Include="SolidOptService.asmx.cs" />
+    <None Include="SolidOptService.asmx">
+      <DependentUpon>SolidOptService.asmx.cs</DependentUpon>
+    </None>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\src\SolidOpt.csproj">
-      <Project>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</Project>
-      <Name>SolidOpt</Name>
+    <ProjectReference Include="..\..\..\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Subsystems\HetAccess\SolidOpt.Services.HetAccess.csproj">
+      <Project>{2806b750-e3fd-43ed-a395-0961f952314c}</Project>
+      <Name>SolidOpt.Services.HetAccess</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

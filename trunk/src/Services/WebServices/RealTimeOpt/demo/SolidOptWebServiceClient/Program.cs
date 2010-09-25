@@ -7,7 +7,7 @@
 using System;
 using SolidOptWebServiceClient.www.solidopt.org;
 
-namespace SolidOptWebServiceClient
+namespace SolidOpt.Services.WebServices.SolidOptWebServiceClient
 {
 	class Program 
 	{

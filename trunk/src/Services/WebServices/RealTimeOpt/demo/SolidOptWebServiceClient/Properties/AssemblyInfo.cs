@@ -16,11 +16,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SolidOptWebServiceClient")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. SolidOptWebServiceClient demo program.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SolidOptWebServiceClient")]
-[assembly: AssemblyCopyright("Copyright 2010")]
+[assembly: AssemblyCompany("SolidOpt.org")]
+[assembly: AssemblyProduct("SolidOpt")]
+[assembly: AssemblyCopyright("Copyright 2009-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

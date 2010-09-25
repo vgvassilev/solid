@@ -36,12 +36,34 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 		{
 		}
 		
+#if (DEBUG)
+		const string build_type = "Debug";
+#else
+		const string build_type = "Release";
+#endif
+		
 		public override void LoadServices(string[] args)
 		{
-			//TODO: use file plugins.list as config
-			//TODO: for folders in plugins.list use plugin + $(Configuration), on fail use plugin
-			//TODO: for files in plugins.list use plugin with $(Configuration) before filename, on fail use plugin
-			//ServicesContainer.AddPlugins(AppDomain.CurrentDomain.BaseDirectory + "plugins");
+			string basepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("..", ".."));
+			StreamReader sr = new StreamReader(Path.Combine(basepath, "plugins.list"));
+			while (!sr.EndOfStream) {
+				string s = sr.ReadLine();
+				if (!string.IsNullOrEmpty(s)) {
+					string name = Path.Combine(basepath, s);
+					//TODO: For files in plugins.list use "name" with $(Configuration) before filename, on fail use "name"
+					if (File.Exists(name)) {
+						ServicesContainer.AddPlugin(name);
+					} else {
+						string s1 = Path.Combine(name, build_type);
+						if (Directory.Exists(s1)) {
+							ServicesContainer.AddPlugins(s1);
+						} else if (Directory.Exists(name)) {
+							ServicesContainer.AddPlugins(name);
+						}
+					}
+				}
+			}
+				
 			base.LoadServices(args);
 		}
 		

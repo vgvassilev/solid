@@ -1,5 +1,5 @@
 ﻿/*
- * $Id$
+ * $Id: SolidOprService.asmx.cs 327 2010-09-19 23:09:54Z apenev $
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -18,7 +18,7 @@ using System.Xml.Serialization;
 using SolidOpt.Services.Subsystems.HetAccess.Importers;
 using SolidOpt.Services.Subsystems.HetAccess;
 
-namespace SolidOpt
+namespace SolidOpt.Services.WebServices.SolidOptWebService
 {
 	public class ConfigParamDef
 	{
