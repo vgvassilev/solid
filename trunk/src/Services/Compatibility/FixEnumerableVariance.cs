@@ -113,7 +113,7 @@ namespace SolidOpt.Services.Compatibility
 	        : EnumerableWrapper<S, D>, ICollection<D>
 	        where S : D
 	    {
-	        private ICollection<S> source;
+	    	private ICollection<S> source = null;
 			
 	        public CollectionWrapper(ICollection<S> source)
 	            : base(source)
