@@ -36,7 +36,7 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 		{
 		}
 		
-		public virtual void LoadServices(string[] args)
+		public override void LoadServices(string[] args)
 		{
 			//TODO: use file plugins.list as config
 			//TODO: for folders in plugins.list use plugin + $(Configuration), on fail use plugin
