@@ -9,6 +9,12 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Core.Loader.Demo.Loadee
 {
+	// Disable warnings for never used and unreachable code, because this is test
+	// 168 - variable declared but never used
+	// 162 - unreachable code detected
+	// 219 - variable assigned but the value never used
+	
+	#pragma warning disable 168, 162, 219
 	class Program
 	{
 		public static void Main(string[] args)
@@ -236,6 +242,7 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 //			return;
 //		}
 	}
+	#pragma warning restore 168, 162, 219
 }
 	class TestThis
 	{

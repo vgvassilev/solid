@@ -68,16 +68,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 		private List<ExpressionStatement> expressions = new List<ExpressionStatement>();
 		
 		/// <summary>
-		/// Field, which stores the current block, containing the method invocation.
-		/// </summary>
-		private BlockStatement currentBlock;
-		
-		/// <summary>
-		/// Field, which stores the current expression, containing the method invocation.
-		/// </summary>
-		private ExpressionStatement currentExpression;
-		
-		/// <summary>
 		/// Structure, where new local variables are stored. The new local variables are going to replace
 		/// the old ones. There shouldn't be local variable, which overlaps with variable of the inlined method.
 		/// Целта е да не съвпадне локална променлива с тази от inline-вания метод.
@@ -674,7 +664,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			private static int exitNumber = 0;
 			private BlockStatement currentBlock;
 			private Expression thisSubstitution;
-			private GotoStatement lastGoTo;
 			
 			#endregion
 			
@@ -897,7 +886,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
 			private Dictionary<VariableDefinition, VariableDefinition> localVarSubstitution;
 			private HashSet<VariableDefinition> isVariableDefined = new HashSet<VariableDefinition>();
 			private AssignExpression lastAssignment;
-			private BlockStatement currentBlock;
 			
 			#endregion
 			
