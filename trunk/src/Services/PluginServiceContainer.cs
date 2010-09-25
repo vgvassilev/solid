@@ -46,8 +46,8 @@ namespace SolidOpt.Services
 				foreach (DirectoryInfo subDirInfo in dirInfo.GetDirectories("*"))
 					AddPlugins(subDirInfo);
 			} catch (System.IO.DirectoryNotFoundException e) {
-				// log e
-				throw e;
+				//TODO: log e
+				// throw e;
 			}
 		}
 		
@@ -112,7 +112,7 @@ namespace SolidOpt.Services
 			if (status != Status.Loaded) return;
 
 			IService service;
-		foreach (Type type in assembly.GetTypes())
+			foreach (Type type in assembly.GetTypes())
 				if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
 					try {
 						service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
