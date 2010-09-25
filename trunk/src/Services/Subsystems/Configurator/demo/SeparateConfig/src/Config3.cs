@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SeparateConfig
+namespace SolidOpt.Services.Subsystems.Configurator.Demo.Config3
 {
 	/// <summary>
 	/// Description of Config3.
@@ -26,12 +26,5 @@ namespace SeparateConfig
 	        // Fields
 	        public static int b = 5;
 	    }
-
-		
-		
-		
-		
 	}
-	
-	
 }

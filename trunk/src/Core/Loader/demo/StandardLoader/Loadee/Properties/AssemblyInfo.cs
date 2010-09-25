@@ -15,12 +15,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Loadee")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SolidOpt.Core.Loader.Demo.Loadee")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. Loadee demo program.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Loadee")]
-[assembly: AssemblyCopyright("Copyright 2009")]
+[assembly: AssemblyCompany("SolidOpt.org")]
+[assembly: AssemblyProduct("SolidOpt")]
+[assembly: AssemblyCopyright("Copyright 2009-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -4,10 +4,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AdvancedConfigDemo</RootNamespace>
+    <RootNamespace>SolidOpt.Services.Subsystems.Configurator.Demo.AdvancedConfigDemo</RootNamespace>
     <AssemblyName>AdvancedConfigDemo</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Sasho\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -41,13 +42,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\SolidOpt\src\SolidOpt.csproj">
-      <Project>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</Project>
-      <Name>SolidOpt</Name>
+    <ProjectReference Include="..\..\..\HetAccess\SolidOpt.Services.HetAccess.csproj">
+      <Project>{2806b750-e3fd-43ed-a395-0961f952314c}</Project>
+      <Name>SolidOpt.Services.HetAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SolidOpt.Services.Configurator.csproj">
+      <Project>{fa31ff3a-8fa8-43b7-92c3-322b9d7255a6}</Project>
+      <Name>SolidOpt.Services.Configurator</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

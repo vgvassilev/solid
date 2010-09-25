@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+# SharpDevelop 3.0.0.3800
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeparateConfig", "SeparateConfig.csproj", "{846CAC53-FF82-4133-A03F-F214B48790B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{C1C9FC60-4891-4E33-8BC8-F1ECEE10D01E}"
+	ProjectSection(SolutionItems) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{846CAC53-FF82-4133-A03F-F214B48790B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846CAC53-FF82-4133-A03F-F214B48790B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846CAC53-FF82-4133-A03F-F214B48790B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846CAC53-FF82-4133-A03F-F214B48790B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

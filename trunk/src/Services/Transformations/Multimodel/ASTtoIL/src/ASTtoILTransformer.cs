@@ -18,7 +18,7 @@ using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 
 using SolidOpt.Services.Transformations.Multimodel;
 
-namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL 
+namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
 {
 	/// <summary>
 	/// Description of ASTtoILTransformer.

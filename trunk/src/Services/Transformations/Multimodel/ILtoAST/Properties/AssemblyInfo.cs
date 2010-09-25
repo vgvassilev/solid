@@ -15,12 +15,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NopRemover")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Multimodel.ILtoAST")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. ILtoAST decompilator plugin.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NopRemover")]
-[assembly: AssemblyCopyright("Copyright 2009")]
+[assembly: AssemblyCompany("SolidOpt.org")]
+[assembly: AssemblyProduct("SolidOpt")]
+[assembly: AssemblyCopyright("Copyright 2009-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

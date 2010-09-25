@@ -1,0 +1,12 @@
+trunk\src\Services\Transformations\Multimodel\AstMethodDefinitionModel\bin
+trunk\src\Services\Transformations\Multimodel\ASTtoIL\bin
+trunk\src\Services\Transformations\Multimodel\CilToControlFlowGraph\bin
+trunk\src\Services\Transformations\Multimodel\ILtoAST\bin
+
+trunk\src\Services\Transformations\Optimizations\AST\ConstantFolding\bin
+trunk\src\Services\Transformations\Optimizations\AST\ConstantPropagation\bin
+trunk\src\Services\Transformations\Optimizations\AST\MethodInliner\bin
+trunk\src\Services\Transformations\Optimizations\AST\SimplifyExpression\bin
+trunk\src\Services\Transformations\Optimizations\IL\MethodInlineIL\bin
+trunk\src\Services\Transformations\Optimizations\IL\NopRemover\bin
+trunk\src\Services\Transformations\Optimizations\IL\OverflowArithmeticRemover\bin

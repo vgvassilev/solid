@@ -36,6 +36,15 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 		{
 		}
 		
+		public virtual void LoadServices(string[] args)
+		{
+			//TODO: use file plugins.list as config
+			//TODO: for folders in plugins.list use plugin + $(Configuration), on fail use plugin
+			//TODO: for files in plugins.list use plugin with $(Configuration) before filename, on fail use plugin
+			//ServicesContainer.AddPlugins(AppDomain.CurrentDomain.BaseDirectory + "plugins");
+			base.LoadServices(args);
+		}
+		
 		public override void Transform(string[] args)
 		{
 //			IService[] transformers = (IService[]) ServicesContainer.GetServices(typeof(ITransform<MethodDefinition>));

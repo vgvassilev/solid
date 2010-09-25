@@ -9,8 +9,6 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services.Transformations
 {
-
-
 	public class Pipeline<Source, Target> : IPipeline<Source, Target>
 		where Source : class
 		where Target : class

@@ -4,8 +4,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Cache1</RootNamespace>
+    <RootNamespace>SolidOpt.Services.Subsystems.Cache.Demo.Cache1</RootNamespace>
     <AssemblyName>Cache1</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Sasho\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -25,24 +27,27 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Reference Include="SolidOpt">
-      <HintPath>..\..\..\..\SolidOpt\src\bin\$(Configuration)\SolidOpt.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ClassBuilder.cs" />
-    <Compile Include="ResultClass.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="TestBase.cs" />
-    <Compile Include="TestDefault.cs" />
-    <Compile Include="TestMem1.cs" />
-    <Compile Include="TestMem2.cs" />
-    <Compile Include="TestMemExpire.cs" />
-    <Compile Include="TestMemIsolatedStorage.cs" />
-    <Compile Include="TestMemIsolatedStorage1Collision.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\ClassBuilder.cs" />
+    <Compile Include="src\ResultClass.cs" />
+    <Compile Include="src\Program.cs" />
+    <Compile Include="src\TestBase.cs" />
+    <Compile Include="src\TestDefault.cs" />
+    <Compile Include="src\TestMem1.cs" />
+    <Compile Include="src\TestMem2.cs" />
+    <Compile Include="src\TestMemExpire.cs" />
+    <Compile Include="src\TestMemIsolatedStorage.cs" />
+    <Compile Include="src\TestMemIsolatedStorage1Collision.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <ProjectReference Include="..\..\SolidOpt.Services.Cache.csproj">
+      <Project>{de4555cc-c32c-46d2-aa99-e196e5779c43}</Project>
+      <Name>SolidOpt.Services.Cache</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
