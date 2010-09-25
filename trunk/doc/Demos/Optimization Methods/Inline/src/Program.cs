@@ -14,32 +14,30 @@ using Cecil.Decompiler;
 using Cecil.Decompiler.Cil;
 using Cecil.Decompiler.Languages;
 
-
-
-namespace Inline
+namespace SolidOpt.Documentation.Samples.Inline
 {
 	class Program
 	{
 		public static void Main(string[] args)
 		{
-			var method = GetProgramMethod ("Inliner");
-			var cfg = ControlFlowGraph.Create (method);
-			FormatControlFlowGraph (Console.Out, cfg);
+			var method = GetProgramMethod("Inliner");
+			var cfg = ControlFlowGraph.Create(method);
+			FormatControlFlowGraph(Console.Out, cfg);
 			Console.WriteLine ("--------------------");
 
 //			var store = AnnotationStore.CreateStore (cfg, BlockOptimization.Detailed);
 //			PrintAnnotations (method, store);
 
-			var language = CSharp.GetLanguage (CSharpVersion.V1);
-			//var body = method.Body.Decompile (language);
-			var writer = language.GetWriter (new PlainTextFormatter (Console.Out));
-			writer.Write (method);
+			var language = CSharp.GetLanguage(CSharpVersion.V1);
+			//var body = method.Body.Decompile(language);
+			var writer = language.GetWriter(new PlainTextFormatter (Console.Out));
+			writer.Write(method);
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
 		
-		public static void FormatControlFlowGraph (TextWriter writer, ControlFlowGraph cfg)
+		public static void FormatControlFlowGraph(TextWriter writer, ControlFlowGraph cfg)
 		{
 			foreach (InstructionBlock block in cfg.Blocks) {
 				writer.WriteLine ("block {0}:", block.Index);
@@ -61,17 +59,19 @@ namespace Inline
 			}
 		}
 		
-		static MethodDefinition GetProgramMethod (string name)
+		static MethodDefinition GetProgramMethod(string name)
 		{
-			return GetProgramAssembly ().MainModule.Types ["Inline.Program"].Methods.GetMethod (name) [0];
+			foreach (MethodDefinition method in GetProgramAssembly().MainModule.GetType("SolidOpt.Documentation.Samples.Inline.Program").Methods) {
+				if (method.Name == name) return method;
+			}
+			return null;
 		}
-		static IAssemblyResolver resolver = new DefaultAssemblyResolver ();
+		
+		static IAssemblyResolver resolver = new DefaultAssemblyResolver();
 
-		static AssemblyDefinition GetProgramAssembly ()
+		static AssemblyDefinition GetProgramAssembly()
 		{
-			var assembly = AssemblyFactory.GetAssembly (typeof (Program).Module.FullyQualifiedName);
-			assembly.Resolver = resolver;
-			return assembly;
+			return AssemblyDefinition.ReadAssembly(typeof(Program).Module.FullyQualifiedName);
 		}
 		
 		

@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 
-using SolidOpt.Core.Services;
+using SolidOpt.Services;
 
-namespace TestPluginService
+namespace SolidOpt.Documentation.Samples.TestPluginService
 {
 	/// <summary>
 	/// Description of MyClass.
