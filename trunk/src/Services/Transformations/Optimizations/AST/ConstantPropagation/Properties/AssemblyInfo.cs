@@ -1,5 +1,5 @@
 ﻿/*
- * $Id: AssemblyInfo.cs 327 2010-09-19 23:09:54Z apenev $
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
