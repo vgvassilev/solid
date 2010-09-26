@@ -66,11 +66,11 @@
       <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
       <Name>SolidOpt.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\AST\MethodInliner\SolidOpt.Services.MethodInline.csproj">
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\AST\MethodInline\SolidOpt.Services.MethodInline.csproj">
       <Project>{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}</Project>
       <Name>SolidOpt.Services.MethodInline</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\IL\MethodInlineIL\SolidOpt.Services.MethodInline.csproj">
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\IL\MethodInline\SolidOpt.Services.MethodInline.csproj">
       <Project>{9DFD76F4-C25D-4AB8-BC5F-ED932767B84D}</Project>
       <Name>SolidOpt.Services.MethodInline</Name>
     </ProjectReference>
