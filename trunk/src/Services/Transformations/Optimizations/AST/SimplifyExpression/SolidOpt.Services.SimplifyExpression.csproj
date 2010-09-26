@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>SolidOpt.Services.Transformations.Optimizations.SimplifyExpression</RootNamespace>
-    <AssemblyName>SolidOpt.Services.Transformations.Optimizations.SimplifyExpression</AssemblyName>
+    <RootNamespace>SolidOpt.Services.Transformations.Optimizations.AST.SimplifyExpression</RootNamespace>
+    <AssemblyName>SolidOpt.Services.Transformations.Optimizations.AST.SimplifyExpression</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>

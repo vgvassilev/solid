@@ -15,7 +15,7 @@ using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace SolidOpt.Services.Transformations.Optimizations.ConstantPropagation
+namespace SolidOpt.Services.Transformations.Optimizations.AST.ConstantPropagation
 {
 	/// <summary>
 	/// Description of ConstantPropagationTransformer.

@@ -13,7 +13,7 @@ using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace SolidOpt.Services.Transformations.Optimizations.OverflowArithmeticRemover
+namespace SolidOpt.Services.Transformations.Optimizations.IL.OverflowArithmeticRemove
 {
 	/// <summary>
 	/// Simple method, which removes the arithmetic overflow checks.

@@ -159,7 +159,7 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 // 		}
 		
 //		[MethodInliner.Inlineable]
-		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 //		[MethodInliner.SideEffects(false)]
 		public static double CalculateArea(double a, double b, double c)
 		{
@@ -169,7 +169,7 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 			return Math.Sqrt(p * (p-a) * (p-b) * (p-c));
 		}
 		
-		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 		public static double CalculateArea1(double a, double b, double c)
 		{
 			try {
@@ -201,7 +201,7 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 //		}
 		
 //		[MethodInliner.Inlineable]
-		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 //		[MethodInliner.SideEffects(true)]
 		public static int Inlinee(int p, int q)
 		{
@@ -249,7 +249,7 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 		private static int number = 0;
 		
 //		[MethodInliner.Inlineable]
-		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 		public int Test()
 		{
 			Console.WriteLine("This is this");
@@ -257,14 +257,14 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 		}
 		
 //		[MethodInliner.Inlineable]
-		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 		public static int Inc ()
 		{
 			return number + 1;
 		}
 		
 //		[MethodInliner.Inlineable]
-		[SolidOpt.Services.Transformations.Optimizations.MethodInlineIL.Inlineable]
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 		public static int Inc (int number)
 		{
 			return (TestThis.number + number + 1) * (number + TestThis.number + 1);

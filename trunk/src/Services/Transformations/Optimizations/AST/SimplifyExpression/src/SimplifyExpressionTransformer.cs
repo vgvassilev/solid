@@ -16,7 +16,7 @@ using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 using SolidOpt.Services.Transformations.Optimizations;
 
 
-namespace SolidOpt.Services.Transformations.Optimizations.SimplifyExpression
+namespace SolidOpt.Services.Transformations.Optimizations.AST.SimplifyExpression
 {
 	/// <summary>
 	/// Sasho comment your plugin, please...

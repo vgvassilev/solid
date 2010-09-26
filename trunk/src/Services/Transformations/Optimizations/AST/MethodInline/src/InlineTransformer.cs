@@ -16,7 +16,7 @@ using SolidOpt.Services.Transformations.Multimodel.ILtoAST;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace SolidOpt.Services.Transformations.Optimizations.MethodInliner
+namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
 {
 	/// <summary>
 	/// Replaces method invocation with the invoked method itself. For correct replacement we need the method,

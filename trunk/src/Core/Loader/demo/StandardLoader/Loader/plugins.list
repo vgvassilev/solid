@@ -5,8 +5,8 @@
 
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantFolding\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantPropagation\bin
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\MethodInliner\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\MethodInline\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\SimplifyExpression\bin
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\MethodInlineIL\bin
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\NopRemover\bin
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\OverflowArithmeticRemover\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\MethodInline\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\NopRemove\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\OverflowArithmeticRemove\bin

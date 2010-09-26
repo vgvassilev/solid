@@ -13,7 +13,7 @@ using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
+namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline
 {
 	/// <summary>
 	/// Replaces method invocation with the invoked method itself. For correct replacement we need the method,
@@ -58,9 +58,9 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 	/// }	
 	/// </code>
 	/// </summary>
-	public class MethodInlineILTransformer : IOptimize<MethodDefinition>
+	public class InlineTransformer : IOptimize<MethodDefinition>
 	{
-		public MethodInlineILTransformer()
+		public InlineTransformer()
 		{
 		}
 		
@@ -76,7 +76,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.MethodInlineIL
 						Console.WriteLine(source.FullName + " call inline " + inlineMethod.FullName);
 						
 						// Clone inlinee method
-						//TODO: crate clone method
+						//TODO: crate copy of method
 						inlineMethod.Body = null;
 						
 						//TODO: Think about inlineMethod.Body.SimplifyMacros();

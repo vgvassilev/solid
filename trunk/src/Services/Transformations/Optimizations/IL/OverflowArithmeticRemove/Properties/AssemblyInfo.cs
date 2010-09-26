@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Optimizations.OverflowArithmeticRemover")]
-[assembly: AssemblyDescription("SolidOpt optimization framework. OverflowArithmeticRemover optimization plugin.")]
+[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Optimizations.IL.OverflowArithmeticRemove")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. OverflowArithmeticRemove optimization plugin.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SolidOpt.org")]
 [assembly: AssemblyProduct("SolidOpt")]

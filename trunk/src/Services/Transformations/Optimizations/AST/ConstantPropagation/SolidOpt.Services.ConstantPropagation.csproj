@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>SolidOpt.Services.Transformations.Optimizations.ConstantPropagation</RootNamespace>
-    <AssemblyName>SolidOpt.Services.Transformations.Optimizations.ConstantPropagation</AssemblyName>
+    <RootNamespace>SolidOpt.Services.Transformations.Optimizations.AST.ConstantPropagation</RootNamespace>
+    <AssemblyName>SolidOpt.Services.Transformations.Optimizations.AST.ConstantPropagation</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>

@@ -13,7 +13,7 @@ using Mono.Cecil.Rocks;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace SolidOpt.Services.Transformations.Optimizations.NopRemover
+namespace SolidOpt.Services.Transformations.Optimizations.IL.NopRemover
 {
 	/// <summary>
 	/// Simple method, which removes the nop instructions. 

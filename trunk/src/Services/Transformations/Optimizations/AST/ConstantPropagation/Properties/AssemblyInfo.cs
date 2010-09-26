@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Optimizations.ConstantPropagation")]
+[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Optimizations.AST.ConstantPropagation")]
 [assembly: AssemblyDescription("SolidOpt optimization framework. ConstantPropagation optimization plugin.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SolidOpt.org")]

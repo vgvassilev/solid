@@ -1,5 +1,5 @@
 ﻿/*
- * $Id: AssemblyInfo.cs 327 2010-09-19 23:09:54Z apenev $
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Optimizations.MethodInliner")]
-[assembly: AssemblyDescription("SolidOpt optimization framework. MethodInliner optimization plugin.")]
+[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Optimizations.IL.MethodInline")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. IL level MethodInline optimization plugin.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SolidOpt.org")]
 [assembly: AssemblyProduct("SolidOpt")]

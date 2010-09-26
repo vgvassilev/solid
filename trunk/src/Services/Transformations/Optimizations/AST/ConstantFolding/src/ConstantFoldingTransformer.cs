@@ -15,7 +15,7 @@ using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 
 using SolidOpt.Services.Transformations.Optimizations;
 
-namespace SolidOpt.Services.Transformations.Optimizations.ConstantFolding
+namespace SolidOpt.Services.Transformations.Optimizations.AST.ConstantFolding
 {
 	/// <summary>
 	/// It folds constants.
