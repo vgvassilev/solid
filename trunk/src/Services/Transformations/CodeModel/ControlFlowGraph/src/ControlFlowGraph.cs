@@ -16,8 +16,8 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	public class ControlFlowGraph {
 
 		MethodBody body;
-		InstructionBlock [] blocks;
-		Dictionary<int, InstructionData> data;
+		Node [] blocks;
+//		Dictionary<int, InstructionData> data;
 		List<ExceptionHandlerData> exception_data;
 		HashSet<int> exception_objects_offsets;
 
@@ -25,14 +25,14 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			get { return body; }
 		}
 
-		public InstructionBlock [] Blocks {
+		public Node [] Blocks {
 			get { return blocks; }
 		}
 
 		public ControlFlowGraph (
 			MethodBody body,
-			InstructionBlock [] blocks,
-			Dictionary<int, InstructionData> instructionData,
+			Node [] blocks,
+//			Dictionary<int, InstructionData> instructionData,
 			List<ExceptionHandlerData> exception_data,
 			HashSet<int> exception_objects_offsets)
 		{
@@ -43,10 +43,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			this.exception_objects_offsets = exception_objects_offsets;
 		}
 
-		public InstructionData GetData (Instruction instruction)
-		{
-			return data [instruction.Offset];
-		}
+//		public InstructionData GetData (Instruction instruction)
+//		{
+//			return data [instruction.Offset];
+//		}
 
 		public ExceptionHandlerData [] GetExceptionData ()
 		{
@@ -70,7 +70,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		public void FormatControlFlowGraph (TextWriter writer)
 		{
-			foreach (InstructionBlock block in Blocks) {
+			foreach (Node block in Blocks) {
 				writer.WriteLine ("block {0}:", block.Index);
 				writer.WriteLine ("\tbody:");
 				foreach (Instruction instruction in block) {
@@ -80,10 +80,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 					writer.Write(instruction);
 					writer.WriteLine ();
 				}
-				InstructionBlock [] successors = block.Successors;
+				Node [] successors = block.Successors;
 				if (successors.Length > 0) {
 					writer.WriteLine ("\tsuccessors:");
-					foreach (InstructionBlock successor in successors) {
+					foreach (Node successor in successors) {
 						writer.WriteLine ("\t\tblock {0}", successor.Index);
 					}
 				}

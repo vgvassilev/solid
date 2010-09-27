@@ -34,15 +34,15 @@ using Mono.Cecil.Cil;
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph 
 {
 
-	public class InstructionBlock : IEnumerable<Instruction>, IComparable<InstructionBlock> 
+	public class Node : IEnumerable<Instruction>, IComparable<Node> 
 	{
 
-		static readonly InstructionBlock [] NoSuccessors = new InstructionBlock [0];
+		static readonly Node [] NoSuccessors = new Node [0];
 
 		int index;
 		Instruction first;
 		Instruction last;
-		InstructionBlock [] successors = NoSuccessors;
+		Node [] successors = NoSuccessors;
 
 		public int Index {
 			get { return index; }
@@ -60,12 +60,12 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		}
 
-		public InstructionBlock [] Successors {
+		public Node [] Successors {
 			get { return successors; }
 			set { successors = value; }
 		}
 
-		public InstructionBlock (Instruction first)
+		public Node (Instruction first)
 		{
 			if (first == null)
 				throw new ArgumentNullException ("first");
@@ -73,7 +73,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			this.first = first;
 		}
 
-		public int CompareTo (InstructionBlock block)
+		public int CompareTo (Node block)
 		{
 			return first.Offset - block.First.Offset;
 		}

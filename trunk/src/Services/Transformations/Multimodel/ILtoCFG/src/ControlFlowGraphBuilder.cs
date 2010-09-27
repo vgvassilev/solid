@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		MethodBody body;
 		Dictionary<int, InstructionData> data;
-		Dictionary<int, InstructionBlock> blocks = new Dictionary<int, InstructionBlock> ();
+		Dictionary<int, Node> blocks = new Dictionary<int, Node> ();
 		List<ExceptionHandlerData> exception_data;
 		HashSet<int> exception_objects_offsets;
 
@@ -138,7 +138,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			if (block != null)
 				return;
 
-			block = new InstructionBlock (instruction);
+			block = new Node (instruction);
 			RegisterBlock (block);
 		}
 
@@ -146,13 +146,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 		{
 			data = new Dictionary<int, InstructionData> ();
 
-			var visited = new HashSet<InstructionBlock> ();
+			var visited = new HashSet<Node> ();
 
 			foreach (var block in this.blocks.Values)
 				ComputeInstructionData (visited, 0, block);
 		}
 
-		void ComputeInstructionData (HashSet<InstructionBlock> visited, int stackHeight, InstructionBlock block)
+		void ComputeInstructionData (HashSet<Node> visited, int stackHeight, Node block)
 		{
 			if (visited.Contains (block))
 				return;
@@ -281,16 +281,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return type.FullName == "System.Void";
 		}
 
-		InstructionBlock [] ToArray ()
+		Node [] ToArray ()
 		{
-			var result = new InstructionBlock [blocks.Count];
+			var result = new Node [blocks.Count];
 			blocks.Values.CopyTo (result, 0);
 			Array.Sort (result);
 			ComputeIndexes (result);
 			return result;
 		}
 
-		static void ComputeIndexes (InstructionBlock [] blocks)
+		static void ComputeIndexes (Node [] blocks)
 		{
 			for (int i = 0; i < blocks.Length; i++)
 				blocks [i].Index = i;
@@ -298,11 +298,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		void ConnectBlocks ()
 		{
-			foreach (InstructionBlock block in blocks.Values)
+			foreach (Node block in blocks.Values)
 				ConnectBlock (block);
 		}
 
-		void ConnectBlock (InstructionBlock block)
+		void ConnectBlock (Node block)
 		{
 			if (block.Last == null)
 				throw new ArgumentException ("Undelimited block at offset " + block.First.Offset);
@@ -345,9 +345,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			}
 		}
 
-		static InstructionBlock [] AddBlock (InstructionBlock block, InstructionBlock [] blocks)
+		static Node [] AddBlock (Node block, Node [] blocks)
 		{
-			var result = new InstructionBlock [blocks.Length + 1];
+			var result = new Node [blocks.Length + 1];
 			Array.Copy (blocks, result, blocks.Length);
 			result [result.Length - 1] = block;
 
@@ -359,10 +359,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return instruction.OpCode.Code == Code.Switch;
 		}
 
-		InstructionBlock [] GetBranchTargetsBlocks (Instruction instruction)
+		Node [] GetBranchTargetsBlocks (Instruction instruction)
 		{
 			var targets = GetBranchTargets (instruction);
-			var blocks = new InstructionBlock [targets.Length];
+			var blocks = new Node [targets.Length];
 			for (int i = 0; i < targets.Length; i++)
 				blocks [i] = GetBlock (targets [i]);
 
@@ -374,7 +374,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return (Instruction []) instruction.Operand;
 		}
 
-		InstructionBlock GetBranchTargetBlock (Instruction instruction)
+		Node GetBranchTargetBlock (Instruction instruction)
 		{
 			return GetBlock (GetBranchTarget (instruction));
 		}
@@ -384,14 +384,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return (Instruction) instruction.Operand;
 		}
 
-		void RegisterBlock (InstructionBlock block)
+		void RegisterBlock (Node block)
 		{
 			blocks.Add (block.First.Offset, block);
 		}
 
-		InstructionBlock GetBlock (Instruction firstInstruction)
+		Node GetBlock (Instruction firstInstruction)
 		{
-			InstructionBlock block;
+			Node block;
 			blocks.TryGetValue (firstInstruction.Offset, out block);
 			return block;
 		}
