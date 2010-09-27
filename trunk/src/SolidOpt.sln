@@ -142,11 +142,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASTtoIL", "ASTtoIL", "{640C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ASTtoIL", "Services\Transformations\Multimodel\ASTtoIL\SolidOpt.Services.ASTtoIL.csproj", "{12F84CA5-C981-420D-8CFA-24B68ED11DCE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CilToControlFlowGraph", "CilToControlFlowGraph", "{7347C8B1-1D93-4C39-945D-4BF1B7C11459}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ILtoCFG", "ILtoCFG", "{7347C8B1-1D93-4C39-945D-4BF1B7C11459}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.CilToControlFlowGraph", "Services\Transformations\Multimodel\CilToControlFlowGraph\SolidOpt.Services.CilToControlFlowGraph.csproj", "{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ILtoCFG", "Services\Transformations\Multimodel\ILtoCFG\SolidOpt.Services.ILtoCFG.csproj", "{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ILtoAST", "ILtoAST", "{855610B9-ED24-4355-A0DE-721F7E362A24}"
 	ProjectSection(SolutionItems) = postProject
@@ -218,10 +218,6 @@ Global
 		{12F84CA5-C981-420D-8CFA-24B68ED11DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{12F84CA5-C981-420D-8CFA-24B68ED11DCE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{12F84CA5-C981-420D-8CFA-24B68ED11DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}.Release|Any CPU.Build.0 = Release|Any CPU
@@ -322,6 +318,10 @@ Global
 		{846CAC53-FF82-4133-A03F-F214B48790B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{846CAC53-FF82-4133-A03F-F214B48790B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{846CAC53-FF82-4133-A03F-F214B48790B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = vendors\Mono.Cecil\Mono.Cecil.csproj

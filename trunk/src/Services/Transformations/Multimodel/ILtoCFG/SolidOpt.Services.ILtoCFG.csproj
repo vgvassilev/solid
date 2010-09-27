@@ -50,7 +50,7 @@
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
-    <Compile Include="src\CilToControlFlowGraph.cs" />
+    <Compile Include="src\ILtoCFGTransformer.cs" />
     <ProjectReference Include="..\..\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
       <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
       <Name>SolidOpt.Services.ControlFlowGraph</Name>

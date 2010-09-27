@@ -11,8 +11,7 @@ namespace SolidOpt.Services.Transformations
 
 
 	public abstract class Step : IStep
-	{
-		
+	{		
 		#region IStep implementation		
 		
 		public abstract object Process (object codeModel);
