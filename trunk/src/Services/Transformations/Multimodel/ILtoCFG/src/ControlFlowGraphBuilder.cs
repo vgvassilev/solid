@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		MethodBody body;
 //		Dictionary<int, InstructionData> data;
-		Dictionary<int, Node> blocks = new Dictionary<int, Node>();
+		Dictionary<int, CfgNode> blocks = new Dictionary<int, CfgNode>();
 //		List<ExceptionHandlerData> exception_data;
 		HashSet<int> exception_objects_offsets;
 
@@ -44,7 +44,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 //			return new ControlFlowGraph (body, ToArray (), data, exception_data, exception_objects_offsets);
 //			return new ControlFlowGraph (body, ToList(), exception_objects_offsets);
-			return new ControlFlowGraph(body, ToList());
+			return new ControlFlowGraph(body, ToNodes());
 			
 		}
 
@@ -111,8 +111,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		void MarkBlockEnds (Collection<Instruction> instructions)
 		{
-			var blocks = ToList ();
-			var current = blocks [0];
+			var blocks = ToNodes().SubNodes;
+			var current = blocks[0];
 
 			for (int i = 1; i < blocks.Count; ++i) {
 				var block = blocks [i];
@@ -142,7 +142,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 				return;
 
 			block = new Node (instruction);
-			RegisterBlock (block);
+			RegisterBlock(block);
 		}
 
 		void ComputeInstructionData ()
@@ -284,25 +284,25 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return type.FullName == "System.Void";
 		}
 
-		List<Node> ToList()
-		{
-			var result = new List<Node>(blocks.Count);
-			result.AddRange(blocks.Values);
-			result.Sort();
-			ComputeIndexes (result);
-			return result;
-		}
+//		List<Node> ToList()
+//		{
+//			var result = new List<Node>(blocks.Count);
+//			result.AddRange(blocks.Values);
+//			result.Sort();
+//			ComputeIndexes (result);
+//			return result;
+//		}
 
 		Nodes ToNodes()
 		{
 			var result = new Nodes();
 			result.SubNodes.AddRange(blocks.Values);
-			result.Sort();
-			ComputeIndexes(result);
+			result.SubNodes.Sort();
+			ComputeIndexes(result.SubNodes);
 			return result;
 		}
 
-		static void ComputeIndexes (List<Node> blocks)
+		static void ComputeIndexes (List<CfgNode> blocks)
 		{
 			for (int i = 0; i < blocks.Count; i++)
 				blocks [i].Index = i;
@@ -405,14 +405,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return (Instruction) instruction.Operand;
 		}
 
-		void RegisterBlock (Node block)
+		void RegisterBlock (CfgNode block)
 		{
 			blocks.Add (block.First.Offset, block);
 		}
 
-		Node GetBlock (Instruction firstInstruction)
+		CfgNode GetBlock (Instruction firstInstruction)
 		{
-			Node block;
+			CfgNode block;
 			blocks.TryGetValue (firstInstruction.Offset, out block);
 			return block;
 		}

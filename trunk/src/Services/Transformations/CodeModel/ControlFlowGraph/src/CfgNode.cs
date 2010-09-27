@@ -94,7 +94,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		#region IEnumerable
 		
-		public IEnumerator<Instruction> GetEnumerator()
+		public virtual IEnumerator<Instruction> GetEnumerator()
 		{
 			var instruction = first;
 			while (true) {
@@ -112,7 +112,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			return GetEnumerator ();
 		}
 		
-		public IEnumerable<CfgNode> GetNodesEnumerator()
+		public virtual IEnumerable<CfgNode> GetNodesEnumerator()
 		{
 			yield return this;
 		}

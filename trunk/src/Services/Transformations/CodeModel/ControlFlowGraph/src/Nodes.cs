@@ -43,7 +43,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		#region IEnumerable
 		
-		public IEnumerator<Instruction> GetEnumerator()
+		public override IEnumerator<Instruction> GetEnumerator()
 		{
 			var instruction = First;
 			while (true) {
@@ -61,7 +61,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			return GetEnumerator ();
 		}
 		
-		public IEnumerable<CfgNode> GetNodesEnumerator()
+		public override IEnumerable<CfgNode> GetNodesEnumerator()
 		{
 			foreach (CfgNode node in SubNodes) yield return node;
 		}
