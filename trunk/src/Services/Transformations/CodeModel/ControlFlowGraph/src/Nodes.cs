@@ -11,17 +11,18 @@ using Mono.Cecil.Cil;
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 {
 	/// <summary>
-	/// Description of Node.
+	/// Description of Nodes.
 	/// </summary>
-	public class Node : CfgNode
+	public class Nodes : CfgNode
 	{
+		
 		#region Constructors
 		
-		public Node(Instruction first) : base (first)
+		public Nodes(Instruction first) : base(first)
 		{
 		}
 		
 		#endregion
-				
+		
 	}
 }
