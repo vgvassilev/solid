@@ -23,11 +23,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		MethodBody body;
 //		Dictionary<int, InstructionData> data;
-		Dictionary<int, Node> blocks = new Dictionary<int, Node> ();
+		Dictionary<int, Node> blocks = new Dictionary<int, Node>();
 //		List<ExceptionHandlerData> exception_data;
 		HashSet<int> exception_objects_offsets;
 
-		internal ControlFlowGraphBuilder (MethodDefinition method)
+		internal ControlFlowGraphBuilder(MethodDefinition method)
 		{
 			body = method.Body;
 
@@ -35,19 +35,20 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 				exception_objects_offsets = new HashSet<int> ();
 		}
 
-		public ControlFlowGraph CreateGraph ()
+		public ControlFlowGraph CreateGraph()
 		{
-			DelimitBlocks ();
-			ConnectBlocks ();
-			ComputeInstructionData ();
-			ComputeExceptionHandlerData ();
+			DelimitBlocks();
+			ConnectBlocks();
+			ComputeInstructionData();
+			ComputeExceptionHandlerData();
 
 //			return new ControlFlowGraph (body, ToArray (), data, exception_data, exception_objects_offsets);
-			return new ControlFlowGraph (body, ToList(), exception_objects_offsets);
+//			return new ControlFlowGraph (body, ToList(), exception_objects_offsets);
+			return new ControlFlowGraph(body, ToList());
 			
 		}
 
-		void DelimitBlocks ()
+		void DelimitBlocks()
 		{
 			var instructions = body.Instructions;
 			MarkBlockStarts (instructions);
@@ -289,6 +290,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			result.AddRange(blocks.Values);
 			result.Sort();
 			ComputeIndexes (result);
+			return result;
+		}
+
+		Nodes ToNodes()
+		{
+			var result = new Nodes();
+			result.SubNodes.AddRange(blocks.Values);
+			result.Sort();
+			ComputeIndexes(result);
 			return result;
 		}
 

@@ -7,14 +7,26 @@
 using System;
 
 using Mono.Cecil.Cil;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 {
 	/// <summary>
 	/// Description of Nodes.
 	/// </summary>
-	public class Nodes : CfgNode
+	public class Nodes : CfgNode, IEnumerable<Instruction>
 	{
+		
+		#region Fields & Properties
+		
+		List<CfgNode> subNodes = new List<CfgNode>();
+		public List<CfgNode> SubNodes {
+			get { return subNodes; }
+			set { subNodes = value; }
+		}
+		
+		#endregion
 		
 		#region Constructors
 		
@@ -22,7 +34,38 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 		{
 		}
 		
-		#endregion
+		public Nodes(List<CfgNode> subNodes)
+		{
+			this.subNodes = subNodes;
+		}
 		
+		#endregion
+
+		#region IEnumerable
+		
+		public IEnumerator<Instruction> GetEnumerator()
+		{
+			var instruction = First;
+			while (true) {
+				yield return instruction;
+
+				if (instruction == Last)
+					yield break;
+
+				instruction = instruction.Next;
+			}
+		}
+
+		IEnumerator IEnumerable.GetEnumerator ()
+		{
+			return GetEnumerator ();
+		}
+		
+		public IEnumerable<CfgNode> GetNodesEnumerator()
+		{
+			foreach (CfgNode node in SubNodes) yield return node;
+		}
+
+		#endregion		
 	}
 }

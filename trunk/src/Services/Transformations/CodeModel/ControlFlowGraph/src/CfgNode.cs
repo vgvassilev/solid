@@ -14,12 +14,11 @@ using Mono.Cecil.Cil;
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph 
 {
 
-	public class CfgNode
+	public class CfgNode: IEnumerable<Instruction>, IComparable<CfgNode>
 	{
 		#region Fields & Properties
 		
-		public static readonly List<CfgNode> NoSuccessors = new List<CfgNode>(0);
-		public static readonly List<CfgNode> NoPredecessor = new List<CfgNode>(0);
+		public static readonly List<CfgNode> Empty = new List<CfgNode>(0);
 
 		int index;
 		public int Index {
@@ -33,21 +32,91 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			set { successors = value; }
 		}		
 		
-		List<CfgNode> predecessor;		
+		List<CfgNode> predecessor;
 		public List<CfgNode> Predecessor {
 			get { return predecessor;  }
 			set { predecessor = value; }
+		}
+
+		Instruction first;
+		public virtual Instruction First {
+			get { return first; }
+			set { first = value; }
+		}
+
+		Instruction last;
+		public virtual Instruction Last {
+			get { return last; }
+			set { last = value; }
 		}
 
 		#endregion
 		
 		#region Constructors
 		
-		public CfgNode ()
+		public CfgNode()
 		{
-		}		
+		}
 		
+		public CfgNode(List<CfgNode> successors, List<CfgNode> predecessor)
+		{
+			this.successors = successors;
+			this.predecessor = predecessor;
+		}
+
+		public CfgNode(Instruction first)
+		{
+			if (first == null)
+				throw new ArgumentNullException ("first");
+
+			this.first = first;
+		}
+		
+		public CfgNode(Instruction first, Instruction last)
+		{
+			if (first == null || last == null)
+				throw new ArgumentNullException ("first");
+
+			this.first = first;
+			this.last = last;
+		}
+
 		#endregion
 				
+		#region IComparable
+
+		public int CompareTo(CfgNode node)
+		{
+			return first.Offset - node.First.Offset;
+		}
+		
+		#endregion
+
+		#region IEnumerable
+		
+		public IEnumerator<Instruction> GetEnumerator()
+		{
+			var instruction = first;
+			while (true) {
+				yield return instruction;
+
+				if (instruction == last)
+					yield break;
+
+				instruction = instruction.Next;
+			}
+		}
+
+		IEnumerator IEnumerable.GetEnumerator ()
+		{
+			return GetEnumerator ();
+		}
+		
+		public IEnumerable<CfgNode> GetNodesEnumerator()
+		{
+			yield return this;
+		}
+
+		#endregion		
 	}
 }

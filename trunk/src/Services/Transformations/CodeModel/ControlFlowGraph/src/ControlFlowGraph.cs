@@ -16,50 +16,50 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	public class ControlFlowGraph {
 
 		MethodBody body;
-		List<Node> nodes;
+		Nodes nodes;
 //		Dictionary<int, InstructionData> data;
 //		List<ExceptionHandlerData> exception_data;
-		HashSet<int> exception_objects_offsets;
+//		HashSet<int> exception_objects_offsets;
 
 		public MethodBody MethodBody {
 			get { return body; }
 		}
 
-		public List<Node> Nodes {
+		public Nodes Nodes {
 			get { return nodes; }
 		}
 
-		public ControlFlowGraph (
+		public ControlFlowGraph(
 			MethodBody body,
-			List<Node> blocks,
+			Nodes nodes)
 //			Dictionary<int, InstructionData> instructionData,
 //			List<ExceptionHandlerData> exception_data,
-			HashSet<int> exception_objects_offsets)
+//			HashSet<int> exception_objects_offsets
 		{
 			this.body = body;
-			this.nodes = blocks;
+			this.nodes = nodes;
 //			this.data = instructionData;
 //			this.exception_data = exception_data;
-			this.exception_objects_offsets = exception_objects_offsets;
+//			this.exception_objects_offsets = exception_objects_offsets;
 		}
 
-//		public InstructionData GetData (Instruction instruction)
+//		public InstructionData GetData(Instruction instruction)
 //		{
-//			return data [instruction.Offset];
+//			return data[instruction.Offset];
 //		}
 
 //		public ExceptionHandlerData[] GetExceptionData()
 //		{
-//			return exception_data.ToArray ();
+//			return exception_data.ToArray();
 //		}
 
-		public bool HasExceptionObject (int offset)
-		{
-			if (exception_objects_offsets == null)
-				return false;
-
-			return exception_objects_offsets.Contains (offset);
-		}	
+//		public bool HasExceptionObject(int offset)
+//		{
+//			if (exception_objects_offsets == null)
+//				return false;
+//
+//			return exception_objects_offsets.Contains(offset);
+//		}	
 		
 		public override string ToString()
 		{
@@ -68,9 +68,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			return writer.ToString ();
 		}
 
-		public void FormatControlFlowGraph (TextWriter writer)
+		public void FormatControlFlowGraph(TextWriter writer)
 		{
-			foreach (Node node in Nodes) {
+			foreach (Node node in Nodes.GetNodesEnumerator()) {
 				writer.WriteLine ("block {0}:", node.Index);
 				writer.WriteLine ("\tbody:");
 				foreach (Instruction instruction in node) {

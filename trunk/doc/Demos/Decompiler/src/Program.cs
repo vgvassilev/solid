@@ -55,12 +55,12 @@ namespace SolidOpt.Documentation.Samples.Decompiler
 		
 		static MethodDefinition GetProgramMethod (string name)
 		{
-			return GetProgramAssembly ().MainModule.GetType ("SolidOpt.Documentation.Samples.Decompiler.Program").Methods[1];
+			return GetProgramAssembly().MainModule.GetType("SolidOpt.Documentation.Samples.Decompiler.Program").Methods[1];
 		}
 	
 		static AssemblyDefinition GetProgramAssembly ()
 		{
-			var assembly = AssemblyDefinition.ReadAssembly (typeof (Program).Module.FullyQualifiedName);
+			var assembly = AssemblyDefinition.ReadAssembly(typeof(Program).Module.FullyQualifiedName);
 			return assembly;
 		}
 		

@@ -14,16 +14,35 @@ using Cecil.Decompiler;
 using Cecil.Decompiler.Cil;
 using Cecil.Decompiler.Languages;
 
-namespace SolidOpt.Documentation.Samples.Inline
+namespace SolidOpt //.Documentation.Samples.Inline
 {
 	class Program
 	{
 		public static void Main(string[] args)
 		{
-			var method = GetProgramMethod("Inliner");
-			var cfg = ControlFlowGraph.Create(method);
-			FormatControlFlowGraph(Console.Out, cfg);
+			var method1 = GetProgramMethod("Inliner");
+			FormatIL(Console.Out, method1);
+			//var cfg = ControlFlowGraph.Create(method);
+			//FormatControlFlowGraph(Console.Out, cfg);
 			Console.WriteLine ("--------------------");
+
+			var method2 = GetProgramMethod("SubAB");
+			FormatIL(Console.Out, method2);
+			//cfg = ControlFlowGraph.Create(method);
+			//FormatControlFlowGraph(Console.Out, cfg);
+			Console.WriteLine ("--------------------");
+			
+			var tr = new SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.InlineTransformer();
+			Console.WriteLine ("--------------------");
+			method1 = tr.Optimize(method1);
+			Console.WriteLine ("--------------------");
+			FormatIL(Console.Out, method1);
+			//cfg = ControlFlowGraph.Create(method);
+			//FormatControlFlowGraph(Console.Out, cfg);
+			Console.WriteLine ("--------------------");
+			
+			
+/*
 
 //			var store = AnnotationStore.CreateStore (cfg, BlockOptimization.Detailed);
 //			PrintAnnotations (method, store);
@@ -32,7 +51,7 @@ namespace SolidOpt.Documentation.Samples.Inline
 			//var body = method.Body.Decompile(language);
 			var writer = language.GetWriter(new PlainTextFormatter (Console.Out));
 			writer.Write(method);
-			
+*/			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
@@ -59,9 +78,19 @@ namespace SolidOpt.Documentation.Samples.Inline
 			}
 		}
 		
+		public static void FormatIL(TextWriter writer, MethodDefinition method)
+		{
+			writer.WriteLine(method.ToString());
+			foreach(Instruction instruction in method.Body.Instructions) {
+				writer.Write("\t");
+				Formatter.WriteInstruction(writer, instruction);
+				writer.WriteLine();
+			}
+		}
+		
 		static MethodDefinition GetProgramMethod(string name)
 		{
-			foreach (MethodDefinition method in GetProgramAssembly().MainModule.GetType("SolidOpt.Documentation.Samples.Inline.Program").Methods) {
+			foreach (MethodDefinition method in GetProgramAssembly().MainModule.GetType("SolidOpt.Program").Methods) { //.Documentation.Samples.Inline.Program").Methods) {
 				if (method.Name == name) return method;
 			}
 			return null;
@@ -85,7 +114,8 @@ namespace SolidOpt.Documentation.Samples.Inline
 			else
 				Console.Write(a + b + c);
 		}
-		
+
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 		public static int SubAB(int a, int b)
 		{
 			return a - b;
