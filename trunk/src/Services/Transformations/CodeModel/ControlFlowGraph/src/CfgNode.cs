@@ -17,8 +17,8 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	{
 		#region Fields & Properties
 		
-		static readonly List<CfgNode> NoSuccessors = new List<CfgNode>(0);
-		static readonly List<CfgNode> NoPredecessor = new List<CfgNode>(0);
+		public static readonly List<CfgNode> NoSuccessors = new List<CfgNode>(0);
+		public static readonly List<CfgNode> NoPredecessor = new List<CfgNode>(0);
 
 		int index;
 		Instruction first;		

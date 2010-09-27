@@ -22,8 +22,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 	class ControlFlowGraphBuilder {
 
 		MethodBody body;
-		Dictionary<int, InstructionData> data;
-		Dictionary<int, Node> blocks = new Dictionary<int, Node> ();
+//		Dictionary<int, InstructionData> data;
+		Dictionary<int, CfgNode> blocks = new Dictionary<int, CfgNode> ();
 		List<ExceptionHandlerData> exception_data;
 		HashSet<int> exception_objects_offsets;
 
@@ -42,7 +42,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			ComputeInstructionData ();
 			ComputeExceptionHandlerData ();
 
-			return new ControlFlowGraph (body, ToArray (), data, exception_data, exception_objects_offsets);
+//			return new ControlFlowGraph (body, ToArray (), data, exception_data, exception_objects_offsets);
+			return new ControlFlowGraph (body, ToList(), exception_data, exception_objects_offsets);
+			
 		}
 
 		void DelimitBlocks ()
@@ -108,10 +110,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		void MarkBlockEnds (Collection<Instruction> instructions)
 		{
-			var blocks = ToArray ();
+			var blocks = ToList ();
 			var current = blocks [0];
 
-			for (int i = 1; i < blocks.Length; ++i) {
+			for (int i = 1; i < blocks.Count; ++i) {
 				var block = blocks [i];
 				current.Last = block.First.Previous;
 				current = block;
@@ -144,12 +146,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		void ComputeInstructionData ()
 		{
-			data = new Dictionary<int, InstructionData> ();
-
-			var visited = new HashSet<Node> ();
-
-			foreach (var block in this.blocks.Values)
-				ComputeInstructionData (visited, 0, block);
+//			data = new Dictionary<int, InstructionData> ();
+//
+//			var visited = new HashSet<Node> ();
+//
+//			foreach (var block in this.blocks.Values)
+//				ComputeInstructionData (visited, 0, block);
 		}
 
 		void ComputeInstructionData (HashSet<Node> visited, int stackHeight, Node block)
@@ -159,11 +161,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 			visited.Add (block);
 
-			foreach (var instruction in block)
-				stackHeight = ComputeInstructionData (stackHeight, instruction);
+//			foreach (var instruction in block)
+//				stackHeight = ComputeInstructionData (stackHeight, instruction);
 
-			foreach (var successor in block.Successors)
-				ComputeInstructionData (visited, stackHeight, successor);
+//			foreach (var successor in block.Successors)
+//				ComputeInstructionData (visited, stackHeight, successor);
 		}
 
 		bool IsCatchStart (Instruction instruction)
@@ -174,16 +176,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return exception_objects_offsets.Contains (instruction.Offset);
 		}
 
-		int ComputeInstructionData (int stackHeight, Instruction instruction)
-		{
-			if (IsCatchStart (instruction))
-				stackHeight++;
-
-			int before = stackHeight;
-			int after = ComputeNewStackHeight (stackHeight, instruction);
-			data.Add (instruction.Offset, new InstructionData (before, after));
-			return after;
-		}
+//		int ComputeInstructionData (int stackHeight, Instruction instruction)
+//		{
+//			if (IsCatchStart (instruction))
+//				stackHeight++;
+//
+//			int before = stackHeight;
+//			int after = ComputeNewStackHeight (stackHeight, instruction);
+//			data.Add (instruction.Offset, new InstructionData (before, after));
+//			return after;
+//		}
 
 		int ComputeNewStackHeight (int stackHeight, Instruction instruction)
 		{
@@ -281,18 +283,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return type.FullName == "System.Void";
 		}
 
-		Node [] ToArray ()
+		List<CfgNode> ToList()
 		{
-			var result = new Node [blocks.Count];
-			blocks.Values.CopyTo (result, 0);
-			Array.Sort (result);
+			var result = new List<CfgNode>(blocks.Count);
+			result.AddRange(blocks.Values);
+			result.Sort();
 			ComputeIndexes (result);
 			return result;
 		}
 
-		static void ComputeIndexes (Node [] blocks)
+		static void ComputeIndexes (List<CfgNode> blocks)
 		{
-			for (int i = 0; i < blocks.Length; i++)
+			for (int i = 0; i < blocks.Count; i++)
 				blocks [i].Index = i;
 		}
 
@@ -314,23 +316,31 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 				if (HasMultipleBranches (instruction)) {
 					var blocks = GetBranchTargetsBlocks (instruction);
 					if (instruction.Next != null)
-						blocks = AddBlock (GetBlock (instruction.Next), blocks);
+						blocks.Add(GetBlock (instruction.Next));
 
 					block.Successors = blocks;
 					break;
 				}
 
 				var target = GetBranchTargetBlock (instruction);
-				if (instruction.OpCode.FlowControl == FlowControl.Cond_Branch && instruction.Next != null)
-					block.Successors = new [] { target, GetBlock (instruction.Next) };
-				else
-					block.Successors = new [] { target };
+				if (instruction.OpCode.FlowControl == FlowControl.Cond_Branch && instruction.Next != null) {
+					block.Successors = new List<CfgNode>();
+					block.Successors.Add(target);
+					block.Successors.Add(GetBlock (instruction.Next));
+					
+				}
+				else {
+					block.Successors = new List<CfgNode>();
+					block.Successors.Add(target);
+				}
 				break;
 			}
 			case FlowControl.Call:
 			case FlowControl.Next:
-				if (null != instruction.Next)
-					block.Successors = new [] { GetBlock (instruction.Next) };
+				if (null != instruction.Next) {
+					block.Successors = new List<CfgNode>();
+					block.Successors.Add(GetBlock (instruction.Next));
+				}
 
 				break;
 			case FlowControl.Return:
@@ -345,26 +355,27 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			}
 		}
 
-		static Node [] AddBlock (Node block, Node [] blocks)
-		{
-			var result = new Node [blocks.Length + 1];
-			Array.Copy (blocks, result, blocks.Length);
-			result [result.Length - 1] = block;
-
-			return result;
-		}
+//		static List<CfgNode> AddBlock (CfgNode block, List<CfgNode> blocks)
+//		{
+//			
+//			var result = new Node [blocks.Length + 1];
+//			Array.Copy (blocks, result, blocks.Length);
+//			result [result.Length - 1] = block;
+//
+//			return result;
+//		}
 
 		static bool HasMultipleBranches (Instruction instruction)
 		{
 			return instruction.OpCode.Code == Code.Switch;
 		}
 
-		Node [] GetBranchTargetsBlocks (Instruction instruction)
+		List<CfgNode> GetBranchTargetsBlocks (Instruction instruction)
 		{
 			var targets = GetBranchTargets (instruction);
-			var blocks = new Node [targets.Length];
+			var blocks = new List<CfgNode>(targets.Length);
 			for (int i = 0; i < targets.Length; i++)
-				blocks [i] = GetBlock (targets [i]);
+				blocks.Add(GetBlock (targets [i]));
 
 			return blocks;
 		}
@@ -374,7 +385,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return (Instruction []) instruction.Operand;
 		}
 
-		Node GetBranchTargetBlock (Instruction instruction)
+		CfgNode GetBranchTargetBlock (Instruction instruction)
 		{
 			return GetBlock (GetBranchTarget (instruction));
 		}
@@ -384,14 +395,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return (Instruction) instruction.Operand;
 		}
 
-		void RegisterBlock (Node block)
+		void RegisterBlock (CfgNode block)
 		{
 			blocks.Add (block.First.Offset, block);
 		}
 
-		Node GetBlock (Instruction firstInstruction)
+		CfgNode GetBlock (Instruction firstInstruction)
 		{
-			Node block;
+			CfgNode block;
 			blocks.TryGetValue (firstInstruction.Offset, out block);
 			return block;
 		}
@@ -441,9 +452,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			}
 		}
 
-		BlockRange ComputeRange (Instruction start, Instruction end)
+		Nodes ComputeRange (Instruction start, Instruction end)
 		{
-			return new BlockRange (blocks [start.Offset], blocks [end.Offset]);
+			throw new NotImplementedException();
+//			return new BlockRange (blocks [start.Offset], blocks [end.Offset]);
 		}
 	}
 }
