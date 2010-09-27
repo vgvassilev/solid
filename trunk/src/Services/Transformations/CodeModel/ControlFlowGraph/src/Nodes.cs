@@ -18,7 +18,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 		
 		#region Constructors
 		
-		public Nodes(Instruction first) : base(first)
+		public Nodes()
 		{
 		}
 		

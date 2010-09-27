@@ -31,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\CfgNode.cs" />
-    <Compile Include="src\ExceptionHandlerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\ControlFlowGraph.cs" />
     <Compile Include="src\Node.cs" />

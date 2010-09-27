@@ -23,8 +23,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		MethodBody body;
 //		Dictionary<int, InstructionData> data;
-		Dictionary<int, CfgNode> blocks = new Dictionary<int, CfgNode> ();
-		List<ExceptionHandlerData> exception_data;
+		Dictionary<int, Node> blocks = new Dictionary<int, Node> ();
+//		List<ExceptionHandlerData> exception_data;
 		HashSet<int> exception_objects_offsets;
 
 		internal ControlFlowGraphBuilder (MethodDefinition method)
@@ -43,7 +43,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			ComputeExceptionHandlerData ();
 
 //			return new ControlFlowGraph (body, ToArray (), data, exception_data, exception_objects_offsets);
-			return new ControlFlowGraph (body, ToList(), exception_data, exception_objects_offsets);
+			return new ControlFlowGraph (body, ToList(), exception_objects_offsets);
 			
 		}
 
@@ -283,16 +283,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return type.FullName == "System.Void";
 		}
 
-		List<CfgNode> ToList()
+		List<Node> ToList()
 		{
-			var result = new List<CfgNode>(blocks.Count);
+			var result = new List<Node>(blocks.Count);
 			result.AddRange(blocks.Values);
 			result.Sort();
 			ComputeIndexes (result);
 			return result;
 		}
 
-		static void ComputeIndexes (List<CfgNode> blocks)
+		static void ComputeIndexes (List<Node> blocks)
 		{
 			for (int i = 0; i < blocks.Count; i++)
 				blocks [i].Index = i;
@@ -395,14 +395,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return (Instruction) instruction.Operand;
 		}
 
-		void RegisterBlock (CfgNode block)
+		void RegisterBlock (Node block)
 		{
 			blocks.Add (block.First.Offset, block);
 		}
 
-		CfgNode GetBlock (Instruction firstInstruction)
+		Node GetBlock (Instruction firstInstruction)
 		{
-			CfgNode block;
+			Node block;
 			blocks.TryGetValue (firstInstruction.Offset, out block);
 			return block;
 		}
@@ -413,44 +413,44 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			if (handlers.Count == 0)
 				return;
 
-			var datas = new Dictionary<int, ExceptionHandlerData> ();
+//			var datas = new Dictionary<int, ExceptionHandlerData> ();
 
-			foreach (ExceptionHandler handler in handlers)
-				ComputeExceptionHandlerData (datas, handler);
+//			foreach (ExceptionHandler handler in handlers)
+//				ComputeExceptionHandlerData (datas, handler);
 
-			exception_data = new List<ExceptionHandlerData> (datas.Values);
-			exception_data.Sort ();
+//			exception_data = new List<ExceptionHandlerData> (datas.Values);
+//			exception_data.Sort ();
 		}
 
-		void ComputeExceptionHandlerData (Dictionary<int, ExceptionHandlerData> datas, ExceptionHandler handler)
-		{
-			ExceptionHandlerData data;
-			if (!datas.TryGetValue (handler.TryStart.Offset, out data)) {
-				data = new ExceptionHandlerData (ComputeRange (handler.TryStart, handler.TryEnd));
-				datas.Add (handler.TryStart.Offset, data);
-			}
+//		void ComputeExceptionHandlerData (Dictionary<int, ExceptionHandlerData> datas, ExceptionHandler handler)
+//		{
+//			ExceptionHandlerData data;
+//			if (!datas.TryGetValue (handler.TryStart.Offset, out data)) {
+//				data = new ExceptionHandlerData (ComputeRange (handler.TryStart, handler.TryEnd));
+//				datas.Add (handler.TryStart.Offset, data);
+//			}
+//
+//			ComputeExceptionHandlerData (data, handler);
+//		}
 
-			ComputeExceptionHandlerData (data, handler);
-		}
-
-		void ComputeExceptionHandlerData (ExceptionHandlerData data, ExceptionHandler handler)
-		{
-			var range = ComputeRange (handler.HandlerStart, handler.HandlerEnd);
-		
-			switch (handler.HandlerType) {
-			case ExceptionHandlerType.Catch:
-				data.Catches.Add (new CatchHandlerData (handler.CatchType, range));
-				break;
-			case ExceptionHandlerType.Fault:
-				data.FaultRange = range;
-				break;
-			case ExceptionHandlerType.Finally:
-				data.FinallyRange = range;
-				break;
-			case ExceptionHandlerType.Filter:
-				throw new NotImplementedException ();
-			}
-		}
+//		void ComputeExceptionHandlerData (ExceptionHandlerData data, ExceptionHandler handler)
+//		{
+//			var range = ComputeRange (handler.HandlerStart, handler.HandlerEnd);
+//		
+//			switch (handler.HandlerType) {
+//			case ExceptionHandlerType.Catch:
+//				data.Catches.Add (new CatchHandlerData (handler.CatchType, range));
+//				break;
+//			case ExceptionHandlerType.Fault:
+//				data.FaultRange = range;
+//				break;
+//			case ExceptionHandlerType.Finally:
+//				data.FinallyRange = range;
+//				break;
+//			case ExceptionHandlerType.Filter:
+//				throw new NotImplementedException ();
+//			}
+//		}
 
 		Nodes ComputeRange (Instruction start, Instruction end)
 		{

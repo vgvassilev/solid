@@ -16,30 +16,30 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	public class ControlFlowGraph {
 
 		MethodBody body;
-		List<CfgNode> nodes;
+		List<Node> nodes;
 //		Dictionary<int, InstructionData> data;
-		List<ExceptionHandlerData> exception_data;
+//		List<ExceptionHandlerData> exception_data;
 		HashSet<int> exception_objects_offsets;
 
 		public MethodBody MethodBody {
 			get { return body; }
 		}
 
-		public List<CfgNode> Nodes {
+		public List<Node> Nodes {
 			get { return nodes; }
 		}
 
 		public ControlFlowGraph (
 			MethodBody body,
-			List<CfgNode> blocks,
+			List<Node> blocks,
 //			Dictionary<int, InstructionData> instructionData,
-			List<ExceptionHandlerData> exception_data,
+//			List<ExceptionHandlerData> exception_data,
 			HashSet<int> exception_objects_offsets)
 		{
 			this.body = body;
 			this.nodes = blocks;
 //			this.data = instructionData;
-			this.exception_data = exception_data;
+//			this.exception_data = exception_data;
 			this.exception_objects_offsets = exception_objects_offsets;
 		}
 
@@ -48,10 +48,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 //			return data [instruction.Offset];
 //		}
 
-		public ExceptionHandlerData[] GetExceptionData()
-		{
-			return exception_data.ToArray ();
-		}
+//		public ExceptionHandlerData[] GetExceptionData()
+//		{
+//			return exception_data.ToArray ();
+//		}
 
 		public bool HasExceptionObject (int offset)
 		{
@@ -70,7 +70,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		public void FormatControlFlowGraph (TextWriter writer)
 		{
-			foreach (CfgNode node in Nodes) {
+			foreach (Node node in Nodes) {
 				writer.WriteLine ("block {0}:", node.Index);
 				writer.WriteLine ("\tbody:");
 				foreach (Instruction instruction in node) {
