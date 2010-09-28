@@ -41,7 +41,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 				throw new ArgumentException ();
 
 			var builder = new ControlFlowGraphBuilder (source.Method);
-			return builder.CreateGraph ();
+			return builder.Create();
 		}
 		
 	}

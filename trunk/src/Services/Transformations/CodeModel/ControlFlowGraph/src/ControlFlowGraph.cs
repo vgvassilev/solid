@@ -17,9 +17,6 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		MethodBody body;
 		Nodes nodes;
-//		Dictionary<int, InstructionData> data;
-//		List<ExceptionHandlerData> exception_data;
-//		HashSet<int> exception_objects_offsets;
 
 		public MethodBody MethodBody {
 			get { return body; }
@@ -29,38 +26,12 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			get { return nodes; }
 		}
 
-		public ControlFlowGraph(
-			MethodBody body,
-			Nodes nodes)
-//			Dictionary<int, InstructionData> instructionData,
-//			List<ExceptionHandlerData> exception_data,
-//			HashSet<int> exception_objects_offsets
+		public ControlFlowGraph(MethodBody body, Nodes nodes)
 		{
 			this.body = body;
 			this.nodes = nodes;
-//			this.data = instructionData;
-//			this.exception_data = exception_data;
-//			this.exception_objects_offsets = exception_objects_offsets;
 		}
-
-//		public InstructionData GetData(Instruction instruction)
-//		{
-//			return data[instruction.Offset];
-//		}
-
-//		public ExceptionHandlerData[] GetExceptionData()
-//		{
-//			return exception_data.ToArray();
-//		}
-
-//		public bool HasExceptionObject(int offset)
-//		{
-//			if (exception_objects_offsets == null)
-//				return false;
-//
-//			return exception_objects_offsets.Contains(offset);
-//		}	
-		
+	
 		public override string ToString()
 		{
 			StringWriter writer = new StringWriter ();

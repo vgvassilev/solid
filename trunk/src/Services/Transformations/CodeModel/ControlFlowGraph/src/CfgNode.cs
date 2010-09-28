@@ -83,6 +83,12 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		#endregion
 				
+		public bool Contains(Instruction instruction)
+		{
+			return (instruction.Offset >= First.Offset && instruction.Offset <= Last.Offset);
+			
+		}
+		
 		#region IComparable
 
 		public int CompareTo(CfgNode node)
