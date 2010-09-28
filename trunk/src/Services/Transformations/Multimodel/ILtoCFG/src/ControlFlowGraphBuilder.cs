@@ -143,6 +143,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 			var instruction = node.Last;
 			switch (instruction.OpCode.FlowControl) {
+			case FlowControl.Call:
+			case FlowControl.Next:					
 			case FlowControl.Branch:
 			case FlowControl.Cond_Branch: {
 //				if (HasMultipleBranches (instruction)) {
@@ -167,14 +169,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 //				}
 //				break;
 			}
-			case FlowControl.Call:
-			case FlowControl.Next:
-				if (instruction.Next != null) {
-//					block.Successors = new List<CfgNode>();
-					node.Successors.Add(GetNode(instruction.Next));
-				}
 
-				break;
 			case FlowControl.Return:
 			case FlowControl.Throw:
 				break;

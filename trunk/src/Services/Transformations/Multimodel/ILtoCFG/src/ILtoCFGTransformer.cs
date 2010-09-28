@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using SolidOpt.Services.Transformations.Multimodel;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 
 namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
@@ -17,7 +18,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 	/// <summary>
 	/// Description of CilToControlFlowGraph.
 	/// </summary>
-	public class CilToControlFlowGraph : DecompilationStep
+	public class CilToControlFlowGraph : DecompilationStep, IDecompile<MethodDefinition, ControlFlowGraph>
 	{		
 		#region Constructors
 		
@@ -44,5 +45,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return builder.Create();
 		}
 		
+		
+		public ControlFlowGraph Decompile(MethodDefinition source)
+		{
+			return Process(source.Body);
+		}
 	}
 }
