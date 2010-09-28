@@ -2,6 +2,7 @@
 ..\..\..\..\..\..\src\Services\Transformations\Multimodel\ASTtoIL\bin
 ..\..\..\..\..\..\src\Services\Transformations\Multimodel\CilToControlFlowGraph\bin
 ..\..\..\..\..\..\src\Services\Transformations\Multimodel\ILtoAST\bin
+..\..\..\..\..\..\src\Services\Transformations\Multimodel\ILtoCFG\bin
 
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantFolding\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantPropagation\bin
