@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
     <RootNamespace>test</RootNamespace>
-    <AssemblyName>test</AssemblyName>
+    <AssemblyName>SolidOpt.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
@@ -37,10 +37,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
+    <Compile Include="Core\Loader\Loader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\src\Core\Loader\SolidOpt.Core.Loader.csproj">
+      <Project>{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}</Project>
+      <Name>SolidOpt.Core.Loader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Services\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
       <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
       <Name>nunit.core.dll</Name>
@@ -53,5 +61,7 @@
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
       <Name>nunit.framework</Name>
     </ProjectReference>
+    <Folder Include="Core" />
+    <Folder Include="Core\Loader" />
   </ItemGroup>
 </Project>

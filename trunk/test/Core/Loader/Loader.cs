@@ -9,16 +9,18 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
-namespace test
+using SolidOpt.Core.Loader;
+
+namespace SolidOpt.Core.Loader.Tests
 {
 	/// <summary>
-	/// Description of MyClass.
+	/// Loader test cases.
 	/// </summary>
 	[TestFixture]
-	public class MyClass
+	public class Loader
 	{
 		[Test]
-		public void TestMethod1()
+		public void TestBaseLoader()
 		{
 			int a = 5;
 			if (a == 6)
