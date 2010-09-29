@@ -49,10 +49,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 //			ComputeInstructionData();
 //			ComputeExceptionHandlerData();
 
-//			return new ControlFlowGraph (body, ToArray (), data, exception_data, exception_objects_offsets);
-//			return new ControlFlowGraph (body, ToList(), exception_objects_offsets);
-//			return new ControlFlowGraph(body, ToNodes());
-			return null;
+			return new ControlFlowGraph(body, nodes);
 		}
 		
 		#endregion
@@ -115,19 +112,39 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			return (Instruction) instruction.Operand;
 		}		
 		
+				
+		
 		void CreateNodes()
 		{
-			int first = 0;
 			Node node;
-			for (int i = 1; i < starts.Count; i++) {
+			for (int i = 0; i < starts.Count; i++) {
 				if (starts[i]) {
-					node = new Node(body.Instructions[first], body.Instructions[i - 1]);
+					int first = i;
+					int last = body.Instructions.Count - 1;
+					while(!starts[i])
+						i++;
+					if (body.Instructions[i] != null)
+						last = i;
+					
+					node = new Node(body.Instructions[first], body.Instructions[last]);
 					nodes.SubNodes.Add(node);
-					first = i;
 				}
-			}
-
+			}			
 		}
+		
+//		void CreateNodes()
+//		{
+//			int first = 0;
+//			Node node;
+//			for (int i = 1; i < starts.Count; i++) {
+//				if (starts[i]) {
+//					node = new Node(body.Instructions[first], body.Instructions[i - 1]);
+//					nodes.SubNodes.Add(node);
+//					first = i;
+//				}
+//			}
+//
+//		}
 		
 		void ConnectNodes()
 		{
@@ -203,28 +220,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			}
 			return null;
 		}
-
 		
-		
-//		
-//		
-//		void CreateNodesAlternative()
-//		{
-//			Node node;
-//			for (int i = 0; i < starts.Count; i++) {
-//				if (starts[i]) {
-//					int first = i;
-//					int last = body.Instructions.Count - 1;
-//					while(!starts[i])
-//						i++;
-//					if (body.Instructions[i] != null)
-//						last = i;
-//					
-//					node = new Node(body.Instructions[first], body.Instructions[i - 1]);
-//					nodes.SubNodes.Add(node);
-//				}
-//			}			
-//		}		
 		
 	}
 

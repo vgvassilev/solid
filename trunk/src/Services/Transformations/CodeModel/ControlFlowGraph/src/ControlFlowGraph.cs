@@ -41,7 +41,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		public void FormatControlFlowGraph(TextWriter writer)
 		{
-			foreach (Node node in Nodes.GetNodesEnumerator()) {
+			foreach (CfgNode node in Nodes.SubNodes) {
 				writer.WriteLine ("block {0}:", node.Index);
 				writer.WriteLine ("\tbody:");
 				foreach (Instruction instruction in node) {

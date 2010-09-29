@@ -51,5 +51,9 @@
       <Project>{846d2563-5af8-4459-81c6-59a9da174849}</Project>
       <Name>SolidOpt.Services.Compatibility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

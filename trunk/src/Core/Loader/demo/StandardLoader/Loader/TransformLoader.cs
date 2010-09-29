@@ -20,6 +20,7 @@ using SolidOpt.Services.Transformations.Multimodel;
 using SolidOpt.Core.Loader;
 
 using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
 //
 using System.Collections;
@@ -46,8 +47,7 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 		{
 			string basepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("..", ".."));
 			StreamReader sr = new StreamReader(Path.Combine(basepath, "plugins.list"));
-			while (!sr.EndOfStream) {
-				string s = sr.ReadLine();
+			foreach (string s in GetPlatformDependentPath(sr))
 				if (!string.IsNullOrEmpty(s)) {
 					string name = Path.Combine(basepath, s);
 					//TODO: For files in plugins.list use "name" with $(Configuration) before filename, on fail use "name"
@@ -61,10 +61,33 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 							ServicesContainer.AddPlugins(name);
 						}
 					}
-				}
 			}
 			
 			base.LoadServices(args);
+		}
+		
+		/// <summary>
+		/// Replaces the directory separator in the file with the current dir separator.  
+		/// </summary>
+		/// <param name="sr">
+		/// A <see cref="StreamReader"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IEnumerable"/>
+		/// </returns>
+		private static IEnumerable GetPlatformDependentPath(StreamReader sr)
+		{
+			char separator = Path.DirectorySeparatorChar;
+			
+			while (!sr.EndOfStream) {
+				string s = sr.ReadLine();
+				if ( '/' != separator && s.Contains("/") ) {
+					yield return s.Replace('/', separator);
+				} 
+				else if ('\\' != separator && s.Contains("\\")) {
+					yield return s.Replace('\\', separator);
+				}
+			}
 		}
 		
 		public override void Transform(string[] args)
@@ -86,6 +109,9 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 			
 //			assembly.MainModule.LoadSymbols();
 			
+			IDecompile<MethodDefinition, ControlFlowGraph> ILtoCfgTransformer = 
+				ServicesContainer.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
+			
 			foreach (ModuleDefinition module in assembly.Modules)
 				foreach (TypeDefinition type in module.Types) 
 					for (int i = 0; i < type.Methods.Count; i++) {
@@ -93,9 +119,21 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 //						if ( i != 1 ) continue;
 						MethodDefinition method = type.Methods[i];
 						Console.WriteLine(method.ToString());
+						
+						//CFG Test section
+							
+							if (ILtoCfgTransformer != null) {
+								ControlFlowGraph cfg = ILtoCfgTransformer.Decompile(method);
+								cfg.FormatControlFlowGraph(Console.Out);
+							}
+					
+						//end
+					
 						foreach (IOptimize<MethodDefinition> transformer in IL2ILTransformers) {
 							method = transformer.Optimize(method);
 						}
+					
+					
 /* 						foreach (Instruction instruction in method.Body.Instructions) {
 								Console.Write ("\t\t");
 								Cecil.Decompiler.Cil.Formatter.WriteInstruction (Console.Out, instruction);
