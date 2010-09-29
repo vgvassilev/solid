@@ -376,6 +376,6 @@ Global
 		{846d2563-5af8-4459-81c6-59a9da174849} = {6B9C1EF2-6249-4431-B93C-BE082C299FCF}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = vendors\Mono.Cecil\Mono.Cecil.csproj
+		StartupItem = Core\Loader\demo\StandardLoader\Loader\TransformLoader.csproj
 	EndGlobalSection
 EndGlobal

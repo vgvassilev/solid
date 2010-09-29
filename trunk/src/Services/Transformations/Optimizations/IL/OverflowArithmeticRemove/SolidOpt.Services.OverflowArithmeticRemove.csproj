@@ -72,4 +72,7 @@
       <Name>SolidOpt.Services.Optimizations</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+  </ItemGroup>
 </Project>
