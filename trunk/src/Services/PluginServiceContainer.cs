@@ -47,7 +47,7 @@ namespace SolidOpt.Services
 					AddPlugins(subDirInfo);
 			} catch (System.IO.DirectoryNotFoundException e) {
 				//TODO: log e
-				// throw e;
+				throw e;
 			}
 		}
 		
@@ -115,11 +115,14 @@ namespace SolidOpt.Services
 			foreach (Type type in assembly.GetTypes())
 				if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
 					try {
-						service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
+						service = (IService)(assembly.CreateInstance(type.FullName));
+						///////service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
 						////service = (IService)(appDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
 						if (service != null)
 							serviceContainer.AddService(service);
-					} catch (Exception e) {Console.WriteLine("Error:{0}", e.ToString());}
+					} catch (Exception e) {
+						Console.WriteLine("Error:{0}", e.ToString());
+					}
 			status = Status.Created;
 		}
 		
