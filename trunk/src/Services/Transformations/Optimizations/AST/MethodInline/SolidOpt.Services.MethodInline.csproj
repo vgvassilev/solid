@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}</ProjectGuid>
@@ -62,29 +62,21 @@
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\SolidOpt.Services.csproj">
-      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
-      <Name>SolidOpt.Services</Name>
+    <ProjectReference Include="..\..\SolidOpt.Services.Optimizations.csproj">
+      <Project>{cccc9966-8ceb-4451-8ad4-fe48d7ad04bb}</Project>
+      <Name>SolidOpt.Services.Optimizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Multimodel\AstMethodDefinitionModel\SolidOpt.Services.AstMethodDefinitionModel.csproj">
       <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
       <Name>SolidOpt.Services.AstMethodDefinitionModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Multimodel\ILtoAST\SolidOpt.Services.ILtoAST.csproj">
-      <Project>{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}</Project>
-      <Name>SolidOpt.Services.ILtoAST</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Multimodel\SolidOpt.Services.Multimodel.csproj">
       <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
       <Name>SolidOpt.Services.Multimodel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SolidOpt.Services.Transformations.csproj">
-      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
-      <Name>SolidOpt.Services.Transformations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SolidOpt.Services.Optimizations.csproj">
-      <Project>{cccc9966-8ceb-4451-8ad4-fe48d7ad04bb}</Project>
-      <Name>SolidOpt.Services.Optimizations</Name>
+    <ProjectReference Include="..\..\..\Multimodel\ILtoAST\SolidOpt.Services.ILtoAST.csproj">
+      <Project>{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}</Project>
+      <Name>SolidOpt.Services.ILtoAST</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

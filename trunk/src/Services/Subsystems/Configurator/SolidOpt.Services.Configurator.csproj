@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -70,13 +70,13 @@
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cache\SolidOpt.Services.Cache.csproj">
-      <Project>{de4555cc-c32c-46d2-aa99-e196e5779c43}</Project>
-      <Name>SolidOpt.Services.Cache</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HetAccess\SolidOpt.Services.HetAccess.csproj">
       <Project>{2806b750-e3fd-43ed-a395-0961f952314c}</Project>
       <Name>SolidOpt.Services.HetAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cache\SolidOpt.Services.Cache.csproj">
+      <Project>{de4555cc-c32c-46d2-aa99-e196e5779c43}</Project>
+      <Name>SolidOpt.Services.Cache</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
