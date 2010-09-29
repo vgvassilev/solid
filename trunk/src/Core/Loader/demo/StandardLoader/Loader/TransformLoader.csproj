@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <StartArguments>..\..\..\Loadee\bin\$(Configuration)\Loadee.exe</StartArguments>
+    <StartArguments>..\..\..\Loadee\bin\$(Configuration)\Loadee.exe ..\..\opt1.list</StartArguments>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
@@ -66,9 +66,17 @@
     <Compile Include="TransformLoader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
+      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
+      <Name>SolidOpt.Services.ControlFlowGraph</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Services\Transformations\Multimodel\AstMethodDefinitionModel\SolidOpt.Services.AstMethodDefinitionModel.csproj">
       <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
       <Name>SolidOpt.Services.AstMethodDefinitionModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Multimodel\ILtoCFG\SolidOpt.Services.ILtoCFG.csproj">
+      <Project>{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}</Project>
+      <Name>SolidOpt.Services.ILtoCFG</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj">
       <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>

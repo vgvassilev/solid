@@ -1,0 +1,5 @@
+SolidOpt.Services.Transformations.Optimizations.IL.NopRemover.NopRemoveTransformer
+SolidOpt.Services.Transformations.Optimizations.IL.OverflowArithmeticRemove.OverflowArithmeticRemoveTransformer
+SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.InlineTransformer
+#SolidOpt.Services.Transformations.Optimizations.AST.ConstantFolding.ConstantPropagationTransformer
+SolidOpt.Services.Transformations.Optimizations.IL.NopRemover.NopRemoveTransformer

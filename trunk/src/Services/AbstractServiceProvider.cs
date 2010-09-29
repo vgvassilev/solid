@@ -36,6 +36,11 @@ namespace SolidOpt.Services
 			return (found != null) ? new IService[1] {found} : new IService[0];
 		}
 		
+		//TODO: Check implementation.
+		public virtual IService[] GetServices() {
+			return new IService[1] {this};
+		}
+		
 	}
 	
 }

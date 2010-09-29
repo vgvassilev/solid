@@ -140,6 +140,28 @@ namespace SolidOpt.Services
 			return (IService[])foundServices.ToArray(typeof(IService));
 		}
 		
+		//TODO: Check implementation.
+		public override IService[] GetServices()
+		{
+			ArrayList foundServices = new ArrayList();
+			
+			foreach (IService service in services) {
+				
+				if (service is IServiceProvider)
+					foundServices.AddRange((service as IServiceProvider).GetServices());
+				else 
+//					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
+//					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
+//						foundServices.Add(service);
+					foundServices.Add(service);
+			}
+			
+			if (parent != null)
+				foundServices.AddRange(parent.GetServices());
+			
+			return (IService[])foundServices.ToArray(typeof(IService));
+		}
+		
 		public virtual bool AddService(IService service)
 		{
 			services.Add(service);
