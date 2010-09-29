@@ -41,8 +41,13 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 
 		public void FormatControlFlowGraph(TextWriter writer)
 		{
-			foreach (CfgNode node in Nodes.SubNodes) {
-				writer.WriteLine ("block {0}:", node.Index);
+//			foreach (CfgNode node in Nodes.SubNodes) {
+			CfgNode node;
+			for (int i = 0; i < Nodes.SubNodes.Count; i++) {
+				
+				node = Nodes.SubNodes[i];
+				
+				writer.WriteLine ("block {0}:", i);
 				writer.WriteLine ("\tbody:");
 				foreach (Instruction instruction in node) {
 					writer.Write ("\t\t");
@@ -52,7 +57,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 					writer.WriteLine ();
 				}
 				List<CfgNode> successors = node.Successors;
-				if (successors.Count > 0) {
+				if (successors != null && successors.Count > 0) {
 					writer.WriteLine ("\tsuccessors:");
 					foreach (CfgNode successor in successors) {
 						writer.WriteLine ("\t\tblock {0}", successor.Index);

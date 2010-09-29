@@ -42,7 +42,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 		public ControlFlowGraph Create()
 			
 		{
-			Split();
+			SplitNodes();
 			CreateNodes();
 //			DelimitBlocks();
 //			ConnectBlocks();
@@ -54,14 +54,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 		
 		#endregion
 		
-		void Split()
+		void SplitNodes()
 		{
 			var instructions = body.Instructions;
 			
 			starts = new BitArray(instructions.Count);
 			// the first instruction starts a block
 			starts[0] = true;
-			for (int i = 0; i < instructions.Count; ++i) {
+			for (int i = 1; i < instructions.Count; ++i) {
 				var instruction = instructions[i];
 
 				if (!IsBlockDelimiter (instruction))
@@ -117,19 +117,24 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 		void CreateNodes()
 		{
 			Node node;
-			for (int i = 0; i < starts.Count; i++) {
+			int first = 0;
+			int last = body.Instructions.Count - 1;
+			
+			for (int i = 1; i < starts.Count; i++) {
 				if (starts[i]) {
-					int first = i;
-					int last = body.Instructions.Count - 1;
-					while(!starts[i])
-						i++;
-					if (body.Instructions[i] != null)
-						last = i;
+					last = i - 1;
 					
 					node = new Node(body.Instructions[first], body.Instructions[last]);
 					nodes.SubNodes.Add(node);
+					first = i;
+					last = body.Instructions.Count - 1;
 				}
-			}			
+			}
+			// if the method has only one block
+			if (first == 0) {
+				node = new Node(body.Instructions[first], body.Instructions[last]);
+				nodes.SubNodes.Add(node);
+			}
 		}
 		
 //		void CreateNodes()

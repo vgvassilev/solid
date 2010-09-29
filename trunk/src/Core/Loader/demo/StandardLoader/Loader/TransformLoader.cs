@@ -129,9 +129,9 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 					
 						//end
 					
-						foreach (IOptimize<MethodDefinition> transformer in IL2ILTransformers) {
-							method = transformer.Optimize(method);
-						}
+//						foreach (IOptimize<MethodDefinition> transformer in IL2ILTransformers) {
+//							method = transformer.Optimize(method);
+//						}
 					
 					
 /* 						foreach (Instruction instruction in method.Body.Instructions) {
