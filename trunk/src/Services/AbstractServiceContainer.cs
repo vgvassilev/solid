@@ -65,18 +65,31 @@ namespace SolidOpt.Services
 		public override Service GetService<Service>()
 		{			
 			Console.WriteLine(">>>search: "+typeof(Service));
-				
+			
 			Service found = base.GetService<Service>();
 			if (found != default(Service)) return found;
 			
 			foreach (object service in services) {
+	Type t1 = typeof(Service);
+	Type t2 = service.GetType();
+		
+	Console.WriteLine("-T1--------------");
+	Type[] typeArray2 = t1.GetInterfaces();
+	for (int j = 0; j < typeArray2.Length; j++) {
+		Console.WriteLine(typeArray2[j]);
+	}
+	Console.WriteLine("-T2--------------");
+	typeArray2 = t2.GetInterfaces();
+	for (int j = 0; j < typeArray2.Length; j++) {
+		Console.WriteLine(typeArray2[j]);
+	}
+
 				if (service is IServiceProvider) {
 					Console.WriteLine(">>>found: IServiceProvider");
 					found = (service as IServiceProvider).GetService<Service>();
 				}
 				else {
 					found = service as Service;
-						
 				}
 				
 				if (found != default(Service)) {
@@ -102,8 +115,22 @@ namespace SolidOpt.Services
 			foreach (IService service in services) {
 				if (service is IServiceProvider)
 					found = (service as IServiceProvider).GetService(serviceType);
-				else 
-					found = serviceType.IsInstanceOfType(service) ? service : null;
+				else {
+//					found = serviceType.IsInstanceOfType(service) ? service : null;
+//					Type t1 = service.GetType();
+//					
+//	Console.WriteLine("----------------");
+//	if (serviceType.IsInterface)
+//    {
+//        Type[] typeArray2 = t1.GetInterfaces();
+//        for (int j = 0; j < typeArray2.Length; j++)
+//        {
+//            Console.WriteLine(typeArray2[j]);
+//        }
+//    }
+//					found = serviceType.IsInstanceOfType(service) ? service : null;
+					found = serviceType.IsAssignableFrom(service.GetType()) ? service : null;
+				}
 				if (found != null) return found;
 			}
 
@@ -130,7 +157,8 @@ namespace SolidOpt.Services
 //					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
 //					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
 //						foundServices.Add(service);
-					if (service.GetType().IsInstanceOfType(serviceType))
+//					if (service.GetType().IsInstanceOfType(serviceType))
+					if (serviceType.IsAssignableFrom(service.GetType()))
 						foundServices.Add(service);
 			}
 			
@@ -173,7 +201,5 @@ namespace SolidOpt.Services
 			services.Remove(service);
 			return true;
 		}
-		
 	}
-	
 }

@@ -9,8 +9,8 @@ using System.Runtime.CompilerServices;
 
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
-[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph")]
-[assembly: AssemblyDescription("SolidOpt optimization framework. CilToControlFlowGraph plugin.")]
+[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Multimodel.ILtoCFG")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. ILtoCFG plugin.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SolidOpt.org")]
 [assembly: AssemblyProduct("SolidOpt")]

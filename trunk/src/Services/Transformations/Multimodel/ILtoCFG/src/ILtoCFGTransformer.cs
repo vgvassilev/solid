@@ -13,7 +13,7 @@ using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
+namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 {
 	/// <summary>
 	/// Description of CilToControlFlowGraph.

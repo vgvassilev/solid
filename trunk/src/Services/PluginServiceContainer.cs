@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Collections;
 using System.Runtime.Remoting;
+using System.Security.Policy;
 
 using System.Threading;
 
@@ -83,12 +84,47 @@ namespace SolidOpt.Services
 			this.status = Status.UnLoaded;
 			
 		}
+		
+//		private static int domainId = 0;
 
 		public void Load() {
 			if (status == Status.UnLoaded) {
 				try {
-					AppDomain.CurrentDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
-					AppDomain.CurrentDomain.AppendPrivatePath(Path.GetDirectoryName(fullName));
+					foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies()) {
+						if (a.ManifestModule.Name == Path.GetFileName(fullName)) {
+							status = Status.Error;
+							return;
+						}
+					}
+					
+//					AppDomainSetup domaininfo = new AppDomainSetup();
+//					domaininfo.ApplicationBase = Path.GetDirectoryName(fullName) + "\\";
+////					domaininfo.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
+//					//domaininfo.PrivateBinPath += Path.GetDirectoryName(fullName);
+//					domaininfo.LoaderOptimization = LoaderOptimization.MultiDomain;
+//					Evidence adevidence = AppDomain.CurrentDomain.Evidence;
+//					appDomain = AppDomain.CreateDomain("Plugin-"+domainId, adevidence, domaininfo);
+//					domainId++;
+
+
+//					AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender, ResolveEventArgs args) { Console.WriteLine("RRR: "+args.Name); return null; };
+//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.DynamicBase);
+//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
+//					AppDomain.CurrentDomain.SetupInformation.PrivateBinPath += "D:\\Univ\\Projects\\SolidOpt\\trunk\\src\\Core\\Loader\\demo\\StandardLoader\\Loader\\bin\\Debug\\plugins";
+//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
+					
+//					AppDomainSetup domaininfo = new AppDomainSetup();
+//					domaininfo.ApplicationBase = System.Environment.CurrentDirectory;
+//					Evidence adevidence = AppDomain.CurrentDomain.Evidence;
+//					AppDomain domain = AppDomain.CreateDomain("MyDomain", adevidence, domaininfo);
+//					Console.WriteLine("Host domain: " + AppDomain.CurrentDomain.FriendlyName);
+//					Console.WriteLine("new child domain: " + domain.FriendlyName);
+//					Console.WriteLine();
+//					Console.WriteLine("Application base is: " + domain.SetupInformation.ApplicationBase);
+
+//					AppDomain.CurrentDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
+//					AppDomain.CurrentDomain.AppendPrivatePath(Path.GetDirectoryName(fullName));
 					
 //					AppDomainSetup appDomainSetup = new AppDomainSetup();
 //					appDomainSetup.ApplicationName = "Plugins";
@@ -97,9 +133,10 @@ namespace SolidOpt.Services
 ////					appDomainSetup.PrivateBinPath += Path.PathSeparator + AppDomain.CurrentDomain.BaseDirectory;
 //					appDomain = AppDomain.CreateDomain("Plugins", null, appDomainSetup);
 //					appDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
-					
+
+//					assembly = appDomain.Load(fullName);
 					assembly = Assembly.LoadFrom(fullName);
-					if (assembly == null) assembly = Assembly.LoadWithPartialName(fullName);
+					//if (assembly == null) assembly = Assembly.LoadWithPartialName(fullName);
 					status = Status.Loaded;
 				} catch { assembly = null; }
 				if (assembly == null) status = Status.Error;
@@ -116,7 +153,7 @@ namespace SolidOpt.Services
 				if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
 					try {
 						service = (IService)(assembly.CreateInstance(type.FullName));
-						///////service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
+						////////service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
 						////service = (IService)(appDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
 						if (service != null)
 							serviceContainer.AddService(service);
@@ -125,7 +162,5 @@ namespace SolidOpt.Services
 					}
 			status = Status.Created;
 		}
-		
 	}
-	
 }

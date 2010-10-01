@@ -23,7 +23,7 @@ using SolidOpt.Core.Loader;
 using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
-using SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph;
+using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
 
 //
 using System.Collections;
@@ -141,8 +141,6 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 				}
 			}
 			
-			Console.WriteLine(optList);
-			
 			
 			IDecompile<MethodDefinition, ControlFlowGraph> ILtoCfgTransformer = 
 				ServicesContainer.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
@@ -152,6 +150,10 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 				ServicesContainer.GetServices<IOptimize<MethodDefinition>>();
 			IDecompile<MethodDefinition, AstMethodDefinition> IL2ASTtransformer = 
 				ServicesContainer.GetService<IDecompile<MethodDefinition, AstMethodDefinition>>();
+
+			//TODO: Fix ServicesContainer.GetService(...)
+//			IDecompile<MethodDefinition, AstMethodDefinition> IL2ASTtransformer =
+//				(IDecompile<MethodDefinition, AstMethodDefinition>)(ServicesContainer.GetService(typeof(IDecompile<MethodDefinition, AstMethodDefinition>)));
 			
 			List<IOptimize<AstMethodDefinition>> AST2ASTTransformers = 
 				ServicesContainer.GetServices<IOptimize<AstMethodDefinition>>();
