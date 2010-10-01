@@ -67,12 +67,23 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.NopRemover
 			
 			// Fix exception handlers
 			foreach (ExceptionHandler handler in source.Body.ExceptionHandlers) {
-				while (handler.TryStart.OpCode == OpCodes.Nop) handler.TryStart = handler.TryStart.Next;
-				while (handler.FilterStart.OpCode == OpCodes.Nop) handler.FilterStart = handler.FilterStart.Next;
-				while (handler.HandlerStart.OpCode == OpCodes.Nop) handler.HandlerStart = handler.HandlerStart.Next;
-				while (handler.TryEnd.OpCode == OpCodes.Nop) handler.TryEnd = handler.TryEnd.Previous;
-				while (handler.FilterEnd.OpCode == OpCodes.Nop) handler.FilterEnd = handler.FilterEnd.Previous;
-				while (handler.HandlerEnd.OpCode == OpCodes.Nop) handler.HandlerEnd = handler.HandlerEnd.Previous;
+				while (handler.TryStart != null && handler.TryStart.OpCode == OpCodes.Nop)
+					handler.TryStart = handler.TryStart.Next;
+				
+				while (handler.FilterStart != null && handler.FilterStart.OpCode == OpCodes.Nop) 
+					handler.FilterStart = handler.FilterStart.Next;
+				
+				while (handler.HandlerStart != null && handler.HandlerStart.OpCode == OpCodes.Nop) 
+					handler.HandlerStart = handler.HandlerStart.Next;
+				
+				while (handler.TryEnd != null && handler.TryEnd.OpCode == OpCodes.Nop)
+					handler.TryEnd = handler.TryEnd.Previous;
+				
+				while (handler.FilterEnd != null && handler.FilterEnd.OpCode == OpCodes.Nop) 
+					handler.FilterEnd = handler.FilterEnd.Previous;
+				
+				while (handler.HandlerEnd != null && handler.HandlerEnd.OpCode == OpCodes.Nop)
+					handler.HandlerEnd = handler.HandlerEnd.Previous;
 			}
 			
 			// Remove Nop instructions
