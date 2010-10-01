@@ -54,8 +54,8 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 				string s = sr.ReadLine();
 //				foreach (string s in GetPlatformDependentPath(sr))
 				if (!string.IsNullOrEmpty(s)) {
-					s.Replace("\\", Path.DirectorySeparatorChar.ToString());
-					s.Replace("/", Path.DirectorySeparatorChar.ToString());
+					s = s.Replace("\\", Path.DirectorySeparatorChar.ToString());
+					s = s.Replace("/", Path.DirectorySeparatorChar.ToString());
 					string name = Path.Combine(basepath, s);
 					//TODO: For files in plugins.list use "name" with $(Configuration) before filename, on fail use "name"
 					if (File.Exists(name)) {

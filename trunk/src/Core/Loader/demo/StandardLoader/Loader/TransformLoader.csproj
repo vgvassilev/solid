@@ -38,12 +38,13 @@
     <Optimize>false</Optimize>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <Commandlineparameters>../../../Loadee/bin/Debug/Loadee.exe</Commandlineparameters>
+    <Commandlineparameters> ../../../Loadee/bin/Debug/Loadee.exe ../../opt1.list</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <WarningLevel>4</WarningLevel>
+    <Commandlineparameters> ../../../Loadee/bin/Release/Loadee.exe ../../opt1.list</Commandlineparameters>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

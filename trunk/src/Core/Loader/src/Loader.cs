@@ -37,7 +37,9 @@ namespace SolidOpt.Core.Loader
 		
 		public virtual void LoadServices(string[] args)
 		{
-			ServicesContainer.AddPlugins(AppDomain.CurrentDomain.BaseDirectory + "plugins");
+			string defaultDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins");
+			if (Directory.Exists(defaultDir))
+				ServicesContainer.AddPlugins(defaultDir);
 			
 			ServicesContainer.LoadPlugins();
 		}
