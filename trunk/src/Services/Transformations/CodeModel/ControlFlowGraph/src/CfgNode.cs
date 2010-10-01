@@ -20,12 +20,6 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 		
 		public static readonly List<CfgNode> Empty = new List<CfgNode>(0);
 
-		int index;
-		public int Index {
-			get { return index; }
-			set { index = value; }
-		}
-		
 		List<CfgNode> successors = new List<CfgNode>();
 		public List<CfgNode> Successors {
 			get { return successors;  }

@@ -18,7 +18,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	public class Nodes : CfgNode, IEnumerable<Instruction>
 	{
 		
-		#region Fields & Properties
+		#region Fields & Properties	
 		
 		List<CfgNode> subNodes = new List<CfgNode>();
 		public List<CfgNode> SubNodes {

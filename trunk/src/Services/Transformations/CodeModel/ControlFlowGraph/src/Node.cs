@@ -17,6 +17,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	/// </summary>
 	public class Node : CfgNode
 	{
+		#region Fields & Properties
+				
+		#endregion
+		
 		#region Constructors
 		
 		public Node(): base () {}

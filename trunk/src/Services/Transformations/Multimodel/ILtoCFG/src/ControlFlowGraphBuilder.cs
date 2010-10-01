@@ -26,7 +26,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 
 		MethodBody body;
 		BitArray starts;
-		Nodes nodes = new Nodes();		
+		List<CfgNode> graph = new List<CfgNode>();		
 		
 		#endregion
 		
@@ -50,7 +50,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 //			ComputeInstructionData();
 //			ComputeExceptionHandlerData();
 
-			return new ControlFlowGraph(body, nodes);
+			return new ControlFlowGraph(body, graph);
 		}
 		
 		#endregion
@@ -68,16 +68,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 				if (!IsBlockDelimiter (instruction))
 					continue;
 
-				if (HasMultipleBranches (instruction)) {
-					// each switch case first instruction starts a block
-					foreach (var target in GetBranchTargets (instruction))
-						if (target != null)
-							starts[instructions.IndexOf(target)] = true;
-				} else {
-					// the target of a branch starts a block
-					var target = GetBranchTarget (instruction);
-					if (target != null)
-						starts[instructions.IndexOf(target)] = true;
+				var targets = GetTargetInstructions(instruction);
+				foreach (Instruction target in targets) {
+					starts[instructions.IndexOf(target)] = true;
 				}
 
 				// the next instruction after a branch starts a block
@@ -96,122 +89,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 				return true;
 			}
 			return false;
-		}		
-		
-		static bool HasMultipleBranches (Instruction instruction)
-		{
-			return instruction.OpCode.Code == Code.Switch;
-		}	
-		
-		static Instruction [] GetBranchTargets (Instruction instruction)
-		{
-			return (Instruction []) instruction.Operand;
-		}	
-		
-		static Instruction GetBranchTarget (Instruction instruction)
-		{
-			return (Instruction) instruction.Operand;
-		}		
-			
-				
-		void CreateNodes()
-		{
-			Node node;
-			int first = 0;
-			int last = body.Instructions.Count - 1;
-			
-			for (int i = 1; i < starts.Count; i++) {
-				if (starts[i]) {
-					last = i - 1;
-					
-					node = new Node(body.Instructions[first], body.Instructions[last]);
-					nodes.SubNodes.Add(node);
-					first = i;
-					last = body.Instructions.Count - 1;
-				}
-			}
-			// if the method has only one block
-			if (first == 0) {
-				node = new Node(body.Instructions[first], body.Instructions[last]);
-				nodes.SubNodes.Add(node);
-			}
 		}
 		
-//		void CreateNodes()
-//		{
-//			int first = 0;
-//			Node node;
-//			for (int i = 1; i < starts.Count; i++) {
-//				if (starts[i]) {
-//					node = new Node(body.Instructions[first], body.Instructions[i - 1]);
-//					nodes.SubNodes.Add(node);
-//					first = i;
-//				}
-//			}
-//
-//		}
-		
-		void ConnectNodes()
-		{
-			foreach (CfgNode node in nodes.SubNodes) {
-				ConnectNode(node);
-			}
-		}
-		
-		void ConnectNode(CfgNode node)
-		{
-			if (node.Last == null)
-				throw new ArgumentException ("Undelimited node at offset " + nodes.First.Offset);
-
-			var instruction = node.Last;
-			switch (instruction.OpCode.FlowControl) {
-			case FlowControl.Call:
-			case FlowControl.Next:					
-			case FlowControl.Branch:
-			case FlowControl.Cond_Branch: {
-//				if (HasMultipleBranches (instruction)) {
-//					var succ = GetBranchTargetsBlocks(instruction);
-					foreach (Instruction instr in GetTargets(instruction)) {
-						if (instruction.Next != null)
-							node.Successors.Add(GetNode(instr.Next));
-					}
-					
-					
-
-//					nodes.Successors.AddRange(succ);
-					break;
-//				}
-
-//				var target = GetBranchTargetBlock (instruction);
-//				if (instruction.OpCode.FlowControl == FlowControl.Cond_Branch && instruction.Next != null) {
-//					block.Successors = new List<CfgNode>();
-//					block.Successors.Add(target);
-//					block.Successors.Add(GetBlock (instruction.Next));
-//					
-//				}
-//				else {
-//					block.Successors = new List<CfgNode>();
-//					block.Successors.Add(target);
-//				}
-				break;
-			}
-
-			case FlowControl.Return:
-			case FlowControl.Throw:
-				break;
-			default:
-				throw new NotSupportedException (
-					string.Format ("Unhandled instruction flow behavior {0}: {1}",
-					               instruction.OpCode.FlowControl,
-					               instruction.ToString()));				                                                
-//					               Formatter.FormatInstruction (instruction)));
-			}			
-		}
-		
-		static Collection<Instruction> GetTargets (Instruction instruction)
+		static Collection<Instruction> GetTargetInstructions(Instruction instruction)
 		{
 			Collection<Instruction> result = new Collection<Instruction>();
 			
+			// if there are more multiple branches
 			Instruction[] targets = instruction.Operand as Instruction[];
 			Instruction target = null;
 			if (targets == null) {
@@ -228,24 +112,75 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 				return result;
 			}
 			
-			return null;
-		}			
-		
-					
-		List<CfgNode> GetBranchTargetsBlocks (Instruction instruction)
+			return result;
+		}
+				
+		void CreateNodes()
 		{
-			var targets = GetBranchTargets (instruction);
-			var blocks = new List<CfgNode>(targets.Length - 1);
-			for (int i = 0; i < targets.Length; i++)
-				blocks.Add(GetNode(targets[i]));
+			Node node;
+			int first = 0;
+			int last = body.Instructions.Count - 1;
+			
+			for (int i = 1; i < starts.Count; i++) {
+				if (starts[i]) {
+					last = i - 1;
+					
+					node = new Node(body.Instructions[first], body.Instructions[last]);
+					graph.Add(node);
+					first = i;
+					last = body.Instructions.Count - 1;
+				}
+			}
+			
+			// if the method has only one block
+			if (first == 0) {
+				node = new Node(body.Instructions[first], body.Instructions[last]);
+				graph.Add(node);
+			}
+		}
+		
+		void ConnectNodes()
+		{
+			foreach (CfgNode node in graph) {
+				ConnectNode(node);
+			}
+		}
+		
+		void ConnectNode(CfgNode node)
+		{
+			if (node.Last == null)
+				throw new ArgumentException ("Undelimited node at offset " + node.First.Offset);
 
-			return blocks;
-		}					
+			var instruction = node.Last;
+			switch (instruction.OpCode.FlowControl) {
+			case FlowControl.Call:
+			case FlowControl.Next:					
+			case FlowControl.Branch:
+			case FlowControl.Cond_Branch: {
+				var targets = GetTargetInstructions(instruction);
+				foreach (var target in targets) {
+					if (target.Next != null)
+						node.Successors.Add(GetNode(target.Next));
+				}
+				
+				break;
+			}
 
+			case FlowControl.Return:
+			case FlowControl.Throw:
+				break;
+			default:
+				throw new NotSupportedException (
+					string.Format ("Unhandled instruction flow behavior {0}: {1}",
+					               instruction.OpCode.FlowControl,
+					               instruction.ToString(),				                                                
+					               instruction.ToString()));
+			}			
+		}
 
 		CfgNode GetNode(Instruction firstInstruction)
 		{
-			foreach (CfgNode node in nodes.SubNodes) {
+			foreach (CfgNode node in graph) {
 				if (node.Contains(firstInstruction))
 				return node;
 			}

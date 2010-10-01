@@ -171,38 +171,43 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 						if (ILtoCfgTransformer != null) {
 							ControlFlowGraph cfg = ILtoCfgTransformer.Decompile(method);
 							cfg.FormatControlFlowGraph(Console.Out);
+//							
+//							foreach (CfgNode node in cfg.Graph) {
+//								cfg.FormatControlFlowGraphNode(Console.Out, node, "");
+//							}
+														
 						}
 					
 						//end
 					
-						foreach (IOptimize<MethodDefinition> transformer in IL2ILTransformers) {
-							method = transformer.Optimize(method);
-						}
-						
- 						foreach (Instruction instruction in method.Body.Instructions) {
-								Console.Write ("\t\t");
-								Cecil.Decompiler.Cil.Formatter.WriteInstruction (Console.Out, instruction);
-								Console.WriteLine ();
-						}
-						
-						AstMethodDefinition ast = null;
-						if (IL2ASTtransformer != null) {
-							ast = IL2ASTtransformer.Decompile(method);
-						}
-						
-//						Console.WriteLine("{0}", ast.Method.ToString());
-//						WriteAST(ast.Block);
-						
-						List<string> list = new List<string>(){"InlineTransformer", "SimplifyExpressionTransformer", "ConstantFoldingTransformer"};
-						foreach (string s in list) {
-							foreach (IOptimize<AstMethodDefinition> transformer in AST2ASTTransformers) {
-//								Console.WriteLine(transformer.GetType().Name);
-								if (transformer.GetType().Name == s) {
-									ast = transformer.Optimize(ast);
-								}
-							}
-							
-						}
+//						foreach (IOptimize<MethodDefinition> transformer in IL2ILTransformers) {
+//							method = transformer.Optimize(method);
+//						}
+////						
+// 						foreach (Instruction instruction in method.Body.Instructions) {
+//								Console.Write ("\t\t");
+//								Cecil.Decompiler.Cil.Formatter.WriteInstruction (Console.Out, instruction);
+//								Console.WriteLine ();
+//						}
+//						
+//						AstMethodDefinition ast = null;
+//						if (IL2ASTtransformer != null) {
+//							ast = IL2ASTtransformer.Decompile(method);
+//						}
+//						
+////						Console.WriteLine("{0}", ast.Method.ToString());
+////						WriteAST(ast.Block);
+//						
+//						List<string> list = new List<string>(){"InlineTransformer", "SimplifyExpressionTransformer", "ConstantFoldingTransformer"};
+//						foreach (string s in list) {
+//							foreach (IOptimize<AstMethodDefinition> transformer in AST2ASTTransformers) {
+////								Console.WriteLine(transformer.GetType().Name);
+//								if (transformer.GetType().Name == s) {
+//									ast = transformer.Optimize(ast);
+//								}
+//							}
+//							
+//						}
 						
 						
 						
@@ -211,9 +216,9 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 //						Console.WriteLine("Abstract Syntax Tree");
 //						WriteAST(ast.Block);
 						
-						
-						if (AST2ILtransformer != null)
-							method = AST2ILtransformer.Compile(ast);
+//						
+//						if (AST2ILtransformer != null)
+//							method = AST2ILtransformer.Compile(ast);
 						
 //						foreach (ITransform<MethodDefinition> transformer in IL2ILTransformers) {
 //							method = transformer.Transform(method);
