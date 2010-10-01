@@ -44,6 +44,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 		{
 			SplitNodes();
 			CreateNodes();
+			ConnectNodes();
 //			DelimitBlocks();
 //			ConnectBlocks();
 //			ComputeInstructionData();
@@ -111,9 +112,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 		{
 			return (Instruction) instruction.Operand;
 		}		
-		
+			
 				
-		
 		void CreateNodes()
 		{
 			Node node;
@@ -170,11 +170,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			case FlowControl.Branch:
 			case FlowControl.Cond_Branch: {
 //				if (HasMultipleBranches (instruction)) {
-					var succ = GetBranchTargetsBlocks(instruction);
-					if (instruction.Next != null)
-						succ.Add(GetNode(instruction.Next));
+//					var succ = GetBranchTargetsBlocks(instruction);
+					foreach (Instruction instr in GetTargets(instruction)) {
+						if (instruction.Next != null)
+							node.Successors.Add(GetNode(instr.Next));
+					}
+					
+					
 
-					nodes.Successors.AddRange(succ);
+//					nodes.Successors.AddRange(succ);
 					break;
 //				}
 
@@ -189,7 +193,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 //					block.Successors = new List<CfgNode>();
 //					block.Successors.Add(target);
 //				}
-//				break;
+				break;
 			}
 
 			case FlowControl.Return:
@@ -204,6 +208,28 @@ namespace SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph
 			}			
 		}
 		
+		static Collection<Instruction> GetTargets (Instruction instruction)
+		{
+			Collection<Instruction> result = new Collection<Instruction>();
+			
+			Instruction[] targets = instruction.Operand as Instruction[];
+			Instruction target = null;
+			if (targets == null) {
+				target = instruction.Operand as Instruction;
+				if (target != null) {
+					result.Add(target);
+					return result;
+				}
+			}
+			else {
+				foreach (Instruction instr in targets) {
+					result.Add(instr);	
+				}
+				return result;
+			}
+			
+			return null;
+		}			
 		
 					
 		List<CfgNode> GetBranchTargetsBlocks (Instruction instruction)

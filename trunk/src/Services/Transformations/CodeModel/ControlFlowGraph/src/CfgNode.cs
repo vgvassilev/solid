@@ -26,7 +26,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			set { index = value; }
 		}
 		
-		List<CfgNode> successors;
+		List<CfgNode> successors = new List<CfgNode>();
 		public List<CfgNode> Successors {
 			get { return successors;  }
 			set { successors = value; }

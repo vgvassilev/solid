@@ -56,15 +56,45 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 					writer.Write(instruction);
 					writer.WriteLine ();
 				}
-				List<CfgNode> successors = node.Successors;
-				if (successors != null && successors.Count > 0) {
+				
+				
+				if (node.Successors != null && node.Successors.Count > 0) {
 					writer.WriteLine ("\tsuccessors:");
-					foreach (CfgNode successor in successors) {
-						writer.WriteLine ("\t\tblock {0}", successor.Index);
+					foreach (CfgNode successor in node.Successors) {
+						writer.WriteLine ("\t\tblock {0}", i	);
 					}
 				}
 			}
 		}
+		
+//		public void FormatControlFlowGraphNode(TextWriter writer, CfgNode node, string indent)
+//		{
+////			foreach (CfgNode node in Nodes.SubNodes) {
+//			CfgNode node;
+//			for (int i = 0; i < Nodes.SubNodes.Count; i++) {
+//				
+//				node = Nodes.SubNodes[i];
+//				
+//				writer.WriteLine ("block {0}:", i);
+//				writer.WriteLine ("\tbody:");
+//				foreach (Instruction instruction in node) {
+//					writer.Write ("\t\t");
+////					var data = GetData (instruction);
+////					writer.Write ("[{0}:{1}] ", data.StackBefore, data.StackAfter);
+//					writer.Write(instruction);
+//					writer.WriteLine ();
+//				}
+//				
+//				
+//				if (node.Successors != null && node.Successors.Count > 0) {
+//					writer.WriteLine ("\tsuccessors:");
+//					foreach (CfgNode successor in node.Successors) {
+//						writer.WriteLine ("\t\tblock {0}", i	);
+//					}
+//				}
+//			}
+//		}
+				
 		
 	}
 }
