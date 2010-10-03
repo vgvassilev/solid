@@ -48,24 +48,28 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 		
 		public override void LoadServices(string[] args)
 		{
-			string basepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("..", ".."));
+//			string basepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("..", ".."));
+			string basepath = Path.Combine("..", "..");
 			StreamReader sr = new StreamReader(Path.Combine(basepath, "plugins.list"));
 			while (!sr.EndOfStream) {
 				string s = sr.ReadLine();
-//				foreach (string s in GetPlatformDependentPath(sr))
-				if (!string.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s) && s[0] != '#') {
 					s = s.Replace("\\", Path.DirectorySeparatorChar.ToString());
 					s = s.Replace("/", Path.DirectorySeparatorChar.ToString());
 					string name = Path.Combine(basepath, s);
-					//TODO: For files in plugins.list use "name" with $(Configuration) before filename, on fail use "name"
 					if (File.Exists(name)) {
 						ServicesContainer.AddPlugin(name);
 					} else {
-						string s1 = Path.Combine(name, build_type);
-						if (Directory.Exists(s1)) {
-							ServicesContainer.AddPlugins(s1);
-						} else if (Directory.Exists(name)) {
-							ServicesContainer.AddPlugins(name);
+						string name1 = Path.Combine(Path.Combine(Path.GetDirectoryName(name), build_type), Path.GetFileName(name));
+						if (File.Exists(name1)) {
+							ServicesContainer.AddPlugin(name1);
+						} else {
+							string s1 = Path.Combine(name, build_type);
+							if (Directory.Exists(s1)) {
+								ServicesContainer.AddPlugins(s1);
+							} else if (Directory.Exists(name)) {
+								ServicesContainer.AddPlugins(name);
+							}
 						}
 					}
 				}

@@ -70,19 +70,20 @@ namespace SolidOpt.Services
 			if (found != default(Service)) return found;
 			
 			foreach (object service in services) {
-	Type t1 = typeof(Service);
-	Type t2 = service.GetType();
-		
-	Console.WriteLine("-T1--------------");
-	Type[] typeArray2 = t1.GetInterfaces();
-	for (int j = 0; j < typeArray2.Length; j++) {
-		Console.WriteLine(typeArray2[j]);
-	}
-	Console.WriteLine("-T2--------------");
-	typeArray2 = t2.GetInterfaces();
-	for (int j = 0; j < typeArray2.Length; j++) {
-		Console.WriteLine(typeArray2[j]);
-	}
+//	Type t1 = typeof(Service);
+//	Type t2 = service.GetType();
+//	
+//	Console.WriteLine("-T1--------------");
+//	Type[] typeArray2 = t1.GetInterfaces();
+//	for (int j = 0; j < typeArray2.Length; j++) {
+//		Console.WriteLine(typeArray2[j].FullName);
+//	}
+//	Console.WriteLine("-T2--------------");
+//	typeArray2 = t2.GetInterfaces();
+//	for (int j = 0; j < typeArray2.Length; j++) {
+////		Console.WriteLine(typeArray2[j].Module.FullyQualifiedName);
+//		Console.WriteLine(typeArray2[j].FullName);
+//	}
 
 				if (service is IServiceProvider) {
 					Console.WriteLine(">>>found: IServiceProvider");

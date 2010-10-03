@@ -76,12 +76,13 @@ namespace SolidOpt.Services
 		public string fullName;
 		public Status status;
 		public Assembly assembly;
-//		private AppDomain appDomain;
+		private AppDomain appDomain;
 
 		public PluginInfo(string fileName)
 		{
 			this.fullName = Path.GetFullPath(fileName);
 			this.status = Status.UnLoaded;
+			this.appDomain = AppDomain.CurrentDomain;
 			
 		}
 		
@@ -90,12 +91,12 @@ namespace SolidOpt.Services
 		public void Load() {
 			if (status == Status.UnLoaded) {
 				try {
-					foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies()) {
-						if (a.ManifestModule.Name == Path.GetFileName(fullName)) {
-							status = Status.Error;
-							return;
-						}
-					}
+//					foreach (Assembly a in appDomain.GetAssemblies()) {
+//						if (a.ManifestModule.Name == Path.GetFileName(fullName)) {
+//							status = Status.Error;
+//							return;
+//						}
+//					}
 					
 //					AppDomainSetup domaininfo = new AppDomainSetup();
 //					domaininfo.ApplicationBase = Path.GetDirectoryName(fullName) + "\\";
@@ -134,8 +135,10 @@ namespace SolidOpt.Services
 //					appDomain = AppDomain.CreateDomain("Plugins", null, appDomainSetup);
 //					appDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
 
-//					assembly = appDomain.Load(fullName);
-					assembly = Assembly.LoadFrom(fullName);
+					AssemblyName an = new AssemblyName();
+					an.CodeBase = fullName;
+					assembly = appDomain.Load(an);
+					//assembly = Assembly.LoadFrom(fullName);
 					//if (assembly == null) assembly = Assembly.LoadWithPartialName(fullName);
 					status = Status.Loaded;
 				} catch { assembly = null; }
