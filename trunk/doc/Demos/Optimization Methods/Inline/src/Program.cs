@@ -20,19 +20,39 @@ namespace SolidOpt //.Documentation.Samples.Inline
 	{
 		public static void Main(string[] args)
 		{
-			var method1 = GetProgramMethod("Inliner");
+			var method1 = GetProgramMethod("InlineTest");
+			FormatIL(Console.Out, method1);
+			Console.WriteLine ("--------------------");
+
+			var method2 = GetProgramMethod("CalculateArea");
+			FormatIL(Console.Out, method2);
+			Console.WriteLine ("--------------------");
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+			
+			var tr = new SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.InlineTransformer();
+			Console.WriteLine ("--------------------");
+			method1 = tr.Optimize(method1);
+			Console.WriteLine ("--------------------");
+			FormatIL(Console.Out, method1);
+			Console.WriteLine ("-1------------------");
+
+			//
+			
+			method1 = GetProgramMethod("Inliner");
 			FormatIL(Console.Out, method1);
 			//var cfg = ControlFlowGraph.Create(method);
 			//FormatControlFlowGraph(Console.Out, cfg);
 			Console.WriteLine ("--------------------");
 
-			var method2 = GetProgramMethod("SubAB");
+			method2 = GetProgramMethod("SubAB");
 			FormatIL(Console.Out, method2);
 			//cfg = ControlFlowGraph.Create(method);
 			//FormatControlFlowGraph(Console.Out, cfg);
 			Console.WriteLine ("--------------------");
 			
-			var tr = new SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.InlineTransformer();
+			tr = new SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.InlineTransformer();
 			Console.WriteLine ("--------------------");
 			method1 = tr.Optimize(method1);
 			Console.WriteLine ("--------------------");
@@ -195,5 +215,17 @@ namespace SolidOpt //.Documentation.Samples.Inline
 				Console.Write(a + b + c);
 		}		
  */
+ 
+		public void InlineTest() {
+			double s;
+			s = CalculateArea(2,3,4);
+			Console.WriteLine(s);
+		}
+
+		[SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
+		public static double CalculateArea (double a, double b, double c) {
+			double p = (a + b + c) / 2;
+			return Math.Sqrt(p*(p-a)*(p-b)*(p-c));
+		}
 	}
 }

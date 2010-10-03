@@ -46,9 +46,9 @@
       <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
       <Name>SolidOpt.Services.ControlFlowGraph</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Services\Transformations\Multimodel\CilToControlFlowGraph\SolidOpt.Services.CilToControlFlowGraph.csproj">
-      <Project>{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}</Project>
-      <Name>SolidOpt.Services.CilToControlFlowGraph</Name>
+    <ProjectReference Include="..\..\..\src\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
+      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
+      <Name>SolidOpt.Services.ControlFlowGraph</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj">
       <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>

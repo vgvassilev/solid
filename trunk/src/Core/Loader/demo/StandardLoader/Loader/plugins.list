@@ -1,13 +1,15 @@
-#..\..\..\..\..\..\src\Services\Transformations\Multimodel\AstMethodDefinitionModel\bin\
+..\..\..\..\..\..\src\Services\Transformations\Multimodel\AstMethodDefinitionModel\bin\
 
-..\..\..\..\..\..\src\Services\Transformations\Multimodel\ASTtoIL\bin\SolidOpt.Services.Transformations.Multimodel.ASTtoIL.dll
-..\..\..\..\..\..\src\Services\Transformations\Multimodel\ILtoAST\bin\SolidOpt.Services.Transformations.Multimodel.ILtoAST.dll
-..\..\..\..\..\..\src\Services\Transformations\Multimodel\ILtoCFG\bin\SolidOpt.Services.Transformations.Multimodel.ILtoCFG.dll
+..\..\..\..\..\..\src\Services\Transformations\Multimodel\ASTtoIL\bin
+..\..\..\..\..\..\src\Services\Transformations\Multimodel\ILtoAST\bin
+..\..\..\..\..\..\src\Services\Transformations\Multimodel\ILtoCFG\bin
 
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantFolding\bin\SolidOpt.Services.Transformations.Optimizations.AST.ConstantFolding.dll
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantPropagation\bin\SolidOpt.Services.Transformations.Optimizations.AST.ConstantPropagation.dll
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\MethodInline\bin\SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.dll
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\SimplifyExpression\bin\SolidOpt.Services.Transformations.Optimizations.AST.SimplifyExpression.dll
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\MethodInline\bin\SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.dll
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\NopRemove\bin\SolidOpt.Services.Transformations.Optimizations.IL.NopRemover.dll
-..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\OverflowArithmeticRemove\bin\SolidOpt.Services.Transformations.Optimizations.IL.OverflowArithmeticRemove.dll
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantFolding\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantPropagation\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\MethodInline\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\SimplifyExpression\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\MethodInline\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\NopRemove\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\OverflowArithmeticRemove\bin
+
+#..\..\..\..\..\..\src\Services\Transformations\Multimodel\ASTtoIL\bin\SolidOpt.Services.Transformations.Multimodel.ASTtoIL.dll

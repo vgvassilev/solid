@@ -73,14 +73,14 @@ namespace SolidOpt.Services
 	{
 		public enum Status {UnLoaded, Loaded, Created, Error};
 
-		public string fullName;
+		public string codeBase;
 		public Status status;
 		public Assembly assembly;
 		private AppDomain appDomain;
 
 		public PluginInfo(string fileName)
 		{
-			this.fullName = Path.GetFullPath(fileName);
+			this.codeBase = Path.GetFullPath(fileName);
 			this.status = Status.UnLoaded;
 			this.appDomain = AppDomain.CurrentDomain;
 			
@@ -107,37 +107,20 @@ namespace SolidOpt.Services
 //					appDomain = AppDomain.CreateDomain("Plugin-"+domainId, adevidence, domaininfo);
 //					domainId++;
 
-
-//					AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender, ResolveEventArgs args) { Console.WriteLine("RRR: "+args.Name); return null; };
-//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
-//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.DynamicBase);
-//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
-//					AppDomain.CurrentDomain.SetupInformation.PrivateBinPath += "D:\\Univ\\Projects\\SolidOpt\\trunk\\src\\Core\\Loader\\demo\\StandardLoader\\Loader\\bin\\Debug\\plugins";
-//					Console.WriteLine(">>>" + AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
-					
-//					AppDomainSetup domaininfo = new AppDomainSetup();
-//					domaininfo.ApplicationBase = System.Environment.CurrentDirectory;
-//					Evidence adevidence = AppDomain.CurrentDomain.Evidence;
-//					AppDomain domain = AppDomain.CreateDomain("MyDomain", adevidence, domaininfo);
-//					Console.WriteLine("Host domain: " + AppDomain.CurrentDomain.FriendlyName);
-//					Console.WriteLine("new child domain: " + domain.FriendlyName);
-//					Console.WriteLine();
-//					Console.WriteLine("Application base is: " + domain.SetupInformation.ApplicationBase);
-
 //					AppDomain.CurrentDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
 //					AppDomain.CurrentDomain.AppendPrivatePath(Path.GetDirectoryName(fullName));
 					
-//					AppDomainSetup appDomainSetup = new AppDomainSetup();
-//					appDomainSetup.ApplicationName = "Plugins";
-//					appDomainSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
-////					appDomainSetup.PrivateBinPath += Path.GetDirectoryName(fullName);
-////					appDomainSetup.PrivateBinPath += Path.PathSeparator + AppDomain.CurrentDomain.BaseDirectory;
-//					appDomain = AppDomain.CreateDomain("Plugins", null, appDomainSetup);
-//					appDomain.AppendPrivatePath(AppDomain.CurrentDomain.BaseDirectory);
-
-					AssemblyName an = new AssemblyName();
-					an.CodeBase = fullName;
+					AssemblyName an = null;
+					try { an = AssemblyName.GetAssemblyName(codeBase); } catch {}
+					if (an == null) {
+						an = new AssemblyName();
+						an.CodeBase = codeBase;
+					}
 					assembly = appDomain.Load(an);
+					
+//					AssemblyName an = new AssemblyName();
+//					an.CodeBase = fullName;
+//					assembly = appDomain.Load(an);
 					//assembly = Assembly.LoadFrom(fullName);
 					//if (assembly == null) assembly = Assembly.LoadWithPartialName(fullName);
 					status = Status.Loaded;

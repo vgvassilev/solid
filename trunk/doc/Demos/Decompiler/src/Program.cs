@@ -13,7 +13,7 @@ using Mono.Cecil.Cil;
 using SolidOpt.Services.Transformations;
 using SolidOpt.Services.Transformations.Multimodel;
 
-using SolidOpt.Services.Transformations.Multimodel.CilToControlFlowGraph;
+using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
 namespace SolidOpt.Documentation.Samples.Decompiler
