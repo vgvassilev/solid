@@ -8,6 +8,7 @@
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\ConstantPropagation\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\MethodInline\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\AST\SimplifyExpression\bin
+..\..\..\..\..\..\src\Services\Transformations\Optimizations\CFG\DeadCodeElimination\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\MethodInline\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\NopRemove\bin
 ..\..\..\..\..\..\src\Services\Transformations\Optimizations\IL\OverflowArithmeticRemove\bin

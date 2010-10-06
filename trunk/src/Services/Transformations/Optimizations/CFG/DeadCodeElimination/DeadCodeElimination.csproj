@@ -1,1 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?><Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  <PropertyGroup>    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>    <ProductVersion>9.0.21022</ProductVersion>    <SchemaVersion>2.0</SchemaVersion>    <ProjectGuid>{A035D611-94A5-458A-B879-292E4AB4C5B0}</ProjectGuid>    <OutputType>Library</OutputType>    <RootNamespace>DeadCodeElimination</RootNamespace>    <AssemblyName>DeadCodeElimination</AssemblyName>    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>  </PropertyGroup>  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">    <DebugSymbols>true</DebugSymbols>    <DebugType>full</DebugType>    <Optimize>false</Optimize>    <OutputPath>bin\Debug</OutputPath>    <DefineConstants>DEBUG</DefineConstants>    <ErrorReport>prompt</ErrorReport>    <WarningLevel>4</WarningLevel>    <ConsolePause>false</ConsolePause>  </PropertyGroup>  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">    <DebugType>none</DebugType>    <Optimize>false</Optimize>    <OutputPath>bin\Release</OutputPath>    <ErrorReport>prompt</ErrorReport>    <WarningLevel>4</WarningLevel>    <ConsolePause>false</ConsolePause>  </PropertyGroup>  <ItemGroup>    <Folder Include="src\" />    <Folder Include="Properties\" />  </ItemGroup>  <ItemGroup>    <Compile Include="Properties\AssemblyInfo.cs" />    <Compile Include="src\DeadCodeTransformer.cs" />  </ItemGroup>  <ItemGroup>    <Reference Include="System" />  </ItemGroup>  <ItemGroup>    <ProjectReference Include="..\..\..\SolidOpt.Services.Transformations.csproj">      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>      <Name>SolidOpt.Services.Transformations</Name>    </ProjectReference>    <ProjectReference Include="..\..\SolidOpt.Services.Optimizations.csproj">      <Project>{cccc9966-8ceb-4451-8ad4-fe48d7ad04bb}</Project>      <Name>SolidOpt.Services.Optimizations</Name>    </ProjectReference>    <ProjectReference Include="..\..\..\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>      <Name>SolidOpt.Services.ControlFlowGraph</Name>    </ProjectReference>  </ItemGroup>  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /></Project>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A035D611-94A5-458A-B879-292E4AB4C5B0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeElimination</RootNamespace>
+    <AssemblyName>SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeElimination</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Sasho\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="Properties\" />
+    <ProjectReference Include="..\..\..\..\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\DeadCodeEliminationTransformer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SolidOpt.Services.Transformations.csproj">
+      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
+      <Name>SolidOpt.Services.Transformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SolidOpt.Services.Optimizations.csproj">
+      <Project>{cccc9966-8ceb-4451-8ad4-fe48d7ad04bb}</Project>
+      <Name>SolidOpt.Services.Optimizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
+      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
+      <Name>SolidOpt.Services.ControlFlowGraph</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

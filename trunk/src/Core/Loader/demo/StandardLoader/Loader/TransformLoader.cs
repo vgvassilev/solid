@@ -152,6 +152,8 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 //			IService[] transformers = (IService[]) ServicesContainer.GetServices(typeof(ITransform<MethodDefinition>));
 			List<IOptimize<MethodDefinition>> IL2ILTransformers = 
 				ServicesContainer.GetServices<IOptimize<MethodDefinition>>();
+			List<IOptimize<ControlFlowGraph>> CFG2CFGTransformers = 
+				ServicesContainer.GetServices<IOptimize<ControlFlowGraph>>();
 			IDecompile<MethodDefinition, AstMethodDefinition> IL2ASTtransformer = 
 				ServicesContainer.GetService<IDecompile<MethodDefinition, AstMethodDefinition>>();
 
@@ -176,6 +178,10 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 							
 						if (ILtoCfgTransformer != null) {
 							ControlFlowGraph cfg = ILtoCfgTransformer.Decompile(method);
+							cfg.FormatControlFlowGraph(Console.Out);
+							foreach (IOptimize<ControlFlowGraph> transformer in CFG2CFGTransformers) {
+								cfg = transformer.Optimize(cfg);
+							}
 							cfg.FormatControlFlowGraph(Console.Out);
 //							
 //							foreach (CfgNode node in cfg.Graph) {

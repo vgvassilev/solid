@@ -65,7 +65,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			for (int i = 1; i < instructions.Count; ++i) {
 				var instruction = instructions[i];
 
-				if (!IsBlockDelimiter (instruction))
+				if (!IsBlockDelimiter(instruction))
 					continue;
 
 				var targets = GetTargetInstructions(instruction);
@@ -75,7 +75,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
 				// the next instruction after a branch starts a block
 				if (instruction.Next != null)
-					starts[instructions.IndexOf(instruction.Next)] = true;
+					starts[i+1] = true;
 			}
 		}
 		
@@ -119,24 +119,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		{
 			Node node;
 			int first = 0;
-			int last = body.Instructions.Count - 1;
 			
 			for (int i = 1; i < starts.Count; i++) {
 				if (starts[i]) {
-					last = i - 1;
-					
-					node = new Node(body.Instructions[first], body.Instructions[last]);
+					node = new Node(body.Instructions[first], body.Instructions[i - 1]);
 					graph.Add(node);
 					first = i;
-					last = body.Instructions.Count - 1;
 				}
 			}
 			
-			// if the method has only one block
-			if (first == 0) {
-				node = new Node(body.Instructions[first], body.Instructions[last]);
-				graph.Add(node);
-			}
+			// add last node
+			node = new Node(body.Instructions[first], body.Instructions[body.Instructions.Count - 1]);
+			graph.Add(node);
 		}
 		
 		void ConnectNodes()
@@ -153,28 +147,37 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
 			var instruction = node.Last;
 			switch (instruction.OpCode.FlowControl) {
-			case FlowControl.Call:
-			case FlowControl.Next:					
-			case FlowControl.Branch:
-			case FlowControl.Cond_Branch: {
-				var targets = GetTargetInstructions(instruction);
-				foreach (var target in targets) {
-					if (target.Next != null)
-						node.Successors.Add(GetNode(target.Next));
+				case FlowControl.Call:
+				case FlowControl.Branch: {
+					var targets = GetTargetInstructions(instruction);
+					foreach (var target in targets) {
+						if (target.Next != null)
+							node.Successors.Add(GetNode(target.Next));
+					}
+					
+					break;
 				}
-				
-				break;
-			}
+				case FlowControl.Next:					
+				case FlowControl.Cond_Branch: {
+					var targets = GetTargetInstructions(instruction);
+					foreach (var target in targets) {
+						if (target.Next != null)
+							node.Successors.Add(GetNode(target.Next));
+					}
+					node.Successors.Add(GetNode(node.Last.Next));
+					
+					break;
+				}
 
-			case FlowControl.Return:
-			case FlowControl.Throw:
-				break;
-			default:
-				throw new NotSupportedException (
-					string.Format ("Unhandled instruction flow behavior {0}: {1}",
-					               instruction.OpCode.FlowControl,
-					               instruction.ToString(),				                                                
-					               instruction.ToString()));
+				case FlowControl.Return:
+				case FlowControl.Throw:
+					break;
+				default:
+					throw new NotSupportedException (
+						string.Format ("Unhandled instruction flow behavior {0}: {1}",
+						               instruction.OpCode.FlowControl,
+						               instruction.ToString(),				                                                
+						               instruction.ToString()));
 			}			
 		}
 
