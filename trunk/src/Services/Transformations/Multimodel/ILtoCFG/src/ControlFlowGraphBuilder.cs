@@ -40,7 +40,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		}
 
 		public ControlFlowGraph Create()
-			
 		{
 			SplitNodes();
 			CreateNodes();
@@ -63,13 +62,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			// the first instruction starts a block
 			starts[0] = true;
 			for (int i = 1; i < instructions.Count; ++i) {
-				var instruction = instructions[i];
+				Instruction instruction = instructions[i];
 
 				if (!IsBlockDelimiter(instruction))
 					continue;
 
-				var targets = GetTargetInstructions(instruction);
-				foreach (Instruction target in targets) {
+				// all target instructions starts a blocks
+				foreach (Instruction target in GetTargetInstructions(instruction)) {
 					starts[instructions.IndexOf(target)] = true;
 				}
 
@@ -77,29 +76,39 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				if (instruction.Next != null)
 					starts[i+1] = true;
 			}
+			
+			// Try and Excepion handlers define blocks
+			foreach (ExceptionHandler handler in body.ExceptionHandlers) {
+				if (handler.TryStart != null) starts[instructions.IndexOf(handler.TryStart)] = true;
+				if (handler.TryEnd != null && handler.TryEnd.Next != null) starts[instructions.IndexOf(handler.TryEnd.Next)] = true;
+				if (handler.FilterStart != null) starts[instructions.IndexOf(handler.FilterStart)] = true;
+				if (handler.FilterEnd != null && handler.FilterEnd.Next != null) starts[instructions.IndexOf(handler.FilterEnd.Next)] = true;
+				if (handler.HandlerStart != null) starts[instructions.IndexOf(handler.HandlerStart)] = true;
+				if (handler.HandlerEnd != null && handler.HandlerEnd.Next != null) starts[instructions.IndexOf(handler.HandlerEnd.Next)] = true;
+			}
 		}
 		
 		static bool IsBlockDelimiter (Instruction instruction)
 		{
 			switch (instruction.OpCode.FlowControl) {
-			case FlowControl.Break:
-			case FlowControl.Branch:
-			case FlowControl.Return:
-			case FlowControl.Cond_Branch:
-				return true;
+				case FlowControl.Break:
+				case FlowControl.Branch:
+				case FlowControl.Return:
+				case FlowControl.Cond_Branch:
+				case FlowControl.Throw:
+					return true;
 			}
 			return false;
 		}
 		
 		static Collection<Instruction> GetTargetInstructions(Instruction instruction)
 		{
-			Collection<Instruction> result = new Collection<Instruction>();
+			Collection<Instruction> result = new Collection<Instruction>(1);
 			
 			// if there are more multiple branches
 			Instruction[] targets = instruction.Operand as Instruction[];
-			Instruction target = null;
 			if (targets == null) {
-				target = instruction.Operand as Instruction;
+				Instruction target = instruction.Operand as Instruction;
 				if (target != null) {
 					result.Add(target);
 					return result;
@@ -122,7 +131,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			
 			for (int i = 1; i < starts.Count; i++) {
 				if (starts[i]) {
-					node = new Node(body.Instructions[first], body.Instructions[i - 1]);
+					node = new Node(body.Instructions[first], body.Instructions[i-1]);
 					graph.Add(node);
 					first = i;
 				}
@@ -145,9 +154,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			if (node.Last == null)
 				throw new ArgumentException ("Undelimited node at offset " + node.First.Offset);
 
-			var instruction = node.Last;
+			Instruction instruction = node.Last;
 			switch (instruction.OpCode.FlowControl) {
-				case FlowControl.Call:
 				case FlowControl.Branch: {
 					var targets = GetTargetInstructions(instruction);
 					foreach (var target in targets) {
@@ -157,7 +165,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					
 					break;
 				}
-				case FlowControl.Next:					
+				case FlowControl.Next:
 				case FlowControl.Cond_Branch: {
 					var targets = GetTargetInstructions(instruction);
 					foreach (var target in targets) {
@@ -169,6 +177,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					break;
 				}
 
+				case FlowControl.Call:
 				case FlowControl.Return:
 				case FlowControl.Throw:
 					break;
@@ -185,7 +194,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		{
 			foreach (CfgNode node in graph) {
 				if (node.Contains(firstInstruction))
-				return node;
+					return node;
 			}
 			return null;
 		}
