@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{9DFD76F4-C25D-4AB8-BC5F-ED932767B84D}</ProjectGuid>
@@ -30,7 +30,6 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System" />
@@ -74,6 +73,10 @@
     <ProjectReference Include="..\..\..\SolidOpt.Services.Transformations.csproj">
       <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="SolidOpt.Services.MethodInline.Intf.csproj">
+      <Project>{92027372-A9D5-4E4D-B5BB-9591B9B06EC6}</Project>
+      <Name>SolidOpt.Services.MethodInline.Intf</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

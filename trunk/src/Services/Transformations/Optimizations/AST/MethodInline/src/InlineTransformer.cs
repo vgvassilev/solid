@@ -1004,25 +1004,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
 		}
 	}
 	
-	/// <summary>
-	/// Attribute with which the appropriate methods for inline are marked. 
-	/// </summary>
-	//TODO: Класът трябва да бъде преместен в специална отделна библиотека за атрибути
-	public class InlineableAttribute : Attribute
-	{
-		
-	}
-	
-	public class SideEffectsAttribute : Attribute
-	{
-		public bool HasSideEffects = false;
-		
-		public SideEffectsAttribute(bool HasSideEffects)
-		{
-			this.HasSideEffects = HasSideEffects;
-		}
-	}
-	
 	internal class SideEffectInfo
 	{
 		public MethodInvocationExpression mInvokeNode = null;
@@ -1031,13 +1012,13 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
 		public List<VariableDefinition> SideEffectsInNodeVar = new List<VariableDefinition>();
 		
 		
-		public SideEffectInfo ()
+		public SideEffectInfo()
 		{
 		}
 
-		public SideEffectInfo (MethodInvocationExpression mInvokeNode, VariableDefinition mInvokeNodeVar,
-		                       List<MethodInvocationExpression> SideEffectsInNode, 
-		                       List<VariableDefinition> SideEffectsInNodeVar)
+		public SideEffectInfo(MethodInvocationExpression mInvokeNode, VariableDefinition mInvokeNodeVar,
+							List<MethodInvocationExpression> SideEffectsInNode,
+							List<VariableDefinition> SideEffectsInNodeVar)
 		{
 			this.mInvokeNode = mInvokeNode;
 			this.mInvokeNodeVar = mInvokeNodeVar;

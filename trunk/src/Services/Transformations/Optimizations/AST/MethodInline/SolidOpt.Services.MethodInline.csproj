@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}</ProjectGuid>
@@ -85,6 +85,10 @@
     <ProjectReference Include="..\..\..\..\SolidOpt.Services.csproj">
       <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
       <Name>SolidOpt.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="SolidOpt.Services.MethodInline.Intf.csproj">
+      <Project>{0AC4BFEE-F1E0-4E9B-8454-B7C21AE5B1C3}</Project>
+      <Name>SolidOpt.Services.MethodInline.Intf</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

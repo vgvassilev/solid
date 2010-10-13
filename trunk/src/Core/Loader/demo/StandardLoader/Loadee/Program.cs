@@ -107,8 +107,20 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 //		}
 //		
 		
-
 		public static void InlineTest()
+		{
+			double a = 5;
+			double result;
+			result = CalculateDiag(a);
+			Console.WriteLine(a);
+		}
+		
+		public static double CalculateDiag(double a)
+		{
+			return Math.Sqrt(2) * a;
+		}
+
+		public static void InlineTest1()
 		{
 //			int a = 0;
 //			Random rnd = new Random();

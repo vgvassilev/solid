@@ -35,6 +35,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		internal ControlFlowGraphBuilder(MethodDefinition method)
 		{
 			body = method.Body;
+			var t = body.ExceptionHandlers[0];
+
 //			if (body.ExceptionHandlers.Count > 0)
 //				exception_objects_offsets = new HashSet<int> ();
 		}
@@ -88,7 +90,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			}
 		}
 		
-		static bool IsBlockDelimiter (Instruction instruction)
+		bool IsBlockDelimiter (Instruction instruction)
 		{
 			switch (instruction.OpCode.FlowControl) {
 				case FlowControl.Break:
@@ -98,6 +100,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				case FlowControl.Throw:
 					return true;
 			}
+			
+//			switch (body.ExceptionHandlers.Contains().OpCode.Code) {
+//			case ExceptionHandlerType.Fault:
+//			case ExceptionHandlerType.Filter:						
+//			case ExceptionHandlerType.Finally:
+//				return true;
+//			}
+			
 			return false;
 		}
 		
@@ -115,9 +125,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				}
 			}
 			else {
-				foreach (Instruction instr in targets) {
+				foreach (Instruction instr in targets)
 					result.Add(instr);	
-				}
+				
 				return result;
 			}
 			
@@ -133,6 +143,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				if (starts[i]) {
 					node = new Node(body.Instructions[first], body.Instructions[i-1]);
 					graph.Add(node);
+			
 					first = i;
 				}
 			}
