@@ -1,0 +1,61 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{72104152-D24F-11DF-8993-9CE3DED72085}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>test</RootNamespace>
+    <AssemblyName>SolidOpt.Services.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Services\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
+      <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
+      <Name>nunit.core.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
+      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
+      <Name>nunit.core.interfaces.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework</Name>
+    </ProjectReference>
+    <Folder Include="Services" />
+  </ItemGroup>
+</Project>
