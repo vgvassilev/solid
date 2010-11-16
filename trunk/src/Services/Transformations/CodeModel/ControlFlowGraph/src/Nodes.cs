@@ -13,7 +13,8 @@ using System.Collections.Generic;
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 {
 	/// <summary>
-	/// Description of Nodes.
+	/// Represents an composite node, i. e. node, containing nodes. It
+	/// simplifies the exception handling constructions in the CFG.
 	/// </summary>
 	public class Nodes : CfgNode, IEnumerable<Instruction>
 	{

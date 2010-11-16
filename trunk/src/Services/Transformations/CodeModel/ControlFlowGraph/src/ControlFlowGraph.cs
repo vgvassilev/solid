@@ -13,6 +13,13 @@ using Mono.Cecil.Cil;
 
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 {
+	/// <summary>
+	/// Implementation of a Control Flow Graph structure. The CFG represents the
+	/// the method body as a graph, which consist of nodes. Every node of the CFG
+	/// contains linear block of CIL instructions. A node can have successors and
+	/// predecessors, which represent the explicit change (branches) of the 
+	/// control flow.
+	/// </summary>
 	public class ControlFlowGraph {
 		
 		#region Fields & Properties
@@ -91,7 +98,5 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			}
 			
 		}
-				
-		
 	}
 }

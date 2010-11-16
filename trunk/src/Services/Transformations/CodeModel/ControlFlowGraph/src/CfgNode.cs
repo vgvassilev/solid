@@ -13,7 +13,9 @@ using Mono.Cecil.Cil;
 
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph 
 {
-
+	/// <summary>
+	/// The base class of the CFG nodes.
+	/// </summary>
 	public class CfgNode: IEnumerable<Instruction>, IComparable<CfgNode>
 	{
 		#region Fields & Properties

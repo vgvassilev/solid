@@ -13,7 +13,8 @@ using Mono.Cecil.Cil;
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 {
 	/// <summary>
-	/// Description of Node.
+	/// Represents single node in the CFG. The node contains CIL instructions
+	/// and the last instruction of the node very often is branch.
 	/// </summary>
 	public class Node : CfgNode
 	{
