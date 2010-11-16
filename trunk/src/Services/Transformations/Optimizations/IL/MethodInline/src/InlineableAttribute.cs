@@ -11,7 +11,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline
 	/// <summary>
 	/// Attribute with which the appropriate methods for inline are marked. 
 	/// </summary>
-	//TODO: Класът трябва да бъде преместен в специална отделна библиотека за атрибути
 	public class InlineableAttribute : Attribute
 	{
 	}
