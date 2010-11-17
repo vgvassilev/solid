@@ -46,7 +46,7 @@ using System.Reflection;
 namespace SolidOpt.Services.Subsystems.Configurator.Sources
 {
 	/// <summary>
-	/// Generates CIR (Dictionary) from assembly.
+	/// Generates Configuration Intermediate Representation (Dictionary) from assembly.
 	/// </summary>
 	public class ILSource<TParamName> : IConfigSource<TParamName>
 	{
@@ -83,6 +83,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 			return dict;
 		}
 		
+		//FIXME: Fix the VisitConfigTypes because it is no more visitor...
 		internal void VisitConfigTypes(TypeDefinition type, Dictionary<TParamName, object> dict)
 		{
 			foreach (FieldDefinition field in type.Fields) {

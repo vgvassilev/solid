@@ -10,7 +10,7 @@ using System.Globalization;
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
-	/// Description of FloatResolver.
+	/// Tries to resolve floats and doubles.
 	/// </summary>
 	public class FloatResolver : Resolver
 	{

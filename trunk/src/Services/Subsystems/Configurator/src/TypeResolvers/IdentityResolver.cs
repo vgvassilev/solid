@@ -10,7 +10,8 @@ using System.Collections.Generic;
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
-	/// Description of EntryPoint.
+	/// The identity resolver is used for testing and demonstration what should contain
+	/// a resolver. When it is used it returns the same type.
 	/// </summary>
 	public class IdentityResolver : ITypeResolver
 	{

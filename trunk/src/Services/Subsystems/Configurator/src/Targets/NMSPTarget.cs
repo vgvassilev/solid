@@ -13,7 +13,7 @@ using SolidOpt.Services.Subsystems.HetAccess;
 namespace SolidOpt.Services.Subsystems.Configurator.Targets
 {
 	/// <summary>
-	/// Description of NMSPBuilder.
+	/// This class builds NMSP file format from the configuration intermediate representation
 	/// </summary>
 	public class NMSPTarget<TParamName> : IConfigTarget<TParamName>
 	{

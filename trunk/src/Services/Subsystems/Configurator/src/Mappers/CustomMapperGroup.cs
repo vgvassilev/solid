@@ -10,11 +10,13 @@ using System.Collections.Generic;
 namespace SolidOpt.Services.Subsystems.Configurator.Mappers
 {
 	/// <summary>
-	/// Групата CustomMapperGroup е част от шаблона композиция и би трябвало да се използва тогава,
-	/// когато mapping-и трябва да се извършат в точно определена последователност. С други думи
-	/// когато се построява съставен mapping и е необходимо map-a да се извърши в определен ред се
-	/// съставя група, която се добавя в MapManager-a и бива разглеждана от него като хомогенен обект.
+	/// The CustomMapperGroup is part of the Composition Pattern and it should be used when the
+	/// mappers are going to be used in specific sequence. In other words when a composite mapper
+	/// is built and we need the mapping to be performed in specific order this group should be 
+	/// created. Then it is added to the MapManager and from now onit is seen as homogeneous 
+	/// object.
 	/// </summary>
+	//FIXME:Has to be ChainMapper and to be similar to the TypeResolvers because the idea is the same...
 	public class CustomMapperGroup<TParamName> : Mapper<TParamName>
 	{
 		private List<Mapper<TParamName>> mapperList = new List<Mapper<TParamName>>();

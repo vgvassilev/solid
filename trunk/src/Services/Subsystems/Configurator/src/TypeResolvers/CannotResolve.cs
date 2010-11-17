@@ -8,6 +8,10 @@ using System;
 
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
+	/// <summary>
+	/// Type that is being returned when the type resolution fails or
+	/// the type is impossible to be determined. 
+	/// </summary>
 	internal class CannotResolve
 	{
 		private static CannotResolve instance = new CannotResolve();

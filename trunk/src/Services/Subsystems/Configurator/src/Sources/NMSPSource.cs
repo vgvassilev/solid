@@ -14,8 +14,34 @@ using SolidOpt.Services.Subsystems.HetAccess;
 namespace SolidOpt.Services.Subsystems.Configurator.Sources
 {
 	/// <summary>
-	/// Generates intermediate represenation (Dictionary) from the NMSP file format. 
+	/// Generates intermediate represenation (Dictionary) from the NMSP file format.
+	/// The example demonstrates the new config file format, which is hierarchical. Here is an example:
+	/// <example>
+	/// a1{
+	///		x1=5
+	///		b{
+	///			x2=13
+	///			x5=asd
+	///			x4=11
+	///			c{
+	///				x=2
+	///				d{
+	///					asd=10
+	///				}
+	///			}
+	/// 	}
+	/// }
+	/// x=14
+	/// y=opa
+	/// </example>
+	/// NMSP file format has very simple and useful grammar:
+	/// NMSP = [namespace | {param}]
+	/// namespace = ident '{' [{namespace | param}] '}'
+	/// param = ident '=' value '\n'
+	/// ident = letter {letter | digit}
+	/// value = {letter | digit}
 	/// </summary>
+	//FIXME: Fix the grammar and the parser...
 	public class NMSPSource<TParamName> : IConfigSource<TParamName>
 	{
 		public NMSPSource()
@@ -37,30 +63,6 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 			parser.AnalizeSyntax();
 			return parser.ConfigIR;
 		}
-	
-		/// <summary>
-		/// The example demonstrates the new config file format, which is hierarchical. Here is an example:
-		/// a1{
-		///		x1=5
-		///		b{
-		///			x2=13
-		///			x5=asd
-		///			x4=11
-		///			c{
-		///				x=2
-		///				d{
-		///					asd=10
-		///				}
-		///			}
-		/// 	}
-		/// }
-		/// x=14
-		/// y=opa
-		/// </summary>
-//		public string Exports()
-//		{
-//			return "nmsp";
-//		}
 	}
 
 	#region Lexem Hierarchy
@@ -151,7 +153,6 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 						ch = (char)stream.ReadByte();
 					}
 					isValue = false;
-//					Console.WriteLine("Identifier" + sb.ToString());
 					return new LexValue(sb.ToString());
 				}
 				else if (char.IsLetterOrDigit(ch)){
@@ -160,7 +161,6 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 						sb.Append(ch);
 						ch = (char)stream.ReadByte();
 					}
-//					Console.WriteLine("Identifier" + sb.ToString());
 					return new LexIdentifier(sb.ToString());
 				}
 //				else if (char.IsDigit(ch)){
@@ -184,7 +184,6 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 					if (ch == '=') {
 						isValue = true;
 					}
-					
 					char ch1 = ch;
 					try{
 						ch = (char)stream.ReadByte();
@@ -192,12 +191,9 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 					catch{
 					  ch = Char.MaxValue;
 					}
-//					Console.WriteLine("Special" + ch1.ToString());
-					
 					return new LexSpecialSymbol(ch1);
 				}
 				else if (char.IsWhiteSpace(ch)){
-//					Console.WriteLine("Whitespace" + ch.ToString());
 					try{
 						ch = (char)stream.ReadByte();
 					}
@@ -206,14 +202,11 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 					}
 				}
 				else if (ch == char.MaxValue){
-//					Console.WriteLine("Whitespace" + ch.ToString());
 					return new LexEndOfFile();
 				}
 				else{
 					char ch1 = ch;
 					ch = (char)stream.ReadByte();
-//					Console.WriteLine("Unknown" + ch1.ToString());
-					
 					return new LexUnknownSymbol(ch1);
 				}
 			}

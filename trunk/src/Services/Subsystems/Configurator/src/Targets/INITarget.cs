@@ -15,7 +15,7 @@ using SolidOpt.Services.Subsystems.Configurator.Mappers;
 namespace SolidOpt.Services.Subsystems.Configurator.Targets
 {
 	/// <summary>
-	/// This class builds ini file format from the intermediate representation
+	/// Builds INI file format from the configuration intermediate representation
 	/// </summary>
 	public class INITarget<TParamName> : IConfigTarget<TParamName>
 	{
@@ -33,9 +33,14 @@ namespace SolidOpt.Services.Subsystems.Configurator.Targets
 		}
 		
 		/// <summary>
-		/// Builds configuration format and saves to given URI using Stream Provider Manager.
+		/// Builds configuration format and saves to given URI using Stream Provider Manager. 
 		/// </summary>
-		/// <param name="configRepresenation">Intermediate Representation of the config params</param>
+		/// <param name="configRepresenation">
+		/// A <see cref="Dictionary<TParamName, System.Object>"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="Stream"/>
+		/// </returns>
 		public Stream Build(Dictionary<TParamName, object> configRepresenation)
 		{
 			streamWriter = new StreamWriter(new MemoryStream());

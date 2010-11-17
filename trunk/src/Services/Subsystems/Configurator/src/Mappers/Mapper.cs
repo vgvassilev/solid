@@ -10,8 +10,8 @@ using System.Collections.Generic;
 namespace SolidOpt.Services.Subsystems.Configurator.Mappers
 {
 	/// <summary>
-	/// Базовия клас на шаблона композиция, който третира листата и върховете на структурата по
-	/// един и същ начин.
+	/// The base class of the Composition Pattern, in which the nodes and the leaves are
+	/// threated in the same way.
 	/// </summary>
 	public abstract class Mapper<TParamName> : IConfigMapper<TParamName>
 	{

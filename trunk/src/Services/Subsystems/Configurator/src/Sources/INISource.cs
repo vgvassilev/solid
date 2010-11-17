@@ -14,7 +14,9 @@ using SolidOpt.Services.Subsystems.HetAccess;
 namespace SolidOpt.Services.Subsystems.Configurator.Sources
 {
 	/// <summary>
-	/// Creates CIR from stream, i.e loads the configuration into the configuration manager.
+	/// Creates Configuration Intermediate Representation from stream,
+	/// i.e loads the configuration into the configuration manager from 
+	/// INI file format. 
 	/// </summary>
 	public class INISource<TParamName> : IConfigSource<TParamName>
 	{
@@ -23,18 +25,32 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
 		}
 		
 		/// <summary>
-		/// Checks if the URI can be handled.
+		/// Checks if the URI can be handled. 
 		/// </summary>
-		/// <returns>Can be handled</returns>
+		/// <param name="resUri">
+		/// A <see cref="Uri"/>
+		/// </param>
+		/// <param name="resStream">
+		/// A <see cref="Stream"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		public bool CanParse(Uri resUri, Stream resStream)
 		{
 			return resUri.IsFile && Path.GetExtension(resUri.LocalPath).ToLower() == ".ini";
 		}
 		
 		/// <summary>
-		/// Iterates over the stream delivered by the Stream Provider Manager and creates the IR.
+		/// Iterates over the stream delivered by the Stream Provider Manager and creates the IR. 
 		/// </summary>
-		/// <returns>IR</returns>
+		/// <param name="resStream">
+		/// A <see cref="Stream"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="Dictionary<TParamName, System.Object>"/>
+		/// </returns>
+		//FIXME: get the INI file format grammar and create suitable parser.
 		public Dictionary<TParamName, object> LoadConfiguration(Stream resStream)
 		{
 			ConfigINIParser<TParamName> parser = new ConfigINIParser<TParamName>(resStream);

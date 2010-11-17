@@ -8,9 +8,8 @@ using System;
 
 namespace SolidOpt.Services.Subsystems.Configurator
 {
-	/// <summary>
-	/// Description of IConfigSaver.
-	/// </summary>
+	
+	//FIXME: Fix the link between this interface and ConfigurationManager
 	public interface IConfigSaver
 	{
 		bool CanSave();

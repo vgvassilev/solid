@@ -10,8 +10,8 @@ using System.Collections.Generic;
 namespace SolidOpt.Services.Subsystems.Configurator.Mappers
 {
 	/// <summary>
-	/// Единичният (прозрачният) mapper. Използва се за тестване и демонстрация какво би трябвало
-	/// да включва един mapper.
+	/// The identity mapper is used for testing and demonstration what should contain
+	/// a mapper. When it is used it returns the same name.
 	/// </summary>
 	public class IdentityMapper<TParamName> : Mapper<TParamName>
 	{

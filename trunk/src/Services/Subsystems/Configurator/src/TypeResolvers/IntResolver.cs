@@ -11,7 +11,7 @@ using System;
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
-	/// Description of IntResolver.
+	/// Tries to resolve ints (int32) and longs (int64).
 	/// </summary>
 	public class IntResolver : Resolver
 	{

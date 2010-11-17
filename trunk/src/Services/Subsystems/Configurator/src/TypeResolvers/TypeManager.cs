@@ -10,7 +10,8 @@ using System.Collections.Generic;
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
-	/// Description of TypeManager.
+	/// The TypeManager is responsible for the type resolution of the incoming and outgoing
+	/// types. It needs to be constructed, set up and attached to the ConfigurationManager.
 	/// </summary>
 	public class TypeManager<TParamName>
 	{
@@ -25,6 +26,15 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 		{	
 		}
 		
+		/// <summary>
+		/// Triggers the type resolution. 
+		/// </summary>
+		/// <param name="CIR">
+		/// A <see cref="Dictionary<TParamName, System.Object>"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="Dictionary<TParamName, System.Object>"/>
+		/// </returns>
 		public Dictionary<TParamName, object> ResolveTypes(Dictionary<TParamName, object> CIR)
 		{
 			Dictionary<TParamName, object> dict = new Dictionary<TParamName, object>();
@@ -40,6 +50,15 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 			return dict;
 		}
 		
+		/// <summary>
+		/// Builds new configuration intermediate representation. 
+		/// </summary>
+		/// <param name="ResolvedCIR">
+		/// A <see cref="Dictionary<TParamName, System.Object>"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="Dictionary<TParamName, System.Object>"/>
+		/// </returns>
 		private Dictionary<TParamName, object> Build(Dictionary<TParamName, object> ResolvedCIR)
 		{
 			Dictionary<TParamName, object> Result = new Dictionary<TParamName, object>();

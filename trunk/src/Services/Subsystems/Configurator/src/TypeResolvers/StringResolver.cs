@@ -10,7 +10,7 @@ using System.Text;
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
 	/// <summary>
-	/// Description of StringResolver.
+	/// Tries to resolve strings.
 	/// </summary>
 	public class StringResolver : Resolver
 	{
