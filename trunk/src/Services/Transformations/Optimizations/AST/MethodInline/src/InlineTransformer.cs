@@ -70,7 +70,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
 		/// <summary>
 		/// Structure, where new local variables are stored. The new local variables are going to replace
 		/// the old ones. There shouldn't be local variable, which overlaps with variable of the inlined method.
-		/// Целта е да не съвпадне локална променлива с тази от inline-вания метод.
 		/// </summary>
 		private Dictionary<VariableDefinition, VariableDefinition> localVarSubstitution =
 			new Dictionary<VariableDefinition, VariableDefinition>();
@@ -129,24 +128,6 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
 		}
 		
 		#region Model Transformers
-		
-		/// <summary>
-		/// Записва текущия блок, който се обхожда.
-		/// </summary>
-//		public override ICodeNode VisitBlockStatement(BlockStatement node)
-//		{
-//			currentBlock = node;
-//			return base.VisitBlockStatement(node);
-//		}
-		
-		/// <summary>
-		/// Записва текущия израз, който се обхожда.
-		/// </summary>
-//		public override ICodeNode VisitExpressionStatement(ExpressionStatement node)
-//		{
-//			currentExpression = node;
-//			return base.VisitExpressionStatement(node);
-//		}
 		
 		
 		
