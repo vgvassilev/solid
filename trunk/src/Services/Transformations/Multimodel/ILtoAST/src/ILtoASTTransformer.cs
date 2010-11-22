@@ -23,7 +23,8 @@ using SolidOpt.Services.Transformations.Multimodel;
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST
 {
 	/// <summary>
-	/// Description of NopRemoveTransformer.
+	/// Creates Cecil.Decompiler AST representation of the specified method body.
+	/// The Cecil.Decompiler is going to be replaced in the next versions with SolidOpt.Decompiler
 	/// </summary>
 	public class ILtoASTTransformer : IDecompile<MethodDefinition, AstMethodDefinition>
 	{
