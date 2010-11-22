@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{7CCE9049-76C5-4D92-9731-FB375C60F9B1}</ProjectGuid>
@@ -62,10 +62,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\IL\MethodInline\SolidOpt.Services.MethodInline.Intf.csproj">
-      <Project>{92027372-A9D5-4E4D-B5BB-9591B9B06EC6}</Project>
-      <Name>SolidOpt.Services.MethodInline.Intf</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Services\Transformations\SolidOpt.Services.Transformations.csproj">
       <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
@@ -73,6 +69,10 @@
     <ProjectReference Include="..\..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Optimizations\SolidOpt.Services.Optimizations.Annotations\SolidOpt.Services.Optimizations.Annotations.csproj">
+      <Project>{C3F549D3-B9A7-45D3-B2E4-22E17717EA56}</Project>
+      <Name>SolidOpt.Services.Optimizations.Annotations</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

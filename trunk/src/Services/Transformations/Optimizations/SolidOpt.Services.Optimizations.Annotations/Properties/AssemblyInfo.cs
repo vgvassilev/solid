@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SolidOpt.Services.Transformations.Optimizations.IL.MethodInline")]
-[assembly: AssemblyDescription("SolidOpt optimization framework. IL level MethodInline optimization plugin.")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. Annotation attributes for the optimizing methods.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SolidOpt.org")]
 [assembly: AssemblyProduct("SolidOpt")]
