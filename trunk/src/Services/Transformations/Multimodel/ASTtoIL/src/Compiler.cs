@@ -17,7 +17,7 @@ using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
 namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
 {
 	/// <summary>
-	/// Description of Compiler.
+	/// Worker class that compiles Cecil.Decompiler's AST to executable CIL. Demo implementation!
 	/// </summary>
 	public class Compiler : Cecil.Decompiler.Ast.BaseCodeVisitor
 	{

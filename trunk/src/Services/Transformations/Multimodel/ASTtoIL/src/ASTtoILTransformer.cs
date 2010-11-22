@@ -21,7 +21,7 @@ using SolidOpt.Services.Transformations.Multimodel;
 namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
 {
 	/// <summary>
-	/// Description of ASTtoILTransformer.
+	/// Compiles Cecil.Decompiler's AST to executable CIL.
 	/// </summary>
 	public class ASTtoILTransformer : ICompile<AstMethodDefinition, MethodDefinition>
 	{
