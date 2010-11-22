@@ -8,6 +8,9 @@ using System;
 
 namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
 {
+	/// <summary>
+	/// Shows if the annotated element has side effect. 
+	/// </summary>
 	public class SideEffectsAttribute : Attribute
 	{
 		public bool HasSideEffects = false;
