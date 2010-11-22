@@ -16,7 +16,9 @@ using SolidOpt.Services.Subsystems.HetAccess.Importers;
 namespace SolidOpt.Services.Subsystems.HetAccess
 {
 	/// <summary>
-	/// Description of URIManager.
+	/// The manager class, which handles the resource management. The user
+	/// specifies only the location and the manager looks for appropriate 
+	/// class that could handle the resource.
 	/// </summary>
 	public class URIManager : AbstractResourceProvider
 	{
@@ -36,6 +38,16 @@ namespace SolidOpt.Services.Subsystems.HetAccess
 		{
 		}
 		
+		/// <summary>
+		/// Traverses the registered store classes and tries to find one that 
+		/// can manage the request.
+		/// </summary>
+		/// <param name="stream">
+		/// A <see cref="Stream"/>
+		/// </param>
+		/// <param name="resource">
+		/// A <see cref="Uri"/>
+		/// </param>
 		public void SetResource(Stream stream, Uri resource)
 		{
 			foreach(ISetURI exporter in Exporters){
@@ -47,6 +59,16 @@ namespace SolidOpt.Services.Subsystems.HetAccess
 			throw new IOException("Resource cannot be exported.");
 		}
 		
+		/// <summary>
+		/// Traverses the registered load classes and tries to find one that 
+		/// can manage the request. 
+		/// </summary>
+		/// <param name="resource">
+		/// A <see cref="Uri"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="Stream"/>
+		/// </returns>
 		public Stream GetResource(Uri resource)
 		{
 			foreach(IGetURI importer in Importers){

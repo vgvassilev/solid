@@ -10,7 +10,7 @@ using System.IO;
 namespace SolidOpt.Services.Subsystems.HetAccess.Exporters
 {
 	/// <summary>
-	/// Stores file on the local machine at given location.
+	/// Stores file on the at given location.
 	/// </summary>
 	public class FileExporter : ISetURI
 	{

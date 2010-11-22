@@ -10,7 +10,8 @@ using System.IO;
 namespace SolidOpt.Services.Subsystems.HetAccess.Importers
 {
 	/// <summary>
-	/// Description of IGetURI.
+	/// Specifies the interface for the resource importers, which should
+	/// fetch the resources.
 	/// </summary>
 	public interface IGetURI
 	{

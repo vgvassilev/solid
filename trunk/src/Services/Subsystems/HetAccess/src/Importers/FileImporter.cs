@@ -10,7 +10,7 @@ using System.IO;
 namespace SolidOpt.Services.Subsystems.HetAccess.Importers
 {
 	/// <summary>
-	/// Description of FileImporter.
+	/// Loads file from specified location.
 	/// </summary>
 	public class FileImporter : IGetURI
 	{

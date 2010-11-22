@@ -10,7 +10,8 @@ using System.IO;
 namespace SolidOpt.Services.Subsystems.HetAccess.Exporters
 {
 	/// <summary>
-	/// Description of ISetURI.
+	/// Specifies the interface for the resource exporters, which should
+	/// stored.
 	/// </summary>
 	public interface ISetURI
 	{
