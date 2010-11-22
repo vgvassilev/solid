@@ -32,8 +32,9 @@ using Cecil.Decompiler.Ast;
 namespace SolidOpt.Core.Loader.Demo.TransformLoader
 {
 	/// <summary>
-	/// Description of TransformLoader.
+	/// This is the plugin loader. It loads specified in configuration plugins.
 	/// </summary>
+	//FIXME: Rewrite
 	public class TransformLoader : Loader
 	{
 		public TransformLoader()

@@ -15,6 +15,11 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 	// 219 - variable assigned but the value never used
 	
 	#pragma warning disable 168, 162, 219
+	
+	/// <summary>
+	/// This is a test program. It should be removed when appropraite tests are created. 
+	/// </summary>
+	//TODO: Replace this with test cases
 	class Program
 	{
 		public static void Main(string[] args)
