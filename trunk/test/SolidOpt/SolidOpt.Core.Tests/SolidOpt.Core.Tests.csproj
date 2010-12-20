@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -6,8 +7,9 @@
     <OutputType>Library</OutputType>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>SolidOpt.Core.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -25,7 +27,20 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -41,27 +56,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Core\Loader\SolidOpt.Core.Loader.csproj">
-      <Project>{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}</Project>
-      <Name>SolidOpt.Core.Loader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\Services\SolidOpt.Services.csproj">
-      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
-      <Name>SolidOpt.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
+    <ProjectReference Include="..\..\..\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
       <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
       <Name>nunit.core.dll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
+    <ProjectReference Include="..\..\..\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
       <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
       <Name>nunit.core.interfaces.dll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
+    <Folder Include="Core\" />
+    <ProjectReference Include="..\..\..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj">
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework</Name>
+      <Name>nunit.framework.dll</Name>
     </ProjectReference>
-    <Folder Include="Core" />
-    <Folder Include="Core\Loader" />
   </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5" />
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

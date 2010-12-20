@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C3F549D3-B9A7-45D3-B2E4-22E17717EA56}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>SolidOpt.Services.Optimizations.Annotations</RootNamespace>
-    <AssemblyName>SolidOpt.Services.Optimizations.Annotations</AssemblyName>
+    <ProjectGuid>{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SolidOpt.Services.ControlFlowGraph.Test</RootNamespace>
+    <AssemblyName>SolidOpt.Services.ControlFlowGraph.Test</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,17 +30,10 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
-    <Folder Include="src\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\IL.InlineableAttribute.cs" />
-    <Compile Include="src\AST.InlineableAttribute.cs" />
-    <Compile Include="src\SideEffectsAttribute.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
+    <Folder Include="test\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="test\TestFixture.cs" />
+  </ItemGroup>
 </Project>
