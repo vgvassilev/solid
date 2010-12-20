@@ -4,6 +4,7 @@ using System.IO;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 using Cecil.Decompiler;
 using Cecil.Decompiler.Languages;
@@ -556,15 +557,22 @@ namespace Cecil.Decompiler.Debug {
 
 		static MethodDefinition GetProgramMethod (string name)
 		{
-			return GetProgramAssembly ().MainModule.Types ["Cecil.Decompiler.Debug.Program"].Methods.GetMethod (name) [0];
+			ModuleDefinition module = GetProgramAssembly ().MainModule;
+			foreach (TypeDefinition type in module.GetAllTypes())
+				if (type.FullName == "Cecil.Decompiler.Debug.Program")
+					foreach (MethodDefinition method in type.Methods)
+						if (method.Name == name)
+							return method;
+			return null;
 		}
 
 		static IAssemblyResolver resolver = new DefaultAssemblyResolver ();
 
 		static AssemblyDefinition GetProgramAssembly ()
 		{
-			var assembly = AssemblyFactory.GetAssembly (typeof (Program).Module.FullyQualifiedName);
-			assembly.Resolver = resolver;
+			
+			var assembly = AssemblyDefinition.ReadAssembly (typeof (Program).Module.FullyQualifiedName);
+//			assembly.Resolver = resolver;
 			return assembly;
 		}
 

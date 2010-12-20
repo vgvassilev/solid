@@ -78,12 +78,17 @@ namespace Cecil.Decompiler {
 		{
 			CompileTestCase (testCaseName);
 
-			AssemblyDefinition assembly = AssemblyFactory.GetAssembly (TestAssemblyPath);
-			TypeDefinition type = assembly.MainModule.Types ["TestCase"];
+			AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly (TestAssemblyPath);
+
+			TypeDefinition type = assembly.MainModule.GetType("TestCase");
 			Assert.IsNotNull (type, "Type TestCase not found!");
-			MethodDefinition[] found = type.Methods.GetMethod ("Main");
-			Assert.AreEqual (1, found.Length, "Method TestCase.Main not found!");
-			return found [0];
+//			MethodDefinition main = null;
+			foreach (MethodDefinition method in type.Methods) 
+				if (method.Name == "Main") 
+					 return method;	
+						
+			Assert.Fail("Method TestCase.Main not found!");
+			return null;
 		}
 
 		public virtual string TestCasesDirectory {

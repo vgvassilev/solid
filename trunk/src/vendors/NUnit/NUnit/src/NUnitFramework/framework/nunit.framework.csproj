@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -7,36 +8,27 @@
     <RootNamespace>NUnit.Framework</RootNamespace>
     <AssemblyName>nunit.framework</AssemblyName>
     <OutputType>Library</OutputType>
-    <ApplicationIcon />
     <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
     <PreBuildEvent />
     <PostBuildEvent />
-    <StartupObject />
     <NoConfig>false</NoConfig>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <NoWarn />
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <OutputPath>bin\Debug\</OutputPath>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <NoWarn />
-    <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
     <OutputPath>bin\Release\</OutputPath>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -104,4 +96,5 @@
   <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

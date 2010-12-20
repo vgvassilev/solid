@@ -12,13 +12,13 @@
     <PreBuildEvent />
     <PostBuildEvent />
     <NoConfig>false</NoConfig>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Sasho\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\nunit.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <ProductVersion>9.0.21022</ProductVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
