@@ -26,6 +26,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
+
 using Mono.Cecil;
 using NUnit.Framework;
 
@@ -66,7 +68,7 @@ namespace Cecil.Decompiler {
 			p.StartInfo.RedirectStandardOutput = true;
 			p.StartInfo.RedirectStandardInput = true;
 			p.StartInfo.RedirectStandardError = true;
-			p.StartInfo.FileName = "ilasm";
+			p.StartInfo.FileName = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(),"ilasm");
 			p.Start ();
 			string output = p.StandardOutput.ReadToEnd ();
 			string error = p.StandardError.ReadToEnd ();
