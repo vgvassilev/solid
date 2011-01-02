@@ -5,13 +5,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{58DD
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "..\..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.dll", "..\..\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj", "{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.dll", "..\..\src\vendors\NUnit\src\NUnitCore\core\nunit.core.dll.csproj", "{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.interfaces.dll", "..\..\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj", "{435428F8-5995-4CE4-8022-93D595A8CC0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.interfaces.dll", "..\..\src\vendors\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj", "{435428F8-5995-4CE4-8022-93D595A8CC0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.dll", "..\..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.dll", "..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolidOpt", "SolidOpt", "{828CC632-3867-4FB1-8E19-B022229634D6}"
 	ProjectSection(SolutionItems) = postProject
@@ -44,12 +44,8 @@ Global
 		{72104152-D24F-11DF-8993-9CE3DED72085}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72104152-D24F-11DF-8993-9CE3DED72085}.Release|Any CPU.Build.0 = Release|Any CPU
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.Build.0 = Release|Any CPU
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -77,6 +73,6 @@ Global
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660} = {828CC632-3867-4FB1-8E19-B022229634D6}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj
+		StartupItem = ..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj
 	EndGlobalSection
 EndGlobal

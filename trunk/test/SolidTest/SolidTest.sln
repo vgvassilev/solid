@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{7689
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "..\..\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

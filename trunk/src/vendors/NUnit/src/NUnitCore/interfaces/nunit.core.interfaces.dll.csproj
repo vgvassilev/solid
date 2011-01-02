@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{435428F8-5995-4CE4-8022-93D595A8CC0F}</ProjectGuid>
+    <RootNamespace>NUnit.Core</RootNamespace>
+    <AssemblyName>nunit.core.interfaces</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <NoConfig>false</NoConfig>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Sasho\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\nunit.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <ProductVersion>9.0.21022</ProductVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="EventListener.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="ITest.cs" />
+    <Compile Include="ITestFilter.cs" />
+    <Compile Include="ResultState.cs" />
+    <Compile Include="ResultVisitor.cs" />
+    <Compile Include="RunState.cs" />
+    <Compile Include="RuntimeFramework.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="TestAssemblyInfo.cs" />
+    <Compile Include="TestCaseResult.cs" />
+    <Compile Include="TestFilter.cs" />
+    <Compile Include="TestID.cs" />
+    <Compile Include="TestInfo.cs" />
+    <Compile Include="TestName.cs" />
+    <Compile Include="TestNode.cs" />
+    <Compile Include="TestOutput.cs" />
+    <Compile Include="TestPackage.cs" />
+    <Compile Include="TestResult.cs" />
+    <Compile Include="TestRunner.cs" />
+    <Compile Include="TestSuiteResult.cs" />
+    <Compile Include="Extensibility\Addin.cs" />
+    <Compile Include="Extensibility\AddinStatus.cs" />
+    <Compile Include="Extensibility\ExtensionType.cs" />
+    <Compile Include="Extensibility\IAddin.cs" />
+    <Compile Include="Extensibility\IAddinRegistry.cs" />
+    <Compile Include="Extensibility\IExtensionHost.cs" />
+    <Compile Include="Extensibility\IExtensionPoint.cs" />
+    <Compile Include="Extensibility\IFrameworkRegistry.cs" />
+    <Compile Include="Extensibility\ISuiteBuilder.cs" />
+    <Compile Include="Extensibility\ITestCaseBuilder.cs" />
+    <Compile Include="Extensibility\ITestDecorator.cs" />
+    <Compile Include="Extensibility\NUnitAddinAttribute.cs" />
+    <Compile Include="Extensibility\TestFramework.cs" />
+    <Compile Include="Filters\AndFilter.cs" />
+    <Compile Include="Filters\CategoryFilter.cs" />
+    <Compile Include="Filters\NameFilter.cs" />
+    <Compile Include="Filters\NotFilter.cs" />
+    <Compile Include="Filters\OrFilter.cs" />
+    <Compile Include="Filters\SimpleNameFilter.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5" />
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
