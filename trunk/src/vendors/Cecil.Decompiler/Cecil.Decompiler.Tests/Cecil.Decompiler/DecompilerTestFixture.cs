@@ -67,8 +67,8 @@ namespace Cecil.Decompiler {
 			p.StartInfo.UseShellExecute = false;
 			p.StartInfo.RedirectStandardOutput = true;
 			p.StartInfo.RedirectStandardInput = true;
-			p.StartInfo.RedirectStandardError = true;
-			p.StartInfo.FileName = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(),"ilasm");
+			p.StartInfo.RedirectStandardError = true;		
+			p.StartInfo.FileName = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(),"ilasm.exe");
 			p.Start ();
 			string output = p.StandardOutput.ReadToEnd ();
 			string error = p.StandardError.ReadToEnd ();
