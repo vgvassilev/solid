@@ -163,6 +163,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ILtoCFG", "ILtoCFG", "{7347
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ILtoCFG", "Services\Transformations\Multimodel\ILtoCFG\SolidOpt.Services.ILtoCFG.csproj", "{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ILtoCFG.Test", "Services\Transformations\Multimodel\ILtoCFG\SolidOpt.Services.ILtoCFG.Test.csproj", "{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ILtoAST", "ILtoAST", "{855610B9-ED24-4355-A0DE-721F7E362A24}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
@@ -260,8 +262,12 @@ Global
 		{A035D611-94A5-458A-B879-292E4AB4C5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A035D611-94A5-458A-B879-292E4AB4C5B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3A89F18-EA13-4415-AC17-D8FC6D109303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3A89F18-EA13-4415-AC17-D8FC6D109303}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -407,6 +413,7 @@ Global
 		{009B19FC-7D5E-4F38-8421-7A63115C23E8} = {AA0FB6DA-1D11-4127-AEC7-F580A0A70920}
 		{12F84CA5-C981-420D-8CFA-24B68ED11DCE} = {640C594D-5933-4395-B29D-48EF827010D7}
 		{3ADFD79B-EE89-4E79-85E6-33DDECC8459A} = {7347C8B1-1D93-4C39-945D-4BF1B7C11459}
+		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4} = {7347C8B1-1D93-4C39-945D-4BF1B7C11459}
 		{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F} = {855610B9-ED24-4355-A0DE-721F7E362A24}
 		{43A760A8-E789-4E27-A3C3-182CD847D07C} = {0A9D7C9B-3CE5-44A8-B501-E41DC824CE11}
 		{BB9709D4-9C97-4A77-8F5D-391F8234D5C4} = {0A9D7C9B-3CE5-44A8-B501-E41DC824CE11}
@@ -431,7 +438,14 @@ Global
 		$4.inheritsSet = null
 		$4.scope = application/octet-stream
 		$0.StandardHeader = $5
-		$5.Text = @/*\r\n * $Id$\r\n */
+		$5.Text = @/*\r\n * $Id: $\n * Author Vassil Vassilev (vasil.georgiev.vasilev@cern.ch)\r\n */
 		$5.inheritsSet = Apache2License
+		$0.VersionControlPolicy = $6
+		$6.inheritsSet = Mono
+		$0.ChangeLogPolicy = $7
+		$7.UpdateMode = None
+		$7.MessageStyle = $8
+		$8.LineAlign = 0
+		$7.inheritsSet = Mono
 	EndGlobalSection
 EndGlobal

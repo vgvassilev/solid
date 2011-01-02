@@ -33,24 +33,4 @@
     <Folder Include="test\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Compile Include="test\CfgDumper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="test\cases\Empy.il" />
-    <None Include="test\cases\Empty.il.cfg" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="SolidOpt.Services.ControlFlowGraph.csproj">
-      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
-      <Name>SolidOpt.Services.ControlFlowGraph</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
-      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
-      <Name>Mono.Cecil</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Core" />
-  </ItemGroup>
 </Project>
