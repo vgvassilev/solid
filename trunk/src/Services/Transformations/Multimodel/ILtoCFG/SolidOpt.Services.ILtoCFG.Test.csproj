@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}</ProjectGuid>
+    <ProjectGuid>{FCB54DAE-2F81-11E0-B78D-FFE4DED72085}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SolidOpt.Services.ControlFlowGraph.Test</RootNamespace>
     <AssemblyName>SolidOpt.Services.ControlFlowGraph.Test</AssemblyName>
