@@ -1,5 +1,5 @@
 ﻿/*
- * $Id: InlineTransformer.cs 349 2010-09-26 08:15:46Z apenev $
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
