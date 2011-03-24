@@ -1,6 +1,0 @@
-*.userprefs
-*.pidb
-bin
-obj
-Thumbs.db
-thumbs.db
