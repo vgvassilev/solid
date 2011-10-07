@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" height="100%">
+	
+	<mx:Script>
+		<![CDATA[
+			import so.event.SolidOptEvent;
+			import so.model.vo.MethodVO;
+			import mx.core.DragSource;
+			import mx.core.UIComponent;
+			import mx.managers.DragManager;
+			import mx.events.DragEvent;
+			import so.view.components.methods.MethodsItemRenderer;
+			import so.view.components.info.InfoComp;
+			import mx.managers.PopUpManager;
+			
+			private var fileReference:FileReference;
+			
+			private function browseButton_clickHandler(event:MouseEvent):void
+			{
+				fileReference = new FileReference();
+				fileReference.addEventListener(Event.SELECT, file_selectHandler);	
+				fileReference.browse();
+			}
+			
+			private function uploadButton_clickHandler(event:MouseEvent):void
+			{
+				var sendVars:URLVariables = new URLVariables();
+				sendVars.action = "upload";
+				sendVars.file = fileReference;
+				var request:URLRequest = new URLRequest();
+				request.data = sendVars;
+				request.url = "http://solidopt.org/online/test.php";
+				request.method = URLRequestMethod.POST;
+				fileReference.upload(request);
+			}
+			
+			private function file_selectHandler(event:Event):void
+			{
+				filePathTI.text = fileReference.name;
+			}
+			
+			private function infoButton_clickHandler(event:MouseEvent):void
+			{
+				var infoComp:InfoComp = new InfoComp();
+				PopUpManager.addPopUp(infoComp, this, true);
+				PopUpManager.centerPopUp(infoComp);
+			}
+			
+			private function userMethodsList_dragEnterHandler(event:DragEvent):void
+			{
+				if (event.dragSource.hasFormat('method'))
+				{
+					DragManager.acceptDragDrop(event.target as UIComponent);
+				}
+			}
+			
+			private function userMethodsList_dragOverHandler(event:DragEvent):void
+			{
+				DragManager.showFeedback(DragManager.COPY);
+			}
+			
+			private function userMethodsList_dragDropHandler(event:DragEvent):void
+			{	
+				var selectedMethodsEvent:SolidOptEvent = new SolidOptEvent(SolidOptEvent.TRANSFORM_METHOD_SELECTED);
+				selectedMethodsEvent.selectedMethod = event.dragSource.dataForFormat('method') as MethodVO;
+				dispatchEvent(selectedMethodsEvent);	
+			}
+			
+			private function optimizeButton_clickHandler(event:MouseEvent):void
+			{
+				
+			}
+			
+			private function clearAllButton_clickHandler(event:MouseEvent):void
+			{
+				var clearUserMethodsEvent:SolidOptEvent = new SolidOptEvent(SolidOptEvent.CLEAR_ALL_USER_METHODS);
+				
+				dispatchEvent(clearUserMethodsEvent);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:DefaultListEffect id="listEff" />
+
+	<mx:Canvas width="100%" height="68" styleName="headerStyle"/>
+	<mx:Button width="24" height="24" styleName="infoButton" buttonMode="true" click="infoButton_clickHandler(event)" top="3" right="20"/>
+	<mx:TextInput id="filePathTI" y="110" width="530" horizontalCenter="0"/>
+	<mx:Button id="uploadButton" label="Upload" x="{filePathTI.x + filePathTI.width + 20}" y="110" click="uploadButton_clickHandler(event)" />
+	<mx:Button id="browseButton" label="Browse" x="{filePathTI.x - browseButton.width - 20}" y="110" click="browseButton_clickHandler(event)" />
+	
+	<mx:Button id="leftArrow"
+			width="128" height="128"
+			horizontalCenter="0" top="225"
+			toolTip="Drag&amp;Drop the methods here."
+			styleName="leftArrowButton"/>
+			
+	<mx:Canvas id="preparedMethodsListContainer"
+			horizontalCenter="-230" top="195"
+			width="350" height="200">
+		<mx:List id="preparedMethodsList" 
+			width="100%" height="100%"
+			itemRenderer="so.view.components.methods.MethodsItemRenderer"
+			dragEnabled="true" />
+	</mx:Canvas>
+	
+	<mx:Canvas id="userMethodsListContainer" 
+			width="350" height="300"
+			horizontalCenter="230" top="195">
+			
+		<mx:List id="userMethodsList" 
+				width="100%" height="200"
+				itemRenderer="so.view.components.methods.UserMethodsItemRenderer"
+				dragEnter="userMethodsList_dragEnterHandler(event)"
+				dragOver="userMethodsList_dragOverHandler(event)"
+				dragDrop="userMethodsList_dragDropHandler(event)"
+				rowHeight="40"
+				variableRowHeight="true"/>
+		
+		<mx:Button id="clearAllButton"
+			label="Clear all"
+			left="0" bottom="70"
+			click="clearAllButton_clickHandler(event)"
+			styleName="optimizeButton"
+			buttonMode="true" />
+		
+		<mx:Button id="saveButton"
+			label="Save combination"
+			left="{clearAllButton.width + 10}" bottom="70"
+			styleName="optimizeButton"
+			buttonMode="true" />
+		
+		<mx:Button id="optimizeButton"
+			label="Optimize"
+			width="120"
+			right="0" bottom="70"
+			click="optimizeButton_clickHandler(event)"
+			styleName="optimizeButton"
+			buttonMode="true" />
+	</mx:Canvas>
+	
+</mx:Canvas>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300" styleName="infoCompStyle">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			
+			private function okButton_clickHandler(event:MouseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Label top="10" left="10" text="Info" styleName="infoHeader" />
+	<mx:Text width="368" height="134" top="45" left="20" styleName="infoNormalText">
+		<mx:text>
+			Solid Optimizer is an open source project, developed by Alexander Penev and Vasil Vasilev. 
+			The main purpose of our software is to improve the performance of your applications.
+			Solid Optimizer is frequently updated. The online part that you are now using is developed
+			by Vasil Garov.
+		</mx:text>
+	</mx:Text>
+	<mx:Button label="OK" buttonMode="true" x="152" y="263" width="94" click="okButton_clickHandler(event)"/>
+	
+</mx:Canvas>

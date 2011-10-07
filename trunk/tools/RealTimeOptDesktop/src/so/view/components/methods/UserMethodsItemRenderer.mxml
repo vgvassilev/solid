@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+		width="350" height="80"
+		dataChange="data_changeHandler()"
+		horizontalScrollPolicy="off" verticalScrollPolicy="off">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import so.model.vo.UserMethodVO;
+			import so.model.vo.MethodVO;
+			import so.event.SolidOptEvent;
+			
+			[Bindable]
+			private var isBoolean:Boolean = false;
+			
+			private function data_changeHandler():void
+			{
+				paramsAcc.removeAllChildren();
+				
+				var params:ArrayCollection = data.configParams[data.selectedIndex];
+				
+				for (var i:int=0; i < params.length; i++)
+				{
+					var paramsContainer:ParamsContainer = new ParamsContainer();
+					paramsContainer.data = params[i];
+					paramsAcc.addChild(paramsContainer);
+				}
+				
+				height = params.length * 30 + 45;
+			}
+			
+			private function removeButton_clickHandler(event:MouseEvent):void
+			{
+				var removeUserMethodEvent:SolidOptEvent = new SolidOptEvent(SolidOptEvent.REMOVE_USER_METHOD, true);
+				
+				removeUserMethodEvent.userMethod = data as UserMethodVO;
+				
+				dispatchEvent(removeUserMethodEvent);
+			}
+			
+			override protected function commitProperties():void
+			{
+				super.commitProperties();
+				
+				
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas id="headerCanvas"
+		styleName="headerCanvasStyle"
+		width="100%" height="21">
+		
+		<mx:Label id="methodName"
+			text="{data.methodName}" />
+		
+		<mx:Label id="selectedVersion"
+			text="{data.selectedVersion}"
+			horizontalCenter="0" />
+		
+		<mx:Button id="removeButton"
+			click="removeButton_clickHandler(event)"
+	 		right="15"
+			buttonMode="true"
+			styleName="removeButtonStyle" />
+	</mx:Canvas>
+	
+	<mx:Accordion id="paramsAcc"
+		width="340"
+		y="22" />
+		
+</mx:Canvas>

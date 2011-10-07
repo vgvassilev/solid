@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+		width="350" height="30"
+		label="{data.Caption}"
+		dataChange="data_changeHandler()">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			private var isBoolean:Boolean = false;
+			
+			private function data_changeHandler():void
+			{
+				trace ("data value: " + data.Value);
+				
+				if (data.Value.toString() == "true" || data.Value.toString() == "false")
+					isBoolean = true;
+			}
+			
+		]]>
+	</mx:Script>
+	
+		
+	<mx:Canvas width="100%" height="100%">
+		
+		<mx:Label text="Value:"
+			left="5"
+			verticalCenter="0" />
+		<mx:TextInput left="52"
+			verticalCenter="0"
+			text="{data.Value}"
+			visible="{!isBoolean}"
+			includeInLayout="{isBoolean}" />
+		<mx:LinkButton id="infoButton"
+			label="Info" 
+			toolTip="{data.Description}"
+			right="20"
+			verticalCenter="0" />
+		<mx:CheckBox 
+			left="52"
+			verticalCenter="0"
+			visible="{isBoolean}"
+			selected="{(data.Value == true)?true:false}"
+			includeInLayout="{isBoolean}"/>
+	</mx:Canvas>
+	
+</mx:Canvas>

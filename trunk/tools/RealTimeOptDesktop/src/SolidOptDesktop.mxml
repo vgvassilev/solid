@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<utils:FlexDragWindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view="so.view.*" 
+	xmlns:utils="so.utils.*"
+	layout="absolute" 
+	creationComplete="init()"
+	backgroundColor="#ffffff"
+	width="960" height="580">
+	
+	<mx:Style source="so/assets/main.css" />
+	<mx:Script>
+		<![CDATA[
+			import so.ApplicationFacade;
+			
+			private function init():void
+			{
+				ApplicationFacade.getInstance().startup(this);
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<view:MainView id="mainView"
+		width="100%" height="100%" />
+</utils:FlexDragWindowedApplication>

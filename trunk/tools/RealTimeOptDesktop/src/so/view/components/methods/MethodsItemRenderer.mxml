@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+		width="350" height="28" 
+		mouseMove="preparedMethodsList_dragStartHandler(event)">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.DragEvent;
+			import mx.core.UIComponent;
+			import mx.managers.DragManager;
+			import so.model.vo.MethodVO;
+			import mx.core.DragSource;
+			
+			private function versionCombo_changeHandler(event:Event):void
+			{
+				(data as MethodVO).selectedVersion = versionsCombo.selectedItem.toString();
+				(data as MethodVO).selectedIndex = versionsCombo.selectedIndex;
+			}
+			
+			private function preparedMethodsList_dragStartHandler(event:MouseEvent):void
+			{
+				var dragSrc:DragSource = new DragSource();
+				dragSrc.addData(data as MethodVO, "method");
+				DragManager.doDrag(event.currentTarget as UIComponent, dragSrc, event);
+			}
+			
+			override protected function commitProperties():void
+			{
+				super.commitProperties();
+				
+				versionsCombo.selectedIndex = (data as MethodVO).selectedIndex;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label id="methodName" 
+			styleName="methodName" 
+			text="{data.methodName}" 
+			verticalCenter="0"/>
+	<mx:ComboBox id="versionsCombo" 
+			dataProvider="{data.versionsCollection}" 
+			change="versionCombo_changeHandler(event)" 
+			width="100"
+			verticalCenter="0" 
+			x="145"/>
+	<mx:Button id="methodInfo" 
+			label="i" 
+			color="#00000000" 
+			enabled="false" 
+			fontFamily="Arial" 
+			fontSize="14" 
+			height="24" 
+			toolTip="{data.description}" 
+			width="30"
+			verticalCenter="0" x="298"/>
+	
+</mx:Canvas>
