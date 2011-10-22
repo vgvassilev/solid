@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
@@ -38,7 +38,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -76,7 +76,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml" />
     <ProjectReference Include="..\Cecil.Decompiler\Cecil.Decompiler.csproj">
@@ -103,18 +102,6 @@
     <ProjectReference Include="..\..\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
-      <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
-      <Name>nunit.core.dll</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
-      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
-      <Name>nunit.core.interfaces.dll</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
-      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

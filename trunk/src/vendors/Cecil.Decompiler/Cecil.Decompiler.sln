@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecil.Decompiler.Tests", "Cecil.Decompiler.Tests\Cecil.Decompiler.Tests.csproj", "{A2D41337-2817-453A-B299-E4DF957CEE7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecil.Decompiler", "Cecil.Decompiler\Cecil.Decompiler.csproj", "{ED1BE103-1699-4116-A732-616BEB142EB2}"
@@ -68,7 +68,7 @@ Global
 		{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC} = {D111ECBE-4835-4A3D-BB4C-938326763AAF}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Cecil.Decompiler.Tests\Cecil.Decompiler.Tests.csproj
+		StartupItem = dbg\dbg.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
