@@ -7,8 +7,9 @@
 using System;
 using System.Collections.Generic;
 
+using NUnit.Core;
 using NUnit.Framework;
-
+	
 using SolidOpt.Core.Loader;
 
 namespace SolidOpt.Core.Loader.Tests

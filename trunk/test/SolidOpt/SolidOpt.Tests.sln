@@ -1,11 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{58DD339F-46EC-4C26-8AC7-76EBC767C701}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.dll", "..\..\src\vendors\NUnit\src\NUnitCore\core\nunit.core.dll.csproj", "{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}"
 EndProject
@@ -65,7 +63,6 @@ Global
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382} = {58DD339F-46EC-4C26-8AC7-76EBC767C701}
 		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3} = {58DD339F-46EC-4C26-8AC7-76EBC767C701}
 		{435428F8-5995-4CE4-8022-93D595A8CC0F} = {58DD339F-46EC-4C26-8AC7-76EBC767C701}
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382} = {58DD339F-46EC-4C26-8AC7-76EBC767C701}
@@ -73,6 +70,6 @@ Global
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660} = {828CC632-3867-4FB1-8E19-B022229634D6}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj
+		StartupItem = ..\..\src\Core\Loader\SolidOpt.Core.Loader.csproj
 	EndGlobalSection
 EndGlobal
