@@ -33,16 +33,10 @@
     <StartAction>Project</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <Commandlineparameters> ../../../Loadee/bin/Debug/Loadee.exe ../../opt1.list</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
     <WarningLevel>4</WarningLevel>
     <Commandlineparameters> ../../../Loadee/bin/Release/Loadee.exe ../../opt1.list</Commandlineparameters>
   </PropertyGroup>
@@ -102,10 +96,6 @@
     <ProjectReference Include="..\..\..\SolidOpt.Core.Loader.csproj">
       <Project>{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}</Project>
       <Name>SolidOpt.Core.Loader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
-      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
-      <Name>SolidOpt.Services.ControlFlowGraph</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Services\SolidOpt.Services.csproj">
       <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
