@@ -33,4 +33,33 @@
     <Folder Include="test\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="test\TestCases\Empty.il.cfg" />
+    <None Include="test\TestCases\Empty.il" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="test\CFGTestFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="SolidOpt.Services.ILtoCFG.csproj">
+      <Project>{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}</Project>
+      <Name>SolidOpt.Services.ILtoCFG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
+      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
+      <Name>SolidOpt.Services.ControlFlowGraph</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
 </Project>
