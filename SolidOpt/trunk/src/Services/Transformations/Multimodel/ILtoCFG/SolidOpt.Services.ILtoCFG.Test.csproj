@@ -36,6 +36,8 @@
   <ItemGroup>
     <None Include="test\TestCases\Empty.il.cfg" />
     <None Include="test\TestCases\Empty.il" />
+    <None Include="test\TestCases\SimpleIf.il" />
+    <None Include="test\TestCases\SimpleIf.il.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\CFGTestFixture.cs" />

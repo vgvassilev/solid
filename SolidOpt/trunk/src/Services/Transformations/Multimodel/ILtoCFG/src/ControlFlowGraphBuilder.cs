@@ -68,11 +68,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		void CreateBlocks()
 		{
 			BasicBlock curBlock = null;
-			Instruction instr;
-			for(int i = 0; i < body.Instructions.Count; i++) {
-				instr = body.Instructions[i];
+			foreach(Instruction instr in body.Instructions) {
+
 				if (IsBlockLeader(instr))
-					curBlock = new BasicBlock(i.ToString());
+					curBlock = new BasicBlock(rawBlocks.Count.ToString());
 				
 				if (root == null)
 					root = curBlock;
@@ -107,6 +106,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					return true;
 			}
 			
+			if (i.Next != null)
+				return HasLabel(i.Next);
 			return false;
 		}
 		

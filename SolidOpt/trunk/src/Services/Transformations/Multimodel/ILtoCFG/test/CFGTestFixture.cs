@@ -146,5 +146,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 		{
 			RunTestCase("Empty");
 		}
+		
+		[Test]
+		public void SimpleIf() 
+		{
+			RunTestCase("SimpleIf");
+		}
+
 	}
 }

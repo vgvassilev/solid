@@ -31,15 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="test\" />
+    <Folder Include="test\cases\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Compile Include="test\CfgDumper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="test\cases\Empy.il" />
-    <None Include="test\cases\Empty.il.cfg" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SolidOpt.Services.ControlFlowGraph.csproj">
       <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
