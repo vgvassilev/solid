@@ -60,7 +60,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			CreateBlocks();
 			ConnectBlocks();
 
-			return new ControlFlowGraph(root);
+			return new ControlFlowGraph(root, rawBlocks);
 		}
 		
 		#endregion
@@ -185,6 +185,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					break;
 				}
 				case FlowControl.Next:
+				case FlowControl.Return:
 				case FlowControl.Cond_Branch: {
 					var targets = GetTargetInstructions(i);
 					foreach (var target in targets) {
@@ -203,7 +204,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				}
 
 				case FlowControl.Call:
-				case FlowControl.Return:
 				case FlowControl.Throw:
 					break;
 				default:
@@ -217,9 +217,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		
 		BasicBlock GetNodeContaining(Instruction i)
 		{
-			foreach (BasicBlock node in rawBlocks) {
-				if (node.Contains(i))
-					return node;
+			foreach (BasicBlock block in rawBlocks) {
+				if (block.Contains(i))
+					return block;
 			}
 			return null;
 		}

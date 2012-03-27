@@ -179,11 +179,11 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 							
 						if (ILtoCfgTransformer != null) {
 							ControlFlowGraph cfg = ILtoCfgTransformer.Decompile(method);
-							cfg.FormatControlFlowGraph(Console.Out);
+							//cfg.FormatControlFlowGraph(Console.Out);
 							foreach (IOptimize<ControlFlowGraph> transformer in CFG2CFGTransformers) {
 								cfg = transformer.Optimize(cfg);
 							}
-							cfg.FormatControlFlowGraph(Console.Out);
+							//cfg.FormatControlFlowGraph(Console.Out);
 //							
 //							foreach (CfgNode node in cfg.Graph) {
 //								cfg.FormatControlFlowGraphNode(Console.Out, node, "");

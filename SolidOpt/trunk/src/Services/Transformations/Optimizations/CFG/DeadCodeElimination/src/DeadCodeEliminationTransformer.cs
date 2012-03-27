@@ -23,40 +23,17 @@ namespace SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeEliminatio
 		#region IOptimize<ControlFlowGraph> implementation
 		public ControlFlowGraph Optimize(ControlFlowGraph source)
 		{
-			DeadCodeElimination(source.Graph);
+			// Unreachable block is a block without predecessors, which is not the root block
+			foreach(BasicBlock block in source.RawBlocks) {
+				if (block != source.Root)
+					if (block.Predecessors.Count == 0)
+						source.RawBlocks.Remove(block);
+			}
+
 			return source;
 		}
 		#endregion
 		
-		public void DeadCodeElimination(List<CfgNode> graph)
-		{
-			// Mark
-			BitArray marks = new BitArray(graph.Count);
-			List<CfgNode> active = new List<CfgNode>();
-			active.Add(graph[0]);
-			while (active.Count != 0) {
-				CfgNode current = active[0];
-				int i = graph.IndexOf(current);
-				if (!marks[i]) {
-					marks[i] = true;
-					if (current is Nodes) {
-						DeadCodeElimination((current as Nodes).SubNodes);
-					}
-					foreach (CfgNode n in current.Successors) {
-						int i1 = graph.IndexOf(n);
-						if (!marks[i1]) active.Add(n);
-					}
-				}
-				active.RemoveAt(0);
-			}
-			
-			// Remove unmarked
-			for (int i = graph.Count-1; i >= 0; i--) {
-				if (!marks[i]) {
-					graph.RemoveAt(i);
-				}
-			}
-		}
 	}
 }
 

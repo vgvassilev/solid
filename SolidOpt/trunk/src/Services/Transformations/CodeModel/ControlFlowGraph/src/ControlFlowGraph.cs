@@ -24,16 +24,22 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 		
 		#region Fields & Properties
 		
-		BasicBlock root;
+		private BasicBlock root;
 		public BasicBlock Root {
 			get { return root; }
+		}
+
+		private List<BasicBlock> rawBlocks = null;
+		public List<BasicBlock> RawBlocks {
+			get { return this.rawBlocks; }
 		}		
 		
 		#endregion
 
-		public ControlFlowGraph(BasicBlock root)
+		public ControlFlowGraph(BasicBlock root, List<BasicBlock> rawBlocks)
 		{
 			this.root = root;
+			this.rawBlocks = rawBlocks;
 		}
 
 	}
