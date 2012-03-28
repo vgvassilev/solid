@@ -1,3 +1,9 @@
+/*
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
+
 using System;
 using Gtk;
 
@@ -12,5 +18,15 @@ public partial class MainWindow: Gtk.Window
 	{
 		Application.Quit();
 		a.RetVal = true;
+	}
+
+	protected void OnOpenActionActivated (object sender, System.EventArgs e)
+	{
+		System.Windows.Forms.MessageBox.Show("It works!");
+	}
+
+	protected void OnExitActionActivated (object sender, System.EventArgs e)
+	{
+		Application.Quit();
 	}
 }
