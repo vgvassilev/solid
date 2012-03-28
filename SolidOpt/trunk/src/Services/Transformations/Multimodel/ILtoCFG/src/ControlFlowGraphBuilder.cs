@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 using Mono.Collections.Generic;
 
@@ -175,11 +176,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				case FlowControl.Branch: {
 					var targets = GetTargetInstructions(i);
 					foreach (var target in targets) {
-						if (target.Next != null) {
-							BasicBlock successor = GetNodeContaining(target.Next);
-							block.Successors.Add(successor);
-							successor.Predecessors.Add(block);
-						}
+						Debug.Assert(target != null, "Target cannot be null!");
+
+						BasicBlock successor = GetNodeContaining(target.Next);
+						block.Successors.Add(successor);
+						successor.Predecessors.Add(block);
 					}
 					
 					break;
@@ -191,11 +192,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				case FlowControl.Cond_Branch: {
 					var targets = GetTargetInstructions(i);
 					foreach (var target in targets) {
-						if (target != null) {
-							BasicBlock successor = GetNodeContaining(target);
-							block.Successors.Add(successor);
-							successor.Predecessors.Add(block);
-						}
+						Debug.Assert(target != null, "Target cannot be null!");
+
+						BasicBlock successor = GetNodeContaining(target);
+						block.Successors.Add(successor);
+						successor.Predecessors.Add(block);
 					}
 					if (block.Last.Next != null) {
 						BasicBlock successor = GetNodeContaining(block.Last.Next);
