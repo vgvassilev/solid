@@ -48,7 +48,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 		
 		public bool Validate(ControlFlowGraph graph, string testCaseName)
 		{
-			string cfg = DumpBasicBlock(graph.Root);
+			string cfg = DumpBasicBlock(graph);
 			string resultFile = GetTestCaseFullPath(testCaseName) + ".il.cfg";
 
 			if (!File.Exists(resultFile))
@@ -59,31 +59,30 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 			return seen == expected;
 		}
 		
-		public string DumpBasicBlock(BasicBlock block)
+		public string DumpBasicBlock(ControlFlowGraph cfg)
 		{
 			StringBuilder sb = new StringBuilder();
 			
-			sb.AppendLine(String.Format("block {0}:", block.Name));
-			sb.AppendLine("\tbody:");
-			foreach (Instruction instruction in block) 
-				sb.AppendLine(String.Format("\t\t{0}", instruction.ToString()));
-			
-			if (block.Successors != null && block.Successors.Count > 0) {
-				sb.AppendLine("\tsuccessors:");
-				foreach (BasicBlock succ in block.Successors) {
-					sb.AppendLine(String.Format("\t\tblock {0}", succ.Name));
+			foreach (BasicBlock block in cfg.RawBlocks) {
+				sb.AppendLine(String.Format("block {0}:", block.Name));
+				sb.AppendLine("\tbody:");
+				foreach (Instruction instruction in block) 
+					sb.AppendLine(String.Format("\t\t{0}", instruction.ToString()));
+				
+				if (block.Successors != null && block.Successors.Count > 0) {
+					sb.AppendLine("\tsuccessors:");
+					foreach (BasicBlock succ in block.Successors) {
+						sb.AppendLine(String.Format("\t\tblock {0}", succ.Name));
+					}
+				}
+				
+				if (block.Predecessors != null && block.Predecessors.Count > 0) {
+					sb.AppendLine("\tpredecessor:");
+					foreach (BasicBlock pred in block.Predecessors) {
+						sb.AppendLine(String.Format("\t\tblock {0}", pred.Name));
+					}
 				}
 			}
-			
-			if (block.Predecessors != null && block.Predecessors.Count > 0) {
-				sb.AppendLine("\tpredecessor:");
-				foreach (BasicBlock pred in block.Predecessors) {
-					sb.AppendLine(String.Format("\t\tblock {0}", pred.Name));
-				}
-			}
-			
-			foreach(BasicBlock succ in block.Successors)
-				sb.AppendLine(DumpBasicBlock(succ));
 			
 			return sb.ToString();
 		}

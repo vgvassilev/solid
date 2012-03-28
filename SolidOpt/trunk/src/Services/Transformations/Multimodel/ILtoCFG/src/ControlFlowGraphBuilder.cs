@@ -184,13 +184,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					
 					break;
 				}
+				// treat the call as next
+				case FlowControl.Call:
 				case FlowControl.Next:
 				case FlowControl.Return:
 				case FlowControl.Cond_Branch: {
 					var targets = GetTargetInstructions(i);
 					foreach (var target in targets) {
-						if (target.Next != null) {
-							BasicBlock successor = GetNodeContaining(target.Next);
+						if (target != null) {
+							BasicBlock successor = GetNodeContaining(target);
 							block.Successors.Add(successor);
 							successor.Predecessors.Add(block);
 						}
@@ -203,7 +205,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					break;
 				}
 
-				case FlowControl.Call:
 				case FlowControl.Throw:
 					break;
 				default:
