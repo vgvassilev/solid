@@ -3,6 +3,9 @@
 .class public auto ansi beforefieldinit TestCase
        extends [mscorlib]System.Object
 {
+	// public static void Main(string[] args) {
+	//   return;
+	// }
 	.method public hidebysig static void  Main(string[] args) cil managed
 	{
 	  .entrypoint

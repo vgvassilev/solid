@@ -3,6 +3,10 @@
 .class public auto ansi beforefieldinit TestCase
        extends [mscorlib]System.Object
 {
+	// public static void Main(int x, int y) {
+	//   if (x > y)
+	//     ConsoleWriteLine("x > y")
+	// }
 	.method public hidebysig static void Main(int32 x, int32 y) cil managed
 	{
 		IL_0000: ldarg.0
