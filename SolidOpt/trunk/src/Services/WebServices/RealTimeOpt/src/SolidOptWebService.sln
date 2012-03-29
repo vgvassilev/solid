@@ -1,20 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.2.0.5777
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOptWebService", "SolidOptWebService.csproj", "{4FEB715D-6814-40DE-A20D-AE816879DDF3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{43721419-ACFE-44A1-BA85-3105C4015D96}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Core.Loader", "..\..\..\..\Core\Loader\SolidOpt.Core.Loader.csproj", "{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.HetAccess", "..\..\..\Subsystems\HetAccess\SolidOpt.Services.HetAccess.csproj", "{2806b750-e3fd-43ed-a395-0961f952314c}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services", "..\..\..\SolidOpt.Services.csproj", "{c41b5fb4-dae9-4a27-9d15-55109ab79660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.HetAccess", "..\..\..\Subsystems\HetAccess\SolidOpt.Services.HetAccess.csproj", "{2806b750-e3fd-43ed-a395-0961f952314c}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Core.Loader", "..\..\..\..\Core\Loader\SolidOpt.Core.Loader.csproj", "{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{E0343D00-E18D-4FF0-8DBB-B2FF781CF72A}"
 	ProjectSection(SolutionItems) = postProject
@@ -32,38 +31,38 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2806b750-e3fd-43ed-a395-0961f952314c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2806b750-e3fd-43ed-a395-0961f952314c}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2806b750-e3fd-43ed-a395-0961f952314c}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2806b750-e3fd-43ed-a395-0961f952314c}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FEB715D-6814-40DE-A20D-AE816879DDF3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2806b750-e3fd-43ed-a395-0961f952314c}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2806b750-e3fd-43ed-a395-0961f952314c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2806b750-e3fd-43ed-a395-0961f952314c}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2806b750-e3fd-43ed-a395-0961f952314c}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2806B750-E3FD-43ED-A395-0961F952314C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2806B750-E3FD-43ED-A395-0961F952314C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2806B750-E3FD-43ED-A395-0961F952314C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2806B750-E3FD-43ED-A395-0961F952314C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED08E9DA-EFFC-4922-8D76-35FC9671A381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2806b750-e3fd-43ed-a395-0961f952314c} = {43721419-ACFE-44A1-BA85-3105C4015D96}
@@ -72,5 +71,58 @@ Global
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486} = {43721419-ACFE-44A1-BA85-3105C4015D96}
 		{00B792BB-09A3-4D2E-8CF6-5909DD3EF6B2} = {E0343D00-E18D-4FF0-8DBB-B2FF781CF72A}
 		{ED08E9DA-EFFC-4922-8D76-35FC9671A381} = {00B792BB-09A3-4D2E-8CF6-5909DD3EF6B2}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SolidOptWebService.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 100
+		$1.TabWidth = 2
+		$1.RemoveTrailingWhitespace = True
+		$1.EolMarker = Windows
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = application/xml
+		$0.XmlFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = application/xml
+		$2.scope = application/xml
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 100
+		$3.TabWidth = 2
+		$3.RemoveTrailingWhitespace = True
+		$3.EolMarker = Windows
+		$3.inheritsSet = VisualStudio
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 100
+		$4.TabWidth = 2
+		$4.RemoveTrailingWhitespace = True
+		$4.EolMarker = Windows
+		$4.inheritsSet = VisualStudio
+		$4.inheritsScope = text/plain
+		$4.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $5
+		$5.IndentSwitchBody = True
+		$5.AlignEmbeddedUsingStatements = False
+		$5.AlignEmbeddedIfStatements = False
+		$5.MethodBraceStyle = EndOfLine
+		$5.ConstructorBraceStyle = EndOfLine
+		$5.DestructorBraceStyle = EndOfLine
+		$5.BeforeMethodDeclarationParentheses = False
+		$5.BeforeMethodCallParentheses = False
+		$5.BeforeConstructorDeclarationParentheses = False
+		$5.BeforeIndexerDeclarationBracket = False
+		$5.BeforeDelegateDeclarationParentheses = False
+		$5.AfterDelegateDeclarationParameterComma = True
+		$5.NewParentheses = False
+		$5.SpacesBeforeBrackets = False
+		$5.inheritsSet = Mono
+		$5.inheritsScope = text/x-csharp
+		$5.scope = text/x-csharp
+		$0.StandardHeader = $6
+		$6.Text = @/*\n * $Id: $\n * It is part of the SolidOpt Copyright Policy (see Copyright.txt)\n * For further details see the nearest License.txt\n */
+		$6.IncludeInNewFiles = True
 	EndGlobalSection
 EndGlobal

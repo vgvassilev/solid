@@ -1,7 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-# SharpDevelop 3.2.0.5777
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{C1C9FC60-4891-4E33-8BC8-F1ECEE10D01E}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
@@ -14,9 +13,64 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{846CAC53-FF82-4133-A03F-F214B48790B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{846CAC53-FF82-4133-A03F-F214B48790B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{846CAC53-FF82-4133-A03F-F214B48790B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846CAC53-FF82-4133-A03F-F214B48790B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{846CAC53-FF82-4133-A03F-F214B48790B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846CAC53-FF82-4133-A03F-F214B48790B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Config3.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 100
+		$1.TabWidth = 2
+		$1.RemoveTrailingWhitespace = True
+		$1.EolMarker = Windows
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = application/xml
+		$0.XmlFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = application/xml
+		$2.scope = application/xml
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 100
+		$3.TabWidth = 2
+		$3.RemoveTrailingWhitespace = True
+		$3.EolMarker = Windows
+		$3.inheritsSet = VisualStudio
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 100
+		$4.TabWidth = 2
+		$4.RemoveTrailingWhitespace = True
+		$4.EolMarker = Windows
+		$4.inheritsSet = VisualStudio
+		$4.inheritsScope = text/plain
+		$4.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $5
+		$5.IndentSwitchBody = True
+		$5.AlignEmbeddedUsingStatements = False
+		$5.AlignEmbeddedIfStatements = False
+		$5.MethodBraceStyle = EndOfLine
+		$5.ConstructorBraceStyle = EndOfLine
+		$5.DestructorBraceStyle = EndOfLine
+		$5.BeforeMethodDeclarationParentheses = False
+		$5.BeforeMethodCallParentheses = False
+		$5.BeforeConstructorDeclarationParentheses = False
+		$5.BeforeIndexerDeclarationBracket = False
+		$5.BeforeDelegateDeclarationParentheses = False
+		$5.AfterDelegateDeclarationParameterComma = True
+		$5.NewParentheses = False
+		$5.SpacesBeforeBrackets = False
+		$5.inheritsSet = Mono
+		$5.inheritsScope = text/x-csharp
+		$5.scope = text/x-csharp
+		$0.StandardHeader = $6
+		$6.Text = @/*\n * $Id: $\n * It is part of the SolidOpt Copyright Policy (see Copyright.txt)\n * For further details see the nearest License.txt\n */
+		$6.IncludeInNewFiles = True
 	EndGlobalSection
 EndGlobal

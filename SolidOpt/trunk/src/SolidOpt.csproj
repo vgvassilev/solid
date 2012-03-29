@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</ProjectGuid>
@@ -29,15 +29,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -63,32 +57,10 @@
     </ProjectReference>
     <Folder Include="Core\" />
     <Folder Include="Core\Loader\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\" />
     <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
     <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Transformations\" />
-    <Folder Include="Services\Transformations\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
     <Folder Include="Services\Transformations\" />
     <Compile Include="Services\Transformations\IPipeline.cs" />
     <Compile Include="Services\Transformations\IStep.cs" />
@@ -99,72 +71,6 @@
     <Compile Include="Services\Transformations\Multimodel\DecompilationStep.cs" />
     <Folder Include="Services\Transformations\CodeModel\" />
     <Folder Include="Services\Transformations\CodeModel\ControlFlowGraph\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Transformations\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Transformations\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Transformations\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Transformations\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Transformations\" />
-    <Folder Include="Core\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\Configurator\" />
-    <Folder Include="Services\Subsystems\" />
-    <Folder Include="Services\Subsystems\HetAccess\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Transformations\" />
     <Folder Include="Services\Compatibility\" />
     <Compile Include="Services\Compatibility\FixEnumerableVariance.cs" />
     <Compile Include="Services\Subsystems\Cache\src\CacheManager.cs" />
@@ -311,7 +217,7 @@
       <Properties>
         <Policies>
           <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileFormatDefault" />
-          <StandardHeader Text="&#xA; ${FileName} is created by ${AuthorName} &lt;${AuthorEmail}&gt; .&#xA;&#xA;It is part of the SolidOpt Copyrigth Policy &#xA;&#xA;Copyright (c) ${Year} ${CopyrightHolder}&#xA;&#xA;For further details see the nearest to ${FileName} License.txt&#xA;" inheritsSet="Apache2License" />
+          <StandardHeader Text="&#xA; ${FileName} is created by ${AuthorName} &lt;${AuthorEmail}&gt; .&#xA;&#xA;It is part of the SolidOpt Copyrigth Policy &#xA;&#xA;Copyright (c) ${Year} ${CopyrightHolder}&#xA;&#xA;For further details see the nearest to ${FileName} License.txt&#xA;" IncludeInNewFiles="True" />
         </Policies>
       </Properties>
     </MonoDevelop>

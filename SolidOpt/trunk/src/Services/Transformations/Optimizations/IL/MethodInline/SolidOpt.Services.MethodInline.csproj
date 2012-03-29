@@ -68,9 +68,5 @@
       <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SolidOpt.Services.Optimizations.Annotations\SolidOpt.Services.Optimizations.Annotations.csproj">
-      <Project>{C3F549D3-B9A7-45D3-B2E4-22E17717EA56}</Project>
-      <Name>SolidOpt.Services.Optimizations.Annotations</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
