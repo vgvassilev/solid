@@ -12,8 +12,10 @@ public partial class MainWindow
 	private global::Gtk.VBox vbox1;
 	private global::Gtk.MenuBar MainMenuBar;
 	private global::Gtk.HBox hbox1;
+	private global::Gtk.Alignment alignment1;
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
 	private global::Gtk.TreeView assemblyView;
+	private global::Gtk.Alignment alignment2;
 	
 	protected virtual void Build ()
 	{
@@ -59,6 +61,9 @@ public partial class MainWindow
 		this.hbox1.Name = "hbox1";
 		this.hbox1.Spacing = 6;
 		// Container child hbox1.Gtk.Box+BoxChild
+		this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+		this.alignment1.Name = "alignment1";
+		// Container child alignment1.Gtk.Container+ContainerChild
 		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
 		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -67,12 +72,19 @@ public partial class MainWindow
 		this.assemblyView.CanFocus = true;
 		this.assemblyView.Name = "assemblyView";
 		this.GtkScrolledWindow.Add (this.assemblyView);
-		this.hbox1.Add (this.GtkScrolledWindow);
-		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.GtkScrolledWindow]));
-		w4.Position = 0;
+		this.alignment1.Add (this.GtkScrolledWindow);
+		this.hbox1.Add (this.alignment1);
+		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.alignment1]));
+		w5.Position = 0;
+		// Container child hbox1.Gtk.Box+BoxChild
+		this.alignment2 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+		this.alignment2.Name = "alignment2";
+		this.hbox1.Add (this.alignment2);
+		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.alignment2]));
+		w6.Position = 1;
 		this.vbox1.Add (this.hbox1);
-		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
-		w5.Position = 1;
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
+		w7.Position = 1;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();

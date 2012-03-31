@@ -68,6 +68,7 @@ public partial class MainWindow: Gtk.Window
   }
 
   private void LoadFilesInTreeView() {
+
     TreeViewColumn col = new TreeViewColumn();
 
     CellRendererText colTitleCell = new CellRendererText ();
@@ -84,7 +85,6 @@ public partial class MainWindow: Gtk.Window
 
     assemblyView.Model = ls;
     assemblyView.ShowAll();
-    this.ShowAll();
   }
 
   protected virtual void PreBuild() {
