@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidReflector", "SolidReflector.csproj", "{2F7448D6-7206-4758-BB48-F48D4C75AB5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\SolidOpt\vendors\Mono.Cecil\v0.9.3\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{2F7448D6-7206-4758-BB48-F48D4C75AB5F}.Debug|x86.Build.0 = Debug|x86
 		{2F7448D6-7206-4758-BB48-F48D4C75AB5F}.Release|x86.ActiveCfg = Release|x86
 		{2F7448D6-7206-4758-BB48-F48D4C75AB5F}.Release|x86.Build.0 = Release|x86
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|x86.Build.0 = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|x86.ActiveCfg = Release|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SolidReflector.csproj

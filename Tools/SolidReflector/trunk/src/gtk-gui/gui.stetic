@@ -82,6 +82,7 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
+                        <signal name="RowActivated" handler="OnAssemblyViewRowActivated" />
                       </widget>
                     </child>
                   </widget>
@@ -96,7 +97,18 @@
               <widget class="Gtk.Alignment" id="alignment2">
                 <property name="MemberName" />
                 <child>
-                  <placeholder />
+                  <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
+                    <property name="MemberName" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="disassemblyText">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Text" translatable="yes" />
+                      </widget>
+                    </child>
+                  </widget>
                 </child>
               </widget>
               <packing>

@@ -6,6 +6,9 @@
 
 using System;
 using Gtk;
+using Mono.Collections.Generic;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -90,4 +93,35 @@ public partial class MainWindow: Gtk.Window
   protected virtual void PreBuild() {
     this.Realized += new global::System.EventHandler (this.OnRealized);
   }
+
+  protected void OnAssemblyViewRowActivated (object o, Gtk.RowActivatedArgs args)
+  {
+    TreeIter iter;
+    assemblyView.Model.GetIter(out iter, args.Path);
+    string s = (string)assemblyView.Model.GetValue(iter, 0);
+    foreach (string f in fileNames) {
+      if (System.IO.Path.GetFileName(f) == s) {
+        AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(f);
+        TypeDefinition type = assembly.MainModule.GetType("SolidReflector.MainClass");
+        MethodDefinition found = GetMethod(type.Methods, "Main");
+        TextIter textIter = disassemblyText.Buffer.EndIter;
+        foreach (Instruction i in found.Body.Instructions) {
+          textIter = disassemblyText.Buffer.EndIter;
+          disassemblyText.Buffer.Insert(ref textIter, i.ToString() + "\n");
+        }
+        break;
+      }
+    }
+    //assemblyView.
+  }
+
+  private MethodDefinition GetMethod(Collection<MethodDefinition> methods, string name)
+   {
+     foreach (MethodDefinition mDef in methods) {
+       if (mDef.Name == name)
+         return mDef;
+     }
+     return null;
+   }
+
 }
