@@ -124,4 +124,17 @@ public partial class MainWindow: Gtk.Window
      return null;
    }
 
+  protected void OnCombobox6Changed (object sender, System.EventArgs e)
+  {
+    TreeIter iter;
+    combobox6.GetActiveIter(out iter);
+    string val = (string)combobox6.Model.GetValue(iter, 0);
+    if (val == "IL") {
+
+    }
+    else if (val == "CFG") {
+
+    }
+
+  }
 }
