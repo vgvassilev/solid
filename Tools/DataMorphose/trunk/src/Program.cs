@@ -5,15 +5,17 @@
  */
 
 using System;
+using Gtk;
 
 namespace DataMorphose
 {
 	public class Program
 	{
-		public static int Main(string[] args)
-		{
-			// Implementation still to come
-			return 0;
+		public static void Main(string[] args) {
+      Application.Init();
+			MainWindow form = new MainWindow();
+			form.Show();
+			Application.Run();
 		}
 	}
 }
