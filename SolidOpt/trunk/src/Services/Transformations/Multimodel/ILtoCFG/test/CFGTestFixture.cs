@@ -43,22 +43,41 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 			MethodDefinition mDef = LoadTestCaseMethod(testCaseName);
 			CilToControlFlowGraph TransforIL = new CilToControlFlowGraph();
 			ControlFlowGraph CFG = TransforIL.Process(mDef.Body);
-			Assert.IsTrue(Validate(CFG, testCaseName), "Different");
+      string errMsg = String.Empty;
+      Assert.IsTrue(Validate(CFG, testCaseName, ref errMsg), errMsg);
 		}
 		
-		public bool Validate(ControlFlowGraph graph, string testCaseName)
+		public bool Validate(ControlFlowGraph graph, string testCaseName, ref string errMsg)
 		{
 			string cfg = DumpBasicBlock(graph);
 			string resultFile = GetTestCaseFullPath(testCaseName) + ".il.cfg";
 
-			if (!File.Exists(resultFile))
-				return false;
+			if (!File.Exists(resultFile)) {
+        errMsg = String.Format("{0} does not exist.", Path.GetFileName(resultFile));
+        return false;
+      }
 
 			string seen = Normalize(cfg);
 			string expected = Normalize(File.ReadAllText(resultFile));
-			return seen == expected;
+
+      // compare line by line
+      string[] seenLines = seen.Split('\n');
+      string[] expectedLines = expected.Split('\n');
+
+      if (seenLines.Length != expectedLines.Length) {
+        errMsg = "Seen has different line count compared to expected.";
+        return false;
+      }
+      for (int i = 0; i < seenLines.Length; i++) {
+        if (Normalize(seenLines[i]) != Normalize(expectedLines[i])) {
+          errMsg = String.Format("Difference at line {0}.", (i + 1).ToString());
+          return false;
+        }
+      }
+
+      return true;
 		}
-		
+
 		public string DumpBasicBlock(ControlFlowGraph cfg)
 		{
 			StringBuilder sb = new StringBuilder();
@@ -152,5 +171,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 			RunTestCase("SimpleIf");
 		}
 
+    [Test]
+    public void SimpleWhile()
+    {
+      RunTestCase("SimpleWhile");
+    }
 	}
 }
