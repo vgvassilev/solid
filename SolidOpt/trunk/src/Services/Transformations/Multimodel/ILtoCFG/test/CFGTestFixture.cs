@@ -176,5 +176,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
     {
       RunTestCase("SimpleWhile");
     }
+
+    [Test]
+    public void SimpleSwitch()
+    {
+      RunTestCase("SimpleSwitch");
+    }
 	}
 }

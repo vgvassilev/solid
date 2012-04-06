@@ -4,15 +4,13 @@
        extends [mscorlib]System.Object
 
 {
-  //public static void Main(string[] args)
-  //{
-  //  int x = 5;
-  //  while (x > 0)
-  //  {
-  //    Console.WriteLine(x.ToString());
-  //    x--;
-  //  }
-  //}
+  // public static void Main(string[] args) {
+  //   int x = 5;
+  //   while (x > 0) {
+  //     Console.WriteLine(x.ToString());
+  //     x--;
+  //   }
+  // }
   .method public hidebysig static void Main(string[] args) cil managed
   {
       .entrypoint

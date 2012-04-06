@@ -178,7 +178,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					foreach (var target in targets) {
 						Debug.Assert(target != null, "Target cannot be null!");
 
-						BasicBlock successor = GetNodeContaining(target.Next);
+						BasicBlock successor = GetNodeContaining(target);
 						block.Successors.Add(successor);
 						successor.Predecessors.Add(block);
 					}
