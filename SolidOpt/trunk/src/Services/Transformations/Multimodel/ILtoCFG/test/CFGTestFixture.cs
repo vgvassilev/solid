@@ -96,7 +96,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 				}
 				
 				if (block.Predecessors != null && block.Predecessors.Count > 0) {
-					sb.AppendLine("\tpredecessor:");
+					sb.AppendLine("\tpredecessors:");
 					foreach (BasicBlock pred in block.Predecessors) {
 						sb.AppendLine(String.Format("\t\tblock {0}", pred.Name));
 					}
