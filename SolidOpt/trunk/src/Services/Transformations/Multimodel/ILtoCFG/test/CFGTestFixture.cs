@@ -64,10 +64,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
       string[] seenLines = seen.Split('\n');
       string[] expectedLines = expected.Split('\n');
 
-      if (seenLines.Length != expectedLines.Length) {
-        errMsg = "Seen has different line count compared to expected.";
-        return false;
-      }
+      // if (seenLines.Length != expectedLines.Length) {
+      //   errMsg = "Seen has different line count compared to expected.";
+      //   return false;
+      // }
+
       for (int i = 0; i < seenLines.Length; i++) {
         if (Normalize(seenLines[i]) != Normalize(expectedLines[i])) {
           errMsg = String.Format("Difference at line {0}.", (i + 1).ToString());
@@ -160,16 +161,208 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 		}
 		
 		[Test]
-		public void Empty() 
-		{
-			RunTestCase("Empty");
-		}
-		
-		[Test]
-		public void SimpleIf() 
-		{
-			RunTestCase("SimpleIf");
-		}
+    public void BoolAndGreaterOrEqualThan()
+    {
+      RunTestCase("BoolAndGreaterOrEqualThan");
+    }
+
+    [Test]
+    public void BoolOrLessOrEqualThan()
+    {
+      RunTestCase("BoolOrLessOrEqualThan");
+    }
+
+    [Test]
+    public void DoWhile()
+    {
+      RunTestCase("DoWhile");
+    }
+
+    [Test]
+    public void Empty()
+    {
+      RunTestCase("Empty");
+    }
+
+    [Test]
+    public void FalseIf()
+    {
+      RunTestCase("FalseIf");
+    }
+
+    [Test]
+    public void FieldAccessor()
+    {
+      RunTestCase("FieldAccessor");
+    }
+
+    [Test]
+    public void FloatEquals()
+    {
+      RunTestCase("FloatEquals");
+    }
+
+    [Test]
+    public void FloatGreaterThan()
+    {
+      RunTestCase("FloatGreaterThan");
+    }
+
+    [Test]
+    public void FlowTest()
+    {
+      RunTestCase("FlowTest");
+    }
+
+    [Test]
+    public void GreaterThanOrEqual()
+    {
+      RunTestCase("GreaterThanOrEqual");
+    }
+
+    [Test]
+    public void IfNestedCondition()
+    {
+      RunTestCase("IfNestedCondition");
+    }
+
+    [Test]
+    public void InPlaceAdd()
+    {
+      RunTestCase("InPlaceAdd");
+    }
+
+    [Test]
+    public void InRange()
+    {
+      RunTestCase("InRange");
+    }
+
+    [Test]
+    public void IntPropertyEquals1()
+    {
+      RunTestCase("IntPropertyEquals1");
+    }
+
+    [Test]
+    public void IntPropertyEquals2()
+    {
+      RunTestCase("IntPropertyEquals2");
+    }
+
+    [Test]
+    public void IsNull()
+    {
+      RunTestCase("IsNull");
+    }
+
+    [Test]
+    public void LessThanOrEqual()
+    {
+      RunTestCase("LessThanOrEqual");
+    }
+
+    [Test]
+    public void MathOperators()
+    {
+      RunTestCase("MathOperators");
+    }
+
+    [Test]
+    public void MixedAndOr()
+    {
+      RunTestCase("MixedAndOr");
+    }
+
+    [Test]
+    public void MultipleAndOr()
+    {
+      RunTestCase("MultipleAndOr");
+    }
+
+    [Test]
+    public void MultipleOr()
+    {
+      RunTestCase("MultipleOr");
+    }
+
+    [Test]
+    public void NestedOrGreaterThan()
+    {
+      RunTestCase("NestedOrGreaterThan");
+    }
+
+    [Test]
+    public void NotEqual()
+    {
+      RunTestCase("NotEqual");
+    }
+
+    [Test]
+    public void NotStringEquality()
+    {
+      RunTestCase("NotStringEquality");
+    }
+
+    [Test]
+    public void OptimizedAnd()
+    {
+      RunTestCase("OptimizedAnd");
+    }
+
+    [Test]
+    public void OptimizedNestedOr()
+    {
+      RunTestCase("OptimizedNestedOr");
+    }
+
+    [Test]
+    public void OptimizedOr()
+    {
+      RunTestCase("OptimizedOr");
+    }
+
+    [Test]
+    public void PropertyPredicate()
+    {
+      RunTestCase("PropertyPredicate");
+    }
+
+    [Test]
+    public void SideEffectExpression()
+    {
+      RunTestCase("SideEffectExpression");
+    }
+
+    [Test]
+    public void SimpleCalculation()
+    {
+      RunTestCase("SimpleCalculation");
+    }
+
+    [Test]
+    public void SimpleCondition()
+    {
+      RunTestCase("SimpleCondition");
+    }
+
+    [Test]
+    public void SimpleIf()
+    {
+      RunTestCase("SimpleIf");
+    }
+
+    [Test]
+    public void SimpleReturn()
+    {
+      RunTestCase("SimpleReturn");
+    }
+
+    [Test]
+    public void SimpleSwitch()
+    {
+      RunTestCase("SimpleSwitch");
+    }
 
     [Test]
     public void SimpleWhile()
@@ -178,9 +371,63 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
     }
 
     [Test]
-    public void SimpleSwitch()
+    public void SingleAnd()
     {
-      RunTestCase("SimpleSwitch");
+      RunTestCase("SingleAnd");
+    }
+
+    [Test]
+    public void SingleOr()
+    {
+      RunTestCase("SingleOr");
+    }
+
+    [Test]
+    public void StaticField()
+    {
+      RunTestCase("StaticField");
+    }
+
+    [Test]
+    public void StringCast()
+    {
+      RunTestCase("StringCast");
+    }
+
+    [Test]
+    public void StringPredicate()
+    {
+      RunTestCase("StringPredicate");
+    }
+
+    [Test]
+    public void StringTryCast()
+    {
+      RunTestCase("StringTryCast");
+    }
+
+    [Test]
+    public void Switch()
+    {
+      RunTestCase("Switch");
+    }
+
+    [Test]
+    public void TernaryExpression()
+    {
+      RunTestCase("TernaryExpression");
+    }
+
+    [Test]
+    public void ThreeReturns()
+    {
+      RunTestCase("ThreeReturns");
+    }
+
+    [Test]
+    public void TwoIfs()
+    {
+      RunTestCase("TwoIfs");
     }
 	}
 }
