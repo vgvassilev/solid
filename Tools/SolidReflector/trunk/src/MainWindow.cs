@@ -155,6 +155,8 @@ public partial class MainWindow: Gtk.Window
 
   protected void DumpMember(IMemberDefinition member)
   {
+    disassemblyText.Buffer.Clear();
+
     Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
     MethodDefinition method = member as MethodDefinition;
     if (method != null) {
