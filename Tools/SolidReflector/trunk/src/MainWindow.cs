@@ -125,7 +125,7 @@ public partial class MainWindow: Gtk.Window
     case 3:
         Debug.Assert(curModule != null, "CurModule is null!?");
         foreach (TypeDefinition tDef in curModule.Types) {
-          if (tDef.Name == s) {
+          if (tDef.FullName == s) {
             curType = tDef;
             //AttachSubTree(assemblyView.Model, iter, tDef.Fields.ToArray());
             AttachSubTree(assemblyView.Model, iter, tDef.Methods.ToArray());
