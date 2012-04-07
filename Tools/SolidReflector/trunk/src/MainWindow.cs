@@ -5,7 +5,7 @@
  */
 
 using System;
-using Gtk;
+using System.Diagnostics;
 using Mono.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -13,6 +13,10 @@ using Mono.Cecil.Cil;
 public partial class MainWindow: Gtk.Window
 {
   private string[] fileNames = {};
+  private AssemblyDefinition curAssembly = null;
+  private ModuleDefinition curModule = null;
+  private TypeDefinition curType = null;
+
 	public MainWindow(): base(Gtk.WindowType.Toplevel)
 	{
     // That's a hack because of the designer. If one needs to attach an event the designer attaches
@@ -23,24 +27,23 @@ public partial class MainWindow: Gtk.Window
 		Build();
 	}
 	
-	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
+	protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
 	{
     SaveEnvironment();
-		Application.Quit();
+		Gtk.Application.Quit();
 		a.RetVal = true;
 	}
 
 	protected void OnOpenActionActivated(object sender, System.EventArgs e)
   {
-    var fc = new FileChooserDialog("Choose the file to open",
-      this,
-      FileChooserAction.Open,
-      "Cancel", ResponseType.Cancel,
-      "Open", ResponseType.Accept);
+    var fc = new Gtk.FileChooserDialog("Choose the file to open",
+                                        this, Gtk.FileChooserAction.Open,
+                                        "Cancel", Gtk.ResponseType.Cancel,
+                                        "Open", Gtk.ResponseType.Accept);
     try {
       fc.SelectMultiple = true;
       fc.SetCurrentFolder(Environment.CurrentDirectory);
-      if (fc.Run() == (int)ResponseType.Accept) {
+      if (fc.Run() == (int)Gtk.ResponseType.Accept) {
         fileNames = fc.Filenames;
       }
     } finally {
@@ -53,7 +56,7 @@ public partial class MainWindow: Gtk.Window
 	protected void OnExitActionActivated(object sender, System.EventArgs e)
 	{
     SaveEnvironment();
-		Application.Quit();
+		Gtk.Application.Quit();
 	}
 
   protected void OnRealized(object sender, System.EventArgs e)
@@ -72,21 +75,21 @@ public partial class MainWindow: Gtk.Window
 
   private void LoadFilesInTreeView() {
 
-    TreeViewColumn col = new TreeViewColumn();
+    Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
 
-    CellRendererText colTitleCell = new CellRendererText ();
+    Gtk.CellRendererText colTitleCell = new Gtk.CellRendererText();
     col.PackStart(colTitleCell, true);
 
     col.AddAttribute (colTitleCell, "text", 0);
 
     assemblyView.AppendColumn(col);
 
-    ListStore ls = new ListStore(typeof(string));
+    Gtk.TreeStore store = new Gtk.TreeStore(typeof(string));
     foreach (string file in fileNames) {
-      ls.AppendValues(System.IO.Path.GetFileName(file));
+      store.AppendValues(System.IO.Path.GetFileName(file));
     }
 
-    assemblyView.Model = ls;
+    assemblyView.Model = store;
     assemblyView.ShowAll();
   }
 
@@ -96,37 +99,90 @@ public partial class MainWindow: Gtk.Window
 
   protected void OnAssemblyViewRowActivated (object o, Gtk.RowActivatedArgs args)
   {
-    TreeIter iter;
+    Gtk.TreeIter iter;
     assemblyView.Model.GetIter(out iter, args.Path);
-    string s = (string)assemblyView.Model.GetValue(iter, 0);
-    foreach (string f in fileNames) {
-      if (System.IO.Path.GetFileName(f) == s) {
-        AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(f);
-        TypeDefinition type = assembly.MainModule.GetType("SolidReflector.MainClass");
-        MethodDefinition found = GetMethod(type.Methods, "Main");
-        TextIter textIter = disassemblyText.Buffer.EndIter;
-        foreach (Instruction i in found.Body.Instructions) {
-          textIter = disassemblyText.Buffer.EndIter;
-          disassemblyText.Buffer.Insert(ref textIter, i.ToString() + "\n");
+    string s = (string) assemblyView.Model.GetValue(iter, 0);
+
+    switch(args.Path.Depth) {
+    case 1:
+        foreach (string f in fileNames) {
+          if (System.IO.Path.GetFileName(f) == s) {
+            curAssembly = AssemblyDefinition.ReadAssembly(f);
+            Debug.Assert(curAssembly != null, "Assembly cannot be null.");
+            AttachSubTree(assemblyView.Model, iter, curAssembly.Modules.ToArray());
+          }
         }
         break;
-      }
+    case 2:
+        foreach (ModuleDefinition mDef in curAssembly.Modules) {
+          if (mDef.Name == s) {
+            curModule = mDef;
+            AttachSubTree(assemblyView.Model, iter, mDef.Types.ToArray());
+          }
+        }
+        break;
+
+    case 3:
+        Debug.Assert(curModule != null, "CurModule is null!?");
+        foreach (TypeDefinition tDef in curModule.Types) {
+          if (tDef.Name == s) {
+            curType = tDef;
+            //AttachSubTree(assemblyView.Model, iter, tDef.Fields.ToArray());
+            AttachSubTree(assemblyView.Model, iter, tDef.Methods.ToArray());
+            //AttachSubTree(assemblyView.Model, iter, tDef.Events.ToArray());
+          }
+        }
+        break;
+      case 4:
+        Debug.Assert(curType != null, "CurType is null!?");
+        foreach (MethodDefinition mDef in curType.Methods)
+          if (mDef.ToString() == s)
+            DumpMember(mDef);
+        break;
     }
-    //assemblyView.
+    assemblyView.ShowAll();
+    ShowAll();
   }
 
-  private MethodDefinition GetMethod(Collection<MethodDefinition> methods, string name)
-   {
-     foreach (MethodDefinition mDef in methods) {
-       if (mDef.Name == name)
-         return mDef;
-     }
-     return null;
-   }
+  protected void AttachSubTree(Gtk.TreeModel model, Gtk.TreeIter parent, object[] elements)
+  {
+    Gtk.TreeStore store = model as Gtk.TreeStore;
+    Debug.Assert(store != null, "TreeModel shouldn't be flat");
+    for (uint i = 0; i < elements.Length; ++i) {
+      store.AppendValues(parent, elements[i].ToString());
+    }
+  }
+
+  protected void DumpMember(IMemberDefinition member)
+  {
+    Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
+    MethodDefinition method = member as MethodDefinition;
+    if (method != null) {
+      foreach (Instruction inst in method.Body.Instructions) {
+         disassemblyText.Buffer.Insert(ref textIter, inst.ToString() + "\n");
+      }
+      return;
+    }
+
+    EventDefinition evt = member as EventDefinition;
+    if (evt != null) {
+      foreach (MethodDefinition mDef in evt.OtherMethods) {
+         disassemblyText.Buffer.Insert(ref textIter, mDef.ToString() + "\n");
+      }
+      return;
+    }
+
+    FieldDefinition field = member as FieldDefinition;
+    if (field != null) {
+      disassemblyText.Buffer.Insert(ref textIter, field.ToString() + "\n");
+      return;
+    }
+
+  }
 
   protected void OnCombobox6Changed (object sender, System.EventArgs e)
   {
-    TreeIter iter;
+    Gtk.TreeIter iter;
     combobox6.GetActiveIter(out iter);
     string val = (string)combobox6.Model.GetValue(iter, 0);
     if (val == "IL") {
