@@ -26,7 +26,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 		{
 			//FIXME: add implementation
 			throw new NotImplementedException();
-			return CannotResolve.Instance;
+			//return CannotResolve.Instance;
 		}
 		
 		/// <summary>
@@ -42,7 +42,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 		{
 			//FIXME: add implementation
 			throw new NotImplementedException();
-			return this;
+			//return this;
 		}
 		
 		/// <summary>
@@ -58,7 +58,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 		{
 			//FIXME: add implementation
 			throw new NotImplementedException();
-			return this;
+			//return this;
 		}
 		
 		/// <summary>
@@ -77,7 +77,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 		{
 			//FIXME: add implementation
 			throw new NotImplementedException();
-			return this;
+			//return this;
 		}
 		
 		/// <summary>
@@ -96,7 +96,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 		{
 			//FIXME: add implementation
 			throw new NotImplementedException();
-			return this;
+			//return this;
 		}
 		
 		/// <summary>
