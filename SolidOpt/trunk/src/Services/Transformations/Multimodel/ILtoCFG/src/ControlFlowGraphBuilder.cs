@@ -20,7 +20,8 @@ using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 {
 	/// <summary>
-	/// Control flow graph builder.
+	/// Control flow graph builder. Builds <seealso cref="ControlFlowGraph"/>ControlFlowGraph of a
+  ///  method body given set of instructions.
 	/// </summary>
 	/// <description>
 	/// Dragon Book [8.4.1]
@@ -38,7 +39,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 	/// instructions up to but not including the next leader or the end of the
 	/// intermediate program
 	/// </description>
-	class ControlFlowGraphBuilder {
+	public class ControlFlowGraphBuilder {
 		
 		#region Fields & Properties
 
