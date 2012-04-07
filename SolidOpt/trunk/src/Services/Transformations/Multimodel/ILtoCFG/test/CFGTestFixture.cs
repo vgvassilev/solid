@@ -64,11 +64,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
       string[] seenLines = seen.Split('\n');
       string[] expectedLines = expected.Split('\n');
 
-      // if (seenLines.Length != expectedLines.Length) {
-      //   errMsg = "Seen has different line count compared to expected.";
-      //   return false;
-      // }
-
       for (int i = 0; i < seenLines.Length; i++) {
         if (Normalize(seenLines[i]) != Normalize(expectedLines[i])) {
           errMsg = String.Format("Difference at line {0}.", (i + 1).ToString());
