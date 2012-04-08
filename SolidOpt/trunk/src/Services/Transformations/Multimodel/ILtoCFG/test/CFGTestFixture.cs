@@ -63,10 +63,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
       // compare line by line
       string[] seenLines = seen.Split('\n');
       string[] expectedLines = expected.Split('\n');
-
+      string seenLine, expectedLine;
       for (int i = 0; i < seenLines.Length; i++) {
-        if (Normalize(seenLines[i]) != Normalize(expectedLines[i])) {
-          errMsg = String.Format("Difference at line {0}.", (i + 1).ToString());
+        seenLine = Normalize(seenLines[i]);
+        expectedLine = Normalize(expectedLines[i]);
+        if (seenLine != expectedLine) {
+          errMsg = String.Format("Difference at line {0}: ", (i + 1).ToString());
+          errMsg += String.Format("{0} != {1}", seenLine, expectedLine);
           return false;
         }
       }
