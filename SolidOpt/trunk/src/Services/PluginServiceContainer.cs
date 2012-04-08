@@ -7,7 +7,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Remoting;
 using System.Security.Policy;
 
@@ -17,13 +17,8 @@ namespace SolidOpt.Services
 {
 	public class PluginServiceContainer : ServiceContainer
 	{
-		public ArrayList plugins;
+		public List<PluginInfo> plugins = new List<PluginInfo>();
 
-		public PluginServiceContainer()
-		{
-			plugins = new ArrayList();
-		}
-		
 		public void AddPlugins(string path)
 		{
 			AddPlugins(new DirectoryInfo(path));
@@ -66,9 +61,8 @@ namespace SolidOpt.Services
 				if (pluginInfo.status == PluginInfo.Status.Error)
 					pluginInfo.assembly = null;
 		}
-		
 	}
-	
+
 	public class PluginInfo
 	{
 		public enum Status {UnLoaded, Loaded, Created, Error};
