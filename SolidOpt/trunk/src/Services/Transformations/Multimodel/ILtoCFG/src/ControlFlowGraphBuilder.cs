@@ -174,6 +174,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
 			Instruction i = block.Last;
 			switch (i.OpCode.FlowControl) {
+        case FlowControl.Return:
 				case FlowControl.Branch: {
 					var targets = GetTargetInstructions(i);
 					foreach (var target in targets) {
@@ -189,7 +190,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				// treat the call as next
 				case FlowControl.Call:
 				case FlowControl.Next:
-				case FlowControl.Return:
 				case FlowControl.Cond_Branch: {
 					var targets = GetTargetInstructions(i);
 					foreach (var target in targets) {
@@ -199,11 +199,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 						block.Successors.Add(successor);
 						successor.Predecessors.Add(block);
 					}
-					if (block.Last.Next != null) {
-						BasicBlock successor = GetNodeContaining(block.Last.Next);
-						block.Successors.Add(successor);
-						successor.Predecessors.Add(block);
-					}
+
+          if (block.Last.Next != null) {
+            BasicBlock successor = GetNodeContaining(block.Last.Next);
+            block.Successors.Add(successor);
+            successor.Predecessors.Add(block);
+          }
 					break;
 				}
 
