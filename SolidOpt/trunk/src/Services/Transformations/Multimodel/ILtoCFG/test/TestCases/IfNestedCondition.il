@@ -3,7 +3,6 @@
 .class public auto ansi beforefieldinit TestCase
        extends [mscorlib]System.Object
 {
-  //  TODO: RFC
   //  public static bool Main(int x) {
   //    if (x != 1) {
   //      if (x > 3)

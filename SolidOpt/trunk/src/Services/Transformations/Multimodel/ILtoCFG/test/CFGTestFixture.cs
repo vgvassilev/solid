@@ -423,9 +423,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
     }
 
     [Test]
-    public void TwoIfs()
-    {
+    public void TwoIfs() {
       RunTestCase("TwoIfs");
+    }
+
+    // Malformed IL tests
+    [Test]
+    public void MalformedConditionalBranch() {
+      RunTestCase("MalformedConditionalBranch");
+    }
+
+    [Test]
+    public void MalformedBranchInfiniteLoop() {
+      RunTestCase("MalformedBranchInfiniteLoop");
     }
 	}
 }
