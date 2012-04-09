@@ -4,6 +4,9 @@
  * For further details see the nearest License.txt
  */
 
+using SolidOpt.Services;
+using SolidOpt.Services.Transformations.Multimodel;
+
 using System;
 using System.Diagnostics;
 using Mono.Collections.Generic;
@@ -12,6 +15,7 @@ using Mono.Cecil.Cil;
 
 public partial class MainWindow: Gtk.Window
 {
+  private PluginServiceContainer plugins = new PluginServiceContainer();
   private string[] fileNames = {};
   private AssemblyDefinition curAssembly = null;
   private ModuleDefinition curModule = null;
@@ -61,6 +65,11 @@ public partial class MainWindow: Gtk.Window
 
   protected void OnRealized(object sender, System.EventArgs e)
   {
+    LoadEnvironment();
+    LoadRegisteredPlugins();
+  }
+
+  private void LoadEnvironment() {
     string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
     if (System.IO.File.Exists(curEnv)) {
       fileNames = System.IO.File.ReadAllLines(curEnv);
@@ -71,6 +80,12 @@ public partial class MainWindow: Gtk.Window
   private void SaveEnvironment() {
     string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
     System.IO.File.WriteAllLines(curEnv, fileNames);
+
+    string pluginsEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Plugins.env");
+
+    foreach(PluginInfo pInfo in plugins.plugins) {
+      System.IO.File.AppendText(pluginsEnv).WriteLine(pInfo.codeBase);
+    }
   }
 
   private void LoadFilesInTreeView() {
@@ -91,6 +106,22 @@ public partial class MainWindow: Gtk.Window
 
     assemblyView.Model = store;
     assemblyView.ShowAll();
+  }
+
+  private void LoadRegisteredPlugins() {
+    string registeredPlugins =
+        System.IO.Path.Combine(Environment.CurrentDirectory, "Plugins.env");
+    if (System.IO.File.Exists(registeredPlugins)) {
+      foreach (string s in System.IO.File.ReadAllLines(registeredPlugins))
+        if (System.IO.File.Exists(s))
+          plugins.AddPlugin(s);
+    }
+
+    plugins.LoadPlugins();
+    //IDecompile<MethodDefinition, ControlFlowGraph> ILtoCfgTransformer =
+    //   plugins.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
+
+
   }
 
   protected virtual void PreBuild() {

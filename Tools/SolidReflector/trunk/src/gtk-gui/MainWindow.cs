@@ -106,6 +106,8 @@ public partial class MainWindow
 		this.disassemblyText = new global::Gtk.TextView ();
 		this.disassemblyText.CanFocus = true;
 		this.disassemblyText.Name = "disassemblyText";
+		this.disassemblyText.Editable = false;
+		this.disassemblyText.CursorVisible = false;
 		this.GtkScrolledWindow1.Add (this.disassemblyText);
 		this.vpaned1.Add (this.GtkScrolledWindow1);
 		this.hpaned1.Add (this.vpaned1);

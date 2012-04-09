@@ -75,6 +75,14 @@
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj">
+      <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
+      <Name>SolidOpt.Services.Multimodel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\app.config">
