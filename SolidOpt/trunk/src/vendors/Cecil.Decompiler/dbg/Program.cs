@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
+using Mono.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
@@ -479,10 +480,21 @@ namespace Cecil.Decompiler.Debug {
 		
 		//-------------
 		
+		static MethodDefinition GetMethod(Collection<MethodDefinition> methods, string name)
+		{
+			foreach (MethodDefinition mDef in methods) {
+				if (mDef.Name == name)
+					return mDef;
+			}
+			return null;
+		}
 		
 		static void Main (string [] args)
 		{
-			var method = GetProgramMethod ("Triangle1");
+			//var method = GetProgramMethod ("Triangle1");
+			AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(args[1]);
+			TypeDefinition type = assembly.MainModule.GetType("TestCase");
+			MethodDefinition method = GetMethod(type.Methods, "Main");
 
 			var cfg = ControlFlowGraph.Create (method);
 
