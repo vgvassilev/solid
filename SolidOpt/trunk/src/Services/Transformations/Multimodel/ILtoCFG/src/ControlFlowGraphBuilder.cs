@@ -204,10 +204,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
             }
 					}
           // Make sure we don't have a branch pointing to the next instruction as a target
-          if (block.Last.Next != null && (block.Successors.IndexOf(successor) < 0)) {
+          if (block.Last.Next != null) {
             BasicBlock successor = GetNodeContaining(block.Last.Next);
-            block.Successors.Add(successor);
-            successor.Predecessors.Add(block);
+            if (block.Successors.IndexOf(successor) < 0) {
+              block.Successors.Add(successor);
+              successor.Predecessors.Add(block);
+            }
           }
 					break;
 				}
