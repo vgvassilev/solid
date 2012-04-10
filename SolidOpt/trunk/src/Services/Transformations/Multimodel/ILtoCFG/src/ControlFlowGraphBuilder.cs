@@ -192,15 +192,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				case FlowControl.Next:
 				case FlowControl.Cond_Branch: {
 					var targets = GetTargetInstructions(i);
+          bool nextBlockOverlapsWithTarget = false;
 					foreach (var target in targets) {
 						Debug.Assert(target != null, "Target cannot be null!");
 
 						BasicBlock successor = GetNodeContaining(target);
 						block.Successors.Add(successor);
 						successor.Predecessors.Add(block);
+            if (target == block.Last.Next)
+              nextBlockOverlapsWithTarget = true;
 					}
 
-          if (block.Last.Next != null) {
+          if (block.Last.Next != null && !nextBlockOverlapsWithTarget) {
             BasicBlock successor = GetNodeContaining(block.Last.Next);
             block.Successors.Add(successor);
             successor.Predecessors.Add(block);
