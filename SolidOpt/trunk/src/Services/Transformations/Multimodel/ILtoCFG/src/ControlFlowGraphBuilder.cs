@@ -192,18 +192,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 				case FlowControl.Next:
 				case FlowControl.Cond_Branch: {
 					var targets = GetTargetInstructions(i);
-          bool nextBlockOverlapsWithTarget = false;
 					foreach (var target in targets) {
 						Debug.Assert(target != null, "Target cannot be null!");
 
 						BasicBlock successor = GetNodeContaining(target);
-						block.Successors.Add(successor);
-						successor.Predecessors.Add(block);
-            if (target == block.Last.Next)
-              nextBlockOverlapsWithTarget = true;
+            // Check whether the successor already exists. Can happen when having branches pointing
+            // to one and the same block. Eg. switch with no break.
+            if (block.Successors.IndexOf(successor) < 0) {
+  					  block.Successors.Add(successor);
+						  successor.Predecessors.Add(block);
+            }
 					}
-
-          if (block.Last.Next != null && !nextBlockOverlapsWithTarget) {
+          // Make sure we don't have a branch pointing to the next instruction as a target
+          if (block.Last.Next != null && (block.Successors.IndexOf(successor) < 0)) {
             BasicBlock successor = GetNodeContaining(block.Last.Next);
             block.Successors.Add(successor);
             successor.Predecessors.Add(block);
