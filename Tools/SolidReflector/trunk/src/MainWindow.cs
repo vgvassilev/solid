@@ -191,8 +191,78 @@ public partial class MainWindow: Gtk.Window
     Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
     MethodDefinition method = member as MethodDefinition;
     if (method != null) {
+      disassemblyText.Buffer.Insert(ref textIter, ".method ");
+
+      if (method.IsPublic)
+        disassemblyText.Buffer.Insert(ref textIter, "public ");
+      if (method.IsPrivate)
+        disassemblyText.Buffer.Insert(ref textIter, "private ");
+      if (method.IsHideBySig)
+        disassemblyText.Buffer.Insert(ref textIter, "hidebysig ");
+      if (method.IsStatic)
+        disassemblyText.Buffer.Insert(ref textIter, "static ");
+      else
+        disassemblyText.Buffer.Insert(ref textIter, "instance ");
+      //else if (method.is)
+
+      disassemblyText.Buffer.Insert(ref textIter, method.ReturnType.ToString() + " ");
+      disassemblyText.Buffer.Insert(ref textIter, method.Name + "(");
+      if (method.Parameters.Count > 0) {
+        disassemblyText.Buffer.Insert(ref textIter, method.Parameters[0].ParameterType + " ");
+        disassemblyText.Buffer.Insert(ref textIter, method.Parameters[0].Name);
+      }
+      disassemblyText.Buffer.Insert(ref textIter, ") ");
+      if (method.IsIL)
+        disassemblyText.Buffer.Insert(ref textIter, "cil ");
+      else if (method.IsNative)
+        disassemblyText.Buffer.Insert(ref textIter, "native ");
+
+      if (method.IsManaged)
+        disassemblyText.Buffer.Insert(ref textIter, "managed ");
+      else if (method.IsUnmanaged)
+        disassemblyText.Buffer.Insert(ref textIter, "unmanaged ");
+
+      disassemblyText.Buffer.Insert(ref textIter, "\n");
+
+      if (method.Body.Variables.Count > 0) {
+        disassemblyText.Buffer.Insert(ref textIter, ".locals init (");
+        for (int i = 0; i < method.Body.Variables.Count; i++) {
+            disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].VariableType.ToString() + " ");
+            disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].ToString() + "\n");
+        }
+        disassemblyText.Buffer.Insert(ref textIter, ")\n");
+      }
+
       foreach (Instruction inst in method.Body.Instructions) {
          disassemblyText.Buffer.Insert(ref textIter, inst.ToString() + "\n");
+      }
+
+      if (method.Body.HasExceptionHandlers) {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        foreach (var handler in method.Body.ExceptionHandlers) {
+          if (handler.FilterStart != null) {
+            sb.Append(".filter ");
+            AppendLabel(sb, handler.FilterStart);
+            sb.Append(" to ");
+            AppendLabel(sb, handler.FilterEnd);
+          }
+          if (handler.TryStart != null) {
+            sb.Append("\n.try ");
+            AppendLabel(sb, handler.TryStart);
+            sb.Append(" to ");
+            AppendLabel(sb, handler.TryEnd);
+          }
+          if (handler.HandlerStart != null) {
+            sb.Append(" .handler ");
+            sb.Append(handler.HandlerType + " ");
+            AppendLabel(sb, handler.HandlerStart);
+            sb.Append(" to ");
+            AppendLabel(sb, handler.HandlerEnd);
+          }
+        }
+
+        disassemblyText.Buffer.Insert(ref textIter, sb.ToString() + "\n");
+
       }
       return;
     }
@@ -211,6 +281,11 @@ public partial class MainWindow: Gtk.Window
       return;
     }
 
+  }
+
+  private void AppendLabel (System.Text.StringBuilder builder, Instruction instruction) {
+    builder.Append ("IL_");
+    builder.Append (instruction.Offset.ToString ("x4"));
   }
 
   protected void OnCombobox6Changed (object sender, System.EventArgs e)
