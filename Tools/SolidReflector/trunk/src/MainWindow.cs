@@ -190,6 +190,7 @@ public partial class MainWindow: Gtk.Window
 
     Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
     MethodDefinition method = member as MethodDefinition;
+    
     if (method != null) {
       disassemblyText.Buffer.Insert(ref textIter, ".method ");
 
@@ -203,9 +204,8 @@ public partial class MainWindow: Gtk.Window
         disassemblyText.Buffer.Insert(ref textIter, "static ");
       else
         disassemblyText.Buffer.Insert(ref textIter, "instance ");
-      //else if (method.is)
 
-      disassemblyText.Buffer.Insert(ref textIter, method.ReturnType.ToString() + " ");
+      disassemblyText.Buffer.Insert(ref textIter, method.ReturnType.Name + " ");
       disassemblyText.Buffer.Insert(ref textIter, method.Name + "(");
       if (method.Parameters.Count > 0) {
         disassemblyText.Buffer.Insert(ref textIter, method.Parameters[0].ParameterType + " ");
@@ -222,13 +222,16 @@ public partial class MainWindow: Gtk.Window
       else if (method.IsUnmanaged)
         disassemblyText.Buffer.Insert(ref textIter, "unmanaged ");
 
-      disassemblyText.Buffer.Insert(ref textIter, "\n");
+      disassemblyText.Buffer.Insert(ref textIter, "\n{\n");
 
       if (method.Body.Variables.Count > 0) {
         disassemblyText.Buffer.Insert(ref textIter, ".locals init (");
         for (int i = 0; i < method.Body.Variables.Count; i++) {
-            disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].VariableType.ToString() + " ");
-            disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].ToString() + "\n");
+            disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].VariableType.Name + " ");
+            if (i + 1 != method.Body.Variables.Count)
+              disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].ToString() + ", ");
+            else
+              disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].ToString());
         }
         disassemblyText.Buffer.Insert(ref textIter, ")\n");
       }
@@ -239,31 +242,36 @@ public partial class MainWindow: Gtk.Window
 
       if (method.Body.HasExceptionHandlers) {
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        sb.Append("\n");
         foreach (var handler in method.Body.ExceptionHandlers) {
           if (handler.FilterStart != null) {
-            sb.Append(".filter ");
+            sb.Append("//  .filter ");
             AppendLabel(sb, handler.FilterStart);
             sb.Append(" to ");
             AppendLabel(sb, handler.FilterEnd);
+            sb.Append("\n");
           }
           if (handler.TryStart != null) {
-            sb.Append("\n.try ");
+            sb.Append("// .try ");
             AppendLabel(sb, handler.TryStart);
             sb.Append(" to ");
             AppendLabel(sb, handler.TryEnd);
+            sb.Append("\n");
           }
           if (handler.HandlerStart != null) {
-            sb.Append(" .handler ");
+            sb.Append("// .handler ");
             sb.Append(handler.HandlerType + " ");
             AppendLabel(sb, handler.HandlerStart);
             sb.Append(" to ");
             AppendLabel(sb, handler.HandlerEnd);
+            sb.Append("\n");
           }
         }
 
         disassemblyText.Buffer.Insert(ref textIter, sb.ToString() + "\n");
-
       }
+
+      disassemblyText.Buffer.Insert(ref textIter, "}");
       return;
     }
 
