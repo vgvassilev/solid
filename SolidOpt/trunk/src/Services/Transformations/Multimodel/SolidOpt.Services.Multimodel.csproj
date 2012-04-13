@@ -40,20 +40,20 @@
     <Compile Include="IDecompile.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SolidOpt.Services.Transformations.csproj">
-      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
-      <Name>SolidOpt.Services.Transformations</Name>
-    </ProjectReference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <ProjectReference Include="..\..\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Compatibility\SolidOpt.Services.Compatibility.csproj">
       <Project>{846d2563-5af8-4459-81c6-59a9da174849}</Project>
       <Name>SolidOpt.Services.Compatibility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SolidOpt.Services.csproj">
-      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
-      <Name>SolidOpt.Services</Name>
+    <ProjectReference Include="..\SolidOpt.Services.Transformations.csproj">
+      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
+      <Name>SolidOpt.Services.Transformations</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
