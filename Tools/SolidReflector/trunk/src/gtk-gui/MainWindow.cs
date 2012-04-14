@@ -80,6 +80,8 @@ public partial class MainWindow
 		this.assemblyView = new global::Gtk.TreeView ();
 		this.assemblyView.CanFocus = true;
 		this.assemblyView.Name = "assemblyView";
+		this.assemblyView.HoverSelection = true;
+		this.assemblyView.HoverExpand = true;
 		this.GtkScrolledWindow.Add (this.assemblyView);
 		this.hpaned1.Add (this.GtkScrolledWindow);
 		global::Gtk.Paned.PanedChild w4 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.GtkScrolledWindow]));

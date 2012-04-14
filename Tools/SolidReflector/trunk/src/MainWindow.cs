@@ -8,7 +8,9 @@ using SolidOpt.Services;
 using SolidOpt.Services.Transformations.Multimodel;
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+
 using Mono.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -16,7 +18,7 @@ using Mono.Cecil.Cil;
 public partial class MainWindow: Gtk.Window
 {
   private PluginServiceContainer plugins = new PluginServiceContainer();
-  private string[] fileNames = {};
+  private List<String> fileNames = new List<String>();
   private AssemblyDefinition curAssembly = null;
   private ModuleDefinition curModule = null;
   private TypeDefinition curType = null;
@@ -48,13 +50,25 @@ public partial class MainWindow: Gtk.Window
       fc.SelectMultiple = true;
       fc.SetCurrentFolder(Environment.CurrentDirectory);
       if (fc.Run() == (int)Gtk.ResponseType.Accept) {
-        fileNames = fc.Filenames;
+        List<string> filesToLoad = new List<string>();
+        filesToLoad.AddRange(fc.Filenames);
+        for (uint i = 0; i < fc.Filenames.Length; i++)
+          if (!fileNames.Contains(fc.Filenames[i]))
+            fileNames.Add(fc.Filenames[i]);
+          else {
+            var msg = new Gtk.MessageDialog(null, Gtk.DialogFlags.Modal, Gtk.MessageType.Info,
+                                            Gtk.ButtonsType.Ok,
+                                            String.Format("Filename {0} already loaded.",
+                                                          fc.Filenames[i]));
+            filesToLoad.Remove(fc.Filenames[i]);
+            msg.Run();
+            msg.Destroy();
+        }
+        LoadFilesInTreeView(filesToLoad.ToArray());
       }
     } finally {
       fc.Destroy();
     }
-
-    LoadFilesInTreeView();
   }
 
 	protected void OnExitActionActivated(object sender, System.EventArgs e)
@@ -72,14 +86,14 @@ public partial class MainWindow: Gtk.Window
   private void LoadEnvironment() {
     string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
     if (System.IO.File.Exists(curEnv)) {
-      fileNames = System.IO.File.ReadAllLines(curEnv);
-      LoadFilesInTreeView();
+      fileNames.AddRange(System.IO.File.ReadAllLines(curEnv));
+      LoadFilesInTreeView(fileNames.ToArray());
     }
   }
 
   private void SaveEnvironment() {
     string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
-    System.IO.File.WriteAllLines(curEnv, fileNames);
+    System.IO.File.WriteAllLines(curEnv, fileNames.ToArray());
 
     string pluginsEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Plugins.env");
 
@@ -88,19 +102,24 @@ public partial class MainWindow: Gtk.Window
     }
   }
 
-  private void LoadFilesInTreeView() {
-
+  private void LoadFilesInTreeView(string [] files) {
     Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
 
     Gtk.CellRendererText colTitleCell = new Gtk.CellRendererText();
     col.PackStart(colTitleCell, true);
 
-    col.AddAttribute (colTitleCell, "text", 0);
+    col.AddAttribute(colTitleCell, "text", 0);
 
-    assemblyView.AppendColumn(col);
+    if (assemblyView.GetColumn(0) != null)
+      assemblyView.Columns[0] = col;
+    else
+      assemblyView.AppendColumn(col);
 
-    Gtk.TreeStore store = new Gtk.TreeStore(typeof(string));
-    foreach (string file in fileNames) {
+    Gtk.TreeStore store = assemblyView.Model as Gtk.TreeStore;
+    if (store == null)
+     store = new Gtk.TreeStore(typeof(string));
+
+    foreach (string file in files) {
       store.AppendValues(System.IO.Path.GetFileName(file));
     }
 
@@ -179,6 +198,15 @@ public partial class MainWindow: Gtk.Window
   {
     Gtk.TreeStore store = model as Gtk.TreeStore;
     Debug.Assert(store != null, "TreeModel shouldn't be flat");
+
+    // remove the values if they were added before.
+    Gtk.TreePath path = store.GetPath(parent);
+    path.Down();
+    Gtk.TreeIter iter;
+    while (store.GetIter(out iter, path))
+      store.Remove(ref iter);
+
+    // Add the elements to the tree view.
     for (uint i = 0; i < elements.Length; ++i) {
       store.AppendValues(parent, elements[i].ToString());
     }
