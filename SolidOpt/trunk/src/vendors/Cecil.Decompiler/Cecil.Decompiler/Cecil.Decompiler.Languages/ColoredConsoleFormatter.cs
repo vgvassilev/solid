@@ -51,7 +51,7 @@ namespace Cecil.Decompiler.Languages
         public void WriteComment(string comment)
         {
             Console.ForegroundColor = CommentColor;
-			WriteIndent();
+			      WriteIndent();
             Console.Write(comment);
            // WriteLine();
         }

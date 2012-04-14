@@ -115,9 +115,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 			string sourceFile = GetTestCaseFullPath(testCaseName) + ".il";
 			Assert.IsTrue(File.Exists (sourceFile), sourceFile + " not found!");
 			string testCaseAssemblyName = Path.Combine(testCasesTmpDir, testCaseName+".dll");
-			ilasm (string.Format ("/DLL \"/OUTPUT:{0}\" {1}", testCaseAssemblyName, sourceFile));
-			
-			return testCaseAssemblyName;
+      ilasm (string.Format ("/DLL \"/OUTPUT:{0}\" {1}", testCaseAssemblyName, sourceFile));
+
+      return testCaseAssemblyName;
 		}
 		
 		static void ilasm (string arguments)
@@ -435,6 +435,51 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
     [Test]
     public void InfiniteLoopBranchToSelf() {
       RunTestCase("InfiniteLoopBranchToSelf");
+    }
+
+    [Test]
+    public void ThrowNewException() {
+      RunTestCase("ThrowNewException");
+    }
+
+    [Test]
+    public void TryCatchException() {
+      RunTestCase("TryCatchException");
+    }
+
+    [Test]
+    public void TryCatchFinallyException() {
+      RunTestCase("TryCatchFinallyException");
+    }
+
+    [Test]
+    public void TryMultipleCatchException() {
+      RunTestCase("TryMultipleCatchException");
+    }
+
+    [Test]
+    public void NestedTryCatchException() {
+      RunTestCase("NestedTryCatchException");
+    }
+
+    [Test]
+    public void NestedTryCatchFinallyException() {
+      RunTestCase("NestedTryCatchFinallyException");
+    }
+
+    [Test]
+    public void CatchFaultException() {
+      RunTestCase("CatchFaultException");
+    }
+
+    [Test]
+    public void CatchFilterException() {
+      RunTestCase("CatchFilterException");
+    }
+
+    [Test]
+    public void CatchTwoFiltersException() {
+      RunTestCase("CatchTwoFiltersException");
     }
 	}
 }

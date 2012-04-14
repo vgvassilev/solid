@@ -129,6 +129,23 @@
     <None Include="test\TestCases\FloatEquals.il" />
     <None Include="test\TestCases\MultipleOr.il" />
     <None Include="test\TestCases\ThrowNewException.il" />
+    <None Include="test\TestCases\ThrowNewException.il.cfg" />
+    <None Include="test\TestCases\TryCatchException.il" />
+    <None Include="test\TestCases\TryCatchException.il.cfg" />
+    <None Include="test\TestCases\TryCatchFinallyException.il" />
+    <None Include="test\TestCases\TryCatchFinallyException.il.cfg" />
+    <None Include="test\TestCases\TryMultipleCatchException.il" />
+    <None Include="test\TestCases\TryMultipleCatchException.il.cfg" />
+    <None Include="test\TestCases\NestedTryCatchException.il" />
+    <None Include="test\TestCases\NestedTryCatchException.il.cfg" />
+    <None Include="test\TestCases\NestedTryCatchFinallyException.il" />
+    <None Include="test\TestCases\NestedTryCatchFinallyException.il.cfg" />
+    <None Include="test\TestCases\CatchFaultException.il" />
+    <None Include="test\TestCases\CatchFaultException.il.cfg" />
+    <None Include="test\TestCases\CatchFilterException.il" />
+    <None Include="test\TestCases\CatchFilterException.il.cfg" />
+    <None Include="test\TestCases\CatchTwoFiltersException.il" />
+    <None Include="test\TestCases\CatchTwoFiltersException.il.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\CFGTestFixture.cs" />

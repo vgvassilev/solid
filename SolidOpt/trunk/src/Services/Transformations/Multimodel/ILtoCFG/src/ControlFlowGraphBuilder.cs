@@ -233,6 +233,5 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			}
 			return null;
 		}
-		
 	}
 }
