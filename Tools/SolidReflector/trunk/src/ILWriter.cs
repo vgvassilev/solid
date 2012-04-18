@@ -5,6 +5,7 @@
 //  */
 
 using Gtk;
+using Mono.Cecil.Cil;
 using System;
 
 namespace SolidReflector
@@ -47,6 +48,12 @@ namespace SolidReflector
       tag = new TextTag("ImplementationAttributes");
       tag.Foreground = "darkred";
       buffer.TagTable.Add(tag);
+
+      tag = new TextTag("Label");
+      tag.Foreground = "darkgreen";
+      tag.Style = Pango.Style.Italic;
+      tag.Weight = Pango.Weight.Bold;
+      buffer.TagTable.Add(tag);
     }
 
     public void Indent() {
@@ -61,10 +68,48 @@ namespace SolidReflector
       WriteNewLine();
     }
 
-    public void WriteInstruction(string inst) {
+    public void WriteInstruction(Instruction inst) {
       WriteIndent();
-      Out.Insert(ref endIter, inst);
+      WriteInstLabel(inst);
+
+      // Copied and modified for Mono.Cecil.Cil.Instruction.ToString()
+      Out.Insert(ref endIter, ": ");
+      Out.Insert(ref endIter, inst.OpCode.Name);
+
+      if (inst.Operand != null) {
+        Out.Insert(ref endIter, " ");
+
+        switch (inst.OpCode.OperandType) {
+        case OperandType.ShortInlineBrTarget:
+        case OperandType.InlineBrTarget:
+          WriteInstLabel((Instruction) inst.Operand);
+          break;
+        case OperandType.InlineSwitch:
+          var labels = (Instruction[]) inst.Operand;
+          for (int i = 0; i < labels.Length; i++) {
+            if (i > 0)
+              Out.Insert(ref endIter,",");
+
+            WriteInstLabel(labels[i]);
+          }
+          break;
+        case OperandType.InlineString:
+          Out.Insert(ref endIter, "\"");
+          Out.Insert(ref endIter, inst.Operand.ToString());
+          Out.Insert(ref endIter, "\"");
+          break;
+        default:
+          Out.Insert(ref endIter, inst.Operand.ToString());
+          break;
+        }
+      }
+
       WriteNewLine();
+    }
+
+    public void WriteInstLabel(Instruction inst) {
+      Out.InsertWithTagsByName(ref endIter, "IL_", "Label");
+      Out.InsertWithTagsByName(ref endIter, inst.Offset.ToString ("x4") + " ", "Label");
     }
 
     public void WriteKeyword(string keyword) {

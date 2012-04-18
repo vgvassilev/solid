@@ -153,6 +153,7 @@ public partial class MainWindow: Gtk.Window
     assemblyView.Model.GetIter(out iter, args.Path);
     string s = (string) assemblyView.Model.GetValue(iter, 0);
 
+
     switch(args.Path.Depth) {
     case 1:
         foreach (string f in fileNames) {
@@ -303,7 +304,7 @@ public partial class MainWindow: Gtk.Window
             writer.WriteExceptionDirective("}");
           }
         }
-        writer.WriteInstruction(inst.ToString());
+        writer.WriteInstruction(inst);
 
       }
 
