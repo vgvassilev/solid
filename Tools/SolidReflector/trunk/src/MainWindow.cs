@@ -1,8 +1,8 @@
-/*
- * $Id$
- * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
- * For further details see the nearest License.txt
- */
+///*
+// * $Id$
+// * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+// * For further details see the nearest License.txt
+// */
 
 using SolidOpt.Services;
 using SolidOpt.Services.Transformations.Multimodel;
@@ -32,7 +32,7 @@ public partial class MainWindow: Gtk.Window
     PreBuild();
 		Build();
 	}
-	
+
 	protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
 	{
     SaveEnvironment();
@@ -218,88 +218,98 @@ public partial class MainWindow: Gtk.Window
 
     Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
     MethodDefinition method = member as MethodDefinition;
-    
+
     if (method != null) {
-      disassemblyText.Buffer.Insert(ref textIter, ".method ");
+      SolidReflector.ILWriter writer = new SolidReflector.ILWriter(disassemblyText.Buffer);
+      writer.Indent();
+      writer.WriteMethodAttribute(".method");
 
       if (method.IsPublic)
-        disassemblyText.Buffer.Insert(ref textIter, "public ");
+        writer.WriteMethodAttribute("public");
       if (method.IsPrivate)
-        disassemblyText.Buffer.Insert(ref textIter, "private ");
+        writer.WriteMethodAttribute("private");
       if (method.IsHideBySig)
-        disassemblyText.Buffer.Insert(ref textIter, "hidebysig ");
+        writer.WriteMethodAttribute("hidebysig");
       if (method.IsStatic)
-        disassemblyText.Buffer.Insert(ref textIter, "static ");
+        writer.WriteMethodAttribute("static");
       else
-        disassemblyText.Buffer.Insert(ref textIter, "instance ");
+        writer.WriteMethodAttribute("instance");
 
-      disassemblyText.Buffer.Insert(ref textIter, method.ReturnType.Name + " ");
-      disassemblyText.Buffer.Insert(ref textIter, method.Name + "(");
+      writer.WriteType(method.ReturnType.Name);
+      writer.WriteName(method.Name);
+      writer.Write(" (");
       if (method.Parameters.Count > 0) {
-        disassemblyText.Buffer.Insert(ref textIter, method.Parameters[0].ParameterType + " ");
-        disassemblyText.Buffer.Insert(ref textIter, method.Parameters[0].Name);
+        writer.WriteType(method.Parameters[0].ParameterType.ToString());
+        writer.WriteName(method.Parameters[0].Name.ToString());
       }
-      disassemblyText.Buffer.Insert(ref textIter, ") ");
+      writer.Write(") ");
       if (method.IsIL)
-        disassemblyText.Buffer.Insert(ref textIter, "cil ");
+        writer.WriteImplementationAttribute("cil");
       else if (method.IsNative)
-        disassemblyText.Buffer.Insert(ref textIter, "native ");
+        writer.WriteImplementationAttribute("native");
 
       if (method.IsManaged)
-        disassemblyText.Buffer.Insert(ref textIter, "managed ");
+        writer.WriteImplementationAttribute("managed");
       else if (method.IsUnmanaged)
-        disassemblyText.Buffer.Insert(ref textIter, "unmanaged ");
+        writer.WriteImplementationAttribute("unmanaged");
 
-      disassemblyText.Buffer.Insert(ref textIter, "\n{\n");
+      writer.NewLine();
+      writer.Write("{");
+      writer.NewLine();
 
       if (method.Body.Variables.Count > 0) {
-        disassemblyText.Buffer.Insert(ref textIter, ".locals init (");
+        writer.WriteKeyword(".locals init");
+        writer.Write("(");
         for (int i = 0; i < method.Body.Variables.Count; i++) {
-            disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].VariableType.Name + " ");
-            if (i + 1 != method.Body.Variables.Count)
-              disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].ToString() + ", ");
-            else
-              disassemblyText.Buffer.Insert(ref textIter, method.Body.Variables[i].ToString());
+          writer.WriteType(method.Body.Variables[i].VariableType.Name.ToString());
+          writer.WriteName(method.Body.Variables[i].ToString());
+          if (i + 1 != method.Body.Variables.Count)
+              writer.Write(", ");
         }
-        disassemblyText.Buffer.Insert(ref textIter, ")\n");
+        writer.Write(")");
+        writer.NewLine();
       }
 
       foreach (Instruction inst in method.Body.Instructions) {
-         disassemblyText.Buffer.Insert(ref textIter, inst.ToString() + "\n");
-      }
+        //if (method.Body.HasExceptionHandlers) {
+        foreach (ExceptionHandler handler in method.Body.ExceptionHandlers) {
+          if (handler.FilterStart == inst) {
+            writer.Indent();
+            writer.WriteExceptionDirective(".filter {");
+          }
 
-      if (method.Body.HasExceptionHandlers) {
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        sb.Append("\n");
-        foreach (var handler in method.Body.ExceptionHandlers) {
-          if (handler.FilterStart != null) {
-            sb.Append("//  .filter ");
-            AppendLabel(sb, handler.FilterStart);
-            sb.Append(" to ");
-            AppendLabel(sb, handler.FilterEnd);
-            sb.Append("\n");
+          if (handler.FilterEnd == inst) {
+            writer.Outdent();
+            writer.WriteExceptionDirective("}");
           }
-          if (handler.TryStart != null) {
-            sb.Append("// .try ");
-            AppendLabel(sb, handler.TryStart);
-            sb.Append(" to ");
-            AppendLabel(sb, handler.TryEnd);
-            sb.Append("\n");
+
+          if (handler.TryStart == inst) {
+            writer.WriteExceptionDirective(".try {");
+            writer.Indent();
           }
-          if (handler.HandlerStart != null) {
-            sb.Append("// .handler ");
-            sb.Append(handler.HandlerType + " ");
-            AppendLabel(sb, handler.HandlerStart);
-            sb.Append(" to ");
-            AppendLabel(sb, handler.HandlerEnd);
-            sb.Append("\n");
+
+          if (handler.TryEnd == inst) {
+            writer.Outdent();
+            writer.WriteExceptionDirective("}");
+          }
+
+          if (handler.HandlerStart == inst) {
+            writer.WriteExceptionDirective(handler.HandlerType.ToString() + " {");
+            writer.Indent();
+          }
+
+          if (handler.HandlerEnd == inst) {
+            writer.Outdent();
+            writer.WriteExceptionDirective("}");
           }
         }
+        writer.WriteInstruction(inst.ToString());
 
-        disassemblyText.Buffer.Insert(ref textIter, sb.ToString() + "\n");
       }
 
-      disassemblyText.Buffer.Insert(ref textIter, "}");
+      writer.Outdent();
+      writer.Write("}");
+
       return;
     }
 
