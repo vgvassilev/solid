@@ -19,15 +19,21 @@
   
   .method public static int32 Main ()
   {
-    IL_0000: ldstr "#jibba!!jabba"
-    IL_0005: newobj [mscorlib]System.Void [mscorlib]System.Uri::.ctor(System.String)
-    IL_000a: leave IL_0021
-    IL_000f: ldc.i4.1
-    IL_0010: stsfld [mscorlib]System.Int32 TestCase::exc_caught
-    IL_0015: leave IL_0021
-    IL_001a: ldc.i4.1
-    IL_001b: stsfld [mscorlib]System.Int32 TestCase::flt_caught
-    IL_0020: endfinally
+    .try {
+      .try {
+        IL_0000: ldstr "#jibba!!jabba"
+        IL_0005: newobj [mscorlib]System.Void [mscorlib]System.Uri::.ctor(System.String)
+        IL_000a: leave IL_0021
+      } catch [mscorlib]System.Exception {
+        IL_000f: ldc.i4.1
+        IL_0010: stsfld [mscorlib]System.Int32 TestCase::exc_caught
+        IL_0015: leave IL_0021
+      }
+    } fault {
+      IL_001a: ldc.i4.1
+      IL_001b: stsfld [mscorlib]System.Int32 TestCase::flt_caught
+      IL_0020: endfinally
+    }
     IL_0021: ldsfld [mscorlib]System.Int32 TestCase::exc_caught
     IL_0026: brfalse IL_0041
     IL_002b: ldsfld [mscorlib]System.Int32 TestCase::flt_caught

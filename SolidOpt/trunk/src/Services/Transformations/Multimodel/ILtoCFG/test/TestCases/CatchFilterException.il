@@ -21,18 +21,22 @@
 
   .method public static int32 Main ()
   {
-    IL_0000: ldc.i4.0
-    IL_0001: ldc.i4.0
-    IL_0002: div
-    IL_0003: ldc.i4.1
-    IL_0004: stsfld [mscorlib]System.Int32 TestCase::exc_not_thrown
-    IL_0009: leave IL_001d
-    IL_000e: pop
-    IL_000f: ldc.i4.1
-    IL_0010: endfilter
-    IL_0012: ldc.i4.1
-    IL_0013: stsfld [mscorlib]System.Int32 TestCase::flt_caught
-    IL_0018: leave IL_001d
+    .try {
+      IL_0000: ldc.i4.0
+      IL_0001: ldc.i4.0
+      IL_0002: div
+      IL_0003: ldc.i4.1
+      IL_0004: stsfld [mscorlib]System.Int32 TestCase::exc_not_thrown
+      IL_0009: leave IL_001d
+    } filter {
+      IL_000e: pop
+      IL_000f: ldc.i4.1
+      IL_0010: endfilter
+    } {
+      IL_0012: ldc.i4.1
+      IL_0013: stsfld [mscorlib]System.Int32 TestCase::flt_caught
+      IL_0018: leave IL_001d
+    }
     IL_001d: ldsfld [mscorlib]System.Int32 TestCase::exc_not_thrown
     IL_0022: brtrue IL_003d
     IL_0027: ldsfld [mscorlib]System.Int32 TestCase::flt_caught

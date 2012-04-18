@@ -32,24 +32,30 @@
     IL_0004: ldc.i4.2
     IL_0005: newarr int32
     IL_000a: stloc.2
-    IL_000b: ldloc.0
-    IL_000c: ldloc.1
-    IL_000d: div
-    IL_000e: stloc.0
-    IL_000f: leave IL_0042
-    IL_0014: stloc.3
-    IL_0015: ldstr "DivideByZeroException detected."
-    IL_001a: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine([mscorlib]System.String)
-    IL_001f: ldloc.2
-    IL_0020: ldc.i4.4
-    IL_0021: ldelem.i4
-    IL_0022: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine([mscorlib]System.Int32)
-    IL_0027: leave IL_003d
-    IL_002c: stloc.s V_4
-    IL_002e: ldstr "IndexOutOfRangeException detected"
-    IL_0033: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine([mscorlib]System.String)
-    IL_0038: leave IL_003d
-    IL_003d: leave IL_0042
+    .try {
+      IL_000b: ldloc.0
+      IL_000c: ldloc.1
+      IL_000d: div
+      IL_000e: stloc.0
+      IL_000f: leave IL_0042
+    } catch [mscorlib]System.DivideByZeroException {
+      IL_0014: stloc.3
+      IL_0015: ldstr "DivideByZeroException detected."
+      IL_001a: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine([mscorlib]System.String)
+      .try {
+        IL_001f: ldloc.2
+        IL_0020: ldc.i4.4
+        IL_0021: ldelem.i4
+        IL_0022: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine([mscorlib]System.Int32)
+        IL_0027: leave IL_003d
+      } catch [mscorlib]System.IndexOutOfRangeException {
+        IL_002c: stloc.s V_4
+        IL_002e: ldstr "IndexOutOfRangeException detected"
+        IL_0033: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine([mscorlib]System.String)
+        IL_0038: leave IL_003d
+      }
+      IL_003d: leave IL_0042
+    }
     IL_0042: ldstr "I am a WriteLine method"
     IL_0047: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine([mscorlib]System.String)
     IL_004c: ret

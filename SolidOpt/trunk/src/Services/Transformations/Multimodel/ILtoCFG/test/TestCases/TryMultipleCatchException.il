@@ -29,23 +29,28 @@
     IL_0001: stloc.0
     IL_0002: ldc.i4.0
     IL_0003: stloc.1
-    IL_0004: ldloc.0
-    IL_0005: ldloc.1
-    IL_0006: div
-    IL_0007: stloc.0
-    IL_0008: leave IL_003e
-    IL_000d: stloc.2
-    IL_000e: ldstr "Division by zero detected."
-    IL_0013: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
-    IL_0018: leave IL_003e
-    IL_001d: stloc.3
-    IL_001e: ldstr "Arg out of range detected."
-    IL_0023: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
-    IL_0028: leave IL_003e
-    IL_002d: stloc.s V_4
-    IL_002f: ldstr "Overflow detected."
-    IL_0034: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
-    IL_0039: leave IL_003e
+    .try {
+      IL_0004: ldloc.0
+      IL_0005: ldloc.1
+      IL_0006: div
+      IL_0007: stloc.0
+      IL_0008: leave IL_003e
+    } catch [mscorlib]System.DivideByZeroException {
+      IL_000d: stloc.2
+      IL_000e: ldstr "Division by zero detected."
+      IL_0013: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
+      IL_0018: leave IL_003e
+    } catch [mscorlib]System.ArgumentOutOfRangeException {
+      IL_001d: stloc.3
+      IL_001e: ldstr "Arg out of range detected."
+      IL_0023: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
+      IL_0028: leave IL_003e
+    } catch [mscorlib]System.OverflowException {
+      IL_002d: stloc.s V_4
+      IL_002f: ldstr "Overflow detected."
+      IL_0034: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
+      IL_0039: leave IL_003e
+    }
     IL_003e: ldstr "I am a WriteLine method"
     IL_0043: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
     IL_0048: ret

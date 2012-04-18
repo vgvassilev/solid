@@ -19,15 +19,18 @@
     IL_0001: stloc.0
     IL_0002: ldc.i4.0
     IL_0003: stloc.1
-    IL_0004: ldloc.0
-    IL_0005: ldloc.1
-    IL_0006: div
-    IL_0007: stloc.0
-    IL_0008: leave IL_001d
-    IL_000d: stloc.2
-    IL_000e: ldstr "Division by zero detected."
-    IL_0013: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
-    IL_0018: leave IL_001d
+    .try {
+      IL_0004: ldloc.0
+      IL_0005: ldloc.1
+      IL_0006: div
+      IL_0007: stloc.0
+      IL_0008: leave IL_001d
+    } catch [mscorlib]System.DivideByZeroException {
+      IL_000d: stloc.2
+      IL_000e: ldstr "Division by zero detected."
+      IL_0013: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
+      IL_0018: leave IL_001d
+    }
     IL_001d: ret
   }
 }
