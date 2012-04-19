@@ -37,6 +37,9 @@
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="MainWindow.cs" />
     <Compile Include="gtk-gui\DataMorphose.MainWindow.cs" />
+    <Compile Include="Model\Table.cs" />
+    <Compile Include="Model\Row.cs" />
+    <Compile Include="Model\Column.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -66,5 +69,8 @@
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\Database.cs" />
   </ItemGroup>
 </Project>
