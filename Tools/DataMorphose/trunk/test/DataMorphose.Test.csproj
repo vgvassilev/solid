@@ -46,4 +46,10 @@
     <None Include="DemoDB\Text\Users.txt" />
     <None Include="DemoDB\Text\UserDetails.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\DataMorphose.csproj">
+      <Project>{05710681-804D-4225-B53D-8DCC08B604BF}</Project>
+      <Name>DataMorphose</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

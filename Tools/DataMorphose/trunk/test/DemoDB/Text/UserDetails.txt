@@ -1,4 +1,4 @@
-UserID      Address               Secret_Question                   Secret_Answer
-1           Sergy, France         WTF?                              I don't know
-2           Plovdiv, Bulgaria     ABC?                              D
-3           Sopot, Bulgaria       Which is your favourite city      Karlovo
+UserID   |   Address             |  Secret_Question                |   Secret_Answer
+1        |   Sergy, France       |  WTF?                           |   I don't know
+2        |   Plovdiv, Bulgaria   |  ABC?                           |   D
+3        |   Sopot, Bulgaria     |  Which is your favourite city   |   Karlovo
