@@ -5,8 +5,8 @@ public partial class MainWindow
 {
 	private global::Gtk.UIManager UIManager;
 	private global::Gtk.Action FileAction;
-	private global::Gtk.Action OpenAction;
-	private global::Gtk.Action ExitAction;
+	private global::Gtk.Action openAction;
+	private global::Gtk.Action quitAction;
 	private global::Gtk.Action HelpAction;
 	private global::Gtk.Action AboutAction;
 	private global::Gtk.VBox vbox1;
@@ -30,12 +30,12 @@ public partial class MainWindow
 		this.FileAction = new global::Gtk.Action ("FileAction", global::Mono.Unix.Catalog.GetString ("File"), null, null);
 		this.FileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("File");
 		w1.Add (this.FileAction, null);
-		this.OpenAction = new global::Gtk.Action ("OpenAction", global::Mono.Unix.Catalog.GetString ("Open"), null, null);
-		this.OpenAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open");
-		w1.Add (this.OpenAction, null);
-		this.ExitAction = new global::Gtk.Action ("ExitAction", global::Mono.Unix.Catalog.GetString ("Exit"), null, null);
-		this.ExitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Exit");
-		w1.Add (this.ExitAction, null);
+		this.openAction = new global::Gtk.Action ("openAction", global::Mono.Unix.Catalog.GetString ("Open"), null, "gtk-open");
+		this.openAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open");
+		w1.Add (this.openAction, null);
+		this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("Exit"), null, "gtk-quit");
+		this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Exit");
+		w1.Add (this.quitAction, null);
 		this.HelpAction = new global::Gtk.Action ("HelpAction", global::Mono.Unix.Catalog.GetString ("Help"), null, null);
 		this.HelpAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Help");
 		w1.Add (this.HelpAction, null);
@@ -52,7 +52,7 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='MainMenuBar'><menu name='FileAction' action='FileAction'><menuitem name='OpenAction' action='OpenAction'/><menuitem name='ExitAction' action='ExitAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name='MainMenuBar'><menu name='FileAction' action='FileAction'><menuitem name='openAction' action='openAction'/><menuitem name='quitAction' action='quitAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
 		this.MainMenuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/MainMenuBar")));
 		this.MainMenuBar.Name = "MainMenuBar";
 		this.vbox1.Add (this.MainMenuBar);
@@ -128,8 +128,8 @@ public partial class MainWindow
 		this.DefaultHeight = 723;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-		this.OpenAction.Activated += new global::System.EventHandler (this.OnOpenActionActivated);
-		this.ExitAction.Activated += new global::System.EventHandler (this.OnExitActionActivated);
+		this.openAction.Activated += new global::System.EventHandler (this.OnOpenActionActivated);
+		this.quitAction.Activated += new global::System.EventHandler (this.OnExitActionActivated);
 		this.assemblyView.RowActivated += new global::Gtk.RowActivatedHandler (this.OnAssemblyViewRowActivated);
 		this.combobox6.Changed += new global::System.EventHandler (this.OnCombobox6Changed);
 	}

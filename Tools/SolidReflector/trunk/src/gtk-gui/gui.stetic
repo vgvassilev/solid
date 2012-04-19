@@ -15,16 +15,18 @@
         <property name="Label" translatable="yes">File</property>
         <property name="ShortLabel" translatable="yes">File</property>
       </action>
-      <action id="OpenAction">
+      <action id="openAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Open</property>
         <property name="ShortLabel" translatable="yes">Open</property>
+        <property name="StockId">gtk-open</property>
         <signal name="Activated" handler="OnOpenActionActivated" />
       </action>
-      <action id="ExitAction">
+      <action id="quitAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Exit</property>
         <property name="ShortLabel" translatable="yes">Exit</property>
+        <property name="StockId">gtk-quit</property>
         <signal name="Activated" handler="OnExitActionActivated" />
       </action>
       <action id="HelpAction">
@@ -51,8 +53,8 @@
             <property name="MemberName" />
             <node name="MainMenuBar" type="Menubar">
               <node type="Menu" action="FileAction">
-                <node type="Menuitem" action="OpenAction" />
-                <node type="Menuitem" action="ExitAction" />
+                <node type="Menuitem" action="openAction" />
+                <node type="Menuitem" action="quitAction" />
               </node>
               <node type="Menu" action="HelpAction">
                 <node type="Menuitem" action="AboutAction" />
