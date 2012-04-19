@@ -18,7 +18,6 @@ using Mono.Cecil.Cil;
 public partial class MainWindow: Gtk.Window
 {
   private PluginServiceContainer plugins = new PluginServiceContainer();
-  private List<String> fileNames = new List<String>();
 
 	public MainWindow(): base(Gtk.WindowType.Toplevel)
 	{
@@ -47,15 +46,17 @@ public partial class MainWindow: Gtk.Window
       fc.SelectMultiple = true;
       fc.SetCurrentFolder(Environment.CurrentDirectory);
       if (fc.Run() == (int)Gtk.ResponseType.Accept) {
+        // Get the currently loaded files in the tree view
+        List<string> filesLoaded;
+        GetLoadedFiles(out filesLoaded);
+
         List<string> filesToLoad = new List<string>();
         filesToLoad.AddRange(fc.Filenames);
         for (uint i = 0; i < fc.Filenames.Length; i++)
-          if (!fileNames.Contains(fc.Filenames[i]))
-            fileNames.Add(fc.Filenames[i]);
-          else {
+          if (filesLoaded.Contains(fc.Filenames[i])) {
             filesToLoad.Remove(fc.Filenames[i]);
-            ShowMessageGtk(String.Format("Filename {0} already loaded.", fc.Filenames[i]));
-        }
+            ShowMessageGtk(String.Format("File {0} already loaded.", fc.Filenames[i]));
+          }
         LoadFilesInTreeView(filesToLoad.ToArray());
       }
     } finally {
@@ -63,9 +64,35 @@ public partial class MainWindow: Gtk.Window
     }
   }
 
+  /// <summary>
+  /// Walks up the tree view's model and collects the loaded files.
+  /// </summary>
+  /// <param name='filesLoaded'>[out]
+  /// Storage where the loaded file names will be added.
+  /// </param>
+  private void GetLoadedFiles(out List<string> filesLoaded) {
+    filesLoaded = new List<string>();
+    Gtk.TreeIter iter;
+    assemblyView.Model.GetIterFirst(out iter);
+    AssemblyDefinition aDef = null;
+    do {
+      aDef = assemblyView.Model.GetValue(iter, 0) as AssemblyDefinition;
+      Debug.Assert(aDef != null && aDef.MainModule != null,
+                   "We must have only assembly definitions here");
+      filesLoaded.Add(aDef.MainModule.FullyQualifiedName);
+    }
+    while (assemblyView.Model.IterNext(ref iter));
+  }
+
+  /// <summary>
+  /// Shows message box using GTK.
+  /// </summary>
+  /// <param name='msg'>
+  /// The message.
+  /// </param>
   private void ShowMessageGtk(string msg) {
     var msgBox = new Gtk.MessageDialog(null, Gtk.DialogFlags.Modal, Gtk.MessageType.Info,
-                                      Gtk.ButtonsType.Ok, msg);
+                                       Gtk.ButtonsType.Ok, msg);
     msgBox.Run();
     msgBox.Destroy();
   }
@@ -85,14 +112,15 @@ public partial class MainWindow: Gtk.Window
   private void LoadEnvironment() {
     string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
     if (System.IO.File.Exists(curEnv)) {
-      fileNames.AddRange(System.IO.File.ReadAllLines(curEnv));
-      LoadFilesInTreeView(fileNames.ToArray());
+      LoadFilesInTreeView(System.IO.File.ReadAllLines(curEnv));
     }
   }
 
   private void SaveEnvironment() {
     string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
-    System.IO.File.WriteAllLines(curEnv, fileNames.ToArray());
+    List<string> filesLoaded;
+    GetLoadedFiles(out filesLoaded);
+    System.IO.File.WriteAllLines(curEnv, filesLoaded.ToArray());
 
     string pluginsEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Plugins.env");
 
