@@ -146,6 +146,12 @@
     <None Include="test\TestCases\CatchFilterException.il.cfg" />
     <None Include="test\TestCases\CatchTwoFiltersException.il" />
     <None Include="test\TestCases\CatchTwoFiltersException.il.cfg" />
+    <None Include="test\TestCases\TryFinallyException.il.cfg" />
+    <None Include="test\TestCases\TryFinallyException.il" />
+    <None Include="test\TestCases\TryFinallyExceptionWithNops.il" />
+    <None Include="test\TestCases\TryFinallyExceptionWithNops.il.cfg" />
+    <None Include="test\TestCases\TryFinallyExceptionFinallyAtEnd.il" />
+    <None Include="test\TestCases\TryFinallyExceptionFinallyAtEnd.il.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\CFGTestFixture.cs" />

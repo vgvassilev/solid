@@ -486,5 +486,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
     public void TryFinallyException() {
       RunTestCase("TryFinallyException");
     }
+
+    [Test]
+    public void TryFinallyExceptionWithNops() {
+      RunTestCase("TryFinallyExceptionWithNops");
+    }
+
+    [Test]
+    public void TryFinallyExceptionFinallyAtEnd() {
+      RunTestCase("TryFinallyExceptionFinallyAtEnd");
+    }
 	}
 }
