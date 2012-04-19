@@ -72,5 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Model\Database.cs" />
+    <None Include="Properties\app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
