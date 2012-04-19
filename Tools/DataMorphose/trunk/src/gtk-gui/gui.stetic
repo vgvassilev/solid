@@ -25,20 +25,24 @@
         <property name="Label" translatable="yes">About...</property>
         <property name="ShortLabel" translatable="yes">About...</property>
       </action>
-      <action id="OpenAction">
+      <action id="openAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Open...</property>
         <property name="ShortLabel" translatable="yes">Open...</property>
+        <property name="StockId">gtk-open</property>
+        <signal name="Activated" handler="OnOpenActionActivated" />
       </action>
-      <action id="ExitAction">
+      <action id="quitAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Exit</property>
         <property name="ShortLabel" translatable="yes">Exit</property>
+        <property name="StockId">gtk-quit</property>
+        <signal name="Activated" handler="OnQuitActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainForm</property>
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="WindowPosition">CenterAlways</property>
     <child>
       <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
@@ -48,8 +52,8 @@
             <property name="MemberName" />
             <node name="__gtksharp_55_Stetic_Editor_ActionMenuBar" type="Menubar">
               <node type="Menu" action="FileAction">
-                <node type="Menuitem" action="OpenAction" />
-                <node type="Menuitem" action="ExitAction" />
+                <node type="Menuitem" action="openAction" />
+                <node type="Menuitem" action="quitAction" />
               </node>
               <node type="Menu" action="HelpAction">
                 <node type="Menuitem" action="AboutAction" />

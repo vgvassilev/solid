@@ -19,6 +19,17 @@ namespace DataMorphose
       Application.Quit();
 		  a.RetVal = true;
 	  }
+
+
+    protected void OnOpenActionActivated (object sender, System.EventArgs e)
+    {
+      throw new System.NotImplementedException ();
+    }
+
+    protected void OnQuitActionActivated (object sender, System.EventArgs e)
+    {
+      Gtk.Application.Quit();
+    }
 	}
 }
 
