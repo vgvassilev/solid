@@ -56,19 +56,21 @@ public partial class MainWindow: Gtk.Window
           if (!fileNames.Contains(fc.Filenames[i]))
             fileNames.Add(fc.Filenames[i]);
           else {
-            var msg = new Gtk.MessageDialog(null, Gtk.DialogFlags.Modal, Gtk.MessageType.Info,
-                                            Gtk.ButtonsType.Ok,
-                                            String.Format("Filename {0} already loaded.",
-                                                          fc.Filenames[i]));
             filesToLoad.Remove(fc.Filenames[i]);
-            msg.Run();
-            msg.Destroy();
+            ShowMessageGtk(String.Format("Filename {0} already loaded.", fc.Filenames[i]));
         }
         LoadFilesInTreeView(filesToLoad.ToArray());
       }
     } finally {
       fc.Destroy();
     }
+  }
+
+  private void ShowMessageGtk(string msg) {
+    var msgBox = new Gtk.MessageDialog(null, Gtk.DialogFlags.Modal, Gtk.MessageType.Info,
+                                      Gtk.ButtonsType.Ok, msg);
+    msgBox.Run();
+    msgBox.Destroy();
   }
 
 	protected void OnExitActionActivated(object sender, System.EventArgs e)
@@ -105,10 +107,10 @@ public partial class MainWindow: Gtk.Window
   private void LoadFilesInTreeView(string [] files) {
     Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
 
-    Gtk.CellRendererText colTitleCell = new Gtk.CellRendererText();
-    col.PackStart(colTitleCell, true);
+    Gtk.CellRendererText colAssemblyCell = new Gtk.CellRendererText();
+    col.PackStart(colAssemblyCell, true);
 
-    col.AddAttribute(colTitleCell, "text", 0);
+    col.AddAttribute(colAssemblyCell, "text", 0);
 
     if (assemblyView.GetColumn(0) != null)
       assemblyView.Columns[0] = col;
@@ -117,14 +119,52 @@ public partial class MainWindow: Gtk.Window
 
     Gtk.TreeStore store = assemblyView.Model as Gtk.TreeStore;
     if (store == null)
-     store = new Gtk.TreeStore(typeof(string));
+     store = new Gtk.TreeStore(typeof(object));
 
     foreach (string file in files) {
-      store.AppendValues(System.IO.Path.GetFileName(file));
+      if (System.IO.File.Exists(file))
+        store.AppendValues(AssemblyDefinition.ReadAssembly(file));
+      else
+        ShowMessageGtk(String.Format("File {0} doesn't exits.", file));
     }
+
+    // Add functions managinig the visualization of those assembly definitions
+    col.SetCellDataFunc(colAssemblyCell, new Gtk.TreeCellDataFunc(RenderAssemblyDefinition));
 
     assemblyView.Model = store;
     assemblyView.ShowAll();
+  }
+
+  private void RenderAssemblyDefinition(Gtk.TreeViewColumn column, Gtk.CellRenderer cell,
+                                          Gtk.TreeModel model, Gtk.TreeIter iter) {
+    object curObject = model.GetValue(iter, 0);
+    switch (model.GetPath(iter).Depth) {
+      // Assemblies
+      case 1:
+        AssemblyDefinition aDef = curObject as AssemblyDefinition;
+        Debug.Assert(aDef != null, "Must have assembly.");
+        (cell as Gtk.CellRendererText).Text =  aDef.Name.Name;
+        break;
+      // Modules
+      case 2:
+        ModuleDefinition modDef = curObject as ModuleDefinition;
+        Debug.Assert(modDef != null, "Must have module.");
+        (cell as Gtk.CellRendererText).Text =  modDef.Name;
+        break;
+      // Types
+      case 3:
+        TypeDefinition tDef = curObject as TypeDefinition;
+        Debug.Assert(tDef != null, "Must have type (definition).");
+        (cell as Gtk.CellRendererText).Text =  tDef.Name;
+        break;
+      // Methods
+      case 4:
+        MethodDefinition methDef = curObject as MethodDefinition;
+        Debug.Assert(methDef != null, "Must have method.");
+        (cell as Gtk.CellRendererText).Text =  methDef.Name;
+        break;
+    }
+
   }
 
   private void LoadRegisteredPlugins() {
@@ -151,44 +191,31 @@ public partial class MainWindow: Gtk.Window
   {
     Gtk.TreeIter iter;
     assemblyView.Model.GetIter(out iter, args.Path);
-    string s = (string) assemblyView.Model.GetValue(iter, 0);
-
+    object currentObj = (object) assemblyView.Model.GetValue(iter, 0);
 
     switch(args.Path.Depth) {
     case 1:
-        foreach (string f in fileNames) {
-          if (System.IO.Path.GetFileName(f) == s) {
-            curAssembly = AssemblyDefinition.ReadAssembly(f);
-            Debug.Assert(curAssembly != null, "Assembly cannot be null.");
-            AttachSubTree(assemblyView.Model, iter, curAssembly.Modules.ToArray());
-          }
-        }
+        curAssembly = currentObj as AssemblyDefinition;
+        Debug.Assert(curAssembly != null, "Assembly cannot be null.");
+        AttachSubTree(assemblyView.Model, iter, curAssembly.Modules.ToArray());
         break;
     case 2:
-        foreach (ModuleDefinition mDef in curAssembly.Modules) {
-          if (mDef.Name == s) {
-            curModule = mDef;
-            AttachSubTree(assemblyView.Model, iter, mDef.Types.ToArray());
-          }
-        }
+        curModule = currentObj as ModuleDefinition;
+        Debug.Assert(curModule != null, "CurModule is null!?");
+        AttachSubTree(assemblyView.Model, iter, curModule.Types.ToArray());
         break;
 
     case 3:
-        Debug.Assert(curModule != null, "CurModule is null!?");
-        foreach (TypeDefinition tDef in curModule.Types) {
-          if (tDef.FullName == s) {
-            curType = tDef;
-            //AttachSubTree(assemblyView.Model, iter, tDef.Fields.ToArray());
-            AttachSubTree(assemblyView.Model, iter, tDef.Methods.ToArray());
-            //AttachSubTree(assemblyView.Model, iter, tDef.Events.ToArray());
-          }
-        }
+        curType = currentObj as TypeDefinition;
+        Debug.Assert(curType != null, "CurType is null!?");
+        //AttachSubTree(assemblyView.Model, iter, tDef.Fields.ToArray());
+        AttachSubTree(assemblyView.Model, iter, curType.Methods.ToArray());
+        //AttachSubTree(assemblyView.Model, iter, tDef.Events.ToArray());
         break;
       case 4:
-        Debug.Assert(curType != null, "CurType is null!?");
-        foreach (MethodDefinition mDef in curType.Methods)
-          if (mDef.ToString() == s)
-            DumpMember(mDef);
+        MethodDefinition mDef = currentObj as MethodDefinition;
+        Debug.Assert(mDef != null, "MethodDef is null!?");
+        DumpMember(mDef);
         break;
     }
     assemblyView.ShowAll();
@@ -209,7 +236,7 @@ public partial class MainWindow: Gtk.Window
 
     // Add the elements to the tree view.
     for (uint i = 0; i < elements.Length; ++i) {
-      store.AppendValues(parent, elements[i].ToString());
+      store.AppendValues(parent, elements[i]);
     }
   }
 
