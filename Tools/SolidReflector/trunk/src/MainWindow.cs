@@ -184,9 +184,9 @@ public partial class MainWindow: Gtk.Window
         break;
       // Methods
       case 4:
-        MethodDefinition methDef = curObject as MethodDefinition;
-        Debug.Assert(methDef != null, "Must have method.");
-        (cell as Gtk.CellRendererText).Text =  methDef.Name;
+        IMemberDefinition memberDef = curObject as IMemberDefinition;
+        Debug.Assert(memberDef != null, "Must have member.");
+        (cell as Gtk.CellRendererText).Text =  memberDef.Name;
         break;
     }
 
@@ -233,20 +233,34 @@ public partial class MainWindow: Gtk.Window
     case 3:
         TypeDefinition curType = currentObj as TypeDefinition;
         Debug.Assert(curType != null, "CurType is null!?");
-        //AttachSubTree(assemblyView.Model, iter, tDef.Fields.ToArray());
-        AttachSubTree(assemblyView.Model, iter, curType.Methods.ToArray());
-        //AttachSubTree(assemblyView.Model, iter, tDef.Events.ToArray());
+        List<IMemberDefinition> members = new List<IMemberDefinition>();
+        members.AddRange(curType.Fields.ToArray());
+        members.AddRange(curType.Methods.ToArray());
+        members.AddRange(curType.Events.ToArray());
+        AttachSubTree(assemblyView.Model, iter, members.ToArray());
         break;
       case 4:
-        MethodDefinition methDef = currentObj as MethodDefinition;
-        Debug.Assert(methDef != null, "MethodDef is null!?");
-        DumpMember(methDef);
+        IMemberDefinition memberDef = currentObj as IMemberDefinition;
+        Debug.Assert(memberDef != null, "MemberDef is null!?");
+        DumpMember(memberDef);
         break;
     }
     assemblyView.ShowAll();
     ShowAll();
   }
 
+  /// <summary>
+  /// Attaches a submodel to the tree view's model.
+  /// </summary>
+  /// <param name='model'>
+  /// The root model to be attached to.
+  /// </param>
+  /// <param name='parent'>[ref]
+  /// The pointer where the elements to be attached to.
+  /// </param>
+  /// <param name='elements'>
+  /// Elements.
+  /// </param>
   protected void AttachSubTree(Gtk.TreeModel model, Gtk.TreeIter parent, object[] elements)
   {
     Gtk.TreeStore store = model as Gtk.TreeStore;
@@ -265,121 +279,133 @@ public partial class MainWindow: Gtk.Window
     }
   }
 
-  protected void DumpMember(IMemberDefinition member)
+  protected void DumpMember(IMemberDefinition memberDef) {
+    MethodDefinition methodDef = memberDef as MethodDefinition;
+    if (methodDef != null) {
+      DumpMethodDef(methodDef);
+      return;
+    }
+
+    EventDefinition eventDef = memberDef as EventDefinition;
+    if (eventDef != null) {
+      DumpEventDef(eventDef);
+      return;
+    }
+
+    FieldDefinition fieldDef = memberDef as FieldDefinition;
+    if (fieldDef != null) {
+      DumpFieldDef(fieldDef);
+      return;
+    }
+  }
+
+  protected void DumpMethodDef(MethodDefinition methodDef)
   {
     disassemblyText.Buffer.Clear();
 
-    Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
-    MethodDefinition method = member as MethodDefinition;
+    SolidReflector.ILWriter writer = new SolidReflector.ILWriter(disassemblyText.Buffer);
+    writer.Indent();
+    writer.WriteMethodAttribute(".method");
 
-    if (method != null) {
-      SolidReflector.ILWriter writer = new SolidReflector.ILWriter(disassemblyText.Buffer);
-      writer.Indent();
-      writer.WriteMethodAttribute(".method");
+    if (methodDef.IsPublic)
+      writer.WriteMethodAttribute("public");
+    if (methodDef.IsPrivate)
+      writer.WriteMethodAttribute("private");
+    if (methodDef.IsHideBySig)
+      writer.WriteMethodAttribute("hidebysig");
+    if (methodDef.IsStatic)
+      writer.WriteMethodAttribute("static");
+    else
+      writer.WriteMethodAttribute("instance");
 
-      if (method.IsPublic)
-        writer.WriteMethodAttribute("public");
-      if (method.IsPrivate)
-        writer.WriteMethodAttribute("private");
-      if (method.IsHideBySig)
-        writer.WriteMethodAttribute("hidebysig");
-      if (method.IsStatic)
-        writer.WriteMethodAttribute("static");
-      else
-        writer.WriteMethodAttribute("instance");
+    writer.WriteType(methodDef.ReturnType.Name);
+    writer.WriteName(methodDef.Name);
+    writer.Write(" (");
+    if (methodDef.Parameters.Count > 0) {
+      writer.WriteType(methodDef.Parameters[0].ParameterType.ToString());
+      writer.WriteName(methodDef.Parameters[0].Name.ToString());
+    }
+    writer.Write(") ");
+    if (methodDef.IsIL)
+      writer.WriteImplementationAttribute("cil");
+    else if (methodDef.IsNative)
+      writer.WriteImplementationAttribute("native");
 
-      writer.WriteType(method.ReturnType.Name);
-      writer.WriteName(method.Name);
-      writer.Write(" (");
-      if (method.Parameters.Count > 0) {
-        writer.WriteType(method.Parameters[0].ParameterType.ToString());
-        writer.WriteName(method.Parameters[0].Name.ToString());
+    if (methodDef.IsManaged)
+      writer.WriteImplementationAttribute("managed");
+    else if (methodDef.IsUnmanaged)
+      writer.WriteImplementationAttribute("unmanaged");
+
+    writer.NewLine();
+    writer.Write("{");
+    writer.NewLine();
+
+    if (methodDef.Body.Variables.Count > 0) {
+      writer.WriteKeyword(".locals init");
+      writer.Write("(");
+      for (int i = 0; i < methodDef.Body.Variables.Count; i++) {
+        writer.WriteType(methodDef.Body.Variables[i].VariableType.Name.ToString());
+        writer.WriteName(methodDef.Body.Variables[i].ToString());
+        if (i + 1 != methodDef.Body.Variables.Count)
+            writer.Write(", ");
       }
-      writer.Write(") ");
-      if (method.IsIL)
-        writer.WriteImplementationAttribute("cil");
-      else if (method.IsNative)
-        writer.WriteImplementationAttribute("native");
-
-      if (method.IsManaged)
-        writer.WriteImplementationAttribute("managed");
-      else if (method.IsUnmanaged)
-        writer.WriteImplementationAttribute("unmanaged");
-
+      writer.Write(")");
       writer.NewLine();
-      writer.Write("{");
-      writer.NewLine();
+    }
 
-      if (method.Body.Variables.Count > 0) {
-        writer.WriteKeyword(".locals init");
-        writer.Write("(");
-        for (int i = 0; i < method.Body.Variables.Count; i++) {
-          writer.WriteType(method.Body.Variables[i].VariableType.Name.ToString());
-          writer.WriteName(method.Body.Variables[i].ToString());
-          if (i + 1 != method.Body.Variables.Count)
-              writer.Write(", ");
+    foreach (Instruction inst in methodDef.Body.Instructions) {
+      //if (method.Body.HasExceptionHandlers) {
+      foreach (ExceptionHandler handler in methodDef.Body.ExceptionHandlers) {
+        if (handler.FilterStart == inst) {
+          writer.Indent();
+          writer.WriteExceptionDirective(".filter {");
         }
-        writer.Write(")");
-        writer.NewLine();
-      }
 
-      foreach (Instruction inst in method.Body.Instructions) {
-        //if (method.Body.HasExceptionHandlers) {
-        foreach (ExceptionHandler handler in method.Body.ExceptionHandlers) {
-          if (handler.FilterStart == inst) {
-            writer.Indent();
-            writer.WriteExceptionDirective(".filter {");
-          }
-
-          if (handler.FilterEnd == inst) {
-            writer.Outdent();
-            writer.WriteExceptionDirective("}");
-          }
-
-          if (handler.TryStart == inst) {
-            writer.WriteExceptionDirective(".try {");
-            writer.Indent();
-          }
-
-          if (handler.TryEnd == inst) {
-            writer.Outdent();
-            writer.WriteExceptionDirective("}");
-          }
-
-          if (handler.HandlerStart == inst) {
-            writer.WriteExceptionDirective(handler.HandlerType.ToString() + " {");
-            writer.Indent();
-          }
-
-          if (handler.HandlerEnd == inst) {
-            writer.Outdent();
-            writer.WriteExceptionDirective("}");
-          }
+        if (handler.FilterEnd == inst) {
+          writer.Outdent();
+          writer.WriteExceptionDirective("}");
         }
-        writer.WriteInstruction(inst);
 
+        if (handler.TryStart == inst) {
+          writer.WriteExceptionDirective(".try {");
+          writer.Indent();
+        }
+
+        if (handler.TryEnd == inst) {
+          writer.Outdent();
+          writer.WriteExceptionDirective("}");
+        }
+
+        if (handler.HandlerStart == inst) {
+          writer.WriteExceptionDirective(handler.HandlerType.ToString() + " {");
+          writer.Indent();
+        }
+
+        if (handler.HandlerEnd == inst) {
+          writer.Outdent();
+          writer.WriteExceptionDirective("}");
+        }
       }
-
+      writer.WriteInstruction(inst);
+    }
       writer.Outdent();
       writer.Write("}");
+  }
 
-      return;
+  protected void DumpEventDef(EventDefinition evtDef) {
+    disassemblyText.Buffer.Clear();
+
+    Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
+
+    foreach (MethodDefinition mDef in evtDef.OtherMethods) {
+      disassemblyText.Buffer.Insert(ref textIter, evtDef.ToString() + "\n");
     }
+  }
 
-    EventDefinition evt = member as EventDefinition;
-    if (evt != null) {
-      foreach (MethodDefinition mDef in evt.OtherMethods) {
-         disassemblyText.Buffer.Insert(ref textIter, mDef.ToString() + "\n");
-      }
-      return;
-    }
-
-    FieldDefinition field = member as FieldDefinition;
-    if (field != null) {
-      disassemblyText.Buffer.Insert(ref textIter, field.ToString() + "\n");
-      return;
-    }
-
+  protected void DumpFieldDef(FieldDefinition fldDef) {
+    disassemblyText.Buffer.Clear();
+    Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
+    disassemblyText.Buffer.Insert(ref textIter, fldDef.ToString() + "\n");
   }
 
   private void AppendLabel (System.Text.StringBuilder builder, Instruction instruction) {
