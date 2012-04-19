@@ -19,9 +19,6 @@ public partial class MainWindow: Gtk.Window
 {
   private PluginServiceContainer plugins = new PluginServiceContainer();
   private List<String> fileNames = new List<String>();
-  private AssemblyDefinition curAssembly = null;
-  private ModuleDefinition curModule = null;
-  private TypeDefinition curType = null;
 
 	public MainWindow(): base(Gtk.WindowType.Toplevel)
 	{
@@ -195,27 +192,27 @@ public partial class MainWindow: Gtk.Window
 
     switch(args.Path.Depth) {
     case 1:
-        curAssembly = currentObj as AssemblyDefinition;
+        AssemblyDefinition curAssembly = currentObj as AssemblyDefinition;
         Debug.Assert(curAssembly != null, "Assembly cannot be null.");
         AttachSubTree(assemblyView.Model, iter, curAssembly.Modules.ToArray());
         break;
     case 2:
-        curModule = currentObj as ModuleDefinition;
+        ModuleDefinition curModule = currentObj as ModuleDefinition;
         Debug.Assert(curModule != null, "CurModule is null!?");
         AttachSubTree(assemblyView.Model, iter, curModule.Types.ToArray());
         break;
 
     case 3:
-        curType = currentObj as TypeDefinition;
+        TypeDefinition curType = currentObj as TypeDefinition;
         Debug.Assert(curType != null, "CurType is null!?");
         //AttachSubTree(assemblyView.Model, iter, tDef.Fields.ToArray());
         AttachSubTree(assemblyView.Model, iter, curType.Methods.ToArray());
         //AttachSubTree(assemblyView.Model, iter, tDef.Events.ToArray());
         break;
       case 4:
-        MethodDefinition mDef = currentObj as MethodDefinition;
-        Debug.Assert(mDef != null, "MethodDef is null!?");
-        DumpMember(mDef);
+        MethodDefinition methDef = currentObj as MethodDefinition;
+        Debug.Assert(methDef != null, "MethodDef is null!?");
+        DumpMember(methDef);
         break;
     }
     assemblyView.ShowAll();
