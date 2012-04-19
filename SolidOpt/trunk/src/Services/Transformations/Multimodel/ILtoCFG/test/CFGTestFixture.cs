@@ -481,5 +481,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
     public void CatchTwoFiltersException() {
       RunTestCase("CatchTwoFiltersException");
     }
+
+    [Test]
+    public void TryFinallyException() {
+      RunTestCase("TryFinallyException");
+    }
 	}
 }
