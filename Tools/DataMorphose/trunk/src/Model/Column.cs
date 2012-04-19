@@ -10,9 +10,20 @@ namespace DataMorphose.Model
 {
   public class Column
   {
-    List<object> values;
-    
-    public Column() {
+    private string name;
+    public string Name {
+      get { return this.name; }
+      set { name = value; }
+    }
+
+    private List<object> values = new List<object>();
+    public List<object> Values {
+      get { return this.values; }
+      set { values = value; }
+    }
+
+    public Column(string name) {
+      this.name = name;
     }
   }
 }

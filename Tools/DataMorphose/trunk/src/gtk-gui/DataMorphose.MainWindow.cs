@@ -8,8 +8,8 @@ namespace DataMorphose
 		private global::Gtk.Action FileAction;
 		private global::Gtk.Action HelpAction;
 		private global::Gtk.Action AboutAction;
-		private global::Gtk.Action OpenAction;
-		private global::Gtk.Action ExitAction;
+		private global::Gtk.Action openAction;
+		private global::Gtk.Action quitAction;
 		private global::Gtk.VBox vbox1;
 		private global::Gtk.MenuBar menubar1;
 		private global::Gtk.Toolbar toolbar1;
@@ -31,23 +31,23 @@ namespace DataMorphose
 			this.AboutAction = new global::Gtk.Action ("AboutAction", global::Mono.Unix.Catalog.GetString ("About..."), null, null);
 			this.AboutAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("About...");
 			w1.Add (this.AboutAction, null);
-			this.OpenAction = new global::Gtk.Action ("OpenAction", global::Mono.Unix.Catalog.GetString ("Open..."), null, null);
-			this.OpenAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open...");
-			w1.Add (this.OpenAction, null);
-			this.ExitAction = new global::Gtk.Action ("ExitAction", global::Mono.Unix.Catalog.GetString ("Exit"), null, null);
-			this.ExitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Exit");
-			w1.Add (this.ExitAction, null);
+			this.openAction = new global::Gtk.Action ("openAction", global::Mono.Unix.Catalog.GetString ("Open..."), null, "gtk-open");
+			this.openAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open...");
+			w1.Add (this.openAction, null);
+			this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("Exit"), null, "gtk-quit");
+			this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Exit");
+			w1.Add (this.quitAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "DataMorphose.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString ("MainForm");
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.WindowPosition = ((global::Gtk.WindowPosition)(3));
 			// Container child DataMorphose.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox ();
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='OpenAction' action='OpenAction'/><menuitem name='ExitAction' action='ExitAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='openAction' action='openAction'/><menuitem name='quitAction' action='quitAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
 			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 			this.menubar1.Name = "menubar1";
 			this.vbox1.Add (this.menubar1);
@@ -90,6 +90,8 @@ namespace DataMorphose
 			this.DefaultWidth = 1089;
 			this.DefaultHeight = 652;
 			this.Show ();
+			this.openAction.Activated += new global::System.EventHandler (this.OnOpenActionActivated);
+			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
 		}
 	}
 }

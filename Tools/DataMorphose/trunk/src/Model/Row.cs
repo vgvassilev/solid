@@ -10,7 +10,12 @@ namespace DataMorphose.Model
 {
   public class Row
   {
-    List<Column> columns;
+    private List<Column> columns = new List<Column>();
+    public List<Column> Columns {
+      get { return this.columns; }
+      set { columns = value; }
+    }
+
     public Row() {
     }
   }

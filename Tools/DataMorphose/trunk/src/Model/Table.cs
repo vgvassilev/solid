@@ -11,10 +11,26 @@ namespace DataMorphose.Model
 {
   public class Table
   {
-    List<Row> rows;
-    string name;
+    private string name;
+    public string Name {
+      get { return this.name; }
+      set { name = value; }
+    }
 
-    public Table() {
+    private Row header = new Row();
+    public Row Header {
+      get { return this.header; }
+      set { header = value; }
+    }
+
+    private List<Row> rows = new List<Row>();
+    public List<Row> Rows {
+      get { return this.rows; }
+      set { rows = value; }
+    }
+
+    public Table(string name) {
+      this.name = name;
     }
   }
 }
