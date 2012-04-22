@@ -31,7 +31,7 @@ namespace DataMorphose.Test
         }
         curLineIndex++;
       }
-      return null;
+      return (sb.Length == 0) ? null : sb.ToString().Trim();
     }
 
   }
