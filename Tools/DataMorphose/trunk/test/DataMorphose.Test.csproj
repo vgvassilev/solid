@@ -51,7 +51,7 @@
     <None Include="DemoDB\Text\Shippers.txt" />
     <None Include="DemoDB\Text\Suppliers.txt" />
     <None Include="DemoDB\Text\OrderDetails.txt" />
-    <None Include="DemoDB\Text\Demo.txtdb" />
+    <None Include="DemoDB\Text\Demo.csvdb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\DataMorphose.csproj">
