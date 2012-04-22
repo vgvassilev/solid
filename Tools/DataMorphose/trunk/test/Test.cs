@@ -77,7 +77,7 @@ namespace DataMorphose.Test
           row = new Row();
           while((colValue = lexer.Lex()) != null) {
             col = new Column("");
-            col.Values.Add(colValue);
+            col.Value = colValue;
             row.Columns.Add(col);
           }
           table.Rows.Add(row);
@@ -102,25 +102,25 @@ namespace DataMorphose.Test
     [Test()]
     public void CheckEmployees() {
       Table Employees = importFromFile(Path.Combine(filePath, "Employees.txt"));
-      CheckTable(Employees, "Employees", 9, 17);
+      CheckTable(Employees, "Employees", 12, 16);
     }
 
     [Test()]
     public void CheckOrederDetails() {
       Table OrederDetails = importFromFile(Path.Combine(filePath, "OrederDetails.txt"));
-      CheckTable(OrederDetails, "OrederDetails", 775, 5);
+      CheckTable(OrederDetails, "OrederDetails", 400, 5);
     }
 
     [Test()]
     public void CheckOreders() {
       Table Oreders = importFromFile(Path.Combine(filePath, "Oreders.txt"));
-      CheckTable(Oreders, "Oreders", 530, 14);
+      CheckTable(Oreders, "Oreders", 529, 14);
     }
 
     [Test()]
     public void CheckProducts() {
       Table Products = importFromFile(Path.Combine(filePath, "Products.txt"));
-      CheckTable(Products, "Products", 78, 10);
+      CheckTable(Products, "Products", 77, 10);
     }
 
     [Test()]
