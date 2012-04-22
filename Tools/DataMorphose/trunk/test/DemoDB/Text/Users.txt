@@ -1,4 +1,0 @@
-ID    |    Name                  |      UserName      |    Email
-1     |    Vassil Vassilev       |      vvassilev     |    vv_@abv.bg
-2     |    Spas Spasov           |      panko         |    bai_spas@hotmail.com
-3     |    Tania Georgieva       |      sisa          |    ssssa@sopot.org

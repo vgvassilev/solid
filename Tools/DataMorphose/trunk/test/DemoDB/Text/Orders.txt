@@ -1,0 +1,530 @@
+OrderID|CustomerID|EmployeeID|OrderDate|RequiredDate|ShippedDate|ShipVia|Freight|ShipName|ShipAddress|ShipCity|ShipRegion|ShipPostalCode|ShipCountry
+10248|VINET|5|4.7.1996 00:00:00|1.8.1996 00:00:00|16.7.1996 00:00:00|3|32,38 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
+10249|TOMSP|6|5.7.1996 00:00:00|16.8.1996 00:00:00|10.7.1996 00:00:00|1|11,61 лв|Toms Spezialitaten|Luisenstr. 48|Munster||44087|Germany
+10250|HANAR|4|8.7.1996 00:00:00|5.8.1996 00:00:00|12.7.1996 00:00:00|2|65,83 лв|Hanari Carnes|Rua do Paco, 67|Rio de Janeiro|RJ|05454-876|Brazil
+10251|VICTE|3|8.7.1996 00:00:00|5.8.1996 00:00:00|15.7.1996 00:00:00|1|41,34 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
+10252|SUPRD|4|9.7.1996 00:00:00|6.8.1996 00:00:00|11.7.1996 00:00:00|2|51,30 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
+10253|HANAR|3|10.7.1996 00:00:00|24.7.1996 00:00:00|16.7.1996 00:00:00|2|58,17 лв|Hanari Carnes|Rua do Paco, 67|Rio de Janeiro|RJ|05454-876|Brazil
+10254|CHOPS|5|11.7.1996 00:00:00|8.8.1996 00:00:00|23.7.1996 00:00:00|2|22,98 лв|Chop-suey Chinese|Hauptstr. 31|Bern||3012|Switzerland
+10255|RICSU|9|12.7.1996 00:00:00|9.8.1996 00:00:00|15.7.1996 00:00:00|3|148,33 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
+10256|WELLI|3|15.7.1996 00:00:00|12.8.1996 00:00:00|17.7.1996 00:00:00|2|13,97 лв|Wellington Importadora|Rua do Mercado, 12|Resende|SP|08737-363|Brazil
+10257|HILAA|4|16.7.1996 00:00:00|13.8.1996 00:00:00|22.7.1996 00:00:00|3|81,91 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10258|ERNSH|1|17.7.1996 00:00:00|14.8.1996 00:00:00|23.7.1996 00:00:00|1|140,51 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10259|CENTC|4|18.7.1996 00:00:00|15.8.1996 00:00:00|25.7.1996 00:00:00|3|3,25 лв|Centro comercial Moctezuma|Sierras de Granada 9993|Mexico D.F.||05022|Mexico
+10260|OTTIK|4|19.7.1996 00:00:00|16.8.1996 00:00:00|29.7.1996 00:00:00|1|55,09 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
+10261|QUEDE|4|19.7.1996 00:00:00|16.8.1996 00:00:00|30.7.1996 00:00:00|2|3,05 лв|Que Delicia|Rua da Panificadora, 12|Rio de Janeiro|RJ|02389-673|Brazil
+10262|RATTC|8|22.7.1996 00:00:00|19.8.1996 00:00:00|25.7.1996 00:00:00|3|48,29 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10263|ERNSH|9|23.7.1996 00:00:00|20.8.1996 00:00:00|31.7.1996 00:00:00|3|146,06 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10264|FOLKO|6|24.7.1996 00:00:00|21.8.1996 00:00:00|23.8.1996 00:00:00|3|3,67 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10265|BLONP|2|25.7.1996 00:00:00|22.8.1996 00:00:00|12.8.1996 00:00:00|1|55,28 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10266|WARTH|3|26.7.1996 00:00:00|6.9.1996 00:00:00|31.7.1996 00:00:00|3|25,73 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10267|FRANK|4|29.7.1996 00:00:00|26.8.1996 00:00:00|6.8.1996 00:00:00|1|208,58 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10268|GROSR|8|30.7.1996 00:00:00|27.8.1996 00:00:00|2.8.1996 00:00:00|3|66,29 лв|GROSELLA-Restaurante|5? Ave. Los Palos Grandes|Caracas|DF|1081|Venezuela
+10269|WHITC|5|31.7.1996 00:00:00|14.8.1996 00:00:00|9.8.1996 00:00:00|1|4,56 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10270|WARTH|1|1.8.1996 00:00:00|29.8.1996 00:00:00|2.8.1996 00:00:00|1|136,54 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10271|SPLIR|6|1.8.1996 00:00:00|29.8.1996 00:00:00|30.8.1996 00:00:00|2|4,54 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
+10272|RATTC|6|2.8.1996 00:00:00|30.8.1996 00:00:00|6.8.1996 00:00:00|2|98,03 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10273|QUICK|3|5.8.1996 00:00:00|2.9.1996 00:00:00|12.8.1996 00:00:00|3|76,07 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10274|VINET|6|6.8.1996 00:00:00|3.9.1996 00:00:00|16.8.1996 00:00:00|1|6,01 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
+10275|MAGAA|1|7.8.1996 00:00:00|4.9.1996 00:00:00|9.8.1996 00:00:00|1|26,93 лв|Magazzini Alimentari Riuniti|Via Ludovico il Moro 22|Bergamo||24100|Italy
+10276|TORTU|8|8.8.1996 00:00:00|22.8.1996 00:00:00|14.8.1996 00:00:00|3|13,84 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
+10277|MORGK|2|9.8.1996 00:00:00|6.9.1996 00:00:00|13.8.1996 00:00:00|3|125,77 лв|Morgenstern Gesundkost|Heerstr. 22|Leipzig||04179|Germany
+10278|BERGS|8|12.8.1996 00:00:00|9.9.1996 00:00:00|16.8.1996 00:00:00|2|92,69 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10279|LEHMS|8|13.8.1996 00:00:00|10.9.1996 00:00:00|16.8.1996 00:00:00|2|25,83 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10280|BERGS|2|14.8.1996 00:00:00|11.9.1996 00:00:00|12.9.1996 00:00:00|1|8,98 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10281|ROMEY|4|14.8.1996 00:00:00|28.8.1996 00:00:00|21.8.1996 00:00:00|1|2,94 лв|Romero y tomillo|Gran Via, 1|Madrid||28001|Spain
+10282|ROMEY|4|15.8.1996 00:00:00|12.9.1996 00:00:00|21.8.1996 00:00:00|1|12,69 лв|Romero y tomillo|Gran Via, 1|Madrid||28001|Spain
+10283|LILAS|3|16.8.1996 00:00:00|13.9.1996 00:00:00|23.8.1996 00:00:00|3|84,81 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
+10284|LEHMS|4|19.8.1996 00:00:00|16.9.1996 00:00:00|27.8.1996 00:00:00|1|76,56 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10285|QUICK|1|20.8.1996 00:00:00|17.9.1996 00:00:00|26.8.1996 00:00:00|2|76,83 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10286|QUICK|8|21.8.1996 00:00:00|18.9.1996 00:00:00|30.8.1996 00:00:00|3|229,24 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10287|RICAR|8|22.8.1996 00:00:00|19.9.1996 00:00:00|28.8.1996 00:00:00|3|12,76 лв|Ricardo Adocicados|Av. Copacabana, 267|Rio de Janeiro|RJ|02389-890|Brazil
+10288|REGGC|4|23.8.1996 00:00:00|20.9.1996 00:00:00|3.9.1996 00:00:00|1|7,45 лв|Reggiani Caseifici|Strada Provinciale 124|Reggio Emilia||42100|Italy
+10289|BSBEV|7|26.8.1996 00:00:00|23.9.1996 00:00:00|28.8.1996 00:00:00|3|22,77 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
+10290|COMMI|8|27.8.1996 00:00:00|24.9.1996 00:00:00|3.9.1996 00:00:00|1|79,70 лв|Comercio Mineiro|Av. dos Lusiadas, 23|Sao Paulo|SP|05432-043|Brazil
+10291|QUEDE|6|27.8.1996 00:00:00|24.9.1996 00:00:00|4.9.1996 00:00:00|2|6,40 лв|Que Delicia|Rua da Panificadora, 12|Rio de Janeiro|RJ|02389-673|Brazil
+10292|TRADH|1|28.8.1996 00:00:00|25.9.1996 00:00:00|2.9.1996 00:00:00|2|1,35 лв|Tradicao Hipermercados|Av. Ines de Castro, 414|Sao Paulo|SP|05634-030|Brazil
+10293|TORTU|1|29.8.1996 00:00:00|26.9.1996 00:00:00|11.9.1996 00:00:00|3|21,18 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
+10294|RATTC|4|30.8.1996 00:00:00|27.9.1996 00:00:00|5.9.1996 00:00:00|2|147,26 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10295|VINET|2|2.9.1996 00:00:00|30.9.1996 00:00:00|10.9.1996 00:00:00|2|1,15 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
+10296|LILAS|6|3.9.1996 00:00:00|1.10.1996 00:00:00|11.9.1996 00:00:00|1|0,12 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
+10297|BLONP|5|4.9.1996 00:00:00|16.10.1996 00:00:00|10.9.1996 00:00:00|2|5,74 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10298|HUNGO|6|5.9.1996 00:00:00|3.10.1996 00:00:00|11.9.1996 00:00:00|2|168,22 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10299|RICAR|4|6.9.1996 00:00:00|4.10.1996 00:00:00|13.9.1996 00:00:00|2|29,76 лв|Ricardo Adocicados|Av. Copacabana, 267|Rio de Janeiro|RJ|02389-890|Brazil
+10300|MAGAA|2|9.9.1996 00:00:00|7.10.1996 00:00:00|18.9.1996 00:00:00|2|17,68 лв|Magazzini Alimentari Riuniti|Via Ludovico il Moro 22|Bergamo||24100|Italy
+10301|WANDK|8|9.9.1996 00:00:00|7.10.1996 00:00:00|17.9.1996 00:00:00|2|45,08 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10302|SUPRD|4|10.9.1996 00:00:00|8.10.1996 00:00:00|9.10.1996 00:00:00|2|6,27 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
+10303|GODOS|7|11.9.1996 00:00:00|9.10.1996 00:00:00|18.9.1996 00:00:00|2|107,83 лв|Godos Cocina Tipica|C/ Romero, 33|Sevilla||41101|Spain
+10304|TORTU|1|12.9.1996 00:00:00|10.10.1996 00:00:00|17.9.1996 00:00:00|2|63,79 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
+10305|OLDWO|8|13.9.1996 00:00:00|11.10.1996 00:00:00|9.10.1996 00:00:00|3|257,62 лв|Old World Delicatessen|2743 Bering St.|Anchorage|AK|99508|USA
+10306|ROMEY|1|16.9.1996 00:00:00|14.10.1996 00:00:00|23.9.1996 00:00:00|3|7,56 лв|Romero y tomillo|Gran Via, 1|Madrid||28001|Spain
+10307|LONEP|2|17.9.1996 00:00:00|15.10.1996 00:00:00|25.9.1996 00:00:00|2|0,56 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
+10308|ANATR|7|18.9.1996 00:00:00|16.10.1996 00:00:00|24.9.1996 00:00:00|3|1,61 лв|Ana Trujillo Emparedados y helados|Avda. de la Constitucion 2222|Mexico D.F.||05021|Mexico
+10309|HUNGO|3|19.9.1996 00:00:00|17.10.1996 00:00:00|23.10.1996 00:00:00|1|47,30 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10310|THEBI|8|20.9.1996 00:00:00|18.10.1996 00:00:00|27.9.1996 00:00:00|2|17,52 лв|The Big Cheese|89 Jefferson Way
+Suite 2|Portland|OR|97201|USA
+10311|DUMON|1|20.9.1996 00:00:00|4.10.1996 00:00:00|26.9.1996 00:00:00|3|24,69 лв|Du monde entier|67, rue des Cinquante Otages|Nantes||44000|France
+10312|WANDK|2|23.9.1996 00:00:00|21.10.1996 00:00:00|3.10.1996 00:00:00|2|40,26 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10313|QUICK|2|24.9.1996 00:00:00|22.10.1996 00:00:00|4.10.1996 00:00:00|2|1,96 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10314|RATTC|1|25.9.1996 00:00:00|23.10.1996 00:00:00|4.10.1996 00:00:00|2|74,16 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10315|ISLAT|4|26.9.1996 00:00:00|24.10.1996 00:00:00|3.10.1996 00:00:00|2|41,76 лв|Island Trading|Garden House
+Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10316|RATTC|1|27.9.1996 00:00:00|25.10.1996 00:00:00|8.10.1996 00:00:00|3|150,15 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10317|LONEP|6|30.9.1996 00:00:00|28.10.1996 00:00:00|10.10.1996 00:00:00|1|12,69 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
+10318|ISLAT|8|1.10.1996 00:00:00|29.10.1996 00:00:00|4.10.1996 00:00:00|2|4,73 лв|Island Trading|Garden House
+Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10319|TORTU|7|2.10.1996 00:00:00|30.10.1996 00:00:00|11.10.1996 00:00:00|3|64,50 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
+10320|WARTH|5|3.10.1996 00:00:00|17.10.1996 00:00:00|18.10.1996 00:00:00|3|34,57 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10321|ISLAT|3|3.10.1996 00:00:00|31.10.1996 00:00:00|11.10.1996 00:00:00|2|3,43 лв|Island Trading|Garden House
+Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10322|PERIC|7|4.10.1996 00:00:00|1.11.1996 00:00:00|23.10.1996 00:00:00|3|0,40 лв|Pericles Comidas clasicas|Calle Dr. Jorge Cash 321|Mexico D.F.||05033|Mexico
+10323|KOENE|4|7.10.1996 00:00:00|4.11.1996 00:00:00|14.10.1996 00:00:00|1|4,88 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10324|SAVEA|9|8.10.1996 00:00:00|5.11.1996 00:00:00|10.10.1996 00:00:00|1|214,27 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10325|KOENE|1|9.10.1996 00:00:00|23.10.1996 00:00:00|14.10.1996 00:00:00|3|64,86 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10326|BOLID|4|10.10.1996 00:00:00|7.11.1996 00:00:00|14.10.1996 00:00:00|2|77,92 лв|Bolido Comidas preparadas|C/ Araquil, 67|Madrid||28023|Spain
+10327|FOLKO|2|11.10.1996 00:00:00|8.11.1996 00:00:00|14.10.1996 00:00:00|1|63,36 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10328|FURIB|4|14.10.1996 00:00:00|11.11.1996 00:00:00|17.10.1996 00:00:00|3|87,03 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
+10329|SPLIR|4|15.10.1996 00:00:00|26.11.1996 00:00:00|23.10.1996 00:00:00|2|191,67 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
+10330|LILAS|3|16.10.1996 00:00:00|13.11.1996 00:00:00|28.10.1996 00:00:00|1|12,75 лв|LILA-Supermercado|Carrera 52 con A10334|VICTE|8|21.10.1996 00:00:00|18.11.1996 00:00:00|28.10.1996 00:00:00|2|8,56 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
+anada
+10335|HUNGO|7|22.10.1996 00:00:00|19.11.1996 00:00:00|24.10.1996 00:00:00|2|42,11 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10336|PRINI|7|23.10.1996 00:00:00|20.11.1996 00:00:00|25.10.1996 00:00:00|2|15,51 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
+10337|FRANK|4|24.10.1996 00:00:00|21.11.1996 00:00:00|29.10.1996 00:00:00|3|108,26 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10338|OLDWO|4|25.10.1996 00:00:00|22.11.1996 00:00:00|29.10.1996 00:00:00|3|84,21 лв|Old World Delicatessen|2743 Bering St.|Anchorage|AK|99508|USA
+10339|MEREP|2|28.10.1996 00:00:00|25.11.1996 00:00:00|4.11.1996 00:00:00|2|15,66 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10340|BONAP|1|29.10.1996 00:00:00|26.11.1996 00:00:00|8.11.1996 00:00:00|3|166,31 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10341|SIMOB|7|29.10.1996 00:00:00|26.11.1996 00:00:00|5.11.1996 00:00:00|3|26,78 лв|Simons bistro|Vinb?ltet 34|Kobenhavn||1734|Denmark
+10342|FRANK|4|30.10.1996 00:00:00|13.11.1996 00:00:00|4.11.1996 00:00:00|2|54,83 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10343|LEHMS|4|31.10.1996 00:00:00|28.11.1996 00:00:00|6.11.1996 00:00:00|1|110,37 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10344|WHITC|4|1.11.1996 00:00:00|29.11.1996 00:00:00|5.11.1996 00:00:00|2|23,29 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10345|QUICK|2|4.11.1996 00:00:00|2.12.1996 00:00:00|11.11.1996 00:00:00|2|249,06 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10346|RATTC|3|5.11.1996 00:00:00|17.12.1996 00:00:00|8.11.1996 00:00:00|3|142,08 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10347|FAMIA|4|6.11.1996 00:00:00|4.12.1996 00:00:00|8.11.1996 00:00:00|3|3,10 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
+10348|WANDK|4|7.11.1996 00:00:00|5.12.1996 00:00:00|15.11.1996 00:00:00|2|0,78 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10349|SPLIR|7|8.11.1996 00:00:00|6.12.1996 00:00:00|15.11.1996 00:00:00|1|8,63 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
+10350|LAMAI|6|11.11.1996 00:00:00|9.12.1996 00:00:00|3.12.1996 00:00:00|2|64,19 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10351|ERNSH|1|11.11.1996 00:00:00|9.12.1996 00:00:00|20.11.1996 00:00:00|1|162,33 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10352|FURIB|3|12.11.1996 00:00:00|26.11.1996 00:00:00|18.11.1996 00:00:00|3|1,30 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
+10353|PICCO|7|13.11.1996 00:00:00|11.12.1996 00:00:00|25.11.1996 00:00:00|3|360,63 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
+10354|PERIC|8|14.11.1996 00:00:00|12.12.1996 00:00:00|20.11.1996 00:00:00|3|53,80 лв|Pericles Comidas clasicas|Calle Dr. Jorge Cash 321|Mexico D.F.||05033|Mexico
+10355|AROUT|6|15.11.1996 00:00:00|13.12.1996 00:00:00|20.11.1996 00:00:00|1|41,95 лв|Around the Horn|Brook Farm
+Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10356|WANDK|6|18.11.1996 00:00:00|16.12.1996 00:00:00|27.11.1996 00:00:00|2|36,71 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10357|LILAS|1|19.11.1996 00:00:00|17.12.1996 00:00:00|2.12.1996 00:00:00|3|34,88 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
+10358|LAMAI|5|20.11.1996 00:00:00|18.12.1996 00:00:00|27.11.1996 00:00:00|1|19,64 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10359|SEVES|5|21.11.1996 00:00:00|19.12.1996 00:00:00|26.11.1996 00:00:00|3|288,43 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
+10360|BLONP|4|22.11.1996 00:00:00|20.12.1996 00:00:00|2.12.1996 00:00:00|3|131,70 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10361|QUICK|1|22.11.1996 00:00:00|20.12.1996 00:00:00|3.12.1996 00:00:00|2|183,17 лв|QUICK-Stop10363|DRACD|4|26.11.1996 00:00:00|24.12.1996 00:00:00|4.12.1996 00:00:00|3|30,54 лв|Drachenblut Delikatessen|Walserweg 21|Aachen||52066|Germany
+10364|EASTC|1|26.11.1996 00:00:00|7.1.1997 00:00:00|4.12.1996 00:00:00|1|71,97 лв|Eastern Connection|35 King George|London||WX3 6FW|UK
+10365|ANTON|3|27.11.1996 00:00:00|25.12.1996 00:00:00|2.12.1996 00:00:00|2|22,00 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
+10366|GALED|8|28.11.1996 00:00:00|9.1.1997 00:00:00|30.12.1996 00:00:00|2|10,14 лв|Galeria del gastronomo|Rambla de Cataluna, 23|Barcelona||8022|Spain
+10367|VAFFE|7|28.11.1996 00:00:00|26.12.1996 00:00:00|2.12.1996 00:00:00|3|13,55 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
+10368|ERNSH|2|29.11.1996 00:00:00|27.12.1996 00:00:00|2.12.1996 00:00:00|2|101,95 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10369|SPLIR|8|2.12.1996 00:00:00|30.12.1996 00:00:00|9.12.1996 00:00:00|2|195,68 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
+10370|CHOPS|6|3.12.1996 00:00:00|31.12.1996 00:00:00|27.12.1996 00:00:00|2|1,17 лв|Chop-suey Chinese|Hauptstr. 31|Bern||3012|Switzerland
+10371|LAMAI|1|3.12.1996 00:00:00|31.12.1996 00:00:00|24.12.1996 00:00:00|1|0,45 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10372|QUEEN|5|4.12.1996 00:00:00|1.1.1997 00:00:00|9.12.1996 00:00:00|2|890,78 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
+10373|HUNGO|4|5.12.1996 00:00:00|2.1.1997 00:00:00|11.12.1996 00:00:00|3|124,12 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10374|WOLZA|1|5.12.1996 00:00:00|2.1.1997 00:00:00|9.12.1996 00:00:00|3|3,94 лв|Wolski Zajazd|ul. Filtrowa 68|Warszawa||01-012|Poland
+10375|HUNGC|3|6.12.1996 00:00:00|3.1.1997 00:00:00|9.12.1996 00:00:00|2|20,12 лв|Hungry Coyote Import Store|City Center Plaza
+516 Main St.|Elgin|OR|97827|USA
+10376|MEREP|1|9.12.1996 00:00:00|6.1.1997 00:00:00|13.12.1996 00:00:00|2|20,39 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10377|SEVES|1|9.12.1996 00:00:00|6.1.1997 00:00:00|13.12.1996 00:00:00|3|22,21 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
+10378|FOLKO|5|10.12.1996 00:00:00|7.1.1997 00:00:00|19.12.1996 00:00:00|3|5,44 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10379|QUEDE|2|11.12.1996 00:00:00|8.1.1997 00:00:00|13.12.1996 00:00:00|1|45,03 лв|Que Delicia|Rua da Panificadora, 12|Rio de Janeiro|RJ|02389-673|Brazil
+10380|HUNGO|8|12.12.1996 00:00:00|9.1.1997 00:00:00|16.1.1997 00:00:00|3|35,03 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10381|LILAS|3|12.12.1996 00:00:00|9.1.1997 00:00:00|13.12.1996 00:00:00|3|7,99 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
+10382|ERNSH|4|13.12.1996 00:00:00|10.1.1997 00:00:00|16.12.1996 00:00:00|1|94,77 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10383|AROUT|8|16.12.1996 00:00:00|13.1.1997 00:00:00|18.12.1996 00:00:00|3|34,24 лв|Around the Horn|Brook Farm
+Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10384|BERGS|3|16.12.1996 00:00:00|13.1.1997 00:00:00|20.12.1996 00:00:00|3|168,64 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10385|SPLIR|1|17.12.1996 00:00:00|14.1.1997 00:00:00|23.12.1996 00:00:00|2|30,96 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
+10386|FAMIA|9|18.12.1996 00:00:00|1.1.1997 00:00:00|25.12.1996 00:00:00|3|13,99 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
+10387|SANTG|1|18.12.1996 00:00:00|15.1.1997 00:00:00|20.12.1996 00:00:00|2|93,63 лв|Sante Gourmet|Erling Skakkes gate 78|Stavern||4110|Norway
+10388|SEVES|2|19.12.1996 00:00:00|16.1.1997 00:00:00|20.12.1996 00:00:00|1|34,86 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
+10389|BOTTM|4|20.12.1996 00:00:00|17.1.1997 00:00:00|24.12.1996 00:00:00|2|47,42 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
+10390|ERNSH|6|23.12.1996 00:00:00|20.1.1997 00:00:00|26.12.1996 00:00:00|1|126,38 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10391|DRACD|3|23.12.1996 0010393|SAVEA|1|25.12.1996 00:00:00|22.1.1997 00:00:00|3.1.1997 00:00:00|3|126,56 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10394|HUNGC|1|25.12.1996 00:00:00|22.1.1997 00:00:00|3.1.1997 00:00:00|3|30,34 лв|Hungry Coyote Import Store|City Center Plaza
+516 Main St.|Elgin|OR|97827|USA
+10395|HILAA|6|26.12.1996 00:00:00|23.1.1997 00:00:00|3.1.1997 00:00:00|1|184,41 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10396|FRANK|1|27.12.1996 00:00:00|10.1.1997 00:00:00|6.1.1997 00:00:00|3|135,35 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10397|PRINI|5|27.12.1996 00:00:00|24.1.1997 00:00:00|2.1.1997 00:00:00|1|60,26 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
+10398|SAVEA|2|30.12.1996 00:00:00|27.1.1997 00:00:00|9.1.1997 00:00:00|3|89,16 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10399|VAFFE|8|31.12.1996 00:00:00|14.1.1997 00:00:00|8.1.1997 00:00:00|3|27,36 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
+10400|EASTC|1|1.1.1997 00:00:00|29.1.1997 00:00:00|16.1.1997 00:00:00|3|83,93 лв|Eastern Connection|35 King George|London||WX3 6FW|UK
+10401|RATTC|1|1.1.1997 00:00:00|29.1.1997 00:00:00|10.1.1997 00:00:00|1|12,51 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10402|ERNSH|8|2.1.1997 00:00:00|13.2.1997 00:00:00|10.1.1997 00:00:00|2|67,88 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10403|ERNSH|4|3.1.1997 00:00:00|31.1.1997 00:00:00|9.1.1997 00:00:00|3|73,79 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10404|MAGAA|2|3.1.1997 00:00:00|31.1.1997 00:00:00|8.1.1997 00:00:00|1|155,97 лв|Magazzini Alimentari Riuniti|Via Ludovico il Moro 22|Bergamo||24100|Italy
+10405|LINOD|1|6.1.1997 00:00:00|3.2.1997 00:00:00|22.1.1997 00:00:00|1|34,82 лв|LINO-Delicateses|Ave. 5 de Mayo Porlamar|I. de Margarita|Nueva Esparta|4980|Venezuela
+10406|QUEEN|7|7.1.1997 00:00:00|18.2.1997 00:00:00|13.1.1997 00:00:00|1|108,04 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
+10407|OTTIK|2|7.1.1997 00:00:00|4.2.1997 00:00:00|30.1.1997 00:00:00|2|91,48 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
+10408|FOLIG|8|8.1.1997 00:00:00|5.2.1997 00:00:00|14.1.1997 00:00:00|1|11,26 лв|Folies gourmandes|184, chaussee de Tournai|Lille||59000|France
+10409|OCEAN|3|9.1.1997 00:00:00|6.2.1997 00:00:00|14.1.1997 00:00:00|1|29,83 лв|Oceano Atlantico Ltda.|Ing. Gustavo Moncada 8585
+Piso 20-A|Buenos Aires||1010|Argentina
+10410|BOTTM|3|10.1.1997 00:00:00|7.2.1997 00:00:00|15.1.1997 00:00:00|3|2,40 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
+10411|BOTTM|9|10.1.1997 00:00:00|7.2.1997 00:00:00|21.1.1997 00:00:00|3|23,65 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
+10412|WARTH|8|13.1.1997 00:00:00|10.2.1997 00:00:00|15.1.1997 00:00:00|2|3,77 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10413|LAMAI|3|14.1.1997 00:00:00|11.2.1997 00:00:00|16.1.1997 00:00:00|2|95,66 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10414|FAMIA|2|14.1.1997 00:00:00|11.2.1997 00:00:00|17.1.1997 00:00:00|3|21,48 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
+10415|HUNGC|3|15.1.1997 00:00:00|12.2.1997 00:00:00|24.1.1997 00:00:00|1|0,20 лв|Hungry Coyote Import Store|City Center Plaza
+516 Main St.|Elgin|OR|97827|USA
+10416|WARTH|8|16.1.1997 00:00:00|13.2.1997 00:00:00|27.1.1997 00:00:00|3|22,72 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10417|SIMOB|4|16.1.1997 00:00:00|13.2.1997 00:00:00|28.1.1997 00:00:00|3|70,29 лв|Simons bistro|Vinb?ltet 34|Kobenhavn||1734|Denmark
+10418|QUICK|4|17.1.1997 00:00:00|14.2.1997 00:00:00|24.1.1997 00:00:00|1|17,55 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10419|RICSU|4|20.1.1997 00:00:00|17.2.1997 00:00:00|30.1.1997 00:00:00|2|137,35 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
+10420|WELLI|3|21.1.1997 00:00:00|18.2.1997 00:00:00|27.1.1997 00:00:00|1|44,12 лв|Wellington Importadora|Rua do Mercado, 12|Resende|SP|08737-363|Brazil
+10421|QUEDE|8|21.110424|MEREP|7|23.1.1997 00:00:00|20.2.1997 00:00:00|27.1.1997 00:00:00|2|370,61 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10425|LAMAI|6|24.1.1997 00:00:00|21.2.1997 00:00:00|14.2.1997 00:00:00|2|7,93 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10426|GALED|4|27.1.1997 00:00:00|24.2.1997 00:00:00|6.2.1997 00:00:00|1|18,69 лв|Galeria del gastronomo|Rambla de Cataluna, 23|Barcelona||8022|Spain
+10427|PICCO|4|27.1.1997 00:00:00|24.2.1997 00:00:00|3.3.1997 00:00:00|2|31,29 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
+10428|REGGC|7|28.1.1997 00:00:00|25.2.1997 00:00:00|4.2.1997 00:00:00|1|11,09 лв|Reggiani Caseifici|Strada Provinciale 124|Reggio Emilia||42100|Italy
+10429|HUNGO|3|29.1.1997 00:00:00|12.3.1997 00:00:00|7.2.1997 00:00:00|2|56,63 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10430|ERNSH|4|30.1.1997 00:00:00|13.2.1997 00:00:00|3.2.1997 00:00:00|1|458,78 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10431|BOTTM|4|30.1.1997 00:00:00|13.2.1997 00:00:00|7.2.1997 00:00:00|2|44,17 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
+10432|SPLIR|3|31.1.1997 00:00:00|14.2.1997 00:00:00|7.2.1997 00:00:00|2|4,34 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
+10433|PRINI|3|3.2.1997 00:00:00|3.3.1997 00:00:00|4.3.1997 00:00:00|3|73,83 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
+10434|FOLKO|3|3.2.1997 00:00:00|3.3.1997 00:00:00|13.2.1997 00:00:00|2|17,92 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10435|CONSH|8|4.2.1997 00:00:00|18.3.1997 00:00:00|7.2.1997 00:00:00|2|9,21 лв|Consolidated Holdings|Berkeley Gardens
+12  Brewery |London||WX1 6LT|UK
+10436|BLONP|3|5.2.1997 00:00:00|5.3.1997 00:00:00|11.2.1997 00:00:00|2|156,66 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10437|WARTH|8|5.2.1997 00:00:00|5.3.1997 00:00:00|12.2.1997 00:00:00|1|19,97 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10438|TOMSP|3|6.2.1997 00:00:00|6.3.1997 00:00:00|14.2.1997 00:00:00|2|8,24 лв|Toms Spezialitaten|Luisenstr. 48|Munster||44087|Germany
+10439|MEREP|6|7.2.1997 00:00:00|7.3.1997 00:00:00|10.2.1997 00:00:00|3|4,07 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10440|SAVEA|4|10.2.1997 00:00:00|10.3.1997 00:00:00|28.2.1997 00:00:00|2|86,53 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10441|OLDWO|3|10.2.1997 00:00:00|24.3.1997 00:00:00|14.3.1997 00:00:00|2|73,02 лв|Old World Delicatessen|2743 Bering St.|Anchorage|AK|99508|USA
+10442|ERNSH|3|11.2.1997 00:00:00|11.3.1997 00:00:00|18.2.1997 00:00:00|2|47,94 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10443|REGGC|8|12.2.1997 00:00:00|12.3.1997 00:00:00|14.2.1997 00:00:00|1|13,95 лв|Reggiani Caseifici|Strada Provinciale 124|Reggio Emilia||42100|Italy
+10444|BERGS|3|12.2.1997 00:00:00|12.3.1997 00:00:00|21.2.1997 00:00:00|3|3,50 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10445|BERGS|3|13.2.1997 00:00:00|13.3.1997 00:00:00|20.2.1997 00:00:00|1|9,30 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10446|TOMSP|6|14.2.1997 00:00:00|14.3.1997 00:00:00|19.2.1997 00:00:00|1|14,68 лв|Toms Spezialitaten|Luisenstr. 48|Munster||44087|Germany
+10447|RICAR|4|14.2.1997 00:00:00|14.3.1997 00:00:00|7.3.1997 00:00:00|2|68,66 лв|Ricardo Adocicados|Av. Copacabana, 267|Rio de Janeiro|RJ|02389-890|Brazil
+10448|RANCH|4|17.2.1997 00:00:00|17.3.1997 00:00:00|24.2.1997 00:00:00|2|38,82 лв|Rancho grande|Av. del Libertador 900|Buenos Aires||1010|Argentina
+10449|BLONP|3|18.2.1997 00:00:00|18.3.1997 00:00:00|27.2.1997 00:00:00|2|53,30 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10450|VICTE|8|19.2.1997 00:00:00|19.3.1997 00:00:00|11.3.1997 00:00:00|2|7,23 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
+10451|QUICK|4|19.2.1997 00:00:00|5.3.1997 00:00:00|12.3.1997 00:00:00|3|189,09 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10452|SAVEA|8|20.2.1997 00:00:00|20.3.1997 00:00:00|26.2.1997 00:00:00|1|140,26 лв|Save-a-lot Markets|187 10453|AROUT|1|21.2.1997 00:00:00|21.3.1997 00:00:00|26.2.1997 00:00:00|2|25,36 лв|Around the Horn|Brook Farm
+Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10454|LAMAI|4|21.2.1997 00:00:00|21.3.1997 00:00:00|25.2.1997 00:00:00|3|2,74 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10455|WARTH|8|24.2.1997 00:00:00|7.4.1997 00:00:00|3.3.1997 00:00:00|2|180,45 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10456|KOENE|8|25.2.1997 00:00:00|8.4.1997 00:00:00|28.2.1997 00:00:00|2|8,12 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10457|KOENE|2|25.2.1997 00:00:00|25.3.1997 00:00:00|3.3.1997 00:00:00|1|11,57 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10458|SUPRD|7|26.2.1997 00:00:00|26.3.1997 00:00:00|4.3.1997 00:00:00|3|147,06 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
+10459|VICTE|4|27.2.1997 00:00:00|27.3.1997 00:00:00|28.2.1997 00:00:00|2|25,09 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
+10460|FOLKO|8|28.2.1997 00:00:00|28.3.1997 00:00:00|3.3.1997 00:00:00|1|16,27 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10461|LILAS|1|28.2.1997 00:00:00|28.3.1997 00:00:00|5.3.1997 00:00:00|3|148,61 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
+10462|CONSH|2|3.3.1997 00:00:00|31.3.1997 00:00:00|18.3.1997 00:00:00|1|6,17 лв|Consolidated Holdings|Berkeley Gardens
+12  Brewery |London||WX1 6LT|UK
+10463|SUPRD|5|4.3.1997 00:00:00|1.4.1997 00:00:00|6.3.1997 00:00:00|3|14,78 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
+10464|FURIB|4|4.3.1997 00:00:00|1.4.1997 00:00:00|14.3.1997 00:00:00|2|89,00 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
+10465|VAFFE|1|5.3.1997 00:00:00|2.4.1997 00:00:00|14.3.1997 00:00:00|3|145,04 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
+10466|COMMI|4|6.3.1997 00:00:00|3.4.1997 00:00:00|13.3.1997 00:00:00|1|11,93 лв|Comercio Mineiro|Av. dos Lusiadas, 23|Sao Paulo|SP|05432-043|Brazil
+10467|MAGAA|8|6.3.1997 00:00:00|3.4.1997 00:00:00|11.3.1997 00:00:00|2|4,93 лв|Magazzini Alimentari Riuniti|Via Ludovico il Moro 22|Bergamo||24100|Italy
+10468|KOENE|3|7.3.1997 00:00:00|4.4.1997 00:00:00|12.3.1997 00:00:00|3|44,12 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10469|WHITC|1|10.3.1997 00:00:00|7.4.1997 00:00:00|14.3.1997 00:00:00|1|60,18 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10470|BONAP|4|11.3.1997 00:00:00|8.4.1997 00:00:00|14.3.1997 00:00:00|2|64,56 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10471|BSBEV|2|11.3.1997 00:00:00|8.4.1997 00:00:00|18.3.1997 00:00:00|3|45,59 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
+10472|SEVES|8|12.3.1997 00:00:00|9.4.1997 00:00:00|19.3.1997 00:00:00|1|4,20 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
+10473|ISLAT|1|13.3.1997 00:00:00|27.3.1997 00:00:00|21.3.1997 00:00:00|3|16,37 лв|Island Trading|Garden House
+Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10474|PERIC|5|13.3.1997 00:00:00|10.4.1997 00:00:00|21.3.1997 00:00:00|2|83,49 лв|Pericles Comidas clasicas|Calle Dr. Jorge Cash 321|Mexico D.F.||05033|Mexico
+10475|SUPRD|9|14.3.1997 00:00:00|11.4.1997 00:00:00|4.4.1997 00:00:00|1|68,52 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
+10476|HILAA|8|17.3.1997 00:00:00|14.4.1997 00:00:00|24.3.1997 00:00:00|3|4,41 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10477|PRINI|5|17.3.1997 00:00:00|14.4.1997 00:00:00|25.3.1997 00:00:00|2|13,02 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
+10478|VICTE|2|18.3.1997 00:00:00|1.4.1997 00:00:00|26.3.1997 00:00:00|3|4,81 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
+10479|RATTC|3|19.3.1997 00:00:00|16.4.1997 00:00:00|21.3.1997 00:00:00|3|708,95 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10480|FOLIG|6|20.3.1997 00:00:00|17.4.1997 00:00:00|24.3.1997 00:00:00|2|1,35 лв|Folies gourmandes|184, chaussee de Tournai|Li10483|WHITC|7|24.3.1997 00:00:00|21.4.1997 00:00:00|25.4.1997 00:00:00|2|15,28 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+SA
+Brazil
+10484|BSBEV|3|24.3.1997 00:00:00|21.4.1997 00:00:00|1.4.1997 00:00:00|3|6,88 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
+10485|LINOD|4|25.3.1997 00:00:00|8.4.1997 00:00:00|31.3.1997 00:00:00|2|64,45 лв|LINO-Delicateses|Ave. 5 de Mayo Porlamar|I. de Margarita|Nueva Esparta|4980|Venezuela
+10486|HILAA|1|26.3.1997 00:00:00|23.4.1997 00:00:00|2.4.1997 00:00:00|2|30,53 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10487|QUEEN|2|26.3.1997 00:00:00|23.4.1997 00:00:00|28.3.1997 00:00:00|2|71,07 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
+10488|FRANK|8|27.3.1997 00:00:00|24.4.1997 00:00:00|2.4.1997 00:00:00|2|4,93 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10489|PICCO|6|28.3.1997 00:00:00|25.4.1997 00:00:00|9.4.1997 00:00:00|2|5,29 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
+10490|HILAA|7|31.3.1997 00:00:00|28.4.1997 00:00:00|3.4.1997 00:00:00|2|210,19 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10491|FURIB|8|31.3.1997 00:00:00|28.4.1997 00:00:00|8.4.1997 00:00:00|3|16,96 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
+10492|BOTTM|3|1.4.1997 00:00:00|29.4.1997 00:00:00|11.4.1997 00:00:00|1|62,89 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
+10493|LAMAI|4|2.4.1997 00:00:00|30.4.1997 00:00:00|10.4.1997 00:00:00|3|10,64 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10494|COMMI|4|2.4.1997 00:00:00|30.4.1997 00:00:00|9.4.1997 00:00:00|2|65,99 лв|Comercio Mineiro|Av. dos Lusiadas, 23|Sao Paulo|SP|05432-043|Brazil
+10495|LAUGB|3|3.4.1997 00:00:00|1.5.1997 00:00:00|11.4.1997 00:00:00|3|4,65 лв|Laughing Bacchus Wine Cellars|2319 Elm St.|Vancouver|BC|V3F 2K1|Canada
+10496|TRADH|7|4.4.1997 00:00:00|2.5.1997 00:00:00|7.4.1997 00:00:00|2|46,77 лв|Tradicao Hipermercados|Av. Ines de Castro, 414|Sao Paulo|SP|05634-030|Brazil
+10497|LEHMS|7|4.4.1997 00:00:00|2.5.1997 00:00:00|7.4.1997 00:00:00|1|36,21 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10498|HILAA|8|7.4.1997 00:00:00|5.5.1997 00:00:00|11.4.1997 00:00:00|2|29,75 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10499|LILAS|4|8.4.1997 00:00:00|6.5.1997 00:00:00|16.4.1997 00:00:00|2|102,02 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
+10500|LAMAI|6|9.4.1997 00:00:00|7.5.1997 00:00:00|17.4.1997 00:00:00|1|42,68 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10501|BLAUS|9|9.4.1997 00:00:00|7.5.1997 00:00:00|16.4.1997 00:00:00|3|8,85 лв|Blauer See Delikatessen|Forsterstr. 57|Mannheim||68306|Germany
+10502|PERIC|2|10.4.1997 00:00:00|8.5.1997 00:00:00|29.4.1997 00:00:00|1|69,32 лв|Pericles Comidas clasicas|Calle Dr. Jorge Cash 321|Mexico D.F.||05033|Mexico
+10503|HUNGO|6|11.4.1997 00:00:00|9.5.1997 00:00:00|16.4.1997 00:00:00|2|16,74 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10504|WHITC|4|11.4.1997 00:00:00|9.5.1997 00:00:00|18.4.1997 00:00:00|3|59,13 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10505|MEREP|3|14.4.1997 00:00:00|12.5.1997 00:00:00|21.4.1997 00:00:00|3|7,13 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10506|KOENE|9|15.4.1997 00:00:00|13.5.1997 00:00:00|2.5.1997 00:00:00|2|21,19 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10507|ANTON|7|15.4.1997 00:00:00|13.5.1997 00:00:00|22.4.1997 00:00:00|1|47,45 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
+10508|OTTIK|1|16.4.1997 00:00:00|14.5.1997 00:00:00|13.5.1997 00:00:00|2|4,99 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
+10509|BLAUS|4|17.4.1997 00:00:00|15.5.1997 00:00:00|29.4.1997 00:00:00|1|0,15 лв|Blauer See Delikatessen|Forsterstr. 57|Mannheim||10511|BONAP|4|18.4.1997 00:00:00|16.5.1997 00:00:00|21.4.1997 00:00:00|3|350,64 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10512|FAMIA|7|21.4.1997 00:00:00|19.5.1997 00:00:00|24.4.1997 00:00:00|2|3,53 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
+10513|WANDK|7|22.4.1997 00:00:00|3.6.1997 00:00:00|28.4.1997 00:00:00|1|105,65 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10514|ERNSH|3|22.4.1997 00:00:00|20.5.1997 00:00:00|16.5.1997 00:00:00|2|789,95 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10515|QUICK|2|23.4.1997 00:00:00|7.5.1997 00:00:00|23.5.1997 00:00:00|1|204,47 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10516|HUNGO|2|24.4.1997 00:00:00|22.5.1997 00:00:00|1.5.1997 00:00:00|3|62,78 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10517|NORTS|3|24.4.1997 00:00:00|22.5.1997 00:00:00|29.4.1997 00:00:00|3|32,07 лв|North/South|South House
+300 Queensbridge|London||SW7 1RZ|UK
+10518|TORTU|4|25.4.1997 00:00:00|9.5.1997 00:00:00|5.5.1997 00:00:00|2|218,15 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
+10519|CHOPS|6|28.4.1997 00:00:00|26.5.1997 00:00:00|1.5.1997 00:00:00|3|91,76 лв|Chop-suey Chinese|Hauptstr. 31|Bern||3012|Switzerland
+10520|SANTG|7|29.4.1997 00:00:00|27.5.1997 00:00:00|1.5.1997 00:00:00|1|13,37 лв|Sante Gourmet|Erling Skakkes gate 78|Stavern||4110|Norway
+10521|CACTU|8|29.4.1997 00:00:00|27.5.1997 00:00:00|2.5.1997 00:00:00|2|17,22 лв|Cactus Comidas para llevar|Cerrito 333|Buenos Aires||1010|Argentina
+10522|LEHMS|4|30.4.1997 00:00:00|28.5.1997 00:00:00|6.5.1997 00:00:00|1|45,33 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10523|SEVES|7|1.5.1997 00:00:00|29.5.1997 00:00:00|30.5.1997 00:00:00|2|77,63 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
+10524|BERGS|1|1.5.1997 00:00:00|29.5.1997 00:00:00|7.5.1997 00:00:00|2|244,79 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10525|BONAP|1|2.5.1997 00:00:00|30.5.1997 00:00:00|23.5.1997 00:00:00|2|11,06 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10526|WARTH|4|5.5.1997 00:00:00|2.6.1997 00:00:00|15.5.1997 00:00:00|2|58,59 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10527|QUICK|7|5.5.1997 00:00:00|2.6.1997 00:00:00|7.5.1997 00:00:00|1|41,90 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10528|GREAL|6|6.5.1997 00:00:00|20.5.1997 00:00:00|9.5.1997 00:00:00|2|3,35 лв|Great Lakes Food Market|2732 Baker Blvd.|Eugene|OR|97403|USA
+10529|MAISD|5|7.5.1997 00:00:00|4.6.1997 00:00:00|9.5.1997 00:00:00|2|66,69 лв|Maison Dewey|Rue Joseph-Bens 532|Bruxelles||B-1180|Belgium
+10530|PICCO|3|8.5.1997 00:00:00|5.6.1997 00:00:00|12.5.1997 00:00:00|2|339,22 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
+10531|OCEAN|7|8.5.1997 00:00:00|5.6.1997 00:00:00|19.5.1997 00:00:00|1|8,12 лв|Oceano Atlantico Ltda.|Ing. Gustavo Moncada 8585
+Piso 20-A|Buenos Aires||1010|Argentina
+10532|EASTC|7|9.5.1997 00:00:00|6.6.1997 00:00:00|12.5.1997 00:00:00|3|74,46 лв|Eastern Connection|35 King George|London||WX3 6FW|UK
+10533|FOLKO|8|12.5.1997 00:00:00|9.6.1997 00:00:00|22.5.1997 00:00:00|1|188,04 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10534|LEHMS|8|12.5.1997 00:00:00|9.6.1997 00:00:00|14.5.1997 00:00:00|2|27,94 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10535|ANTON|4|13.5.1997 00:00:00|10.6.1997 00:00:00|21.5.1997 00:00:00|1|15,64 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
+10536|LEHMS|3|14.5.1997 00:00:00|11.6.1997 00:00:00|6.6.1997 00:00:00|2|58,88 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10537|RICSU|1|14.5.1997 00:00:00|28.5.1997 00:00:00|19.5.1997 00:00:00|1|78,85 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
+10538|BSBEV|9|15.5.1997 00:00:00|12.6.1997 00:00:00|16.5.1997 00:00:00|3|4,87 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
+10539|BSBEV|6|16.5.1997 00:00:00|13.6.1997 00:00:00|23.5.1997 00:00:00|3|12,36 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
+10540|QUICK|3|19.5.110542|KOENE|1|20.5.1997 00:00:00|17.6.1997 00:00:00|26.5.1997 00:00:00|3|10,95 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+Brazil
+10543|LILAS|8|21.5.1997 00:00:00|18.6.1997 00:00:00|23.5.1997 00:00:00|2|48,17 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
+10544|LONEP|4|21.5.1997 00:00:00|18.6.1997 00:00:00|30.5.1997 00:00:00|1|24,91 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
+10545|LAZYK|8|22.5.1997 00:00:00|19.6.1997 00:00:00|26.6.1997 00:00:00|2|11,92 лв|Lazy K Kountry Store|12 Orchestra Terrace|Walla Walla|WA|99362|USA
+10546|VICTE|1|23.5.1997 00:00:00|20.6.1997 00:00:00|27.5.1997 00:00:00|3|194,72 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
+10547|SEVES|3|23.5.1997 00:00:00|20.6.1997 00:00:00|2.6.1997 00:00:00|2|178,43 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
+10548|TOMSP|3|26.5.1997 00:00:00|23.6.1997 00:00:00|2.6.1997 00:00:00|2|1,43 лв|Toms Spezialitaten|Luisenstr. 48|Munster||44087|Germany
+10549|QUICK|5|27.5.1997 00:00:00|10.6.1997 00:00:00|30.5.1997 00:00:00|1|171,24 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10550|GODOS|7|28.5.1997 00:00:00|25.6.1997 00:00:00|6.6.1997 00:00:00|3|4,32 лв|Godos Cocina Tipica|C/ Romero, 33|Sevilla||41101|Spain
+10551|FURIB|4|28.5.1997 00:00:00|9.7.1997 00:00:00|6.6.1997 00:00:00|3|72,95 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
+10552|HILAA|2|29.5.1997 00:00:00|26.6.1997 00:00:00|5.6.1997 00:00:00|1|83,22 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10553|WARTH|2|30.5.1997 00:00:00|27.6.1997 00:00:00|3.6.1997 00:00:00|2|149,49 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10554|OTTIK|4|30.5.1997 00:00:00|27.6.1997 00:00:00|5.6.1997 00:00:00|3|120,97 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
+10555|SAVEA|6|2.6.1997 00:00:00|30.6.1997 00:00:00|4.6.1997 00:00:00|3|252,49 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10556|SIMOB|2|3.6.1997 00:00:00|15.7.1997 00:00:00|13.6.1997 00:00:00|1|9,80 лв|Simons bistro|Vinb?ltet 34|Kobenhavn||1734|Denmark
+10557|LEHMS|9|3.6.1997 00:00:00|17.6.1997 00:00:00|6.6.1997 00:00:00|2|96,72 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10558|AROUT|1|4.6.1997 00:00:00|2.7.1997 00:00:00|10.6.1997 00:00:00|2|72,97 лв|Around the Horn|Brook Farm
+Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10559|BLONP|6|5.6.1997 00:00:00|3.7.1997 00:00:00|13.6.1997 00:00:00|1|8,05 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10560|FRANK|8|6.6.1997 00:00:00|4.7.1997 00:00:00|9.6.1997 00:00:00|1|36,65 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10561|FOLKO|2|6.6.1997 00:00:00|4.7.1997 00:00:00|9.6.1997 00:00:00|2|242,21 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10562|REGGC|1|9.6.1997 00:00:00|7.7.1997 00:00:00|12.6.1997 00:00:00|1|22,95 лв|Reggiani Caseifici|Strada Provinciale 124|Reggio Emilia||42100|Italy
+10563|RICAR|2|10.6.1997 00:00:00|22.7.1997 00:00:00|24.6.1997 00:00:00|2|60,43 лв|Ricardo Adocicados|Av. Copacabana, 267|Rio de Janeiro|RJ|02389-890|Brazil
+10564|RATTC|4|10.6.1997 00:00:00|8.7.1997 00:00:00|16.6.1997 00:00:00|3|13,75 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10565|MEREP|8|11.6.1997 00:00:00|9.7.1997 00:00:00|18.6.1997 00:00:00|2|7,15 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10566|BLONP|9|12.6.1997 00:00:00|10.7.1997 00:00:00|18.6.1997 00:00:00|1|88,40 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10567|HUNGO|1|12.6.1997 00:00:00|10.7.1997 00:00:00|17.6.1997 00:00:00|1|33,97 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10568|GALED|3|13.6.1997 00:00:00|11.7.1997 00:00:00|9.7.1997 00:00:00|3|6,54 лв|Galeria del gastronomo|Rambla de Cataluna, 23|Barcelona||8022|Spain
+10569|RATTC|5|16.6.1997 00:00:00|14.7.1997 00:00:00|11.7.1997 00:00:00|1|58,98 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM10571|ERNSH|8|17.6.1997 00:00:00|29.7.1997 00:00:00|4.7.1997 00:00:00|3|26,06 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+uebec|H1J 1C3|Canada
+10572|BERGS|3|18.6.1997 00:00:00|16.7.1997 00:00:00|25.6.1997 00:00:00|2|116,43 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10573|ANTON|7|19.6.1997 00:00:00|17.7.1997 00:00:00|20.6.1997 00:00:00|3|84,84 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
+10574|TRAIH|4|19.6.1997 00:00:00|17.7.1997 00:00:00|30.6.1997 00:00:00|2|37,60 лв|Trail's Head Gourmet Provisioners|722 DaVinci Blvd.|Kirkland|WA|98034|USA
+10575|MORGK|5|20.6.1997 00:00:00|4.7.1997 00:00:00|30.6.1997 00:00:00|1|127,34 лв|Morgenstern Gesundkost|Heerstr. 22|Leipzig||04179|Germany
+10576|TORTU|3|23.6.1997 00:00:00|7.7.1997 00:00:00|30.6.1997 00:00:00|3|18,56 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
+10577|TRAIH|9|23.6.1997 00:00:00|4.8.1997 00:00:00|30.6.1997 00:00:00|2|25,41 лв|Trail's Head Gourmet Provisioners|722 DaVinci Blvd.|Kirkland|WA|98034|USA
+10578|BSBEV|4|24.6.1997 00:00:00|22.7.1997 00:00:00|25.7.1997 00:00:00|3|29,60 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
+10579|LETSS|1|25.6.1997 00:00:00|23.7.1997 00:00:00|4.7.1997 00:00:00|2|13,73 лв|Let's Stop N Shop|87 Polk St.
+Suite 5|San Francisco|CA|94117|USA
+10580|OTTIK|4|26.6.1997 00:00:00|24.7.1997 00:00:00|1.7.1997 00:00:00|3|75,89 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
+10581|FAMIA|3|26.6.1997 00:00:00|24.7.1997 00:00:00|2.7.1997 00:00:00|1|3,01 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
+10582|BLAUS|3|27.6.1997 00:00:00|25.7.1997 00:00:00|14.7.1997 00:00:00|2|27,71 лв|Blauer See Delikatessen|Forsterstr. 57|Mannheim||68306|Germany
+10583|WARTH|2|30.6.1997 00:00:00|28.7.1997 00:00:00|4.7.1997 00:00:00|2|7,28 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10584|BLONP|4|30.6.1997 00:00:00|28.7.1997 00:00:00|4.7.1997 00:00:00|1|59,14 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10585|WELLI|7|1.7.1997 00:00:00|29.7.1997 00:00:00|10.7.1997 00:00:00|1|13,41 лв|Wellington Importadora|Rua do Mercado, 12|Resende|SP|08737-363|Brazil
+10586|REGGC|9|2.7.1997 00:00:00|30.7.1997 00:00:00|9.7.1997 00:00:00|1|0,48 лв|Reggiani Caseifici|Strada Provinciale 124|Reggio Emilia||42100|Italy
+10587|QUEDE|1|2.7.1997 00:00:00|30.7.1997 00:00:00|9.7.1997 00:00:00|1|62,52 лв|Que Delicia|Rua da Panificadora, 12|Rio de Janeiro|RJ|02389-673|Brazil
+10588|QUICK|2|3.7.1997 00:00:00|31.7.1997 00:00:00|10.7.1997 00:00:00|3|194,67 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10589|GREAL|8|4.7.1997 00:00:00|1.8.1997 00:00:00|14.7.1997 00:00:00|2|4,42 лв|Great Lakes Food Market|2732 Baker Blvd.|Eugene|OR|97403|USA
+10590|MEREP|4|7.7.1997 00:00:00|4.8.1997 00:00:00|14.7.1997 00:00:00|3|44,77 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10591|VAFFE|1|7.7.1997 00:00:00|21.7.1997 00:00:00|16.7.1997 00:00:00|1|55,92 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
+10592|LEHMS|3|8.7.1997 00:00:00|5.8.1997 00:00:00|16.7.1997 00:00:00|1|32,10 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10593|LEHMS|7|9.7.1997 00:00:00|6.8.1997 00:00:00|13.8.1997 00:00:00|2|174,20 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10594|OLDWO|3|9.7.1997 00:00:00|6.8.1997 00:00:00|16.7.1997 00:00:00|2|5,24 лв|Old World Delicatessen|2743 Bering St.|Anchorage|AK|99508|USA
+10595|ERNSH|2|10.7.1997 00:00:00|7.8.1997 00:00:00|14.7.1997 00:00:00|1|96,78 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10596|WHITC|8|11.7.1997 00:00:00|8.8.1997 00:00:00|12.8.1997 00:00:00|1|16,34 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10597|PICCO|7|11.7.1997 00:00:00|8.8.1997 00:00:00|18.7.1997 00:00:00|3|35,12 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
+10598|RATTC|1|14.7.1997 00:00:00|11.8.1997 00:00:00|18.7.1997 00:00:00|3|44,42 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10599|BSBEV|6|15.7.1997 00:00:00|26.8.1997 00:00:00|21.7.1997 00:00:00|3|29,98 10601|HILAA|7|16.7.1997 00:00:00|27.8.1997 00:00:00|22.7.1997 00:00:00|1|58,30 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10602|VAFFE|8|17.7.1997 00:00:00|14.8.1997 00:00:00|22.7.1997 00:00:00|2|2,92 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
+10603|SAVEA|8|18.7.1997 00:00:00|15.8.1997 00:00:00|8.8.1997 00:00:00|2|48,77 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10604|FURIB|1|18.7.1997 00:00:00|15.8.1997 00:00:00|29.7.1997 00:00:00|1|7,46 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
+10605|MEREP|1|21.7.1997 00:00:00|18.8.1997 00:00:00|29.7.1997 00:00:00|2|379,13 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10606|TRADH|4|22.7.1997 00:00:00|19.8.1997 00:00:00|31.7.1997 00:00:00|3|79,40 лв|Tradicao Hipermercados|Av. Ines de Castro, 414|Sao Paulo|SP|05634-030|Brazil
+10607|SAVEA|5|22.7.1997 00:00:00|19.8.1997 00:00:00|25.7.1997 00:00:00|1|200,24 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10608|TOMSP|4|23.7.1997 00:00:00|20.8.1997 00:00:00|1.8.1997 00:00:00|2|27,79 лв|Toms Spezialitaten|Luisenstr. 48|Munster||44087|Germany
+10609|DUMON|7|24.7.1997 00:00:00|21.8.1997 00:00:00|30.7.1997 00:00:00|2|1,85 лв|Du monde entier|67, rue des Cinquante Otages|Nantes||44000|France
+10610|LAMAI|8|25.7.1997 00:00:00|22.8.1997 00:00:00|6.8.1997 00:00:00|1|26,78 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10611|WOLZA|6|25.7.1997 00:00:00|22.8.1997 00:00:00|1.8.1997 00:00:00|2|80,65 лв|Wolski Zajazd|ul. Filtrowa 68|Warszawa||01-012|Poland
+10612|SAVEA|1|28.7.1997 00:00:00|25.8.1997 00:00:00|1.8.1997 00:00:00|2|544,08 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10613|HILAA|4|29.7.1997 00:00:00|26.8.1997 00:00:00|1.8.1997 00:00:00|2|8,11 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10614|BLAUS|8|29.7.1997 00:00:00|26.8.1997 00:00:00|1.8.1997 00:00:00|3|1,93 лв|Blauer See Delikatessen|Forsterstr. 57|Mannheim||68306|Germany
+10615|WILMK|2|30.7.1997 00:00:00|27.8.1997 00:00:00|6.8.1997 00:00:00|3|0,75 лв|Wilman Kala|Keskuskatu 45|Helsinki||21240|Finland
+10616|GREAL|1|31.7.1997 00:00:00|28.8.1997 00:00:00|5.8.1997 00:00:00|2|116,53 лв|Great Lakes Food Market|2732 Baker Blvd.|Eugene|OR|97403|USA
+10617|GREAL|4|31.7.1997 00:00:00|28.8.1997 00:00:00|4.8.1997 00:00:00|2|18,53 лв|Great Lakes Food Market|2732 Baker Blvd.|Eugene|OR|97403|USA
+10618|MEREP|1|1.8.1997 00:00:00|12.9.1997 00:00:00|8.8.1997 00:00:00|1|154,68 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10619|MEREP|3|4.8.1997 00:00:00|1.9.1997 00:00:00|7.8.1997 00:00:00|3|91,05 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10620|LAUGB|2|5.8.1997 00:00:00|2.9.1997 00:00:00|14.8.1997 00:00:00|3|0,94 лв|Laughing Bacchus Wine Cellars|2319 Elm St.|Vancouver|BC|V3F 2K1|Canada
+10621|ISLAT|4|5.8.1997 00:00:00|2.9.1997 00:00:00|11.8.1997 00:00:00|2|23,73 лв|Island Trading|Garden House
+Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10622|RICAR|4|6.8.1997 00:00:00|3.9.1997 00:00:00|11.8.1997 00:00:00|3|50,97 лв|Ricardo Adocicados|Av. Copacabana, 267|Rio de Janeiro|RJ|02389-890|Brazil
+10623|FRANK|8|7.8.1997 00:00:00|4.9.1997 00:00:00|12.8.1997 00:00:00|2|97,18 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10624|THECR|4|7.8.1997 00:00:00|4.9.1997 00:00:00|19.8.1997 00:00:00|2|94,80 лв|The Cracker Box|55 Grizzly Peak Rd.|Butte|MT|59801|USA
+10625|ANATR|3|8.8.1997 00:00:00|5.9.1997 00:00:00|14.8.1997 00:00:00|1|43,90 лв|Ana Trujillo Emparedados y helados|Avda. de la Constitucion 2222|Mexico D.F.||05021|Mexico
+10626|BERGS|1|11.8.1997 00:00:00|8.9.1997 00:00:00|20.8.1997 00:00:00|2|138,69 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10627|SAVEA|8|11.8.1997 00:00:00|22.9.1997 00:00:00|21.8.1997 00:00:00|3|107,46 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10628|BLONP|4|12.8.1997 00:00:00|9.9.1997 00:00:00|20.8.1997 00:00:00|3|30,36 лв|Blondel pere et fils|24, place Kleber|Strasbo10629|GODOS|4|12.8.1997 00:00:00|9.9.1997 00:00:00|20.8.1997 00:00:00|3|85,46 лв|Godos Cocina Tipica|C/ Romero, 33|Sevilla||41101|Spain
+10630|KOENE|1|13.8.1997 00:00:00|10.9.1997 00:00:00|19.8.1997 00:00:00|2|32,35 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10631|LAMAI|8|14.8.1997 00:00:00|11.9.1997 00:00:00|15.8.1997 00:00:00|1|0,87 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
+10632|WANDK|8|14.8.1997 00:00:00|11.9.1997 00:00:00|19.8.1997 00:00:00|1|41,38 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10633|ERNSH|7|15.8.1997 00:00:00|12.9.1997 00:00:00|18.8.1997 00:00:00|3|477,90 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10634|FOLIG|4|15.8.1997 00:00:00|12.9.1997 00:00:00|21.8.1997 00:00:00|3|487,38 лв|Folies gourmandes|184, chaussee de Tournai|Lille||59000|France
+10635|MAGAA|8|18.8.1997 00:00:00|15.9.1997 00:00:00|21.8.1997 00:00:00|3|47,46 лв|Magazzini Alimentari Riuniti|Via Ludovico il Moro 22|Bergamo||24100|Italy
+10636|WARTH|4|19.8.1997 00:00:00|16.9.1997 00:00:00|26.8.1997 00:00:00|1|1,15 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10637|QUEEN|6|19.8.1997 00:00:00|16.9.1997 00:00:00|26.8.1997 00:00:00|1|201,29 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
+10638|LINOD|3|20.8.1997 00:00:00|17.9.1997 00:00:00|1.9.1997 00:00:00|1|158,44 лв|LINO-Delicateses|Ave. 5 de Mayo Porlamar|I. de Margarita|Nueva Esparta|4980|Venezuela
+10639|SANTG|7|20.8.1997 00:00:00|17.9.1997 00:00:00|27.8.1997 00:00:00|3|38,64 лв|Sante Gourmet|Erling Skakkes gate 78|Stavern||4110|Norway
+10640|WANDK|4|21.8.1997 00:00:00|18.9.1997 00:00:00|28.8.1997 00:00:00|1|23,55 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10641|HILAA|4|22.8.1997 00:00:00|19.9.1997 00:00:00|26.8.1997 00:00:00|2|179,61 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10642|SIMOB|7|22.8.1997 00:00:00|19.9.1997 00:00:00|5.9.1997 00:00:00|3|41,89 лв|Simons bistro|Vinb?ltet 34|Kobenhavn||1734|Denmark
+10643|ALFKI|6|25.8.1997 00:00:00|22.9.1997 00:00:00|2.9.1997 00:00:00|1|29,46 лв|Alfreds Futterkiste|Obere Str. 57|Berlin||12209|Germany
+10644|WELLI|3|25.8.1997 00:00:00|22.9.1997 00:00:00|1.9.1997 00:00:00|2|0,14 лв|Wellington Importadora|Rua do Mercado, 12|Resende|SP|08737-363|Brazil
+10645|HANAR|4|26.8.1997 00:00:00|23.9.1997 00:00:00|2.9.1997 00:00:00|1|12,41 лв|Hanari Carnes|Rua do Paco, 67|Rio de Janeiro|RJ|05454-876|Brazil
+10646|HUNGO|9|27.8.1997 00:00:00|8.10.1997 00:00:00|3.9.1997 00:00:00|3|142,33 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10647|QUEDE|4|27.8.1997 00:00:00|10.9.1997 00:00:00|3.9.1997 00:00:00|2|45,54 лв|Que Delicia|Rua da Panificadora, 12|Rio de Janeiro|RJ|02389-673|Brazil
+10648|RICAR|5|28.8.1997 00:00:00|9.10.1997 00:00:00|9.9.1997 00:00:00|2|14,25 лв|Ricardo Adocicados|Av. Copacabana, 267|Rio de Janeiro|RJ|02389-890|Brazil
+10649|MAISD|5|28.8.1997 00:00:00|25.9.1997 00:00:00|29.8.1997 00:00:00|3|6,20 лв|Maison Dewey|Rue Joseph-Bens 532|Bruxelles||B-1180|Belgium
+10650|FAMIA|5|29.8.1997 00:00:00|26.9.1997 00:00:00|3.9.1997 00:00:00|3|176,81 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
+10651|WANDK|8|1.9.1997 00:00:00|29.9.1997 00:00:00|11.9.1997 00:00:00|2|20,60 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10652|GOURL|4|1.9.1997 00:00:00|29.9.1997 00:00:00|8.9.1997 00:00:00|2|7,14 лв|Gourmet Lanchonetes|Av. Brasil, 442|Campinas|SP|04876-786|Brazil
+10653|FRANK|1|2.9.1997 00:00:00|30.9.1997 00:00:00|19.9.1997 00:00:00|1|93,25 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10654|BERGS|5|2.9.1997 00:00:00|30.9.1997 00:00:00|11.9.1997 00:00:00|1|55,26 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10655|REGGC|1|3.9.1997 00:00:00|1.10.1997 00:00:00|11.9.1997 00:00:00|2|4,41 лв|Reggiani Caseifici|Strada Provinciale 124|Reggio Emilia||42100|Italy
+10656|GREAL|6|4.9.1997 00:00:00|2.10.1997 00:00:00|10.9.1997 00:00:00|1|57,15 лв|Great Lakes Food Market|2732 Baker Blvd.|Eugene|OR|97403|USA
+10657|SAVEA|2|4.9.1997 00:00:00|2.10.1997 00:00:00|15.9.1997 00:00:00|2|352,69 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10658|QUICK|4|5.9.1997 00:00:00|3.10.1997 00:00:00|8.9.1997 00:00:00|1|364,15 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10659|QUEEN|7|5.9.1997 00:00:00|3.10.1997 00:00:00|10.9.1997 00:00:00|2|105,81 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
+10660|HUNGC|8|8.9.1997 00:00:00|6.10.1997 00:00:00|15.10.1997 00:00:00|1|111,29 лв|Hungry Coyote Import Store|City Center Plaza
+516 Main St.|Elgin|OR|97827|USA
+10661|HUNGO|7|9.9.1997 00:00:00|7.10.1997 00:00:00|15.9.1997 00:00:00|3|17,55 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10662|LONEP|3|9.9.1997 00:00:00|7.10.1997 00:00:00|18.9.1997 00:00:00|2|1,28 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
+10663|BONAP|2|10.9.1997 00:00:00|24.9.1997 00:00:00|3.10.1997 00:00:00|2|113,15 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10664|FURIB|1|10.9.1997 00:00:00|8.10.1997 00:00:00|19.9.1997 00:00:00|3|1,27 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
+10665|LONEP|1|11.9.1997 00:00:00|9.10.1997 00:00:00|17.9.1997 00:00:00|2|26,31 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
+10666|RICSU|7|12.9.1997 00:00:00|10.10.1997 00:00:00|22.9.1997 00:00:00|2|232,42 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
+10667|ERNSH|7|12.9.1997 00:00:00|10.10.1997 00:00:00|19.9.1997 00:00:00|1|78,09 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10668|WANDK|1|15.9.1997 00:00:00|13.10.1997 00:00:00|23.9.1997 00:00:00|2|47,22 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
+10669|SIMOB|2|15.9.1997 00:00:00|13.10.1997 00:00:00|22.9.1997 00:00:00|1|24,39 лв|Simons bistro|Vinb?ltet 34|Kobenhavn||1734|Denmark
+10670|FRANK|4|16.9.1997 00:00:00|14.10.1997 00:00:00|18.9.1997 00:00:00|1|203,48 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10671|FRANR|1|17.9.1997 00:00:00|15.10.1997 00:00:00|24.9.1997 00:00:00|1|30,34 лв|France restauration|54, rue Royale|Nantes||44000|France
+10672|BERGS|9|17.9.1997 00:00:00|1.10.1997 00:00:00|26.9.1997 00:00:00|2|95,75 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10673|WILMK|2|18.9.1997 00:00:00|16.10.1997 00:00:00|19.9.1997 00:00:00|1|22,76 лв|Wilman Kala|Keskuskatu 45|Helsinki||21240|Finland
+10674|ISLAT|4|18.9.1997 00:00:00|16.10.1997 00:00:00|30.9.1997 00:00:00|2|0,90 лв|Island Trading|Garden House
+Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10675|FRANK|5|19.9.1997 00:00:00|17.10.1997 00:00:00|23.9.1997 00:00:00|2|31,85 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10676|TORTU|2|22.9.1997 00:00:00|20.10.1997 00:00:00|29.9.1997 00:00:00|2|2,01 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
+10677|ANTON|1|22.9.1997 00:00:00|20.10.1997 00:00:00|26.9.1997 00:00:00|3|4,03 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
+10678|SAVEA|7|23.9.1997 00:00:00|21.10.1997 00:00:00|16.10.1997 00:00:00|3|388,98 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10679|BLONP|8|23.9.1997 00:00:00|21.10.1997 00:00:00|30.9.1997 00:00:00|3|27,94 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
+10680|OLDWO|1|24.9.1997 00:00:00|22.10.1997 00:00:00|26.9.1997 00:00:00|1|26,61 лв|Old World Delicatessen|2743 Bering St.|Anchorage|AK|99508|USA
+10681|GREAL|3|25.9.1997 00:00:00|23.10.1997 00:00:00|30.9.1997 00:00:00|3|76,13 лв|Great Lakes Food Market|2732 Baker Blvd.|Eugene|OR|97403|USA
+10682|ANTON|3|25.9.1997 00:00:00|23.10.1997 00:00:00|1.10.1997 00:00:00|2|36,13 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
+10683|DUMON|2|26.9.1997 00:00:00|24.10.1997 00:00:00|1.10.1997 00:00:00|1|4,40 лв|Du monde entier|67, rue des Cinquante Otages|Nantes||44000|France
+10684|OTTIK|3|26.9.1997 00:00:00|24.10.1997 00:00:00|30.9.1997 00:00:00|1|145,63 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
+10685|GOURL|4|29.9.1997 00:00:00|13.10.1997 00:00:00|10687|HUNGO|9|30.9.1997 00:00:00|28.10.1997 00:00:00|30.10.1997 00:00:00|2|296,43 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10688|VAFFE|4|1.10.1997 00:00:00|15.10.1997 00:00:00|7.10.1997 00:00:00|2|299,09 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
+10689|BERGS|1|1.10.1997 00:00:00|29.10.1997 00:00:00|7.10.1997 00:00:00|2|13,42 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10690|HANAR|1|2.10.1997 00:00:00|30.10.1997 00:00:00|3.10.1997 00:00:00|1|15,80 лв|Hanari Carnes|Rua do Paco, 67|Rio de Janeiro|RJ|05454-876|Brazil
+10691|QUICK|2|3.10.1997 00:00:00|14.11.1997 00:00:00|22.10.1997 00:00:00|2|810,05 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10692|ALFKI|4|3.10.1997 00:00:00|31.10.1997 00:00:00|13.10.1997 00:00:00|2|61,02 лв|Alfreds Futterkiste|Obere Str. 57|Berlin||12209|Germany
+10693|WHITC|3|6.10.1997 00:00:00|20.10.1997 00:00:00|10.10.1997 00:00:00|3|139,34 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10694|QUICK|8|6.10.1997 00:00:00|3.11.1997 00:00:00|9.10.1997 00:00:00|3|398,36 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10695|WILMK|7|7.10.1997 00:00:00|18.11.1997 00:00:00|14.10.1997 00:00:00|1|16,72 лв|Wilman Kala|Keskuskatu 45|Helsinki||21240|Finland
+10696|WHITC|8|8.10.1997 00:00:00|19.11.1997 00:00:00|14.10.1997 00:00:00|3|102,55 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10697|LINOD|3|8.10.1997 00:00:00|5.11.1997 00:00:00|14.10.1997 00:00:00|1|45,52 лв|LINO-Delicateses|Ave. 5 de Mayo Porlamar|I. de Margarita|Nueva Esparta|4980|Venezuela
+10698|ERNSH|4|9.10.1997 00:00:00|6.11.1997 00:00:00|17.10.1997 00:00:00|1|272,47 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10699|MORGK|3|9.10.1997 00:00:00|6.11.1997 00:00:00|13.10.1997 00:00:00|3|0,58 лв|Morgenstern Gesundkost|Heerstr. 22|Leipzig||04179|Germany
+10700|SAVEA|3|10.10.1997 00:00:00|7.11.1997 00:00:00|16.10.1997 00:00:00|1|65,10 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10701|HUNGO|6|13.10.1997 00:00:00|27.10.1997 00:00:00|15.10.1997 00:00:00|3|220,31 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10702|ALFKI|4|13.10.1997 00:00:00|24.11.1997 00:00:00|21.10.1997 00:00:00|1|23,94 лв|Alfreds Futterkiste|Obere Str. 57|Berlin||12209|Germany
+10703|FOLKO|6|14.10.1997 00:00:00|11.11.1997 00:00:00|20.10.1997 00:00:00|2|152,30 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10704|QUEEN|6|14.10.1997 00:00:00|11.11.1997 00:00:00|7.11.1997 00:00:00|1|4,78 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
+10705|HILAA|9|15.10.1997 00:00:00|12.11.1997 00:00:00|18.11.1997 00:00:00|2|3,52 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
+10706|OLDWO|8|16.10.1997 00:00:00|13.11.1997 00:00:00|21.10.1997 00:00:00|3|135,63 лв|Old World Delicatessen|2743 Bering St.|Anchorage|AK|99508|USA
+10707|AROUT|4|16.10.1997 00:00:00|30.10.1997 00:00:00|23.10.1997 00:00:00|3|21,74 лв|Around the Horn|Brook Farm
+Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10708|THEBI|6|17.10.1997 00:00:00|28.11.1997 00:00:00|5.11.1997 00:00:00|2|2,96 лв|The Big Cheese|89 Jefferson Way
+Suite 2|Portland|OR|97201|USA
+10709|GOURL|1|17.10.1997 00:00:00|14.11.1997 00:00:00|20.11.1997 00:00:00|3|210,80 лв|Gourmet Lanchonetes|Av. Brasil, 442|Campinas|SP|04876-786|Brazil
+10710|FRANS|1|20.10.1997 00:00:00|17.11.1997 00:00:00|23.10.1997 00:00:00|1|4,98 лв|Franchi S.p.A.|Via Monte Bianco 34|Torino||10100|Italy
+10711|SAVEA|5|21.10.1997 00:00:00|2.12.1997 00:00:00|29.10.1997 00:00:00|2|52,41 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10712|HUNGO|3|21.10.1997 00:00:00|18.11.1997 00:00:00|31.10.1997 00:00:00|1|89,93 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10713|SAVEA|1|22.10.1997 00:00:00|19.11.1997 00:00:00|24.10.1997 00:00:00|1|167,05 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10714|SAVEA|5|22.10.1997 00:00:00|19.11.1997 00:00:00|27.10.1997 00:00:00|3|24,49 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|837210716|RANCH|4|24.10.1997 00:00:00|21.11.1997 00:00:00|27.10.1997 00:00:00|2|22,57 лв|Rancho grande|Av. del Libertador 900|Buenos Aires||1010|Argentina
+10717|FRANK|1|24.10.1997 00:00:00|21.11.1997 00:00:00|29.10.1997 00:00:00|2|59,25 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
+10718|KOENE|1|27.10.1997 00:00:00|24.11.1997 00:00:00|29.10.1997 00:00:00|3|170,88 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
+10719|LETSS|8|27.10.1997 00:00:00|24.11.1997 00:00:00|5.11.1997 00:00:00|2|51,44 лв|Let's Stop N Shop|87 Polk St.
+Suite 5|San Francisco|CA|94117|USA
+10720|QUEDE|8|28.10.1997 00:00:00|11.11.1997 00:00:00|5.11.1997 00:00:00|2|9,53 лв|Que Delicia|Rua da Panificadora, 12|Rio de Janeiro|RJ|02389-673|Brazil
+10721|QUICK|5|29.10.1997 00:00:00|26.11.1997 00:00:00|31.10.1997 00:00:00|3|48,92 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10722|SAVEA|8|29.10.1997 00:00:00|10.12.1997 00:00:00|4.11.1997 00:00:00|1|74,58 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10723|WHITC|3|30.10.1997 00:00:00|27.11.1997 00:00:00|25.11.1997 00:00:00|1|21,72 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10724|MEREP|8|30.10.1997 00:00:00|11.12.1997 00:00:00|5.11.1997 00:00:00|2|57,75 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
+10725|FAMIA|4|31.10.1997 00:00:00|28.11.1997 00:00:00|5.11.1997 00:00:00|3|10,83 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
+10726|EASTC|4|3.11.1997 00:00:00|17.11.1997 00:00:00|5.12.1997 00:00:00|1|16,56 лв|Eastern Connection|35 King George|London||WX3 6FW|UK
+10727|REGGC|2|3.11.1997 00:00:00|1.12.1997 00:00:00|5.12.1997 00:00:00|1|89,90 лв|Reggiani Caseifici|Strada Provinciale 124|Reggio Emilia||42100|Italy
+10728|QUEEN|4|4.11.1997 00:00:00|2.12.1997 00:00:00|11.11.1997 00:00:00|2|58,33 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
+10729|LINOD|8|4.11.1997 00:00:00|16.12.1997 00:00:00|14.11.1997 00:00:00|3|141,06 лв|LINO-Delicateses|Ave. 5 de Mayo Porlamar|I. de Margarita|Nueva Esparta|4980|Venezuela
+10730|BONAP|5|5.11.1997 00:00:00|3.12.1997 00:00:00|14.11.1997 00:00:00|1|20,12 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10731|CHOPS|7|6.11.1997 00:00:00|4.12.1997 00:00:00|14.11.1997 00:00:00|1|96,65 лв|Chop-suey Chinese|Hauptstr. 31|Bern||3012|Switzerland
+10732|BONAP|3|6.11.1997 00:00:00|4.12.1997 00:00:00|7.11.1997 00:00:00|1|16,97 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10733|BERGS|1|7.11.1997 00:00:00|5.12.1997 00:00:00|10.11.1997 00:00:00|3|110,11 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
+10734|GOURL|2|7.11.1997 00:00:00|5.12.1997 00:00:00|12.11.1997 00:00:00|3|1,63 лв|Gourmet Lanchonetes|Av. Brasil, 442|Campinas|SP|04876-786|Brazil
+10735|LETSS|6|10.11.1997 00:00:00|8.12.1997 00:00:00|21.11.1997 00:00:00|2|45,97 лв|Let's Stop N Shop|87 Polk St.
+Suite 5|San Francisco|CA|94117|USA
+10736|HUNGO|9|11.11.1997 00:00:00|9.12.1997 00:00:00|21.11.1997 00:00:00|2|44,10 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
+10737|VINET|2|11.11.1997 00:00:00|9.12.1997 00:00:00|18.11.1997 00:00:00|2|7,79 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
+10738|SPECD|2|12.11.1997 00:00:00|10.12.1997 00:00:00|18.11.1997 00:00:00|1|2,91 лв|Specialites du monde|25, rue Lauriston|Paris||75016|France
+10739|VINET|3|12.11.1997 00:00:00|10.12.1997 00:00:00|17.11.1997 00:00:00|3|11,08 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
+10740|WHITC|4|13.11.1997 00:00:00|11.12.1997 00:00:00|25.11.1997 00:00:00|2|81,88 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
+10741|AROUT|4|14.11.1997 00:00:00|28.11.1997 00:00:00|18.11.1997 00:00:00|3|10,96 лв|Around the Horn|Brook Farm
+Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10742|BOTTM|3|14.11.1997 00:00:00|12.12.1997 00:00:00|18.11.1997 00:00:00|3|243,73 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
+10743|AROUT|1|17.11.1997 00:00:00|15.12.1997 00:00:00|21.11.1997 00:00:00|2|23,72 лв|Around the 10746|CHOPS|1|19.11.1997 00:00:00|17.12.1997 00:00:00|21.11.1997 00:00:00|3|31,43 лв|Chop-suey Chinese|Hauptstr. 31|Bern||3012|Switzerland
+10747|PICCO|6|19.11.1997 00:00:00|17.12.1997 00:00:00|26.11.1997 00:00:00|1|117,33 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
+10748|SAVEA|3|20.11.1997 00:00:00|18.12.1997 00:00:00|28.11.1997 00:00:00|1|232,55 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10749|ISLAT|4|20.11.1997 00:00:00|18.12.1997 00:00:00|19.12.1997 00:00:00|2|61,53 лв|Island Trading|Garden House
+Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10750|WARTH|9|21.11.1997 00:00:00|19.12.1997 00:00:00|24.11.1997 00:00:00|1|79,30 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
+10751|RICSU|3|24.11.1997 00:00:00|22.12.1997 00:00:00|3.12.1997 00:00:00|3|130,79 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
+10752|NORTS|2|24.11.1997 00:00:00|22.12.1997 00:00:00|28.11.1997 00:00:00|3|1,39 лв|North/South|South House
+300 Queensbridge|London||SW7 1RZ|UK
+10753|FRANS|3|25.11.1997 00:00:00|23.12.1997 00:00:00|27.11.1997 00:00:00|1|7,70 лв|Franchi S.p.A.|Via Monte Bianco 34|Torino||10100|Italy
+10754|MAGAA|6|25.11.1997 00:00:00|23.12.1997 00:00:00|27.11.1997 00:00:00|3|2,38 лв|Magazzini Alimentari Riuniti|Via Ludovico il Moro 22|Bergamo||24100|Italy
+10755|BONAP|4|26.11.1997 00:00:00|24.12.1997 00:00:00|28.11.1997 00:00:00|2|16,71 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
+10756|SPLIR|8|27.11.1997 00:00:00|25.12.1997 00:00:00|2.12.1997 00:00:00|2|73,21 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
+10757|SAVEA|6|27.11.1997 00:00:00|25.12.1997 00:00:00|15.12.1997 00:00:00|1|8,19 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
+10758|RICSU|3|28.11.1997 00:00:00|26.12.1997 00:00:00|4.12.1997 00:00:00|3|138,17 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
+10759|ANATR|3|28.11.1997 00:00:00|26.12.1997 00:00:00|12.12.1997 00:00:00|3|11,99 лв|Ana Trujillo Emparedados y helados|Avda. de la Constitucion 2222|Mexico D.F.||05021|Mexico
+10760|MAISD|4|1.12.1997 00:00:00|29.12.1997 00:00:00|10.12.1997 00:00:00|1|155,64 лв|Maison Dewey|Rue Joseph-Bens 532|Bruxelles||B-1180|Belgium
+10761|RATTC|5|2.12.1997 00:00:00|30.12.1997 00:00:00|8.12.1997 00:00:00|2|18,66 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
+10762|FOLKO|3|2.12.1997 00:00:00|30.12.1997 00:00:00|9.12.1997 00:00:00|1|328,74 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
+10763|FOLIG|3|3.12.1997 00:00:00|31.12.1997 00:00:00|8.12.1997 00:00:00|3|37,35 лв|Folies gourmandes|184, chaussee de Tournai|Lille||59000|France
+10764|ERNSH|6|3.12.1997 00:00:00|31.12.1997 00:00:00|8.12.1997 00:00:00|3|145,45 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10765|QUICK|3|4.12.1997 00:00:00|1.1.1998 00:00:00|9.12.1997 00:00:00|3|42,74 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
+10766|OTTIK|4|5.12.1997 00:00:00|2.1.1998 00:00:00|9.12.1997 00:00:00|1|157,55 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
+10767|SUPRD|4|5.12.1997 00:00:00|2.1.1998 00:00:00|15.12.1997 00:00:00|3|1,59 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
+10768|AROUT|3|8.12.1997 00:00:00|5.1.1998 00:00:00|15.12.1997 00:00:00|2|146,32 лв|Around the Horn|Brook Farm
+Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10769|VAFFE|3|8.12.1997 00:00:00|5.1.1998 00:00:00|12.12.1997 00:00:00|1|65,06 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
+10770|HANAR|8|9.12.1997 00:00:00|6.1.1998 00:00:00|17.12.1997 00:00:00|3|5,32 лв|Hanari Carnes|Rua do Paco, 67|Rio de Janeiro|RJ|05454-876|Brazil
+10771|ERNSH|9|10.12.1997 00:00:00|7.1.1998 00:00:00|2.1.1998 00:00:00|2|11,19 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
+10772|LEHMS|3|10.12.1997 00:00:00|7.1.1998 00:00:00|19.12.1997 00:00:00|2|91,28 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
+10773|ERNSH|1|11.12.1997 00:00:00|8.1.1998 00:00:00|16.12.1997 00:00:00|3|96,43 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria

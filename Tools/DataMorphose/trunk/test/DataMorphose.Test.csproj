@@ -43,8 +43,14 @@
     <Folder Include="DemoDB\Text\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DemoDB\Text\Users.txt" />
-    <None Include="DemoDB\Text\UserDetails.txt" />
+    <None Include="DemoDB\Text\Categories.txt" />
+    <None Include="DemoDB\Text\Employees.txt" />
+    <None Include="DemoDB\Text\Orders.txt" />
+    <None Include="DemoDB\Text\Products.txt" />
+    <None Include="DemoDB\Text\Customers.txt" />
+    <None Include="DemoDB\Text\Shippers.txt" />
+    <None Include="DemoDB\Text\Suppliers.txt" />
+    <None Include="DemoDB\Text\OrderDetails.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\DataMorphose.csproj">

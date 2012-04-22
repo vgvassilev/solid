@@ -40,20 +40,19 @@ namespace DataMorphose.Test
   [TestFixture()]
   public class Test
   {
-    private void importDBFromFiles() {
-      //Database db = new Database("Test DB");
-      string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..");
+    private string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..");
+
+    public Test() {
       filePath = Path.Combine(filePath, "..");
       filePath = Path.Combine(filePath, "..");
       filePath = Path.Combine(filePath, "test");
       filePath = Path.Combine(filePath, "DemoDB");
       filePath = Path.Combine(filePath, "Text");
+    }
 
-      Table Users = importFromFile(Path.Combine(filePath, "Users.txt"));
-      Table UsersDetails = importFromFile(Path.Combine(filePath, "UserDetails.txt"));
-      Assert.IsTrue(Users.Name == "Users", "Table Users expected");
-      Assert.IsTrue(UsersDetails.Name == "UserDetails", "Table UserDetails expected");
-      int i;
+    private void importDBFromFiles() {
+      //Database db = new Database("Test DB");
+
     }
 
     private Table importFromFile(string file) {
@@ -88,10 +87,62 @@ namespace DataMorphose.Test
       return null;
     }
 
+    [Test()]
+    public void CheckCategories() {
+      Table Categories = importFromFile(Path.Combine(filePath, "Categories.txt"));
+      CheckTable(Categories, "Categories", 8, 4);
+    }
 
     [Test()]
-    public void TestCase() {
-      importDBFromFiles();
+    public void CheckCustomers() {
+      Table Customers = importFromFile(Path.Combine(filePath, "Customers.txt"));
+      CheckTable(Customers, "Customers", 95, 11);
+    }
+
+    [Test()]
+    public void CheckEmployees() {
+      Table Employees = importFromFile(Path.Combine(filePath, "Employees.txt"));
+      CheckTable(Employees, "Employees", 9, 17);
+    }
+
+    [Test()]
+    public void CheckOrederDetails() {
+      Table OrederDetails = importFromFile(Path.Combine(filePath, "OrederDetails.txt"));
+      CheckTable(OrederDetails, "OrederDetails", 775, 5);
+    }
+
+    [Test()]
+    public void CheckOreders() {
+      Table Oreders = importFromFile(Path.Combine(filePath, "Oreders.txt"));
+      CheckTable(Oreders, "Oreders", 530, 14);
+    }
+
+    [Test()]
+    public void CheckProducts() {
+      Table Products = importFromFile(Path.Combine(filePath, "Products.txt"));
+      CheckTable(Products, "Products", 78, 10);
+    }
+
+    [Test()]
+    public void CheckShippers() {
+      Table Shippers = importFromFile(Path.Combine(filePath, "Shippers.txt"));
+      CheckTable(Shippers, "Shippers", 3, 3);
+    }
+
+    [Test()]
+    public void CheckSuppliers() {
+      Table Suppliers = importFromFile(Path.Combine(filePath, "Suppliers.txt"));
+      CheckTable(Suppliers, "Suppliers", 38, 12);
+    }
+
+    private void CheckTable(Table table, string expectedName, int expectedRows,
+                            int expectedColummns) {
+
+      Assert.IsNotNull(table, "Table Customers must not be Null");
+      Assert.IsTrue(table.Name == expectedName, "Table name different than expected");
+      Assert.IsTrue(table.Header.Columns.Count == expectedColummns,
+                    "Columns count different from expected");
+      Assert.IsTrue(table.Rows.Count == expectedRows, "Row count different from expected");
     }
   }
 }
