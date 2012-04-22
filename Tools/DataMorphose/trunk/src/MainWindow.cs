@@ -23,7 +23,24 @@ namespace DataMorphose
 
     protected void OnOpenActionActivated (object sender, System.EventArgs e)
     {
-      throw new System.NotImplementedException ();
+      var fc = new Gtk.FileChooserDialog("Choose the file to open",
+                                         this, Gtk.FileChooserAction.Open,
+                                         "Cancel", Gtk.ResponseType.Cancel,
+                                         "Open", Gtk.ResponseType.Accept);
+      try {
+        fc.SelectMultiple = false;
+        var filter = new Gtk.FileFilter();
+        filter.Name = "Database description files (*.csvdb)";
+        filter.AddPattern("*.csvdb");
+        fc.AddFilter(filter);
+        fc.SetCurrentFolder(Environment.CurrentDirectory);
+        if (fc.Run() == (int)Gtk.ResponseType.Accept) {
+
+        }
+      }
+      finally {
+        fc.Destroy();
+      }
     }
 
     protected void OnQuitActionActivated (object sender, System.EventArgs e)
