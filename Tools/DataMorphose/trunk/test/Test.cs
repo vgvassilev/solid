@@ -102,19 +102,19 @@ namespace DataMorphose.Test
     [Test()]
     public void CheckEmployees() {
       Table Employees = importFromFile(Path.Combine(filePath, "Employees.txt"));
-      CheckTable(Employees, "Employees", 12, 16);
+      CheckTable(Employees, "Employees", 12, 17);
     }
 
     [Test()]
-    public void CheckOrederDetails() {
-      Table OrederDetails = importFromFile(Path.Combine(filePath, "OrederDetails.txt"));
-      CheckTable(OrederDetails, "OrederDetails", 400, 5);
+    public void CheckOrderDetails() {
+      Table OrderDetails = importFromFile(Path.Combine(filePath, "OrderDetails.txt"));
+      CheckTable(OrderDetails, "OrderDetails", 400, 5);
     }
 
     [Test()]
-    public void CheckOreders() {
-      Table Oreders = importFromFile(Path.Combine(filePath, "Oreders.txt"));
-      CheckTable(Oreders, "Oreders", 529, 14);
+    public void CheckOrders() {
+      Table Orders = importFromFile(Path.Combine(filePath, "Orders.txt"));
+      CheckTable(Orders, "Orders", 529, 14);
     }
 
     [Test()]
@@ -136,11 +136,11 @@ namespace DataMorphose.Test
     }
 
     private void CheckTable(Table table, string expectedName, int expectedRows,
-                            int expectedColummns) {
+                            int expectedColumns) {
 
       Assert.IsNotNull(table, "Table Customers must not be Null");
       Assert.IsTrue(table.Name == expectedName, "Table name different than expected");
-      Assert.IsTrue(table.Header.Columns.Count == expectedColummns,
+      Assert.IsTrue(table.Header.Columns.Count == expectedColumns,
                     "Columns count different from expected");
       Assert.IsTrue(table.Rows.Count == expectedRows, "Row count different from expected");
     }
