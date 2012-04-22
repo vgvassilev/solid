@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMorphose", "DataMorphose.csproj", "{05710681-804D-4225-B53D-8DCC08B604BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMorphose", "src\DataMorphose.csproj", "{05710681-804D-4225-B53D-8DCC08B604BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMorphose.Test", "..\test\DataMorphose.Test.csproj", "{0A76748C-7758-48BF-969F-0D7FC68A0EF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMorphose.Test", "test\DataMorphose.Test.csproj", "{0A76748C-7758-48BF-969F-0D7FC68A0EF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
