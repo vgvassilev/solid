@@ -16,10 +16,10 @@ namespace DataMorphose.Model
       set { name = value; }
     }
 
-    private object val = new List<object>();
+    private object val = null;
     public object Value {
       get { return this.val; }
-      set { value = value; }
+      set { val = value; }
     }
 
     public Column(string name) {
