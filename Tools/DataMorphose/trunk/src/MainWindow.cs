@@ -4,6 +4,9 @@
 //  * For further details see the nearest License.txt
 //  */
 
+using DataMorphose.Model;
+using DataMorphose.Import;
+
 using System;
 using Gtk;
 
@@ -11,6 +14,8 @@ namespace DataMorphose
 {
 	public partial class MainWindow : Gtk.Window
 	{
+    private Database db;
+
     public MainWindow() : base(Gtk.WindowType.Toplevel) {
       this.Build();
     }
@@ -35,7 +40,8 @@ namespace DataMorphose
         fc.AddFilter(filter);
         fc.SetCurrentFolder(Environment.CurrentDirectory);
         if (fc.Run() == (int)Gtk.ResponseType.Accept) {
-
+          CSVImporter importer = new CSVImporter();
+          db = importer.importDBFromFiles(fc.Filename);
         }
       }
       finally {

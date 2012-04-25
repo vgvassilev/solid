@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace DataMorphose.Model
 {
+  /// <summary>
+  /// Column.
+  /// </summary>
   public class Column
   {
     private string name;

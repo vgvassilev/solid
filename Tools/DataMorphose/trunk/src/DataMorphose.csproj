@@ -40,12 +40,15 @@
     <Compile Include="Model\Table.cs" />
     <Compile Include="Model\Row.cs" />
     <Compile Include="Model\Column.cs" />
+    <Compile Include="Controller\Import\CSVImporter.cs" />
+    <Compile Include="Model\Database.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Model\" />
     <Folder Include="View\" />
     <Folder Include="Controller\" />
+    <Folder Include="Controller\Import\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -71,7 +74,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Model\Database.cs" />
     <None Include="Properties\app.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
