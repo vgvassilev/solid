@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace DataMorphose.Model
 {
   /// <summary>
-  /// Column.
+  /// Column - the smallest unit of the database.
   /// </summary>
   public class Column
   {

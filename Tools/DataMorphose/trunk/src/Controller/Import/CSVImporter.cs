@@ -19,6 +19,10 @@ namespace DataMorphose.Import
       public ColLexer(string line) {
         this.line = line;
       }
+
+      /// <summary>
+      /// Reads symbol by symbol 
+      /// </summary>
   
       public string Lex() {
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -35,6 +39,15 @@ namespace DataMorphose.Import
       }
     }
 
+    /// <summary>
+    /// Imports DB from a list of files.
+    /// </summary>
+    /// <returns>
+    /// The DB from files.
+    /// </returns>
+    /// <param name='file'>
+    /// File.
+    /// </param>
 
     public Database importDBFromFiles(string file) {
       if (!File.Exists(file))
@@ -48,6 +61,16 @@ namespace DataMorphose.Import
 
       return db;
     }
+
+    /// <summary>
+    /// Reads row by row from a file and puts the result into table
+    /// </summary>
+    /// <returns>
+    /// The from file.
+    /// </returns>
+    /// <param name='file'>
+    /// File.
+    /// </param>
 
     public Table importFromFile(string file) {
       if (File.Exists(file)) {
