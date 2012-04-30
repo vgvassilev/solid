@@ -15,6 +15,14 @@ namespace DataMorphose.Model
       get { return this.columns; }
       set { columns = value; }
     }
+    
+    public object[] GetColumnsValues() {
+      object[] result = new object[Columns.Count];
+      for(int i = 0; i < Columns.Count; i++) {
+        result[i] = Columns[i].Value;
+      }
+      return result;
+    }
 
     public Row() {
     }
