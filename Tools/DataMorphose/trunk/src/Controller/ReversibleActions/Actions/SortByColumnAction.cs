@@ -34,7 +34,7 @@ namespace DataMorphose
     #endregion
 
     private int Compare(Row x, Row y) {
-      if (x.Columns.IndexOf(column))
+     // if (x.Columns.IndexOf(column))
       return 0; //if (Row)
     }
   }
