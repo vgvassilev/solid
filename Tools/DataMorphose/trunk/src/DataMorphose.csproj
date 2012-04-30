@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{05710681-804D-4225-B53D-8DCC08B604BF}</ProjectGuid>
@@ -22,15 +22,16 @@
     <DebugType>full</DebugType>
     <OutputPath>bin\Debug</OutputPath>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Optimize>false</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>none</DebugType>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Optimize>false</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
@@ -62,9 +63,11 @@
     <Compile Include="Model\Column.cs" />
     <Compile Include="Controller\Import\CSVImporter.cs" />
     <Compile Include="Model\Database.cs" />
+    <Compile Include="Controller\ReversibleActions\Action.cs" />
+    <Compile Include="Controller\ReversibleActions\IReversibleAction.cs" />
+    <Compile Include="Controller\ReversibleActions\Actions\SortByColumnAction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GUI" />
     <Folder Include="Properties\" />
     <Folder Include="Model\" />
     <Folder Include="View\" />
