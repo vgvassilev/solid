@@ -44,7 +44,7 @@ namespace DataMorphose.Test
     [Test()]
     public void CheckEmployees() {
       Table Employees = importer.importFromFile(Path.Combine(filePath, "Employees.txt"));
-      CheckTable(Employees, "Employees", 12, 17);
+      CheckTable(Employees, "Employees", 9, 17);
     }
 
     [Test()]
