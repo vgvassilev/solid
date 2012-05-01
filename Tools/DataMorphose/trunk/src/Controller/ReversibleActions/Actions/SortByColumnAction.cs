@@ -3,22 +3,23 @@
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
-using System.Collections.Generic;
-
 using DataMorphose.Model;
 
-namespace DataMorphose
+using System.Diagnostics;
+using System.Collections.Generic;
+
+namespace DataMorphose.Actions
 {
   public class SortByColumnAction : Action
   {
     private Table table = null;
-    private List<Row> cachedRows = null;
+    private List<Row> cachedRows = new List<Row>();
 
-    private Column column;
+    private int columnIndex;
 
-    public SortByColumnAction(Table table, Column column) {
+    public SortByColumnAction(Table table, int columnIndex) {
       this.table = table;
-      this.column = column;
+      this.columnIndex = columnIndex;
     }
 
     #region implemented abstract members of DataMorphose.Action
@@ -29,13 +30,17 @@ namespace DataMorphose
 
     public override void Redo()
     {
+      cachedRows.AddRange(table.Rows);
       table.Rows.Sort(Compare);
     }
     #endregion
 
     private int Compare(Row x, Row y) {
-     // if (x.Columns.IndexOf(column))
-      return 0; //if (Row)
+      Debug.Assert(columnIndex > -1, "Column not found!");
+      
+      Column xCol = x.Columns[columnIndex];
+      Column yCol = y.Columns[columnIndex];
+      return xCol.Value.ToString().CompareTo(yCol.Value.ToString());
     }
   }
 }

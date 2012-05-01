@@ -5,7 +5,7 @@
  */
 using System;
 
-namespace DataMorphose
+namespace DataMorphose.Actions
 {
   public interface IReversibleAction
   {

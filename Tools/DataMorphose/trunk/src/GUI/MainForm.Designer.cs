@@ -40,6 +40,9 @@ namespace DataMorphose.GUI
 		  this.mainMenu = new System.Windows.Forms.MenuStrip();
 		  this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 		  this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		  this.sortByIdTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		  this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		  this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 		  this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 		  this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 		  this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -66,6 +69,7 @@ namespace DataMorphose.GUI
 		  // 
 		  this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 		  		  		  this.openToolStripMenuItem,
+		  		  		  this.sortByIdTestToolStripMenuItem,
 		  		  		  this.exitToolStripMenuItem});
 		  this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 		  this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
@@ -74,14 +78,37 @@ namespace DataMorphose.GUI
 		  // openToolStripMenuItem
 		  // 
 		  this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-		  this.openToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+		  this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 		  this.openToolStripMenuItem.Text = "Open";
 		  this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
+		  // 
+		  // sortByIdTestToolStripMenuItem
+		  // 
+		  this.sortByIdTestToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+		  		  		  this.redoToolStripMenuItem,
+		  		  		  this.undoToolStripMenuItem});
+		  this.sortByIdTestToolStripMenuItem.Name = "sortByIdTestToolStripMenuItem";
+		  this.sortByIdTestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+		  this.sortByIdTestToolStripMenuItem.Text = "SortByIdTest";
+		  // 
+		  // redoToolStripMenuItem
+		  // 
+		  this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+		  this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+		  this.redoToolStripMenuItem.Text = "Redo";
+		  this.redoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItemClick);
+		  // 
+		  // undoToolStripMenuItem
+		  // 
+		  this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+		  this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+		  this.undoToolStripMenuItem.Text = "Undo";
+		  this.undoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItemClick);
 		  // 
 		  // exitToolStripMenuItem
 		  // 
 		  this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-		  this.exitToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+		  this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 		  this.exitToolStripMenuItem.Text = "Exit";
 		  this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
 		  // 
@@ -95,9 +122,9 @@ namespace DataMorphose.GUI
 		  // 
 		  this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 		  this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-		  this.dataGridView1.Location = new System.Drawing.Point(0, 231);
+		  this.dataGridView1.Location = new System.Drawing.Point(0, 83);
 		  this.dataGridView1.Name = "dataGridView1";
-		  this.dataGridView1.Size = new System.Drawing.Size(920, 150);
+		  this.dataGridView1.Size = new System.Drawing.Size(920, 298);
 		  this.dataGridView1.TabIndex = 1;
 		  // 
 		  // MainForm
@@ -118,6 +145,9 @@ namespace DataMorphose.GUI
 		  this.ResumeLayout(false);
 		  this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sortByIdTestToolStripMenuItem;
 		private System.Windows.Forms.DataGridView dataGridView1;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;

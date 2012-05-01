@@ -4,10 +4,12 @@
  * For further details see the nearest License.txt
  */
 
+using DataMorphose.Actions;
 using DataMorphose.Model;
 using DataMorphose.Import;
  
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -18,7 +20,8 @@ namespace DataMorphose.GUI
 	/// </summary>
 	public partial class MainForm : Form
 	{
-    	private Database db;
+    private Database db;
+    private List<Actions.Action> actions =  new List<Actions.Action>();
 		
 		public MainForm()
 		{
@@ -30,19 +33,42 @@ namespace DataMorphose.GUI
 			if (ofdDatabase.ShowDialog() == DialogResult.OK) {
         CSVImporter importer = new CSVImporter();
         db = importer.importDBFromFiles(ofdDatabase.FileName);
-        Table tbl = db.Tables[2];
-        foreach(Column headerCol in tbl.Header.Columns)
-          dataGridView1.Columns.Add(headerCol.Name, headerCol.Name);
-        
-        foreach(Row row in tbl.Rows) {
-          dataGridView1.Rows.Add(row.GetColumnsValues());
-        }
+        PopulateGridView();
       }	
+		}
+		
+		private void PopulateGridView()
+		{
+		  dataGridView1.Columns.Clear();
+		  dataGridView1.Rows.Clear();
+      Table tbl = db.Tables[2];
+      foreach(Column headerCol in tbl.Header.Columns)
+        dataGridView1.Columns.Add(headerCol.Name, headerCol.Name);
+        
+      foreach(Row row in tbl.Rows) {
+        dataGridView1.Rows.Add(row.GetColumnsValues());
+      }
 		}
 
 		void ExitToolStripMenuItemClick(object sender, System.EventArgs e)
 		{
 			Close();
+		}
+		
+		void RedoToolStripMenuItemClick(object sender, EventArgs e)
+		{
+		  SortByColumnAction a = new SortByColumnAction(db.Tables[2], /*columnIndex*/0);
+		  actions.Add(a);
+		  a.Redo();
+		  PopulateGridView();		  
+		}
+		
+		
+		void UndoToolStripMenuItemClick(object sender, EventArgs e)
+		{
+		  //Undo the last action
+		  actions[0].Undo();
+		  PopulateGridView();
 		}
 	}
 }
