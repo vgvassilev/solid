@@ -14,8 +14,7 @@ CACTU|Cactus Comidas para llevar|Patricio Simpson|Sales Agent|Cerrito 333|Buenos
 CENTC|Centro comercial Moctezuma|Francisco Chang|Marketing Manager|Sierras de Granada 9993|Mexico D.F.||05022|Mexico|(5) 555-3392|(5) 555-7293
 CHOPS|Chop-suey Chinese|Yang Wang|Owner|Hauptstr. 29|Bern||3012|Switzerland|0452-076545|
 COMMI|Comercio Mineiro|Pedro Afonso|Sales Associate|Av. dos Lusiadas, 23|Sao Paulo|SP|05432-043|Brazil|(11) 555-7647|
-CONSH|Consolidated Holdings|Elizabeth Brown|Sales Representative|Berkeley Gardens
-12  Brewery |London||WX1 6LT|UK|(171) 555-2282|(171) 555-9199
+CONSH|Consolidated Holdings|Elizabeth Brown|Sales Representative|Berkeley Gardens 12  Brewery |London||WX1 6LT|UK|(171) 555-2282|(171) 555-9199
 DRACD|Drachenblut Delikatessen|Sven Ottlieb|Order Administrator|Walserweg 21|Aachen||52066|Germany|0241-039123|0241-059428
 DUMON|Du monde entier|Janine Labrune|Owner|67, rue des Cinquante Otages|Nantes||44000|France|40.67.88.88|40.67.89.89
 EASTC|Eastern Connection|Ann Devon|Sales Agent|35 King George|London||WX3 6FW|UK|(171) 555-0297|(171) 555-3373
@@ -54,10 +53,8 @@ MAGAA|Magazzini Alimentari Riuniti|Giovanni Rovelli|Marketing Manager|Via Ludovi
 MAISD|Maison Dewey|Catherine Dewey|Sales Agent|Rue Joseph-Bens 532|Bruxelles||B-1180|Belgium|(02) 201 24 67|(02) 201 24 68
 MEREP|Mere Paillarde|Jean Fresniere|Marketing Assistant|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada|(514) 555-8054|(514) 555-8055
 MORGK|Morgenstern Gesundkost|Alexander Feuer|Marketing Assistant|Heerstr. 22|Leipzig||04179|Germany|0342-023176|
-NORTS|North/South|Simon Crowther|Sales Associate|South House
-300 Queensbridge|London||SW7 1RZ|UK|(171) 555-7733|(171) 555-2530
-OCEAN|Oceano Atlantico Ltda.|Yvonne Moncada|Sales Agent|Ing. Gustavo Moncada 8585
-Piso 20-A|Buenos Aires||1010|Argentina|(1) 135-5333|(1) 135-5535
+NORTS|North/South|Simon Crowther|Sales Associate|South House 300 Queensbridge|London||SW7 1RZ|UK|(171) 555-7733|(171) 555-2530
+OCEAN|Oceano Atlantico Ltda.|Yvonne Moncada|Sales Agent|Ing. Gustavo Moncada 8585 Piso 20-A|Buenos Aires||1010|Argentina|(1) 135-5333|(1) 135-5535
 OLDWO|Old World Delicatessen|Rene Phillips|Sales Representative|2743 Bering St.|Anchorage|AK|99508|USA|(907) 555-7584|(907) 555-2880
 OTTIK|Ottilies Kaseladen|Henriette Pfalzheim|Owner|Mehrheimerstr. 369|Koln||50739|Germany|0221-0644327|0221-0765721
 PARIS|Paris specialites|Marie Bertrand|Owner|265, boulevard Charonne|Paris||75012|France|(1) 42.34.22.66|(1) 42.34.22.77
@@ -68,17 +65,14 @@ QUEDE|Que Delicia|Bernardo Batista|Accounting Manager|Rua da Panificadora, 12|Ri
 QUEEN|Queen Cozinha|Lucia Carvalho|Marketing Assistant|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil|(11) 555-1189|
 QUICK|QUICK-Stop|Horst Kloss|Accounting Manager|Taucherstra?e 10|Cunewalde||01307|Germany|0372-035188|
 RANCH|Rancho grande|Sergio Gutierrez|Sales Representative|Av. del Libertador 900|Buenos Aires||1010|Argentina|(1) 123-5555|(1) 123-5556
-RATTC|RattlesnakSANTG|Sante Gourmet|Jonas Bergulfsen|Owner|Erling Skakkes gate 78|Stavern||4110|Norway|07-98 92 35|07-98 92 47
-5 6210
-) 555-3412|
+RATTC|RattlesnakSANTG|Sante Gourmet|Jonas Bergulfsen|Owner|Erling Skakkes gate 78|Stavern||4110|Norway|07-98 92 35|07-98 92 475 6210) 555-3412|
 SAVEA|Save-a-lot Markets|Jose Pavarotti|Sales Representative|187 Suffolk Ln.|Boise|ID|83720|USA|(208) 555-8097|
 SEVES|Seven Seas Imports|Hari Kumar|Sales Manager|90 Wadhurst Rd.|London||OX15 4NB|UK|(171) 555-1717|(171) 555-5646
 SIMOB|Simons bistro|Jytte Petersen|Owner|Vinb?ltet 34|Kobenhavn||1734|Denmark|31 12 34 56|31 13 35 57
 SPECD|Specialites du monde|Dominique Perrier|Marketing Manager|25, rue Lauriston|Paris||75016|France|(1) 47.55.60.10|(1) 47.55.60.20
 SPLIR|Split Rail Beer & Ale|Art Braunschweiger|Sales Manager|P.O. Box 555|Lander|WY|82520|USA|(307) 555-4680|(307) 555-6525
 SUPRD|Supremes delices|Pascale Cartrain|Accounting Manager|Boulevard Tirou, 255|Charleroi||B-6000|Belgium|(071) 23 67 22 20|(071) 23 67 22 21
-THEBI|The Big Cheese|Liz Nixon|Marketing Manager|89 Jefferson Way
-Suite 2|Portland|OR|97201|USA|(503) 555-3612|
+THEBI|The Big Cheese|Liz Nixon|Marketing Manager|89 Jefferson Way Suite 2|Portland|OR|97201|USA|(503) 555-3612|
 THECR|The Cracker Box|Liu Wong|Marketing Assistant|55 Grizzly Peak Rd.|Butte|MT|59801|USA|(406) 555-5834|(406) 555-8083
 TOMSP|Toms Spezialitaten|Karin Josephs|Marketing Manager|Luisenstr. 48|Munster||44087|Germany|0251-031259|0251-035695
 TORTU|Tortuga Restaurante|Miguel Angel Paolino|Owner|Avda. Azteca 123|Mexico D.F.||05033|Mexico|(5) 555-2933|
@@ -90,7 +84,6 @@ VINET|Vins et alcools Chevalier|Paul Henriot|Accounting Manager|59 rue de l'Abba
 WANDK|Die Wandernde Kuh|Rita Muller|Sales Representative|Adenauerallee 900|Stuttgart||70563|Germany|0711-020361|0711-035428
 WARTH|Wartian Herkku|Pirkko Koskitalo|Accounting Manager|Torikatu 38|Oulu||90110|Finland|981-443655|981-443655
 WELLI|Wellington Importadora|Paula Parente|Sales Manager|Rua do Mercado, 12|Resende|SP|08737-363|Brazil|(14) 555-8122|
-WHITC|White Clover Markets|Karl Jablonski|Owner|305 - 14th Ave. S.
-Suite 3B|Seattle|WA|98128|USA|(206) 555-4112|(206) 555-4115
+WHITC|White Clover Markets|Karl Jablonski|Owner|305 - 14th Ave. S. Suite 3B|Seattle|WA|98128|USA|(206) 555-4112|(206) 555-4115
 WILMK|Wilman Kala|Matti Karttunen|Owner/Marketing Assistant|Keskuskatu 45|Helsinki||21240|Finland|90-224 8858|90-224 8858
 WOLZA|Wolski  Zajazd|Zbyszek Piestrzeniewicz|Owner|ul. Filtrowa 68|Warszawa||01-012|Poland|(26) 642-7012|(26) 642-7012

@@ -38,7 +38,7 @@ namespace DataMorphose.Test
     [Test()]
     public void CheckCustomers() {
       Table Customers = importer.importFromFile(Path.Combine(filePath, "Customers.txt"));
-      CheckTable(Customers, "Customers", 95, 11);
+      CheckTable(Customers, "Customers", 88, 11);
     }
 
     [Test()]
@@ -56,7 +56,7 @@ namespace DataMorphose.Test
     [Test()]
     public void CheckOrders() {
       Table Orders = importer.importFromFile(Path.Combine(filePath, "Orders.txt"));
-      CheckTable(Orders, "Orders", 529, 14);
+      CheckTable(Orders, "Orders", 495, 14);
     }
 
     [Test()]

@@ -1,4 +1,4 @@
-OrderID|CustomerID|EmployeeID|OrderDate|RequiredDate|ShippedDate|ShipVia|Freight|ShipName|ShipAddress|ShipCity|ShipRegion|ShipPostalCode|ShipCountry
+﻿OrderID|CustomerID|EmployeeID|OrderDate|RequiredDate|ShippedDate|ShipVia|Freight|ShipName|ShipAddress|ShipCity|ShipRegion|ShipPostalCode|ShipCountry
 10248|VINET|5|4.7.1996 00:00:00|1.8.1996 00:00:00|16.7.1996 00:00:00|3|32,38 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
 10249|TOMSP|6|5.7.1996 00:00:00|16.8.1996 00:00:00|10.7.1996 00:00:00|1|11,61 лв|Toms Spezialitaten|Luisenstr. 48|Munster||44087|Germany
 10250|HANAR|4|8.7.1996 00:00:00|5.8.1996 00:00:00|12.7.1996 00:00:00|2|65,83 лв|Hanari Carnes|Rua do Paco, 67|Rio de Janeiro|RJ|05454-876|Brazil
@@ -61,22 +61,18 @@ OrderID|CustomerID|EmployeeID|OrderDate|RequiredDate|ShippedDate|ShipVia|Freight
 10307|LONEP|2|17.9.1996 00:00:00|15.10.1996 00:00:00|25.9.1996 00:00:00|2|0,56 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
 10308|ANATR|7|18.9.1996 00:00:00|16.10.1996 00:00:00|24.9.1996 00:00:00|3|1,61 лв|Ana Trujillo Emparedados y helados|Avda. de la Constitucion 2222|Mexico D.F.||05021|Mexico
 10309|HUNGO|3|19.9.1996 00:00:00|17.10.1996 00:00:00|23.10.1996 00:00:00|1|47,30 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
-10310|THEBI|8|20.9.1996 00:00:00|18.10.1996 00:00:00|27.9.1996 00:00:00|2|17,52 лв|The Big Cheese|89 Jefferson Way
-Suite 2|Portland|OR|97201|USA
+10310|THEBI|8|20.9.1996 00:00:00|18.10.1996 00:00:00|27.9.1996 00:00:00|2|17,52 лв|The Big Cheese|89 Jefferson Way Suite 2|Portland|OR|97201|USA
 10311|DUMON|1|20.9.1996 00:00:00|4.10.1996 00:00:00|26.9.1996 00:00:00|3|24,69 лв|Du monde entier|67, rue des Cinquante Otages|Nantes||44000|France
 10312|WANDK|2|23.9.1996 00:00:00|21.10.1996 00:00:00|3.10.1996 00:00:00|2|40,26 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
 10313|QUICK|2|24.9.1996 00:00:00|22.10.1996 00:00:00|4.10.1996 00:00:00|2|1,96 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
 10314|RATTC|1|25.9.1996 00:00:00|23.10.1996 00:00:00|4.10.1996 00:00:00|2|74,16 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
-10315|ISLAT|4|26.9.1996 00:00:00|24.10.1996 00:00:00|3.10.1996 00:00:00|2|41,76 лв|Island Trading|Garden House
-Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10315|ISLAT|4|26.9.1996 00:00:00|24.10.1996 00:00:00|3.10.1996 00:00:00|2|41,76 лв|Island Trading|Garden House Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10316|RATTC|1|27.9.1996 00:00:00|25.10.1996 00:00:00|8.10.1996 00:00:00|3|150,15 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
 10317|LONEP|6|30.9.1996 00:00:00|28.10.1996 00:00:00|10.10.1996 00:00:00|1|12,69 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
-10318|ISLAT|8|1.10.1996 00:00:00|29.10.1996 00:00:00|4.10.1996 00:00:00|2|4,73 лв|Island Trading|Garden House
-Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10318|ISLAT|8|1.10.1996 00:00:00|29.10.1996 00:00:00|4.10.1996 00:00:00|2|4,73 лв|Island Trading|Garden House Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10319|TORTU|7|2.10.1996 00:00:00|30.10.1996 00:00:00|11.10.1996 00:00:00|3|64,50 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
 10320|WARTH|5|3.10.1996 00:00:00|17.10.1996 00:00:00|18.10.1996 00:00:00|3|34,57 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
-10321|ISLAT|3|3.10.1996 00:00:00|31.10.1996 00:00:00|11.10.1996 00:00:00|2|3,43 лв|Island Trading|Garden House
-Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10321|ISLAT|3|3.10.1996 00:00:00|31.10.1996 00:00:00|11.10.1996 00:00:00|2|3,43 лв|Island Trading|Garden House Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10322|PERIC|7|4.10.1996 00:00:00|1.11.1996 00:00:00|23.10.1996 00:00:00|3|0,40 лв|Pericles Comidas clasicas|Calle Dr. Jorge Cash 321|Mexico D.F.||05033|Mexico
 10323|KOENE|4|7.10.1996 00:00:00|4.11.1996 00:00:00|14.10.1996 00:00:00|1|4,88 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
 10324|SAVEA|9|8.10.1996 00:00:00|5.11.1996 00:00:00|10.10.1996 00:00:00|1|214,27 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
@@ -85,8 +81,7 @@ Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10327|FOLKO|2|11.10.1996 00:00:00|8.11.1996 00:00:00|14.10.1996 00:00:00|1|63,36 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
 10328|FURIB|4|14.10.1996 00:00:00|11.11.1996 00:00:00|17.10.1996 00:00:00|3|87,03 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
 10329|SPLIR|4|15.10.1996 00:00:00|26.11.1996 00:00:00|23.10.1996 00:00:00|2|191,67 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
-10330|LILAS|3|16.10.1996 00:00:00|13.11.1996 00:00:00|28.10.1996 00:00:00|1|12,75 лв|LILA-Supermercado|Carrera 52 con A10334|VICTE|8|21.10.1996 00:00:00|18.11.1996 00:00:00|28.10.1996 00:00:00|2|8,56 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
-anada
+10330|LILAS|3|16.10.1996 00:00:00|13.11.1996 00:00:00|28.10.1996 00:00:00|1|12,75 лв|LILA-Supermercado|Carrera 52 con A10334|VICTE|8|21.10.1996 00:00:00|18.11.1996 00:00:00|28.10.1996 00:00:00|2|8,56 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France anada
 10335|HUNGO|7|22.10.1996 00:00:00|19.11.1996 00:00:00|24.10.1996 00:00:00|2|42,11 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
 10336|PRINI|7|23.10.1996 00:00:00|20.11.1996 00:00:00|25.10.1996 00:00:00|2|15,51 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
 10337|FRANK|4|24.10.1996 00:00:00|21.11.1996 00:00:00|29.10.1996 00:00:00|3|108,26 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
@@ -107,8 +102,7 @@ anada
 10352|FURIB|3|12.11.1996 00:00:00|26.11.1996 00:00:00|18.11.1996 00:00:00|3|1,30 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
 10353|PICCO|7|13.11.1996 00:00:00|11.12.1996 00:00:00|25.11.1996 00:00:00|3|360,63 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
 10354|PERIC|8|14.11.1996 00:00:00|12.12.1996 00:00:00|20.11.1996 00:00:00|3|53,80 лв|Pericles Comidas clasicas|Calle Dr. Jorge Cash 321|Mexico D.F.||05033|Mexico
-10355|AROUT|6|15.11.1996 00:00:00|13.12.1996 00:00:00|20.11.1996 00:00:00|1|41,95 лв|Around the Horn|Brook Farm
-Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10355|AROUT|6|15.11.1996 00:00:00|13.12.1996 00:00:00|20.11.1996 00:00:00|1|41,95 лв|Around the Horn|Brook Farm Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10356|WANDK|6|18.11.1996 00:00:00|16.12.1996 00:00:00|27.11.1996 00:00:00|2|36,71 лв|Die Wandernde Kuh|Adenauerallee 900|Stuttgart||70563|Germany
 10357|LILAS|1|19.11.1996 00:00:00|17.12.1996 00:00:00|2.12.1996 00:00:00|3|34,88 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
 10358|LAMAI|5|20.11.1996 00:00:00|18.12.1996 00:00:00|27.11.1996 00:00:00|1|19,64 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
@@ -126,8 +120,7 @@ Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10372|QUEEN|5|4.12.1996 00:00:00|1.1.1997 00:00:00|9.12.1996 00:00:00|2|890,78 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
 10373|HUNGO|4|5.12.1996 00:00:00|2.1.1997 00:00:00|11.12.1996 00:00:00|3|124,12 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
 10374|WOLZA|1|5.12.1996 00:00:00|2.1.1997 00:00:00|9.12.1996 00:00:00|3|3,94 лв|Wolski Zajazd|ul. Filtrowa 68|Warszawa||01-012|Poland
-10375|HUNGC|3|6.12.1996 00:00:00|3.1.1997 00:00:00|9.12.1996 00:00:00|2|20,12 лв|Hungry Coyote Import Store|City Center Plaza
-516 Main St.|Elgin|OR|97827|USA
+10375|HUNGC|3|6.12.1996 00:00:00|3.1.1997 00:00:00|9.12.1996 00:00:00|2|20,12 лв|Hungry Coyote Import Store|City Center Plaza 516 Main St.|Elgin|OR|97827|USA
 10376|MEREP|1|9.12.1996 00:00:00|6.1.1997 00:00:00|13.12.1996 00:00:00|2|20,39 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
 10377|SEVES|1|9.12.1996 00:00:00|6.1.1997 00:00:00|13.12.1996 00:00:00|3|22,21 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
 10378|FOLKO|5|10.12.1996 00:00:00|7.1.1997 00:00:00|19.12.1996 00:00:00|3|5,44 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
@@ -135,8 +128,7 @@ Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10380|HUNGO|8|12.12.1996 00:00:00|9.1.1997 00:00:00|16.1.1997 00:00:00|3|35,03 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
 10381|LILAS|3|12.12.1996 00:00:00|9.1.1997 00:00:00|13.12.1996 00:00:00|3|7,99 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
 10382|ERNSH|4|13.12.1996 00:00:00|10.1.1997 00:00:00|16.12.1996 00:00:00|1|94,77 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
-10383|AROUT|8|16.12.1996 00:00:00|13.1.1997 00:00:00|18.12.1996 00:00:00|3|34,24 лв|Around the Horn|Brook Farm
-Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10383|AROUT|8|16.12.1996 00:00:00|13.1.1997 00:00:00|18.12.1996 00:00:00|3|34,24 лв|Around the Horn|Brook Farm Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10384|BERGS|3|16.12.1996 00:00:00|13.1.1997 00:00:00|20.12.1996 00:00:00|3|168,64 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
 10385|SPLIR|1|17.12.1996 00:00:00|14.1.1997 00:00:00|23.12.1996 00:00:00|2|30,96 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
 10386|FAMIA|9|18.12.1996 00:00:00|1.1.1997 00:00:00|25.12.1996 00:00:00|3|13,99 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
@@ -145,8 +137,7 @@ Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10389|BOTTM|4|20.12.1996 00:00:00|17.1.1997 00:00:00|24.12.1996 00:00:00|2|47,42 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
 10390|ERNSH|6|23.12.1996 00:00:00|20.1.1997 00:00:00|26.12.1996 00:00:00|1|126,38 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
 10391|DRACD|3|23.12.1996 0010393|SAVEA|1|25.12.1996 00:00:00|22.1.1997 00:00:00|3.1.1997 00:00:00|3|126,56 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
-10394|HUNGC|1|25.12.1996 00:00:00|22.1.1997 00:00:00|3.1.1997 00:00:00|3|30,34 лв|Hungry Coyote Import Store|City Center Plaza
-516 Main St.|Elgin|OR|97827|USA
+10394|HUNGC|1|25.12.1996 00:00:00|22.1.1997 00:00:00|3.1.1997 00:00:00|3|30,34 лв|Hungry Coyote Import Store|City Center Plaza 516 Main St.|Elgin|OR|97827|USA
 10395|HILAA|6|26.12.1996 00:00:00|23.1.1997 00:00:00|3.1.1997 00:00:00|1|184,41 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
 10396|FRANK|1|27.12.1996 00:00:00|10.1.1997 00:00:00|6.1.1997 00:00:00|3|135,35 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
 10397|PRINI|5|27.12.1996 00:00:00|24.1.1997 00:00:00|2.1.1997 00:00:00|1|60,26 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
@@ -161,15 +152,13 @@ Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10406|QUEEN|7|7.1.1997 00:00:00|18.2.1997 00:00:00|13.1.1997 00:00:00|1|108,04 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
 10407|OTTIK|2|7.1.1997 00:00:00|4.2.1997 00:00:00|30.1.1997 00:00:00|2|91,48 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
 10408|FOLIG|8|8.1.1997 00:00:00|5.2.1997 00:00:00|14.1.1997 00:00:00|1|11,26 лв|Folies gourmandes|184, chaussee de Tournai|Lille||59000|France
-10409|OCEAN|3|9.1.1997 00:00:00|6.2.1997 00:00:00|14.1.1997 00:00:00|1|29,83 лв|Oceano Atlantico Ltda.|Ing. Gustavo Moncada 8585
-Piso 20-A|Buenos Aires||1010|Argentina
+10409|OCEAN|3|9.1.1997 00:00:00|6.2.1997 00:00:00|14.1.1997 00:00:00|1|29,83 лв|Oceano Atlantico Ltda.|Ing. Gustavo Moncada 8585 Piso 20-A|Buenos Aires||1010|Argentina
 10410|BOTTM|3|10.1.1997 00:00:00|7.2.1997 00:00:00|15.1.1997 00:00:00|3|2,40 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
 10411|BOTTM|9|10.1.1997 00:00:00|7.2.1997 00:00:00|21.1.1997 00:00:00|3|23,65 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
 10412|WARTH|8|13.1.1997 00:00:00|10.2.1997 00:00:00|15.1.1997 00:00:00|2|3,77 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
 10413|LAMAI|3|14.1.1997 00:00:00|11.2.1997 00:00:00|16.1.1997 00:00:00|2|95,66 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
 10414|FAMIA|2|14.1.1997 00:00:00|11.2.1997 00:00:00|17.1.1997 00:00:00|3|21,48 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
-10415|HUNGC|3|15.1.1997 00:00:00|12.2.1997 00:00:00|24.1.1997 00:00:00|1|0,20 лв|Hungry Coyote Import Store|City Center Plaza
-516 Main St.|Elgin|OR|97827|USA
+10415|HUNGC|3|15.1.1997 00:00:00|12.2.1997 00:00:00|24.1.1997 00:00:00|1|0,20 лв|Hungry Coyote Import Store|City Center Plaza 516 Main St.|Elgin|OR|97827|USA
 10416|WARTH|8|16.1.1997 00:00:00|13.2.1997 00:00:00|27.1.1997 00:00:00|3|22,72 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
 10417|SIMOB|4|16.1.1997 00:00:00|13.2.1997 00:00:00|28.1.1997 00:00:00|3|70,29 лв|Simons bistro|Vinb?ltet 34|Kobenhavn||1734|Denmark
 10418|QUICK|4|17.1.1997 00:00:00|14.2.1997 00:00:00|24.1.1997 00:00:00|1|17,55 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
@@ -186,8 +175,7 @@ Piso 20-A|Buenos Aires||1010|Argentina
 10432|SPLIR|3|31.1.1997 00:00:00|14.2.1997 00:00:00|7.2.1997 00:00:00|2|4,34 лв|Split Rail Beer & Ale|P.O. Box 555|Lander|WY|82520|USA
 10433|PRINI|3|3.2.1997 00:00:00|3.3.1997 00:00:00|4.3.1997 00:00:00|3|73,83 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
 10434|FOLKO|3|3.2.1997 00:00:00|3.3.1997 00:00:00|13.2.1997 00:00:00|2|17,92 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
-10435|CONSH|8|4.2.1997 00:00:00|18.3.1997 00:00:00|7.2.1997 00:00:00|2|9,21 лв|Consolidated Holdings|Berkeley Gardens
-12  Brewery |London||WX1 6LT|UK
+10435|CONSH|8|4.2.1997 00:00:00|18.3.1997 00:00:00|7.2.1997 00:00:00|2|9,21 лв|Consolidated Holdings|Berkeley Gardens 12  Brewery |London||WX1 6LT|UK
 10436|BLONP|3|5.2.1997 00:00:00|5.3.1997 00:00:00|11.2.1997 00:00:00|2|156,66 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
 10437|WARTH|8|5.2.1997 00:00:00|5.3.1997 00:00:00|12.2.1997 00:00:00|1|19,97 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
 10438|TOMSP|3|6.2.1997 00:00:00|6.3.1997 00:00:00|14.2.1997 00:00:00|2|8,24 лв|Toms Spezialitaten|Luisenstr. 48|Munster||44087|Germany
@@ -204,8 +192,7 @@ Piso 20-A|Buenos Aires||1010|Argentina
 10449|BLONP|3|18.2.1997 00:00:00|18.3.1997 00:00:00|27.2.1997 00:00:00|2|53,30 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
 10450|VICTE|8|19.2.1997 00:00:00|19.3.1997 00:00:00|11.3.1997 00:00:00|2|7,23 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
 10451|QUICK|4|19.2.1997 00:00:00|5.3.1997 00:00:00|12.3.1997 00:00:00|3|189,09 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
-10452|SAVEA|8|20.2.1997 00:00:00|20.3.1997 00:00:00|26.2.1997 00:00:00|1|140,26 лв|Save-a-lot Markets|187 10453|AROUT|1|21.2.1997 00:00:00|21.3.1997 00:00:00|26.2.1997 00:00:00|2|25,36 лв|Around the Horn|Brook Farm
-Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10452|SAVEA|8|20.2.1997 00:00:00|20.3.1997 00:00:00|26.2.1997 00:00:00|1|140,26 лв|Save-a-lot Markets|187 10453|AROUT|1|21.2.1997 00:00:00|21.3.1997 00:00:00|26.2.1997 00:00:00|2|25,36 лв|Around the Horn|Brook Farm Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10454|LAMAI|4|21.2.1997 00:00:00|21.3.1997 00:00:00|25.2.1997 00:00:00|3|2,74 лв|La maison d'Asie|1 rue Alsace-Lorraine|Toulouse||31000|France
 10455|WARTH|8|24.2.1997 00:00:00|7.4.1997 00:00:00|3.3.1997 00:00:00|2|180,45 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
 10456|KOENE|8|25.2.1997 00:00:00|8.4.1997 00:00:00|28.2.1997 00:00:00|2|8,12 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
@@ -214,8 +201,7 @@ Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10459|VICTE|4|27.2.1997 00:00:00|27.3.1997 00:00:00|28.2.1997 00:00:00|2|25,09 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
 10460|FOLKO|8|28.2.1997 00:00:00|28.3.1997 00:00:00|3.3.1997 00:00:00|1|16,27 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
 10461|LILAS|1|28.2.1997 00:00:00|28.3.1997 00:00:00|5.3.1997 00:00:00|3|148,61 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
-10462|CONSH|2|3.3.1997 00:00:00|31.3.1997 00:00:00|18.3.1997 00:00:00|1|6,17 лв|Consolidated Holdings|Berkeley Gardens
-12  Brewery |London||WX1 6LT|UK
+10462|CONSH|2|3.3.1997 00:00:00|31.3.1997 00:00:00|18.3.1997 00:00:00|1|6,17 лв|Consolidated Holdings|Berkeley Gardens 12  Brewery |London||WX1 6LT|UK
 10463|SUPRD|5|4.3.1997 00:00:00|1.4.1997 00:00:00|6.3.1997 00:00:00|3|14,78 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
 10464|FURIB|4|4.3.1997 00:00:00|1.4.1997 00:00:00|14.3.1997 00:00:00|2|89,00 лв|Furia Bacalhau e Frutos do Mar|Jardim das rosas n. 32|Lisboa||1675|Portugal
 10465|VAFFE|1|5.3.1997 00:00:00|2.4.1997 00:00:00|14.3.1997 00:00:00|3|145,04 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
@@ -226,17 +212,14 @@ Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10470|BONAP|4|11.3.1997 00:00:00|8.4.1997 00:00:00|14.3.1997 00:00:00|2|64,56 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
 10471|BSBEV|2|11.3.1997 00:00:00|8.4.1997 00:00:00|18.3.1997 00:00:00|3|45,59 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
 10472|SEVES|8|12.3.1997 00:00:00|9.4.1997 00:00:00|19.3.1997 00:00:00|1|4,20 лв|Seven Seas Imports|90 Wadhurst Rd.|London||OX15 4NB|UK
-10473|ISLAT|1|13.3.1997 00:00:00|27.3.1997 00:00:00|21.3.1997 00:00:00|3|16,37 лв|Island Trading|Garden House
-Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10473|ISLAT|1|13.3.1997 00:00:00|27.3.1997 00:00:00|21.3.1997 00:00:00|3|16,37 лв|Island Trading|Garden House Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10474|PERIC|5|13.3.1997 00:00:00|10.4.1997 00:00:00|21.3.1997 00:00:00|2|83,49 лв|Pericles Comidas clasicas|Calle Dr. Jorge Cash 321|Mexico D.F.||05033|Mexico
 10475|SUPRD|9|14.3.1997 00:00:00|11.4.1997 00:00:00|4.4.1997 00:00:00|1|68,52 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
 10476|HILAA|8|17.3.1997 00:00:00|14.4.1997 00:00:00|24.3.1997 00:00:00|3|4,41 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
 10477|PRINI|5|17.3.1997 00:00:00|14.4.1997 00:00:00|25.3.1997 00:00:00|2|13,02 лв|Princesa Isabel Vinhos|Estrada da saude n. 58|Lisboa||1756|Portugal
 10478|VICTE|2|18.3.1997 00:00:00|1.4.1997 00:00:00|26.3.1997 00:00:00|3|4,81 лв|Victuailles en stock|2, rue du Commerce|Lyon||69004|France
 10479|RATTC|3|19.3.1997 00:00:00|16.4.1997 00:00:00|21.3.1997 00:00:00|3|708,95 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM|87110|USA
-10480|FOLIG|6|20.3.1997 00:00:00|17.4.1997 00:00:00|24.3.1997 00:00:00|2|1,35 лв|Folies gourmandes|184, chaussee de Tournai|Li10483|WHITC|7|24.3.1997 00:00:00|21.4.1997 00:00:00|25.4.1997 00:00:00|2|15,28 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
-SA
-Brazil
+10480|FOLIG|6|20.3.1997 00:00:00|17.4.1997 00:00:00|24.3.1997 00:00:00|2|1,35 лв|Folies gourmandes|184, chaussee de Tournai|Li10483|WHITC|7|24.3.1997 00:00:00|21.4.1997 00:00:00|25.4.1997 00:00:00|2|15,28 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA SA Brazil
 10484|BSBEV|3|24.3.1997 00:00:00|21.4.1997 00:00:00|1.4.1997 00:00:00|3|6,88 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
 10485|LINOD|4|25.3.1997 00:00:00|8.4.1997 00:00:00|31.3.1997 00:00:00|2|64,45 лв|LINO-Delicateses|Ave. 5 de Mayo Porlamar|I. de Margarita|Nueva Esparta|4980|Venezuela
 10486|HILAA|1|26.3.1997 00:00:00|23.4.1997 00:00:00|2.4.1997 00:00:00|2|30,53 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
@@ -268,8 +251,7 @@ Brazil
 10514|ERNSH|3|22.4.1997 00:00:00|20.5.1997 00:00:00|16.5.1997 00:00:00|2|789,95 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
 10515|QUICK|2|23.4.1997 00:00:00|7.5.1997 00:00:00|23.5.1997 00:00:00|1|204,47 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
 10516|HUNGO|2|24.4.1997 00:00:00|22.5.1997 00:00:00|1.5.1997 00:00:00|3|62,78 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
-10517|NORTS|3|24.4.1997 00:00:00|22.5.1997 00:00:00|29.4.1997 00:00:00|3|32,07 лв|North/South|South House
-300 Queensbridge|London||SW7 1RZ|UK
+10517|NORTS|3|24.4.1997 00:00:00|22.5.1997 00:00:00|29.4.1997 00:00:00|3|32,07 лв|North/South|South House 300 Queensbridge|London||SW7 1RZ|UK
 10518|TORTU|4|25.4.1997 00:00:00|9.5.1997 00:00:00|5.5.1997 00:00:00|2|218,15 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
 10519|CHOPS|6|28.4.1997 00:00:00|26.5.1997 00:00:00|1.5.1997 00:00:00|3|91,76 лв|Chop-suey Chinese|Hauptstr. 31|Bern||3012|Switzerland
 10520|SANTG|7|29.4.1997 00:00:00|27.5.1997 00:00:00|1.5.1997 00:00:00|1|13,37 лв|Sante Gourmet|Erling Skakkes gate 78|Stavern||4110|Norway
@@ -283,8 +265,7 @@ Brazil
 10528|GREAL|6|6.5.1997 00:00:00|20.5.1997 00:00:00|9.5.1997 00:00:00|2|3,35 лв|Great Lakes Food Market|2732 Baker Blvd.|Eugene|OR|97403|USA
 10529|MAISD|5|7.5.1997 00:00:00|4.6.1997 00:00:00|9.5.1997 00:00:00|2|66,69 лв|Maison Dewey|Rue Joseph-Bens 532|Bruxelles||B-1180|Belgium
 10530|PICCO|3|8.5.1997 00:00:00|5.6.1997 00:00:00|12.5.1997 00:00:00|2|339,22 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
-10531|OCEAN|7|8.5.1997 00:00:00|5.6.1997 00:00:00|19.5.1997 00:00:00|1|8,12 лв|Oceano Atlantico Ltda.|Ing. Gustavo Moncada 8585
-Piso 20-A|Buenos Aires||1010|Argentina
+10531|OCEAN|7|8.5.1997 00:00:00|5.6.1997 00:00:00|19.5.1997 00:00:00|1|8,12 лв|Oceano Atlantico Ltda.|Ing. Gustavo Moncada 8585 Piso 20-A|Buenos Aires||1010|Argentina
 10532|EASTC|7|9.5.1997 00:00:00|6.6.1997 00:00:00|12.5.1997 00:00:00|3|74,46 лв|Eastern Connection|35 King George|London||WX3 6FW|UK
 10533|FOLKO|8|12.5.1997 00:00:00|9.6.1997 00:00:00|22.5.1997 00:00:00|1|188,04 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
 10534|LEHMS|8|12.5.1997 00:00:00|9.6.1997 00:00:00|14.5.1997 00:00:00|2|27,94 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
@@ -293,8 +274,7 @@ Piso 20-A|Buenos Aires||1010|Argentina
 10537|RICSU|1|14.5.1997 00:00:00|28.5.1997 00:00:00|19.5.1997 00:00:00|1|78,85 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
 10538|BSBEV|9|15.5.1997 00:00:00|12.6.1997 00:00:00|16.5.1997 00:00:00|3|4,87 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
 10539|BSBEV|6|16.5.1997 00:00:00|13.6.1997 00:00:00|23.5.1997 00:00:00|3|12,36 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
-10540|QUICK|3|19.5.110542|KOENE|1|20.5.1997 00:00:00|17.6.1997 00:00:00|26.5.1997 00:00:00|3|10,95 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
-Brazil
+10540|QUICK|3|19.5.110542|KOENE|1|20.5.1997 00:00:00|17.6.1997 00:00:00|26.5.1997 00:00:00|3|10,95 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany Brazil
 10543|LILAS|8|21.5.1997 00:00:00|18.6.1997 00:00:00|23.5.1997 00:00:00|2|48,17 лв|LILA-Supermercado|Carrera 52 con Ave. Bolivar #65-98 Llano Largo|Barquisimeto|Lara|3508|Venezuela
 10544|LONEP|4|21.5.1997 00:00:00|18.6.1997 00:00:00|30.5.1997 00:00:00|1|24,91 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
 10545|LAZYK|8|22.5.1997 00:00:00|19.6.1997 00:00:00|26.6.1997 00:00:00|2|11,92 лв|Lazy K Kountry Store|12 Orchestra Terrace|Walla Walla|WA|99362|USA
@@ -310,8 +290,7 @@ Brazil
 10555|SAVEA|6|2.6.1997 00:00:00|30.6.1997 00:00:00|4.6.1997 00:00:00|3|252,49 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
 10556|SIMOB|2|3.6.1997 00:00:00|15.7.1997 00:00:00|13.6.1997 00:00:00|1|9,80 лв|Simons bistro|Vinb?ltet 34|Kobenhavn||1734|Denmark
 10557|LEHMS|9|3.6.1997 00:00:00|17.6.1997 00:00:00|6.6.1997 00:00:00|2|96,72 лв|Lehmanns Marktstand|Magazinweg 7|Frankfurt a.M. ||60528|Germany
-10558|AROUT|1|4.6.1997 00:00:00|2.7.1997 00:00:00|10.6.1997 00:00:00|2|72,97 лв|Around the Horn|Brook Farm
-Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10558|AROUT|1|4.6.1997 00:00:00|2.7.1997 00:00:00|10.6.1997 00:00:00|2|72,97 лв|Around the Horn|Brook Farm Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10559|BLONP|6|5.6.1997 00:00:00|3.7.1997 00:00:00|13.6.1997 00:00:00|1|8,05 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
 10560|FRANK|8|6.6.1997 00:00:00|4.7.1997 00:00:00|9.6.1997 00:00:00|1|36,65 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
 10561|FOLKO|2|6.6.1997 00:00:00|4.7.1997 00:00:00|9.6.1997 00:00:00|2|242,21 лв|Folk och fa HB|Akergatan 24|Bracke||S-844 67|Sweden
@@ -322,8 +301,7 @@ Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10566|BLONP|9|12.6.1997 00:00:00|10.7.1997 00:00:00|18.6.1997 00:00:00|1|88,40 лв|Blondel pere et fils|24, place Kleber|Strasbourg||67000|France
 10567|HUNGO|1|12.6.1997 00:00:00|10.7.1997 00:00:00|17.6.1997 00:00:00|1|33,97 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
 10568|GALED|3|13.6.1997 00:00:00|11.7.1997 00:00:00|9.7.1997 00:00:00|3|6,54 лв|Galeria del gastronomo|Rambla de Cataluna, 23|Barcelona||8022|Spain
-10569|RATTC|5|16.6.1997 00:00:00|14.7.1997 00:00:00|11.7.1997 00:00:00|1|58,98 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM10571|ERNSH|8|17.6.1997 00:00:00|29.7.1997 00:00:00|4.7.1997 00:00:00|3|26,06 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
-uebec|H1J 1C3|Canada
+10569|RATTC|5|16.6.1997 00:00:00|14.7.1997 00:00:00|11.7.1997 00:00:00|1|58,98 лв|Rattlesnake Canyon Grocery|2817 Milton Dr.|Albuquerque|NM10571|ERNSH|8|17.6.1997 00:00:00|29.7.1997 00:00:00|4.7.1997 00:00:00|3|26,06 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria uebec|H1J 1C3|Canada
 10572|BERGS|3|18.6.1997 00:00:00|16.7.1997 00:00:00|25.6.1997 00:00:00|2|116,43 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
 10573|ANTON|7|19.6.1997 00:00:00|17.7.1997 00:00:00|20.6.1997 00:00:00|3|84,84 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
 10574|TRAIH|4|19.6.1997 00:00:00|17.7.1997 00:00:00|30.6.1997 00:00:00|2|37,60 лв|Trail's Head Gourmet Provisioners|722 DaVinci Blvd.|Kirkland|WA|98034|USA
@@ -331,8 +309,7 @@ uebec|H1J 1C3|Canada
 10576|TORTU|3|23.6.1997 00:00:00|7.7.1997 00:00:00|30.6.1997 00:00:00|3|18,56 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
 10577|TRAIH|9|23.6.1997 00:00:00|4.8.1997 00:00:00|30.6.1997 00:00:00|2|25,41 лв|Trail's Head Gourmet Provisioners|722 DaVinci Blvd.|Kirkland|WA|98034|USA
 10578|BSBEV|4|24.6.1997 00:00:00|22.7.1997 00:00:00|25.7.1997 00:00:00|3|29,60 лв|B's Beverages|Fauntleroy Circus|London||EC2 5NT|UK
-10579|LETSS|1|25.6.1997 00:00:00|23.7.1997 00:00:00|4.7.1997 00:00:00|2|13,73 лв|Let's Stop N Shop|87 Polk St.
-Suite 5|San Francisco|CA|94117|USA
+10579|LETSS|1|25.6.1997 00:00:00|23.7.1997 00:00:00|4.7.1997 00:00:00|2|13,73 лв|Let's Stop N Shop|87 Polk St. Suite 5|San Francisco|CA|94117|USA
 10580|OTTIK|4|26.6.1997 00:00:00|24.7.1997 00:00:00|1.7.1997 00:00:00|3|75,89 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
 10581|FAMIA|3|26.6.1997 00:00:00|24.7.1997 00:00:00|2.7.1997 00:00:00|1|3,01 лв|Familia Arquibaldo|Rua Oros, 92|Sao Paulo|SP|05442-030|Brazil
 10582|BLAUS|3|27.6.1997 00:00:00|25.7.1997 00:00:00|14.7.1997 00:00:00|2|27,71 лв|Blauer See Delikatessen|Forsterstr. 57|Mannheim||68306|Germany
@@ -372,8 +349,7 @@ Suite 5|San Francisco|CA|94117|USA
 10618|MEREP|1|1.8.1997 00:00:00|12.9.1997 00:00:00|8.8.1997 00:00:00|1|154,68 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
 10619|MEREP|3|4.8.1997 00:00:00|1.9.1997 00:00:00|7.8.1997 00:00:00|3|91,05 лв|Mere Paillarde|43 rue St. Laurent|Montreal|Quebec|H1J 1C3|Canada
 10620|LAUGB|2|5.8.1997 00:00:00|2.9.1997 00:00:00|14.8.1997 00:00:00|3|0,94 лв|Laughing Bacchus Wine Cellars|2319 Elm St.|Vancouver|BC|V3F 2K1|Canada
-10621|ISLAT|4|5.8.1997 00:00:00|2.9.1997 00:00:00|11.8.1997 00:00:00|2|23,73 лв|Island Trading|Garden House
-Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10621|ISLAT|4|5.8.1997 00:00:00|2.9.1997 00:00:00|11.8.1997 00:00:00|2|23,73 лв|Island Trading|Garden House Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10622|RICAR|4|6.8.1997 00:00:00|3.9.1997 00:00:00|11.8.1997 00:00:00|3|50,97 лв|Ricardo Adocicados|Av. Copacabana, 267|Rio de Janeiro|RJ|02389-890|Brazil
 10623|FRANK|8|7.8.1997 00:00:00|4.9.1997 00:00:00|12.8.1997 00:00:00|2|97,18 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
 10624|THECR|4|7.8.1997 00:00:00|4.9.1997 00:00:00|19.8.1997 00:00:00|2|94,80 лв|The Cracker Box|55 Grizzly Peak Rd.|Butte|MT|59801|USA
@@ -411,8 +387,7 @@ Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10657|SAVEA|2|4.9.1997 00:00:00|2.10.1997 00:00:00|15.9.1997 00:00:00|2|352,69 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
 10658|QUICK|4|5.9.1997 00:00:00|3.10.1997 00:00:00|8.9.1997 00:00:00|1|364,15 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
 10659|QUEEN|7|5.9.1997 00:00:00|3.10.1997 00:00:00|10.9.1997 00:00:00|2|105,81 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
-10660|HUNGC|8|8.9.1997 00:00:00|6.10.1997 00:00:00|15.10.1997 00:00:00|1|111,29 лв|Hungry Coyote Import Store|City Center Plaza
-516 Main St.|Elgin|OR|97827|USA
+10660|HUNGC|8|8.9.1997 00:00:00|6.10.1997 00:00:00|15.10.1997 00:00:00|1|111,29 лв|Hungry Coyote Import Store|City Center Plaza 516 Main St.|Elgin|OR|97827|USA
 10661|HUNGO|7|9.9.1997 00:00:00|7.10.1997 00:00:00|15.9.1997 00:00:00|3|17,55 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
 10662|LONEP|3|9.9.1997 00:00:00|7.10.1997 00:00:00|18.9.1997 00:00:00|2|1,28 лв|Lonesome Pine Restaurant|89 Chiaroscuro Rd.|Portland|OR|97219|USA
 10663|BONAP|2|10.9.1997 00:00:00|24.9.1997 00:00:00|3.10.1997 00:00:00|2|113,15 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
@@ -426,8 +401,7 @@ Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10671|FRANR|1|17.9.1997 00:00:00|15.10.1997 00:00:00|24.9.1997 00:00:00|1|30,34 лв|France restauration|54, rue Royale|Nantes||44000|France
 10672|BERGS|9|17.9.1997 00:00:00|1.10.1997 00:00:00|26.9.1997 00:00:00|2|95,75 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
 10673|WILMK|2|18.9.1997 00:00:00|16.10.1997 00:00:00|19.9.1997 00:00:00|1|22,76 лв|Wilman Kala|Keskuskatu 45|Helsinki||21240|Finland
-10674|ISLAT|4|18.9.1997 00:00:00|16.10.1997 00:00:00|30.9.1997 00:00:00|2|0,90 лв|Island Trading|Garden House
-Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10674|ISLAT|4|18.9.1997 00:00:00|16.10.1997 00:00:00|30.9.1997 00:00:00|2|0,90 лв|Island Trading|Garden House Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10675|FRANK|5|19.9.1997 00:00:00|17.10.1997 00:00:00|23.9.1997 00:00:00|2|31,85 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
 10676|TORTU|2|22.9.1997 00:00:00|20.10.1997 00:00:00|29.9.1997 00:00:00|2|2,01 лв|Tortuga Restaurante|Avda. Azteca 123|Mexico D.F.||05033|Mexico
 10677|ANTON|1|22.9.1997 00:00:00|20.10.1997 00:00:00|26.9.1997 00:00:00|3|4,03 лв|Antonio Moreno Taqueria|Mataderos  2312|Mexico D.F.||05023|Mexico
@@ -458,10 +432,8 @@ Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10704|QUEEN|6|14.10.1997 00:00:00|11.11.1997 00:00:00|7.11.1997 00:00:00|1|4,78 лв|Queen Cozinha|Alameda dos Canarios, 891|Sao Paulo|SP|05487-020|Brazil
 10705|HILAA|9|15.10.1997 00:00:00|12.11.1997 00:00:00|18.11.1997 00:00:00|2|3,52 лв|HILARION-Abastos|Carrera 22 con Ave. Carlos Soublette #8-35|San Cristobal|Tachira|5022|Venezuela
 10706|OLDWO|8|16.10.1997 00:00:00|13.11.1997 00:00:00|21.10.1997 00:00:00|3|135,63 лв|Old World Delicatessen|2743 Bering St.|Anchorage|AK|99508|USA
-10707|AROUT|4|16.10.1997 00:00:00|30.10.1997 00:00:00|23.10.1997 00:00:00|3|21,74 лв|Around the Horn|Brook Farm
-Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
-10708|THEBI|6|17.10.1997 00:00:00|28.11.1997 00:00:00|5.11.1997 00:00:00|2|2,96 лв|The Big Cheese|89 Jefferson Way
-Suite 2|Portland|OR|97201|USA
+10707|AROUT|4|16.10.1997 00:00:00|30.10.1997 00:00:00|23.10.1997 00:00:00|3|21,74 лв|Around the Horn|Brook Farm Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10708|THEBI|6|17.10.1997 00:00:00|28.11.1997 00:00:00|5.11.1997 00:00:00|2|2,96 лв|The Big Cheese|89 Jefferson Way Suite 2|Portland|OR|97201|USA
 10709|GOURL|1|17.10.1997 00:00:00|14.11.1997 00:00:00|20.11.1997 00:00:00|3|210,80 лв|Gourmet Lanchonetes|Av. Brasil, 442|Campinas|SP|04876-786|Brazil
 10710|FRANS|1|20.10.1997 00:00:00|17.11.1997 00:00:00|23.10.1997 00:00:00|1|4,98 лв|Franchi S.p.A.|Via Monte Bianco 34|Torino||10100|Italy
 10711|SAVEA|5|21.10.1997 00:00:00|2.12.1997 00:00:00|29.10.1997 00:00:00|2|52,41 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
@@ -470,8 +442,7 @@ Suite 2|Portland|OR|97201|USA
 10714|SAVEA|5|22.10.1997 00:00:00|19.11.1997 00:00:00|27.10.1997 00:00:00|3|24,49 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|837210716|RANCH|4|24.10.1997 00:00:00|21.11.1997 00:00:00|27.10.1997 00:00:00|2|22,57 лв|Rancho grande|Av. del Libertador 900|Buenos Aires||1010|Argentina
 10717|FRANK|1|24.10.1997 00:00:00|21.11.1997 00:00:00|29.10.1997 00:00:00|2|59,25 лв|Frankenversand|Berliner Platz 43|Munchen||80805|Germany
 10718|KOENE|1|27.10.1997 00:00:00|24.11.1997 00:00:00|29.10.1997 00:00:00|3|170,88 лв|Koniglich Essen|Maubelstr. 90|Brandenburg||14776|Germany
-10719|LETSS|8|27.10.1997 00:00:00|24.11.1997 00:00:00|5.11.1997 00:00:00|2|51,44 лв|Let's Stop N Shop|87 Polk St.
-Suite 5|San Francisco|CA|94117|USA
+10719|LETSS|8|27.10.1997 00:00:00|24.11.1997 00:00:00|5.11.1997 00:00:00|2|51,44 лв|Let's Stop N Shop|87 Polk St. Suite 5|San Francisco|CA|94117|USA
 10720|QUEDE|8|28.10.1997 00:00:00|11.11.1997 00:00:00|5.11.1997 00:00:00|2|9,53 лв|Que Delicia|Rua da Panificadora, 12|Rio de Janeiro|RJ|02389-673|Brazil
 10721|QUICK|5|29.10.1997 00:00:00|26.11.1997 00:00:00|31.10.1997 00:00:00|3|48,92 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
 10722|SAVEA|8|29.10.1997 00:00:00|10.12.1997 00:00:00|4.11.1997 00:00:00|1|74,58 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
@@ -487,25 +458,21 @@ Suite 5|San Francisco|CA|94117|USA
 10732|BONAP|3|6.11.1997 00:00:00|4.12.1997 00:00:00|7.11.1997 00:00:00|1|16,97 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
 10733|BERGS|1|7.11.1997 00:00:00|5.12.1997 00:00:00|10.11.1997 00:00:00|3|110,11 лв|Berglunds snabbkop|Berguvsvagen  8|Lulea||S-958 22|Sweden
 10734|GOURL|2|7.11.1997 00:00:00|5.12.1997 00:00:00|12.11.1997 00:00:00|3|1,63 лв|Gourmet Lanchonetes|Av. Brasil, 442|Campinas|SP|04876-786|Brazil
-10735|LETSS|6|10.11.1997 00:00:00|8.12.1997 00:00:00|21.11.1997 00:00:00|2|45,97 лв|Let's Stop N Shop|87 Polk St.
-Suite 5|San Francisco|CA|94117|USA
+10735|LETSS|6|10.11.1997 00:00:00|8.12.1997 00:00:00|21.11.1997 00:00:00|2|45,97 лв|Let's Stop N Shop|87 Polk St. Suite 5|San Francisco|CA|94117|USA
 10736|HUNGO|9|11.11.1997 00:00:00|9.12.1997 00:00:00|21.11.1997 00:00:00|2|44,10 лв|Hungry Owl All-Night Grocers|8 Johnstown Road|Cork|Co. Cork||Ireland
 10737|VINET|2|11.11.1997 00:00:00|9.12.1997 00:00:00|18.11.1997 00:00:00|2|7,79 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
 10738|SPECD|2|12.11.1997 00:00:00|10.12.1997 00:00:00|18.11.1997 00:00:00|1|2,91 лв|Specialites du monde|25, rue Lauriston|Paris||75016|France
 10739|VINET|3|12.11.1997 00:00:00|10.12.1997 00:00:00|17.11.1997 00:00:00|3|11,08 лв|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims||51100|France
 10740|WHITC|4|13.11.1997 00:00:00|11.12.1997 00:00:00|25.11.1997 00:00:00|2|81,88 лв|White Clover Markets|1029 - 12th Ave. S.|Seattle|WA|98124|USA
-10741|AROUT|4|14.11.1997 00:00:00|28.11.1997 00:00:00|18.11.1997 00:00:00|3|10,96 лв|Around the Horn|Brook Farm
-Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10741|AROUT|4|14.11.1997 00:00:00|28.11.1997 00:00:00|18.11.1997 00:00:00|3|10,96 лв|Around the Horn|Brook Farm Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10742|BOTTM|3|14.11.1997 00:00:00|12.12.1997 00:00:00|18.11.1997 00:00:00|3|243,73 лв|Bottom-Dollar Markets|23 Tsawassen Blvd.|Tsawassen|BC|T2F 8M4|Canada
 10743|AROUT|1|17.11.1997 00:00:00|15.12.1997 00:00:00|21.11.1997 00:00:00|2|23,72 лв|Around the 10746|CHOPS|1|19.11.1997 00:00:00|17.12.1997 00:00:00|21.11.1997 00:00:00|3|31,43 лв|Chop-suey Chinese|Hauptstr. 31|Bern||3012|Switzerland
 10747|PICCO|6|19.11.1997 00:00:00|17.12.1997 00:00:00|26.11.1997 00:00:00|1|117,33 лв|Piccolo und mehr|Geislweg 14|Salzburg||5020|Austria
 10748|SAVEA|3|20.11.1997 00:00:00|18.12.1997 00:00:00|28.11.1997 00:00:00|1|232,55 лв|Save-a-lot Markets|187 Suffolk Ln.|Boise|ID|83720|USA
-10749|ISLAT|4|20.11.1997 00:00:00|18.12.1997 00:00:00|19.12.1997 00:00:00|2|61,53 лв|Island Trading|Garden House
-Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
+10749|ISLAT|4|20.11.1997 00:00:00|18.12.1997 00:00:00|19.12.1997 00:00:00|2|61,53 лв|Island Trading|Garden House Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10750|WARTH|9|21.11.1997 00:00:00|19.12.1997 00:00:00|24.11.1997 00:00:00|1|79,30 лв|Wartian Herkku|Torikatu 38|Oulu||90110|Finland
 10751|RICSU|3|24.11.1997 00:00:00|22.12.1997 00:00:00|3.12.1997 00:00:00|3|130,79 лв|Richter Supermarkt|Starenweg 5|Geneve||1204|Switzerland
-10752|NORTS|2|24.11.1997 00:00:00|22.12.1997 00:00:00|28.11.1997 00:00:00|3|1,39 лв|North/South|South House
-300 Queensbridge|London||SW7 1RZ|UK
+10752|NORTS|2|24.11.1997 00:00:00|22.12.1997 00:00:00|28.11.1997 00:00:00|3|1,39 лв|North/South|South House 300 Queensbridge|London||SW7 1RZ|UK
 10753|FRANS|3|25.11.1997 00:00:00|23.12.1997 00:00:00|27.11.1997 00:00:00|1|7,70 лв|Franchi S.p.A.|Via Monte Bianco 34|Torino||10100|Italy
 10754|MAGAA|6|25.11.1997 00:00:00|23.12.1997 00:00:00|27.11.1997 00:00:00|3|2,38 лв|Magazzini Alimentari Riuniti|Via Ludovico il Moro 22|Bergamo||24100|Italy
 10755|BONAP|4|26.11.1997 00:00:00|24.12.1997 00:00:00|28.11.1997 00:00:00|2|16,71 лв|Bon app'|12, rue des Bouchers|Marseille||13008|France
@@ -521,8 +488,7 @@ Crowther Way|Cowes|Isle of Wight|PO31 7PJ|UK
 10765|QUICK|3|4.12.1997 00:00:00|1.1.1998 00:00:00|9.12.1997 00:00:00|3|42,74 лв|QUICK-Stop|Taucherstra?e 10|Cunewalde||01307|Germany
 10766|OTTIK|4|5.12.1997 00:00:00|2.1.1998 00:00:00|9.12.1997 00:00:00|1|157,55 лв|Ottilies Kaseladen|Mehrheimerstr. 369|Koln||50739|Germany
 10767|SUPRD|4|5.12.1997 00:00:00|2.1.1998 00:00:00|15.12.1997 00:00:00|3|1,59 лв|Supremes delices|Boulevard Tirou, 255|Charleroi||B-6000|Belgium
-10768|AROUT|3|8.12.1997 00:00:00|5.1.1998 00:00:00|15.12.1997 00:00:00|2|146,32 лв|Around the Horn|Brook Farm
-Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
+10768|AROUT|3|8.12.1997 00:00:00|5.1.1998 00:00:00|15.12.1997 00:00:00|2|146,32 лв|Around the Horn|Brook Farm Stratford St. Mary|Colchester|Essex|CO7 6JX|UK
 10769|VAFFE|3|8.12.1997 00:00:00|5.1.1998 00:00:00|12.12.1997 00:00:00|1|65,06 лв|Vaffeljernet|Smagsloget 45|Arhus||8200|Denmark
 10770|HANAR|8|9.12.1997 00:00:00|6.1.1998 00:00:00|17.12.1997 00:00:00|3|5,32 лв|Hanari Carnes|Rua do Paco, 67|Rio de Janeiro|RJ|05454-876|Brazil
 10771|ERNSH|9|10.12.1997 00:00:00|7.1.1998 00:00:00|2.1.1998 00:00:00|2|11,19 лв|Ernst Handel|Kirchgasse 6|Graz||8010|Austria
