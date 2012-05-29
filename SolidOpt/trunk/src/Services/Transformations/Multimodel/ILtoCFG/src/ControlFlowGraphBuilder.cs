@@ -89,6 +89,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		{
 			if (i.Previous == null)
 				return true;
+
+      foreach (ExceptionHandler handler in body.ExceptionHandlers)
+        if (handler.HandlerStart == i)
+          return true;
 			
 			if (IsBlockTerminator(i.Previous))
 				return true;
@@ -222,7 +226,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 						               i.OpCode.FlowControl,
 						               i.ToString(),				                                                
 						               i.ToString()));
-			}			
+			}
+
+      switch (i.OpCode.Name) {
+        case "endfinally": {
+          BasicBlock successor = GetNodeContaining(block.Last.Next);
+          block.Successors.Add(successor);
+          successor.Predecessors.Add(block);
+          break;
+        }
+      }
 		}
 		
 		BasicBlock GetNodeContaining(Instruction i)
