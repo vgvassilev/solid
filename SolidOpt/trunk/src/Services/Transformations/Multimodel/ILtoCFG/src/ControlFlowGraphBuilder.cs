@@ -66,7 +66,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		}
 		
 		#endregion
-		
+
 		void CreateBlocks()
 		{
 			BasicBlock curBlock = null;
@@ -79,7 +79,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					root = curBlock;
 				
 				curBlock.Add(instr);
-				
+        curBlock.BlockKind = BlockType.Structure;
+
 				if (IsBlockTerminator(instr))
 					rawBlocks.Add(curBlock);
 			}
@@ -167,7 +168,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		void ConnectBlocks()
 		{
 			foreach (BasicBlock node in rawBlocks) {
-				ConnectBlock(node);
+        if (node.BlockKind == BlockType.Structure)
+				  ConnectBlock(node);
 			}
 		}
 		
@@ -227,15 +229,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 						               i.ToString(),				                                                
 						               i.ToString()));
 			}
-
-      switch (i.OpCode.Name) {
-        case "endfinally": {
-          BasicBlock successor = GetNodeContaining(block.Last.Next);
-          block.Successors.Add(successor);
-          successor.Predecessors.Add(block);
-          break;
-        }
-      }
 		}
 		
 		BasicBlock GetNodeContaining(Instruction i)

@@ -12,6 +12,10 @@ using Mono.Cecil.Cil;
 
 namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 {
+  /// <summary>
+  /// Indicates the type of the block, whether it is structural or exceptional.
+  /// </summary>
+  public enum BlockType {Structure, Exception};
 	/// <summary>
 	/// Dragon Book [8.4.1] Basic Blocks:
 	/// Basic block starts with the first instruction and keeps adding 
@@ -21,6 +25,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 	/// </summary>
 	public class BasicBlock : IEnumerable<Instruction>
 	{
+    public BlockType BlockKind;
 		private List<Instruction> body = new List<Instruction>();
 		private string name;
 		public string Name {
