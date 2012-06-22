@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using System.Collections.Generic;
 
 using Mono.Cecil;
@@ -42,5 +43,33 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			this.rawBlocks = rawBlocks;
 		}
 
+    public override string ToString ()
+    {
+      StringBuilder sb = new StringBuilder();
+      
+      foreach (BasicBlock block in RawBlocks) {
+       sb.AppendLine(String.Format("block {0}:", block.Name));
+       sb.AppendLine("\tbody:");
+       foreach (Instruction instruction in block)
+         sb.AppendLine(String.Format("\t\t{0}", instruction.ToString()));
+      
+       if (block.Successors != null && block.Successors.Count > 0) {
+         sb.AppendLine("\tsuccessors:");
+         foreach (BasicBlock succ in block.Successors) {
+           sb.AppendLine(String.Format("\t\tblock {0}", succ.Name));
+         }
+       }
+      
+       if (block.Predecessors != null && block.Predecessors.Count > 0) {
+         sb.AppendLine("\tpredecessors:");
+         foreach (BasicBlock pred in block.Predecessors) {
+           sb.AppendLine(String.Format("\t\tblock {0}", pred.Name));
+         }
+       }
+      }
+      
+      return sb.ToString();
+
+    }
 	}
 }
