@@ -94,9 +94,8 @@ public partial class MainWindow
 		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.combobox6 = global::Gtk.ComboBox.NewText ();
 		this.combobox6.AppendText (global::Mono.Unix.Catalog.GetString ("IL"));
-		this.combobox6.AppendText (global::Mono.Unix.Catalog.GetString ("CFG"));
 		this.combobox6.Name = "combobox6";
-		this.combobox6.Active = 1;
+		this.combobox6.Active = 0;
 		this.vpaned1.Add (this.combobox6);
 		global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.combobox6]));
 		w5.Resize = false;

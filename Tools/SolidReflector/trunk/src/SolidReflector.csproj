@@ -9,7 +9,6 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>SolidReflector</RootNamespace>
     <AssemblyName>SolidReflector</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -89,6 +88,10 @@
     <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj">
       <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
       <Name>SolidOpt.Services.Multimodel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
+      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
+      <Name>SolidOpt.Services.ControlFlowGraph</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

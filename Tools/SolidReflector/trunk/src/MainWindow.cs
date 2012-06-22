@@ -5,6 +5,7 @@
 // */
 
 using SolidOpt.Services;
+using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.Multimodel;
 
 using System;
@@ -202,10 +203,14 @@ public partial class MainWindow: Gtk.Window
     }
 
     plugins.LoadPlugins();
-    //IDecompile<MethodDefinition, ControlFlowGraph> ILtoCfgTransformer =
-    //   plugins.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
+    IDecompile<MethodDefinition, ControlFlowGraph> ILtoCfgTransformer =
+       plugins.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
 
-
+    //TODO: Attach dynamically content to the combo with the representations
+    if (ILtoCfgTransformer != null) {
+      // FIXME: Should be get plugin short description
+      combobox6.AppendText("CFG");
+    }
   }
 
   protected virtual void PreBuild() {
@@ -392,6 +397,18 @@ public partial class MainWindow: Gtk.Window
       writer.Write("}");
   }
 
+  protected void DumpControlFlowGraph(ControlFlowGraph cfg) {
+    disassemblyText.Buffer.Clear();
+
+    Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
+
+    if (cfg == null)
+      disassemblyText.Buffer.Insert(ref textIter, "Cannot dump CFG\n");
+    else
+      disassemblyText.Buffer.Insert(ref textIter, cfg.ToString() + "\n");
+  }
+
+
   protected void DumpEventDef(EventDefinition evtDef) {
     disassemblyText.Buffer.Clear();
 
@@ -421,8 +438,18 @@ public partial class MainWindow: Gtk.Window
     if (val == "IL") {
 
     }
+    // FIXME: Plugin short desc
     else if (val == "CFG") {
-
+      var ILtoCfgTransf = plugins.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
+      if (ILtoCfgTransf != null) {
+        Gtk.TreeIter selIter;
+        if (assemblyView.Selection.GetSelected(out selIter)) {
+          MethodDefinition mDef = assemblyView.Model.GetValue(selIter, 0) as MethodDefinition;
+          if (mDef != null) {
+            DumpControlFlowGraph(ILtoCfgTransf.Decompile(mDef));
+          }
+        }
+      }
     }
 
   }
