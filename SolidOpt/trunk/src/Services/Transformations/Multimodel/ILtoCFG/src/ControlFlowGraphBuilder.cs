@@ -79,7 +79,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					root = curBlock;
 				
 				curBlock.Add(instr);
-        curBlock.BlockKind = BlockType.Structure;
+        curBlock.Kind = BlockKind.Structure;
 
 				if (IsBlockTerminator(instr))
 					rawBlocks.Add(curBlock);
@@ -168,7 +168,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		void ConnectBlocks()
 		{
 			foreach (BasicBlock node in rawBlocks) {
-        if (node.BlockKind == BlockType.Structure)
+        if (node.Kind == BlockKind.Structure)
 				  ConnectBlock(node);
 			}
 		}
