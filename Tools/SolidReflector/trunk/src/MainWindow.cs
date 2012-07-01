@@ -11,6 +11,7 @@ using SolidOpt.Services.Transformations.Multimodel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 using Mono.Collections.Generic;
 using Mono.Cecil;
@@ -73,6 +74,9 @@ public partial class MainWindow: Gtk.Window
   /// </param>
   private void GetLoadedFiles(out List<string> filesLoaded) {
     filesLoaded = new List<string>();
+    if (assemblyView.Columns.Length == 0)
+      return;
+
     Gtk.TreeIter iter;
     assemblyView.Model.GetIterFirst(out iter);
     AssemblyDefinition aDef = null;
@@ -112,21 +116,29 @@ public partial class MainWindow: Gtk.Window
 
   private void LoadEnvironment() {
     string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
-    if (System.IO.File.Exists(curEnv)) {
-      LoadFilesInTreeView(System.IO.File.ReadAllLines(curEnv));
+    if (File.Exists(curEnv)) {
+      LoadFilesInTreeView(File.ReadAllLines(curEnv));
     }
   }
 
   private void SaveEnvironment() {
-    string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
     List<string> filesLoaded;
     GetLoadedFiles(out filesLoaded);
-    System.IO.File.WriteAllLines(curEnv, filesLoaded.ToArray());
 
-    string pluginsEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Plugins.env");
+    saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env"),
+                        filesLoaded);
+    saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Plugin.env"),
+                        plugins.plugins.ConvertAll<string>(x => x.ToString()));
+  }
 
-    foreach(PluginInfo pInfo in plugins.plugins) {
-      System.IO.File.AppendText(pluginsEnv).WriteLine(pInfo.codeBase);
+  private void saveEnvironmentData(string curEnv, List<string> items) {
+    FileStream file = new FileStream(curEnv, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+    using (StreamWriter writer = new StreamWriter(file)) {
+      writer.Write("");
+      writer.Flush();
+      foreach (string line in items)
+        writer.WriteLine(line);
+      writer.Flush();
     }
   }
 
@@ -148,7 +160,7 @@ public partial class MainWindow: Gtk.Window
      store = new Gtk.TreeStore(typeof(object));
 
     foreach (string file in files) {
-      if (System.IO.File.Exists(file))
+      if (File.Exists(file))
         store.AppendValues(AssemblyDefinition.ReadAssembly(file));
       else
         ShowMessageGtk(String.Format("File {0} doesn't exits.", file));
@@ -196,9 +208,9 @@ public partial class MainWindow: Gtk.Window
   private void LoadRegisteredPlugins() {
     string registeredPlugins =
         System.IO.Path.Combine(Environment.CurrentDirectory, "Plugins.env");
-    if (System.IO.File.Exists(registeredPlugins)) {
-      foreach (string s in System.IO.File.ReadAllLines(registeredPlugins))
-        if (System.IO.File.Exists(s))
+    if (File.Exists(registeredPlugins)) {
+      foreach (string s in File.ReadAllLines(registeredPlugins))
+        if (File.Exists(s))
           plugins.AddPlugin(s);
     }
 
