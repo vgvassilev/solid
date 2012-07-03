@@ -103,9 +103,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		}
 		
 		bool IsBlockTerminator(Instruction i) {
-      //if ((i.OpCode.Code == Code.Leave) || (i.OpCode.Code == Code.Endfinally)) {
-      //  return false;
-      //}
+      if ((i.OpCode.Code == Code.Leave) || (i.OpCode.Code == Code.Endfinally)) {
+        return false;
+      }
 			// first instruction in the collection starts a block
 			switch (i.OpCode.FlowControl) {
 				case FlowControl.Break:
