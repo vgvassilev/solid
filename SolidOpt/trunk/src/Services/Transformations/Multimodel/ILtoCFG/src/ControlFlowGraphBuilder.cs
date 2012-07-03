@@ -47,7 +47,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		BasicBlock root = null;
 		private List<Instruction> labels = new List<Instruction>();
 		private List<BasicBlock> rawBlocks = new List<BasicBlock>();
-		
+		private HashSet<int> exceptionData = new HashSet<int>();
+
 		#endregion
 		
 		#region Constructors
@@ -61,6 +62,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		{
 			CreateBlocks();
 			ConnectBlocks();
+      CreateConnectSEHBlocks();
 
 			return new ControlFlowGraph(root, rawBlocks);
 		}
@@ -233,6 +235,49 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 						               i.ToString()));
 			}
 		}
+
+    void CreateConnectSEHBlocks()
+    {
+      foreach (ExceptionHandler handler in body.ExceptionHandlers) {
+        BasicBlock TryBlock = new BasicBlock(rawBlocks.Count.ToString());
+        TryBlock.Kind = BlockKind.SEH;
+        Instruction instr = handler.TryStart;
+        if (!exceptionData.Contains(handler.TryEnd.Offset)) {
+          while (instr != handler.TryEnd) {
+            TryBlock.Add(instr);
+            instr = instr.Next;
+          }
+          exceptionData.Add(handler.TryEnd.Offset);
+          rawBlocks.Add(TryBlock);
+        }
+
+        if (handler.HandlerStart != null && handler.HandlerEnd != null) {
+          BasicBlock HandlerBlock = new BasicBlock(rawBlocks.Count.ToString());
+          TryBlock.Successors.Add(HandlerBlock);
+          HandlerBlock.Predecessors.Add(TryBlock);
+          HandlerBlock.Kind = BlockKind.SEH;
+          instr = handler.HandlerStart;
+          while (instr != handler.HandlerEnd) {
+            HandlerBlock.Add(instr);
+            instr = instr.Next;
+          }
+          rawBlocks.Add(HandlerBlock);
+        }
+
+        if (handler.FilterStart != null && handler.FilterEnd != null) {
+          BasicBlock FilterBlock = new BasicBlock(rawBlocks.Count.ToString());
+          TryBlock.Successors.Add(FilterBlock);
+          FilterBlock.Predecessors.Add(TryBlock);
+          FilterBlock.Kind = BlockKind.SEH;
+          instr = handler.FilterStart;
+          while (instr != handler.FilterEnd) {
+            FilterBlock.Add(instr);
+            instr = instr.Next;
+          }
+          rawBlocks.Add(FilterBlock);
+        }
+      }
+    }
 		
 		BasicBlock GetNodeContaining(Instruction i)
 		{
