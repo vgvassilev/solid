@@ -73,7 +73,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		{
 			BasicBlock curBlock = null;
 			foreach(Instruction instr in body.Instructions) {
-
 				if (IsBlockLeader(instr))
 					curBlock = new BasicBlock(rawBlocks.Count.ToString());
 				
@@ -81,10 +80,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 					root = curBlock;
 				
 				curBlock.Add(instr);
-        curBlock.Kind = BlockKind.Structure;
 
-				if (IsBlockTerminator(instr))
+				if (IsBlockTerminator(instr)) {
+          curBlock.Kind = BlockKind.Structure;
 					rawBlocks.Add(curBlock);
+        }
 			}
 		}
 
@@ -105,14 +105,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		}
 		
 		bool IsBlockTerminator(Instruction i) {
-      if ((i.OpCode.Code == Code.Leave) || (i.OpCode.Code == Code.Endfinally)) {
-        return false;
-      }
 			// first instruction in the collection starts a block
 			switch (i.OpCode.FlowControl) {
+        // Ensures leave and endfinally do not create new block in structure CFG
+        case FlowControl.Branch:
+        case FlowControl.Return: {
+          if ((i.OpCode.Code == Code.Leave) || (i.OpCode.Code == Code.Endfinally))
+            return false;
+          else
+            return true;
+        }
 				case FlowControl.Break:
-				case FlowControl.Branch:
-				case FlowControl.Return:
 				case FlowControl.Cond_Branch:
 				case FlowControl.Throw:
 					return true;
