@@ -49,6 +49,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
       
       foreach (BasicBlock block in RawBlocks) {
        sb.AppendLine(String.Format("block {0}:", block.Name));
+       sb.AppendLine(String.Format("\tkind: {0}", block.Kind.ToString().ToLower()));
        sb.AppendLine("\tbody:");
        foreach (Instruction instruction in block)
          sb.AppendLine(String.Format("\t\t{0}", instruction.ToString()));
