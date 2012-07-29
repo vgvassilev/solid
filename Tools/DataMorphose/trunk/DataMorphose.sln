@@ -29,6 +29,10 @@ Global
 		{0A76748C-7758-48BF-969F-0D7FC68A0EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A76748C-7758-48BF-969F-0D7FC68A0EF9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A76748C-7758-48BF-969F-0D7FC68A0EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05710681-804D-4225-B53D-8DCC08B604BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05710681-804D-4225-B53D-8DCC08B604BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05710681-804D-4225-B53D-8DCC08B604BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05710681-804D-4225-B53D-8DCC08B604BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = DataMorphose.csproj
