@@ -80,24 +80,24 @@ namespace DataMorphose.Import
         // The first row contains the column names.
         ColLexer lexer = new ColLexer(reader.ReadLine());
         string colValue;
-        Row header = new Row();
+        Record header = new Record();
 
         while((colValue = lexer.Lex()) != null)
-          header.Columns.Add(new Column(colValue));
+          header.Fields.Add(new Field(colValue));
         table.Header = header;
 
-        Row row = null;
-        Column col = null;
+        Record row = null;
+        Field col = null;
         string s;
         while((s = reader.ReadLine()) != null) {
           lexer = new ColLexer(s);
-          row = new Row();
+          row = new Record();
           while((colValue = lexer.Lex()) != null) {
-            col = new Column("");
+            col = new Field("");
             col.Value = colValue;
-            row.Columns.Add(col);
+            row.Fields.Add(col);
           }
-          table.Rows.Add(row);
+          table.Records.Add(row);
         }
         return table;
       }

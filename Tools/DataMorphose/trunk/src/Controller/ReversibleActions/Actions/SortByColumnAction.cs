@@ -13,7 +13,7 @@ namespace DataMorphose.Actions
   public class SortByColumnAction : Action
   {
     private Table table = null;
-    private List<Row> cachedRows = new List<Row>();
+    private List<Record> cachedRows = new List<Record>();
 
     private int columnIndex;
 
@@ -25,21 +25,21 @@ namespace DataMorphose.Actions
     #region implemented abstract members of DataMorphose.Action
     public override void Undo()
     {
-      table.Rows = cachedRows;
+      table.Records = cachedRows;
     }
 
     public override void Redo()
     {
-      cachedRows.AddRange(table.Rows);
-      table.Rows.Sort(Compare);
+      cachedRows.AddRange(table.Records);
+      table.Records.Sort(Compare);
     }
     #endregion
 
-    private int Compare(Row x, Row y) {
+    private int Compare(Record x, Record y) {
       Debug.Assert(columnIndex > -1, "Column not found!");
       
-      Column xCol = x.Columns[columnIndex];
-      Column yCol = y.Columns[columnIndex];
+      Field xCol = x.Fields[columnIndex];
+      Field yCol = y.Fields[columnIndex];
       return xCol.Value.ToString().CompareTo(yCol.Value.ToString());
     }
   }

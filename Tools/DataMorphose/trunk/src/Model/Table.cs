@@ -17,16 +17,16 @@ namespace DataMorphose.Model
       set { name = value; }
     }
 
-    private Row header = new Row();
-    public Row Header {
+    private Record header = new Record();
+    public Record Header {
       get { return this.header; }
       set { header = value; }
     }
 
-    private List<Row> rows = new List<Row>();
-    public List<Row> Rows {
-      get { return this.rows; }
-      set { rows = value; }
+    private List<Record> records = new List<Record>();
+    public List<Record> Records {
+      get { return this.records; }
+      set { records = value; }
     }
 
     public Table(string name) {

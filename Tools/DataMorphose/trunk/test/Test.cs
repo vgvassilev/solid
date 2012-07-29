@@ -82,9 +82,9 @@ namespace DataMorphose.Test
 
       Assert.IsNotNull(table, "Table Customers must not be Null");
       Assert.IsTrue(table.Name == expectedName, "Table name different than expected");
-      Assert.IsTrue(table.Header.Columns.Count == expectedColumns,
+      Assert.IsTrue(table.Header.Fields.Count == expectedColumns,
                     "Columns count different from expected");
-      Assert.IsTrue(table.Rows.Count == expectedRows, "Row count different from expected");
+      Assert.IsTrue(table.Records.Count == expectedRows, "Row count different from expected");
     }
   }
 }

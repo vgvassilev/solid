@@ -11,7 +11,7 @@ namespace DataMorphose.Model
   /// <summary>
   /// Column - the smallest unit of the database.
   /// </summary>
-  public class Column
+  public class Field
   {
     private string name;
     public string Name {
@@ -25,7 +25,7 @@ namespace DataMorphose.Model
       set { val = value; }
     }
 
-    public Column(string name) {
+    public Field(string name) {
       this.name = name;
     }
   }
