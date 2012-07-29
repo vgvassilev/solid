@@ -1,5 +1,5 @@
 // /*
-//  * $Id: $
+//  * $Id$
 //  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
 //  * For further details see the nearest License.txt
 //  */
@@ -22,8 +22,7 @@ namespace DataMorphose.Import
 
       /// <summary>
       /// Reads symbol by symbol 
-      /// </summary>
-  
+      /// </summary> 
       public string Lex() {
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         while (curLineIndex < line.Length) {
@@ -48,7 +47,6 @@ namespace DataMorphose.Import
     /// <param name='file'>
     /// File.
     /// </param>
-
     public Database importDBFromFiles(string file) {
       if (!File.Exists(file))
         return null;
@@ -71,7 +69,6 @@ namespace DataMorphose.Import
     /// <param name='file'>
     /// File.
     /// </param>
-
     public Table importFromFile(string file) {
       if (File.Exists(file)) {
         Table table = new Table(Path.GetFileNameWithoutExtension(file));
@@ -105,6 +102,5 @@ namespace DataMorphose.Import
     }
 
   }
-
 }
 
