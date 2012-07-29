@@ -38,7 +38,7 @@ namespace DataMorphose.Test
     [Test()]
     public void CheckCustomers() {
       Table Customers = importer.importFromFile(Path.Combine(filePath, "Customers.txt"));
-      CheckTable(Customers, "Customers", 88, 11);
+      CheckTable(Customers, "Customers", 86, 11);
     }
 
     [Test()]
@@ -56,7 +56,7 @@ namespace DataMorphose.Test
     [Test()]
     public void CheckOrders() {
       Table Orders = importer.importFromFile(Path.Combine(filePath, "Orders.txt"));
-      CheckTable(Orders, "Orders", 495, 14);
+      CheckTable(Orders, "Orders", 500, 14);
     }
 
     [Test()]
@@ -82,9 +82,9 @@ namespace DataMorphose.Test
 
       Assert.IsNotNull(table, "Table Customers must not be Null");
       Assert.IsTrue(table.Name == expectedName, "Table name different than expected");
-      Assert.IsTrue(table.Header.Fields.Count == expectedColumns,
+      Assert.IsTrue(table.Columns.Count == expectedColumns,
                     "Columns count different from expected");
-      Assert.IsTrue(table.Records.Count == expectedRows, "Row count different from expected");
+      Assert.IsTrue(table.Columns[0].Values.Count == expectedRows, "Row count different from expected");
     }
   }
 }

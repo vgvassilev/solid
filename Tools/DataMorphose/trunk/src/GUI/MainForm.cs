@@ -42,11 +42,11 @@ namespace DataMorphose.GUI
 		  dataGridView1.Columns.Clear();
 		  dataGridView1.Rows.Clear();
       Table tbl = db.Tables[2];
-      foreach(Field headerF in tbl.Header.Fields)
-        dataGridView1.Columns.Add(headerF.Name, headerF.Name);
+      foreach(Column col in tbl.Columns)
+        dataGridView1.Columns.Add(col.Meta.Name, col.Meta.Name);
         
-      foreach(Record rec in tbl.Records) {
-        dataGridView1.Rows.Add(rec.GetColumnsValues());
+      for(int i = 0; i < tbl.Columns.Count; i++) {
+        dataGridView1.Rows.Add(tbl.GetRow(i));
       }
 		}
 

@@ -17,20 +17,22 @@ namespace DataMorphose.Model
       set { name = value; }
     }
 
-    private Record header = new Record();
-    public Record Header {
-      get { return this.header; }
-      set { header = value; }
-    }
-
-    private List<Record> records = new List<Record>();
-    public List<Record> Records {
-      get { return this.records; }
-      set { records = value; }
+    private List<Column> columns = new List<Column>();
+    public List<Column> Columns {
+      get { return this.columns; }
+      set { columns = value; }
     }
 
     public Table(string name) {
       this.name = name;
+    }
+    
+    public object[] GetRow(int rowNo) {
+      object[] result = new object[Columns.Count];
+      for(int i = 0; i < Columns.Count; i++) {
+        result[i] = Columns[i].Values[rowNo];
+      }
+      return result;
     }
   }
 }
