@@ -21,6 +21,9 @@ public partial class MainWindow: Gtk.Window
 {
   private PluginServiceContainer plugins = new PluginServiceContainer();
 
+  //FIXME: Put them in combobox model.
+  private List<DecompilationStep> decompilationSteps = new List<DecompilationStep>();
+
 	public MainWindow(): base(Gtk.WindowType.Toplevel)
 	{
     // That's a hack because of the designer. If one needs to attach an event the designer attaches
@@ -215,13 +218,10 @@ public partial class MainWindow: Gtk.Window
     }
 
     plugins.LoadPlugins();
-    IDecompile<MethodDefinition, ControlFlowGraph> ILtoCfgTransformer =
-       plugins.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
-
-    //TODO: Attach dynamically content to the combo with the representations
-    if (ILtoCfgTransformer != null) {
+    foreach (DecompilationStep ds in plugins.GetServices<DecompilationStep>()) {
       // FIXME: Should be get plugin short description
-      combobox6.AppendText("CFG");
+      combobox6.AppendText(ds.GetTargetType().FullName);
+      decompilationSteps.Add(ds);
     }
   }
 
@@ -451,18 +451,16 @@ public partial class MainWindow: Gtk.Window
 
     }
     // FIXME: Plugin short desc
-    else if (val == "CFG") {
-      var ILtoCfgTransf = plugins.GetService<IDecompile<MethodDefinition, ControlFlowGraph>>();
-      if (ILtoCfgTransf != null) {
-        Gtk.TreeIter selIter;
-        if (assemblyView.Selection.GetSelected(out selIter)) {
-          MethodDefinition mDef = assemblyView.Model.GetValue(selIter, 0) as MethodDefinition;
-          if (mDef != null) {
-            DumpControlFlowGraph(ILtoCfgTransf.Decompile(mDef));
-          }
+    else if (val == typeof(ControlFlowGraph).FullName) {
+      Gtk.TreeIter selIter;
+      if (assemblyView.Selection.GetSelected(out selIter)) {
+        MethodDefinition mDef = assemblyView.Model.GetValue(selIter, 0) as MethodDefinition;
+        foreach (DecompilationStep ds in decompilationSteps)
+          if (ds.GetSourceType() == mDef.GetType() && ds.GetTargetType() == typeof(ControlFlowGraph)) {
+            object cfg = ds.Process(mDef.Body);
+            DumpControlFlowGraph(cfg as ControlFlowGraph);
         }
       }
     }
-
   }
 }
