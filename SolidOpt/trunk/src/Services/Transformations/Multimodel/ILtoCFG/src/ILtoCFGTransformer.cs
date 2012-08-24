@@ -32,14 +32,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		{
 			return Process (codeModel as MethodBody);
 		}
-		
+
+    public override Type GetSourceType()
+    {
+      return typeof(MethodDefinition);
+    }
+
+    public override Type GetTargetType()
+    {
+      return typeof(ControlFlowGraph);
+    }
 
 		public ControlFlowGraph Process (MethodBody source)
 		{
 			if (source == null)
 				throw new ArgumentNullException ("method");
 			if (!source.Method.HasBody)
-				throw new ArgumentException ();
+				throw new ArgumentException();
 
 			var builder = new ControlFlowGraphBuilder (source.Method);
 			return builder.Create();
