@@ -89,8 +89,6 @@
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
                             <property name="ShowScrollbars">True</property>
-                            <property name="HoverSelection">True</property>
-                            <property name="HoverExpand">True</property>
                             <signal name="RowActivated" handler="OnAssemblyViewRowActivated" />
                           </widget>
                         </child>
