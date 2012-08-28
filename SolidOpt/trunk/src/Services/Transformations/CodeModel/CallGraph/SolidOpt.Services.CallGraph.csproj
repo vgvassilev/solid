@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BB9709D4-9C97-4A77-8F5D-391F8234D5C4}</ProjectGuid>
+    <ProjectGuid>{214C7C81-1105-4E24-9437-41CC6BE4F596}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SolidOpt.Services.ControlFlowGraph.Test</RootNamespace>
-    <AssemblyName>SolidOpt.Services.ControlFlowGraph.Test</AssemblyName>
+    <RootNamespace>CallGraph</RootNamespace>
+    <AssemblyName>CallGraph</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -29,26 +29,20 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="test\" />
-    <Folder Include="test\cases\" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="SolidOpt.Services.ControlFlowGraph.csproj">
-      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
-      <Name>SolidOpt.Services.ControlFlowGraph</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\CallGraph.cs" />
+    <Compile Include="src\CGNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
-      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
   </ItemGroup>
 </Project>

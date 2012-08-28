@@ -42,7 +42,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 	public class ControlFlowGraphBuilder {
 		
 		#region Fields & Properties
-
 		MethodBody body;
 		BasicBlock root = null;
 		private List<Instruction> labels = new List<Instruction>();
