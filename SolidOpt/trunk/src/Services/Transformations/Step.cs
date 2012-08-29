@@ -15,7 +15,6 @@ namespace SolidOpt.Services.Transformations
     public abstract object Process (object codeModel);
     public abstract Type GetSourceType();
     public abstract Type GetTargetType();
-
     #endregion
 
   }
