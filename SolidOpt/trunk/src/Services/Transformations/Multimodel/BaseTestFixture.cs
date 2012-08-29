@@ -16,6 +16,7 @@ using NUnit.Framework;
 namespace SolidOpt.Services.Multimodel.Test
 {
   public class XFailException : Exception {
+    public XFailException(string msg) : base(msg) { }
   }
 
   /// <summary>
@@ -70,8 +71,11 @@ namespace SolidOpt.Services.Multimodel.Test
       string[] expectedLines = expected.Split('\n');
       string seenLine, expectedLine;
       bool match = true;
+      // take the min, because we don't want out of range exception
+      // the test may be marked as XFAIL
+      int minLineCount = Math.Min(seenLines.Length, expectedLines.Length);
       // compare line by line
-      for (int i = 0; i < seenLines.Length; i++) {
+      for (int i = 0; i < minLineCount; i++) {
         seenLine = Normalize(seenLines[i]);
         expectedLine = Normalize(expectedLines[i]);
         if (seenLine != expectedLine) {
@@ -83,7 +87,10 @@ namespace SolidOpt.Services.Multimodel.Test
       // Check whether the test is marked as expected to fail.
       if (expectedLines[expectedLines.Length-1].StartsWith(@"// XFAIL:")) {
         // The test is expected to fail. Throw specific exception.
-        throw new XFailException();
+        throw new XFailException(errMsg);
+      }
+      else if (seenLines.Length != expectedLines.Length) {
+        errMsg += "More lines follow in either seen or expected.";
       }
 
       return match;
