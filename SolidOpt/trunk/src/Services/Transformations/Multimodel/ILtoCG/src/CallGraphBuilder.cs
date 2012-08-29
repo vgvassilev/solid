@@ -35,11 +35,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
     #endregion
 
     private void VisitCGNode(CGNode node) {
-      if (node.Method != null)
-        Console.WriteLine(node.Method);
-      else
-        Console.WriteLine("No name");
-
       if (node.Method.HasBody) {
         MethodReference mRef;
         foreach (Instruction instr in node.Method.Body.Instructions) {
@@ -47,12 +42,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
             mRef = (instr.Operand as MethodReference);
             CGNode callee = new CGNode(mRef.Resolve());
             node.MethodCalls.Add(callee);
-            if (!rawDefs.Contains(callee.Method))
+            if (!rawDefs.Contains(callee.Method)) {
+              rawDefs.Add(node.Method);
               VisitCGNode(callee);
+            }
           }
         }
       }
-      rawDefs.Add(node.Method);
     }
   }
 }

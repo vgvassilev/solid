@@ -59,7 +59,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     }
 
     [Test]
-    [ExpectedException("System.StackOverflowException")]
+    [ExpectedException(typeof(XFailException))]
     public void XFailTwoSystemCalls()
     {
       RunTestCase("TwoSystemCalls");
