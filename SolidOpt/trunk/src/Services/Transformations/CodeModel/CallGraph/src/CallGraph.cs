@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.CallGraph
     }
 
     public override string ToString () {
-
+      return Root.ToString();
     }
   }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8218B187-13C9-40E1-A374-425FBDE6229D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SolidOpt.Services.ILtoCG.Test</RootNamespace>
+    <AssemblyName>SolidOpt.Services.ILtoCG.Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="test\" />
+    <Folder Include="test\TestCases\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="test\CGTestFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="SolidOpt.Services.ILtoCG.csproj">
+      <Project>{8C2F9613-7839-4305-AD6D-6356FA5AE658}</Project>
+      <Name>SolidOpt.Services.ILtoCG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CodeModel\CallGraph\SolidOpt.Services.CallGraph.csproj">
+      <Project>{214C7C81-1105-4E24-9437-41CC6BE4F596}</Project>
+      <Name>SolidOpt.Services.CallGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolidOpt.Services.Multimodel.Test.csproj">
+      <Project>{84D7E4D8-B58E-43EE-BCEB-0F068CC81166}</Project>
+      <Name>SolidOpt.Services.Multimodel.Test</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test\TestCases\TwoCalls.il" />
+    <None Include="test\TestCases\TwoSystemCalls.il" />
+    <None Include="test\TestCases\TwoCalls.il.cg" />
+    <None Include="test\TestCases\TwoSystemCalls.il.cg" />
+  </ItemGroup>
+</Project>

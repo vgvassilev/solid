@@ -5,16 +5,19 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 using Mono.Cecil;
 
 namespace SolidOpt.Services.Transformations.CodeModel.CallGraph
 {
+
   /// <summary>
   /// Represents a single node in a call graph.
   /// </summary>
   public class CGNode
   {
+
     /// <summary>
     /// The method which is represented by the node.
     /// </summary>
@@ -27,14 +30,25 @@ namespace SolidOpt.Services.Transformations.CodeModel.CallGraph
     /// <summary>
     /// Methods that this method can possibly call.
     /// </summary>
-    private List<MethodReference> methodReferences = new List<MethodReference>();
-    public List<MethodReference> MethodReferences {
-      get { return this.methodReferences; }
-      set { methodReferences = value; }
+    private List<CGNode> methodCalls = new List<CGNode>();
+    public List<CGNode> MethodCalls {
+      get { return this.methodCalls; }
+      set { methodCalls = value; }
     }
 
     public CGNode(MethodDefinition method) {
       this.method = method;
+    }
+
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.AppendLine(method.ToString());
+      sb.Append("+--");
+      foreach (CGNode node in methodCalls) {
+        sb.Append(node.ToString());
+      }
+      return sb.ToString();
     }
   }
 }
