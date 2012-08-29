@@ -38,6 +38,13 @@ namespace SolidOpt.Services.Multimodel.Test
     /// </summary>
     protected static string testCasesTmpDir = Path.Combine(testCasesDir, "Tmp");
 
+    public BaseTestFixture()
+    {
+      if (!Directory.Exists(testCasesTmpDir)) {
+        Directory.CreateDirectory(testCasesTmpDir);
+      }
+    }
+
     /// <summary>
     /// Runs a single test case.
     /// </summary>
