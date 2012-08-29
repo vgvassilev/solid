@@ -52,7 +52,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 		
 		#region Constructors
 		
-		internal ControlFlowGraphBuilder(MethodDefinition method)
+		public ControlFlowGraphBuilder(MethodDefinition method)
 		{
 			body = method.Body;
 		}
