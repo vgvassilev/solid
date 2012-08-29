@@ -6,6 +6,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 using Mono.Cecil;
 using Mono.Collections.Generic;
@@ -14,6 +15,8 @@ using NUnit.Framework;
 
 namespace SolidOpt.Services.Multimodel.Test
 {
+  public class XFailException : Exception {
+  }
 
   /// <summary>
   /// Abstract out the common interfaces for running a single testcase.
@@ -62,21 +65,28 @@ namespace SolidOpt.Services.Multimodel.Test
       seen = Normalize(seen);
       expected = Normalize(expected);
 
-      // compare line by line
+
       string[] seenLines = seen.Split('\n');
       string[] expectedLines = expected.Split('\n');
       string seenLine, expectedLine;
+      bool match = true;
+      // compare line by line
       for (int i = 0; i < seenLines.Length; i++) {
         seenLine = Normalize(seenLines[i]);
         expectedLine = Normalize(expectedLines[i]);
         if (seenLine != expectedLine) {
           errMsg = String.Format("Difference at line {0}: ", (i + 1).ToString());
           errMsg += String.Format("{0} != {1}", seenLine, expectedLine);
-          return false;
+          match = false;
         }
       }
+      // Check whether the test is marked as expected to fail.
+      if (expectedLines[expectedLines.Length-1].StartsWith(@"// XFAIL:")) {
+        // The test is expected to fail. Throw specific exception.
+        throw new XFailException();
+      }
 
-      return true;
+      return match;
     }
 
     /// <summary>
@@ -126,8 +136,8 @@ namespace SolidOpt.Services.Multimodel.Test
       p.StartInfo.RedirectStandardError = true;
       p.StartInfo.FileName = "ilasm";
       p.Start();
-      string output = p.StandardOutput.ReadToEnd ();
-      string error = p.StandardError.ReadToEnd ();
+      string output = p.StandardOutput.ReadToEnd();
+      string error = p.StandardError.ReadToEnd();
       p.WaitForExit();
       Assert.AreEqual(0, p.ExitCode, output + error);
 
