@@ -19,6 +19,14 @@ namespace SolidOpt.Services.Transformations.CodeModel.CallGraph
   {
 
     /// <summary>
+    /// The caller. Null if root.
+    /// </summary>
+    private CGNode caller = null;
+    public CGNode Caller {
+      get { return this.caller; }
+    }
+
+    /// <summary>
     /// The method which is represented by the node.
     /// </summary>
     private MethodDefinition method;
@@ -36,18 +44,26 @@ namespace SolidOpt.Services.Transformations.CodeModel.CallGraph
       set { methodCalls = value; }
     }
 
-    public CGNode(MethodDefinition method) {
+    public CGNode(MethodDefinition method, CGNode caller) {
       this.method = method;
+      this.caller = caller;
     }
 
     public override string ToString()
     {
       StringBuilder sb = new StringBuilder();
-      sb.AppendLine(method.ToString());
-      sb.Append("+--");
-      foreach (CGNode node in methodCalls) {
-        sb.Append(node.ToString());
+
+      CGNode parent = Caller;
+      do {
+        sb.Append("   ");
       }
+      while(parent != null && (parent = parent.Caller) != null);
+        sb.Append("+--");
+      sb.AppendLine(method.ToString());
+
+      foreach (CGNode node in methodCalls)
+        sb.Append(node.ToString());
+
       return sb.ToString();
     }
   }

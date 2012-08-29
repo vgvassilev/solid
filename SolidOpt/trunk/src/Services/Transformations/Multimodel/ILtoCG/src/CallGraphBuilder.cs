@@ -27,7 +27,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
 
     public CallGraph Create()
     {
-      CGNode rootNode = new CGNode(rootMethod);
+      CGNode rootNode = new CGNode(rootMethod, null);
       VisitCGNode(rootNode);
       return new CallGraph(rootNode);
     }
@@ -40,7 +40,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
         foreach (Instruction instr in node.Method.Body.Instructions) {
           if (instr.OpCode.FlowControl == FlowControl.Call) {
             mRef = (instr.Operand as MethodReference);
-            CGNode callee = new CGNode(mRef.Resolve());
+            CGNode callee = new CGNode(mRef.Resolve(), node);
             node.MethodCalls.Add(callee);
             if (!rawDefs.Contains(callee.Method)) {
               rawDefs.Add(node.Method);
