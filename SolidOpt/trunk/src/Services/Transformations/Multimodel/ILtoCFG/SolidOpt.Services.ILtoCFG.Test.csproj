@@ -173,6 +173,10 @@
       <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
       <Name>SolidOpt.Services.ControlFlowGraph</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolidOpt.Services.Multimodel.Test.csproj">
+      <Project>{84D7E4D8-B58E-43EE-BCEB-0F068CC81166}</Project>
+      <Name>SolidOpt.Services.Multimodel.Test</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
