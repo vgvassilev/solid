@@ -39,7 +39,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
       string errMsg = String.Empty;
       string seen = cg.ToString();
       string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));
-      Assert.IsTrue(Validate(expected, seen, ref errMsg), errMsg);
+      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
    }
 
     protected override string GetTestCaseFileExtension()
