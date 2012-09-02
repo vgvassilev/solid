@@ -1,5 +1,5 @@
 /*
- * $Id: CFGTestFixture.cs 598 2012-08-29 08:27:53Z vvassilev $
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
