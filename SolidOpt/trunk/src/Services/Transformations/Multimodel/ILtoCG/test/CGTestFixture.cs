@@ -34,8 +34,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
                     String.Format("{0} does not exist.", testCaseResultFile));
 
       MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);
-      var TransforIL = new CilToCallGraph();
-      CallGraph cg = TransforIL.Process(mainMethodDef.Body);
+      var transformIL = new CilToCallGraph();
+      CallGraph cg = transformIL.Process(mainMethodDef.Body);
       string errMsg = String.Empty;
       string seen = cg.ToString();
       string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));

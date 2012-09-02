@@ -28,8 +28,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
       Assert.IsTrue(File.Exists(resultFile), String.Format("{0} does not exist.", testCaseName));
 
       MethodDefinition mDef = LoadTestCaseMethod(testCaseName);
-			CilToControlFlowGraph TransforIL = new CilToControlFlowGraph();
-			ControlFlowGraph cfg = TransforIL.Process(mDef.Body);
+			CilToControlFlowGraph transformIL = new CilToControlFlowGraph();
+			ControlFlowGraph cfg = transformIL.Process(mDef.Body);
       string errMsg = String.Empty;
       string seen = cfg.ToString();
       string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));
