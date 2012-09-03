@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B1B6156A-908A-45AB-B77C-DF638DF1CD75}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CFGtoTAC.Test</RootNamespace>
+    <AssemblyName>CFGtoTAC.Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="test\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="test\TestCases\Empty.il.cfg" />
+    <None Include="test\TestCases\ConditionalBranchToNext.il" />
+    <None Include="test\TestCases\ConditionalBranchToNext.il.cfg" />
+    <None Include="test\TestCases\InfiniteLoopBranchToSelf.il" />
+    <None Include="test\TestCases\InfiniteLoopBranchToSelf.il.cfg" />
+    <None Include="test\TestCases\Empty.il" />
+    <None Include="test\TestCases\SimpleIf.il" />
+    <None Include="test\TestCases\SimpleIf.il.cfg" />
+    <None Include="test\TestCases\SimpleWhile.il" />
+    <None Include="test\TestCases\SimpleWhile.il.cfg" />
+    <None Include="test\TestCases\SimpleSwitch.il" />
+    <None Include="test\TestCases\SimpleSwitch.il.cfg" />
+    <None Include="test\TestCases\DoWhile.il.cfg" />
+    <None Include="test\TestCases\DoWhile.il" />
+    <None Include="test\TestCases\BoolAndGreaterOrEqualThan.il" />
+    <None Include="test\TestCases\BoolOrLessOrEqualThan.il" />
+    <None Include="test\TestCases\FalseIf.il" />
+    <None Include="test\TestCases\FieldAccessor.il" />
+    <None Include="test\TestCases\FloatGreaterThan.il" />
+    <None Include="test\TestCases\FlowTest.il" />
+    <None Include="test\TestCases\GreaterThanOrEqual.il" />
+    <None Include="test\TestCases\IfNestedCondition.il" />
+    <None Include="test\TestCases\InPlaceAdd.il" />
+    <None Include="test\TestCases\InRange.il" />
+    <None Include="test\TestCases\IntPropertyEquals1.il" />
+    <None Include="test\TestCases\IntPropertyEquals2.il" />
+    <None Include="test\TestCases\IsNull.il" />
+    <None Include="test\TestCases\LessThanOrEqual.il" />
+    <None Include="test\TestCases\MathOperators.il" />
+    <None Include="test\TestCases\MixedAndOr.il" />
+    <None Include="test\TestCases\MultipleAndOr.il" />
+    <None Include="test\TestCases\NestedOrGreaterThan.il" />
+    <None Include="test\TestCases\NotEqual.il" />
+    <None Include="test\TestCases\NotStringEquality.il" />
+    <None Include="test\TestCases\OptimizedAnd.il" />
+    <None Include="test\TestCases\OptimizedNestedOr.il" />
+    <None Include="test\TestCases\OptimizedOr.il" />
+    <None Include="test\TestCases\PropertyPredicate.il" />
+    <None Include="test\TestCases\SimpleCalculation.il" />
+    <None Include="test\TestCases\SimpleCondition.il" />
+    <None Include="test\TestCases\SimpleReturn.il" />
+    <None Include="test\TestCases\SingleAnd.il" />
+    <None Include="test\TestCases\SingleOr.il" />
+    <None Include="test\TestCases\StaticField.il" />
+    <None Include="test\TestCases\StringCast.il" />
+    <None Include="test\TestCases\StringTryCast.il" />
+    <None Include="test\TestCases\TernaryExpression.il" />
+    <None Include="test\TestCases\ThreeReturns.il" />
+    <None Include="test\TestCases\TwoIfs.il" />
+    <None Include="test\TestCases\BoolOrLessOrEqualThan.il.cfg" />
+    <None Include="test\TestCases\FalseIf.il.cfg" />
+    <None Include="test\TestCases\FieldAccessor.il.cfg" />
+    <None Include="test\TestCases\FloatEquals.il.cfg" />
+    <None Include="test\TestCases\FloatGreaterThan.il.cfg" />
+    <None Include="test\TestCases\FlowTest.il.cfg" />
+    <None Include="test\TestCases\GreaterThanOrEqual.il.cfg" />
+    <None Include="test\TestCases\IfNestedCondition.il.cfg" />
+    <None Include="test\TestCases\InPlaceAdd.il.cfg" />
+    <None Include="test\TestCases\InRange.il.cfg" />
+    <None Include="test\TestCases\IntPropertyEquals2.il.cfg" />
+    <None Include="test\TestCases\IsNull.il.cfg" />
+    <None Include="test\TestCases\LessThanOrEqual.il.cfg" />
+    <None Include="test\TestCases\MathOperators.il.cfg" />
+    <None Include="test\TestCases\MixedAndOr.il.cfg" />
+    <None Include="test\TestCases\MultipleAndOr.il.cfg" />
+    <None Include="test\TestCases\MultipleOr.il.cfg" />
+    <None Include="test\TestCases\NestedOrGreaterThan.il.cfg" />
+    <None Include="test\TestCases\NotEqual.il.cfg" />
+    <None Include="test\TestCases\NotStringEquality.il.cfg" />
+    <None Include="test\TestCases\OptimizedAnd.il.cfg" />
+    <None Include="test\TestCases\OptimizedNestedOr.il.cfg" />
+    <None Include="test\TestCases\OptimizedOr.il.cfg" />
+    <None Include="test\TestCases\PropertyPredicate.il.cfg" />
+    <None Include="test\TestCases\SideEffectExpression.il.cfg" />
+    <None Include="test\TestCases\SimpleCalculation.il.cfg" />
+    <None Include="test\TestCases\SimpleCondition.il.cfg" />
+    <None Include="test\TestCases\SimpleReturn.il.cfg" />
+    <None Include="test\TestCases\SingleAnd.il.cfg" />
+    <None Include="test\TestCases\SingleOr.il.cfg" />
+    <None Include="test\TestCases\StaticField.il.cfg" />
+    <None Include="test\TestCases\StringCast.il.cfg" />
+    <None Include="test\TestCases\StringPredicate.il.cfg" />
+    <None Include="test\TestCases\StringTryCast.il.cfg" />
+    <None Include="test\TestCases\TernaryExpression.il.cfg" />
+    <None Include="test\TestCases\ThreeReturns.il.cfg" />
+    <None Include="test\TestCases\TwoIfs.il.cfg" />
+    <None Include="test\TestCases\IntPropertyEquals1.il.cfg" />
+    <None Include="test\TestCases\SideEffectExpression.il" />
+    <None Include="test\TestCases\StringPredicate.il" />
+    <None Include="test\TestCases\Switch.il" />
+    <None Include="test\TestCases\Switch.il.cfg" />
+    <None Include="test\TestCases\FloatEquals.il" />
+    <None Include="test\TestCases\MultipleOr.il" />
+    <None Include="test\TestCases\ThrowNewException.il" />
+    <None Include="test\TestCases\ThrowNewException.il.cfg" />
+    <None Include="test\TestCases\TryCatchException.il" />
+    <None Include="test\TestCases\TryCatchException.il.cfg" />
+    <None Include="test\TestCases\TryCatchFinallyException.il" />
+    <None Include="test\TestCases\TryCatchFinallyException.il.cfg" />
+    <None Include="test\TestCases\TryMultipleCatchException.il" />
+    <None Include="test\TestCases\TryMultipleCatchException.il.cfg" />
+    <None Include="test\TestCases\NestedTryCatchException.il" />
+    <None Include="test\TestCases\NestedTryCatchException.il.cfg" />
+    <None Include="test\TestCases\NestedTryCatchFinallyException.il" />
+    <None Include="test\TestCases\NestedTryCatchFinallyException.il.cfg" />
+    <None Include="test\TestCases\CatchFaultException.il" />
+    <None Include="test\TestCases\CatchFaultException.il.cfg" />
+    <None Include="test\TestCases\CatchFilterException.il" />
+    <None Include="test\TestCases\CatchFilterException.il.cfg" />
+    <None Include="test\TestCases\CatchTwoFiltersException.il" />
+    <None Include="test\TestCases\CatchTwoFiltersException.il.cfg" />
+    <None Include="test\TestCases\TryFinallyException.il.cfg" />
+    <None Include="test\TestCases\TryFinallyException.il" />
+    <None Include="test\TestCases\TryFinallyExceptionWithNops.il" />
+    <None Include="test\TestCases\TryFinallyExceptionWithNops.il.cfg" />
+    <None Include="test\TestCases\TryFinallyExceptionFinallyAtEnd.il" />
+    <None Include="test\TestCases\TryFinallyExceptionFinallyAtEnd.il.cfg" />
+    <None Include="test\TestCases\BoolAndGreaterOrEqualThan.il.tac" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="test\CFGTestFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
+      <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
+      <Name>SolidOpt.Services.ControlFlowGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ILtoCFG\SolidOpt.Services.ILtoCFG.csproj">
+      <Project>{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}</Project>
+      <Name>SolidOpt.Services.ILtoCFG</Name>
+    </ProjectReference>
+    <ProjectReference Include="SolidOpt.Services.CFGtoTAC.csproj">
+      <Project>{E762B218-E797-44CE-A65B-071A7A2C684A}</Project>
+      <Name>SolidOpt.Services.CFGtoTAC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolidOpt.Services.Multimodel.Test.csproj">
+      <Project>{84D7E4D8-B58E-43EE-BCEB-0F068CC81166}</Project>
+      <Name>SolidOpt.Services.Multimodel.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CodeModel\ThreeAddressCode\SolidOpt.Services.ThreeAddressCode.csproj">
+      <Project>{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}</Project>
+      <Name>SolidOpt.Services.ThreeAddressCode</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+</Project>
