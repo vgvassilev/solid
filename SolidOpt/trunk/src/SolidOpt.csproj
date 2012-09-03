@@ -51,10 +51,6 @@
     <Compile Include="Services\Transformations\Multimodel\ICompile.cs" />
     <Compile Include="Services\Transformations\Multimodel\IDecompile.cs" />
     <Compile Include="Services\Transformations\Optimizations\IOptimize.cs" />
-    <ProjectReference Include="vendors\Mono.Cecil\Mono.Cecil.csproj">
-      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
-      <Name>Mono.Cecil</Name>
-    </ProjectReference>
     <Folder Include="Core\" />
     <Folder Include="Core\Loader\" />
     <Folder Include="Services\" />
@@ -151,18 +147,14 @@
     <Compile Include="Services\PluginServiceContainer.cs" />
     <Compile Include="Services\ServiceContainer.cs" />
     <Compile Include="Services\Subsystems\Configurator\demo\SeparateConfig\src\Config3.cs" />
-    <ProjectReference Include="vendors\Cecil.Decompiler\Cecil.Decompiler\Cecil.Decompiler.csproj">
-      <Project>{ED1BE103-1699-4116-A732-616BEB142EB2}</Project>
-      <Name>Cecil.Decompiler</Name>
-    </ProjectReference>
-    <ProjectReference Include="vendors\Mono.Cecil\rocks\Mono.Cecil.Rocks.csproj">
-      <Project>{FBC6DD59-D09D-499C-B03C-99C1C78FF2AC}</Project>
-      <Name>Mono.Cecil.Rocks</Name>
-    </ProjectReference>
     <Compile Include="Core\Loader\src\Loader.cs" />
     <Compile Include="Core\Loader\demo\StandardLoader\Loader\Program.cs" />
     <Compile Include="Core\Loader\demo\StandardLoader\Loader\TransformLoader.cs" />
     <Compile Include="Core\Loader\demo\StandardLoader\Loadee\Program.cs" />
+    <ProjectReference Include="..\..\vendors\Mono.Cecil\v0.9.3\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.ini" />
