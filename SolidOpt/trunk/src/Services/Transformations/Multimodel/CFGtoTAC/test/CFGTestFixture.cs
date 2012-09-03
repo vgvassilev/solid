@@ -67,6 +67,30 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
       RunTestCase("BoolAndGreaterOrEqualThan");
     }
 
+    [Test]
+    public void SimpleExpression1()
+    {
+        RunTestCase("SimpleExpression1");
+    }
+
+    [Test]
+    public void SimpleExpression2()
+    {
+        RunTestCase("SimpleExpression2");
+    }
+
+    [Test]
+    public void SimpleExpressionIfThen()
+    {
+       RunTestCase("SimpleExpressionIfThen");
+    }
+
+    [Test]
+    public void SimpleExpressionIfThenElse()
+    {
+        RunTestCase("SimpleExpressionIfThenElse");
+    }
+
     /*
     [Test]
     public void BoolOrLessOrEqualThan()
