@@ -6,8 +6,10 @@
 
 namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
-  public enum OpCode {
+  public enum TripletOpCode {
     Assignment,
+    Add,
+    Sub,
     Multiplication,
     Call,
     Push
@@ -27,29 +29,58 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       get { return this.next; }
     }
 
-    private OpCode opcode;
-    private object operand;
+    private TripletOpCode opcode;
+    private object operand1;
+    private object operand2;
+    private object operand3;
 
-    internal Triplet(int offset, OpCode opCode)
+    public Triplet(int offset, TripletOpCode opCode)
     {
       this.offset = offset;
       this.opcode = opCode;
     }
 
-    internal Triplet(OpCode opcode, object operand)
+    public Triplet(TripletOpCode opcode, object operand1)
     {
       this.opcode = opcode;
-      this.operand = operand;
+      this.operand1 = operand1;
     }
 
-    public static Triplet Create(OpCode opcode)
+    public Triplet(TripletOpCode opcode, object operand1, object operand2)
     {
-      return new Triplet(opcode, null);
+      this.opcode = opcode;
+      this.operand1 = operand1;
+      this.operand2 = operand2;
+    }    
+
+    public Triplet(TripletOpCode opcode, object operand1, object operand2, object operand3)
+    {
+        this.opcode = opcode;
+        this.operand1 = operand1;
+        this.operand2 = operand2;
+        this.operand3 = operand3;
     }
 
-//    public static Triplet Create(OpCode opcode, ParameterDefinition parameter)
-//    {
-//      return new Triplet(opcode, parameter);
-//    }
+/*
+    public static Triplet Create(TripletOpCode opcode)
+    {
+      return new Triplet(opcode);
+    }
+
+        public static Triplet Create(TripletOpCode opcode, object operand1)
+    {
+        return new Triplet(opcode, operand1);
+    }
+
+    public static Triplet Create(TripletOpCode opcode,object operand1, object operand2)
+    {
+      return new Triplet(opcode, operand1, operand2);
+    }
+
+    public static Triplet Create(TripletOpCode opcode, object operand1, object operand2, object operand3)
+    {
+        return new Triplet(opcode, operand1, operand2, operand3);
+    }
+*/
   }
 }

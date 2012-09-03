@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -23,16 +24,32 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     }
 
     public Triplet Create() {
-      System.Collections.Generic.List<Triplet> triplets = new System.Collections.Generic.List<Triplet>();
+      List<Triplet> triplets = new List<Triplet>();
+      Stack<object> simulationStack = new Stack<object>();
       Instruction instr = cfg.Root.First;
       while (instr != null) {
-        //switch (instr.OpCode) {
-        //case OpCodes.Ldarg:
-        //    instr = instr.Next;
-
-            //triplets.Add(Triplet.Create(OpCode.Push, ))
-        //    break;
-        //}
+        switch (instr.OpCode.Code) {
+          case Code.Ldarg:
+            simulationStack.Push(instr.Operand); //TODO: Create Arg operand with numner instr.Operand
+            break;
+          case Code.Ldarg_0:
+            simulationStack.Push(instr.Operand); //TODO: Create Arg operand with number 0
+            break;
+          //...
+          case Code.Add:
+            object newTemp = new object(); //TODO: Implement Temp operand generation
+            triplets.Add(new Triplet(TripletOpCode.Add, newTemp, simulationStack.Pop(), simulationStack.Pop()));
+            simulationStack.Push(newTemp);
+            break;
+          //...
+          case Code.Starg:
+              triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand)); //TODO: Create Arg operand with numner instr.Operand
+              simulationStack.Push(newTemp);
+              break;
+          //...
+          default:
+            throw new NotImplementedException();
+        }
         instr = instr.Next;
       }
 
