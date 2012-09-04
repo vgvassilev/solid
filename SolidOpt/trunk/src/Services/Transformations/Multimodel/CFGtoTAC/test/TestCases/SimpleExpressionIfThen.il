@@ -3,11 +3,11 @@
 .class public auto ansi beforefieldinit TestCase
        extends [mscorlib]System.Object
 {
-  // public static int M(int a, int b, int c) {
+  // public static int Main(int a, int b, int c) {
   //   if (a + b > c) return c;
   //   return a;
   // }
-  .method public hidebysig static int32  M(int32 a, int32 b, int32 c) cil managed
+  .method public hidebysig static int32  Main(int32 a, int32 b, int32 c) cil managed
   {
     .maxstack  8
     IL_0000:  ldarg.0

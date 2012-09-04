@@ -30,6 +30,11 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 			get { return root; }
 		}
 
+    private MethodDefinition method;
+    public MethodDefinition Method {
+        get { return method; }
+    }
+
 		private List<BasicBlock> rawBlocks = null;
 		public List<BasicBlock> RawBlocks {
 			get { return this.rawBlocks; }
@@ -37,8 +42,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
 		
 		#endregion
 
-		public ControlFlowGraph(BasicBlock root, List<BasicBlock> rawBlocks)
+    public ControlFlowGraph(MethodDefinition method, BasicBlock root, List<BasicBlock> rawBlocks)
 		{
+      this.method = method;
 			this.root = root;
 			this.rawBlocks = rawBlocks;
 		}

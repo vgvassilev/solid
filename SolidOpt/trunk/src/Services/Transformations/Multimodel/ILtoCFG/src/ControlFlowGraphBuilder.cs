@@ -63,7 +63,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			ConnectBlocks();
       CreateConnectSEHBlocks();
 
-			return new ControlFlowGraph(root, rawBlocks);
+			return new ControlFlowGraph(body.Method, root, rawBlocks);
 		}
 		
 		#endregion
