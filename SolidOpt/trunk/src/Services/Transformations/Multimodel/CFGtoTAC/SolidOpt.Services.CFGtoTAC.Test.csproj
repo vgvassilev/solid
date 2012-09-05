@@ -44,6 +44,8 @@
     <None Include="test\TestCases\SimpleExpressionIfThen.il.tac" />
     <None Include="test\TestCases\SimpleExpressionIfThenElse.il" />
     <None Include="test\TestCases\SimpleExpressionIfThenElse.il.tac" />
+    <None Include="test\TestCases\LocalVariables.il" />
+    <None Include="test\TestCases\LocalVariables.il.tac" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\CFGTestFixture.cs" />

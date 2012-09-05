@@ -91,6 +91,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         RunTestCase("SimpleExpressionIfThenElse");
     }
 
+    [Test]
+    public void LocalVariables()
+    {
+        RunTestCase("LocalVariables");
+    }
+    
     /*
     [Test]
     public void BoolOrLessOrEqualThan()

@@ -27,10 +27,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       List<Triplet> triplets = new List<Triplet>();
       Stack<object> simulationStack = new Stack<object>();
       Instruction instr = cfg.Root.First;
+      
       object newTemp;
+      
       while (instr != null) {
         switch (instr.OpCode.Code) {
-//          case Code.Nop:
+          case Code.Nop:
+            // Nothing to do
+            break;
 //          case Code.Break:
           case Code.Ldarg_0:
             simulationStack.Push(cfg.Method.Parameters[0]);
@@ -41,44 +45,106 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Ldarg_2:
             simulationStack.Push(cfg.Method.Parameters[2]);
             break;
-//          case Code.Ldarg_3:
-//          case Code.Ldloc_0:
-//          case Code.Ldloc_1:
-//          case Code.Ldloc_2:
-//          case Code.Ldloc_3:
-//          case Code.Stloc_0:
-//          case Code.Stloc_1:
-//          case Code.Stloc_2:
-//          case Code.Stloc_3:
-//          case Code.Ldarg_S:
+          case Code.Ldarg_3:
+            simulationStack.Push(cfg.Method.Parameters[3]);
+            break;
+          case Code.Ldloc_0:
+            simulationStack.Push(cfg.Method.Body.Variables[0]);
+            break;
+          case Code.Ldloc_1:
+            simulationStack.Push(cfg.Method.Body.Variables[1]);
+            break;
+          case Code.Ldloc_2:
+            simulationStack.Push(cfg.Method.Body.Variables[2]);
+            break;
+          case Code.Ldloc_3:
+            simulationStack.Push(cfg.Method.Body.Variables[3]);
+            break;
+          case Code.Stloc_0:
+            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[0], simulationStack.Pop()));
+            break;
+          case Code.Stloc_1:
+            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[1], simulationStack.Pop()));
+            break;
+          case Code.Stloc_2:
+            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[2], simulationStack.Pop()));
+            break;
+          case Code.Stloc_3:
+            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[3], simulationStack.Pop()));
+            break;
+          case Code.Ldarg_S:
+              simulationStack.Push(instr.Operand);
+              break;
 //          case Code.Ldarga_S:
-//          case Code.Starg_S:
-//          case Code.Ldloc_S:
+          case Code.Starg_S:
+            triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+            break;
+          case Code.Ldloc_S:
+            simulationStack.Push(instr.Operand);
+            break;
 //          case Code.Ldloca_S:
-//          case Code.Stloc_S:
-//          case Code.Ldnull:
-//          case Code.Ldc_I4_M1:
-//          case Code.Ldc_I4_0:
-//          case Code.Ldc_I4_1:
-//          case Code.Ldc_I4_2:
-//          case Code.Ldc_I4_3:
-//          case Code.Ldc_I4_4:
-//          case Code.Ldc_I4_5:
-//          case Code.Ldc_I4_6:
-//          case Code.Ldc_I4_7:
-//          case Code.Ldc_I4_8:
-//          case Code.Ldc_I4_S:
-//          case Code.Ldc_I4:
-//          case Code.Ldc_I8:
-//          case Code.Ldc_R4:
-//          case Code.Ldc_R8:
-//          case Code.Dup:
-//          case Code.Pop:
+          case Code.Stloc_S:
+            triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+            break;
+          case Code.Ldnull:
+              simulationStack.Push(null);
+              break;
+          case Code.Ldc_I4_M1:
+            simulationStack.Push(-1);
+            break;
+          case Code.Ldc_I4_0:
+            simulationStack.Push(0);
+            break;
+          case Code.Ldc_I4_1:
+            simulationStack.Push(1);
+            break;
+          case Code.Ldc_I4_2:
+            simulationStack.Push(2);
+            break;
+          case Code.Ldc_I4_3:
+            simulationStack.Push(3);
+            break;
+          case Code.Ldc_I4_4:
+            simulationStack.Push(4);
+            break;
+          case Code.Ldc_I4_5:
+            simulationStack.Push(5);
+            break;
+          case Code.Ldc_I4_6:
+            simulationStack.Push(6);
+            break;
+          case Code.Ldc_I4_7:
+            simulationStack.Push(7);
+            break;
+          case Code.Ldc_I4_8:
+            simulationStack.Push(8);
+            break;
+          case Code.Ldc_I4_S:
+            simulationStack.Push(instr.Operand);
+            break;
+          case Code.Ldc_I4:
+            simulationStack.Push(instr.Operand);
+            break;
+          case Code.Ldc_I8:
+            simulationStack.Push(instr.Operand);
+            break;
+          case Code.Ldc_R4:
+            simulationStack.Push(instr.Operand);
+            break;
+          case Code.Ldc_R8:
+            simulationStack.Push(instr.Operand);
+            break;
+          case Code.Dup:
+            simulationStack.Push(simulationStack.Peek()); // copy reference or copy object?
+            break;
+          case Code.Pop:
+            simulationStack.Pop();
+            break;
 //          case Code.Jmp:
 //          case Code.Call:
 //          case Code.Calli:
           case Code.Ret:
-            if (simulationStack.Count==0)
+            if (simulationStack.Count == 0)
               triplets.Add(new Triplet(TripletOpCode.Return, simulationStack.Pop()));
             else
               triplets.Add(new Triplet(TripletOpCode.Return));
@@ -158,7 +224,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Callvirt:
 //          case Code.Cpobj:
 //          case Code.Ldobj:
-//          case Code.Ldstr:
+          case Code.Ldstr:
+            simulationStack.Push(instr.Operand);
+            break;
 //          case Code.Newobj:
 //          case Code.Castclass:
 //          case Code.Isinst:
@@ -249,13 +317,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             break;
 //          case Code.Ldarga:
           case Code.Starg:
-            newTemp = new object(); //TODO: Implement Temp operand/localvar generation
-            triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand));
-            simulationStack.Push(newTemp);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
             break;
-//          case Code.Ldloc:
+          case Code.Ldloc:
+            simulationStack.Push(instr.Operand);
+            break;
 //          case Code.Ldloca:
-//          case Code.Stloc:
+          case Code.Stloc:
+              triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+              break;
 //          case Code.Localloc:
 //          case Code.Endfilter:
 //          case Code.Unaligned:
