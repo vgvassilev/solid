@@ -14,33 +14,13 @@ using NUnit.Framework;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCG;
 using SolidOpt.Services.Transformations.CodeModel.CallGraph;
 
-using SolidOpt.Services.Multimodel.Test;
+using SolidOpt.Services.Transformations.Multimodel.Test;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
 {
  [TestFixture]
- public class CGTestFixture : BaseTestFixture {
+ public class CGTestFixture : BaseTestFixture<MethodDefinition, CallGraph, CilToCallGraph> {
 
-   public override void RunTestCase(string testCaseName)
-   {
-      string testCaseFile = GetTestCaseFullPath(testCaseName);
-      // Check whether the file exists first.
-      Assert.IsTrue(File.Exists(testCaseFile),
-                    String.Format("{0} does not exist.", testCaseName));
-
-      string testCaseResultFile = GetTestCaseResultFullPath(testCaseName);
-      // Check whether the result file exists first.
-      Assert.IsTrue(File.Exists(testCaseResultFile),
-                    String.Format("{0} does not exist.", testCaseResultFile));
-
-      MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);
-      var transformIL = new CilToCallGraph();
-      CallGraph cg = transformIL.Process(mainMethodDef.Body);
-      string errMsg = String.Empty;
-      string seen = cg.ToString();
-      string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));
-      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
-   }
 
     protected override string GetTestCaseFileExtension()
     {
@@ -55,14 +35,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     [Test]
     public void TwoCalls()
     {
-      RunTestCase("TwoCalls");
+      string testCaseName = "TwoCalls";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     [ExpectedException(typeof(XFailException))]
     public void XFailTwoSystemCalls()
     {
-      RunTestCase("TwoSystemCalls");
+      string testCaseName = "TwoSystemCalls";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
   }
 }

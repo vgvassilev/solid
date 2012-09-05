@@ -14,27 +14,14 @@ using NUnit.Framework;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
-using SolidOpt.Services.Multimodel.Test;
+using SolidOpt.Services.Transformations.Multimodel.Test;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 {
 	[TestFixture]
-	public class CFGTestFixture : BaseTestFixture {
+	public class CFGTestFixture : BaseTestFixture<MethodDefinition, ControlFlowGraph, CilToControlFlowGraph> {
 
-		public override void RunTestCase(string testCaseName)
-		{
-      string resultFile = GetTestCaseFullPath(testCaseName);
-      // Check whether the file exists first.
-      Assert.IsTrue(File.Exists(resultFile), String.Format("{0} does not exist.", testCaseName));
 
-      MethodDefinition mDef = LoadTestCaseMethod(testCaseName);
-			CilToControlFlowGraph transformIL = new CilToControlFlowGraph();
-			ControlFlowGraph cfg = transformIL.Process(mDef.Body);
-      string errMsg = String.Empty;
-      string seen = cfg.ToString();
-      string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));
-      Assert.IsTrue(Validate(expected, seen, ref errMsg), errMsg);
-		}
 
     protected override string GetTestCaseFileExtension()
     {
@@ -49,340 +36,399 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 		[Test]
     public void BoolAndGreaterOrEqualThan()
     {
-      RunTestCase("BoolAndGreaterOrEqualThan");
+      string testCaseName = "BoolAndGreaterOrEqualThan";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void BoolOrLessOrEqualThan()
     {
-      RunTestCase("BoolOrLessOrEqualThan");
+      string testCaseName = "BoolOrLessOrEqualThan";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void DoWhile()
     {
-      RunTestCase("DoWhile");
+      string testCaseName = "DoWhile";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void Empty()
     {
-      RunTestCase("Empty");
+      string testCaseName = "Empty";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void FalseIf()
     {
-      RunTestCase("FalseIf");
+      string testCaseName = "FalseIf";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void FieldAccessor()
     {
-      RunTestCase("FieldAccessor");
+      string testCaseName = "FieldAccessor";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void FloatEquals()
     {
-      RunTestCase("FloatEquals");
+      string testCaseName = "FloatEquals";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void FloatGreaterThan()
     {
-      RunTestCase("FloatGreaterThan");
+      string testCaseName = "FloatGreaterThan";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void FlowTest()
     {
-      RunTestCase("FlowTest");
+      string testCaseName = "FlowTest";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void GreaterThanOrEqual()
     {
-      RunTestCase("GreaterThanOrEqual");
+      string testCaseName = "GreaterThanOrEqual";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void IfNestedCondition()
     {
-      RunTestCase("IfNestedCondition");
+      string testCaseName = "IfNestedCondition";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void InPlaceAdd()
     {
-      RunTestCase("InPlaceAdd");
+      string testCaseName = "InPlaceAdd";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void InRange()
     {
-      RunTestCase("InRange");
+      string testCaseName = "InRange";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void IntPropertyEquals1()
     {
-      RunTestCase("IntPropertyEquals1");
+      string testCaseName = "IntPropertyEquals1";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void IntPropertyEquals2()
     {
-      RunTestCase("IntPropertyEquals2");
+      string testCaseName = "IntPropertyEquals2";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void IsNull()
     {
-      RunTestCase("IsNull");
+      string testCaseName = "IsNull";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void LessThanOrEqual()
     {
-      RunTestCase("LessThanOrEqual");
+      string testCaseName = "LessThanOrEqual";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void MathOperators()
     {
-      RunTestCase("MathOperators");
+      string testCaseName = "MathOperators";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void MixedAndOr()
     {
-      RunTestCase("MixedAndOr");
+      string testCaseName = "MixedAndOr";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void MultipleAndOr()
     {
-      RunTestCase("MultipleAndOr");
+      string testCaseName = "MultipleAndOr";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void MultipleOr()
     {
-      RunTestCase("MultipleOr");
+      string testCaseName = "MultipleOr";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void NestedOrGreaterThan()
     {
-      RunTestCase("NestedOrGreaterThan");
+      string testCaseName = "NestedOrGreaterThan";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void NotEqual()
     {
-      RunTestCase("NotEqual");
+      string testCaseName = "NotEqual";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void NotStringEquality()
     {
-      RunTestCase("NotStringEquality");
+      string testCaseName = "NotStringEquality";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void OptimizedAnd()
     {
-      RunTestCase("OptimizedAnd");
+      string testCaseName = "OptimizedAnd";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void OptimizedNestedOr()
     {
-      RunTestCase("OptimizedNestedOr");
+      string testCaseName = "OptimizedNestedOr";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void OptimizedOr()
     {
-      RunTestCase("OptimizedOr");
+      string testCaseName = "OptimizedOr";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void PropertyPredicate()
     {
-      RunTestCase("PropertyPredicate");
+      string testCaseName = "PropertyPredicate";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SideEffectExpression()
     {
-      RunTestCase("SideEffectExpression");
+      string testCaseName = "SideEffectExpression";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SimpleCalculation()
     {
-      RunTestCase("SimpleCalculation");
+      string testCaseName = "SimpleCalculation";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SimpleCondition()
     {
-      RunTestCase("SimpleCondition");
+      string testCaseName = "SimpleCondition";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SimpleIf()
     {
-      RunTestCase("SimpleIf");
+      string testCaseName = "SimpleIf";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SimpleReturn()
     {
-      RunTestCase("SimpleReturn");
+      string testCaseName = "SimpleReturn";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SimpleSwitch()
     {
-      RunTestCase("SimpleSwitch");
+      string testCaseName = "SimpleSwitch";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SimpleWhile()
     {
-      RunTestCase("SimpleWhile");
+      string testCaseName = "SimpleWhile";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SingleAnd()
     {
-      RunTestCase("SingleAnd");
+      string testCaseName = "SingleAnd";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void SingleOr()
     {
-      RunTestCase("SingleOr");
+      string testCaseName = "SingleOr";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void StaticField()
     {
-      RunTestCase("StaticField");
+      string testCaseName = "StaticField";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void StringCast()
     {
-      RunTestCase("StringCast");
+      string testCaseName = "StringCast";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void StringPredicate()
     {
-      RunTestCase("StringPredicate");
+      string testCaseName = "StringPredicate";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void StringTryCast()
     {
-      RunTestCase("StringTryCast");
+      string testCaseName = "StringTryCast";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void Switch()
     {
-      RunTestCase("Switch");
+      string testCaseName = "Switch";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TernaryExpression()
     {
-      RunTestCase("TernaryExpression");
+      string testCaseName = "TernaryExpression";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void ThreeReturns()
     {
-      RunTestCase("ThreeReturns");
+      string testCaseName = "ThreeReturns";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TwoIfs() {
-      RunTestCase("TwoIfs");
+      string testCaseName = "TwoIfs";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void ConditionalBranchToNext() {
-      RunTestCase("ConditionalBranchToNext");
+      string testCaseName = "ConditionalBranchToNext";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void InfiniteLoopBranchToSelf() {
-      RunTestCase("InfiniteLoopBranchToSelf");
+      string testCaseName = "InfiniteLoopBranchToSelf";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void ThrowNewException() {
-      RunTestCase("ThrowNewException");
+      string testCaseName = "ThrowNewException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TryCatchException() {
-      RunTestCase("TryCatchException");
+      string testCaseName = "TryCatchException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TryCatchFinallyException() {
-      RunTestCase("TryCatchFinallyException");
+      string testCaseName = "TryCatchFinallyException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TryMultipleCatchException() {
-      RunTestCase("TryMultipleCatchException");
+      string testCaseName = "TryMultipleCatchException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void NestedTryCatchException() {
-      RunTestCase("NestedTryCatchException");
+      string testCaseName = "NestedTryCatchException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void NestedTryCatchFinallyException() {
-      RunTestCase("NestedTryCatchFinallyException");
+      string testCaseName = "NestedTryCatchFinallyException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void CatchFaultException() {
-      RunTestCase("CatchFaultException");
+      string testCaseName = "CatchFaultException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void CatchFilterException() {
-      RunTestCase("CatchFilterException");
+      string testCaseName = "CatchFilterException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void CatchTwoFiltersException() {
-      RunTestCase("CatchTwoFiltersException");
+      string testCaseName = "CatchTwoFiltersException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TryFinallyException() {
-      RunTestCase("TryFinallyException");
+      string testCaseName = "TryFinallyException";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TryFinallyExceptionWithNops() {
-      RunTestCase("TryFinallyExceptionWithNops");
+      string testCaseName = "TryFinallyExceptionWithNops";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 
     [Test]
     public void TryFinallyExceptionFinallyAtEnd() {
-      RunTestCase("TryFinallyExceptionFinallyAtEnd");
+      string testCaseName = "TryFinallyExceptionFinallyAtEnd";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
     }
 	}
 }

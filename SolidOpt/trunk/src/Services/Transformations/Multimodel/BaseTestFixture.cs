@@ -13,7 +13,7 @@ using Mono.Collections.Generic;
 
 using NUnit.Framework;
 
-namespace SolidOpt.Services.Multimodel.Test
+namespace SolidOpt.Services.Transformations.Multimodel.Test
 {
   public class XFailException : Exception {
     public XFailException(string msg) : base(msg) { }
@@ -22,7 +22,8 @@ namespace SolidOpt.Services.Multimodel.Test
   /// <summary>
   /// Abstract out the common interfaces for running a single testcase.
   /// </summary>
-  public abstract class BaseTestFixture
+  public abstract class BaseTestFixture<Source, Target, Transformer>
+    where Transformer: SolidOpt.Services.Transformations.Multimodel.IDecompile<Source, Target>, new()
   {
 
     /// <summary>
@@ -51,7 +52,24 @@ namespace SolidOpt.Services.Multimodel.Test
     /// <param name='testCaseName'>
     /// Test case name.
     /// </param>
-    public abstract void RunTestCase(string testCaseName);
+    public virtual void RunTestCase(string testCaseName, Source source) {
+      string testCaseFile = GetTestCaseFullPath(testCaseName);
+      // Check whether the file exists first.
+      Assert.IsTrue(File.Exists(testCaseFile),
+                    String.Format("{0} does not exist.", testCaseName));
+
+      string testCaseResultFile = GetTestCaseResultFullPath(testCaseName);
+      // Check whether the result file exists first.
+      Assert.IsTrue(File.Exists(testCaseResultFile),
+                    String.Format("{0} does not exist.", testCaseResultFile));
+
+      Target target = new Transformer().Decompile(source);
+
+      string errMsg = String.Empty;
+      string seen = target.ToString();
+      string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));
+      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
+    }
 
     /// <summary>
     /// Compare whether the produced result is the expected result. Usually there is a file we want
@@ -72,7 +90,6 @@ namespace SolidOpt.Services.Multimodel.Test
     {
       seen = Normalize(seen);
       expected = Normalize(expected);
-
 
       string[] seenLines = seen.Split('\n');
       string[] expectedLines = expected.Split('\n');
