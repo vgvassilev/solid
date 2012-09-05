@@ -40,7 +40,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     }
 
     [Test]
-    [ExpectedException(typeof(XFailException))]
     public void XFailTwoSystemCalls()
     {
       string testCaseName = "TwoSystemCalls";

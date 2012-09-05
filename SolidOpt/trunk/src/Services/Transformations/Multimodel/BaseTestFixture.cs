@@ -4,6 +4,7 @@
  * For further details see the nearest License.txt
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -17,6 +18,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 {
   public class XFailException : Exception {
     public XFailException(string msg) : base(msg) { }
+  }
+
+  internal enum TestCaseDirectiveKind {
+    XFail
+  }
+
+  internal class TestCaseDirective
+  {
+    private TestCaseDirectiveKind kind;
+    public TestCaseDirectiveKind Kind {
+      get { return this.kind; }
+    }
+
+    public TestCaseDirective(TestCaseDirectiveKind kind)
+    {
+      this.kind = kind;
+    }
   }
 
   /// <summary>
@@ -53,6 +71,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// Test case name.
     /// </param>
     public virtual void RunTestCase(string testCaseName, Source source) {
+      bool testXFail = false;
       string testCaseFile = GetTestCaseFullPath(testCaseName);
       // Check whether the file exists first.
       Assert.IsTrue(File.Exists(testCaseFile),
@@ -63,12 +82,47 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       Assert.IsTrue(File.Exists(testCaseResultFile),
                     String.Format("{0} does not exist.", testCaseResultFile));
 
-      Target target = new Transformer().Decompile(source);
-
+      string[] seen = null;
+      string[] expected;
       string errMsg = String.Empty;
-      string seen = target.ToString();
-      string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));
-      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
+      List<TestCaseDirective> directives = new List<TestCaseDirective>();
+      expected = ParseDirectives(File.ReadAllText(GetTestCaseResultFullPath(testCaseName)),
+                                 ref directives);
+      testXFail = directives.Find(d => d.Kind == TestCaseDirectiveKind.XFail) != null;
+      try {
+        Target target = new Transformer().Decompile(source);
+        seen = Normalize(target.ToString()).Split('\n');
+      }
+      catch (Exception e) {
+        if (!testXFail)
+          throw e;
+      }
+      finally {
+        bool match = Validate(seen, expected, ref errMsg);
+        if (testXFail && match)
+          errMsg += "\n Unexpected pass.";
+        else if (testXFail)
+          errMsg += "\n Expected to fail.";
+        else {
+          Assert.IsTrue(match, errMsg);
+        }
+      }
+    }
+
+    private string[] ParseDirectives(string contents, ref List<TestCaseDirective> directives)
+    {
+      List<string> stringList = new List<string>(Normalize(contents).Split('\n'));
+      string s = string.Empty;
+      for (int i = stringList.Count - 1; i >= 0; i--) {
+        s = stringList[i];
+        if (s.StartsWith(@"//")) {
+          if (s.Contains("XFAIL"))
+            directives.Add(new TestCaseDirective(TestCaseDirectiveKind.XFail));
+          stringList.Remove(s);
+        }
+      }
+
+      return stringList.ToArray();
     }
 
     /// <summary>
@@ -86,13 +140,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// Errors if the match fails.
     /// </param>
     /// <returns>True on success.</returns>
-    public bool Validate(string seen, string expected, ref string errMsg)
+    public bool Validate(string[] seenLines, string[] expectedLines, ref string errMsg)
     {
-      seen = Normalize(seen);
-      expected = Normalize(expected);
-
-      string[] seenLines = seen.Split('\n');
-      string[] expectedLines = expected.Split('\n');
       string seenLine, expectedLine;
       bool match = true;
       // take the min, because we don't want out of range exception
@@ -108,12 +157,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
           match = false;
         }
       }
-      // Check whether the test is marked as expected to fail.
-      if (expectedLines[expectedLines.Length-1].StartsWith(@"// XFAIL:")) {
-        // The test is expected to fail. Throw specific exception.
-        throw new XFailException(errMsg);
-      }
-      else if (seenLines.Length != expectedLines.Length) {
+      if (seenLines.Length != expectedLines.Length) {
         errMsg += "More lines follow in either seen or expected.";
       }
 

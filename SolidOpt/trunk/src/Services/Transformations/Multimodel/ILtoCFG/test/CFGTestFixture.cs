@@ -21,8 +21,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 	[TestFixture]
 	public class CFGTestFixture : BaseTestFixture<MethodDefinition, ControlFlowGraph, CilToControlFlowGraph> {
 
-
-
     protected override string GetTestCaseFileExtension()
     {
       return "il";
