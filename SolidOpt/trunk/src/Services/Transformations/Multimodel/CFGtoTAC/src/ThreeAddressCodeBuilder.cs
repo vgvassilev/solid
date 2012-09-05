@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       this.cfg = cfg;
     }
 
-    public Triplet Create() {
+    public ThreeAdressCode Create() {
       List<Triplet> triplets = new List<Triplet>();
       Stack<object> simulationStack = new Stack<object>();
       Instruction instr = cfg.Root.First;
@@ -346,10 +346,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
         }
         instr = instr.Next;
       }
-
-      //triplets.Add(CreateTriplet());
-      // Here should be the implementation
-      return triplets[0];
+      
+      return new ThreeAdressCode(cfg.Method, triplets[0], triplets);
     }
   }
 

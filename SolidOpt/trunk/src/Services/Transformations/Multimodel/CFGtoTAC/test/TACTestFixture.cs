@@ -25,7 +25,7 @@ using SolidOpt.Services.Transformations.Multimodel.Test;
 namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
 {
   [TestFixture]
-	public class TACTestFixture : BaseTestFixture<ControlFlowGraph, Triplet, CFGtoTACTransformer> {
+  public class TACTestFixture : BaseTestFixture<ControlFlowGraph, ThreeAdressCode, CFGtoTACTransformer> {
 
     protected override string GetTestCaseFileExtension()
     {
@@ -75,8 +75,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
     {
       string testCaseName = "SimpleExpressionIfThenElse";
       RunTestCase(testCaseName, getCfg(testCaseName));
-   }
-
+    }
+    
+    [Test]
+    public void LocalVariables()
+    {
+        string testCaseName = "LocalVariables";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
     /*
     [Test]
     public void BoolOrLessOrEqualThan()

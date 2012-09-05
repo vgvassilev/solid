@@ -8,23 +8,23 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
   public enum TripletOpCode {
     // Basic
-    Assignment,     // result = op2
+    Assignment,     // result = op1
     
     // Array deref etc
     //...
     
     // Aritmetic
-    Addition,       // result = op2 + op3
-    Substraction,   // result = op2 - op3
-    Multiplication, // result = op2 * op3
-    Division,       // result = op2 / op3
+    Addition,       // result = op1 + op2
+    Substraction,   // result = op1 - op2
+    Multiplication, // result = op1 * op2
+    Division,       // result = op1 / op2
     //...
 
     // Logic
-    Less,           // result = op2 < op3
-    Equal,          // result = op2 == op3
-    And,            // result = op2 && op3
-    Or,             // result = op2 || op3
+    Less,           // result = op1 < op2
+    Equal,          // result = op1 == op2
+    And,            // result = op1 && op2
+    Or,             // result = op1 || op2
     //...
 
     // Control

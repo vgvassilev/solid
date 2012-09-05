@@ -10,7 +10,7 @@ using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 {
-  public class CFGtoTACTransformer : DecompilationStep, IDecompile<ControlFlowGraph, Triplet>
+  public class CFGtoTACTransformer : DecompilationStep, IDecompile<ControlFlowGraph, ThreeAdressCode>
   {
 
     #region Constructors
@@ -32,29 +32,25 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 
     public override Type GetTargetType()
     {
-      return typeof(Triplet);
+      return typeof(ThreeAdressCode);
     }
 
-    public Triplet Process(ControlFlowGraph source)
+    public ThreeAdressCode Process(ControlFlowGraph source)
     {
       if (source == null)
         throw new ArgumentNullException ("method");
 
       var builder = new ThreeAddressCodeBuilder(source);
       return builder.Create();
-   }
+    }
 
 
-    #region IDecompile[ControlFlowGraph, Triplet] implementation
-    public Triplet Decompile (ControlFlowGraph source)
+    #region IDecompile[ControlFlowGraph, ThreeAdressCode] implementation
+    public ThreeAdressCode Decompile (ControlFlowGraph source)
     {
       return Process(source);
     }
     #endregion
 
-
-
-
   }
 }
-
