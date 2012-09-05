@@ -1,5 +1,5 @@
 // /*
-//  * $Id$
+//  * $Id: CFGTestFixture.cs 616 2012-09-03 19:49:39Z apenev $
 //  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
 //  * For further details see the nearest License.txt
 //  */
@@ -20,36 +20,12 @@ using SolidOpt.Services.Transformations.Multimodel.CFGtoTAC;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
-using SolidOpt.Services.Multimodel.Test;
+using SolidOpt.Services.Transformations.Multimodel.Test;
 
 namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
 {
   [TestFixture]
-	public class CFGTestFixture : BaseTestFixture {
-
-    public override void RunTestCase(string testCaseName)
-    {
-      string testCaseFile = GetTestCaseFullPath(testCaseName);
-      // Check whether the file exists first.
-      Assert.IsTrue(File.Exists(testCaseFile),
-                    String.Format("{0} does not exist.", testCaseName));
-    
-      string testCaseResultFile = GetTestCaseResultFullPath(testCaseName);
-      // Check whether the result file exists first.
-      Assert.IsTrue(File.Exists(testCaseResultFile),
-                    String.Format("{0} does not exist.", testCaseResultFile));
-
-      MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);
-      ControlFlowGraph cfg = new CilToControlFlowGraph().Decompile(mainMethodDef);
-
-      CFGtoTACTransformer transformCFG = new CFGtoTACTransformer();
-      Triplet triplet = transformCFG.Decompile(cfg);
-
-      string errMsg = String.Empty;
-      string seen = triplet.ToString();
-      string expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName));
-      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
-    }
+	public class TACTestFixture : BaseTestFixture<ControlFlowGraph, Triplet, CFGtoTACTransformer> {
 
     protected override string GetTestCaseFileExtension()
     {
@@ -61,42 +37,46 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
       return "il.tac";
     }
 
+    private ControlFlowGraph getCfg(string testCaseName) {
+      MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);
+      return new CilToControlFlowGraph().Decompile(mainMethodDef);
+    }
+
 		[Test]
     public void BoolAndGreaterOrEqualThan()
     {
-      RunTestCase("BoolAndGreaterOrEqualThan");
+      string testCaseName = "BoolAndGreaterOrEqualThan";
+      RunTestCase(testCaseName, getCfg(testCaseName));
     }
 
     [Test]
     public void SimpleExpression1()
     {
-        RunTestCase("SimpleExpression1");
+      string testCaseName = "SimpleExpression1";
+      RunTestCase(testCaseName, getCfg(testCaseName));
     }
 
     [Test]
     public void SimpleExpression2()
     {
-        RunTestCase("SimpleExpression2");
+      string testCaseName = "SimpleExpression2";
+      RunTestCase(testCaseName, getCfg(testCaseName));
     }
 
     [Test]
     public void SimpleExpressionIfThen()
     {
-       RunTestCase("SimpleExpressionIfThen");
+      string testCaseName = "SimpleExpressionIfThen";
+      RunTestCase(testCaseName, getCfg(testCaseName));
     }
 
     [Test]
     public void SimpleExpressionIfThenElse()
     {
-        RunTestCase("SimpleExpressionIfThenElse");
-    }
+      string testCaseName = "SimpleExpressionIfThenElse";
+      RunTestCase(testCaseName, getCfg(testCaseName));
+   }
 
-    [Test]
-    public void LocalVariables()
-    {
-        RunTestCase("LocalVariables");
-    }
-    
     /*
     [Test]
     public void BoolOrLessOrEqualThan()
