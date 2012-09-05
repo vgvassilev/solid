@@ -26,9 +26,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     public ThreeAdressCode Create() {
       List<Triplet> triplets = new List<Triplet>();
       Stack<object> simulationStack = new Stack<object>();
+      List<VariableDefinition> tempVariables = new List<VariableDefinition>();
       Instruction instr = cfg.Root.First;
       
-      object newTemp;
+      VariableDefinition newTempVariable;
       
       while (instr != null) {
         switch (instr.OpCode.Code) {
@@ -144,8 +145,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Call:
 //          case Code.Calli:
           case Code.Ret:
-            if (simulationStack.Count == 0)
-              triplets.Add(new Triplet(TripletOpCode.Return, simulationStack.Pop()));
+            if (simulationStack.Count > 0)
+              triplets.Add(new Triplet(TripletOpCode.Return, null, simulationStack.Pop()));
             else
               triplets.Add(new Triplet(TripletOpCode.Return));
             break;
@@ -195,9 +196,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Stind_R4:
 //          case Code.Stind_R8:
           case Code.Add:
-            newTemp = new object(); //TODO: Implement Temp operand/localvar generation
-            triplets.Add(new Triplet(TripletOpCode.Addition, newTemp, simulationStack.Pop(), simulationStack.Pop()));
-            simulationStack.Push(newTemp);
+            object obj2 = simulationStack.Pop();
+            object obj1 = simulationStack.Pop();
+            newTempVariable = new VariableDefinition("T_" + tempVariables.Count, Helper.BinaryNumericOperations(obj1, obj2));
+            tempVariables.Add(newTempVariable);
+            triplets.Add(new Triplet(TripletOpCode.Addition, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
             break;
 //          case Code.Sub:
 //          case Code.Mul:
@@ -347,8 +351,55 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
         instr = instr.Next;
       }
       
-      return new ThreeAdressCode(cfg.Method, triplets[0], triplets);
+      return new ThreeAdressCode(cfg.Method, triplets[0], triplets, tempVariables);
     }
+  }
+
+  public static class Helper
+  {
+        public static TypeReference GetOperandType(object op)
+        {
+            Type t = op.GetType();
+            if (op is VariableReference) return (op as VariableReference).VariableType;
+            if (op is ParameterReference) return (op as ParameterReference).ParameterType;
+            return new TypeReference(t.Namespace, t.Name, null, t.IsValueType);
+        }
+
+        public static Type[,] binaryNumericOperationsResultTypes =
+        {
+        //              Int32           Int64           IntPtr                Single          Double          &                     Obj
+        /* Int32  */  { typeof(Int32),  null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
+        /* Int64  */  { null,           typeof(Int64),  null,                 null,           null,           null,                 null },
+        /* IntPtr */  { typeof(IntPtr), null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
+        /* Single */  { null,           null,           null,                 typeof(Single), null,           null,                 null },
+        /* Double */  { null,           null,           null,                 null,           typeof(Double), null,                 null },
+        /* &      */  { typeof(PointerType), null,      typeof(PointerType),  null,           null,           typeof(IntPtr),       null },
+        /* Obj    */  { null,           null,           null,                 null,           null,           null,                 null }
+        };
+
+        public static int GetTypeKind(TypeReference tr)
+        {
+            switch (tr.FullName) {
+                case "System.Int32": return 0;
+                case "System.Int64": return 1;
+                case "System.IntPtr": return 2;
+                case "System.Single": return 3;
+                case "System.Double": return 4;
+            }
+            if (tr.IsPointer) return 5;
+            if (!tr.IsValueType) return 6;
+            throw new Exception("TAC builder: Unsupported type!");
+        }
+
+        public static TypeReference BinaryNumericOperations(object op1, object op2)
+        {
+            Type resultType = binaryNumericOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(op2))];
+            //TODO: Check Add/Sub and PointerType
+
+            if (resultType == null) throw new Exception("TAC builder: Invalid IL!");
+
+            return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
+        }
   }
 
 /*L0: flag = 0;

@@ -6,7 +6,7 @@
   // public static string Main() {
   //  int v1, v2, v3;
   //  float v4, v5;
-  //  string v6;
+  //  string v6, v7;
   //
   //  v1 = 1;
   //  v2 = v1 + 1;
@@ -14,18 +14,21 @@
   //  v4 = 4f;
   //  v5 = 5f + v4;
   //  v6 = "abc";
+  //  v7 = v6;
   //
-  //  return v6;
+  //  return v7;
   // }
   .method public hidebysig static string  Main() cil managed
   {
     .maxstack  2
-    .locals init (int32 V_0,
+    .locals init (
+           int32 V_0,
            int32 V_1,
            int32 V_2,
            float32 V_3,
            float32 V_4,
-           string V_5)
+           string V_5,
+           string V_6)
     IL_0000:  ldc.i4.1
     IL_0001:  stloc.0
     IL_0002:  ldloc.0
@@ -45,6 +48,8 @@
     IL_0019:  ldstr      "abc"
     IL_001e:  stloc.s    V_5
     IL_0020:  ldloc.s    V_5
-    IL_0022:  ret
+    IL_0022:  stloc.s    V_6
+    IL_0024:  ldloc.s    V_6
+    IL_0026:  ret
   }
 }

@@ -25,24 +25,25 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
             get { return method; }
         }
         
-        private List<Triplet> rawTriplets = null;
+        private List<Triplet> rawTriplets;
         public List<Triplet> RawTriplets {
             get { return rawTriplets; }
         }
 
-        private List<VariableDefinition> temporaryVariables = new List<VariableDefinition>();
+        private List<VariableDefinition> temporaryVariables;
         public List<VariableDefinition> TemporaryVariables {
             get { return temporaryVariables; }
         }
 
-        public ThreeAdressCode(MethodDefinition method, Triplet root, List<Triplet> rawTriplets)
+        public ThreeAdressCode(MethodDefinition method, Triplet root, List<Triplet> rawTriplets, List<VariableDefinition> temporaryVariables)
         {
             this.method = method;
             this.root = root;
             this.rawTriplets = rawTriplets;
+            this.temporaryVariables = temporaryVariables;
         }
 
-        public override string ToString ()
+        public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             int i = 0;

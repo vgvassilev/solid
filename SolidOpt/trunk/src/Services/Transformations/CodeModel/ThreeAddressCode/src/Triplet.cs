@@ -28,9 +28,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     //...
 
     // Control
-    Goto,           // goto result/label
-    IfFalse,        // iffalse op1 goto result/label
-    IfTrue,         // iftrue op1 goto result/label
+    Goto,           // goto op1/label
+    IfFalse,        // iffalse op1 goto op2/label
+    IfTrue,         // iftrue op1 goto op2/label
     //...
 
     // Methods
@@ -116,35 +116,71 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         this.operand2 = operand2;
     }
 
-    public override string ToString ()
+    private static string op(object obj)
+    {
+      if (obj is string) return "\"" + obj.ToString() + "\"";  //TODO: Escape string
+      return obj.ToString();
+    }
+
+    public override string ToString()
     {
       System.Text.StringBuilder sb = new System.Text.StringBuilder();
       if (result != null)
-        sb.AppendFormat("{0} = ", result.ToString());
-      if (operand1 != null)
-        sb.AppendFormat("{0}", operand1.ToString());
+        sb.AppendFormat("{0} = ", op(result));
       switch(opcode) {
-        case TripletOpCode.Addition: sb.Append(" +"); break;
-        case TripletOpCode.And: sb.Append(" &&"); break;
-        case TripletOpCode.Assignment: sb.Append(" ="); break;
-        case TripletOpCode.Call: sb.Append(" call"); break;
-        case TripletOpCode.CallVirt: sb.Append(" callvirtual"); break;
-        case TripletOpCode.Division: sb.Append(" /"); break;
-        case TripletOpCode.Equal: sb.Append(" =="); break;
-        case TripletOpCode.Goto: sb.Append(" goto"); break;
-        case TripletOpCode.IfFalse: sb.Append(" ifFalse"); break;
-        case TripletOpCode.IfTrue: sb.Append(" ifTrue"); break;
-        case TripletOpCode.Less: sb.Append(" <"); break;
-        case TripletOpCode.Multiplication: sb.Append(" *"); break;
-        case TripletOpCode.Or: sb.Append(" ||"); break;
-        case TripletOpCode.PushParam: sb.Append(" pushParam"); break;
-        case TripletOpCode.Return: sb.Append(" return"); break;
-        case TripletOpCode.Substraction: sb.Append(" -"); break;
-        default: sb.Append(" UNKNOWN "); break;
+        case TripletOpCode.Addition:
+          sb.AppendFormat("{0} + {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.And:
+          sb.AppendFormat("{0} && {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Assignment:
+          sb.AppendFormat("{0}", op(operand1));
+          break;
+        case TripletOpCode.Call:
+          sb.AppendFormat("call {0}", op(operand1));
+          break;
+        case TripletOpCode.CallVirt:
+          sb.AppendFormat("callvirt {0} {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Division:
+          sb.AppendFormat("{0} / {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Equal:
+          sb.AppendFormat("{0} == {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Goto:
+          sb.AppendFormat("goto {0}", op(operand1));
+          break;
+        case TripletOpCode.IfFalse:
+          sb.AppendFormat("iffalse {0} goto {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.IfTrue:
+          sb.AppendFormat("iftrue {0} goto {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Less:
+          sb.AppendFormat("{0} < {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Multiplication:
+          sb.AppendFormat("{0} * {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Or:
+          sb.AppendFormat("{0} || {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.PushParam:
+          sb.AppendFormat("pushparam {0}", op(operand1));
+          break;
+        case TripletOpCode.Return:
+          sb.AppendFormat("return{0}", operand1==null ? "" : " "+op(operand1));
+          break;
+        case TripletOpCode.Substraction:
+          sb.AppendFormat("{0} + {1}", op(operand1), op(operand2));
+          break;
+        default:
+          sb.Append(" UNKNOWN ");
+          break;
       }
-      if (operand2 != null)
-        sb.AppendFormat("{0}", operand2.ToString());
-
+      
       return sb.ToString();
     }
   }
