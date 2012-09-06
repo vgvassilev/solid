@@ -259,9 +259,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
     protected string GetTestCaseOutFullPath(string testCaseName)
     {
-      string result = Path.Combine(testCasesDir, testCaseName);
-      result = Path.ChangeExtension(result, GetTestCaseOutFileExtension());
-      return result;
+      return GetTestCaseResultFullPath(testCaseName) + '.' + GetTestCaseOutFileExtension();
     }
 
     /// <summary>
