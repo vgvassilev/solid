@@ -264,11 +264,33 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Xor, newTempVariable, obj1, obj2));
             simulationStack.Push(newTempVariable);
             break;
-//          case Code.Shl:
-//          case Code.Shr:
+          case Code.Shl:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.ShiftOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.ShiftLeft, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
+          case Code.Shr:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.ShiftOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.ShiftRight, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Shr_Un:
-//          case Code.Neg:
-//          case Code.Not:
+          case Code.Neg:
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.UnaryNumericOperations(obj1));
+            triplets.Add(new Triplet(TripletOpCode.Negate, newTempVariable, obj1));
+            simulationStack.Push(newTempVariable);
+            break;
+          case Code.Not:
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj1)); //TODO: Strange specification description. Read again.
+            triplets.Add(new Triplet(TripletOpCode.Not, newTempVariable, obj1));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Conv_I1:
 //          case Code.Conv_I2:
 //          case Code.Conv_I4:
@@ -369,9 +391,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
             simulationStack.Push(newTempVariable);
             break;
-//          case Code.Cgt:
+          case Code.Cgt:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2)) throw new Exception(InvalidILExceptionString);
+            newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+            triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Cgt_Un:
-//          case Code.Clt:
+          case Code.Clt:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2)) throw new Exception(InvalidILExceptionString);
+            newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+            triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Clt_Un:
 //          case Code.Ldftn:
 //          case Code.Ldvirtftn:

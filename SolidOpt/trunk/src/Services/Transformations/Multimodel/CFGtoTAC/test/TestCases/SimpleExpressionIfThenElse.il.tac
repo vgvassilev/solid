@@ -1,8 +1,8 @@
 Main
-L0: tmp0 = arg0 + arg1
-L1: ifFalse tmp0 goto L4
-L2: tmp1 = arg0 + arg2
-L3: return tmp1
-L4: tmp2 = arg1 + arg2
-L5: return tmp2
+L0: T_0 = a > b
+L1: ifFalse T_0 goto L4
+L2: T_1 = a + c
+L3: return T_1
+L4: T_2 = b + c
+L5: return T_2
 //XFAIL:

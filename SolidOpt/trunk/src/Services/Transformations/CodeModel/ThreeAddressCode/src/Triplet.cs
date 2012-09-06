@@ -19,15 +19,20 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Multiplication, // result = op1 * op2
     Division,       // result = op1 / op2
     Reminder,       // result = op1 % op2
+    Negate,         // result = - op1
     And,            // result = op1 & op2
     Or,             // result = op1 | op2
     Xor,            // result = op1 ^ op2
+    Not,            // result = ! op1
+    ShiftLeft,      // result = op1 << op2
+    ShiftRight,     // result = op1 >> op2
     //...
 
     // Logic
-    Less,           // result = op1 < op2
     Equal,          // result = op1 == op2
-    //...
+    Less,           // result = op1 < op2
+    Great,          // result = op1 > op2
+        //...
 
     // Control
     Goto,           // goto op1/label
@@ -38,7 +43,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     // Methods
     Call,           // result = call op1/method
     CallVirt,       // result = call op1/object op2/method
-    PushParam,      // push op1
+    PushParam,      // pushparam op1
     Return          // return op1
     //...
   }
@@ -154,6 +159,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         case TripletOpCode.Goto:
           sb.AppendFormat("goto {0}", op(operand1));
           break;
+        case TripletOpCode.Great:
+          sb.AppendFormat("{0} > {1}", op(operand1), op(operand2));
+          break;
         case TripletOpCode.IfFalse:
           sb.AppendFormat("iffalse {0} goto {1}", op(operand1), op(operand2));
           break;
@@ -166,6 +174,12 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         case TripletOpCode.Multiplication:
           sb.AppendFormat("{0} * {1}", op(operand1), op(operand2));
           break;
+        case TripletOpCode.Negate:
+            sb.AppendFormat("- {0}", op(operand1));
+            break;
+        case TripletOpCode.Not:
+            sb.AppendFormat("! {0}", op(operand1));
+            break;
         case TripletOpCode.Or:
           sb.AppendFormat("{0} | {1}", op(operand1), op(operand2));
           break;
@@ -175,8 +189,17 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         case TripletOpCode.Return:
           sb.AppendFormat("return{0}", operand1==null ? "" : " "+op(operand1));
           break;
+        case TripletOpCode.Reminder:
+          sb.AppendFormat("{0} % {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.ShiftLeft:
+            sb.AppendFormat("{0} << {1}", op(operand1), op(operand2));
+            break;
+        case TripletOpCode.ShiftRight:
+            sb.AppendFormat("{0} >> {1}", op(operand1), op(operand2));
+            break;
         case TripletOpCode.Substraction:
-          sb.AppendFormat("{0} + {1}", op(operand1), op(operand2));
+          sb.AppendFormat("{0} - {1}", op(operand1), op(operand2));
           break;
         default:
           sb.Append(" UNKNOWN ");
