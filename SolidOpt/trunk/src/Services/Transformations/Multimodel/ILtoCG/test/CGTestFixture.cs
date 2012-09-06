@@ -47,6 +47,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     }
 
     [Test]
+    public void MultipleNestedMethodCalls()
+    {
+      string testCaseName = "MultipleNestedMethodCalls";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
+    }
+
+    [Test]
     public void XFailTwoSystemCalls()
     {
       string testCaseName = "TwoSystemCalls";
