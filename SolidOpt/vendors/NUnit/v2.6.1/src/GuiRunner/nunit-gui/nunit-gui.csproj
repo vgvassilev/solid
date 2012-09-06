@@ -1,0 +1,161 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3FF340D5-D3B4-4DF0-BAF1-98B3C00B6148}</ProjectGuid>
+    <RootNamespace>NUnit.Gui</RootNamespace>
+    <AssemblyName>nunit-gui-runner</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE;NUNIT_LEAKAGE_TEST</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Windows.Forms.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Drawing.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Data.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.0.3705\System.XML.dll</HintPath>
+      <Private />
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="AddinDialog.cs" />
+    <EmbeddedResource Include="AddinDialog.resx">
+      <DependentUpon>AddinDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="AppEntry.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DetailResults.cs" />
+    <Compile Include="ExceptionDetailsForm.cs" />
+    <EmbeddedResource Include="ExceptionDetailsForm.resx">
+      <DependentUpon>ExceptionDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="GuiOptions.cs" />
+    <Content Include="Logo.ico" />
+    <Compile Include="NUnitForm.cs" />
+    <EmbeddedResource Include="NUnitForm.resx">
+      <DependentUpon>NUnitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="OptionsDialog.cs" />
+    <EmbeddedResource Include="OptionsDialog.resx">
+      <DependentUpon>OptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="ProjectEditor.cs" />
+    <EmbeddedResource Include="ProjectEditor.resx">
+      <DependentUpon>ProjectEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\AdvancedLoaderSettingsPage.cs" />
+    <EmbeddedResource Include="SettingsPages\AdvancedLoaderSettingsPage.resx">
+      <DependentUpon>AdvancedLoaderSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\AssemblyReloadSettingsPage.cs" />
+    <EmbeddedResource Include="SettingsPages\AssemblyReloadSettingsPage.resx">
+      <DependentUpon>AssemblyReloadSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\GuiSettingsPage.cs" />
+    <EmbeddedResource Include="SettingsPages\GuiSettingsPage.resx">
+      <DependentUpon>GuiSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\TestLoaderSettingsPage.cs" />
+    <EmbeddedResource Include="SettingsPages\TestLoaderSettingsPage.resx">
+      <DependentUpon>TestLoaderSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\TestResultSettingsPage.cs" />
+    <EmbeddedResource Include="SettingsPages\TestResultSettingsPage.resx">
+      <DependentUpon>TestResultSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\TreeSettingsPage.cs" />
+    <EmbeddedResource Include="SettingsPages\TreeSettingsPage.resx">
+      <DependentUpon>TreeSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\VisualStudioSettingsPage.cs" />
+    <EmbeddedResource Include="SettingsPages\VisualStudioSettingsPage.resx">
+      <DependentUpon>VisualStudioSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\OldTabPages\GeneralSettingsTab.cs" />
+    <EmbeddedResource Include="SettingsPages\OldTabPages\GeneralSettingsTab.resx">
+      <DependentUpon>GeneralSettingsTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\OldTabPages\TestLoaderSettingsTab.cs" />
+    <EmbeddedResource Include="SettingsPages\OldTabPages\TestLoaderSettingsTab.resx">
+      <DependentUpon>TestLoaderSettingsTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SettingsPages\OldTabPages\TestOutputSettingsTab.cs" />
+    <EmbeddedResource Include="SettingsPages\OldTabPages\TestOutputSettingsTab.resx">
+      <DependentUpon>TestOutputSettingsTab.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\GuiComponents\UiKit\nunit.uikit.dll.csproj">
+      <Project>{27531BBF-183D-4C3A-935B-D840B9F1A3A4}</Project>
+      <Name>nunit.uikit.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\ClientUtilities\util\nunit.util.dll.csproj">
+      <Project>{61CE9CE5-943E-44D4-A381-814DC1406767}</Project>
+      <Name>nunit.util.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
+      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
+      <Name>nunit.core.interfaces.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitCore\core\nunit.core.dll.csproj">
+      <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
+      <Name>nunit.core.dll</Name>
+      <Private />
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
