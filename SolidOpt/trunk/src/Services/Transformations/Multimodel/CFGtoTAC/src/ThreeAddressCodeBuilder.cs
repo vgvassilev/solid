@@ -23,13 +23,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       this.cfg = cfg;
     }
 
+    private static VariableReference GenNewTempVariable(List<VariableDefinition> inVarList, TypeReference varTypeRef)
+    {
+      VariableDefinition result = new VariableDefinition("T_" + inVarList.Count, varTypeRef);
+      inVarList.Add(result);
+      return result;
+    }
+
     public ThreeAdressCode Create() {
       List<Triplet> triplets = new List<Triplet>();
       Stack<object> simulationStack = new Stack<object>();
       List<VariableDefinition> tempVariables = new List<VariableDefinition>();
       Instruction instr = cfg.Root.First;
       
-      VariableDefinition newTempVariable;
+      VariableReference newTempVariable;
+      object obj1, obj2;
       
       while (instr != null) {
         switch (instr.OpCode.Code) {
@@ -196,22 +204,63 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Stind_R4:
 //          case Code.Stind_R8:
           case Code.Add:
-            object obj2 = simulationStack.Pop();
-            object obj1 = simulationStack.Pop();
-            newTempVariable = new VariableDefinition("T_" + tempVariables.Count, Helper.BinaryNumericOperations(obj1, obj2));
-            tempVariables.Add(newTempVariable);
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
             triplets.Add(new Triplet(TripletOpCode.Addition, newTempVariable, obj1, obj2));
             simulationStack.Push(newTempVariable);
             break;
-//          case Code.Sub:
-//          case Code.Mul:
-//          case Code.Div:
+          case Code.Sub:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Substraction, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
+          case Code.Mul:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Multiplication, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
+          case Code.Div:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Division, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Div_Un:
-//          case Code.Rem:
+          case Code.Rem:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Reminder, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Rem_Un:
-//          case Code.And:
-//          case Code.Or:
-//          case Code.Xor:
+          case Code.And:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.And, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
+          case Code.Or:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Or, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
+          case Code.Xor:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Xor, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Shl:
 //          case Code.Shr:
 //          case Code.Shr_Un:
@@ -357,6 +406,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 
   public static class Helper
   {
+        private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
+        private const string UnsupportedTypeExceptionString = "TAC builder: Unsupported type!";
+
         public static TypeReference GetOperandType(object op)
         {
             Type t = op.GetType();
@@ -364,18 +416,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             if (op is ParameterReference) return (op as ParameterReference).ParameterType;
             return new TypeReference(t.Namespace, t.Name, null, t.IsValueType);
         }
-
-        public static Type[,] binaryNumericOperationsResultTypes =
-        {
-        //              Int32           Int64           IntPtr                Single          Double          &                     Obj
-        /* Int32  */  { typeof(Int32),  null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
-        /* Int64  */  { null,           typeof(Int64),  null,                 null,           null,           null,                 null },
-        /* IntPtr */  { typeof(IntPtr), null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
-        /* Single */  { null,           null,           null,                 typeof(Single), null,           null,                 null },
-        /* Double */  { null,           null,           null,                 null,           typeof(Double), null,                 null },
-        /* &      */  { typeof(PointerType), null,      typeof(PointerType),  null,           null,           typeof(IntPtr),       null },
-        /* Obj    */  { null,           null,           null,                 null,           null,           null,                 null }
-        };
 
         public static int GetTypeKind(TypeReference tr)
         {
@@ -388,26 +428,140 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             }
             if (tr.IsPointer) return 5;
             if (!tr.IsValueType) return 6;
-            throw new Exception("TAC builder: Unsupported type!");
+            throw new Exception(UnsupportedTypeExceptionString);
         }
+
+        // Binary numeric operations
+
+        public readonly static Type[,] BinaryNumericOperationsResultTypes =
+        {
+        //              Int32           Int64           IntPtr                Single          Double          &                     Obj
+        /* Int32  */  { typeof(Int32),  null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
+        /* Int64  */  { null,           typeof(Int64),  null,                 null,           null,           null,                 null },
+        /* IntPtr */  { typeof(IntPtr), null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
+        /* Single */  { null,           null,           null,                 typeof(Single), null,           null,                 null },
+        /* Double */  { null,           null,           null,                 null,           typeof(Double), null,                 null },
+        /* &      */  { typeof(PointerType), null,      typeof(PointerType),  null,           null,           typeof(IntPtr),       null },
+        /* Obj    */  { null,           null,           null,                 null,           null,           null,                 null }
+        };
 
         public static TypeReference BinaryNumericOperations(object op1, object op2)
         {
-            Type resultType = binaryNumericOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(op2))];
-            //TODO: Check Add/Sub and PointerType
+            Type resultType = BinaryNumericOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(op2))];
 
-            if (resultType == null) throw new Exception("TAC builder: Invalid IL!");
+            //TODO: PointerType result are valid only with Add/Sub IL instructions. See CIL specification Table III.2
+            if (resultType == null) throw new Exception(InvalidILExceptionString);
 
+            return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
+        }
+
+        // The unary numeric operations
+
+        public readonly static Type[] UnaryNumericOperationsResultTypes =
+          // Int32          Int64          IntPtr          Single          Double          &     Obj
+          {  typeof(Int32), typeof(Int32), typeof(IntPtr), typeof(Single), typeof(Double), null, null };
+
+        public static TypeReference UnaryNumericOperations(object op)
+        {
+            Type resultType = UnaryNumericOperationsResultTypes[GetTypeKind(GetOperandType(op))];
+
+            if (resultType == null) throw new Exception(InvalidILExceptionString);
+            
+            return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
+        }
+
+        // The binary comparison or branch operations
+
+        public readonly static bool[,] BinaryComparisonOrBranchOperationsResultTypes =
+        {
+            //              Int32   Int64   IntPtr  Single  Double  &       Obj
+            /* Int32  */  { true,   false,  true,   false,  false,  false,  false },
+            /* Int64  */  { false,  true,   false,  false,  false,  false,  false },
+            /* IntPtr */  { true,   false,  true,   false,  false,  true,   false },
+            /* Single */  { false,  false,  false,  true,   false,  false,  false },
+            /* Double */  { false,  false,  false,  false,  true,   false,  false },
+            /* &      */  { false,  false,  true,   false,  false,  true,   false },
+            /* Obj    */  { false,  false,  false,  false,  false,  false,  true  }
+        };
+
+        public static bool BinaryComparisonOrBranchOperations(object op1, object op2)
+        {
+            bool result = BinaryComparisonOrBranchOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(op2))];
+
+            //TODO: PointerType and Object/Object result are valid only with beq[.s], bne.un[.s] and ceq IL instructions. See CIL specification Table III.4
+
+            return result;
+        }
+
+        // Integer operations
+        
+        public readonly static Type[,] IntegerOperationsResultTypes =
+        {
+            //              Int32           Int64           IntPtr          Single  Double  &       Obj
+            /* Int32  */  { typeof(Int32),  null,           typeof(IntPtr), null,   null,   null,   null },
+            /* Int64  */  { null,           typeof(Int64),  null,           null,   null,   null,   null },
+            /* IntPtr */  { typeof(IntPtr), null,           typeof(IntPtr), null,   null,   null,   null },
+            /* Single */  { null,           null,           null,           null,   null,   null,   null },
+            /* Double */  { null,           null,           null,           null,   null,   null,   null },
+            /* &      */  { null,           null,           null,           null,   null,   null,   null },
+            /* Obj    */  { null,           null,           null,           null,   null,   null,   null }
+        };
+
+        public static TypeReference IntegerOperations(object op1, object op2)
+        {
+            Type resultType = IntegerOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(op2))];
+            
+            if (resultType == null) throw new Exception(InvalidILExceptionString);
+            
+            return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
+        }
+
+        // Shift operations
+        
+        public readonly static Type[,] ShiftOperationsResultTypes =
+        {
+            //              Int32           Int64   IntPtr          Single  Double  &       Obj
+            /* Int32  */  { typeof(Int32),  null,   typeof(IntPtr), null,   null,   null,   null },
+            /* Int64  */  { typeof(Int64),  null,   typeof(Int64),  null,   null,   null,   null },
+            /* IntPtr */  { typeof(IntPtr), null,   typeof(IntPtr), null,   null,   null,   null },
+            /* Single */  { null,           null,   null,           null,   null,   null,   null },
+            /* Double */  { null,           null,   null,           null,   null,   null,   null },
+            /* &      */  { null,           null,   null,           null,   null,   null,   null },
+            /* Obj    */  { null,           null,   null,           null,   null,   null,   null }
+        };
+        
+        public static TypeReference ShiftOperations(object op1, object shiftBy)
+        {
+            Type resultType = ShiftOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(shiftBy))];
+            
+            if (resultType == null) throw new Exception(InvalidILExceptionString);
+            
+            return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
+        }
+
+        // Overflow arithmetic operations
+        
+        public readonly static Type[,] OverflowArithmeticOperationsResultTypes =
+        {
+            //              Int32           Int64           IntPtr                Single          Double        &                     Obj
+            /* Int32  */  { typeof(Int32),  null,           typeof(IntPtr),       null,           null,         typeof(PointerType),  null },
+            /* Int64  */  { null,           typeof(Int64),  null,                 null,           null,         null,                 null },
+            /* IntPtr */  { typeof(IntPtr), null,           typeof(IntPtr),       null,           null,         typeof(PointerType),  null },
+            /* Single */  { null,           null,           null,                 null,           null,         null,                 null },
+            /* Double */  { null,           null,           null,                 null,           null,         null,                 null },
+            /* &      */  { typeof(PointerType), null,      typeof(PointerType),  null,           null,         typeof(IntPtr),       null },
+            /* Obj    */  { null,           null,           null,                 null,           null,         null,                 null }
+        };
+        
+        public static TypeReference OverflowArithmeticOperations(object op1, object op2)
+        {
+            Type resultType = OverflowArithmeticOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(op2))];
+            
+            //TODO: PointerType result are valid only with Add/Sub IL instructions. See CIL specification Table III.7
+            if (resultType == null) throw new Exception(InvalidILExceptionString);
+            
             return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
         }
   }
 
-/*L0: flag = 0;
-L1: PushParam "A"
-L2: tmp0 = call s.StartsWith();
-L3: ifFalse tmp0 goto L5;
-L4: flag = s.Length >= 3;
-L5: flag = false;
-L6: ret flag;
-*/
 }

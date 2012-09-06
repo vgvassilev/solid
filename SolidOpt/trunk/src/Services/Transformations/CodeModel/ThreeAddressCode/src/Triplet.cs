@@ -18,13 +18,15 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Substraction,   // result = op1 - op2
     Multiplication, // result = op1 * op2
     Division,       // result = op1 / op2
+    Reminder,       // result = op1 % op2
+    And,            // result = op1 & op2
+    Or,             // result = op1 | op2
+    Xor,            // result = op1 ^ op2
     //...
 
     // Logic
     Less,           // result = op1 < op2
     Equal,          // result = op1 == op2
-    And,            // result = op1 && op2
-    Or,             // result = op1 || op2
     //...
 
     // Control
@@ -132,7 +134,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           sb.AppendFormat("{0} + {1}", op(operand1), op(operand2));
           break;
         case TripletOpCode.And:
-          sb.AppendFormat("{0} && {1}", op(operand1), op(operand2));
+          sb.AppendFormat("{0} & {1}", op(operand1), op(operand2));
           break;
         case TripletOpCode.Assignment:
           sb.AppendFormat("{0}", op(operand1));
@@ -165,7 +167,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           sb.AppendFormat("{0} * {1}", op(operand1), op(operand2));
           break;
         case TripletOpCode.Or:
-          sb.AppendFormat("{0} || {1}", op(operand1), op(operand2));
+          sb.AppendFormat("{0} | {1}", op(operand1), op(operand2));
           break;
         case TripletOpCode.PushParam:
           sb.AppendFormat("pushparam {0}", op(operand1));
