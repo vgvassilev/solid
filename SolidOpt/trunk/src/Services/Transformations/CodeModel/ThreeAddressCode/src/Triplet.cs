@@ -44,8 +44,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Call,           // result = call op1/method
     CallVirt,       // result = call op1/object op2/method
     PushParam,      // pushparam op1
-    Return          // return op1
+    Return,         // return op1
     //...
+
+    Nop             // nop
   }
 
   public class Triplet
@@ -63,9 +65,28 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     }
 
     private TripletOpCode opcode;
+    public TripletOpCode Opcode {
+      get { return opcode; }
+      set { opcode = value; }
+    }
+
     private object result;
+    public object Result {
+      get { return result; }
+      set { result = value; }
+    }
+
     private object operand1;
+    public object Operand1 {
+      get { return operand1; }
+      set { operand1 = value; }
+    }
+
     private object operand2;
+    public object Operand2 {
+        get { return operand2; }
+        set { operand2 = value; }
+    }
 
     public Triplet(TripletOpCode opcode)
     {
@@ -126,6 +147,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     private static string op(object obj)
     {
       if (obj is string) return "\"" + obj.ToString() + "\"";  //TODO: Escape string
+      if (obj is Triplet) {
+                return "L" + ((Triplet)obj).offset;
+      }
       return obj.ToString();
     }
 
@@ -177,6 +201,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         case TripletOpCode.Negate:
             sb.AppendFormat("- {0}", op(operand1));
             break;
+        case TripletOpCode.Nop:
+          sb.Append("nop");
+          break;
         case TripletOpCode.Not:
             sb.AppendFormat("! {0}", op(operand1));
             break;

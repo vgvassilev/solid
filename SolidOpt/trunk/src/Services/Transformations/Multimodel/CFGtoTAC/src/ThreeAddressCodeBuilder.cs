@@ -19,7 +19,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private static readonly TypeReference Int32TypeReference = new TypeReference("System", "Int32", null, true);
-    
+        private static readonly Triplet FixupTriplet = new Triplet(TripletOpCode.Nop);
+
     private ControlFlowGraph cfg = null;
     
     public ThreeAddressCodeBuilder(ControlFlowGraph cfg) {
@@ -32,7 +33,24 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       inVarList.Add(result);
       return result;
     }
+    
+    private Dictionary<Triplet, Instruction> ForwardFixupTriplets = new Dictionary<Triplet, Instruction>();
+    private Dictionary<Instruction, Triplet> TripletStrarts = new Dictionary<Instruction, Triplet>();
 
+    private Triplet GetLabeledTripletByIL(Instruction target)
+    {
+      Triplet result;
+      if (TripletStrarts.TryGetValue(target, out result)) return result;
+      return FixupTriplet;
+    }
+    
+    private void FixupTriplets(List<Triplet> triplets)
+    {
+      foreach (KeyValuePair<Triplet, Instruction> pair in ForwardFixupTriplets) {
+        pair.Key.Operand2 = GetLabeledTripletByIL(pair.Value);
+      }
+    }
+    
     public ThreeAdressCode Create() {
       List<Triplet> triplets = new List<Triplet>();
       Stack<object> simulationStack = new Stack<object>();
@@ -41,7 +59,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       
       VariableReference newTempVariable;
       object obj1, obj2;
+      Triplet triplet;
       
+      int tripletIndex = triplets.Count;
+      Instruction start = instr;
       while (instr != null) {
         switch (instr.OpCode.Code) {
           case Code.Nop:
@@ -167,7 +188,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Beq_S:
 //          case Code.Bge_S:
 //          case Code.Bgt_S:
-//          case Code.Ble_S:
+          case Code.Ble_S:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2)) throw new Exception(InvalidILExceptionString);
+            newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+            triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+            triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet) ForwardFixupTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
 //          case Code.Blt_S:
 //          case Code.Bne_Un_S:
 //          case Code.Bge_Un_S:
@@ -443,8 +473,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           default:
             throw new NotImplementedException(instr.OpCode.ToString());
         }
+        
+        if (tripletIndex != triplets.Count) {
+          TripletStrarts.Add(start, triplets[tripletIndex]);
+          tripletIndex = triplets.Count;
+          start = instr.Next;
+        }
+        
         instr = instr.Next;
       }
+
+      FixupTriplets(triplets);
+      
+      for(int i = 0; i<triplets.Count; i++) triplets[i].offset = i;
       
       return new ThreeAdressCode(cfg.Method, triplets[0], triplets, tempVariables);
     }
