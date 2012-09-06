@@ -161,10 +161,6 @@
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
-      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework</Name>
-    </ProjectReference>
     <ProjectReference Include="SolidOpt.Services.ILtoCFG.csproj">
       <Project>{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}</Project>
       <Name>SolidOpt.Services.ILtoCFG</Name>
@@ -176,6 +172,10 @@
     <ProjectReference Include="..\SolidOpt.Services.Multimodel.Test.csproj">
       <Project>{84D7E4D8-B58E-43EE-BCEB-0F068CC81166}</Project>
       <Name>SolidOpt.Services.Multimodel.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\vendors\NUnit\NUnitFramework\framework\nunit.framework.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

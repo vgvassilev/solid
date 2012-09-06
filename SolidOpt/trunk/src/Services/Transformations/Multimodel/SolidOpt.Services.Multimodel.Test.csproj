@@ -38,13 +38,13 @@
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj">
-      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework</Name>
-    </ProjectReference>
     <ProjectReference Include="SolidOpt.Services.Multimodel.csproj">
       <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
       <Name>SolidOpt.Services.Multimodel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\vendors\NUnit\NUnitFramework\framework\nunit.framework.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

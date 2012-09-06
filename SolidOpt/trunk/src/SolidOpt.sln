@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecil.Decompiler", "vendors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "vendors\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "vendors\NUnit\src\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework", "vendors\NUnit\NUnitFramework\framework\nunit.framework.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3DE8C04F-13C6-4C58-8BA1-95E09F9620B5}"
 	ProjectSection(SolutionItems) = postProject

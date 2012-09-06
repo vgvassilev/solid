@@ -40,6 +40,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     }
 
     [Test]
+    public void MathCalls()
+    {
+      string testCaseName = "MathCalls";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
+    }
+
+    [Test]
     public void XFailTwoSystemCalls()
     {
       string testCaseName = "TwoSystemCalls";
