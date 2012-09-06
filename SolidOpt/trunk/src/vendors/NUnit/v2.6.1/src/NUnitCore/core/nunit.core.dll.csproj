@@ -1,0 +1,135 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</ProjectGuid>
+    <RootNamespace>NUnit.Core</RootNamespace>
+    <AssemblyName>nunit.core</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Data.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>E:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.XML.dll</HintPath>
+      <Private />
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractTestCaseDecoration.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AssemblyReader.cs" />
+    <Compile Include="AssemblyResolver.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="CoreExtensions.cs" />
+    <Compile Include="CultureDetector.cs" />
+    <Compile Include="DirectorySwapper.cs" />
+    <Compile Include="EventListenerTextWriter.cs" />
+    <Compile Include="EventPump.cs" />
+    <Compile Include="EventQueue.cs" />
+    <Compile Include="ExtensionHost.cs" />
+    <Compile Include="ExtensionPoint.cs" />
+    <Compile Include="IgnoreDecorator.cs" />
+    <Compile Include="InvalidSuiteException.cs" />
+    <Compile Include="InvalidTestFixtureException.cs" />
+    <Compile Include="LegacySuite.cs" />
+    <Compile Include="Log4NetCapture.cs" />
+    <Compile Include="LogCapture.cs" />
+    <Compile Include="NamespaceTreeBuilder.cs" />
+    <Compile Include="NoTestFixturesException.cs" />
+    <Compile Include="NotRunnableTestCase.cs" />
+    <Compile Include="NTrace.cs" />
+    <Compile Include="NullListener.cs" />
+    <Compile Include="NUnitException.cs" />
+    <Compile Include="NUnitFramework.cs" />
+    <Compile Include="NUnitTestFixture.cs" />
+    <Compile Include="NUnitTestMethod.cs" />
+    <Compile Include="PlatformHelper.cs" />
+    <Compile Include="ProxyTestRunner.cs" />
+    <Compile Include="QueuingEventListener.cs" />
+    <Compile Include="Reflect.cs" />
+    <Compile Include="RemoteTestRunner.cs" />
+    <Content Include="Results.xsd" />
+    <None Include="Results.xsx">
+      <DependentUpon>Results.xsd</DependentUpon>
+    </None>
+    <Compile Include="SetUpFixture.cs" />
+    <Compile Include="SimpleTestRunner.cs" />
+    <Compile Include="StringTextWriter.cs" />
+    <Compile Include="SuiteBuilderAttribute.cs" />
+    <Content Include="Summary.xslt" />
+    <Compile Include="TestBuilderAttribute.cs" />
+    <Compile Include="TestCase.cs" />
+    <Compile Include="TestCaseBuilderAttribute.cs" />
+    <Compile Include="TestContext.cs" />
+    <Compile Include="TestDecoratorAttribute.cs" />
+    <Compile Include="TestFixture.cs" />
+    <Compile Include="TestFixtureBuilder.cs" />
+    <Compile Include="TestMethod.cs" />
+    <Compile Include="TestRunnerThread.cs" />
+    <Compile Include="TestSuite.cs" />
+    <Compile Include="TestSuiteBuilder.cs" />
+    <Compile Include="TextCapture.cs" />
+    <Compile Include="ThreadedTestRunner.cs" />
+    <Compile Include="Builders\AbstractFixtureBuilder.cs" />
+    <Compile Include="Builders\AbstractTestCaseBuilder.cs" />
+    <Compile Include="Builders\LegacySuiteBuilder.cs" />
+    <Compile Include="Builders\NUnitTestCaseBuilder.cs" />
+    <Compile Include="Builders\NUnitTestFixtureBuilder.cs" />
+    <Compile Include="Builders\SetUpFixtureBuilder.cs" />
+    <Compile Include="Builders\TestAssemblyBuilder.cs" />
+    <Compile Include="Extensibility\EventListenerCollection.cs" />
+    <Compile Include="Extensibility\FrameworkRegistry.cs" />
+    <Compile Include="Extensibility\SuiteBuilderCollection.cs" />
+    <Compile Include="Extensibility\TestCaseBuilderCollection.cs" />
+    <Compile Include="Extensibility\TestDecoratorCollection.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj">
+      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
+      <Name>nunit.core.interfaces.dll</Name>
+      <Private />
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

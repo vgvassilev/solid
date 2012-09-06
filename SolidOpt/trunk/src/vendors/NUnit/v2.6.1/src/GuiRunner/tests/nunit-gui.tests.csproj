@@ -1,0 +1,80 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AAD27267-DE1F-4F61-A1FB-D1680A5B8001}</ProjectGuid>
+    <RootNamespace>NUnit.Gui.Tests</RootNamespace>
+    <AssemblyName>nunit-gui.tests</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandLineTests.cs" />
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ExceptionDetailsFormTests.cs" />
+    <Compile Include="ProjectEditorTests.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\GuiRunner\nunit-gui\nunit-gui.csproj">
+      <Project>{3FF340D5-D3B4-4DF0-BAF1-98B3C00B6148}</Project>
+      <Name>nunit-gui</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\ClientUtilities\util\nunit.util.dll.csproj">
+      <Project>{61CE9CE5-943E-44D4-A381-814DC1406767}</Project>
+      <Name>nunit.util.dll</Name>
+      <Private />
+    </ProjectReference>
+    <ProjectReference Include="D:\Univ\Projects\SolidOpt\SolidOpt\src\vendors\NUnit\NUnit\src\tests\test-utilities\test-utilities.csproj">
+      <Project>{3E63AD0F-24D4-46BE-BEE4-5A3299847D86}</Project>
+      <Name>test-utilities</Name>
+      <Private />
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
