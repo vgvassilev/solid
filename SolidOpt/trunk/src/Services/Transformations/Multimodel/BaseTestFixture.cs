@@ -91,7 +91,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       testXFail = directives.Find(d => d.Kind == TestCaseDirectiveKind.XFail) != null;
       try {
         Target target = new Transformer().Decompile(source);
-        seen = Normalize(target.ToString()).Split('\n');
+        seen = Normalize(target.ToString().Split('\n'));
       }
       catch (Exception e) {
         if (!testXFail)
@@ -113,6 +113,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       }
     }
 
+    /// <summary>
+    /// Parses the directives, specified in the test case result file. For now we have only one
+    /// directive: XFAIL - denoting that the test case is expected to fail.
+    /// </summary>
+    /// <returns>
+    /// The file represented line by line with all directives stripped out.
+    /// </returns>
+    /// <param name='contents'>
+    /// Input file contents.
+    /// </param>
+    /// <param name='directives'>
+    /// The list of recognized directives.
+    /// </param>
     private string[] ParseDirectives(string contents, ref List<TestCaseDirective> directives)
     {
       List<string> stringList = new List<string>(Normalize(contents).Split('\n'));
@@ -273,6 +286,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       // for Mac, Win, Lin
       return s.Normalize().Replace("\n\r", "\n").Replace("\r\n", "\n").Replace("\r", "\n").Trim(CharsToTrim);
     }
+
+    /// <summary>
+    /// Removes leading and trailing new lines and tabs.
+    /// </summary>
+    /// <param name='s'>
+    /// The string array to normalize.
+    /// </param>
+    protected static string[] Normalize(string[] s)
+    {
+      char[] CharsToTrim = new char[]{' ','\t'};
+      // for Mac, Win, Lin
+
+      for (int i = 0; i < s.Length; i++)
+        s[i] = s[i].Normalize().Replace("\n\r", "\n").Replace("\r\n", "\n").Replace("\r", "\n").Trim(CharsToTrim);
+      return s;
+   }
+
 
     /// <summary>
     /// Iterates over a collection of methods and finds the one with the given name.
