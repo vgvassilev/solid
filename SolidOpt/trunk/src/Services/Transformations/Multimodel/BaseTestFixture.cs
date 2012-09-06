@@ -82,7 +82,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       Assert.IsTrue(File.Exists(testCaseResultFile),
                     String.Format("{0} does not exist.", testCaseResultFile));
 
-      string[] seen = null;
+      string[] seen = new string[0]; // in case of exception preventing seen to get value.
       string[] expected;
       string errMsg = String.Empty;
       List<TestCaseDirective> directives = new List<TestCaseDirective>();
@@ -108,6 +108,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
           Assert.Ignore(errMsg);
         }
         else {
+          if (!match) {
+            // if the test wasn't expected to fail write out the what was seen so that one can diff
+            File.WriteAllLines(GetTestCaseOutFullPath(testCaseName), seen);
+          }
           Assert.IsTrue(match, errMsg);
         }
       }
@@ -175,6 +179,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
         }
       }
       if (seenLines.Length != expectedLines.Length) {
+        match = false;
         errMsg += "More lines follow in either seen or expected.";
       }
 
@@ -252,6 +257,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       return result;
     }
 
+    protected string GetTestCaseOutFullPath(string testCaseName)
+    {
+      string result = Path.Combine(testCasesDir, testCaseName);
+      result = Path.ChangeExtension(result, GetTestCaseOutFileExtension());
+      return result;
+    }
+
     /// <summary>
     /// Subclasses should implement the method to provide test case specific extensions.
     /// </summary>
@@ -273,6 +285,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     {
       return "result";
     }
+
+    /// <summary>
+    /// Subclasses should implement the method to provide test case output specific extensions.
+    /// </summary>
+    /// <returns>
+    /// The test case out file extension.
+    /// </returns>
+    protected virtual string GetTestCaseOutFileExtension()
+    {
+      return "debug";
+    }
+
 
     /// <summary>
     /// Removes leading and trailing new lines and tabs.
