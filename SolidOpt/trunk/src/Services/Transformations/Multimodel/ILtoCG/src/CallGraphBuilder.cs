@@ -20,21 +20,30 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
 
     #region Constructors
 
-    internal CallGraphBuilder(MethodDefinition rootMethod)
+    public CallGraphBuilder(MethodDefinition rootMethod)
     {
       this.rootMethod = rootMethod;
     }
 
     public CallGraph Create()
     {
+      return Create(0);
+    }
+
+    public CallGraph Create(int maxDepth)
+    {
       CGNode rootNode = new CGNode(rootMethod, null);
-      VisitCGNode(rootNode);
-      return new CallGraph(rootNode);
+      VisitCGNode(rootNode, maxDepth);
+      return new CallGraph(rootNode, maxDepth);
     }
 
     #endregion
 
-    private void VisitCGNode(CGNode node) {
+    private void VisitCGNode(CGNode node, int maxDepth) {
+
+      if (maxDepth < 0)
+        return;
+
       if (node.Method.HasBody) {
         MethodReference mRef;
         foreach (Instruction instr in node.Method.Body.Instructions) {
@@ -44,7 +53,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
             node.MethodCalls.Add(callee);
             if (!rawDefs.Contains(callee.Method)) {
               rawDefs.Add(node.Method);
-              VisitCGNode(callee);
+              VisitCGNode(callee, --maxDepth);
             }
           }
         }

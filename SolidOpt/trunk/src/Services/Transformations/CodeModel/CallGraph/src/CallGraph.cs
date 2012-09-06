@@ -17,6 +17,18 @@ namespace SolidOpt.Services.Transformations.CodeModel.CallGraph
     public CGNode Root {
       get { return this.root; }
     }
+    /// <summary>
+    /// The depth of the call graph. 0 means unlimited.
+    /// </summary>
+    private int depth = 0  ;
+    public int Depth {
+      get { return this.depth; }
+    }
+
+    public CallGraph(CGNode root, int depth) {
+      this.root = root;
+      this.depth = depth;
+    }
 
     public CallGraph(CGNode root) {
       this.root = root;

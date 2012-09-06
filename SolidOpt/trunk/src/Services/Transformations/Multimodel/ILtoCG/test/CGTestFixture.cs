@@ -21,7 +21,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
  [TestFixture]
  public class CGTestFixture : BaseTestFixture<MethodDefinition, CallGraph, CilToCallGraph> {
 
-
     protected override string GetTestCaseFileExtension()
     {
       return "il";
@@ -47,17 +46,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     }
 
     [Test]
-    public void MultipleNestedMethodCalls()
-    {
-      string testCaseName = "MultipleNestedMethodCalls";
-      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
-    }
-
-    [Test]
-    public void XFailTwoSystemCalls()
+    public void TwoSystemCalls()
     {
       string testCaseName = "TwoSystemCalls";
-      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
+      MethodDefinition mDef = LoadTestCaseMethod(testCaseName);
+      CallGraph cg = new CallGraphBuilder(mDef).Create(/*maxDepth*/1);
+      string[] seen = Normalize(cg.ToString().Split('\n'));
+      string[] expected = File.ReadAllText(GetTestCaseResultFullPath(testCaseName)).Split('\n');
+      string errMsg = string.Empty;
+      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
     }
   }
 }

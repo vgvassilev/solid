@@ -20,44 +20,43 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
  /// </summary>
  public class CilToCallGraph : DecompilationStep, IDecompile<MethodDefinition, CallGraph>
  {   
-   #region Constructors
-   
-   public CilToCallGraph ()
-   {
-   }
-   
-   #endregion
-   
-   public override object Process(object codeModel)
-   {
-     return Process (codeModel as MethodBody);
-   }
-
+    #region Constructors
+    
+    public CilToCallGraph ()
+    {
+    }
+    
+    #endregion
+    
+    public override object Process(object codeModel)
+    {
+      return Process (codeModel as MethodBody);
+    }
+    
     public override Type GetSourceType()
     {
       return typeof(MethodDefinition);
     }
-
+    
     public override Type GetTargetType()
     {
       return typeof(CallGraph);
     }
-
-   public CallGraph Process(MethodBody source)
-   {
-     if (source == null)
-       throw new ArgumentNullException ("method");
-     if (!source.Method.HasBody)
-       throw new ArgumentException();
-
-     var builder = new CallGraphBuilder(source.Method);
-     return builder.Create();
-   }
-   
-   
-   public CallGraph Decompile(MethodDefinition source)
-   {
-     return Process(source.Body);
-   }
- }
+    
+    public CallGraph Process(MethodBody source)
+    {
+      if (source == null)
+        throw new ArgumentNullException ("method");
+      if (!source.Method.HasBody)
+        throw new ArgumentException();
+    
+      var builder = new CallGraphBuilder(source.Method);
+      return builder.Create();
+    }
+    
+    public CallGraph Decompile(MethodDefinition source)
+    {
+      return Process(source.Body);
+    }
+  }
 }
