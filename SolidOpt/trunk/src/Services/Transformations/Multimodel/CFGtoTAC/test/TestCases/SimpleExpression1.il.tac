@@ -1,5 +1,4 @@
 Main
-L0: tmp0 = arg0 + arg1
-L1: tmp1 = tmp0 + arg2
-L2: return tmp1
-//XFAIL:
+L0: T_0 = a + b
+L1: T_1 = T_0 + c
+L2: return T_1

@@ -17,12 +17,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 {
   public class ThreeAddressCodeBuilder
   {
+    private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
+    private static readonly TypeReference Int32TypeReference = new TypeReference("System", "Int32", null, true);
+    
     private ControlFlowGraph cfg = null;
-
+    
     public ThreeAddressCodeBuilder(ControlFlowGraph cfg) {
       this.cfg = cfg;
     }
-
+    
     private static VariableReference GenNewTempVariable(List<VariableDefinition> inVarList, TypeReference varTypeRef)
     {
       VariableDefinition result = new VariableDefinition("T_" + inVarList.Count, varTypeRef);
@@ -358,7 +361,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Stind_I:
 //          case Code.Conv_U:
 //          case Code.Arglist:
-//          case Code.Ceq:
+          case Code.Ceq:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2)) throw new Exception(InvalidILExceptionString);
+            newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+            triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
+            simulationStack.Push(newTempVariable);
+            break;
 //          case Code.Cgt:
 //          case Code.Cgt_Un:
 //          case Code.Clt:
