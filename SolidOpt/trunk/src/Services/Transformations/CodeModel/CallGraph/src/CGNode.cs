@@ -54,11 +54,12 @@ namespace SolidOpt.Services.Transformations.CodeModel.CallGraph
       StringBuilder sb = new StringBuilder();
 
       CGNode parent = Caller;
-      do {
-        sb.Append("   ");
+      while(parent != null) {
+        sb.Append("---");
+        parent = parent.Caller;
       }
-      while(parent != null && (parent = parent.Caller) != null);
-        sb.Append("+--");
+
+      sb.Append("+--");
       sb.AppendLine(method.ToString());
 
       foreach (CGNode node in methodCalls)
