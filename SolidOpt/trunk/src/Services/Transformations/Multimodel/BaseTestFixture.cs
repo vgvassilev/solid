@@ -103,6 +103,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
           errMsg += "\n Unexpected pass.";
         else if (testXFail) {
           errMsg += "\n Expected to fail.";
+          Assert.Ignore(errMsg);
         }
         else {
           Assert.IsTrue(match, errMsg);

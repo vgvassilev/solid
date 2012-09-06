@@ -173,9 +173,9 @@
       <Project>{84D7E4D8-B58E-43EE-BCEB-0F068CC81166}</Project>
       <Name>SolidOpt.Services.Multimodel.Test</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\vendors\NUnit\NUnitFramework\framework\nunit.framework.csproj">
+    <ProjectReference Include="..\..\..\..\vendors\NUnit\NUnitFramework\framework\nunit.framework.dll.csproj">
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework</Name>
+      <Name>nunit.framework.dll</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

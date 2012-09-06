@@ -75,9 +75,9 @@
       <Project>{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}</Project>
       <Name>SolidOpt.Services.ThreeAddressCode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\vendors\NUnit\NUnitFramework\framework\nunit.framework.csproj">
+    <ProjectReference Include="..\..\..\..\vendors\NUnit\NUnitFramework\framework\nunit.framework.dll.csproj">
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework</Name>
+      <Name>nunit.framework.dll</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
