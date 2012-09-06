@@ -99,8 +99,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       }
       finally {
         bool match = Validate(seen, expected, ref errMsg);
-        if (testXFail && match)
+        if (testXFail && match) {
           errMsg += "\n Unexpected pass.";
+          Assert.Fail(errMsg);
+        }
         else if (testXFail) {
           errMsg += "\n Expected to fail.";
           Assert.Ignore(errMsg);
