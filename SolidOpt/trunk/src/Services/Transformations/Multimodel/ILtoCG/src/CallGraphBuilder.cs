@@ -40,7 +40,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
     #endregion
 
     private void VisitCGNode(CGNode node, int maxDepth) {
-
+      --maxDepth;
       if (maxDepth < 0)
         return;
 
@@ -53,7 +53,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
             node.MethodCalls.Add(callee);
             if (!rawDefs.Contains(callee.Method)) {
               rawDefs.Add(node.Method);
-              VisitCGNode(callee, --maxDepth);
+              VisitCGNode(callee, maxDepth);
             }
           }
         }

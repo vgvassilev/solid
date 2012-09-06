@@ -1,2 +1,3 @@
-
-// XFAIL: We need to polish the algorithm
++--System.Void TestCase::Main(System.String)
+---+--System.Boolean System.String::StartsWith(System.String)
+---+--System.Int32 System.String::get_Length()
