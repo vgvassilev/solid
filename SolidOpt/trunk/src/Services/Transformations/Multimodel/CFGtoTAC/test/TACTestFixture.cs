@@ -84,6 +84,27 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         RunTestCase(testCaseName, getCfg(testCaseName));
     }
     
+    [Test]
+    public void SimpleWhile()
+    {
+        string testCaseName = "SimpleWhile";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
+    [Test]
+    public void SimpleDoWhile()
+    {
+        string testCaseName = "SimpleDoWhile";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
+    [Test]
+    public void SimpleExpressionReminder()
+    {
+        string testCaseName = "SimpleExpressionReminder";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+
     /*
     [Test]
     public void BoolOrLessOrEqualThan()

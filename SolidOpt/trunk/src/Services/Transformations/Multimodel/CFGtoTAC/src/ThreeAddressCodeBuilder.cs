@@ -19,7 +19,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private static readonly TypeReference Int32TypeReference = new TypeReference("System", "Int32", null, true);
-        private static readonly Triplet FixupTriplet = new Triplet(TripletOpCode.Nop);
+        private static readonly Triplet FixupTriplet = new Triplet(-1, TripletOpCode.Nop);
 
     private ControlFlowGraph cfg = null;
     
@@ -34,7 +34,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return result;
     }
     
-    private Dictionary<Triplet, Instruction> ForwardFixupTriplets = new Dictionary<Triplet, Instruction>();
+    private Dictionary<Triplet, Instruction> ForwardBranchTriplets = new Dictionary<Triplet, Instruction>();
     private Dictionary<Instruction, Triplet> TripletStrarts = new Dictionary<Instruction, Triplet>();
 
     private Triplet GetLabeledTripletByIL(Instruction target)
@@ -44,11 +44,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return FixupTriplet;
     }
     
-    private void FixupTriplets(List<Triplet> triplets)
+    private void FixupForwardBranchTriplets()
     {
-      foreach (KeyValuePair<Triplet, Instruction> pair in ForwardFixupTriplets) {
-        pair.Key.Operand2 = GetLabeledTripletByIL(pair.Value);
+      foreach (KeyValuePair<Triplet, Instruction> pair in ForwardBranchTriplets) {
+        if (pair.Key.Result == FixupTriplet) pair.Key.Result = GetLabeledTripletByIL(pair.Value);
+        if (pair.Key.Operand1 == FixupTriplet) pair.Key.Operand1 = GetLabeledTripletByIL(pair.Value);
+        if (pair.Key.Operand2 == FixupTriplet) pair.Key.Operand2 = GetLabeledTripletByIL(pair.Value);
       }
+      
     }
     
     public ThreeAdressCode Create() {
@@ -182,12 +185,37 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             else
               triplets.Add(new Triplet(TripletOpCode.Return));
             break;
-//          case Code.Br_S:
-//          case Code.Brfalse_S:
-//          case Code.Brtrue_S:
+          case Code.Br_S:
+            triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand1 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
+          case Code.Brfalse_S:
+            obj1 = simulationStack.Pop();
+            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+            triplet = new Triplet(TripletOpCode.IfFalse, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
+          case Code.Brtrue_S:
+            obj1 = simulationStack.Pop();
+            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+            triplet = new Triplet(TripletOpCode.IfTrue, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
 //          case Code.Beq_S:
 //          case Code.Bge_S:
-//          case Code.Bgt_S:
+          case Code.Bgt_S:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2)) throw new Exception(InvalidILExceptionString);
+            newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+            triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+            triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
           case Code.Ble_S:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -195,18 +223,43 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
             triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet) ForwardFixupTriplets[triplet] = (Instruction)instr.Operand;
+            if (triplet.Operand2 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
             triplets.Add(triplet);
             break;
-//          case Code.Blt_S:
+          case Code.Blt_S:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2)) throw new Exception(InvalidILExceptionString);
+            newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+            triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
+            triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
 //          case Code.Bne_Un_S:
 //          case Code.Bge_Un_S:
 //          case Code.Bgt_Un_S:
 //          case Code.Ble_Un_S:
 //          case Code.Blt_Un_S:
-//          case Code.Br:
-//          case Code.Brfalse:
-//          case Code.Brtrue:
+          case Code.Br:
+            triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand1 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
+          case Code.Brfalse:
+            obj1 = simulationStack.Pop();
+            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+            triplet = new Triplet(TripletOpCode.IfFalse, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
+          case Code.Brtrue:
+            obj1 = simulationStack.Pop();
+            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+            triplet = new Triplet(TripletOpCode.IfTrue, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet) ForwardBranchTriplets[triplet] = (Instruction)instr.Operand;
+            triplets.Add(triplet);
+            break;
 //          case Code.Beq:
 //          case Code.Bge:
 //          case Code.Bgt:
@@ -483,7 +536,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
         instr = instr.Next;
       }
 
-      FixupTriplets(triplets);
+      FixupForwardBranchTriplets();
       
       for(int i = 0; i<triplets.Count; i++) triplets[i].offset = i;
       
