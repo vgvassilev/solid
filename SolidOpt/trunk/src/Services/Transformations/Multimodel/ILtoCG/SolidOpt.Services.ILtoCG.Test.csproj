@@ -66,5 +66,7 @@
     <None Include="test\TestCases\TwoSystemCalls.il.cg" />
     <None Include="test\TestCases\MathCalls.il" />
     <None Include="test\TestCases\MathCalls.il.cg" />
+    <None Include="test\TestCases\MultipleNestedMethodCalls.il" />
+    <None Include="test\TestCases\MultipleNestedMethodCalls.il.cg" />
   </ItemGroup>
 </Project>
