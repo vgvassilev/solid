@@ -52,6 +52,8 @@
     <None Include="test\TestCases\SimpleDoWhile.il.tac" />
     <None Include="test\TestCases\SimpleExpressionReminder.il" />
     <None Include="test\TestCases\SimpleExpressionReminder.il.tac" />
+    <None Include="test\TestCases\SimpleSwitch.il" />
+    <None Include="test\TestCases\SimpleSwitch.il.tac" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\TACTestFixture.cs" />

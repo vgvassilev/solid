@@ -4,6 +4,9 @@
  * For further details see the nearest License.txt
  */
 
+using System.Text;
+using System.Collections.Generic;
+
 namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
   public enum TripletOpCode {
@@ -38,6 +41,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Goto,           // goto op1/label
     IfFalse,        // iffalse op1 goto op2/label
     IfTrue,         // iftrue op1 goto op2/label
+    Switch,         // switch op1 goto op2/array/labels
     //...
 
     // Methods
@@ -57,11 +61,13 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     private Triplet previous;
     public Triplet Previous {
       get { return this.previous; }
+      set { this.previous = value; }
     }
 
     private Triplet next;
     public Triplet Next {
       get { return this.next; }
+      set { this.next = value; }
     }
 
     private TripletOpCode opcode;
@@ -147,8 +153,15 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     private static string op(object obj)
     {
       if (obj is string) return "\"" + obj.ToString() + "\"";  //TODO: Escape string
-      if (obj is Triplet) {
-                return "L" + ((Triplet)obj).offset;
+      if (obj is Triplet) return "L" + ((Triplet)obj).offset;
+      if (obj is Triplet[]) {
+        StringBuilder sb = new StringBuilder();
+        foreach (Triplet t in (obj as Triplet[])) {
+          sb.Append(", ");
+          sb.Append(op(t));
+        }
+        sb.Remove(0, 2);
+        return sb.ToString();
       }
       return obj.ToString();
     }
@@ -228,6 +241,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         case TripletOpCode.Substraction:
           sb.AppendFormat("{0} - {1}", op(operand1), op(operand2));
           break;
+        case TripletOpCode.Switch:
+            sb.AppendFormat("switch {0} goto {1}", op(operand1), op(operand2));
+            break;
         default:
           sb.Append(" UNKNOWN ");
           break;

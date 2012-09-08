@@ -1,6 +1,6 @@
 Main
 L0: V_0 = 0;
-L1: PushParam "A"
+L1: pushparam "A"
 L2: T_0 = callvirt s string::StartsWith(string)
 L3: iffalse T_0 goto L8
 L4: T_1 = callvirt s string::get_Length()

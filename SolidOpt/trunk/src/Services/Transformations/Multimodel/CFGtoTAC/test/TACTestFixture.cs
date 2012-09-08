@@ -104,6 +104,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         string testCaseName = "SimpleExpressionReminder";
         RunTestCase(testCaseName, getCfg(testCaseName));
     }
+    
+    [Test]
+    public void SimpleSwitch()
+    {
+        string testCaseName = "SimpleSwitch";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
 
     /*
     [Test]
