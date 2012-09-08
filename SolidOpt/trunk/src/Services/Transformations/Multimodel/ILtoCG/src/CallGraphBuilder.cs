@@ -27,7 +27,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
 
     public CallGraph Create()
     {
-      return Create(0);
+      return Create(Int32.MaxValue);
     }
 
     public CallGraph Create(int maxDepth)

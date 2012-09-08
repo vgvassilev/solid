@@ -11,3 +11,4 @@
 ---------------+--System.Int32 TestCase::One()
 ---------------+--System.Int32 TestCase::One()
 ---------+--System.Int32 TestCase::One()
+// XFAIL

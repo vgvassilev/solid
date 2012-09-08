@@ -3,7 +3,7 @@
 .class public auto ansi beforefieldinit TestCase
        extends [mscorlib]System.Object
 {
-  // public static bool Main() {
+  // public static void Main() {
   //   Math.Abs(-1);
   // }
  .method public hidebysig static void Main() cil managed
