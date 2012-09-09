@@ -1,8 +1,8 @@
-// /*
-//  * $Id$
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
+/*
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
 
 using System;
 using System.Collections.Generic;
@@ -17,22 +17,23 @@ namespace DataMorphose.Model
       set { name = value; }
     }
 
-    private List<Column> columns = new List<Column>();
+    private List<Column> columns;
     public List<Column> Columns {
       get { return this.columns; }
       set { columns = value; }
     }
 
-    public Table(string name) {
+    public Table(string name, int columnCount) {
+      this.columns = new List<Column>(columnCount);
       this.name = name;
     }
     
-    public object[] GetRow(int rowNo) {
+    public Row GetRow(int rowNo) {
       object[] result = new object[Columns.Count];
       for(int i = 0; i < Columns.Count; i++) {
         result[i] = Columns[i].Values[rowNo];
       }
-      return result;
+      return new Row(result);
     }
   }
 }

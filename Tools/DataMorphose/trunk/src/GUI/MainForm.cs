@@ -31,7 +31,7 @@ namespace DataMorphose.GUI
 		void OpenToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			if (ofdDatabase.ShowDialog() == DialogResult.OK) {
-        CSVImporter importer = new CSVImporter();
+        CSVImporter importer = new CSVImporter(/*firstRowIsHeader*/ true);
         db = importer.importDBFromFiles(ofdDatabase.FileName);
         PopulateGridView();
       }	
@@ -46,7 +46,7 @@ namespace DataMorphose.GUI
         dataGridView1.Columns.Add(col.Meta.Name, col.Meta.Name);
         
       for(int i = 0; i < tbl.Columns.Count; i++) {
-        dataGridView1.Rows.Add(tbl.GetRow(i));
+        dataGridView1.Rows.Add(tbl.GetRow(i).ToArray());
       }
 		}
 

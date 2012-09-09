@@ -1,8 +1,8 @@
-// /*
-//  * $Id$
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
+/*
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
 using DataMorphose.Model;
 
 using System;
@@ -13,29 +13,10 @@ namespace DataMorphose.Import
 {
   public class CSVImporter
   {
-    class ColLexer {
-      private string line = null;
-      private int curLineIndex = 0;
-      public ColLexer(string line) {
-        this.line = line;
-      }
+    private readonly bool firstRowIsHeader;
 
-      /// <summary>
-      /// Reads symbol by symbol 
-      /// </summary> 
-      public string Lex() {
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        while (curLineIndex < line.Length) {
-          if (line[curLineIndex] != '|')
-            sb.Append(line[curLineIndex]);
-          else {
-            curLineIndex++;
-            return sb.ToString().Trim();
-          }
-          curLineIndex++;
-        }
-        return (sb.Length == 0) ? null : sb.ToString().Trim();
-      }
+    public CSVImporter(bool firstRowIsHeader) {
+      this.firstRowIsHeader = firstRowIsHeader;
     }
 
     /// <summary>
@@ -71,21 +52,21 @@ namespace DataMorphose.Import
     /// </param>
     public Table importFromFile(string file) {
       if (File.Exists(file)) {
-        Table table = new Table(Path.GetFileNameWithoutExtension(file));
         StreamReader reader = new StreamReader(file);
         // BufferedStream bs = new BufferedStream(new FileStream(file));
         // The first row contains the column names.
-        ColLexer lexer = new ColLexer(reader.ReadLine());
+        CSVLexer lexer = new CSVLexer(reader.ReadLine());
+        Table table = new Table(Path.GetFileNameWithoutExtension(file), lexer.GetSeparatorCount());
         string colValue;
-
         while((colValue = lexer.Lex()) != null)
-          table.Columns.Add(new Column(colValue));
+          // If the first line contains the header
+          table.Columns.Add(new Column((firstRowIsHeader) ? colValue : ""));
 
         string s;
         int i;
         try{
         while((s = reader.ReadLine()) != null) {
-          lexer = new ColLexer(s);
+          lexer = new CSVLexer(s);
           i = 0;
           while((colValue = lexer.Lex()) != null) {
             table.Columns[i].Values.Add(colValue);

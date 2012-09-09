@@ -18,7 +18,7 @@ namespace DataMorphose.Test
   [TestFixture()]
   public class Test
   {
-    private CSVImporter importer = new CSVImporter();
+    private CSVImporter importer = new CSVImporter(/*firstRawIsHeader*/true);
     private string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..");
 
     public Test() {

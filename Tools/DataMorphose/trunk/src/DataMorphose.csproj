@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -19,8 +19,6 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <OutputPath>bin\Debug</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <ConsolePause>false</ConsolePause>
@@ -69,20 +67,24 @@
     <Compile Include="Controller\ReversibleActions\Action.cs" />
     <Compile Include="Controller\ReversibleActions\IReversibleAction.cs" />
     <Compile Include="Controller\ReversibleActions\Actions\SortByColumnAction.cs" />
+    <Compile Include="Controller\Import\CSVLexer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\Meta" />
     <Folder Include="Properties\" />
     <Folder Include="Model\" />
     <Folder Include="View\" />
     <Folder Include="Controller\" />
     <Folder Include="Controller\Import\" />
+    <Folder Include="Controller\Transform\" />
+    <Folder Include="Controller\Map\" />
+    <Folder Include="Controller\Validate\" />
+    <Folder Include="Controller\Deduce\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\MainForm.resx">
