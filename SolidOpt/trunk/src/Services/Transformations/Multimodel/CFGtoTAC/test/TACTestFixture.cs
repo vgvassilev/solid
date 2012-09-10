@@ -112,6 +112,55 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         RunTestCase(testCaseName, getCfg(testCaseName));
     }
 
+    [Test]
+    public void Nop()
+    {
+        string testCaseName = "Nop";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+
+    [Test]
+    public void SwitchDoWhile()
+    {
+        string testCaseName = "SwitchDoWhile";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+
+    [Test]
+    public void PreIncrement()
+    {
+        string testCaseName = "PreIncrement";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+
+    [Test]
+    public void PostIncrement()
+    {
+        string testCaseName = "PostIncrement";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+
+    [Test]
+    public void ILDup1()
+    {
+        string testCaseName = "ILDup1";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
+    [Test]
+    public void ILDup2()
+    {
+        string testCaseName = "ILDup2";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
+    [Test]
+    public void ILLoadStore()
+    {
+        string testCaseName = "ILLoadStore";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
     /*
     [Test]
     public void BoolOrLessOrEqualThan()

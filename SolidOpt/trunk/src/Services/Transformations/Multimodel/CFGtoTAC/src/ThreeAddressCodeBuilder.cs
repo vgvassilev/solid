@@ -66,603 +66,608 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     }
     
     public ThreeAdressCode Create() {
-            List<Triplet> triplets = new List<Triplet>();
-            Stack<object> simulationStack = new Stack<object>();
-            List<VariableDefinition> tempVariables = new List<VariableDefinition>();
-            Instruction instr = cfg.Root.First;
-      
-            VariableReference newTempVariable;
-            object obj1, obj2;
-            Triplet triplet;
-      
-            int tripletIndex = triplets.Count;
-            Instruction start = instr;
-            while (instr != null) {
-                switch (instr.OpCode.Code) {
-                    case Code.Nop:
-            // Nothing to do
-                        break;
-                    case Code.Break:
-            // Nothing to do
-                        break;
-                    case Code.Ldarg_0:
-                        simulationStack.Push(cfg.Method.Parameters[0]);
-                        break;
-                    case Code.Ldarg_1:
-                        simulationStack.Push(cfg.Method.Parameters[1]);
-                        break;
-                    case Code.Ldarg_2:
-                        simulationStack.Push(cfg.Method.Parameters[2]);
-                        break;
-                    case Code.Ldarg_3:
-                        simulationStack.Push(cfg.Method.Parameters[3]);
-                        break;
-                    case Code.Ldloc_0:
-                        simulationStack.Push(cfg.Method.Body.Variables[0]);
-                        break;
-                    case Code.Ldloc_1:
-                        simulationStack.Push(cfg.Method.Body.Variables[1]);
-                        break;
-                    case Code.Ldloc_2:
-                        simulationStack.Push(cfg.Method.Body.Variables[2]);
-                        break;
-                    case Code.Ldloc_3:
-                        simulationStack.Push(cfg.Method.Body.Variables[3]);
-                        break;
-                    case Code.Stloc_0:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[0], simulationStack.Pop()));
-                        break;
-                    case Code.Stloc_1:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[1], simulationStack.Pop()));
-                        break;
-                    case Code.Stloc_2:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[2], simulationStack.Pop()));
-                        break;
-                    case Code.Stloc_3:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[3], simulationStack.Pop()));
-                        break;
-                    case Code.Ldarg_S:
-                        simulationStack.Push(instr.Operand);
-                        break;
-//          case Code.Ldarga_S:
-                    case Code.Starg_S:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
-                        break;
-                    case Code.Ldloc_S:
-                        simulationStack.Push(instr.Operand);
-                        break;
-//          case Code.Ldloca_S:
-                    case Code.Stloc_S:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
-                        break;
-                    case Code.Ldnull:
-                        simulationStack.Push(null);
-                        break;
-                    case Code.Ldc_I4_M1:
-                        simulationStack.Push(-1);
-                        break;
-                    case Code.Ldc_I4_0:
-                        simulationStack.Push(0);
-                        break;
-                    case Code.Ldc_I4_1:
-                        simulationStack.Push(1);
-                        break;
-                    case Code.Ldc_I4_2:
-                        simulationStack.Push(2);
-                        break;
-                    case Code.Ldc_I4_3:
-                        simulationStack.Push(3);
-                        break;
-                    case Code.Ldc_I4_4:
-                        simulationStack.Push(4);
-                        break;
-                    case Code.Ldc_I4_5:
-                        simulationStack.Push(5);
-                        break;
-                    case Code.Ldc_I4_6:
-                        simulationStack.Push(6);
-                        break;
-                    case Code.Ldc_I4_7:
-                        simulationStack.Push(7);
-                        break;
-                    case Code.Ldc_I4_8:
-                        simulationStack.Push(8);
-                        break;
-                    case Code.Ldc_I4_S:
-                        simulationStack.Push(instr.Operand);
-                        break;
-                    case Code.Ldc_I4:
-                        simulationStack.Push(instr.Operand);
-                        break;
-                    case Code.Ldc_I8:
-                        simulationStack.Push(instr.Operand);
-                        break;
-                    case Code.Ldc_R4:
-                        simulationStack.Push(instr.Operand);
-                        break;
-                    case Code.Ldc_R8:
-                        simulationStack.Push(instr.Operand);
-                        break;
-                    case Code.Dup:
-                        simulationStack.Push(simulationStack.Peek()); // copy reference or copy object?
-                        break;
-                    case Code.Pop:
-                        simulationStack.Pop();
-                        break;
-//          case Code.Jmp:
-//          case Code.Call:
-//          case Code.Calli:
-                    case Code.Ret:
-                        if (simulationStack.Count > 0)
-                            triplets.Add(new Triplet(TripletOpCode.Return, null, simulationStack.Pop()));
-                        else
-                            triplets.Add(new Triplet(TripletOpCode.Return));
-                        break;
-                    case Code.Br_S:
-                        triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand1 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Brfalse_S:
-                        obj1 = simulationStack.Pop();
-            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
-                        triplet = new Triplet(TripletOpCode.IfFalse, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Brtrue_S:
-                        obj1 = simulationStack.Pop();
-            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Beq_S:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Bge_S:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Bgt_S:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Ble_S:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Blt_S:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-//          case Code.Bne_Un_S:
-//          case Code.Bge_Un_S:
-//          case Code.Bgt_Un_S:
-//          case Code.Ble_Un_S:
-//          case Code.Blt_Un_S:
-                    case Code.Br:
-                        triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand1 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Brfalse:
-                        obj1 = simulationStack.Pop();
-            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
-                        triplet = new Triplet(TripletOpCode.IfFalse, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Brtrue:
-                        obj1 = simulationStack.Pop();
-            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Beq:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Bge:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Bgt:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Ble:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-                    case Code.Blt:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                        triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
-                        if (triplet.Operand2 == FixupTriplet)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-//          case Code.Bne_Un:
-//          case Code.Bge_Un:
-//          case Code.Bgt_Un:
-//          case Code.Ble_Un:
-//          case Code.Blt_Un:
-                    case Code.Switch:
-                        obj1 = simulationStack.Pop();
-                        Triplet[] labels = new Triplet[((Instruction[])instr.Operand).Length];
-                        bool needFixup = false;
-                        int i = 0;
-                        foreach (Instruction ins in (Instruction[])instr.Operand) {
-                            triplet = GetLabeledTripletByIL(ins);
-                            labels[i++] = triplet;
-                            if (triplet == FixupTriplet)
-                                needFixup = true;
-                        }
-                        triplet = new Triplet(TripletOpCode.Switch, null, obj1, labels);
-                        if (needFixup)
-                            ForwardBranchTriplets[triplet] = instr;
-                        triplets.Add(triplet);
-                        break;
-//          case Code.Ldind_I1:
-//          case Code.Ldind_U1:
-//          case Code.Ldind_I2:
-//          case Code.Ldind_U2:
-//          case Code.Ldind_I4:
-//          case Code.Ldind_U4:
-//          case Code.Ldind_I8:
-//          case Code.Ldind_I:
-//          case Code.Ldind_R4:
-//          case Code.Ldind_R8:
-//          case Code.Ldind_Ref:
-//          case Code.Stind_Ref:
-//          case Code.Stind_I1:
-//          case Code.Stind_I2:
-//          case Code.Stind_I4:
-//          case Code.Stind_I8:
-//          case Code.Stind_R4:
-//          case Code.Stind_R8:
-                    case Code.Add:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.Addition, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Sub:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.Substraction, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Mul:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.Multiplication, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Div:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.Division, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-//          case Code.Div_Un:
-                    case Code.Rem:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.Reminder, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-//          case Code.Rem_Un:
-                    case Code.And:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.And, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Or:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.Or, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Xor:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.Xor, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Shl:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.ShiftOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.ShiftLeft, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Shr:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.ShiftOperations(obj1, obj2));
-                        triplets.Add(new Triplet(TripletOpCode.ShiftRight, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-//          case Code.Shr_Un:
-                    case Code.Neg:
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.UnaryNumericOperations(obj1));
-                        triplets.Add(new Triplet(TripletOpCode.Negate, newTempVariable, obj1));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Not:
-                        obj1 = simulationStack.Pop();
-                        newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj1)); //TODO: Strange specification description. Read again.
-                        triplets.Add(new Triplet(TripletOpCode.Not, newTempVariable, obj1));
-                        simulationStack.Push(newTempVariable);
-                        break;
-//          case Code.Conv_I1:
-//          case Code.Conv_I2:
-//          case Code.Conv_I4:
-//          case Code.Conv_I8:
-//          case Code.Conv_R4:
-//          case Code.Conv_R8:
-//          case Code.Conv_U4:
-//          case Code.Conv_U8:
-//          case Code.Callvirt:
-//          case Code.Cpobj:
-//          case Code.Ldobj:
-                    case Code.Ldstr:
-                        simulationStack.Push(instr.Operand);
-                        break;
-//          case Code.Newobj:
-//          case Code.Castclass:
-//          case Code.Isinst:
-//          case Code.Conv_R_Un:
-//          case Code.Unbox:
-//          case Code.Throw:
-//          case Code.Ldfld:
-//          case Code.Ldflda:
-//          case Code.Stfld:
-//          case Code.Ldsfld:
-//          case Code.Ldsflda:
-//          case Code.Stsfld:
-//          case Code.Stobj:
-//          case Code.Conv_Ovf_I1_Un:
-//          case Code.Conv_Ovf_I2_Un:
-//          case Code.Conv_Ovf_I4_Un:
-//          case Code.Conv_Ovf_I8_Un:
-//          case Code.Conv_Ovf_U1_Un:
-//          case Code.Conv_Ovf_U2_Un:
-//          case Code.Conv_Ovf_U4_Un:
-//          case Code.Conv_Ovf_U8_Un:
-//          case Code.Conv_Ovf_I_Un:
-//          case Code.Conv_Ovf_U_Un:
-//          case Code.Box:
-//          case Code.Newarr:
-//          case Code.Ldlen:
-//          case Code.Ldelema:
-//          case Code.Ldelem_I1:
-//          case Code.Ldelem_U1:
-//          case Code.Ldelem_I2:
-//          case Code.Ldelem_U2:
-//          case Code.Ldelem_I4:
-//          case Code.Ldelem_U4:
-//          case Code.Ldelem_I8:
-//          case Code.Ldelem_I:
-//          case Code.Ldelem_R4:
-//          case Code.Ldelem_R8:
-//          case Code.Ldelem_Ref:
-//          case Code.Stelem_I:
-//          case Code.Stelem_I1:
-//          case Code.Stelem_I2:
-//          case Code.Stelem_I4:
-//          case Code.Stelem_I8:
-//          case Code.Stelem_R4:
-//          case Code.Stelem_R8:
-//          case Code.Stelem_Ref:
-//          case Code.Ldelem_Any:
-//          case Code.Stelem_Any:
-//          case Code.Unbox_Any:
-//          case Code.Conv_Ovf_I1:
-//          case Code.Conv_Ovf_U1:
-//          case Code.Conv_Ovf_I2:
-//          case Code.Conv_Ovf_U2:
-//          case Code.Conv_Ovf_I4:
-//          case Code.Conv_Ovf_U4:
-//          case Code.Conv_Ovf_I8:
-//          case Code.Conv_Ovf_U8:
-//          case Code.Refanyval:
-//          case Code.Ckfinite:
-//          case Code.Mkrefany:
-//          case Code.Ldtoken:
-//          case Code.Conv_U2:
-//          case Code.Conv_U1:
-//          case Code.Conv_I:
-//          case Code.Conv_Ovf_I:
-//          case Code.Conv_Ovf_U:
-//          case Code.Add_Ovf:
-//          case Code.Add_Ovf_Un:
-//          case Code.Mul_Ovf:
-//          case Code.Mul_Ovf_Un:
-//          case Code.Sub_Ovf:
-//          case Code.Sub_Ovf_Un:
-//          case Code.Endfinally:
-//          case Code.Leave:
-//          case Code.Leave_S:
-//          case Code.Stind_I:
-//          case Code.Conv_U:
-//          case Code.Arglist:
-                    case Code.Ceq:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-                    case Code.Cgt:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-//          case Code.Cgt_Un:
-                    case Code.Clt:
-                        obj2 = simulationStack.Pop();
-                        obj1 = simulationStack.Pop();
-                        if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-                            throw new Exception(InvalidILExceptionString);
-                        newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
-                        triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                        simulationStack.Push(newTempVariable);
-                        break;
-//          case Code.Clt_Un:
-//          case Code.Ldftn:
-//          case Code.Ldvirtftn:
-                    case Code.Ldarg:
-                        simulationStack.Push(instr.Operand);
-                        break;
-//          case Code.Ldarga:
-                    case Code.Starg:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
-                        break;
-                    case Code.Ldloc:
-                        simulationStack.Push(instr.Operand);
-                        break;
-//          case Code.Ldloca:
-                    case Code.Stloc:
-                        triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
-                        break;
-//          case Code.Localloc:
-//          case Code.Endfilter:
-//          case Code.Unaligned:
-//          case Code.Volatile:
-//          case Code.Tail:
-//          case Code.Initobj:
-//          case Code.Constrained:
-//          case Code.Cpblk:
-//          case Code.Initblk:
-//          case Code.No:
-//          case Code.Rethrow:
-//          case Code.Sizeof:
-//          case Code.Refanytype:
-//          case Code.Readonly:
+      List<Triplet> triplets = new List<Triplet>();
+      Stack<object> simulationStack = new Stack<object>();
+      List<VariableDefinition> tempVariables = new List<VariableDefinition>();
+      Instruction instr = cfg.Root.First;
 
-                    default:
-                        throw new NotImplementedException(instr.OpCode.ToString());
-                }
-        
-                if (tripletIndex != triplets.Count) {
-                    TripletStrarts.Add(start, triplets[tripletIndex]);
-                    tripletIndex = triplets.Count;
-                    start = instr.Next;
-                }
-        
-                instr = instr.Next;
-            }
+      VariableReference newTempVariable;
+      object obj1, obj2;
+      Triplet triplet;
 
-            FixupForwardBranchTriplets();
-      
-            for (int i = 0; i < triplets.Count; i++) {
-                triplets[i].offset = i;
-                if (i > 0) triplets[i].Previous = triplets[i-1];
-                if (i < triplets.Count-1) triplets[i].Next = triplets[i+1];
-            }
+      int tripletIndex = triplets.Count;
+      Instruction start = instr;
+      while (instr != null) {
+          switch (instr.OpCode.Code) {
+              case Code.Nop:
+                  triplets.Add(new Triplet(TripletOpCode.Nop));
+                  break;
+              case Code.Break:
+                  // Nothing to do
+                  break;
+              case Code.Ldarg_0:
+                  simulationStack.Push(cfg.Method.Parameters[0]);
+                  break;
+              case Code.Ldarg_1:
+                  simulationStack.Push(cfg.Method.Parameters[1]);
+                  break;
+              case Code.Ldarg_2:
+                  simulationStack.Push(cfg.Method.Parameters[2]);
+                  break;
+              case Code.Ldarg_3:
+                  simulationStack.Push(cfg.Method.Parameters[3]);
+                  break;
+              case Code.Ldloc_0:
+                  simulationStack.Push(cfg.Method.Body.Variables[0]);
+                  break;
+              case Code.Ldloc_1:
+                  simulationStack.Push(cfg.Method.Body.Variables[1]);
+                  break;
+              case Code.Ldloc_2:
+                  simulationStack.Push(cfg.Method.Body.Variables[2]);
+                  break;
+              case Code.Ldloc_3:
+                  simulationStack.Push(cfg.Method.Body.Variables[3]);
+                  break;
+              case Code.Stloc_0:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[0], simulationStack.Pop()));
+                  break;
+              case Code.Stloc_1:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[1], simulationStack.Pop()));
+                  break;
+              case Code.Stloc_2:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[2], simulationStack.Pop()));
+                  break;
+              case Code.Stloc_3:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[3], simulationStack.Pop()));
+                  break;
+              case Code.Ldarg_S:
+                  simulationStack.Push(instr.Operand);
+                  break;
+//            case Code.Ldarga_S:
+              case Code.Starg_S:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+                  break;
+              case Code.Ldloc_S:
+                  simulationStack.Push(instr.Operand);
+                  break;
+//            case Code.Ldloca_S:
+              case Code.Stloc_S:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+                  break;
+              case Code.Ldnull:
+                  simulationStack.Push(null);
+                  break;
+              case Code.Ldc_I4_M1:
+                  simulationStack.Push(-1);
+                  break;
+              case Code.Ldc_I4_0:
+                  simulationStack.Push(0);
+                  break;
+              case Code.Ldc_I4_1:
+                  simulationStack.Push(1);
+                  break;
+              case Code.Ldc_I4_2:
+                  simulationStack.Push(2);
+                  break;
+              case Code.Ldc_I4_3:
+                  simulationStack.Push(3);
+                  break;
+              case Code.Ldc_I4_4:
+                  simulationStack.Push(4);
+                  break;
+              case Code.Ldc_I4_5:
+                  simulationStack.Push(5);
+                  break;
+              case Code.Ldc_I4_6:
+                  simulationStack.Push(6);
+                  break;
+              case Code.Ldc_I4_7:
+                  simulationStack.Push(7);
+                  break;
+              case Code.Ldc_I4_8:
+                  simulationStack.Push(8);
+                  break;
+              case Code.Ldc_I4_S:
+                  simulationStack.Push(instr.Operand);
+                  break;
+              case Code.Ldc_I4:
+                  simulationStack.Push(instr.Operand);
+                  break;
+              case Code.Ldc_I8:
+                  simulationStack.Push(instr.Operand);
+                  break;
+              case Code.Ldc_R4:
+                  simulationStack.Push(instr.Operand);
+                  break;
+              case Code.Ldc_R8:
+                  simulationStack.Push(instr.Operand);
+                  break;
+              case Code.Dup:
+                  obj1 = simulationStack.Pop();
+                  TypeReference typeRef = Helper.GetOperandType(obj1);
+                  newTempVariable = GenNewTempVariable(tempVariables, typeRef);
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, newTempVariable, obj1));
+                  simulationStack.Push(newTempVariable);
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Pop:
+                  simulationStack.Pop();
+                  break;
+//            case Code.Jmp:
+//            case Code.Call:
+//            case Code.Calli:
+              case Code.Ret:
+                  if (simulationStack.Count > 0)
+                      triplets.Add(new Triplet(TripletOpCode.Return, null, simulationStack.Pop()));
+                  else
+                      triplets.Add(new Triplet(TripletOpCode.Return));
+                  break;
+              case Code.Br_S:
+                  triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand1 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Brfalse_S:
+                  obj1 = simulationStack.Pop();
+                  //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Brtrue_S:
+                  obj1 = simulationStack.Pop();
+                  //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Beq_S:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Bge_S:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Bgt_S:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Ble_S:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Blt_S:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+//            case Code.Bne_Un_S:
+//            case Code.Bge_Un_S:
+//            case Code.Bgt_Un_S:
+//            case Code.Ble_Un_S:
+//            case Code.Blt_Un_S:
+              case Code.Br:
+                  triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand1 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Brfalse:
+                  obj1 = simulationStack.Pop();
+                  //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Brtrue:
+                  obj1 = simulationStack.Pop();
+                  //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Beq:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Bge:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Bgt:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Ble:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+              case Code.Blt:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  if (triplet.Operand2 == FixupTriplet)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+//            case Code.Bne_Un:
+//            case Code.Bge_Un:
+//            case Code.Bgt_Un:
+//            case Code.Ble_Un:
+//            case Code.Blt_Un:
+              case Code.Switch:
+                  obj1 = simulationStack.Pop();
+                  Triplet[] labels = new Triplet[((Instruction[])instr.Operand).Length];
+                  bool needFixup = false;
+                  int i = 0;
+                  foreach (Instruction ins in (Instruction[])instr.Operand) {
+                      triplet = GetLabeledTripletByIL(ins);
+                      labels[i++] = triplet;
+                      if (triplet == FixupTriplet)
+                          needFixup = true;
+                  }
+                  triplet = new Triplet(TripletOpCode.Switch, null, obj1, labels);
+                  if (needFixup)
+                      ForwardBranchTriplets[triplet] = instr;
+                  triplets.Add(triplet);
+                  break;
+//            case Code.Ldind_I1:
+//            case Code.Ldind_U1:
+//            case Code.Ldind_I2:
+//            case Code.Ldind_U2:
+//            case Code.Ldind_I4:
+//            case Code.Ldind_U4:
+//            case Code.Ldind_I8:
+//            case Code.Ldind_I:
+//            case Code.Ldind_R4:
+//            case Code.Ldind_R8:
+//            case Code.Ldind_Ref:
+//            case Code.Stind_Ref:
+//            case Code.Stind_I1:
+//            case Code.Stind_I2:
+//            case Code.Stind_I4:
+//            case Code.Stind_I8:
+//            case Code.Stind_R4:
+//            case Code.Stind_R8:
+              case Code.Add:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Addition, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Sub:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Substraction, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Mul:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Multiplication, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Div:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Division, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+//            case Code.Div_Un:
+              case Code.Rem:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Reminder, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+//            case Code.Rem_Un:
+              case Code.And:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.And, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Or:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Or, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Xor:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Xor, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Shl:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.ShiftOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.ShiftLeft, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Shr:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.ShiftOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.ShiftRight, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+//            case Code.Shr_Un:
+              case Code.Neg:
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.UnaryNumericOperations(obj1));
+                  triplets.Add(new Triplet(TripletOpCode.Negate, newTempVariable, obj1));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Not:
+                  obj1 = simulationStack.Pop();
+                  newTempVariable = GenNewTempVariable(tempVariables, Helper.IntegerOperations(obj1, obj1)); //TODO: Strange specification description. Read again.
+                  triplets.Add(new Triplet(TripletOpCode.Not, newTempVariable, obj1));
+                  simulationStack.Push(newTempVariable);
+                  break;
+//            case Code.Conv_I1:
+//            case Code.Conv_I2:
+//            case Code.Conv_I4:
+//            case Code.Conv_I8:
+//            case Code.Conv_R4:
+//            case Code.Conv_R8:
+//            case Code.Conv_U4:
+//            case Code.Conv_U8:
+//            case Code.Callvirt:
+//            case Code.Cpobj:
+//            case Code.Ldobj:
+              case Code.Ldstr:
+                  simulationStack.Push(instr.Operand);
+                  break;
+//            case Code.Newobj:
+//            case Code.Castclass:
+//            case Code.Isinst:
+//            case Code.Conv_R_Un:
+//            case Code.Unbox:
+//            case Code.Throw:
+//            case Code.Ldfld:
+//            case Code.Ldflda:
+//            case Code.Stfld:
+//            case Code.Ldsfld:
+//            case Code.Ldsflda:
+//            case Code.Stsfld:
+//            case Code.Stobj:
+//            case Code.Conv_Ovf_I1_Un:
+//            case Code.Conv_Ovf_I2_Un:
+//            case Code.Conv_Ovf_I4_Un:
+//            case Code.Conv_Ovf_I8_Un:
+//            case Code.Conv_Ovf_U1_Un:
+//            case Code.Conv_Ovf_U2_Un:
+//            case Code.Conv_Ovf_U4_Un:
+//            case Code.Conv_Ovf_U8_Un:
+//            case Code.Conv_Ovf_I_Un:
+//            case Code.Conv_Ovf_U_Un:
+//            case Code.Box:
+//            case Code.Newarr:
+//            case Code.Ldlen:
+//            case Code.Ldelema:
+//            case Code.Ldelem_I1:
+//            case Code.Ldelem_U1:
+//            case Code.Ldelem_I2:
+//            case Code.Ldelem_U2:
+//            case Code.Ldelem_I4:
+//            case Code.Ldelem_U4:
+//            case Code.Ldelem_I8:
+//            case Code.Ldelem_I:
+//            case Code.Ldelem_R4:
+//            case Code.Ldelem_R8:
+//            case Code.Ldelem_Ref:
+//            case Code.Stelem_I:
+//            case Code.Stelem_I1:
+//            case Code.Stelem_I2:
+//            case Code.Stelem_I4:
+//            case Code.Stelem_I8:
+//            case Code.Stelem_R4:
+//            case Code.Stelem_R8:
+//            case Code.Stelem_Ref:
+//            case Code.Ldelem_Any:
+//            case Code.Stelem_Any:
+//            case Code.Unbox_Any:
+//            case Code.Conv_Ovf_I1:
+//            case Code.Conv_Ovf_U1:
+//            case Code.Conv_Ovf_I2:
+//            case Code.Conv_Ovf_U2:
+//            case Code.Conv_Ovf_I4:
+//            case Code.Conv_Ovf_U4:
+//            case Code.Conv_Ovf_I8:
+//            case Code.Conv_Ovf_U8:
+//            case Code.Refanyval:
+//            case Code.Ckfinite:
+//            case Code.Mkrefany:
+//            case Code.Ldtoken:
+//            case Code.Conv_U2:
+//            case Code.Conv_U1:
+//            case Code.Conv_I:
+//            case Code.Conv_Ovf_I:
+//            case Code.Conv_Ovf_U:
+//            case Code.Add_Ovf:
+//            case Code.Add_Ovf_Un:
+//            case Code.Mul_Ovf:
+//            case Code.Mul_Ovf_Un:
+//            case Code.Sub_Ovf:
+//            case Code.Sub_Ovf_Un:
+//            case Code.Endfinally:
+//            case Code.Leave:
+//            case Code.Leave_S:
+//            case Code.Stind_I:
+//            case Code.Conv_U:
+//            case Code.Arglist:
+              case Code.Ceq:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+              case Code.Cgt:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+//            case Code.Cgt_Un:
+              case Code.Clt:
+                  obj2 = simulationStack.Pop();
+                  obj1 = simulationStack.Pop();
+                  if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+                      throw new Exception(InvalidILExceptionString);
+                  newTempVariable = GenNewTempVariable(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
+                  simulationStack.Push(newTempVariable);
+                  break;
+//            case Code.Clt_Un:
+//            case Code.Ldftn:
+//            case Code.Ldvirtftn:
+              case Code.Ldarg:
+                  simulationStack.Push(instr.Operand);
+                  break;
+//            case Code.Ldarga:
+              case Code.Starg:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+                  break;
+              case Code.Ldloc:
+                  simulationStack.Push(instr.Operand);
+                  break;
+//            case Code.Ldloca:
+              case Code.Stloc:
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+                  break;
+//            case Code.Localloc:
+//            case Code.Endfilter:
+//            case Code.Unaligned:
+//            case Code.Volatile:
+//            case Code.Tail:
+//            case Code.Initobj:
+//            case Code.Constrained:
+//            case Code.Cpblk:
+//            case Code.Initblk:
+//            case Code.No:
+//            case Code.Rethrow:
+//            case Code.Sizeof:
+//            case Code.Refanytype:
+//            case Code.Readonly:
+
+              default:
+                  throw new NotImplementedException(instr.OpCode.ToString());
+          }
+
+          if (tripletIndex != triplets.Count) {
+              TripletStrarts.Add(start, triplets[tripletIndex]);
+              tripletIndex = triplets.Count;
+              start = instr.Next;
+          }
+
+          instr = instr.Next;
+      }
+
+      FixupForwardBranchTriplets();
+
+      for (int i = 0; i < triplets.Count; i++) {
+          triplets[i].offset = i;
+          if (i > 0) triplets[i].Previous = triplets[i-1];
+          if (i < triplets.Count-1) triplets[i].Next = triplets[i+1];
+      }
       
       return new ThreeAdressCode(cfg.Method, triplets[0], triplets, tempVariables);
     }

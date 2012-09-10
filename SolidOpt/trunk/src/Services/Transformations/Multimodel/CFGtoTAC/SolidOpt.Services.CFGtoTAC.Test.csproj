@@ -54,6 +54,20 @@
     <None Include="test\TestCases\SimpleExpressionReminder.il.tac" />
     <None Include="test\TestCases\SimpleSwitch.il" />
     <None Include="test\TestCases\SimpleSwitch.il.tac" />
+    <None Include="test\TestCases\Nop.il" />
+    <None Include="test\TestCases\Nop.il.tac" />
+    <None Include="test\TestCases\SwitchDoWhile.il" />
+    <None Include="test\TestCases\SwitchDoWhile.il.tac" />
+    <None Include="test\TestCases\PostIncrement.il" />
+    <None Include="test\TestCases\PostIncrement.il.tac" />
+    <None Include="test\TestCases\PreIncrement.il" />
+    <None Include="test\TestCases\PreIncrement.il.tac" />
+    <None Include="test\TestCases\ILDup1.il" />
+    <None Include="test\TestCases\ILDup1.il.tac" />
+    <None Include="test\TestCases\ILLoadStore.il" />
+    <None Include="test\TestCases\ILLoadStore.il.tac" />
+    <None Include="test\TestCases\ILDup2.il" />
+    <None Include="test\TestCases\ILDup2.il.tac" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\TACTestFixture.cs" />
