@@ -18,13 +18,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
   public class ThreeAddressCodeBuilder
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
-    private static readonly TypeReference Int32TypeReference = new TypeReference("System", "Int32", null, true);
-    private static readonly Triplet FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
+    private readonly TypeReference Int32TypeReference;
+    private readonly Triplet FixupTriplet;
 
     private ControlFlowGraph cfg = null;
     
     public ThreeAddressCodeBuilder(ControlFlowGraph cfg) {
       this.cfg = cfg;
+      Int32TypeReference = new TypeReference("System", "Int32", null, true);
+      FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
     }
     
     private static VariableReference GenNewTempVariable(List<VariableDefinition> inVarList, TypeReference varTypeRef)
