@@ -195,8 +195,41 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   simulationStack.Pop();
                   break;
 //            case Code.Jmp:
-//            case Code.Call:
-//            case Code.Calli:
+              case Code.Call:
+                  MethodReference callMethod = instr.Operand as MethodReference;
+                  for (int i = 0; i < callMethod.Parameters.Count; i++) {
+                    obj1 = simulationStack.Pop();
+                    triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj1));
+                  }
+                  if (callMethod.ReturnType.FullName == "System.Void") {
+                  //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
+                    triplets.Add(new Triplet(TripletOpCode.Call, null, instr.Operand));
+                  } else {
+                    newTempVariable = GenNewTempVariable(tempVariables, callMethod.ReturnType);
+                    triplets.Add(new Triplet(TripletOpCode.Call, newTempVariable, instr.Operand));
+                    simulationStack.Push(newTempVariable);
+                  }
+                  break;
+//              case Code.Calli:
+              case Code.Callvirt:
+                  Stack<object> callVirtReverseStack = new Stack<object>();
+                  MethodReference callVirtMethod = instr.Operand as MethodReference;
+                  for (int i = callVirtMethod.Parameters.Count; i > 0; i--)
+                      callVirtReverseStack.Push(simulationStack.Pop());
+                  for (int i = callVirtMethod.Parameters.Count; i > 0; i--) {
+                    obj2 = callVirtReverseStack.Pop();
+                    triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj2));
+                  }
+                  obj1 = simulationStack.Pop();
+                  if (callVirtMethod.ReturnType.FullName == "System.Void") {
+                      //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
+                      triplets.Add(new Triplet(TripletOpCode.CallVirt, null, instr.Operand, obj1));
+                  } else {
+                      newTempVariable = GenNewTempVariable(tempVariables, callVirtMethod.ReturnType);
+                      triplets.Add(new Triplet(TripletOpCode.CallVirt, newTempVariable, instr.Operand, obj1));
+                      simulationStack.Push(newTempVariable);
+                  }
+                  break;
               case Code.Ret:
                   if (simulationStack.Count > 0)
                       triplets.Add(new Triplet(TripletOpCode.Return, null, simulationStack.Pop()));

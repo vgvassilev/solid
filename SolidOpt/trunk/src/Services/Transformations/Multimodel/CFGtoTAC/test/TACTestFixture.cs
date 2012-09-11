@@ -161,6 +161,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         RunTestCase(testCaseName, getCfg(testCaseName));
     }
     
+    [Test]
+    public void CallStaticSkipResult()
+    {
+        string testCaseName = "CallStaticSkipResult";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
     /*
     [Test]
     public void BoolOrLessOrEqualThan()

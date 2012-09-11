@@ -45,8 +45,8 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     //...
 
     // Methods
-    Call,           // result = call op1/method
-    CallVirt,       // result = call op1/object op2/method
+    Call,           // result = call op1/method/signature
+    CallVirt,       // result = callvirt op1/method/signature op2/object
     PushParam,      // pushparam op1
     Return,         // return op1
     //...
