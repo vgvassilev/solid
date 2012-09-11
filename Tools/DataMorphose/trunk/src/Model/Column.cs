@@ -28,9 +28,12 @@ namespace DataMorphose.Model
       set { values = value; }
     }
 
-    public Column(string name) {
-      meta = new MetaData(this);
+    public Column(string name) : this() {
       meta.Name = name;
+    }
+
+    public Column() {
+      meta = new MetaData(this);
     }
   }
 }

@@ -58,13 +58,15 @@ namespace DataMorphose.Import
         CSVLexer lexer = new CSVLexer(reader.ReadLine());
         Table table = new Table(Path.GetFileNameWithoutExtension(file), lexer.GetSeparatorCount());
         string colValue;
-        while((colValue = lexer.Lex()) != null)
+        while ((colValue = lexer.Lex()) != null)
           // If the first line contains the header
-          table.Columns.Add(new Column((firstRowIsHeader) ? colValue : ""));
+          if (firstRowIsHeader)
+            table.Columns.Add(new Column(colValue));
+          else
+            table.Columns.Add(new Column());
 
         string s;
         int i;
-        try{
         while((s = reader.ReadLine()) != null) {
           lexer = new CSVLexer(s);
           i = 0;
@@ -72,10 +74,6 @@ namespace DataMorphose.Import
             table.Columns[i].Values.Add(colValue);
             i++;
           }
-        }
-        }
-        catch(Exception e){
-          int j;
         }
         return table;
       }

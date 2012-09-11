@@ -25,22 +25,24 @@ namespace DataMorphose.Actions
     #region implemented abstract members of DataMorphose.Action
     public override void Undo()
     {
-//      table.Columns = cachedRows;
+      table.SetRows(cachedRows);
     }
 
     public override void Redo()
     {
-//      cachedRows.AddRange(table.Columns);
-//      table.Columns.Sort(Compare);
+      List<Row> tableAsRows = table.GetAsRows();
+      cachedRows.AddRange(tableAsRows);
+      tableAsRows.Sort(Compare);
+      table.SetRows(tableAsRows);
     }
     #endregion
 
     private int Compare(Row x, Row y) {
       Debug.Assert(columnIndex > -1, "Column not found!");
       
-//      Column xCol = x.Columns[columnIndex];
-//      Column yCol = y.Columns[columnIndex];
-      return 0; //xCol.Value.ToString().CompareTo(yCol.Value.ToString());
+      object xCol = x.Data[columnIndex];
+      object yCol = y.Data[columnIndex];
+      return xCol.ToString().CompareTo(yCol.ToString());
     }
   }
 }

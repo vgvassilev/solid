@@ -15,63 +15,59 @@ using NUnit.Framework;
 namespace DataMorphose.Test
 {
 
-  [TestFixture()]
-  public class Test
+  [TestFixture]
+  public class CSVImport : BaseTestFixture
   {
     private CSVImporter importer = new CSVImporter(/*firstRawIsHeader*/true);
-    private string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..");
 
-    public Test() {
-      filePath = Path.Combine(filePath, "..");
-      filePath = Path.Combine(filePath, "..");
-      filePath = Path.Combine(filePath, "test");
+    public CSVImport() {
       filePath = Path.Combine(filePath, "DemoDB");
       filePath = Path.Combine(filePath, "Text");
     }
 
-    [Test()]
+    [Test]
     public void CheckCategories() {
       Table Categories = importer.importFromFile(Path.Combine(filePath, "Categories.txt"));
       CheckTable(Categories, "Categories", 8, 4);
     }
 
-    [Test()]
+    [Test]
     public void CheckCustomers() {
       Table Customers = importer.importFromFile(Path.Combine(filePath, "Customers.txt"));
       CheckTable(Customers, "Customers", 86, 11);
     }
 
-    [Test()]
+    [Test]
     public void CheckEmployees() {
       Table Employees = importer.importFromFile(Path.Combine(filePath, "Employees.txt"));
       CheckTable(Employees, "Employees", 9, 17);
     }
 
-    [Test()]
+    [Test]
     public void CheckOrderDetails() {
       Table OrderDetails = importer.importFromFile(Path.Combine(filePath, "OrderDetails.txt"));
       CheckTable(OrderDetails, "OrderDetails", 400, 5);
     }
 
-    [Test()]
+    [Test]
     public void CheckOrders() {
       Table Orders = importer.importFromFile(Path.Combine(filePath, "Orders.txt"));
       CheckTable(Orders, "Orders", 500, 14);
     }
 
-    [Test()]
+    [Test]
     public void CheckProducts() {
       Table Products = importer.importFromFile(Path.Combine(filePath, "Products.txt"));
       CheckTable(Products, "Products", 77, 10);
     }
 
-    [Test()]
+    [Test]
     public void CheckShippers() {
       Table Shippers = importer.importFromFile(Path.Combine(filePath, "Shippers.txt"));
       CheckTable(Shippers, "Shippers", 3, 3);
     }
 
-    [Test()]
+    [Test]
     public void CheckSuppliers() {
       Table Suppliers = importer.importFromFile(Path.Combine(filePath, "Suppliers.txt"));
       CheckTable(Suppliers, "Suppliers", 38, 12);

@@ -1,10 +1,13 @@
-// /*
-//  * $Id: Row.cs 560 2012-04-30 19:38:29Z ppetrova $
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
+/*
+ * $Id: Row.cs 560 2012-04-30 19:38:29Z ppetrova $
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
+
 using System;
 using System.Collections.Generic;
+using System.Text;
+
 using DataMorphose.Model;
 
 namespace DataMorphose.Model
@@ -15,13 +18,23 @@ namespace DataMorphose.Model
   public class Row
   {
     private object[] data;
-   
+    public object[] Data {
+      get { return this.data; }
+    }
+
     public Row(object[] data) {
       this.data = data;
     }
 
-    public object[] ToArray() {
-      return data;
+    public override string ToString ()
+    {
+      StringBuilder sb = new StringBuilder();
+      foreach (object val in Data) {
+        sb.Append(val.ToString());
+        sb.Append('|');
+      }
+
+      return sb.ToString();
     }
   }
 }

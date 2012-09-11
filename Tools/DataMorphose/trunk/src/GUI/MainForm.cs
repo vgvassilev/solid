@@ -46,7 +46,7 @@ namespace DataMorphose.GUI
         dataGridView1.Columns.Add(col.Meta.Name, col.Meta.Name);
         
       for(int i = 0; i < tbl.Columns.Count; i++) {
-        dataGridView1.Rows.Add(tbl.GetRow(i).ToArray());
+        dataGridView1.Rows.Add(tbl.GetRow(i).Data);
       }
 		}
 
