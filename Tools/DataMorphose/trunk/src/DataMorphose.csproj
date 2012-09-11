@@ -68,6 +68,7 @@
     <Compile Include="Controller\ReversibleActions\IReversibleAction.cs" />
     <Compile Include="Controller\ReversibleActions\Actions\SortByColumnAction.cs" />
     <Compile Include="Controller\Import\CSVLexer.cs" />
+    <Compile Include="Controller\Deduce\ColumnType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -14,13 +14,25 @@ namespace DataMorphose.Model.Meta
   public class MetaData
   {
     private Column described;
-    
+    public Column Described {
+      get { return this.described; }
+    }
+
     private string name;
     public string Name {
       get { return this.name; }
       set { name = value; }
     }
-    
+
+    /// <summary>
+    /// The type to which the column values match closest.
+    /// </summary>
+    private Type type;
+    public Type Type {
+      get { return this.type; }
+      set { type = value; }
+    }
+
     private Relation relates;
     public Relation Relates {
       get { return relates; }
