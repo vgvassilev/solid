@@ -19,7 +19,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private static readonly TypeReference Int32TypeReference = new TypeReference("System", "Int32", null, true);
-        private static readonly Triplet FixupTriplet = new Triplet(-1, TripletOpCode.Nop);
+        private static readonly Triplet FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
 
     private ControlFlowGraph cfg = null;
     
@@ -77,6 +77,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 
       int tripletIndex = triplets.Count;
       Instruction start = instr;
+      int paramOffset = cfg.Method.HasThis ? 1 : 0;
       while (instr != null) {
           switch (instr.OpCode.Code) {
               case Code.Nop:
@@ -86,16 +87,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   // Nothing to do
                   break;
               case Code.Ldarg_0:
-                  simulationStack.Push(cfg.Method.Parameters[0]);
+                  if (cfg.Method.HasThis)
+                    simulationStack.Push(cfg.Method.Body.ThisParameter);
+                  else
+                    simulationStack.Push(cfg.Method.Parameters[0]);
                   break;
               case Code.Ldarg_1:
-                  simulationStack.Push(cfg.Method.Parameters[1]);
+                  simulationStack.Push(cfg.Method.Parameters[1 - paramOffset]);
                   break;
               case Code.Ldarg_2:
-                  simulationStack.Push(cfg.Method.Parameters[2]);
+                  simulationStack.Push(cfg.Method.Parameters[2 - paramOffset]);
                   break;
               case Code.Ldarg_3:
-                  simulationStack.Push(cfg.Method.Parameters[3]);
+                  simulationStack.Push(cfg.Method.Parameters[3 - paramOffset]);
                   break;
               case Code.Ldloc_0:
                   simulationStack.Push(cfg.Method.Body.Variables[0]);
@@ -122,11 +126,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[3], simulationStack.Pop()));
                   break;
               case Code.Ldarg_S:
-                  simulationStack.Push(instr.Operand);
+                  if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+                    simulationStack.Push(cfg.Method.Body.ThisParameter);
+                  else
+                    simulationStack.Push(cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
                   break;
 //            case Code.Ldarga_S:
               case Code.Starg_S:
-                  triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+                  if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+                    triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.ThisParameter, simulationStack.Pop()));
+                  else
+                    triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
                   break;
               case Code.Ldloc_S:
                   simulationStack.Push(instr.Operand);
@@ -196,37 +206,43 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   break;
 //            case Code.Jmp:
               case Code.Call:
+                  Stack<object> callReverseStack = new Stack<object>();
                   MethodReference callMethod = instr.Operand as MethodReference;
-                  for (int i = 0; i < callMethod.Parameters.Count; i++) {
-                    obj1 = simulationStack.Pop();
-                    triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj1));
+                  int callMethodHasThis = callMethod.HasThis ? 1 : 0;
+                  
+                  for (int i = callMethod.Parameters.Count + callMethodHasThis; i > 0; i--)
+                      callReverseStack.Push(simulationStack.Pop());
+                  for (int i = callMethod.Parameters.Count + callMethodHasThis; i > 0; i--) {
+                      obj1 = callReverseStack.Pop();
+                      triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj1));
                   }
                   if (callMethod.ReturnType.FullName == "System.Void") {
-                  //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
-                    triplets.Add(new Triplet(TripletOpCode.Call, null, instr.Operand));
+                      //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
+                      triplets.Add(new Triplet(TripletOpCode.CallVirt, null, instr.Operand));
                   } else {
-                    newTempVariable = GenNewTempVariable(tempVariables, callMethod.ReturnType);
-                    triplets.Add(new Triplet(TripletOpCode.Call, newTempVariable, instr.Operand));
-                    simulationStack.Push(newTempVariable);
+                      newTempVariable = GenNewTempVariable(tempVariables, callMethod.ReturnType);
+                      triplets.Add(new Triplet(TripletOpCode.Call, newTempVariable, instr.Operand));
+                      simulationStack.Push(newTempVariable);
                   }
                   break;
 //              case Code.Calli:
               case Code.Callvirt:
                   Stack<object> callVirtReverseStack = new Stack<object>();
                   MethodReference callVirtMethod = instr.Operand as MethodReference;
-                  for (int i = callVirtMethod.Parameters.Count; i > 0; i--)
+                  int callVirtMethodHasThis = callVirtMethod.HasThis ? 1 : 0;
+                  
+                  for (int i = callVirtMethod.Parameters.Count + callVirtMethodHasThis; i > 0; i--)
                       callVirtReverseStack.Push(simulationStack.Pop());
-                  for (int i = callVirtMethod.Parameters.Count; i > 0; i--) {
-                    obj2 = callVirtReverseStack.Pop();
-                    triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj2));
+                  for (int i = callVirtMethod.Parameters.Count + callVirtMethodHasThis; i > 0; i--) {
+                      obj1 = callVirtReverseStack.Pop();
+                      triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj1));
                   }
-                  obj1 = simulationStack.Pop();
                   if (callVirtMethod.ReturnType.FullName == "System.Void") {
                       //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
-                      triplets.Add(new Triplet(TripletOpCode.CallVirt, null, instr.Operand, obj1));
+                      triplets.Add(new Triplet(TripletOpCode.CallVirt, null, instr.Operand));
                   } else {
                       newTempVariable = GenNewTempVariable(tempVariables, callVirtMethod.ReturnType);
-                      triplets.Add(new Triplet(TripletOpCode.CallVirt, newTempVariable, instr.Operand, obj1));
+                      triplets.Add(new Triplet(TripletOpCode.CallVirt, newTempVariable, instr.Operand));
                       simulationStack.Push(newTempVariable);
                   }
                   break;
@@ -653,11 +669,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //            case Code.Ldftn:
 //            case Code.Ldvirtftn:
               case Code.Ldarg:
-                  simulationStack.Push(instr.Operand);
+                  if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+                    simulationStack.Push(cfg.Method.Body.ThisParameter);
+                  else
+                    simulationStack.Push(cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
                   break;
 //            case Code.Ldarga:
               case Code.Starg:
-                  triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
+                  if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+                    triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.ThisParameter, simulationStack.Pop()));
+                  else
+                    triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
                   break;
               case Code.Ldloc:
                   simulationStack.Push(instr.Operand);

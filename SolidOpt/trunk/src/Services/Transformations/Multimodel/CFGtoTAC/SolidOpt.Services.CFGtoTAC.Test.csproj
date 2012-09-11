@@ -70,6 +70,8 @@
     <None Include="test\TestCases\ILDup2.il.tac" />
     <None Include="test\TestCases\CallStaticSkipResult.il" />
     <None Include="test\TestCases\CallStaticSkipResult.il.tac" />
+    <None Include="test\TestCases\Call.il" />
+    <None Include="test\TestCases\Call.il.tac" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\TACTestFixture.cs" />

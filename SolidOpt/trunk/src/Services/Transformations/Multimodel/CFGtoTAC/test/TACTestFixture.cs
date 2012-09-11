@@ -168,6 +168,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         RunTestCase(testCaseName, getCfg(testCaseName));
     }
     
+    [Test]
+    public void Call()
+    {
+        string testCaseName = "Call";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
     /*
     [Test]
     public void BoolOrLessOrEqualThan()

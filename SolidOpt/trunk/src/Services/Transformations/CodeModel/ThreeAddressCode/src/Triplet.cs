@@ -7,6 +7,9 @@
 using System.Text;
 using System.Collections.Generic;
 
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+
 namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
   public enum TripletOpCode {
@@ -46,7 +49,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
     // Methods
     Call,           // result = call op1/method/signature
-    CallVirt,       // result = callvirt op1/method/signature op2/object
+    CallVirt,       // result = callvirt op1/method/signature
     PushParam,      // pushparam op1
     Return,         // return op1
     //...
@@ -163,6 +166,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         sb.Remove(0, 2);
         return sb.ToString();
       }
+      if (obj is ParameterReference && (obj as ParameterReference).Index == -1) return "this";
       return obj.ToString();
     }
 
@@ -185,7 +189,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           sb.AppendFormat("call {0}", op(operand1));
           break;
         case TripletOpCode.CallVirt:
-          sb.AppendFormat("callvirt {0} {1}", op(operand1), op(operand2));
+          sb.AppendFormat("callvirt {0}", op(operand1));
           break;
         case TripletOpCode.Division:
           sb.AppendFormat("{0} / {1}", op(operand1), op(operand2));
@@ -227,7 +231,8 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           sb.AppendFormat("pushparam {0}", op(operand1));
           break;
         case TripletOpCode.Return:
-          sb.AppendFormat("return{0}", operand1==null ? "" : " "+op(operand1));
+          sb.Append("return");
+          if (operand1 != null) sb.AppendFormat(" {0}", op(operand1));
           break;
         case TripletOpCode.Reminder:
           sb.AppendFormat("{0} % {1}", op(operand1), op(operand2));
