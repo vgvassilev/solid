@@ -19,7 +19,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private static readonly TypeReference Int32TypeReference = new TypeReference("System", "Int32", null, true);
-        private static readonly Triplet FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
+    private static readonly Triplet FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
 
     private ControlFlowGraph cfg = null;
     
@@ -35,12 +35,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     }
     
     private Dictionary<Triplet, Instruction> ForwardBranchTriplets = new Dictionary<Triplet, Instruction>();
-    private Dictionary<Instruction, Triplet> TripletStrarts = new Dictionary<Instruction, Triplet>();
+    private Dictionary<Instruction, Triplet> TripletStarts = new Dictionary<Instruction, Triplet>();
 
     private Triplet GetLabeledTripletByIL(Instruction target)
     {
       Triplet result;
-      if (TripletStrarts.TryGetValue(target, out result)) return result;
+      if (TripletStarts.TryGetValue(target, out result)) return result;
       return FixupTriplet;
     }
     
@@ -708,7 +708,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           }
 
           if (tripletIndex != triplets.Count) {
-              TripletStrarts.Add(start, triplets[tripletIndex]);
+              TripletStarts.Add(start, triplets[tripletIndex]);
               tripletIndex = triplets.Count;
               start = instr.Next;
           }
