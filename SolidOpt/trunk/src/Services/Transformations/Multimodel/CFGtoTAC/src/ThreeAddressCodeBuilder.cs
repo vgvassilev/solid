@@ -74,7 +74,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       List<VariableDefinition> tempVariables = new List<VariableDefinition>();
       Instruction instr = cfg.Root.First;
 
-      VariableReference newTempVariable;
+      VariableReference tmpVarRef;
       object obj1, obj2;
       Triplet triplet;
 
@@ -199,10 +199,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               case Code.Dup:
                   obj1 = simulationStack.Pop();
                   TypeReference typeRef = Helper.GetOperandType(obj1);
-                  newTempVariable = GenerateTempVar(tempVariables, typeRef);
-                  triplets.Add(new Triplet(TripletOpCode.Assignment, newTempVariable, obj1));
-                  simulationStack.Push(newTempVariable);
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, typeRef);
+                  triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef, obj1));
+                  simulationStack.Push(tmpVarRef);
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Pop:
                   simulationStack.Pop();
@@ -223,9 +223,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                       //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
                       triplets.Add(new Triplet(TripletOpCode.CallVirt, null, instr.Operand));
                   } else {
-                      newTempVariable = GenerateTempVar(tempVariables, callMethod.ReturnType);
-                      triplets.Add(new Triplet(TripletOpCode.Call, newTempVariable, instr.Operand));
-                      simulationStack.Push(newTempVariable);
+                      tmpVarRef = GenerateTempVar(tempVariables, callMethod.ReturnType);
+                      triplets.Add(new Triplet(TripletOpCode.Call, tmpVarRef, instr.Operand));
+                      simulationStack.Push(tmpVarRef);
                   }
                   break;
 //              case Code.Calli:
@@ -244,9 +244,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                       //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
                       triplets.Add(new Triplet(TripletOpCode.CallVirt, null, instr.Operand));
                   } else {
-                      newTempVariable = GenerateTempVar(tempVariables, callVirtMethod.ReturnType);
-                      triplets.Add(new Triplet(TripletOpCode.CallVirt, newTempVariable, instr.Operand));
-                      simulationStack.Push(newTempVariable);
+                      tmpVarRef = GenerateTempVar(tempVariables, callVirtMethod.ReturnType);
+                      triplets.Add(new Triplet(TripletOpCode.CallVirt, tmpVarRef, instr.Operand));
+                      simulationStack.Push(tmpVarRef);
                   }
                   break;
               case Code.Ret:
@@ -282,9 +282,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -294,9 +294,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -306,9 +306,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -318,9 +318,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -330,9 +330,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -369,9 +369,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -381,9 +381,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -393,9 +393,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -405,9 +405,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfFalse, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -417,9 +417,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                  triplet = new Triplet(TripletOpCode.IfTrue, null, newTempVariable, GetLabeledTripletByIL((Instruction)instr.Operand));
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
+                  triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
                   if (triplet.Operand2 == FixupTriplet)
                       ForwardBranchTriplets[triplet] = instr;
                   triplets.Add(triplet);
@@ -466,87 +466,87 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               case Code.Add:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.Addition, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Addition, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Sub:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.Substraction, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Substraction, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Mul:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.Multiplication, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Multiplication, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Div:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.Division, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Division, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
 //            case Code.Div_Un:
               case Code.Rem:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.Reminder, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Reminder, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
 //            case Code.Rem_Un:
               case Code.And:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.And, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.And, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Or:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.Or, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Or, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Xor:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.Xor, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.Xor, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Shl:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.ShiftOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.ShiftLeft, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.ShiftOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.ShiftLeft, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Shr:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.ShiftOperations(obj1, obj2));
-                  triplets.Add(new Triplet(TripletOpCode.ShiftRight, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.ShiftOperations(obj1, obj2));
+                  triplets.Add(new Triplet(TripletOpCode.ShiftRight, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
 //            case Code.Shr_Un:
               case Code.Neg:
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.UnaryNumericOperations(obj1));
-                  triplets.Add(new Triplet(TripletOpCode.Negate, newTempVariable, obj1));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.UnaryNumericOperations(obj1));
+                  triplets.Add(new Triplet(TripletOpCode.Negate, tmpVarRef, obj1));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Not:
                   obj1 = simulationStack.Pop();
-                  newTempVariable = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj1)); //TODO: Strange specification description. Read again.
-                  triplets.Add(new Triplet(TripletOpCode.Not, newTempVariable, obj1));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj1)); //TODO: Strange specification description. Read again.
+                  triplets.Add(new Triplet(TripletOpCode.Not, tmpVarRef, obj1));
+                  simulationStack.Push(tmpVarRef);
                   break;
 //            case Code.Conv_I1:
 //            case Code.Conv_I2:
@@ -645,18 +645,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Equal, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
               case Code.Cgt:
                   obj2 = simulationStack.Pop();
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Great, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
 //            case Code.Cgt_Un:
               case Code.Clt:
@@ -664,9 +664,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
                   obj1 = simulationStack.Pop();
                   if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
                       throw new Exception(InvalidILExceptionString);
-                  newTempVariable = GenerateTempVar(tempVariables, Int32TypeReference);
-                  triplets.Add(new Triplet(TripletOpCode.Less, newTempVariable, obj1, obj2));
-                  simulationStack.Push(newTempVariable);
+                  tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+                  triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
+                  simulationStack.Push(tmpVarRef);
                   break;
 //            case Code.Clt_Un:
 //            case Code.Ldftn:
