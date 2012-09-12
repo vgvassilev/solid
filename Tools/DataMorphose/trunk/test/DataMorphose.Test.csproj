@@ -37,6 +37,7 @@
     <Compile Include="CSVImport.cs" />
     <Compile Include="Sort.cs" />
     <Compile Include="DeduceType.cs" />
+    <Compile Include="DeduceConstraints.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace DataMorphose.Model.Meta
 {
@@ -33,12 +34,15 @@ namespace DataMorphose.Model.Meta
       set { type = value; }
     }
 
-    private Relation relates;
-    public Relation Relates {
-      get { return relates; }
-      set { relates = value; }
+    /// <summary>
+    /// List of constraints on the column.
+    /// </summary>
+    private Dictionary<ConstraintKind, Constraint> constraints
+      = new Dictionary<ConstraintKind, Constraint>();
+    public Dictionary<ConstraintKind, Constraint> Constraints {
+      get { return this.constraints; }
     }
-    
+
     public MetaData(Column described)
     {
       this.described = described;
