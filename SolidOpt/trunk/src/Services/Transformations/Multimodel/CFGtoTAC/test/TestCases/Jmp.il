@@ -12,7 +12,7 @@
   //   return a;
   // }
 
-  .method public hidebysig instance void  Main() cil managed
+  .method public hidebysig instance void  Main(int32 a) cil managed
   {
     .maxstack  2
     .locals init (int32 V_0)
@@ -25,7 +25,7 @@
 
   .method public hidebysig instance int32  M1(int32 a) cil managed
   {
-    .maxstack  8
+    .maxstack  1
     IL_0000:  ldarg.1
     IL_0001:  ret
   }
