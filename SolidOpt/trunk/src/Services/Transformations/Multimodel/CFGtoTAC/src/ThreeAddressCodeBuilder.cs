@@ -248,7 +248,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             }
             if (callMethod.ReturnType.FullName == "System.Void") {
               //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
-              triplets.Add(new Triplet(TripletOpCode.CallVirt, null, instr.Operand));
+              triplets.Add(new Triplet(TripletOpCode.Call, null, instr.Operand));
             } else {
               tmpVarRef = GenerateTempVar(tempVariables, callMethod.ReturnType);
               triplets.Add(new Triplet(TripletOpCode.Call, tmpVarRef, instr.Operand));
