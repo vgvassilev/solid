@@ -32,6 +32,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     }
 
     [Test]
+    public void TwoSystemCalls()
+    {
+      string testCaseName = "TwoSystemCalls";
+      MethodDefinition mDef = LoadTestCaseMethod(testCaseName);
+      CallGraph cg = new CallGraphBuilder(mDef).Create(/*maxDepth*/1);
+      string[] seen = Normalize(cg.ToString().Split('\n'));
+      string[] expected = Normalize(File.ReadAllText(GetTestCaseResultFullPath(testCaseName))).Split('\n');
+      string errMsg = string.Empty;
+      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
+    }
+
+    [Test]
     public void TwoCalls()
     {
       string testCaseName = "TwoCalls";
@@ -50,18 +62,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     {
       string testCaseName = "MultipleNestedMethodCalls";
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
-    }
-
-    [Test]
-    public void TwoSystemCalls()
-    {
-      string testCaseName = "TwoSystemCalls";
-      MethodDefinition mDef = LoadTestCaseMethod(testCaseName);
-      CallGraph cg = new CallGraphBuilder(mDef).Create(/*maxDepth*/1);
-      string[] seen = Normalize(cg.ToString().Split('\n'));
-      string[] expected = Normalize(File.ReadAllText(GetTestCaseResultFullPath(testCaseName))).Split('\n');
-      string errMsg = string.Empty;
-      Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
     }
   }
 }

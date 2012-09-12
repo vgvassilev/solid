@@ -16,7 +16,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
   public class CallGraphBuilder
   {
     private readonly MethodDefinition rootMethod;
-    private List<MethodDefinition> rawDefs = new List<MethodDefinition>();
+    private HashSet<MethodDefinition> mDefsInFlight = new HashSet<MethodDefinition>();
 
     #region Constructors
 
@@ -51,9 +51,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
             mRef = (instr.Operand as MethodReference);
             CGNode callee = new CGNode(mRef.Resolve(), node);
             node.MethodCalls.Add(callee);
-            if (!rawDefs.Contains(callee.Method)) {
-              rawDefs.Add(node.Method);
+            if (!mDefsInFlight.Contains(callee.Method)) {
+              mDefsInFlight.Add(node.Method);
               VisitCGNode(callee, maxDepth);
+              mDefsInFlight.Remove(node.Method);
             }
           }
         }
