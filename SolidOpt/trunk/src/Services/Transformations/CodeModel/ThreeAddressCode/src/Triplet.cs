@@ -169,7 +169,8 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         sb.Remove(0, 2);
         return sb.ToString();
       }
-      if (obj is ParameterReference && (obj as ParameterReference).Index == -1) return "this";
+      if (obj is ParameterReference && (obj as ParameterReference).Index == -1)
+        return "this";
       return obj.ToString();
     }
 

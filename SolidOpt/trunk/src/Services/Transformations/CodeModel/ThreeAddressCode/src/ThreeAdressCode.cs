@@ -46,15 +46,24 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            int i = 0;
 
-            sb.AppendLine(method.Name);
-
-            foreach (Triplet triplet in RawTriplets) {
-                sb.AppendLine(String.Format("L{0}: {1}", i++, triplet.ToString()));
+            sb.AppendFormat("{0} ", method.ReturnType.ToString());
+            sb.AppendFormat("{0}::{1}(", method.DeclaringType.ToString(), method.Name);
+            ParameterDefinition paramDef;
+            for(int i = 0; i < method.Parameters.Count; i++) {
+              paramDef = method.Parameters[i];
+              sb.AppendFormat("{0} {1}{2}", paramDef.ParameterType.ToString(), paramDef.Name,
+                              (i < method.Parameters.Count-1) ? ", " : "");
             }
-            
-            return sb.ToString();   
+            sb.AppendLine(") {");
+
+            int index = 0;
+            foreach (Triplet triplet in RawTriplets) {
+                sb.AppendLine(String.Format("  L{0}: {1}", index++, triplet.ToString()));
+            }
+
+            sb.AppendLine("}");
+            return sb.ToString();
         }
     }
 }
