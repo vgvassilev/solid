@@ -219,15 +219,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               paramDef = jmpMethod.Parameters[i];
               Debug.Assert(paramDef == cfg.Method.Parameters[i], "Args differ");
             }
-
-            if (jmpMethod.ReturnType.FullName == "System.Void") {
-                //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
-                triplets.Add(new Triplet(TripletOpCode.Goto, null, jmpMethod));
-            } else {
-                tmpVarRef = GenerateTempVar(tempVariables, jmpMethod.ReturnType);
-                triplets.Add(new Triplet(TripletOpCode.Goto, tmpVarRef, jmpMethod));
-                simulationStack.Push(tmpVarRef);
-            }
+            
+            triplets.Add(new Triplet(TripletOpCode.Goto, null, jmpMethod));
+            
+//            if (jmpMethod.ReturnType.FullName == "System.Void") {
+//                //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
+//                triplets.Add(new Triplet(TripletOpCode.Goto, null, jmpMethod));
+//            } else {
+//                tmpVarRef = GenerateTempVar(tempVariables, jmpMethod.ReturnType);
+//                triplets.Add(new Triplet(TripletOpCode.Goto, tmpVarRef, jmpMethod));
+//                simulationStack.Push(tmpVarRef);
+//            }
             break;
           case Code.Call:
             Stack<object> callReverseStack = new Stack<object>();
