@@ -514,7 +514,54 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Division, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Div_Un:
+          case Code.Div_Un:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            VariableReference tmpVarRefO1 = null;
+            VariableReference tmpVarRefO2 = null;
+
+            switch (Helper.GetTypeKind(Helper.GetOperandType(obj1))) {
+              case /*Int32*/ 0:
+                tmpVarRefO1 = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+              break;
+              case /*Int64*/ 1:
+                tmpVarRefO1 = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
+              break;
+              case /*IntPtr*/ 2:
+                tmpVarRefO1 = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
+              break;
+              default:
+                Debug.Assert(true, "Unsupported types.");
+                break;
+            }
+
+            switch (Helper.GetTypeKind(Helper.GetOperandType(obj2))) {
+              case /*Int32*/ 0:
+                tmpVarRefO2 = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+              break;
+              case /*Int64*/ 1:
+                tmpVarRefO2 = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
+              break;
+              case /*IntPtr*/ 2:
+                tmpVarRefO2 = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
+              break;
+              default:
+                Debug.Assert(true, "Unsupported types.");
+                break;
+            }
+
+            if (tmpVarRefO1 != null)
+              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO1, obj1));
+            if (tmpVarRefO2 != null)
+              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO2, obj2));
+
+
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(tmpVarRefO1 ?? obj1,
+                                                                                      tmpVarRefO2 ?? obj2));
+            triplets.Add(new Triplet(TripletOpCode.Division, tmpVarRef, tmpVarRefO1 ?? obj1,
+                                     tmpVarRefO2 ?? obj2));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Rem:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -872,7 +919,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       
       if (tr.IsPointer) return 5;
       if (!tr.IsValueType) return 6;
-      throw new Exception(UnsupportedTypeExceptionString);
+      return -1;
     }
     
     // Binary numeric operations
