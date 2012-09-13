@@ -26,9 +26,8 @@
     IL_0001:  call       int32 TestCase::Main(int32)
     IL_0006:  stloc.0
     IL_0007:  ldloc.0
-    IL_000d:  call       void [mscorlib]System.Console::WriteLine(int32)
-    IL_0012:  ldloc.0
-    IL_0013:  ret
+    IL_0008:  call       void [mscorlib]System.Console::WriteLine(int32)
+    IL_000d:  ret
   }
 
   .method public static hidebysig int32  Main(int32 a) cil managed
@@ -36,7 +35,7 @@
     .maxstack  1
     //IL_0000:  ldarg.0
     //IL_0001:  call  string TestCase::M1(int32)
-    //IL_0002:  ret
+    //IL_0006:  ret
     IL_0000:  jmp       string TestCase::M1(int32)
   }
   
@@ -44,7 +43,7 @@
   {
     .maxstack  1
     IL_0000:  ldstr "abc"
-    IL_0002:  ret
+    IL_0005:  ret
   }
 
 }
