@@ -573,13 +573,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             break;
           case Code.Conv_I1:
             obj1 = simulationStack.Pop();
-            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int8TypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
           case Code.Conv_I2:
             obj1 = simulationStack.Pop();
-            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int16TypeRef);
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int16TypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
@@ -616,7 +616,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Conv_U8:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
-            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt32TypeRef, obj1));
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt64TypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
 //        case Code.Cpobj:
@@ -627,7 +627,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //        case Code.Newobj:
 //        case Code.Castclass:
 //        case Code.Isinst:
-//        case Code.Conv_R_Un:
+          case Code.Conv_R_Un:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.DoubleTypeRef); //TODO: Push "F"-type to evaluation stack 
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.DoubleTypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
 //        case Code.Unbox:
 //        case Code.Throw:
 //        case Code.Ldfld:
@@ -685,9 +690,24 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //        case Code.Ckfinite:
 //        case Code.Mkrefany:
 //        case Code.Ldtoken:
-//        case Code.Conv_U2:
-//        case Code.Conv_U1:
-//        case Code.Conv_I:
+          case Code.Conv_U2:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int16TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt16TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_U1:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt8TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_I:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.IntPtrTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.IntPtrTypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
 //        case Code.Conv_Ovf_I:
 //        case Code.Conv_Ovf_U:
 //        case Code.Add_Ovf:
@@ -700,7 +720,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //        case Code.Leave:
 //        case Code.Leave_S:
 //        case Code.Stind_I:
-//        case Code.Conv_U:
+          case Code.Conv_U:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UIntPtrTypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
 //        case Code.Arglist:
           case Code.Ceq:
             obj2 = simulationStack.Pop();
@@ -804,6 +829,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     public static readonly TypeReference Int64TypeRef;
     public static readonly TypeReference SingleTypeRef;
     public static readonly TypeReference DoubleTypeRef;
+    public static readonly TypeReference UInt8TypeRef;
     public static readonly TypeReference UInt16TypeRef;
     public static readonly TypeReference UInt32TypeRef;
     public static readonly TypeReference UInt64TypeRef;
@@ -818,6 +844,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       Int64TypeRef = new TypeReference("System", "Int64", null, true);
       SingleTypeRef = new TypeReference("System", "Single", null, true);
       DoubleTypeRef = new TypeReference("System", "Double", null, true);
+      UInt8TypeRef = new TypeReference("System", "UInt8", null, true);
       UInt16TypeRef = new TypeReference("System", "UInt16", null, true);
       UInt32TypeRef = new TypeReference("System", "UInt32", null, true);
       UInt64TypeRef = new TypeReference("System", "UInt64", null, true);
