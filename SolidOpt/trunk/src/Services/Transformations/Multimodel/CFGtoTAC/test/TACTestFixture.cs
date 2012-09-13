@@ -182,5 +182,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         RunTestCase(testCaseName, getCfg(testCaseName));
     }
 
+    [Test]
+    public void Cast()
+    {
+        string testCaseName = "Cast";
+        RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
   }
 }

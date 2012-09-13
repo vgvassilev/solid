@@ -571,15 +571,54 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Not, tmpVarRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Conv_I1:
-//        case Code.Conv_I2:
-//        case Code.Conv_I4:
-//        case Code.Conv_I8:
-//        case Code.Conv_R4:
-//        case Code.Conv_R8:
-//        case Code.Conv_U4:
-//        case Code.Conv_U8:
-//        case Code.Callvirt:
+          case Code.Conv_I1:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int8TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_I2:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int16TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_I4:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int32TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_I8:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int64TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int64TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_R4:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.SingleTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.SingleTypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_R8:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.DoubleTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.DoubleTypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_U4:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt32TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Conv_U8:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt32TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
 //        case Code.Cpobj:
 //        case Code.Ldobj:
           case Code.Ldstr:
@@ -759,14 +798,41 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private const string UnsupportedTypeExceptionString = "TAC builder: Unsupported type!";
 
+    public static readonly TypeReference Int8TypeRef;
+    public static readonly TypeReference Int16TypeRef;
+    public static readonly TypeReference Int32TypeRef;
+    public static readonly TypeReference Int64TypeRef;
+    public static readonly TypeReference SingleTypeRef;
+    public static readonly TypeReference DoubleTypeRef;
+    public static readonly TypeReference UInt16TypeRef;
+    public static readonly TypeReference UInt32TypeRef;
+    public static readonly TypeReference UInt64TypeRef;
+    public static readonly TypeReference IntPtrTypeRef;
+    public static readonly TypeReference UIntPtrTypeRef;
+
+    static Helper()
+    {
+      Int8TypeRef = new TypeReference("System", "Int8", null, true);
+      Int16TypeRef = new TypeReference("System", "Int16", null, true);
+      Int32TypeRef = new TypeReference("System", "Int32", null, true);
+      Int64TypeRef = new TypeReference("System", "Int64", null, true);
+      SingleTypeRef = new TypeReference("System", "Single", null, true);
+      DoubleTypeRef = new TypeReference("System", "Double", null, true);
+      UInt16TypeRef = new TypeReference("System", "UInt16", null, true);
+      UInt32TypeRef = new TypeReference("System", "UInt32", null, true);
+      UInt64TypeRef = new TypeReference("System", "UInt64", null, true);
+      IntPtrTypeRef = new TypeReference("System", "IntPtr", null, true);
+      UIntPtrTypeRef = new TypeReference("System", "UIntPtr", null, true);
+    }
+    
     public static TypeReference GetOperandType(object op)
     {
       Type t = op.GetType();
       if (op is VariableReference) return (op as VariableReference).VariableType;
       if (op is ParameterReference) return (op as ParameterReference).ParameterType;
         return new TypeReference(t.Namespace, t.Name, null, t.IsValueType);
-      }
-
+    }
+    
     public static int GetTypeKind(TypeReference tr)
     {
       switch (tr.FullName) {
@@ -776,14 +842,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
         case "System.Single": return 3;
         case "System.Double": return 4;
       }
-
+      
       if (tr.IsPointer) return 5;
       if (!tr.IsValueType) return 6;
       throw new Exception(UnsupportedTypeExceptionString);
     }
-
+    
     // Binary numeric operations
-
+    
     public readonly static Type[,] BinaryNumericOperationsResultTypes =
       {
         //              Int32           Int64           IntPtr                Single          Double          &                     Obj

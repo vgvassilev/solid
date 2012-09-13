@@ -34,6 +34,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     ShiftRight,     // result = op1 >> op2
     //...
 
+    // Cast
+    Cast,           // result = (op1) op2
+
     // Logic
     Equal,          // result = op1 == op2
     Less,           // result = op1 < op2
@@ -190,6 +193,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           break;
         case TripletOpCode.CallVirt:
           sb.AppendFormat("callvirt {0}", op(operand1));
+          break;
+        case TripletOpCode.Cast:
+          sb.AppendFormat("({0}) {1}", op(operand1), op(operand2));
           break;
         case TripletOpCode.Division:
           sb.AppendFormat("{0} / {1}", op(operand1), op(operand2));
