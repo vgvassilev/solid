@@ -210,28 +210,22 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             break;
           case Code.Jmp:
             MethodReference jmpMethod = instr.Operand as MethodReference;
-            if (jmpMethod.HasThis) {
-              // Construct the this parameter.
-              ParameterReference thisRef = new ParameterDefinition("0",
-                                                                   ParameterAttributes.None,
-                                                                   jmpMethod.DeclaringType);
-              Debug.Assert(cfg.Method.HasThis, "Current method doesn't have this ptr.");
-              triplets.Add(new Triplet(TripletOpCode.PushParam, null, thisRef));
-            }
-
+            // Make sure that argument lists are the same
+            Debug.Assert(jmpMethod.CallingConvention == cfg.Method.CallingConvention,
+                         "Calling convention differs.");
+            Debug.Assert(jmpMethod.HasThis == cfg.Method.HasBody, "One of the methods has this");
             ParameterDefinition paramDef = null;
             for (int i = jmpMethod.Parameters.Count - 1; i >= 0; i--) {
               paramDef = jmpMethod.Parameters[i];
               Debug.Assert(paramDef == cfg.Method.Parameters[i], "Args differ");
-              triplets.Add(new Triplet(TripletOpCode.PushParam, null, paramDef));
             }
 
             if (jmpMethod.ReturnType.FullName == "System.Void") {
                 //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
-                triplets.Add(new Triplet(TripletOpCode.Call, null, jmpMethod));
+                triplets.Add(new Triplet(TripletOpCode.Goto, null, jmpMethod));
             } else {
                 tmpVarRef = GenerateTempVar(tempVariables, jmpMethod.ReturnType);
-                triplets.Add(new Triplet(TripletOpCode.Call, tmpVarRef, jmpMethod));
+                triplets.Add(new Triplet(TripletOpCode.Goto, tmpVarRef, jmpMethod));
                 simulationStack.Push(tmpVarRef);
             }
             break;
