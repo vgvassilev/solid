@@ -188,6 +188,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
         string testCaseName = "Cast";
         RunTestCase(testCaseName, getCfg(testCaseName));
     }
-    
+
+    [Test]
+    public void ExpressionOverflow()
+    {
+      string testCaseName = "ExpressionOverflow";
+      RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+
   }
 }

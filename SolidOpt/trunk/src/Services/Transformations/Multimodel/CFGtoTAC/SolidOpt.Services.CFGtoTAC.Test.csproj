@@ -76,6 +76,8 @@
     <None Include="test\TestCases\Jmp.il.tac" />
     <None Include="test\TestCases\Cast.il" />
     <None Include="test\TestCases\Cast.il.tac" />
+    <None Include="test\TestCases\ExpressionOverflow.il.tac" />
+    <None Include="test\TestCases\ExpressionOverflow.il" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="test\TACTestFixture.cs" />

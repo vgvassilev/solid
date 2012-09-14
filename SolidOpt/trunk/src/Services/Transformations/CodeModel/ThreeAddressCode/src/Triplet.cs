@@ -32,31 +32,39 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Not,            // result = ! op1
     ShiftLeft,      // result = op1 << op2
     ShiftRight,     // result = op1 >> op2
+    CheckOverflow,  // checkoverflow
     //...
-
+    
     // Cast
     Cast,           // result = (op1) op2
-
+    
     // Logic
     Equal,          // result = op1 == op2
     Less,           // result = op1 < op2
     Great,          // result = op1 > op2
-        //...
-
+    //...
+    
     // Control
     Goto,           // goto op1/label
     IfFalse,        // iffalse op1 goto op2/label
     IfTrue,         // iftrue op1 goto op2/label
     Switch,         // switch op1 goto op2/array/labels
     //...
-
+    
     // Methods
     Call,           // result = call op1/method/signature
     CallVirt,       // result = callvirt op1/method/signature
     PushParam,      // pushparam op1
     Return,         // return op1
     //...
+    
+    // Object model
+    //...
+    
+    // Exceptions handling
+    //...
 
+    // Other
     Nop             // nop
   }
 
@@ -194,6 +202,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           break;
         case TripletOpCode.CallVirt:
           sb.AppendFormat("callvirt {0}", op(operand1));
+          break;
+        case TripletOpCode.CheckOverflow:
+          sb.Append("checkoverflow");
           break;
         case TripletOpCode.Cast:
           sb.AppendFormat("({0}) {1}", op(operand1), op(operand2));
