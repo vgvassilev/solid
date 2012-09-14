@@ -520,9 +520,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               case /*IntPtr*/ 2:
                 tmpVarRefO1 = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
               break;
-              default:
-                Debug.Assert(true, "Unsupported types.");
-                break;
             }
 
             switch (Helper.GetTypeKind(Helper.GetOperandType(obj2))) {
@@ -535,21 +532,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               case /*IntPtr*/ 2:
                 tmpVarRefO2 = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
               break;
-              default:
-                Debug.Assert(true, "Unsupported types.");
-                break;
             }
 
             if (tmpVarRefO1 != null)
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO1, obj1));
+              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO1, tmpVarRefO1.VariableType, obj1));
             if (tmpVarRefO2 != null)
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO2, obj2));
+              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO2, tmpVarRefO2.VariableType, obj2));
 
-
-            tmpVarRef = GenerateTempVar(tempVariables, Helper.BinaryNumericOperations(tmpVarRefO1 ?? obj1,
-                                                                                      tmpVarRefO2 ?? obj2));
-            triplets.Add(new Triplet(TripletOpCode.Division, tmpVarRef, tmpVarRefO1 ?? obj1,
-                                     tmpVarRefO2 ?? obj2));
+            tmpVarRef = GenerateTempVar(tempVariables,
+                          Helper.IntegerOperationsUn(tmpVarRefO1 ?? obj1, tmpVarRefO2 ?? obj2));
+            triplets.Add(new Triplet(TripletOpCode.Division, tmpVarRef,
+                                     tmpVarRefO1 ?? obj1, tmpVarRefO2 ?? obj2));
             simulationStack.Push(tmpVarRef);
             break;
           case Code.Rem:
@@ -559,8 +552,49 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Reminder, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Rem_Un:
-          case Code.And:
+          case Code.Rem_Un:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            VariableReference tmpVarRefO1rem = null;
+            VariableReference tmpVarRefO2rem = null;
+            
+            switch (Helper.GetTypeKind(Helper.GetOperandType(obj1))) {
+              case /*Int32*/ 0:
+                tmpVarRefO1rem = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+                break;
+              case /*Int64*/ 1:
+                tmpVarRefO1rem = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
+                break;
+              case /*IntPtr*/ 2:
+                tmpVarRefO1rem = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
+                break;
+            }
+            
+            switch (Helper.GetTypeKind(Helper.GetOperandType(obj2))) {
+              case /*Int32*/ 0:
+                tmpVarRefO2rem = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+                break;
+              case /*Int64*/ 1:
+                tmpVarRefO2rem = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
+                break;
+            case /*IntPtr*/ 2:
+                tmpVarRefO2rem = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
+                break;
+            }
+            
+            if (tmpVarRefO1rem != null)
+              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO1rem, tmpVarRefO1rem.VariableType, obj1));
+            if (tmpVarRefO2rem != null)
+              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRefO2rem, tmpVarRefO2rem.VariableType, obj2));
+
+            tmpVarRef = GenerateTempVar(tempVariables,
+                          Helper.IntegerOperationsUn(tmpVarRefO1rem ?? obj1, tmpVarRefO2rem ?? obj2));
+            triplets.Add(new Triplet(TripletOpCode.Reminder, tmpVarRef,
+                                 tmpVarRefO1rem ?? obj1, tmpVarRefO2rem ?? obj2));
+            simulationStack.Push(tmpVarRef);
+            break;
+            
+        case Code.And:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
@@ -995,6 +1029,28 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return -1;
     }
     
+    public static int GetTypeKindUn(TypeReference tr)
+    {
+        switch (tr.FullName) {
+            case "System.Int8": return 0;
+            case "System.Int16": return 0;
+            case "System.Int32": return 0;
+            case "System.UInt8": return 0;
+            case "System.UInt16": return 0;
+            case "System.UInt32": return 0;
+            case "System.Int64": return 1;
+            case "System.UInt64": return 1;
+            case "System.IntPtr": return 2;
+            case "System.UIntPtr": return 2;
+            case "System.Single": return 3;
+            case "System.Double": return 4;
+        }
+        
+        if (tr.IsPointer) return 5;
+        if (!tr.IsValueType) return 6;
+        return -1;
+    }
+    
     // Binary numeric operations
     
     public readonly static Type[,] BinaryNumericOperationsResultTypes =
@@ -1080,6 +1136,27 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
     }
 
+    public readonly static Type[,] IntegerOperationsResultTypesUn =
+    {
+        //              Int32             Int64           IntPtr            Single  Double  &       Obj
+        /* Int32  */  { typeof(UInt32),   null,           typeof(UIntPtr),  null,   null,   null,   null },
+        /* Int64  */  { null,             typeof(UInt64), null,             null,   null,   null,   null },
+        /* IntPtr */  { typeof(UIntPtr),  null,           typeof(UIntPtr),  null,   null,   null,   null },
+        /* Single */  { null,             null,           null,             null,   null,   null,   null },
+        /* Double */  { null,             null,           null,             null,   null,   null,   null },
+        /* &      */  { null,             null,           null,             null,   null,   null,   null },
+        /* Obj    */  { null,             null,           null,             null,   null,   null,   null }
+    };
+    
+    public static TypeReference IntegerOperationsUn(object op1, object op2)
+    {
+        Type resultType = IntegerOperationsResultTypesUn[GetTypeKindUn(GetOperandType(op1)), GetTypeKindUn(GetOperandType(op2))];
+        
+        if (resultType == null) throw new Exception(InvalidILExceptionString);
+        
+        return new TypeReference(resultType.Namespace, resultType.Name, null, resultType.IsValueType);
+    }
+    
     // Shift operations
 
     public readonly static Type[,] ShiftOperationsResultTypes =

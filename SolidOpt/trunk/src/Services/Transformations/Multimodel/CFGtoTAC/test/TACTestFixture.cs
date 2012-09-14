@@ -196,5 +196,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
       RunTestCase(testCaseName, getCfg(testCaseName));
     }
 
+    [Test]
+    public void SimpleExpressionUnsigned()
+    {
+      string testCaseName = "SimpleExpressionUnsigned";
+      RunTestCase(testCaseName, getCfg(testCaseName));
+    }
+    
   }
 }
