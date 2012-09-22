@@ -1,11 +1,12 @@
-// /*
-//  * $Id$
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
+ /*
+  * $Id$
+  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+  * For further details see the nearest License.txt
+  */
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DataMorphose.Model
 {
@@ -25,6 +26,18 @@ namespace DataMorphose.Model
 
     public Database(string name) {
       this.name = name;
+    }
+
+    public override string ToString()
+    {
+      StringBuilder sb = new StringBuilder();
+      foreach (Table table in Tables) {
+        sb.AppendLine("---" + table.Name + "---");
+        sb.AppendLine(table.ToString());
+        sb.AppendLine();
+      }
+
+      return sb.ToString();
     }
   }
 }
