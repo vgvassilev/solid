@@ -70,6 +70,7 @@
     <Compile Include="Controller\Deduce\ColumnType.cs" />
     <Compile Include="Model\Meta\Constraint.cs" />
     <Compile Include="Controller\Deduce\ColumnConstraints.cs" />
+    <Compile Include="Controller\Export\CSVExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -81,6 +82,7 @@
     <Folder Include="Controller\Map\" />
     <Folder Include="Controller\Validate\" />
     <Folder Include="Controller\Deduce\" />
+    <Folder Include="Controller\Export\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
