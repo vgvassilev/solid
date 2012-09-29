@@ -71,6 +71,7 @@
     <Compile Include="Model\Meta\Constraint.cs" />
     <Compile Include="Controller\Deduce\ColumnConstraints.cs" />
     <Compile Include="Controller\Export\CSVExporter.cs" />
+    <Compile Include="Controller\Transform\SplitColumn.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

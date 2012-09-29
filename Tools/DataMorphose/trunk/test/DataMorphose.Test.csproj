@@ -38,6 +38,7 @@
     <Compile Include="Sort.cs" />
     <Compile Include="DeduceType.cs" />
     <Compile Include="DeduceConstraints.cs" />
+    <Compile Include="SplitColumnTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
