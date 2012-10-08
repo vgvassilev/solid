@@ -30,8 +30,9 @@ namespace DataMorphose.Test
       Table table = importer.importFromFile(Path.Combine(filePath, "Categories.txt"));
       ColumnConstraints columnConstraints = new ColumnConstraints();
       columnConstraints.DeducePrimaryKey(table);
-      // We know that the first column contains is a primary key
-      bool isPrimaryKey = table.Columns[0].Meta.Constraints.ContainsKey(ConstraintKind.PrimaryKey);
+      // We know that the first column Contains is a primary key
+      bool isPrimaryKey = 
+        table.Columns[0].Meta.Constraints.ContainsKey(ConstraintKind.PrimaryKey);
       Assert.IsTrue(isPrimaryKey, "Column 0 not primary key!");
     }
   }
