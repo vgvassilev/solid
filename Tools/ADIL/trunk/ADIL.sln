@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADIL", "src\ADIL.csproj", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADIL.Test", "test\ADIL.Test.csproj", "{74E4A0EC-6572-42C2-8D20-AB36EEF56B71}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{59975128-6981-4A62-BEAF-3278446D4430}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,8 @@ Global
 		{74E4A0EC-6572-42C2-8D20-AB36EEF56B71}.Default|Any CPU.Build.0 = Debug|Any CPU
 		{74E4A0EC-6572-42C2-8D20-AB36EEF56B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74E4A0EC-6572-42C2-8D20-AB36EEF56B71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		BaseDirectory = src
