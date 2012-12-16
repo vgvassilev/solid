@@ -5,11 +5,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{58DD
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.dll", "..\..\src\vendors\NUnit\src\NUnitCore\core\nunit.core.dll.csproj", "{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.dll", "..\..\src\vendors\NUnit\NUnitCore\core\nunit.core.dll.csproj", "{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.interfaces.dll", "..\..\src\vendors\NUnit\src\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj", "{435428F8-5995-4CE4-8022-93D595A8CC0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.core.interfaces.dll", "..\..\src\vendors\NUnit\NUnitCore\interfaces\nunit.core.interfaces.dll.csproj", "{435428F8-5995-4CE4-8022-93D595A8CC0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.dll", "..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.dll", "..\..\src\vendors\NUnit\NUnitFramework\framework\nunit.framework.dll.csproj", "{83DD7E12-A705-4DBA-9D71-09C8973D9382}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolidOpt", "SolidOpt", "{828CC632-3867-4FB1-8E19-B022229634D6}"
 	ProjectSection(SolutionItems) = postProject
@@ -34,8 +34,8 @@ Global
 		{435428F8-5995-4CE4-8022-93D595A8CC0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{435428F8-5995-4CE4-8022-93D595A8CC0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{435428F8-5995-4CE4-8022-93D595A8CC0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{435428F8-5995-4CE4-8022-93D595A8CC0F}.RunTest|Any CPU.ActiveCfg = RunTest|Any CPU
-		{435428F8-5995-4CE4-8022-93D595A8CC0F}.RunTest|Any CPU.Build.0 = RunTest|Any CPU
+		{435428F8-5995-4CE4-8022-93D595A8CC0F}.RunTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{435428F8-5995-4CE4-8022-93D595A8CC0F}.RunTest|Any CPU.Build.0 = Debug|Any CPU
 		{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE036B4-190F-4EB6-BBCC-CE05253D04D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,8 +52,8 @@ Global
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.RunTest|Any CPU.ActiveCfg = RunTest|Any CPU
-		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.RunTest|Any CPU.Build.0 = RunTest|Any CPU
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.RunTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{83DD7E12-A705-4DBA-9D71-09C8973D9382}.RunTest|Any CPU.Build.0 = Debug|Any CPU
 		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87B6DDB6-966A-4772-BF96-F9BBF921E2DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,8 +70,8 @@ Global
 		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}.RunTest|Any CPU.ActiveCfg = RunTest|Any CPU
-		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}.RunTest|Any CPU.Build.0 = RunTest|Any CPU
+		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}.RunTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}.RunTest|Any CPU.Build.0 = Debug|Any CPU
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C41B5FB4-DAE9-4A27-9D15-55109AB79660}.Release|Any CPU.Build.0 = Release|Any CPU
@@ -90,7 +90,6 @@ Global
 		$0.TextStylePolicy = $1
 		$1.FileWidth = 100
 		$1.TabWidth = 2
-		$1.RemoveTrailingWhitespace = True
 		$1.EolMarker = Windows
 		$1.inheritsSet = VisualStudio
 		$1.inheritsScope = text/plain
@@ -102,7 +101,6 @@ Global
 		$0.TextStylePolicy = $3
 		$3.FileWidth = 100
 		$3.TabWidth = 2
-		$3.RemoveTrailingWhitespace = True
 		$3.EolMarker = Windows
 		$3.inheritsSet = VisualStudio
 		$3.inheritsScope = text/plain
@@ -110,7 +108,6 @@ Global
 		$0.TextStylePolicy = $4
 		$4.FileWidth = 100
 		$4.TabWidth = 2
-		$4.RemoveTrailingWhitespace = True
 		$4.EolMarker = Windows
 		$4.inheritsSet = VisualStudio
 		$4.inheritsScope = text/plain

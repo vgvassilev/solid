@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>test</RootNamespace>
+    <RootNamespace>SolidOpt.Services.Tests</RootNamespace>
     <AssemblyName>SolidOpt.Services.Tests</AssemblyName>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RunTest|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\RunTest\bin\</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -47,8 +47,32 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="nunit.framework" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceTests.cs" />
+    <Compile Include="ServiceProviderTests.cs" />
+    <Compile Include="ServiceContainerTests.cs" />
+    <Compile Include="MyServices\IMyAddService.cs" />
+    <Compile Include="MyServices\IMySubService.cs" />
+    <Compile Include="MyServices\MyAddService.cs" />
+    <Compile Include="MyServices\MyAddService1.cs" />
+    <Compile Include="MyServices\MyServiceProvider.cs" />
+    <Compile Include="MyServices\IMyGenericListService.cs" />
+    <Compile Include="MyServices\MyGenericServiceProvider.cs" />
+    <Compile Include="MyServices\MyReverseGenericServiceProvider.cs" />
+    <Compile Include="MyServices\IMyGenericDictionaryService.cs" />
+    <Compile Include="MyServices\MyGenericService2Provider.cs" />
+    <Compile Include="MyServices\MySubService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Services\SolidOpt.Services.csproj">
+      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Name>SolidOpt.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MyServices\" />
   </ItemGroup>
 </Project>

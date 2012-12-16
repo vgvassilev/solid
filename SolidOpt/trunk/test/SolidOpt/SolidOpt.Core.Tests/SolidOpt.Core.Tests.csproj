@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>test</RootNamespace>
+    <RootNamespace>SolidOpt.Core.Loader.Tests</RootNamespace>
     <AssemblyName>SolidOpt.Core.Tests</AssemblyName>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RunTest|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\RunTest\bin\</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -56,7 +56,7 @@
     <Folder Include="Core\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\vendors\NUnit\src\NUnitFramework\framework\nunit.framework.dll.csproj">
+    <ProjectReference Include="..\..\..\src\vendors\NUnit\NUnitFramework\framework\nunit.framework.dll.csproj">
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
       <Name>nunit.framework.dll</Name>
     </ProjectReference>
