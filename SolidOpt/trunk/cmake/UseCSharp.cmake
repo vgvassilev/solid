@@ -44,13 +44,13 @@ macro( CSHARP_ADD_EXECUTABLE name )
   CSHARP_ADD_PROJECT( "exe" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_EXECUTABLE )
 
-macro( CSHARP_ADD_DEPENDENCY name )
-  list( APPEND refs /reference:${name})
-endmacro( CSHARP_ADD_DEPENDENCY )
+#macro( CSHARP_ADD_DEPENDENCY name )
+#  list( APPEND refs /reference:${name})
+#endmacro( CSHARP_ADD_DEPENDENCY )
 
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
-  list( APPEND "${refs} /reference:System.dll" )
+  set( ${refs} /reference:System.dll )
   set( sources )
   set( sources_dep )
 
@@ -102,7 +102,7 @@ macro( CSHARP_ADD_PROJECT type name )
     COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}'"
     OUTPUT ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
     COMMAND ${CSHARP_COMPILER}
-    ARGS /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}
+    ARGS /t:${type} /out:${CMAKE_LIBRARY_OUTPUT_DIR}${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}
     WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
     DEPENDS ${sources_dep}
   )
