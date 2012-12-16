@@ -65,6 +65,7 @@
     <Compile Include="MyServices\IMyGenericDictionaryService.cs" />
     <Compile Include="MyServices\MyGenericService2Provider.cs" />
     <Compile Include="MyServices\MySubService.cs" />
+    <Compile Include="MyServices\MyGenericService3Provider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Services\SolidOpt.Services.csproj">

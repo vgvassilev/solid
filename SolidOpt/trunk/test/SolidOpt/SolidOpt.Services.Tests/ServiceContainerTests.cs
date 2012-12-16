@@ -279,7 +279,8 @@ namespace SolidOpt.Services.Tests
             serviceSubContainer.AddService(new MyReverseGenericServiceProvider<int>());
             serviceSubContainer.AddService(new MyReverseGenericServiceProvider<long>());
             serviceSubContainer.AddService(new MyGenericService2Provider<string, int>());
-            
+            serviceSubContainer.AddService(new MyGenericService2Provider<string, float>());
+
             IMyGenericListService<int> service1 = serviceContainer.GetService<IMyGenericListService<int>>();
             Assert.IsNotNull(service1);
 
@@ -363,55 +364,42 @@ namespace SolidOpt.Services.Tests
         
         [Test]
         public void MyServiceContainerGetFirstServiceGenericWildcard() {
-//            ServiceContainer parentServiceContainer = new ServiceContainer();
-//            ServiceContainer serviceContainer = new ServiceContainer(parentServiceContainer);
-//            ServiceContainer serviceSubContainer = new ServiceContainer();
-//            parentServiceContainer.AddService(new MyGenericServiceProvider<int>());
-//            parentServiceContainer.AddService(new MyGenericServiceProvider<int>());
-//            parentServiceContainer.AddService(new MyGenericServiceProvider<double>());
-//            parentServiceContainer.AddService(new MyAddService());
-//            serviceContainer.AddService(new MyReverseGenericServiceProvider<int>());
-//            serviceContainer.AddService(new MyGenericServiceProvider<int>());
-//            serviceContainer.AddService(new MyGenericServiceProvider<string>());
-//            serviceContainer.AddService(serviceSubContainer);
-//            serviceSubContainer.AddService(new MyReverseGenericServiceProvider<int>());
-//            serviceSubContainer.AddService(new MyReverseGenericServiceProvider<long>());
-//            serviceSubContainer.AddService(new MyGenericService2Provider<string, int>());
-//            
-//            IService service;
-//            
-//            service = serviceContainer.GetService(typeof(IMyGenericListService<int>));
-//            Assert.IsNotNull(service);
-//            Assert.IsInstanceOf(typeof(IMyGenericListService<int>), service);
-//            
-//            service = serviceContainer.GetService(typeof(IMyGenericListService<double>));
-//            Assert.IsNotNull(service);
-//            Assert.IsInstanceOf(typeof(IMyGenericListService<double>), service);
-//            
-//            service = serviceContainer.GetService(typeof(IMyAddService));
-//            Assert.IsNotNull(service);
-//            Assert.IsInstanceOf(typeof(IMyAddService), service);
-//            
-//            service = serviceContainer.GetService(typeof(MyGenericServiceProvider<string>));
-//            Assert.IsNotNull(service);
-//            Assert.IsInstanceOf(typeof(MyGenericServiceProvider<string>), service);
-//            
-//            service = serviceContainer.GetService(typeof(MyReverseGenericServiceProvider<long>));
-//            Assert.IsNotNull(service);
-//            Assert.IsInstanceOf(typeof(MyReverseGenericServiceProvider<long>), service);
-//            
-//            service = serviceContainer.GetService(typeof(MyGenericService2Provider<string, int>));
-//            Assert.IsNotNull(service);
-//            Assert.IsInstanceOf(typeof(MyGenericService2Provider<string, int>), service);
-//            
-//            service = serviceContainer.GetService(typeof(IMyGenericListService<float>));
-//            Assert.IsNull(service);
-//            
-//            service = serviceContainer.GetService(typeof(MyGenericService2Provider<string, string>));
-//            Assert.IsNull(service);
-//            
-//            service = serviceContainer.GetService(typeof(IMySubService));
-//            Assert.IsNull(service);
+            ServiceContainer parentServiceContainer = new ServiceContainer();
+            ServiceContainer serviceContainer = new ServiceContainer(parentServiceContainer);
+            ServiceContainer serviceSubContainer = new ServiceContainer();
+            parentServiceContainer.AddService(new MyGenericServiceProvider<int>());
+            parentServiceContainer.AddService(new MyGenericServiceProvider<int>());
+            parentServiceContainer.AddService(new MyGenericServiceProvider<double>());
+            parentServiceContainer.AddService(new MyAddService());
+            serviceContainer.AddService(new MyReverseGenericServiceProvider<int>());
+            serviceContainer.AddService(new MyGenericServiceProvider<int>());
+            serviceContainer.AddService(new MyGenericServiceProvider<string>());
+            serviceContainer.AddService(serviceSubContainer);
+            serviceSubContainer.AddService(new MyReverseGenericServiceProvider<int>());
+            serviceSubContainer.AddService(new MyReverseGenericServiceProvider<long>());
+            serviceSubContainer.AddService(new MyGenericService2Provider<string, int>());
+            serviceSubContainer.AddService(new MyGenericService2Provider<string, float>());
+
+            IService service;
+            
+            service = serviceContainer.GetService(typeof(IMyGenericListService<>));
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOf(typeof(IMyGenericListService<int>), service);
+            
+            service = serviceContainer.GetService(typeof(MyGenericServiceProvider<>));
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOf(typeof(MyGenericServiceProvider<int>), service);
+            
+            service = serviceContainer.GetService(typeof(MyReverseGenericServiceProvider<>));
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOf(typeof(MyReverseGenericServiceProvider<int>), service);
+            
+            service = serviceContainer.GetService(typeof(MyGenericService2Provider<,>));
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOf(typeof(MyGenericService2Provider<string, int>), service);
+
+            service = serviceContainer.GetService(typeof(MyGenericService3Provider<,,>));
+            Assert.IsNull(service);
         }
         
     }

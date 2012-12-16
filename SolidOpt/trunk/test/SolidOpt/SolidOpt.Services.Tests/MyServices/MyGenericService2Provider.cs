@@ -12,7 +12,6 @@ using SolidOpt.Services;
 
 namespace SolidOpt.Services.Tests
 {
-    
     public class MyGenericService2Provider<TKey,TValue>: AbstractServiceProvider, IMyGenericDictionaryService<TKey,TValue>
     {
         protected Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
