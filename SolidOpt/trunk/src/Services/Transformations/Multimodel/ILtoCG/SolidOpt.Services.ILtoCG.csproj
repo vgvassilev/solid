@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -48,13 +48,13 @@
       <Project>{214C7C81-1105-4E24-9437-41CC6BE4F596}</Project>
       <Name>SolidOpt.Services.CallGraph</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SolidOpt.Services.Multimodel.csproj">
-      <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
-      <Name>SolidOpt.Services.Multimodel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SolidOpt.Services.Transformations.csproj">
       <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolidOpt.Services.Multimodel.csproj">
+      <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
+      <Name>SolidOpt.Services.Multimodel</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

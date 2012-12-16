@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectGuid>{3975D054-C5DC-4BE3-9213-B1BBC3630DC0}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -151,10 +151,6 @@
     <Compile Include="Core\Loader\demo\StandardLoader\Loader\Program.cs" />
     <Compile Include="Core\Loader\demo\StandardLoader\Loader\TransformLoader.cs" />
     <Compile Include="Core\Loader\demo\StandardLoader\Loadee\Program.cs" />
-    <ProjectReference Include="..\..\vendors\Mono.Cecil\v0.9.3\Mono.Cecil.csproj">
-      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
-      <Name>Mono.Cecil</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\TestResources\test.ini" />
@@ -214,4 +210,10 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

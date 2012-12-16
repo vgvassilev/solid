@@ -14,9 +14,8 @@ namespace SolidOpt.Services
 		Service GetService<Service>() where Service : class;
 		List<Service> GetServices<Service>() where Service : class;
 		IService GetService(Type serviceType);
-		IService[] GetServices(Type serviceType);
-		IService[] GetServices();
+    List<IService> GetServices(Type serviceType);
+    List<IService> GetServices();
 	}
 	
 }
-

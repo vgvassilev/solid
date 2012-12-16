@@ -18,8 +18,11 @@ namespace SolidOpt.Services
 	public class PluginServiceContainer : ServiceContainer
 	{
 		public List<PluginInfo> plugins = new List<PluginInfo>();
-
-		public void AddPlugins(string path)
+    
+    public PluginServiceContainer(): base() {}
+    public PluginServiceContainer(IServiceProvider parent): base(parent) {}
+    
+    public void AddPlugins(string path)
 		{
 			AddPlugins(new DirectoryInfo(path));
 		}
@@ -133,8 +136,8 @@ namespace SolidOpt.Services
 				if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
 					try {
 						service = (IService)(assembly.CreateInstance(type.FullName));
-						////////service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
-						////service = (IService)(appDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
+						// //service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
+						//service = (IService)(appDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
 						if (service != null)
 							serviceContainer.AddService(service);
 					} catch (Exception e) {

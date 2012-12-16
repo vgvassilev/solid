@@ -132,7 +132,7 @@ namespace SolidOpt.Core.Loader.Demo.TransformLoader
 			
 			List<object> optList = new List<object>();
 			
-			IService[] services = ServicesContainer.GetServices();
+			List<IService> services = ServicesContainer.GetServices();
 			
 			StreamReader sr = new StreamReader(args[1]);
 			while (!sr.EndOfStream) {

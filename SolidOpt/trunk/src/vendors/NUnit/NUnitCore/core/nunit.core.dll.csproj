@@ -37,7 +37,6 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\..\..\bin\Debug\lib\</OutputPath>
@@ -47,10 +46,10 @@
     <DefineConstants>TRACE;DEBUG;CLR_2_0,NET_2_0,CS_3_0</DefineConstants>
     <DocumentationFile>
     </DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoWarn>1699</NoWarn>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
@@ -67,7 +66,7 @@
     </DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <NoWarn>1699</NoWarn>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
@@ -84,11 +83,6 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
-    <ProjectReference Include="..\interfaces\nunit.core.interfaces.dll.csproj">
-      <Name>nunit.core.interfaces.dll</Name>
-      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
-      <Private>False</Private>
-    </ProjectReference>
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
@@ -211,4 +205,11 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\interfaces\nunit.core.interfaces.dll.csproj">
+      <Project>{435428F8-5995-4CE4-8022-93D595A8CC0F}</Project>
+      <Name>nunit.core.interfaces.dll</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

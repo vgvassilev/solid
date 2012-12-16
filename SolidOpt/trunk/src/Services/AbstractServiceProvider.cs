@@ -24,23 +24,40 @@ namespace SolidOpt.Services
 				result.Add(found);
 			return result;
 		}
-		
-		//TODO: Check implementation.
-		public virtual IService GetService(Type serviceType) {
-			return serviceType.IsInstanceOfType(this) ? this : null;
+    
+    public virtual IService GetService(Type serviceType) {
+      return IsTypeProvideService(this.GetType(), serviceType) ? this : null;
 		}
 		
-		//TODO: Check implementation.
-		public virtual IService[] GetServices(Type serviceType) {
-			IService found = GetService(serviceType);
-			return (found != null) ? new IService[1] {found} : new IService[0];
+    public virtual List<IService> GetServices(Type serviceType) {
+      List<IService> result = new List<IService>(1);
+      IService found = GetService(serviceType);
+			if (found != null) result.Add(found);
+      return result;
 		}
 		
-		//TODO: Check implementation.
-		public virtual IService[] GetServices() {
-			return new IService[1] {this};
+		public virtual List<IService> GetServices() {
+      List<IService> result = new List<IService>(1);
+      result.Add(this);
+			return result;
 		}
 		
-	}
-	
+    protected static bool IsTypeProvideService(Type type, Type serviceTypeOrOpenGeneric) {
+      if (serviceTypeOrOpenGeneric.IsAssignableFrom(type)) return true;
+      
+      while (type != null && type != typeof(object)) {
+        if ((serviceTypeOrOpenGeneric.ContainsGenericParameters && type.IsGenericType && serviceTypeOrOpenGeneric.GetGenericTypeDefinition() == type.GetGenericTypeDefinition()) ||
+            (serviceTypeOrOpenGeneric == type))
+          return true;
+        
+        foreach (Type inter in type.GetInterfaces())
+          if (IsTypeProvideService(inter, serviceTypeOrOpenGeneric)) return true;
+        
+        type = type.BaseType;
+      }
+      
+      return false;
+    }
+    
+  }  
 }

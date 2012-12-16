@@ -12,19 +12,18 @@ namespace SolidOpt.Services
 {
 	public abstract class AbstractServiceContainer : AbstractServiceProvider, IServiceContainer
 	{
-		public ArrayList services;
+		public List<IService> services;
 		public IServiceProvider parent;
 		
 		public AbstractServiceContainer()
 		{
-			// AbstractServiceContainer(null);
-			this.services = new ArrayList();
+			this.services = new List<IService>();
 			this.parent = null;
 		}
 		
 		public AbstractServiceContainer(IServiceProvider parent)
 		{
-			this.services = new ArrayList();
+			this.services = new List<IService>();
 			this.parent = parent;
 		}
 		
@@ -32,28 +31,16 @@ namespace SolidOpt.Services
 		{
 			List<Service> foundServices = new List<Service>();
 			
-			Console.WriteLine(">>>search: "+typeof(Service));
-				
 			foreach (object service in services) {
-				Console.WriteLine(">>>test: "+service.ToString());
-				
 				if (service is IServiceProvider) {
-					Console.WriteLine(">>>found: IServiceProvider");
 					foundServices.AddRange((service as IServiceProvider).GetServices<Service>());
 				}
 				else {
 					Service s = service as Service;
 					if (s != default(Service)) {
-						Console.WriteLine(">>>found: "+typeof(Service));
 						foundServices.Add(service as Service);
 					}
 				}
-				
-//					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
-//					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
-//						foundServices.Add(service);
-//					if (service.GetType().IsInstanceOfType(serviceType))
-//						foundServices.Add(service);
 			}
 			
 			if (parent != null)
@@ -64,131 +51,85 @@ namespace SolidOpt.Services
 		
 		public override Service GetService<Service>()
 		{			
-			Console.WriteLine(">>>search: "+typeof(Service));
-			
-			Service found = base.GetService<Service>();
-			if (found != default(Service)) return found;
+      Service foundService = base.GetService<Service>();
+			if (foundService != default(Service)) return foundService;
 			
 			foreach (object service in services) {
-//	Type t1 = typeof(Service);
-//	Type t2 = service.GetType();
-//	
-//	Console.WriteLine("-T1--------------");
-//	Type[] typeArray2 = t1.GetInterfaces();
-//	for (int j = 0; j < typeArray2.Length; j++) {
-//		Console.WriteLine(typeArray2[j].FullName);
-//	}
-//	Console.WriteLine("-T2--------------");
-//	typeArray2 = t2.GetInterfaces();
-//	for (int j = 0; j < typeArray2.Length; j++) {
-////		Console.WriteLine(typeArray2[j].Module.FullyQualifiedName);
-//		Console.WriteLine(typeArray2[j].FullName);
-//	}
-
 				if (service is IServiceProvider) {
-					Console.WriteLine(">>>found: IServiceProvider");
-					found = (service as IServiceProvider).GetService<Service>();
+					foundService = (service as IServiceProvider).GetService<Service>();
 				}
 				else {
-					found = service as Service;
+					foundService = service as Service;
 				}
 				
-				if (found != default(Service)) {
-					Console.WriteLine(">>>found: "+typeof(Service));
-					return found;
+				if (foundService != default(Service)) {
+					return foundService;
 				}
 			}
 
 			if (parent != null) {
-				found = parent.GetService<Service>();
-				if (found != default(Service)) return found;
+				foundService = parent.GetService<Service>();
+				if (foundService != default(Service)) return foundService;
 			}
 			
 			return default(Service);
 		}
 		
-		//TODO: Check implementation.
 		public override IService GetService(Type serviceType)
 		{
 			IService found = base.GetService(serviceType);
 			if (found != null) return found;
 			
 			foreach (IService service in services) {
-				if (service is IServiceProvider)
+				if (service is IServiceProvider) {
 					found = (service as IServiceProvider).GetService(serviceType);
+          if (found != null) return found;
+        }
 				else {
-//					found = serviceType.IsInstanceOfType(service) ? service : null;
-//					Type t1 = service.GetType();
-//					
-//	Console.WriteLine("----------------");
-//	if (serviceType.IsInterface)
-//    {
-//        Type[] typeArray2 = t1.GetInterfaces();
-//        for (int j = 0; j < typeArray2.Length; j++)
-//        {
-//            Console.WriteLine(typeArray2[j]);
-//        }
-//    }
-//					found = serviceType.IsInstanceOfType(service) ? service : null;
-					found = serviceType.IsAssignableFrom(service.GetType()) ? service : null;
+          if (IsTypeProvideService(service.GetType(), serviceType)) return service;
+					//found = serviceType.IsAssignableFrom(service.GetType()) ? service : null;
 				}
-				if (found != null) return found;
 			}
 
 			if (parent != null) {
-				found = parent.GetService(serviceType);
-				if (found != null) return found;
+				return parent.GetService(serviceType);
 			}
 			
 			return null;
 		}
-
-		//TODO: Check implementation.
-		public override IService[] GetServices(Type serviceType)
+    
+    public override List<IService> GetServices(Type serviceType)
 		{
-			ArrayList foundServices = new ArrayList();
+			List<IService> foundServices = new List<IService>();
 			
 			foreach (IService service in services) {
-				
-				Console.WriteLine(">>>"+serviceType);
-				
 				if (service is IServiceProvider)
 					foundServices.AddRange((service as IServiceProvider).GetServices(serviceType));
 				else 
-//					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
-//					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
-//						foundServices.Add(service);
-//					if (service.GetType().IsInstanceOfType(serviceType))
-					if (serviceType.IsAssignableFrom(service.GetType()))
-						foundServices.Add(service);
+          if (IsTypeProvideService(service.GetType(), serviceType)) foundServices.Add(service);
 			}
 			
 			if (parent != null)
 				foundServices.AddRange(parent.GetServices(serviceType));
 			
-			return (IService[])foundServices.ToArray(typeof(IService));
+			return foundServices;
 		}
 		
-		//TODO: Check implementation.
-		public override IService[] GetServices()
+		public override List<IService> GetServices()
 		{
-			ArrayList foundServices = new ArrayList();
+			List<IService> foundServices = new List<IService>();
 			
 			foreach (IService service in services) {
-				
 				if (service is IServiceProvider)
 					foundServices.AddRange((service as IServiceProvider).GetServices());
 				else 
-//					if (serviceType.IsInstanceOfType(service)) foundServices.Add(service);
-//					if (service.GetType().GetInterface(typeof(IService).FullName) != null)
-//						foundServices.Add(service);
 					foundServices.Add(service);
 			}
 			
 			if (parent != null)
 				foundServices.AddRange(parent.GetServices());
 			
-			return (IService[])foundServices.ToArray(typeof(IService));
+			return foundServices;
 		}
 		
 		public virtual bool AddService(IService service)
