@@ -1,1 +1,13 @@
+#build our vendor drops using msbuild
+find_program(MSBUILD NAMES msbuild xbuild)
+if(NOT MSBUILD)
+message(FATAL_ERROR "MSBUILD/XBUILD not found")
+endif( MSBUILD )
+message( STATUS "Compiling externals using MSBUILD")
+
+execute_process(
+  COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Mono.Cecil/Mono.Cecil.csproj
+)
+
 add_subdirectory(Services)
+
