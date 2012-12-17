@@ -1,3 +1,4 @@
+add_subdirectory(AbstractSyntacticTree)
 add_subdirectory(CallGraph)
 add_subdirectory(ControlFlowGraph)
 add_subdirectory(ThreeAddressCode)

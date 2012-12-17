@@ -14,3 +14,13 @@ execute_process(
 
 add_subdirectory(Services)
 
+#find_package(Doxygen)
+#if (DOXYGEN_FOUND)
+#    configure_file("docs/Doxyfile.in" "${PROJECT_BINARY_DIR}/Doxyfile")
+#    add_custom_target(docs
+#                      COMMAND ${DOXYGEN_EXECUTABLE}
+#                              "${PROJECT_BINARY_DIR}/Doxyfile"
+#                      SOURCES "${PROJECT_BINARY_DIR}/Doxyfile")
+#    install(DIRECTORY "${PROJECT_BINARY_DIR}/docs/"
+#            DESTINATION "docs")
+#endif()
