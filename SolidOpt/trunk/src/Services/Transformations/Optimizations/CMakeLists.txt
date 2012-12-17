@@ -6,3 +6,4 @@ csharp_add_library(
   )
 
 add_subdirectory(AST)
+add_subdirectory(SolidOpt.Services.Optimizations.Annotations)

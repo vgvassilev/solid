@@ -9,3 +9,5 @@ csharp_add_library(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   )
+
+add_subdirectory(ILtoAST)
