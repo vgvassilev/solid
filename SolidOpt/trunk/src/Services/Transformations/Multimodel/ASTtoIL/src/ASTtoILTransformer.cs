@@ -14,7 +14,7 @@ using Cecil.Decompiler;
 using Cecil.Decompiler.Cil;
 using Cecil.Decompiler.Languages;
 
-using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel; 
+using SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree; 
 
 using SolidOpt.Services.Transformations.Multimodel;
 

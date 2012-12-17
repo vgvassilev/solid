@@ -55,10 +55,6 @@
       <Project>{cccc9966-8ceb-4451-8ad4-fe48d7ad04bb}</Project>
       <Name>SolidOpt.Services.Optimizations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Multimodel\AstMethodDefinitionModel\SolidOpt.Services.AstMethodDefinitionModel.csproj">
-      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
-      <Name>SolidOpt.Services.AstMethodDefinitionModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\SolidOpt.Services.csproj">
       <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
       <Name>SolidOpt.Services</Name>
@@ -66,6 +62,10 @@
     <ProjectReference Include="..\..\..\SolidOpt.Services.Transformations.csproj">
       <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CodeModel\AbstractSyntacticTree\SolidOpt.Services.AbstractSyntacticTree.csproj">
+      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
+      <Name>SolidOpt.Services.AbstractSyntacticTree</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ using Mono.Cecil;
 
 using Cecil.Decompiler.Ast;
 
-namespace SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel
+namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
 {
 	/// <summary>
 	/// Description of AstMethodDefinition.

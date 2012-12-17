@@ -11,7 +11,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Cecil.Decompiler.Ast;
 
-using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree;
 
 using SolidOpt.Services.Transformations.Optimizations;
 

@@ -577,7 +577,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               case /*Int64*/ 1:
                 tmpVarRefO2rem = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
                 break;
-            case /*IntPtr*/ 2:
+              case /*IntPtr*/ 2:
                 tmpVarRefO2rem = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
                 break;
             }

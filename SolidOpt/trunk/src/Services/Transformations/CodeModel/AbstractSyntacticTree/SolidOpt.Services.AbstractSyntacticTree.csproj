@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel</RootNamespace>
+    <RootNamespace>SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree</RootNamespace>
     <AssemblyName>SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>

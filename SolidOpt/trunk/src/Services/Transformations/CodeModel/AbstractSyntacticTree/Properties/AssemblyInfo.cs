@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel")]
-[assembly: AssemblyDescription("SolidOpt optimization framework. AstMethodDefinitionModel module.")]
+[assembly: AssemblyTitle("SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree")]
+[assembly: AssemblyDescription("SolidOpt optimization framework. AbstractSyntacticTree module.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SolidOpt.org")]
 [assembly: AssemblyProduct("SolidOpt")]

@@ -65,10 +65,6 @@
       <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
       <Name>SolidOpt.Services.ControlFlowGraph</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Services\Transformations\Multimodel\AstMethodDefinitionModel\SolidOpt.Services.AstMethodDefinitionModel.csproj">
-      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
-      <Name>SolidOpt.Services.AstMethodDefinitionModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Services\Transformations\Multimodel\ILtoCFG\SolidOpt.Services.ILtoCFG.csproj">
       <Project>{3ADFD79B-EE89-4E79-85E6-33DDECC8459A}</Project>
       <Name>SolidOpt.Services.ILtoCFG</Name>
@@ -100,6 +96,10 @@
     <ProjectReference Include="..\..\..\..\..\Services\SolidOpt.Services.csproj">
       <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
       <Name>SolidOpt.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Services\Transformations\CodeModel\AbstractSyntacticTree\SolidOpt.Services.AbstractSyntacticTree.csproj">
+      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
+      <Name>SolidOpt.Services.AbstractSyntacticTree</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

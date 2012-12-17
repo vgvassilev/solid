@@ -20,7 +20,7 @@ using SolidOpt.Services.Transformations.Multimodel;
 
 using SolidOpt.Core.Loader;
 
-using SolidOpt.Services.Transformations.Multimodel.AstMethodDefinitionModel;
+using SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
