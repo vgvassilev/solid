@@ -7,6 +7,7 @@ message( STATUS "Compiling externals using MSBUILD")
 
 execute_process(
   COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Mono.Cecil/Mono.Cecil.csproj
+  COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Cecil.Decompiler/Cecil.Decompiler/Cecil.Decompiler.csproj
 )
 
 add_subdirectory(Services)

@@ -5,4 +5,5 @@ csharp_add_library(
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   )
 
+add_subdirectory(MultiModel)
 add_subdirectory(Optimizations)
