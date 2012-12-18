@@ -6,5 +6,5 @@ csharp_add_library(
   )
 
 add_subdirectory(CodeModel)
-add_subdirectory(MultiModel)
+add_subdirectory(Multimodel)
 add_subdirectory(Optimizations)
