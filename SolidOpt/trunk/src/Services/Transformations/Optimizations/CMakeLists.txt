@@ -5,5 +5,5 @@ csharp_add_library(
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   )
 
-add_subdirectory(AST)
 add_subdirectory(SolidOpt.Services.Optimizations.Annotations)
+add_subdirectory(AST)
