@@ -51,6 +51,7 @@ endmacro( CSHARP_ADD_EXECUTABLE )
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
   set( ${refs} /reference:System.dll )
+  set( deps )
   set( sources )
   set( sources_dep )
 
@@ -65,6 +66,7 @@ macro( CSHARP_ADD_PROJECT type name )
     if( ${it} MATCHES "(.*)(dll)" )
        # Argument is a dll, add reference
        list( APPEND refs /reference:${it} )
+       list( APPEND deps ${it} )
     else( )
       # Argument is a source file
       if( EXISTS ${it} )
@@ -104,11 +106,11 @@ macro( CSHARP_ADD_PROJECT type name )
     COMMAND ${CSHARP_COMPILER}
     ARGS /t:${type} /out:${CMAKE_LIBRARY_OUTPUT_DIR}${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}
     WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
-    DEPENDS ${sources_dep}
+    DEPENDS ${sources_dep} ${deps}
   )
   add_custom_target(
     ${name} ALL
-    DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
-    SOURCES ${sources_dep}
+    DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output} ${deps}
+    SOURCES ${sources_dep} ${deps}
   )
 endmacro( CSHARP_ADD_PROJECT )
