@@ -111,6 +111,6 @@ macro( CSHARP_ADD_PROJECT type name )
   add_custom_target(
     ${name} ALL
     DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output} ${deps}
-    SOURCES ${sources_dep} ${deps}
+    SOURCES ${sources_dep}
   )
 endmacro( CSHARP_ADD_PROJECT )
