@@ -1,0 +1,3 @@
+add_subdirectory(MethodInline)
+add_subdirectory(NopRemove)
+add_subdirectory(OverflowArithmeticRemove)

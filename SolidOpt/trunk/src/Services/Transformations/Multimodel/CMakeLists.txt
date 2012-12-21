@@ -11,4 +11,8 @@ csharp_add_library(
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   )
 
+add_subdirectory(ASTtoIL)
+add_subdirectory(CFGtoTAC)
 add_subdirectory(ILtoAST)
+add_subdirectory(ILtoCFG)
+add_subdirectory(ILtoCG)
