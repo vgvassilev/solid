@@ -1,4 +1,3 @@
-
 csharp_add_library(
   SolidOpt.Services.Transformations
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
@@ -8,3 +7,4 @@ csharp_add_library(
 add_subdirectory(CodeModel)
 add_subdirectory(Multimodel)
 add_subdirectory(Optimizations)
+

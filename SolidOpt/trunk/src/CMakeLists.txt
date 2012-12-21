@@ -14,6 +14,7 @@ execute_process(
 )
 
 add_subdirectory(Services)
+add_subdirectory(Core) # Core depends on Services
 
 #find_package(Doxygen)
 #if (DOXYGEN_FOUND)
