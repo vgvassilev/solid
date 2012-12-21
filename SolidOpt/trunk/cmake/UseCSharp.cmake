@@ -44,14 +44,25 @@ macro( CSHARP_ADD_EXECUTABLE name )
   CSHARP_ADD_PROJECT( "exe" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_EXECUTABLE )
 
-#macro( CSHARP_ADD_DEPENDENCY name )
-#  list( APPEND refs /reference:${name})
-#endmacro( CSHARP_ADD_DEPENDENCY )
+macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
+  # For now we assume all dependencies are libs
+  # The targets doesn't contain the file extension. 
+  # If we have an extension we have to strip it
+  STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" cur_target_we ${cur_target} )
+  STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" depends_on_we ${depends_on} )
+
+  if ( TARGET ${depends_on_we} )
+    MESSAGE(STATUS "  ->Depends on[Target]: ${depends_on_we}")
+    #target_link_libraries( ${cur_target_we} ${depends_on_we} )
+    add_dependencies( ${cur_target_we} ${depends_on_we} )
+  else ( )
+    MESSAGE(STATUS "  ->Depends on[External]: ${depends_on}")    
+  endif ( TARGET ${depends_on_we} )
+endmacro( CSHARP_ADD_DEPENDENCY )
 
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
   set( ${refs} /reference:System.dll )
-  set( deps )
   set( sources )
   set( sources_dep )
 
@@ -66,7 +77,6 @@ macro( CSHARP_ADD_PROJECT type name )
     if( ${it} MATCHES "(.*)(dll)" )
        # Argument is a dll, add reference
        list( APPEND refs /reference:${it} )
-       list( APPEND deps ${it} )
     else( )
       # Argument is a source file
       if( EXISTS ${it} )
@@ -106,11 +116,23 @@ macro( CSHARP_ADD_PROJECT type name )
     COMMAND ${CSHARP_COMPILER}
     ARGS /t:${type} /out:${CMAKE_LIBRARY_OUTPUT_DIR}${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}
     WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
-    DEPENDS ${sources_dep} ${deps}
+    DEPENDS ${sources_dep}
   )
   add_custom_target(
     ${name} ALL
-    DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output} ${deps}
+    DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
     SOURCES ${sources_dep}
   )
+
+  # Resolve dependencies
+  MESSAGE( STATUS "Resolving dependencies for ${type}: ${name}" )
+  foreach( it ${ARGN} )
+    # Argument is a dll, add as dependency. csharp_add_dependency will decide if
+    # if it was a build target or not.
+    if( ${it} MATCHES "(.*)(dll)" )
+       # Get the filename only (no slashes)
+       get_filename_component(filename ${it} NAME)
+       csharp_add_dependency( ${name} ${filename} )
+     endif( )
+   endforeach( )
 endmacro( CSHARP_ADD_PROJECT )
