@@ -1,8 +1,8 @@
 #build our vendor drops using msbuild
 find_program(MSBUILD NAMES msbuild xbuild)
-if(NOT MSBUILD)
-message(FATAL_ERROR "MSBUILD/XBUILD not found")
-endif( MSBUILD )
+if( NOT MSBUILD )
+  message(FATAL_ERROR "MSBUILD/XBUILD not found")
+endif( NOT MSBUILD )
 message( STATUS "Compiling externals using MSBUILD")
 
 execute_process(
