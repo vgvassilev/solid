@@ -2,7 +2,6 @@
 
 if( WIN32 )
   list( GET CSHARP_DOTNET_VERSIONS 0 newest_csharp_dotnet_version )
-  message(STATUS "newest_csharp_dotnet_version: ${newest_csharp_dotnet_version}")
 endif( )
 
 find_program(msbuild NAMES xbuild ${csharp_dotnet_framework_dir}/${newest_csharp_dotnet_version}/msbuild.exe)
