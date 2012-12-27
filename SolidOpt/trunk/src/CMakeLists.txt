@@ -1,5 +1,11 @@
 #build our vendor drops using msbuild
-find_program(MSBUILD NAMES msbuild xbuild)
+message(STATUS "VERSIONS: ${CSHARP_DOTNET_VERSIONS}")
+
+list( GET CSHARP_DOTNET_VERSIONS 0 NEWEST_CSHARP_DOTNET_VERSION )
+message(STATUS "NEWEST_CSHARP_DOTNET_VERSION: ${NEWEST_CSHARP_DOTNET_VERSION}")
+
+find_program(MSBUILD NAMES xbuild ${csharp_dotnet_framework_dir}/${NEWEST_CSHARP_DOTNET_VERSION}/MSbuild.exe)
+MESSAGE(STATUS "MSBUILD: ${csharp_dotnet_framework_dir}/${NEWEST_CSHARP_DOTNET_VERSION}/MSbuild.exe")
 if( NOT MSBUILD )
   message(FATAL_ERROR "MSBUILD/XBUILD not found")
 endif( NOT MSBUILD )
