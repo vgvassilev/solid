@@ -62,7 +62,7 @@ foreach ( csharp_dotnet_executable ${csharp_dotnet_executables} )
   if( NOT DEFINED CSHARP_DOTNET_VERSIONS )
     set( CSHARP_DOTNET_VERSIONS "${csharp_dotnet_version_temp}" CACHE STRING "Available C# .NET compiler versions" FORCE )
   else( )
-    set( CSHARP_DOTNET_VERSIONS "${CSHARP_DOTNET_VERSIONS}, ${csharp_dotnet_version_temp}"  CACHE STRING "Available C# .NET compiler versions" FORCE )
+    list( APPEND CSHARP_DOTNET_VERSIONS ${csharp_dotnet_version_temp} )
   endif( )
   mark_as_advanced( CSHARP_DOTNET_VERSIONS )
 
