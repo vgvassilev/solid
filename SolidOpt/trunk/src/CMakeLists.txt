@@ -1,22 +1,25 @@
 #build our vendor drops using msbuild
-message(STATUS "VERSIONS: ${CSHARP_DOTNET_VERSIONS}")
 
-list( GET CSHARP_DOTNET_VERSIONS 0 NEWEST_CSHARP_DOTNET_VERSION )
-message(STATUS "NEWEST_CSHARP_DOTNET_VERSION: ${NEWEST_CSHARP_DOTNET_VERSION}")
+if( WIN32 )
+  list( GET CSHARP_DOTNET_VERSIONS 0 newest_csharp_dotnet_version )
+  message(STATUS "newest_csharp_dotnet_version: ${newest_csharp_dotnet_version}")
+endif( )
 
-find_program(MSBUILD NAMES xbuild ${csharp_dotnet_framework_dir}/${NEWEST_CSHARP_DOTNET_VERSION}/MSbuild.exe)
-MESSAGE(STATUS "MSBUILD: ${csharp_dotnet_framework_dir}/${NEWEST_CSHARP_DOTNET_VERSION}/MSbuild.exe")
-if( NOT MSBUILD )
+find_program(msbuild NAMES xbuild ${csharp_dotnet_framework_dir}/${newest_csharp_dotnet_version}/msbuild.exe)
+
+MESSAGE(STATUS "MSBUILD: ${msbuild}")
+
+if( NOT msbuild )
   message(FATAL_ERROR "MSBUILD/XBUILD not found")
-endif( NOT MSBUILD )
-message( STATUS "Compiling externals using MSBUILD")
+endif( NOT msbuild )
+message( STATUS "Compiling externals using msbuild")
 
 execute_process(
-  COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Mono.Cecil/Mono.Cecil.csproj
-  COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Mono.Cecil/rocks/Mono.Cecil.Rocks.csproj
-  COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Cecil.Decompiler/Cecil.Decompiler/Cecil.Decompiler.csproj
-  COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/NUnit/NUnitCore/core/nunit.core.dll.csproj
-  COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/NUnit/NUnitFramework/framework/nunit.framework.dll.csproj
+  COMMAND ${msbuild} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Mono.Cecil/Mono.Cecil.csproj
+  COMMAND ${msbuild} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Mono.Cecil/rocks/Mono.Cecil.Rocks.csproj
+  COMMAND ${msbuild} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/Cecil.Decompiler/Cecil.Decompiler/Cecil.Decompiler.csproj
+  COMMAND ${msbuild} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/NUnit/NUnitCore/core/nunit.core.dll.csproj
+  COMMAND ${msbuild} /p:OutputPath=${CMAKE_LIBRARY_OUTPUT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/vendors/NUnit/NUnitFramework/framework/nunit.framework.dll.csproj
 )
 
 add_subdirectory(Services)
