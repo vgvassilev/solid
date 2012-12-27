@@ -20,10 +20,10 @@ include( ${CSHARP_USE_FILE} )
 
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIR)
-  set(CMAKE_RUNTIME_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/bin/)
+  set(CMAKE_RUNTIME_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/bin)
 endif()
 if(NOT CMAKE_LIBRARY_OUTPUT_DIR)
-  set(CMAKE_LIBRARY_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib/)
+  set(CMAKE_LIBRARY_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib)
 endif()
 
 # Make sure the nested directory structure exists
