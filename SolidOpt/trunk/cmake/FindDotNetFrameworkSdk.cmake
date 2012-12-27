@@ -73,13 +73,19 @@ endforeach( csharp_dotnet_executable )
 if( CSHARP_DOTNET_FOUND )
   # Report the found versions
   message( STATUS "Found the following C# .NET versions: ${CSHARP_DOTNET_VERSIONS}" )
-
   # Set the compiler version
   # Do not force, so that the user can manually select their own version if they wish
   # Select the highest version (first in reverse sorted list)
   list( GET CSHARP_DOTNET_VERSIONS 0 csharp_dotnet_version_temp )
+  
+  # Split and represent it in a comparable form.
+  string(REPLACE "." ";" csharp_dotnet_varsion_list ${csharp_dotnet_version_temp})
+  list(GET csharp_dotnet_varsion_list 0 1 cs_ver)
+  string(REPLACE ";" "" cs_ver ${cs_ver})
+  string(REPLACE "v" "" cs_ver ${cs_ver})
+
   # If available, select .NET v2.0.50727 (this is the minimal version as it supports generics, and allows use of VS2008)
-  if (csharp_dotnet_version_temp LESS 2.0.50727)
+  if (cs_ver LESS 20)
     message( FATAL_ERROR "The C# .NET version '${csharp_dotnet_version_temp}' is too ancient. Try using version >= 2.0.50727." )
   endif ( )
   set( CSHARP_DOTNET_VERSION ${csharp_dotnet_version_temp} CACHE STRING "C# .NET compiler version" )
