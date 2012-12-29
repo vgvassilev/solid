@@ -30,6 +30,7 @@ endif()
 file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIR})
 file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIR})
 
+include(Version.cmake)
 
 add_subdirectory(src)
 add_subdirectory(doc)
