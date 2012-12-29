@@ -1,4 +1,4 @@
-# $Id: AbstractService.cs 441 2011-03-24 14:56:14Z vvassilev $
+# $Id$
 # It is part of the SolidOpt Copyright Policy (see Copyright.txt)
 # For further details see the nearest License.txt
 
