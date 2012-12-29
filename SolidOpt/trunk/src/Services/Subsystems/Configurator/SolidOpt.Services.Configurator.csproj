@@ -32,7 +32,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="src\Mappers\CustomMapperGroup.cs" />
     <Compile Include="src\Mappers\IConfigMapper.cs" />
     <Compile Include="src\Mappers\IdentityMapper.cs" />

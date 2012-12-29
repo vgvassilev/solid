@@ -9,7 +9,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SolidOpt.Core.Loader</RootNamespace>
     <AssemblyName>SolidOpt.Core.Loader</AssemblyName>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -39,7 +38,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="src\Loader.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

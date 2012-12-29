@@ -8,7 +8,6 @@
     <RootNamespace>SolidOpt.Core.Loader.Demo.TransformLoader</RootNamespace>
     <AssemblyName>TransformLoader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <StartArguments>..\..\..\Loadee\bin\$(Configuration)\Loadee.exe ..\..\opt1.list</StartArguments>
     <ProductVersion>9.0.21022</ProductVersion>
@@ -57,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformLoader.cs" />
   </ItemGroup>
   <ItemGroup>

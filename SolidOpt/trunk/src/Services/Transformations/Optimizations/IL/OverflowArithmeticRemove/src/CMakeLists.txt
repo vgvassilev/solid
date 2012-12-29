@@ -6,4 +6,5 @@ csharp_add_library(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.Rocks.dll
   ###
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+  ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )

@@ -8,7 +8,6 @@
     <ProjectGuid>{846d2563-5af8-4459-81c6-59a9da174849}</ProjectGuid>
     <OutputType>Library</OutputType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>SolidOpt.Services.Compatibility</AssemblyName>
     <RootNamespace>SolidOpt.Services.Compatibility</RootNamespace>
   </PropertyGroup>
@@ -33,7 +32,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="FixEnumerableVariance.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Core">

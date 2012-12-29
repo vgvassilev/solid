@@ -116,7 +116,6 @@
     <Compile Include="Services\Subsystems\HetAccess\src\AbstractResourceProvider.cs" />
     <Compile Include="Services\Subsystems\HetAccess\src\IProvider.cs" />
     <Compile Include="Services\Subsystems\HetAccess\src\URIManager.cs" />
-    <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\BlockRange.cs" />
     <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\ControlFlowGraph.cs" />
     <Compile Include="Services\Transformations\CodeModel\ControlFlowGraph\src\ExceptionHandlerData.cs" />
@@ -183,22 +182,6 @@
     <None Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Web References\www.solidopt.org\SolidOptService.wsdl" />
     <None Include="Services\WebServices\RealTimeOpt\src\SolidOptService.asmx" />
     <None Include="Services\WebServices\RealTimeOpt\src\Web.config" />
-    <None Include="Services\Subsystems\Cache\demo\Cache1\src\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Subsystems\Configurator\demo\AdvancedConfigDemo\src\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Multimodel\AstMethodDefinitionModel\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Multimodel\ASTtoIL\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Multimodel\CilToControlFlowGraph\src\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Multimodel\ILtoAST\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Optimizations\ConstantFolding\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Optimizations\MethodInlineIL\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Optimizations\NopRemover\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Optimizations\OverflowArithmeticRemover\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Transformations\Optimizations\SimplifyExpression\Properties\AssemblyInfo.cs" />
-    <None Include="Services\WebServices\RealTimeOpt\demo\SolidOptWebServiceClient\Properties\AssemblyInfo.cs" />
-    <None Include="Services\WebServices\RealTimeOpt\src\Properties\AssemblyInfo.cs" />
-    <None Include="Services\Subsystems\Configurator\demo\SeparateConfig\src\Properties\AssemblyInfo.cs" />
-    <None Include="Core\Loader\demo\StandardLoader\Loader\Properties\AssemblyInfo.cs" />
-    <None Include="Core\Loader\demo\StandardLoader\Loadee\Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

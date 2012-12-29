@@ -41,7 +41,6 @@
     <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractServiceContainer.cs" />
     <Compile Include="AbstractServiceProvider.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="IServiceContainer.cs" />
     <Compile Include="IServiceProvider.cs" />

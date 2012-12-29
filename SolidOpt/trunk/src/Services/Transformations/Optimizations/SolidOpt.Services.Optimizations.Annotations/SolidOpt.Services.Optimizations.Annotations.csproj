@@ -30,11 +30,9 @@
     <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\IL.InlineableAttribute.cs" />
     <Compile Include="src\AST.InlineableAttribute.cs" />
     <Compile Include="src\SideEffectsAttribute.cs" />

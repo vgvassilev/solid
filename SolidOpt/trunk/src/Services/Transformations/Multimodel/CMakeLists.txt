@@ -9,6 +9,7 @@ csharp_add_library(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll
   ###
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+  ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 
 add_subdirectory(ASTtoIL)

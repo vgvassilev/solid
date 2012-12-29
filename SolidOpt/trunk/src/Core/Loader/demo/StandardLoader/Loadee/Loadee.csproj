@@ -8,7 +8,6 @@
     <RootNamespace>SolidOpt.Core.Loader.Demo.Loadee</RootNamespace>
     <AssemblyName>Loadee</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Sasho\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
@@ -53,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\Services\Transformations\SolidOpt.Services.Transformations.csproj">

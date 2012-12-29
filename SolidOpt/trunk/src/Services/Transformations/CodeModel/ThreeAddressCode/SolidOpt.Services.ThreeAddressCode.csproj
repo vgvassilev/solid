@@ -32,10 +32,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="src\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Triplet.cs" />
     <Compile Include="src\ThreeAdressCode.cs" />
   </ItemGroup>

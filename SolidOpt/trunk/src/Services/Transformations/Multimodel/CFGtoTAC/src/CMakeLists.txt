@@ -4,4 +4,5 @@ csharp_add_library(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+  ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )

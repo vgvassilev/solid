@@ -1,10 +1,6 @@
 #
 # A CMake Module for finding and using C# (.NET and Mono).
 #
-# The following global variables are assumed to exist:
-#   CSHARP_SOURCE_DIRECTORY - path to C# sources
-#   CSHARP_BINARY_DIRECTORY - path to place resultant C# binary files
-#
 # The following variables are set:
 #   CSHARP_TYPE - the type of the C# compiler (eg. ".NET" or "Mono")
 #   CSHARP_COMPILER - the path to the C# compiler executable (eg. "C:/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe")
@@ -53,7 +49,6 @@ macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
 
   if ( TARGET ${depends_on_we} )
     MESSAGE(STATUS "  ->Depends on[Target]: ${depends_on_we}")
-    #target_link_libraries( ${cur_target_we} ${depends_on_we} )
     add_dependencies( ${cur_target_we} ${depends_on_we} )
   else ( )
     MESSAGE(STATUS "  ->Depends on[External]: ${depends_on}")    
@@ -62,6 +57,16 @@ endmacro( CSHARP_ADD_DEPENDENCY )
 
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
+  # Generate AssemblyInfo.cs
+  MESSAGE( STATUS "Generating AssemblyInfo.cs for ${name}" )
+  configure_file(
+    ${CMAKE_MODULE_PATH}/AssemblyInfo.cs.in
+    ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+    @ONLY
+  )
+
+  string(TOUPPER ${type} TYPE_UPCASE)
+
   set( ${refs} /reference:System.dll )
   set( sources )
   set( sources_dep )
@@ -82,9 +87,9 @@ macro( CSHARP_ADD_PROJECT type name )
       if( EXISTS ${it} )
         list( APPEND sources ${it} )
         list( APPEND sources_dep ${it} )
-      elseif( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
-        list( APPEND sources ${CSHARP_SOURCE_DIRECTORY}/${it} )
-        list( APPEND sources_dep ${CSHARP_SOURCE_DIRECTORY}/${it} )
+      elseif( EXISTS ${CMAKE_CURRENT_BINARY_DIR}/${it} )
+        list( APPEND sources ${it} )
+        list( APPEND sources_dep ${it} )
       elseif( ${it} MATCHES "[*]" )
         # For dependencies, we need to expand wildcards
         FILE( GLOB it_glob ${it} )
@@ -93,7 +98,7 @@ macro( CSHARP_ADD_PROJECT type name )
       endif( )
     endif ( )
   endforeach( )
-
+MESSAGE(STATUS "sources: ${sources}")
   # Check we have at least one source
   list( LENGTH sources_dep sources_length )
   if ( ${sources_length} LESS 1 )
@@ -101,26 +106,19 @@ macro( CSHARP_ADD_PROJECT type name )
   endif ()
   list( SORT sources_dep )
 
-  # Perform platform specific actions
-  if (WIN32)
-    string( REPLACE "/" "\\" sources ${sources} )
-  else (UNIX)
-    string( REPLACE "\\" "/" sources ${sources} )
-  endif (WIN32)
-
   # Add custom target and command
   MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}'" )
   add_custom_command(
     COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}'"
-    OUTPUT ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
+    OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output}
     COMMAND ${CSHARP_COMPILER}
-    ARGS /t:${type} /out:${CMAKE_LIBRARY_OUTPUT_DIR}/${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}
-    WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
+    ARGS /t:${type} /out:${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output} /platform:${CSHARP_PLATFORM} ${CSHARP_SDK} ${refs} ${sources}
+    WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
     DEPENDS ${sources_dep}
   )
   add_custom_target(
     ${name} ALL
-    DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
+    DEPENDS ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output}
     SOURCES ${sources_dep}
   )
 

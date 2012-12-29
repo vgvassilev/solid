@@ -11,7 +11,6 @@
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Vassil Vassilev\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -47,7 +46,6 @@
     </ProjectReference>
     <Compile Include="src\ILtoCFGTransformer.cs" />
     <Compile Include="src\ControlFlowGraphBuilder.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <ProjectReference Include="..\..\SolidOpt.Services.Transformations.csproj">
       <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
