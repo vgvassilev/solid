@@ -32,4 +32,5 @@ file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIR})
 
 
 add_subdirectory(src)
+add_subdirectory(doc)
 
