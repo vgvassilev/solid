@@ -211,6 +211,7 @@ macro( CSHARP_ADD_PROJECT type name )
     set( VAR_Project_AssemblyName "${name}.${output}" )
     set( VAR_Project_TargetFrameworkVersion "v${CSHARP_VERSION}" )
     set( VAR_Project_TargetFrameworkProfile "Client" )
+    set( VAR_Project_InternalReferences "" )
     set( VAR_Project_References "" )
     if (refs)
       list( REMOVE_DUPLICATES refs )
@@ -218,19 +219,48 @@ macro( CSHARP_ADD_PROJECT type name )
     foreach ( it ${refs} )
       STRING( REGEX REPLACE "^/reference:" "" it ${it} )
       file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
-      set( VAR_Project_References "${VAR_Project_References}    <Reference Include=\"${rel_it}\" />\n" )
+
+      get_filename_component(filename ${it} NAME)
+      STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name} )
+      STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" filename_we ${filename} )
+      if ( TARGET ${filename_we} )
+        # Internal project
+        get_property(sln_projs_guid GLOBAL PROPERTY sln_projs_guid_property)
+        get_property(sln_projs_name GLOBAL PROPERTY sln_projs_name_property)
+        get_property(sln_projs_file GLOBAL PROPERTY sln_projs_file_property)
+        list( FIND sln_projs_name ${filename_we} index )
+        #TODO: index=-1 ~ in GAC?
+        list( GET sln_projs_file ${index} ref_proj)
+        list( GET sln_projs_guid ${index} ref_proj_guid)
+        file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${ref_proj} )
+        set( VAR_Project_InternalReferences "${VAR_Project_InternalReferences}\t<ProjectReference Include=\"${rel_ref_proj}\">\n\t  <Project>{${ref_proj_guid}}</Project>\n\t  <Name>${filename_we}</Name>\n\t</ProjectReference>\n" )
+      else ( )
+        # in GAC
+        #\t<Reference Include=\"Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756\">\n
+        #\t  <Private>False</Private>\n
+        #\t</Reference>\n
+        #set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename}\">\n\t  <Private>False</Private>\n\t</Reference>\n" )
+
+        # External/vendor assembly
+        file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${it} )
+        set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename}\">\n\t  <Private>False</Private>\n\t  <HintPath>${rel_ref_proj}</HintPath>\n\t</Reference>\n" )
+      endif ( TARGET ${filename_we} )
+
     endforeach(it)
+
     set( VAR_Project_CompileItems "" )
     foreach ( it ${sources_dep} )
       file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
       set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\" />\n" )
     endforeach(it)
+
     # Configure project
     configure_file(
       ${CMAKE_MODULE_PATH}/ProjectName-v11.csproj.in
       ${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj
       @ONLY
     )
+
     # Add info for ptoject in global solution lists
     set_property(GLOBAL APPEND PROPERTY sln_projs_guid_property ${proj_guid})
     set_property(GLOBAL APPEND PROPERTY sln_projs_name_property ${name})

@@ -49,12 +49,29 @@
     <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+<!--
   <ItemGroup>
-<!--     <Reference Include="System.Xml" /> -->
+    <ProjectReference Include="..\Compatibility\SolidOpt.Services.Compatibility.csproj">
+      <Project>{80C5E8EE-1981-417A-91DD-2A71B508421F}</Project>
+      <Name>SolidOpt.Services.Compatibility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\..\..\lib\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+-->
+  <ItemGroup>
+@VAR_Project_InternalReferences@
+  </ItemGroup>
+  <ItemGroup>
 @VAR_Project_References@
   </ItemGroup>
   <ItemGroup>
-<!--    <Compile Include="MyClass.cs" /> -->
 @VAR_Project_CompileItems@
   </ItemGroup>
 </Project>
