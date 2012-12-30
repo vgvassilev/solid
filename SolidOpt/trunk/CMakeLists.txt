@@ -35,6 +35,11 @@ file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIR})
 
 include(Version.cmake)
 
+# If no build type is set it should defaults to debug
+if( NOT CMAKE_BUILD_TYPE )
+  set( CMAKE_BUILD_TYPE Debug CACHE STRING "Choose a build type: [Debug Release]" FORCE )
+endif()
+
 add_subdirectory(src)
 add_subdirectory(doc)
 
