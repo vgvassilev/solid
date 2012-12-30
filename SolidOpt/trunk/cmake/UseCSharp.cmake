@@ -145,9 +145,20 @@ MESSAGE(STATUS "sources: ${sources}")
 
   # Generate csproj
   if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
+    find_program(guid_gen NAMES ${CMAKE_LIBRARY_OUTPUT_DIR}/guid.exe)
+    if( NOT guid_gen )
+      file(WRITE ${CMAKE_LIBRARY_OUTPUT_DIR}/guid.cs "class GUIDGen { static void Main() { System.Console.Write(System.Guid.NewGuid().ToString().ToUpper()); } }" )
+      set( guid_gen "${CMAKE_LIBRARY_OUTPUT_DIR}/guid.exe" )
+      execute_process(
+        COMMAND ${CSHARP_COMPILER} /t:exe /out:${guid_gen} /platform:anycpu ${CMAKE_LIBRARY_OUTPUT_DIR}/guid.cs
+      )
+    endif ( )
+
+    execute_process(COMMAND ${CSHARP_INTERPRETER} ${guid_gen} OUTPUT_VARIABLE proj_guid )
+
     MESSAGE( STATUS "Generating ${name}.csproj" )
     # Set substitution variables
-    set( VAR_Project_GUID "18248EA1-C1A4-4FF4-AE89-BA3C4E0F1DA5" )
+    set( VAR_Project_GUID ${proj_guid} )
     set( VAR_Project_OutputType ${output_type} )
     set( VAR_Project_DefaultNamespace "" )
     set( VAR_Project_AssemblyName "${name}.${output}" )
