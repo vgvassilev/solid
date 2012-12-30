@@ -1,4 +1,4 @@
-find_package(Doxygen REQUIRED)
+find_package(Doxygen)
 if (DOXYGEN_FOUND)
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/doxygen.conf.in 
