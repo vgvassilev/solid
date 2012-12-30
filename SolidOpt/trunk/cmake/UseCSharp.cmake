@@ -107,7 +107,6 @@ macro( CSHARP_ADD_PROJECT type name )
       endif( )
     endif ( )
   endforeach( )
-MESSAGE(STATUS "sources: ${sources}")
   # Check we have at least one source
   list( LENGTH sources_dep sources_length )
   if ( ${sources_length} LESS 1 )
