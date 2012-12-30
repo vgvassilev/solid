@@ -7,11 +7,11 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{18248EA1-C1A4-4FF4-AE89-BA3C4E0F1DA5}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>@@DefaultNamespace@@</RootNamespace>
-    <AssemblyName>@@AssemblyName@@</AssemblyName>
+    <RootNamespace>@DefaultNamespace@</RootNamespace>
+    <AssemblyName>@AssemblyName@</AssemblyName>
     <newfilesearch>OnLoadAutoInsert</newfilesearch>
 <!--    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion> -->
-    <TargetFrameworkVersion>@@TargetFrameworkVersion@@</TargetFrameworkVersion>
+    <TargetFrameworkVersion>@TargetFrameworkVersion@</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -34,10 +34,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
 <!--     <Reference Include="System.Xml" /> -->
-@@References@@
+@References@
   </ItemGroup>
   <ItemGroup>
 <!--    <Compile Include="MyClass.cs" /> -->
-@@CompileItems@@
+@CompileItems@
   </ItemGroup>
 </Project>
