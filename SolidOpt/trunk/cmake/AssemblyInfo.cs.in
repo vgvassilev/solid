@@ -17,8 +17,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyVersion("@SolidOpt_Major@.@SolidOpt_Minor@.@SolidOpt_Revision@")]
 // TODO: Add the target name
 [assembly: AssemblyTitle("@PROJECT_NAME@ Optimization Framework.")]
-// TODO: Get current year automatically
-[assembly: AssemblyCopyright("Copyright SolidOpt 2009-2012")]
+[assembly: AssemblyCopyright("Copyright (c) 2009-@SolidOpt_LastYear@ SolidOpt.org")]
 [assembly: AssemblyDescription("@PROJECT_NAME@ Optimization Framework")]
 [assembly: AssemblyCompany("SolidOpt.org")]
 [assembly: AssemblyFileVersion("@SolidOpt_Major@.@SolidOpt_Minor@.@SolidOpt_Revision@")]

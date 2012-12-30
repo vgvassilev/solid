@@ -1,4 +1,3 @@
-#
 # A CMake Module for finding and using C# (.NET and Mono).
 #
 # The following variables are set:
@@ -40,9 +39,13 @@ macro( CSHARP_ADD_EXECUTABLE name )
   CSHARP_ADD_PROJECT( "exe" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_EXECUTABLE )
 
+macro( CSHARP_ADD_GUI_EXECUTABLE name )
+  CSHARP_ADD_PROJECT( "gui" ${name} ${ARGN} )
+endmacro( CSHARP_ADD_GUI_EXECUTABLE )
+
 macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
   # For now we assume all dependencies are libs
-  # The targets doesn't contain the file extension. 
+  # The targets doesn't contain the file extension.
   # If we have an extension we have to strip it
   STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" cur_target_we ${cur_target} )
   STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" depends_on_we ${depends_on} )
@@ -51,7 +54,7 @@ macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
     MESSAGE(STATUS "  ->Depends on[Target]: ${depends_on_we}")
     add_dependencies( ${cur_target_we} ${depends_on_we} )
   else ( )
-    MESSAGE(STATUS "  ->Depends on[External]: ${depends_on}")    
+    MESSAGE(STATUS "  ->Depends on[External]: ${depends_on}")
   endif ( TARGET ${depends_on_we} )
 endmacro( CSHARP_ADD_DEPENDENCY )
 
@@ -59,6 +62,7 @@ endmacro( CSHARP_ADD_DEPENDENCY )
 macro( CSHARP_ADD_PROJECT type name )
   # Generate AssemblyInfo.cs
   MESSAGE( STATUS "Generating AssemblyInfo.cs for ${name}" )
+  string(SUBSTRING ${SolidOpt_LastDate} 0 4 SolidOpt_LastYear)
   configure_file(
     ${CMAKE_MODULE_PATH}/AssemblyInfo.cs.in
     ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
@@ -73,8 +77,13 @@ macro( CSHARP_ADD_PROJECT type name )
 
   if( ${type} MATCHES "library" )
     set( output "dll" )
+    set( output_type "Library" )
   elseif( ${type} MATCHES "exe" )
     set( output "exe" )
+    set( output_type "Exe" )
+  elseif( ${type} MATCHES "gui" )
+    set( output "exe" )
+    set( output_type "WinExe" )
   endif( ${type} MATCHES "library" )
 
   # Step through each argument
@@ -133,4 +142,37 @@ MESSAGE(STATUS "sources: ${sources}")
        csharp_add_dependency( ${name} ${filename} )
      endif( )
    endforeach( )
+
+  # Generate csproj
+  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
+    MESSAGE( STATUS "Generating ${name}.csproj" )
+    # Set substitution variables
+    set( VAR_Project_GUID "18248EA1-C1A4-4FF4-AE89-BA3C4E0F1DA5" )
+    set( VAR_Project_OutputType ${output_type} )
+    set( VAR_Project_DefaultNamespace "" )
+    set( VAR_Project_AssemblyName "${name}.${output}" )
+    set( VAR_Project_TargetFrameworkVersion "v${CSHARP_VERSION}" )
+    set( VAR_Project_TargetFrameworkProfile "Client" )
+    set( VAR_Project_References "" )
+    if (refs)
+      list( REMOVE_DUPLICATES refs )
+    endif (refs)
+    foreach ( it ${refs} )
+      STRING( REGEX REPLACE "^/reference:" "" it ${it} )
+      file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
+      set( VAR_Project_References "${VAR_Project_References}    <Reference Include=\"${rel_it}\" />\n" )
+    endforeach(it)
+    set( VAR_Project_CompileItems "" )
+    foreach ( it ${sources_dep} )
+      file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
+      set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\" />\n" )
+    endforeach(it)
+    # Configure project
+    configure_file(
+      ${CMAKE_MODULE_PATH}/ProjectName-v11.csproj.in
+      ${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj
+      @ONLY
+    )
+  endif ()
+
 endmacro( CSHARP_ADD_PROJECT )

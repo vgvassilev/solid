@@ -12,7 +12,10 @@ string(COMPARE EQUAL "${CMAKE_CURRENT_SOURCE_DIR}" "${PARENTDIR}" INSOURCESUBDIR
 if(INSOURCE OR INSOURCESUBDIR)
 message(FATAL_ERROR "SolidOpt requires an out of source Build. "
 "Please create a separate binary directory and run CMake there.")
-endif() 
+endif()
+
+# Define generator properties
+set(FORCE_VISUAL_STUDIO_10_SLN OFF CACHE BOOL "Force generation of SLN.")
 
 # Find C#
 find_package( CSharp REQUIRED )
