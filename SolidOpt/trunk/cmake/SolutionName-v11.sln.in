@@ -20,7 +20,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 #Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{33A7A87E-39D4-4CD7-A869-9C9370AE7CF1}"
 #EndProject
 ### Project item template
-#Project("{@SolutionUUID@}") = "@ProjectName@", "@ProjectFolder@\@ProjectName@.csproj", "{@ProjectUUID}"
+#Project("{@SolutionUUID@}") = "@ProjectName@", "@ProjectFolder@\@ProjectName@.csproj", "{@ProjectUUID@}"
 #EndProject
 @VAR_Solution_Projects@
 Global

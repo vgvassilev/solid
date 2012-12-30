@@ -31,6 +31,13 @@ elseif ( CSHARP_TYPE MATCHES "Mono" )
   include( ${Mono_USE_FILE} )
 endif ( CSHARP_TYPE MATCHES ".NET" )
 
+# Init global solution lists
+set_property(GLOBAL PROPERTY sln_projs_guid_property)
+set_property(GLOBAL PROPERTY sln_projs_name_property)
+set_property(GLOBAL PROPERTY sln_projs_file_property)
+
+# Macroses
+
 macro( CSHARP_ADD_LIBRARY name )
   CSHARP_ADD_PROJECT( "library" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_LIBRARY )
@@ -57,6 +64,41 @@ macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
     MESSAGE(STATUS "  ->Depends on[External]: ${depends_on}")
   endif ( TARGET ${depends_on_we} )
 endmacro( CSHARP_ADD_DEPENDENCY )
+
+macro( CSHARP_SAVE_SOLUTION name )
+  # Generate sln
+  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
+    # Read global solution lists
+    get_property(sln_projs_guid GLOBAL PROPERTY sln_projs_guid_property)
+    get_property(sln_projs_name GLOBAL PROPERTY sln_projs_name_property)
+    get_property(sln_projs_file GLOBAL PROPERTY sln_projs_file_property)
+
+    # Generate solution GUID
+    execute_process(COMMAND ${CSHARP_INTERPRETER} ${guid_gen} OUTPUT_VARIABLE sln_guid )
+
+    MESSAGE( STATUS "Generating solution ${name}.sln" )
+
+    # Set substitution variables
+    set( VAR_Solution_Projects "" )
+    set( VAR_Solution_Platforms "" )
+    set( i 0 )
+    foreach ( it ${sln_projs_guid} )
+      list( GET sln_projs_name ${i} project_name )
+      list( GET sln_projs_file ${i} project_file )
+      file( RELATIVE_PATH project_file ${CMAKE_CURRENT_BINARY_DIR} ${project_file} )
+      set( VAR_Solution_Projects "${VAR_Solution_Projects}Project(\"{${sln_guid}}\") = \"${project_name}\", \"${project_file}\", \"{${it}}\"\nEndProject\n" )
+      set( VAR_Solution_Platforms "${VAR_Solution_Platforms}\t\t{${it}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{${it}}.Debug|Any CPU.Build.0 = Debug|Any CPU\n\t\t{${it}}.Release|Any CPU.ActiveCfg = Release|Any CPU\n\t\t{${it}}.Release|Any CPU.Build.0 = Release|Any CPU\n" )
+      math(EXPR i "${i}+1")
+    endforeach(it)
+
+    # Configure solution
+    configure_file(
+      ${CMAKE_MODULE_PATH}/SolutionName-v11.sln.in
+      ${CMAKE_CURRENT_BINARY_DIR}/${name}.sln
+      @ONLY
+    )
+  endif ()
+endmacro( CSHARP_SAVE_SOLUTION )
 
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
@@ -183,6 +225,10 @@ macro( CSHARP_ADD_PROJECT type name )
       ${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj
       @ONLY
     )
+    # Add info for ptoject in global solution lists
+    set_property(GLOBAL APPEND PROPERTY sln_projs_guid_property ${proj_guid})
+    set_property(GLOBAL APPEND PROPERTY sln_projs_name_property ${name})
+    set_property(GLOBAL APPEND PROPERTY sln_projs_file_property "${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj")
   endif ()
 
 endmacro( CSHARP_ADD_PROJECT )

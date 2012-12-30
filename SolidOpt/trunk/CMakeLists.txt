@@ -38,3 +38,5 @@ include(Version.cmake)
 add_subdirectory(src)
 add_subdirectory(doc)
 
+# Save solution
+csharp_save_solution(SolidOpt)
