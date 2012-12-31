@@ -5,6 +5,22 @@ if (DOXYGEN_FOUND)
     ${PROJECT_BINARY_DIR}/doc/doxygen.conf
     @ONLY
     )
+
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/doxygen.intro.in 
+    ${PROJECT_BINARY_DIR}/doc/doxygen.intro
+    COPYONLY
+    )
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/header.html.in 
+    ${PROJECT_BINARY_DIR}/doc/header.html
+    @ONLY
+    )
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/footer.html.in 
+    ${PROJECT_BINARY_DIR}/doc/footer.html
+    @ONLY
+    )
   add_custom_target(
     doxygen
     COMMAND ${DOXYGEN_EXECUTABLE}

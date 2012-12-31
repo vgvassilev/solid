@@ -1,0 +1,14 @@
+/// @mainpage SolidOpt
+///
+/// @section main_intro Introduction
+/// Welcome to the SolidOpt project.
+///
+/// The project SolidOpt provides tools to facilitate the construction of optimization modules. 
+/// SolidOpt base also provides an environment through which they can load optimization modules,
+/// which could control the resources are used in the computer system.
+///
+/// Different presentations of the target application facilitate the implementation 
+/// of optimization methods. SolidOpt can be used as a compiler optimization using
+/// available optimization methods and presentations.
+///
+/// SolidOpt provides decompiler if the source code of the target application is not available.
