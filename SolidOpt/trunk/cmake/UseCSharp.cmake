@@ -73,9 +73,6 @@ macro( CSHARP_SAVE_SOLUTION name )
     get_property(sln_projs_name GLOBAL PROPERTY sln_projs_name_property)
     get_property(sln_projs_file GLOBAL PROPERTY sln_projs_file_property)
 
-    # Generate solution GUID
-    execute_process(COMMAND ${CSHARP_INTERPRETER} ${guid_gen} OUTPUT_VARIABLE sln_guid )
-
     MESSAGE( STATUS "Generating solution ${name}.sln" )
 
     # Set substitution variables
@@ -86,7 +83,10 @@ macro( CSHARP_SAVE_SOLUTION name )
       list( GET sln_projs_name ${i} project_name )
       list( GET sln_projs_file ${i} project_file )
       file( RELATIVE_PATH project_file ${CMAKE_CURRENT_BINARY_DIR} ${project_file} )
-      set( VAR_Solution_Projects "${VAR_Solution_Projects}Project(\"{${sln_guid}}\") = \"${project_name}\", \"${project_file}\", \"{${it}}\"\nEndProject\n" )
+      # Project(.csproj) GUID = FAE04EC0-301F-11D3-BF4B-00C04F79EFBC
+      # Project(.ilproj) GUID = B4EC64DC-6D44-11DD-AAB0-C9A155D89593
+      # Project folder GUID = 2150E333-8FDC-42A3-9474-1A3956D46DE8
+      set( VAR_Solution_Projects "${VAR_Solution_Projects}Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"${project_name}\", \"${project_file}\", \"{${it}}\"\nEndProject\n" )
       set( VAR_Solution_Platforms "${VAR_Solution_Platforms}\t\t{${it}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{${it}}.Debug|Any CPU.Build.0 = Debug|Any CPU\n\t\t{${it}}.Release|Any CPU.ActiveCfg = Release|Any CPU\n\t\t{${it}}.Release|Any CPU.Build.0 = Release|Any CPU\n" )
       math(EXPR i "${i}+1")
     endforeach(it)
