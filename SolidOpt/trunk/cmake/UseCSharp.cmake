@@ -113,7 +113,7 @@ macro( CSHARP_ADD_PROJECT type name )
 
   string(TOUPPER ${type} TYPE_UPCASE)
 
-  set( ${refs} /reference:System.dll )
+  set( refs /reference:System.dll )
   set( sources )
   set( sources_dep )
 
