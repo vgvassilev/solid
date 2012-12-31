@@ -163,12 +163,12 @@ macro( CSHARP_ADD_PROJECT type name )
   endif()
 
   # Add custom target and command
-  MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK} ${refs} ${sources}'" )
+  MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'" )
   add_custom_command(
-    COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK} ${refs} ${sources}'"
+    COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'"
     OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output}
     COMMAND ${CSHARP_COMPILER}
-    ARGS /t:${type} /out:${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK} ${refs} ${sources}
+    ARGS /t:${type} /out:${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}
     WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
     DEPENDS ${sources_dep}
   )
@@ -209,8 +209,8 @@ macro( CSHARP_ADD_PROJECT type name )
     set( VAR_Project_OutputType ${output_type} )
     set( VAR_Project_DefaultNamespace "" )
     set( VAR_Project_AssemblyName "${name}.${output}" )
-    set( VAR_Project_TargetFrameworkVersion "v${CSHARP_VERSION}" )
-    set( VAR_Project_TargetFrameworkProfile "Client" )
+    set( VAR_Project_TargetFrameworkVersion "v${CSHARP_FRAMEWORK_VERSION}" )
+    set( VAR_Project_TargetFrameworkProfile "${CSHARP_FRAMEWORK_PROFILE}" )
     set( VAR_Project_InternalReferences "" )
     set( VAR_Project_References "" )
     if (refs)
@@ -251,7 +251,8 @@ macro( CSHARP_ADD_PROJECT type name )
     set( VAR_Project_CompileItems "" )
     foreach ( it ${sources_dep} )
       file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
-      set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\" />\n" )
+      #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
+      set( VAR_Project_CompileItems "${VAR_Project_CompileItems}\t<Compile Include=\"${rel_it}\" />\n" )
     endforeach(it)
 
     # Configure project

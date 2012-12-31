@@ -24,7 +24,6 @@
     <OutputType>@VAR_Project_OutputType@</OutputType>
     <RootNamespace>@VAR_Project_DefaultNamespace@</RootNamespace>
     <AssemblyName>@VAR_Project_AssemblyName@</AssemblyName>
-    <newfilesearch>OnLoadAutoInsert</newfilesearch>
 <!--    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion> -->
     <TargetFrameworkVersion>@VAR_Project_TargetFrameworkVersion@</TargetFrameworkVersion>
 <!--    <TargetFrameworkProfile>Client</TargetFrameworkProfile> -->

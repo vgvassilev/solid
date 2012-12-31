@@ -9,7 +9,9 @@
 #   CSHARP_COMPILER - the path to the C# compiler executable (eg. "C:/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe" or "/usr/bin/gmcs")
 #   CSHARP_INTERPRETER - the path to interpreter needed to run CSharp executables
 #   CSHARP_PLATFORM - the C# target platform
-#   CSHARP_SDK - the SDK commandline switch (empty for .NET, for Mono eg. "/sdk:2" or "/sdk:4")
+#   CSHARP_SDK_COMPILER - the SDK commandline switch (empty for .NET, for Mono eg. "/sdk:2" or "/sdk:4")
+#   CSHARP_FRAMEWORK_VERSION - the Framework version (1.0, 1.1, 2.0, 3.0, 3.5, 4.0, 4.5, ...)
+#   CSHARP_FRAMEWORK_PROFILE - the Framework profile (empty, "Client", ...)
 #
 # This file is based on the work of SimpleITK:
 #   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/FindCSharp.cmake
@@ -47,12 +49,16 @@ if( CSHARP_DOTNET_FOUND )
   set( CSHARP_VERSION ${CSHARP_DOTNET_VERSION} CACHE STRING "C# .NET compiler version" FORCE )
   set( CSHARP_COMPILER ${CSHARP_DOTNET_COMPILER_${CSHARP_DOTNET_VERSION}} CACHE STRING "Full path to .NET compiler" FORCE )
   set( CSHARP_INTERPRETER "" CACHE INTERNAL "Interpretor not required for .NET" FORCE )
+  set( CSHARP_FRAMEWORK_VERSION "2.0" CACHE STRING "C# .NET SDK version (e.g. 1.0, 1.1, 2.0, 3.0, 3.5, 4.0, 4.5, ...)" FORCE )
+  set( CSHARP_FRAMEWORK_PROFILE "" CACHE STRING "C# .NET SDK profile (e.g. '', 'Client', ...)" FORCE )
 elseif( CSHARP_MONO_FOUND )
   set( CSHARP_TYPE "Mono" CACHE STRING "Using the Mono compiler" )
   set( CSHARP_VERSION ${CSHARP_MONO_VERSION} CACHE STRING "C# Mono compiler version" FORCE )
   set( CSHARP_COMPILER ${CSHARP_MONO_COMPILER_${CSHARP_MONO_VERSION}} CACHE STRING "Full path to Mono compiler" FORCE )
   set( CSHARP_INTERPRETER ${CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION}} CACHE STRING "Full path to Mono interpretor" FORCE )
-  set( CSHARP_SDK "/sdk:2" CACHE STRING "C# Mono SDK commandline switch (e.g. /sdk:2, /sdk:4, /sdk:5)" )
+  set( CSHARP_SDK_COMPILER "/sdk:2" CACHE STRING "C# Mono SDK commandline switch (e.g. /sdk:2, /sdk:4, /sdk:5)" )
+  set( CSHARP_FRAMEWORK_VERSION "2.0" CACHE STRING "C# Mono SDK version (e.g. 1.0, 1.1, 2.0, 3.0, 3.5, 4.0, 4.5, ...)" FORCE )
+  set( CSHARP_FRAMEWORK_PROFILE "" CACHE STRING "C# Mono SDK profile (e.g. '', 'Client', ...)" FORCE )
 endif( )
 
 # Handle WIN32 specific issues
@@ -64,7 +70,7 @@ endif( )
 
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(CSharp DEFAULT_MSG CSHARP_TYPE CSHARP_VERSION CSHARP_COMPILER)
 
-mark_as_advanced( CSHARP_TYPE CSHARP_VERSION CSHARP_COMPILER CSHARP_INTERPRETER CSHARP_PLATFORM CSHARP_SDK )
+mark_as_advanced( CSHARP_TYPE CSHARP_VERSION CSHARP_COMPILER CSHARP_INTERPRETER CSHARP_PLATFORM CSHARP_SDK_COMPILER CSHARP_FRAMEWORK_VERSION CSHARP_FRAMEWORK_PROFILE )
 
 # Set the USE_FILE path
 # http://public.kitware.com/Bug/view.php?id=7757
