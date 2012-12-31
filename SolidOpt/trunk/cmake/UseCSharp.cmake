@@ -113,7 +113,7 @@ macro( CSHARP_ADD_PROJECT type name )
 
   string(TOUPPER ${type} TYPE_UPCASE)
 
-  set( refs /reference:System.dll )
+  set( refs "/reference:System.dll" )
   set( sources )
   set( sources_dep )
 
@@ -218,7 +218,7 @@ macro( CSHARP_ADD_PROJECT type name )
     endif (refs)
     foreach ( it ${refs} )
       STRING( REGEX REPLACE "^/reference:" "" it ${it} )
-      file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
+      #file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
 
       get_filename_component(filename ${it} NAME)
       STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name} )
@@ -235,15 +235,15 @@ macro( CSHARP_ADD_PROJECT type name )
         file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${ref_proj} )
         set( VAR_Project_InternalReferences "${VAR_Project_InternalReferences}\t<ProjectReference Include=\"${rel_ref_proj}\">\n\t  <Project>{${ref_proj_guid}}</Project>\n\t  <Name>${filename_we}</Name>\n\t</ProjectReference>\n" )
       else ( )
-        # in GAC
-        #\t<Reference Include=\"Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756\">\n
-        #\t  <Private>False</Private>\n
-        #\t</Reference>\n
-        #set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename}\">\n\t  <Private>False</Private>\n\t</Reference>\n" )
-
-        # External/vendor assembly
-        file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${it} )
-        set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename}\">\n\t  <Private>False</Private>\n\t  <HintPath>${rel_ref_proj}</HintPath>\n\t</Reference>\n" )
+        if ( EXISTS ${it} )
+          # External/vendor assembly
+          file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${it} )
+          set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename}\">\n\t  <Private>False</Private>\n\t  <HintPath>${rel_ref_proj}</HintPath>\n\t</Reference>\n" )
+        else ()
+          # in GAC
+          #\t<Reference Include=\"Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756\" />\n
+          set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename_we}\">\n\t  <Private>False</Private>\n\t</Reference>\n" )
+        endif ()
       endif ( TARGET ${filename_we} )
 
     endforeach(it)
