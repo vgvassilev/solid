@@ -105,8 +105,11 @@ if( WIN32 )
 
 else( UNIX )
   # Search for Mono on non-Win32 systems
-  # Compiler versions ordered: higher first.
-  set( chsarp_mono_names "gmcs" "gmcs.exe" "smcs" "smcs.exe" "dmcs" "dmcs.exe" "mcs" "mcs.exe" )
+  # Compiler versions ordered: higher first. (http://www.mono-project.com/CSharp_Compiler)
+  # gmcs: compiler to target the 2.0 mscorlib.
+  # smcs: compiler to target the 2.1 mscorlib, to build Moonlight applications.
+  # dmcs: compiler to target the 4.0 mscorlib. 
+  set( chsarp_mono_names "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" "mcs" "mcs.exe" )
   set(
     csharp_mono_paths
     "/usr/bin/"
