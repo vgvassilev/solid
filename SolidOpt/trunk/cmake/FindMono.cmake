@@ -108,8 +108,9 @@ else( UNIX )
   # Compiler versions ordered: higher first. (http://www.mono-project.com/CSharp_Compiler)
   # gmcs: compiler to target the 2.0 mscorlib.
   # smcs: compiler to target the 2.1 mscorlib, to build Moonlight applications.
-  # dmcs: compiler to target the 4.0 mscorlib. 
-  set( chsarp_mono_names "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" "mcs" "mcs.exe" )
+  # dmcs: compiler to target the 4.0 mscorlib.
+  # The (mcs) compiler defaults to the latest language specification available. 
+  set( chsarp_mono_names "mcs" "mcs.exe" "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" )
   set(
     csharp_mono_paths
     "/usr/bin/"
