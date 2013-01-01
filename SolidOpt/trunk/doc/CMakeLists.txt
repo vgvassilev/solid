@@ -5,11 +5,15 @@ if (DOXYGEN_FOUND)
     ${PROJECT_BINARY_DIR}/doc/doxygen.conf
     @ONLY
     )
-
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/custom.css 
+    ${PROJECT_BINARY_DIR}/doc/custom.css
+    COPYONLY
+    )
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/doxygen.intro.in 
     ${PROJECT_BINARY_DIR}/doc/doxygen.intro
-    COPYONLY
+    @ONLY
     )
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/header.html.in 
