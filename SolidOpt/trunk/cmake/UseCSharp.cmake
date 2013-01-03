@@ -208,7 +208,7 @@ macro( CSHARP_ADD_PROJECT type name )
     set( VAR_Project_GUID ${proj_guid} )
     set( VAR_Project_OutputType ${output_type} )
     set( VAR_Project_DefaultNamespace "" )
-    set( VAR_Project_AssemblyName "${name}.${output}" )
+    set( VAR_Project_AssemblyName "${name}" ) # Intentionally without extension
     set( VAR_Project_TargetFrameworkVersion "v${CSHARP_FRAMEWORK_VERSION}" )
     set( VAR_Project_TargetFrameworkProfile "${CSHARP_FRAMEWORK_PROFILE}" )
     set( VAR_Project_InternalReferences "" )
@@ -238,7 +238,7 @@ macro( CSHARP_ADD_PROJECT type name )
         if ( EXISTS ${it} )
           # External/vendor assembly
           file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${it} )
-          set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename}\">\n\t  <Private>False</Private>\n\t  <HintPath>${rel_ref_proj}</HintPath>\n\t</Reference>\n" )
+          set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${rel_ref_proj}\">\n\t  <Private>True</Private>\n\t  <HintPath>${rel_ref_proj}</HintPath>\n\t</Reference>\n" )
         else ()
           # in GAC
           #\t<Reference Include=\"Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756\" />\n
