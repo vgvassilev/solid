@@ -18,16 +18,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-<!--    <ProjectGuid>{18248EA1-C1A4-4FF4-AE89-BA3C4E0F1DA5}</ProjectGuid> -->
     <ProjectGuid>{@VAR_Project_GUID@}</ProjectGuid>
-<!--    <OutputType>Library</OutputType> -->
     <OutputType>@VAR_Project_OutputType@</OutputType>
     <RootNamespace>@VAR_Project_DefaultNamespace@</RootNamespace>
     <AssemblyName>@VAR_Project_AssemblyName@</AssemblyName>
-<!--    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion> -->
     <TargetFrameworkVersion>@VAR_Project_TargetFrameworkVersion@</TargetFrameworkVersion>
-<!--    <TargetFrameworkProfile>Client</TargetFrameworkProfile> -->
     <TargetFrameworkProfile>@VAR_Project_TargetFrameworkProfile@</TargetFrameworkProfile>
+    <BaseDirectory>@VAR_Project_BaseDirectory@</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>

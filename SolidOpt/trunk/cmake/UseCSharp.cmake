@@ -87,7 +87,7 @@ macro( CSHARP_SAVE_SOLUTION name )
       # Project(.ilproj) GUID = B4EC64DC-6D44-11DD-AAB0-C9A155D89593
       # Project folder GUID = 2150E333-8FDC-42A3-9474-1A3956D46DE8
       set( VAR_Solution_Projects "${VAR_Solution_Projects}Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"${project_name}\", \"${project_file}\", \"{${it}}\"\nEndProject\n" )
-      set( VAR_Solution_Platforms "${VAR_Solution_Platforms}\t\t{${it}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{${it}}.Debug|Any CPU.Build.0 = Debug|Any CPU\n\t\t{${it}}.Release|Any CPU.ActiveCfg = Release|Any CPU\n\t\t{${it}}.Release|Any CPU.Build.0 = Release|Any CPU\n" )
+      set( VAR_Solution_Platforms "${VAR_Solution_Platforms}    {${it}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n    {${it}}.Debug|Any CPU.Build.0 = Debug|Any CPU\n    {${it}}.Release|Any CPU.ActiveCfg = Release|Any CPU\n    {${it}}.Release|Any CPU.Build.0 = Release|Any CPU\n" )
       math(EXPR i "${i}+1")
     endforeach(it)
 
@@ -213,6 +213,9 @@ macro( CSHARP_ADD_PROJECT type name )
     set( VAR_Project_TargetFrameworkProfile "${CSHARP_FRAMEWORK_PROFILE}" )
     set( VAR_Project_InternalReferences "" )
     set( VAR_Project_References "" )
+    set( VAR_Project_RootNamespace "" )
+    #set( VAR_Project_BaseDirectory ${CMAKE_CURRENT_SOURCE_DIR} )
+    set( VAR_Project_BaseDirectory ${CMAKE_CURRENT_BINARY_DIR} )
     if (refs)
       list( REMOVE_DUPLICATES refs )
     endif (refs)
@@ -233,16 +236,16 @@ macro( CSHARP_ADD_PROJECT type name )
         list( GET sln_projs_file ${index} ref_proj)
         list( GET sln_projs_guid ${index} ref_proj_guid)
         file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${ref_proj} )
-        set( VAR_Project_InternalReferences "${VAR_Project_InternalReferences}\t<ProjectReference Include=\"${rel_ref_proj}\">\n\t  <Project>{${ref_proj_guid}}</Project>\n\t  <Name>${filename_we}</Name>\n\t</ProjectReference>\n" )
+        set( VAR_Project_InternalReferences "${VAR_Project_InternalReferences}    <ProjectReference Include=\"${rel_ref_proj}\">\n      <Project>{${ref_proj_guid}}</Project>\n      <Name>${filename_we}</Name>\n    </ProjectReference>\n" )
       else ( )
         if ( EXISTS ${it} )
           # External/vendor assembly
           file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${it} )
-          set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${rel_ref_proj}\">\n\t  <Private>True</Private>\n\t  <HintPath>${rel_ref_proj}</HintPath>\n\t</Reference>\n" )
+          set( VAR_Project_References "${VAR_Project_References}    <Reference Include=\"${rel_ref_proj}\">\n      <Private>True</Private>\n      <HintPath>${rel_ref_proj}</HintPath>\n    </Reference>\n" )
         else ()
           # in GAC
-          #\t<Reference Include=\"Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756\" />\n
-          set( VAR_Project_References "${VAR_Project_References}\t<Reference Include=\"${filename_we}\">\n\t  <Private>False</Private>\n\t</Reference>\n" )
+          #  <Reference Include=\"Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756\" />\n
+          set( VAR_Project_References "${VAR_Project_References}    <Reference Include=\"${filename_we}\">\n      <Private>False</Private>\n    </Reference>\n" )
         endif ()
       endif ( TARGET ${filename_we} )
 
@@ -250,9 +253,9 @@ macro( CSHARP_ADD_PROJECT type name )
 
     set( VAR_Project_CompileItems "" )
     foreach ( it ${sources_dep} )
-      file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
+      file( RELATIVE_PATH rel_it ${VAR_Project_BaseDirectory} ${it} )
       #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
-      set( VAR_Project_CompileItems "${VAR_Project_CompileItems}\t<Compile Include=\"${rel_it}\" />\n" )
+      set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\" />\n" )
     endforeach(it)
 
     # Configure project
