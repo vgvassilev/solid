@@ -111,6 +111,7 @@ else( UNIX )
   # dmcs: compiler to target the 4.0 mscorlib.
   # The (mcs) compiler defaults to the latest language specification available. Only after 2.11
   set( chsarp_mono_names "mcs" "mcs.exe" "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" )
+  #TODO: CSHARP_MONO_VERSION is undefined in first cmake run
   if (CSHARP_MONO_VERSION VERSION_LESS "2.11")
     set( chsarp_mono_names "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" "mcs" "mcs.exe" )
   endif()
@@ -141,10 +142,7 @@ else( UNIX )
         OUTPUT_VARIABLE csharp_mono_version_string
       )
       string( REGEX MATCH "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)" csharp_mono_version_temp ${csharp_mono_version_string} )
-      set( CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION} ${csharp_mono_interpreter} CACHE STRING "C# Mono interpreter ${csharp_mono_version_temp}" FORCE )
-      mark_as_advanced( CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION} )
     endif ( EXISTS ${csharp_mono_interpreter} )
-    unset( csharp_mono_interpreter CACHE )
 
     # We found Mono compiler
     set( CSHARP_MONO_VERSION ${csharp_mono_version_temp} CACHE STRING "C# Mono compiler version" )
@@ -153,7 +151,11 @@ else( UNIX )
     mark_as_advanced( CSHARP_MONO_COMPILER_${CSHARP_MONO_VERSION} )
     set( CSHARP_MONO_VERSIONS ${CSHARP_MONO_VERSION} CACHE STRING "Available C# Mono compiler versions" FORCE )
     mark_as_advanced( CSHARP_MONO_VERSIONS )
+    set( CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION} ${csharp_mono_interpreter} CACHE STRING "C# Mono interpreter ${csharp_mono_version_temp}" FORCE )
+    mark_as_advanced( CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION} )
     set( CSHARP_MONO_FOUND 1 CACHE INTERNAL "Boolean indicating if C# Mono was found" )
+
+    unset( csharp_mono_interpreter CACHE )
   endif( EXISTS ${csharp_mono_compiler} )
 
   # Remove temp variable from cache

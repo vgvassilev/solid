@@ -446,10 +446,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             obj1 = simulationStack.Pop();
             Triplet[] labels = new Triplet[((Instruction[])instr.Operand).Length];
             bool needFixup = false;
-            int i = 0;
+            int sw_i = 0;
             foreach (Instruction ins in (Instruction[])instr.Operand) {
               triplet = GetLabeledTripletByIL(ins);
-              labels[i++] = triplet;
+              labels[sw_i++] = triplet;
               if (triplet == FixupTriplet)
                 needFixup = true;
             }

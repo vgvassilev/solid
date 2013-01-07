@@ -18,9 +18,6 @@
 #EndProject
 #Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{33A7A87E-39D4-4CD7-A869-9C9370AE7CF1}"
 #EndProject
-### Project item template
-#Project("{@SolutionUUID@}") = "@ProjectName@", "@ProjectFolder@\@ProjectName@.csproj", "{@ProjectUUID@}"
-#EndProject
 @VAR_Solution_Projects@
 Global
   GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,11 +34,6 @@ Global
 #    {87134710-FC34-4923-B630-06098A0D0751}.Debug|Any CPU.Build.0 = Debug|Any CPU
 #    {87134710-FC34-4923-B630-06098A0D0751}.Release|Any CPU.ActiveCfg = Release|Any CPU
 #    {87134710-FC34-4923-B630-06098A0D0751}.Release|Any CPU.Build.0 = Release|Any CPU
-### Project platforms template
-#    {@ProjectUUID@}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-#    {@ProjectUUID@}.Debug|Any CPU.Build.0 = Debug|Any CPU
-#    {@ProjectUUID@}.Release|Any CPU.ActiveCfg = Release|Any CPU
-#    {@ProjectUUID@}.Release|Any CPU.Build.0 = Release|Any CPU
 @VAR_Solution_Platforms@
   EndGlobalSection
   GlobalSection(NestedProjects) = preSolution

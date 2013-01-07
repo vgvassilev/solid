@@ -10,8 +10,9 @@ string(COMPARE EQUAL "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}"
 get_filename_component(PARENTDIR ${CMAKE_CURRENT_BINARY_DIR} PATH)
 string(COMPARE EQUAL "${CMAKE_CURRENT_SOURCE_DIR}" "${PARENTDIR}" INSOURCESUBDIR)
 if(INSOURCE OR INSOURCESUBDIR)
-message(FATAL_ERROR "SolidOpt requires an out of source Build. "
-"Please create a separate binary directory and run CMake there.")
+  message(FATAL_ERROR
+    "SolidOpt requires an out of source Build. "
+    "Please create a separate binary directory and run CMake there.")
 endif()
 
 # Define generator properties
@@ -44,4 +45,4 @@ add_subdirectory(src)
 add_subdirectory(doc)
 
 # Save solution
-csharp_save_solution(SolidOpt)
+csharp_save_vs_solution(SolidOpt)

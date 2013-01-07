@@ -6,8 +6,9 @@
 #   CSHARP_VERSION - the version number of the C# compiler (eg. "v4.0.30319")
 #
 # The following macros are defined:
-#   CSHARP_ADD_EXECUTABLE( name references [files] [output_dir] ) - Define C# executable with the given name
-#   CSHARP_ADD_LIBRARY( name references [files] [output_dir] ) - Define C# library with the given name
+#   CSHARP_ADD_EXECUTABLE( name references [(ref_files | source_files)*] ) - Define C# executable with the given name
+#   CSHARP_ADD_GUI_EXECUTABLE( name references [(ref_files | source_files)*] ) - Define C# gui executable with the given name
+#   CSHARP_ADD_LIBRARY( name references [(ref_files | source_files)*] ) - Define C# library with the given name
 #
 # Examples:
 #   CSHARP_ADD_EXECUTABLE( MyExecutable "" "Program.cs" )
@@ -30,6 +31,8 @@ if( CSHARP_TYPE MATCHES ".NET" )
 elseif ( CSHARP_TYPE MATCHES "Mono" )
   include( ${Mono_USE_FILE} )
 endif ( CSHARP_TYPE MATCHES ".NET" )
+
+include(VisualStudioGenerator)
 
 # Init global solution lists
 set_property(GLOBAL PROPERTY sln_projs_guid_property)
@@ -65,46 +68,11 @@ macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
   endif ( TARGET ${depends_on_we} )
 endmacro( CSHARP_ADD_DEPENDENCY )
 
-macro( CSHARP_SAVE_SOLUTION name )
-  # Generate sln
-  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
-    # Read global solution lists
-    get_property(sln_projs_guid GLOBAL PROPERTY sln_projs_guid_property)
-    get_property(sln_projs_name GLOBAL PROPERTY sln_projs_name_property)
-    get_property(sln_projs_file GLOBAL PROPERTY sln_projs_file_property)
-
-    MESSAGE( STATUS "Generating solution ${name}.sln" )
-
-    # Set substitution variables
-    set( VAR_Solution_Projects "" )
-    set( VAR_Solution_Platforms "" )
-    set( i 0 )
-    foreach ( it ${sln_projs_guid} )
-      list( GET sln_projs_name ${i} project_name )
-      list( GET sln_projs_file ${i} project_file )
-      file( RELATIVE_PATH project_file ${CMAKE_CURRENT_BINARY_DIR} ${project_file} )
-      # Project(.csproj) GUID = FAE04EC0-301F-11D3-BF4B-00C04F79EFBC
-      # Project(.ilproj) GUID = B4EC64DC-6D44-11DD-AAB0-C9A155D89593
-      # Project folder GUID = 2150E333-8FDC-42A3-9474-1A3956D46DE8
-      set( VAR_Solution_Projects "${VAR_Solution_Projects}Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"${project_name}\", \"${project_file}\", \"{${it}}\"\nEndProject\n" )
-      set( VAR_Solution_Platforms "${VAR_Solution_Platforms}    {${it}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n    {${it}}.Debug|Any CPU.Build.0 = Debug|Any CPU\n    {${it}}.Release|Any CPU.ActiveCfg = Release|Any CPU\n    {${it}}.Release|Any CPU.Build.0 = Release|Any CPU\n" )
-      math(EXPR i "${i}+1")
-    endforeach(it)
-
-    # Configure solution
-    configure_file(
-      ${CMAKE_MODULE_PATH}/SolutionName-v11.sln.in
-      ${CMAKE_CURRENT_BINARY_DIR}/${name}.sln
-      @ONLY
-    )
-  endif ()
-endmacro( CSHARP_SAVE_SOLUTION )
-
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
   # Generate AssemblyInfo.cs
   MESSAGE( STATUS "Generating AssemblyInfo.cs for ${name}" )
-  string(SUBSTRING ${SolidOpt_LastDate} 0 4 SolidOpt_LastYear)
+  string(SUBSTRING "${SolidOpt_LastDate}" 0 4 SolidOpt_LastYear)
   configure_file(
     ${CMAKE_MODULE_PATH}/AssemblyInfo.cs.in
     ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
@@ -191,84 +159,6 @@ macro( CSHARP_ADD_PROJECT type name )
    endforeach( )
 
   # Generate csproj
-  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
-    find_program(guid_gen NAMES ${CMAKE_LIBRARY_OUTPUT_DIR}/guid.exe)
-    if( NOT guid_gen )
-      file(WRITE ${CMAKE_LIBRARY_OUTPUT_DIR}/guid.cs "class GUIDGen { static void Main() { System.Console.Write(System.Guid.NewGuid().ToString().ToUpper()); } }" )
-      set( guid_gen "${CMAKE_LIBRARY_OUTPUT_DIR}/guid.exe" )
-      execute_process(
-        COMMAND ${CSHARP_COMPILER} /t:exe /out:${guid_gen} /platform:anycpu ${CMAKE_LIBRARY_OUTPUT_DIR}/guid.cs
-      )
-    endif ( )
-
-    execute_process(COMMAND ${CSHARP_INTERPRETER} ${guid_gen} OUTPUT_VARIABLE proj_guid )
-
-    MESSAGE( STATUS "Generating ${name}.csproj" )
-    # Set substitution variables
-    set( VAR_Project_GUID ${proj_guid} )
-    set( VAR_Project_OutputType ${output_type} )
-    set( VAR_Project_DefaultNamespace "" )
-    set( VAR_Project_AssemblyName "${name}" ) # Intentionally without extension
-    set( VAR_Project_TargetFrameworkVersion "v${CSHARP_FRAMEWORK_VERSION}" )
-    set( VAR_Project_TargetFrameworkProfile "${CSHARP_FRAMEWORK_PROFILE}" )
-    set( VAR_Project_InternalReferences "" )
-    set( VAR_Project_References "" )
-    set( VAR_Project_RootNamespace "" )
-    #set( VAR_Project_BaseDirectory ${CMAKE_CURRENT_SOURCE_DIR} )
-    set( VAR_Project_BaseDirectory ${CMAKE_CURRENT_BINARY_DIR} )
-    if (refs)
-      list( REMOVE_DUPLICATES refs )
-    endif (refs)
-    foreach ( it ${refs} )
-      STRING( REGEX REPLACE "^/reference:" "" it ${it} )
-      #file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
-
-      get_filename_component(filename ${it} NAME)
-      STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name} )
-      STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" filename_we ${filename} )
-      if ( TARGET ${filename_we} )
-        # Internal project
-        get_property(sln_projs_guid GLOBAL PROPERTY sln_projs_guid_property)
-        get_property(sln_projs_name GLOBAL PROPERTY sln_projs_name_property)
-        get_property(sln_projs_file GLOBAL PROPERTY sln_projs_file_property)
-        list( FIND sln_projs_name ${filename_we} index )
-        #TODO: index=-1 ~ in GAC?
-        list( GET sln_projs_file ${index} ref_proj)
-        list( GET sln_projs_guid ${index} ref_proj_guid)
-        file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${ref_proj} )
-        set( VAR_Project_InternalReferences "${VAR_Project_InternalReferences}    <ProjectReference Include=\"${rel_ref_proj}\">\n      <Project>{${ref_proj_guid}}</Project>\n      <Name>${filename_we}</Name>\n    </ProjectReference>\n" )
-      else ( )
-        if ( EXISTS ${it} )
-          # External/vendor assembly
-          file( RELATIVE_PATH rel_ref_proj ${CMAKE_CURRENT_BINARY_DIR} ${it} )
-          set( VAR_Project_References "${VAR_Project_References}    <Reference Include=\"${rel_ref_proj}\">\n      <Private>True</Private>\n      <HintPath>${rel_ref_proj}</HintPath>\n    </Reference>\n" )
-        else ()
-          # in GAC
-          #  <Reference Include=\"Mono.Cecil, Version=0.9.4.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756\" />\n
-          set( VAR_Project_References "${VAR_Project_References}    <Reference Include=\"${filename_we}\">\n      <Private>False</Private>\n    </Reference>\n" )
-        endif ()
-      endif ( TARGET ${filename_we} )
-
-    endforeach(it)
-
-    set( VAR_Project_CompileItems "" )
-    foreach ( it ${sources_dep} )
-      file( RELATIVE_PATH rel_it ${VAR_Project_BaseDirectory} ${it} )
-      #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
-      set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\" />\n" )
-    endforeach(it)
-
-    # Configure project
-    configure_file(
-      ${CMAKE_MODULE_PATH}/ProjectName-v11.csproj.in
-      ${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj
-      @ONLY
-    )
-
-    # Add info for ptoject in global solution lists
-    set_property(GLOBAL APPEND PROPERTY sln_projs_guid_property ${proj_guid})
-    set_property(GLOBAL APPEND PROPERTY sln_projs_name_property ${name})
-    set_property(GLOBAL APPEND PROPERTY sln_projs_file_property "${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj")
-  endif ()
+  csharp_save_project( ${name} )
 
 endmacro( CSHARP_ADD_PROJECT )
