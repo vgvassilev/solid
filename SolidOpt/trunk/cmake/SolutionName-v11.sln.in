@@ -40,6 +40,7 @@ Global
   GlobalSection(NestedProjects) = preSolution
 ### Nested projects example
 #    {87134710-FC34-4923-B630-06098A0D0751} = {33A7A87E-39D4-4CD7-A869-9C9370AE7CF1}
+@VAR_Solution_NestedProjects@
   EndGlobalSection
   GlobalSection(MonoDevelopProperties) = preSolution
 #    StartupItem = ProjectFolder\ProjectName.csproj
@@ -82,7 +83,7 @@ Global
     $4.inheritsSet = null
     $4.scope = application/octet-stream
     $0.StandardHeader = $5
-    $5.Text = @/*\n * $Id$\n * It is part of the SolidOpt Copyright Policy (see Copyright.txt)\n * For further details see the nearest License.txt\n */
+    $5.Text = @/*\n * $@VAR_Solution_IdEscape@$\n * It is part of the SolidOpt Copyright Policy (see Copyright.txt)\n * For further details see the nearest License.txt\n */
     $5.IncludeInNewFiles = True
     $0.VersionControlPolicy = $6
     $6.inheritsSet = Mono

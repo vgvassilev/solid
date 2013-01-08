@@ -101,17 +101,55 @@ macro( CSHARP_SAVE_VS_SOLUTION name )
     # Set substitution variables
     set( VAR_Solution_Projects "" )
     set( VAR_Solution_Platforms "" )
+    set( VAR_Solution_NestedProjects "" )
+    set( VAR_Solution_IdEscape "Id" )
+
+    # Nested projects/folders
+    set( fld_guids )
+    set( fld_subpaths )
     set( i 0 )
     foreach ( it ${sln_projs_guid} )
       list( GET sln_projs_name ${i} project_name )
       list( GET sln_projs_file ${i} project_file )
       file( RELATIVE_PATH project_file ${CMAKE_CURRENT_BINARY_DIR} ${project_file} )
-      file(TO_NATIVE_PATH "${project_file}" project_file)
+
+      # SLN GUIDs
       # Project(.csproj) GUID = FAE04EC0-301F-11D3-BF4B-00C04F79EFBC
       # Project(.ilproj) GUID = B4EC64DC-6D44-11DD-AAB0-C9A155D89593
-      # Project folder GUID = 2150E333-8FDC-42A3-9474-1A3956D46DE8
+      # Project(Solution folder) GUID = 2150E333-8FDC-42A3-9474-1A3956D46DE8
+
+      # Folders
+      string(REGEX MATCHALL "[^/]+" li "${project_file}")
+      list(REMOVE_AT li -1)
+      set( current_subpath "" )
+      set( nested_in_guid "" )
+      foreach ( fld_it ${li} )
+        set(current_subpath "${current_subpath}/${fld_it}")
+        list(FIND fld_subpaths "${current_subpath}" idx)
+        if (idx EQUAL -1)
+          execute_process(COMMAND ${CSHARP_INTERPRETER} ${guid_gen} OUTPUT_VARIABLE fld_guid )
+          #
+          list(APPEND fld_subpaths "${current_subpath}")
+          list(APPEND fld_guids "${fld_guid}")
+          #
+          set( VAR_Solution_Projects "${VAR_Solution_Projects}Project(\"{2150E333-8FDC-42A3-9474-1A3956D46DE8}\") = \"${fld_it}\", \"${fld_it}\", \"{${fld_guid}}\"\nEndProject\n" )
+          if (nested_in_guid)
+            set( VAR_Solution_NestedProjects "${VAR_Solution_NestedProjects}    {${fld_guid}} = {${nested_in_guid}}\n" )
+          endif()
+        else ()
+          list(GET fld_subpaths ${idx} current_subpath)
+          list(GET fld_guids ${idx} fld_guid)
+        endif()
+        set( nested_in_guid "${fld_guid}" )
+      endforeach()
+
+      # Project
+      file(TO_NATIVE_PATH "${project_file}" project_file)
       set( VAR_Solution_Projects "${VAR_Solution_Projects}Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"${project_name}\", \"${project_file}\", \"{${it}}\"\nEndProject\n" )
       set( VAR_Solution_Platforms "${VAR_Solution_Platforms}    {${it}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n    {${it}}.Debug|Any CPU.Build.0 = Debug|Any CPU\n    {${it}}.Release|Any CPU.ActiveCfg = Release|Any CPU\n    {${it}}.Release|Any CPU.Build.0 = Release|Any CPU\n" )
+      if (nested_in_guid)
+        set( VAR_Solution_NestedProjects "${VAR_Solution_NestedProjects}    {${it}} = {${nested_in_guid}}\n" )
+      endif()
       math(EXPR i "${i}+1")
     endforeach(it)
 
