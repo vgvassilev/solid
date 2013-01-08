@@ -5,4 +5,5 @@ csharp_add_library(
   )
 
 add_subdirectory(Compatibility)
+add_subdirectory(Subsystems)
 add_subdirectory(Transformations)
