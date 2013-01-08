@@ -22,6 +22,10 @@ set(FORCE_VISUAL_STUDIO_10_SLN OFF CACHE BOOL "Force generation of SLN.")
 find_package( CSharp REQUIRED )
 include( ${CSHARP_USE_FILE} )
 
+# Find MSBuild
+find_package( MSBuild REQUIRED )
+include( ${MSBuild_USE_FILE} )
+
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIR)
   set(CMAKE_RUNTIME_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/bin)

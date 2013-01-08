@@ -39,7 +39,7 @@ set_property(GLOBAL PROPERTY sln_projs_guid_property)
 set_property(GLOBAL PROPERTY sln_projs_name_property)
 set_property(GLOBAL PROPERTY sln_projs_file_property)
 
-# Macroses
+# Macros
 
 macro( CSHARP_ADD_LIBRARY name )
   CSHARP_ADD_PROJECT( "library" ${name} ${ARGN} )
