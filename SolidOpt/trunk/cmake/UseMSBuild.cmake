@@ -20,8 +20,6 @@ macro( CSHARP_ADD_MSBUILD_PROJECT filename )
   STRING( REGEX REPLACE "(\\.sln)[^\\.sln]*$" "" name_we ${name_we} )
 
   add_custom_command(
-    #TARGET ALL
-    #Pre_build
     COMMENT "MSBuilding ${filename}."
     OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
     COMMAND ${MSBUILD}
