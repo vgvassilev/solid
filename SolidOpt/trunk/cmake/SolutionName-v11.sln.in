@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 ###
 # 
 # /*
-#  * $Id: $
+#  * $Id$
 #  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
 #  * For further details see the nearest License.txt
 #  */
@@ -82,7 +82,7 @@ Global
     $4.inheritsSet = null
     $4.scope = application/octet-stream
     $0.StandardHeader = $5
-    $5.Text = @/*\n * $Id: $\n * It is part of the SolidOpt Copyright Policy (see Copyright.txt)\n * For further details see the nearest License.txt\n */
+    $5.Text = @/*\n * $Id$\n * It is part of the SolidOpt Copyright Policy (see Copyright.txt)\n * For further details see the nearest License.txt\n */
     $5.IncludeInNewFiles = True
     $0.VersionControlPolicy = $6
     $6.inheritsSet = Mono
