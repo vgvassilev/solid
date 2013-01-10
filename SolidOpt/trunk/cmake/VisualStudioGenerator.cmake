@@ -68,10 +68,15 @@ macro( CSHARP_SAVE_PROJECT name )
 
     set( VAR_Project_CompileItems "" )
     foreach ( it ${sources_dep} )
-      file( RELATIVE_PATH rel_it ${CMAKE_CURRENT_BINARY_DIR} ${it} )
+      file(RELATIVE_PATH rel_it "${CMAKE_CURRENT_BINARY_DIR}" "${it}")
+      file(RELATIVE_PATH link_it "${CMAKE_CURRENT_SOURCE_DIR}" "${it}")
       file(TO_NATIVE_PATH "${rel_it}" rel_it)
       #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
-      set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\" />\n" )
+      if (link_it MATCHES "^\\.\\.")
+        set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\" />\n" )
+      else()
+        set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <Compile Include=\"${rel_it}\">\n      <Link>${link_it}</Link>\n    </Compile>\n" )
+      endif()
     endforeach(it)
 
     # Configure project
