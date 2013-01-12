@@ -1,6 +1,5 @@
 csharp_add_library(
   SolidOpt.Services.Transformations.MultiModel
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Compatibility.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.dll
   # External
