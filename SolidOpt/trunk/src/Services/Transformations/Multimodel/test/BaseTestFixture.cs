@@ -275,7 +275,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// <returns>
     /// The overriden test cases.
     /// </returns>
-    protected HashSet<string> GetOverridenTestCases() {
+    protected HashSet<string> GetOverridenTestCases()
+    {
       HashSet<string> res = new HashSet<string>();
       Type ty = GetType();
       foreach(System.Reflection.MethodInfo mInfo in ty.GetMethods()) {
