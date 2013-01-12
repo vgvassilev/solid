@@ -45,8 +45,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)
     {
-      if (filename == GetTestCaseFullPath("TwoSystemCalls"))
-        return;
       RunTestCase(filename, getCfg(filename));
     }
   }
