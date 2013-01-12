@@ -74,7 +74,7 @@ macro( CSHARP_SAVE_PROJECT name )
       file(RELATIVE_PATH link_it "${CMAKE_CURRENT_SOURCE_DIR}" "${it}")
       file(TO_NATIVE_PATH "${rel_it}" rel_it)
       #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
-      if (it MATCHES "^CMakeLists\\.txt")
+      if (it MATCHES "CMakeLists\\.txt")
         set(item_type "None")
       else()
         set(item_type "Compile")
