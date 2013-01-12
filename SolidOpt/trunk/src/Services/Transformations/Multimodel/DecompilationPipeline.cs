@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 
-using SolidOpt.Services.Compatibility;
 using SolidOpt.Services.Transformations;
 
 namespace SolidOpt.Services.Transformations.Multimodel
