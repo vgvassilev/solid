@@ -46,8 +46,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)
     {
-      if (filename == GetTestCaseFullPath("TwoSystemCalls"))
-        return;
       RunTestCase(filename, LoadTestCaseMethod(filename));
     }
   }
