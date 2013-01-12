@@ -18,8 +18,8 @@ namespace SolidOpt.Services.Transformations.Multimodel
 	{
 		
 		//TODO: make enumerator of the subclass. You have to do enumeration type casting
-		public DecompilationPipeline (IEnumerable<DecompilationStep> steps) 
-				: base (FixEnumerableVariance.Convert<DecompilationStep, IStep>(steps))
+		public DecompilationPipeline (IEnumerable<IStep> steps) 
+				: base (steps)
 		{		
 		}
 			
