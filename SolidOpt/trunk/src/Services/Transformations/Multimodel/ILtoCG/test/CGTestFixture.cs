@@ -43,25 +43,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
       Assert.IsTrue(Validate(seen, expected, ref errMsg), errMsg);
     }
 
-    [Test]
-    public void TwoCalls()
+    [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
+    public void Cases(string filename)
     {
-      string testCaseName = "TwoCalls";
-      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
-    }
-
-    [Test]
-    public void MathCalls()
-    {
-      string testCaseName = "MathCalls";
-      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
-    }
-
-    [Test]
-    public void MultipleNestedMethodCalls()
-    {
-      string testCaseName = "MultipleNestedMethodCalls";
-      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName));
+      if (filename == GetTestCaseFullPath("TwoSystemCalls"))
+        return;
+      RunTestCase(filename, LoadTestCaseMethod(filename));
     }
   }
 }

@@ -4,6 +4,7 @@
  * For further details see the nearest License.txt
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -61,6 +62,31 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     {
       if (!Directory.Exists(testCasesTmpDir)) {
         Directory.CreateDirectory(testCasesTmpDir);
+      }
+    }
+
+    /// <summary>
+    /// Gets the test cases in the testCasesDir. Allows overriding of test cases. For example,
+    /// <code> 
+    /// [Test]
+    /// public void MyTest() {}
+    /// </code>
+    /// defined in the derived class will override the current default logic.
+    /// </summary>
+    /// <returns>
+    /// The TestCaseData representation of the test case.
+    /// </returns>
+    protected IEnumerable GetTestCases()
+    {
+      string[] testCases = Directory.GetFiles(testCasesDir, "*." + GetTestCaseFileExtension());
+      HashSet<string> excludedTestCases = GetOverridenTestCases();
+
+      foreach (string testCase in testCases) {
+        if (!excludedTestCases.Contains(Path.GetFileNameWithoutExtension(testCase))) {
+          TestCaseData data = new TestCaseData(testCase);
+          data.SetName(Path.GetFileNameWithoutExtension(testCase));
+          yield return data;
+        }
       }
     }
 
@@ -242,6 +268,22 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     }
 
     #region Util functions
+
+    /// <summary>
+    /// Scans the TextFixture for TestAttributes and adds them in a hash set.
+    /// </summary>
+    /// <returns>
+    /// The overriden test cases.
+    /// </returns>
+    protected HashSet<string> GetOverridenTestCases() {
+      HashSet<string> res = new HashSet<string>();
+      Type ty = GetType();
+      foreach(System.Reflection.MethodInfo mInfo in ty.GetMethods()) {
+        if (mInfo.GetCustomAttributes(typeof(TestAttribute), true).Length == 1)
+          res.Add(mInfo.Name);
+      }
+      return res;
+    }
 
     protected string GetTestCaseFullPath(string testCaseName)
     {
