@@ -4,6 +4,5 @@ csharp_add_library(
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 
-add_subdirectory(Compatibility)
 add_subdirectory(Subsystems)
 add_subdirectory(Transformations)
