@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Text;
 
 using Mono.Cecil;
 
@@ -39,5 +40,36 @@ namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
 			this.method = method;
 			this.block = block;
 		}
+
+    public override string ToString()
+    {
+      CodeVisitor codeVisitor = new CodeVisitor();
+      codeVisitor.Visit(block);
+      return codeVisitor.Text;
+    }
+            
+    internal class CodeVisitor : Cecil.Decompiler.Ast.BaseCodeVisitor {
+      private StringBuilder text = new StringBuilder();
+      public string Text {
+        get { return text.ToString(); }
+      }
+      private int indent = 0;
+
+      public override void Visit (ICodeNode node)
+      {
+        if (null == node)
+          return;
+        for(int i = 0; i <= indent; i++)
+          if (i + 1 > indent)
+            text.Append("+--");
+          else
+            text.Append("---");
+
+        text.AppendLine(node.CodeNodeType.ToString());
+        indent++;
+        base.Visit(node);
+        indent--;
+        }
+      }
 	}
 }

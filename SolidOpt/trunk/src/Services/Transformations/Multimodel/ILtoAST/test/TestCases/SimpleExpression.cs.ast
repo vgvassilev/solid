@@ -1,0 +1,15 @@
++--BlockStatement
+---+--ExpressionStatement
+------+--AssignExpression
+---------+--VariableDeclarationExpression
+---------+--LiteralExpression
+---+--ExpressionStatement
+------+--AssignExpression
+---------+--VariableDeclarationExpression
+---------+--LiteralExpression
+---+--ExpressionStatement
+------+--AssignExpression
+---------+--VariableReferenceExpression
+---------+--BinaryExpression
+------------+--VariableReferenceExpression
+------------+--VariableReferenceExpression
