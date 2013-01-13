@@ -54,6 +54,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 			return builder.Create();
 		}
 		
+    public ControlFlowGraph Transform(MethodDefinition source)
+    {
+      return Decompile(source);
+    }
 		
 		public ControlFlowGraph Decompile(MethodDefinition source)
 		{

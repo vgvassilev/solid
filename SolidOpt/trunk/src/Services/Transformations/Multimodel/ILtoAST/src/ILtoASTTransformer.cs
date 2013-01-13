@@ -32,6 +32,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST
 		{
 		}
 
+    public AstMethodDefinition Transform(MethodDefinition source)
+    {
+      return Decompile(source);
+    }
+
 		public AstMethodDefinition Decompile(MethodDefinition source)
 		{
 			ILanguage csharpLang = CSharp.GetLanguage(CSharpVersion.V1);//new CSharp();

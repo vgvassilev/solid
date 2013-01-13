@@ -63,6 +63,11 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline
 		public InlineTransformer()
 		{
 		}
+
+    public MethodDefinition Transform(MethodDefinition source)
+    {
+      return Optimize(source);
+    }
 		
 		public MethodDefinition Optimize(MethodDefinition source)
 		{

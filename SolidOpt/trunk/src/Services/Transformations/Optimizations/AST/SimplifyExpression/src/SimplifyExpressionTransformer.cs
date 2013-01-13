@@ -35,6 +35,11 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.SimplifyExpression
 		}
 		
 		#endregion
+
+    public AstMethodDefinition Transform(AstMethodDefinition source)
+    {
+      return Optimize(source);
+    }
 		
 		public AstMethodDefinition Optimize(AstMethodDefinition source)
 		{

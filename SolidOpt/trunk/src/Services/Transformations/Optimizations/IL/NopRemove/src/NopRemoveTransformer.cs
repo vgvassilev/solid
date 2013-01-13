@@ -24,6 +24,11 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.NopRemover
 		{
 		}
 		
+    public MethodDefinition Transform(MethodDefinition source)
+    {
+      return Optimize(source);
+    }
+
 		public MethodDefinition Optimize(MethodDefinition source)
 		{
 			ILProcessor cil = source.Body.GetILProcessor();

@@ -42,7 +42,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
   /// Abstract out the common interfaces for running a single testcase.
   /// </summary>
   public abstract class BaseTestFixture<Source, Target, Transformer>
-    where Transformer: SolidOpt.Services.Transformations.Multimodel.IDecompile<Source, Target>, new()
+    where Transformer: SolidOpt.Services.Transformations.ITransform<Source, Target>, new()
   {
 
     /// <summary>
@@ -116,7 +116,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
                                  ref directives);
       testXFail = directives.Find(d => d.Kind == TestCaseDirectiveKind.XFail) != null;
       try {
-        Target target = new Transformer().Decompile(source);
+        Target target = new Transformer().Transform(source);
         seen = Normalize(target.ToString().Split('\n'));
       }
       catch (Exception e) {

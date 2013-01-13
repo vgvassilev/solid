@@ -29,6 +29,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
 		{
 		}
 		
+    public MethodDefinition Transform(AstMethodDefinition source)
+    {
+      return Compile(source);
+    }
+
 		public MethodDefinition Compile(AstMethodDefinition source)
 		{
 			//Mono.Cecil 0.9.3 migration: Compiler compiler = new Compiler(source.Block, source.Method.Body.CilWorker);

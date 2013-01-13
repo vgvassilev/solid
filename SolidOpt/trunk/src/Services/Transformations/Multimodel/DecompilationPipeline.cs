@@ -21,7 +21,12 @@ namespace SolidOpt.Services.Transformations.Multimodel
 				: base (steps)
 		{		
 		}
-			
+		
+    public Target Transform(Source source)
+    {
+      return Decompile(source);
+    }
+
 		#region IDecompile<Source, Target> implementation
 
 		public Target Decompile (Source source)

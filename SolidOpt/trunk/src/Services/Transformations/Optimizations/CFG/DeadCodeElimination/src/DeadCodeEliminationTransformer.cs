@@ -19,7 +19,12 @@ namespace SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeEliminatio
 		public DeadCodeEliminationTransformer()
 		{
 		}
-		
+
+    public ControlFlowGraph Transform(ControlFlowGraph source)
+    {
+      return Optimize(source);
+    }
+
 		#region IOptimize<ControlFlowGraph> implementation
 		public ControlFlowGraph Optimize(ControlFlowGraph source)
 		{

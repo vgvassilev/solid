@@ -53,6 +53,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
       var builder = new CallGraphBuilder(source.Method);
       return builder.Create();
     }
+
+    public CallGraph Transform(MethodDefinition source)
+    {
+      return Decompile(source);
+    }
     
     public CallGraph Decompile(MethodDefinition source)
     {

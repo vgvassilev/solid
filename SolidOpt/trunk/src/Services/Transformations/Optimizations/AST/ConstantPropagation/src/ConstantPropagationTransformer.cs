@@ -28,6 +28,11 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.ConstantPropagatio
 		public ConstantPropagationTransformer()
 		{
 		}
+
+    public AstMethodDefinition Transform(AstMethodDefinition source)
+    {
+      return Optimize(source);
+    }
 		
 		public AstMethodDefinition Optimize(AstMethodDefinition source)
 		{

@@ -46,6 +46,10 @@
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
       <Name>nunit.framework.dll</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolidOpt.Services.Transformations.csproj">
+      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
+      <Name>SolidOpt.Services.Transformations</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

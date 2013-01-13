@@ -23,6 +23,11 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.OverflowArithmeticR
 		public OverflowArithmeticRemoveTransformer()
 		{
 		}
+
+    public MethodDefinition Transform(MethodDefinition source)
+    {
+      return Optimize(source);
+    }
 		
 		public MethodDefinition Optimize(MethodDefinition source)
 		{

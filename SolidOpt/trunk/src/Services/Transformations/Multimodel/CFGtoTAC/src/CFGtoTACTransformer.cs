@@ -44,6 +44,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return builder.Create();
     }
 
+    public ThreeAdressCode Transform(ControlFlowGraph source)
+    {
+      return Decompile(source);
+    }
 
     #region IDecompile[ControlFlowGraph, ThreeAdressCode] implementation
     public ThreeAdressCode Decompile (ControlFlowGraph source)
