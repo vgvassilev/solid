@@ -17,12 +17,9 @@ using NUnit.Framework;
 
 namespace SolidOpt.Services.Transformations.Multimodel.Test
 {
-  public class XFailException : Exception {
-    public XFailException(string msg) : base(msg) { }
-  }
-
   internal enum TestCaseDirectiveKind {
-    XFail
+    XFail,
+    Run
   }
 
   internal class TestCaseDirective
