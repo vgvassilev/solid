@@ -17,23 +17,6 @@ using NUnit.Framework;
 
 namespace SolidOpt.Services.Transformations.Multimodel.Test
 {
-  internal enum TestCaseDirectiveKind {
-    XFail,
-    Run
-  }
-
-  internal class TestCaseDirective
-  {
-    private TestCaseDirectiveKind kind;
-    public TestCaseDirectiveKind Kind {
-      get { return this.kind; }
-    }
-
-    public TestCaseDirective(TestCaseDirectiveKind kind)
-    {
-      this.kind = kind;
-    }
-  }
 
   /// <summary>
   /// Abstract out the common interfaces for running a single testcase.
@@ -107,11 +90,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
       string[] seen = new string[0]; // in case of exception preventing seen to get value.
       string[] expected;
-      string errMsg = String.Empty;
-      List<TestCaseDirective> directives = new List<TestCaseDirective>();
-      expected = ParseDirectives(File.ReadAllText(GetTestCaseResultFullPath(testCaseName)),
-                                 ref directives);
-      testXFail = directives.Find(d => d.Kind == TestCaseDirectiveKind.XFail) != null;
+      string errMsg = String.Empty; 
+      StreamReader stream = new StreamReader(GetTestCaseResultFullPath(testCaseName));
+      TestCaseDirectiveParser dirParser = new TestCaseDirectiveParser(stream);
+      List<TestCaseDirective> directives = dirParser.ParseDirectives();
+      stream = new StreamReader(GetTestCaseResultFullPath(testCaseName));
+      expected = Normalize(DirectiveLexer.StripComments(stream)).Split('\n');
+      testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
         Target target = new Transformer().Transform(source);
         seen = Normalize(target.ToString().Split('\n'));
@@ -138,35 +123,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
           Assert.IsTrue(match, errMsg);
         }
       }
-    }
-
-    /// <summary>
-    /// Parses the directives, specified in the test case result file. For now we have only one
-    /// directive: XFAIL - denoting that the test case is expected to fail.
-    /// </summary>
-    /// <returns>
-    /// The file represented line by line with all directives stripped out.
-    /// </returns>
-    /// <param name='contents'>
-    /// Input file contents.
-    /// </param>
-    /// <param name='directives'>
-    /// The list of recognized directives.
-    /// </param>
-    private string[] ParseDirectives(string contents, ref List<TestCaseDirective> directives)
-    {
-      List<string> stringList = new List<string>(Normalize(contents).Split('\n'));
-      string s = string.Empty;
-      for (int i = stringList.Count - 1; i >= 0; i--) {
-        s = stringList[i];
-        if (s.StartsWith(@"//")) {
-          if (s.Contains("XFAIL"))
-            directives.Add(new TestCaseDirective(TestCaseDirectiveKind.XFail));
-          stringList.Remove(s);
-        }
-      }
-
-      return stringList.ToArray();
     }
 
     /// <summary>

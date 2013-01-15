@@ -32,6 +32,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="test\BaseTestFixture.cs" />
+    <Compile Include="test\TestCaseDirective.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
