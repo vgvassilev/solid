@@ -113,6 +113,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MethodInline", "MethodInlin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.MethodInline", "Services\Transformations\Optimizations\AST\MethodInline\SolidOpt.Services.MethodInline.csproj", "{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.MethodInline.Test", "Services\Transformations\Optimizations\AST\MethodInline\SolidOpt.Services.MethodInline.Test.csproj", "{53832668-F8A8-44E5-9A27-554281CAB1BF}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.SimplifyExpression", "Services\Transformations\Optimizations\AST\SimplifyExpression\SolidOpt.Services.SimplifyExpression.csproj", "{29CE04D4-BB40-4638-800F-5EBADAB52B69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ConstantPropagation", "Services\Transformations\Optimizations\AST\ConstantPropagation\SolidOpt.Services.ConstantPropagation.csproj", "{1E227DA0-76C7-499C-BFB2-D11E6F212445}"
@@ -243,6 +245,10 @@ Global
 		{43A760A8-E789-4E27-A3C3-182CD847D07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43A760A8-E789-4E27-A3C3-182CD847D07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43A760A8-E789-4E27-A3C3-182CD847D07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53832668-F8A8-44E5-9A27-554281CAB1BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53832668-F8A8-44E5-9A27-554281CAB1BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53832668-F8A8-44E5-9A27-554281CAB1BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53832668-F8A8-44E5-9A27-554281CAB1BF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68F2A166-BED6-44F3-9440-3DDF412F4BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{68F2A166-BED6-44F3-9440-3DDF412F4BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68F2A166-BED6-44F3-9440-3DDF412F4BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -442,6 +448,7 @@ Global
 		{1E227DA0-76C7-499C-BFB2-D11E6F212445} = {76549458-BF29-4F92-A7DF-804AD75B78D9}
 		{68F2A166-BED6-44F3-9440-3DDF412F4BA4} = {76549458-BF29-4F92-A7DF-804AD75B78D9}
 		{09A9101B-94C4-46F0-99B5-DA5E658C5A4E} = {AC8117A8-5FC5-4141-80AA-B33250D137EE}
+		{53832668-F8A8-44E5-9A27-554281CAB1BF} = {AC8117A8-5FC5-4141-80AA-B33250D137EE}
 		{290649D0-DDE4-480E-A05C-6068123FACC4} = {9E11D86A-6302-4564-84EF-D0B4C46643CA}
 		{ce5652bd-2574-4a52-916a-d326048d8b43} = {9E11D86A-6302-4564-84EF-D0B4C46643CA}
 		{f1c147e3-8578-4d5c-b2f8-1516bb43211b} = {9E11D86A-6302-4564-84EF-D0B4C46643CA}

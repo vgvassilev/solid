@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53832668-F8A8-44E5-9A27-554281CAB1BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SolidOpt.Services.MethodInline.Test</RootNamespace>
+    <AssemblyName>SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="test\" />
+    <Folder Include="test\TestCases\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="test\MethodInlineTestFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\vendors\NUnit\NUnitFramework\framework\nunit.framework.dll.csproj">
+      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
+      <Name>nunit.framework.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Multimodel\SolidOpt.Services.Multimodel.Test.csproj">
+      <Project>{84D7E4D8-B58E-43EE-BCEB-0F068CC81166}</Project>
+      <Name>SolidOpt.Services.Multimodel.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CodeModel\AbstractSyntacticTree\SolidOpt.Services.AbstractSyntacticTree.csproj">
+      <Project>{009B19FC-7D5E-4F38-8421-7A63115C23E8}</Project>
+      <Name>SolidOpt.Services.AbstractSyntacticTree</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Multimodel\ILtoAST\SolidOpt.Services.ILtoAST.csproj">
+      <Project>{2CEFC6BD-6924-4E76-97BF-4C9951F09D1F}</Project>
+      <Name>SolidOpt.Services.ILtoAST</Name>
+    </ProjectReference>
+    <ProjectReference Include="SolidOpt.Services.MethodInline.csproj">
+      <Project>{09A9101B-94C4-46F0-99B5-DA5E658C5A4E}</Project>
+      <Name>SolidOpt.Services.MethodInline</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test\TestCases\SimpleInline.cs" />
+    <None Include="test\TestCases\SimpleInline.cs.ast" />
+  </ItemGroup>
+</Project>

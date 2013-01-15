@@ -1,0 +1,6 @@
+//XFAIL
+
++--BlockStatement
+---+--ExpressionStatement
+------+--MethodInvocationExpression
+---------+--MethodReferenceExpression
