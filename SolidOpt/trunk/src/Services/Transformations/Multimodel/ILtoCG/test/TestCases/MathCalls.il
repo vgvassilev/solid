@@ -1,3 +1,4 @@
+// XFAIL
 .assembly TestCase {}
 
 .class public auto ansi beforefieldinit TestCase

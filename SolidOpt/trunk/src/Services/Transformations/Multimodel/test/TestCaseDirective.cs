@@ -58,10 +58,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     }
   }
   internal class TestCaseDirectiveParser {
-    private StreamReader stream;
+    private DirectiveLexer lexer;
     public TestCaseDirectiveParser(StreamReader stream)
     {
-      this.stream = stream;
+      this.lexer = new DirectiveLexer(stream);
     }
 
     /// <summary>
@@ -80,20 +80,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     internal List<TestCaseDirective> ParseDirectives()
     {
       List<TestCaseDirective> directives = new List<TestCaseDirective>(1);
-      DirectiveLexer dirLexer = new DirectiveLexer(stream);
       Token tok;
       while (true) {
-        tok = dirLexer.Lex();
+        tok = lexer.Lex();
         if (tok.Kind == Token.Kinds.EOF)
           break;
         if (tok.Kind == Token.Kinds.Comment) {
-          tok = dirLexer.Lex();
+          tok = lexer.Lex();
           if (tok.Kind == Token.Kinds.Ident) {
             TestCaseDirective dir = null;
             if (tok.IdentName == "XFAIL")
               dir = ParseXfailDirective();
             else if (tok.IdentName == "RUN")
-              dir = ParseRunDirective(ref dirLexer);
+              dir = ParseRunDirective();
 
             if (dir != null)
               directives.Add(dir);
@@ -105,10 +104,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
     internal TestCaseDirective ParseXfailDirective()
     {
+      Token tok = lexer.Lex();
+      if (tok.Kind != Token.Kinds.Colon)
+        return null;
+
       return new TestCaseDirective(TestCaseDirective.Kinds.XFail);
     }
 
-    internal TestCaseDirective ParseRunDirective(ref DirectiveLexer lexer)
+    internal TestCaseDirective ParseRunDirective()
     {
       Token tok = lexer.Lex();
       if (tok.Kind != Token.Kinds.Colon)
@@ -120,10 +123,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       TestCaseDirective runDir = new TestCaseDirective(TestCaseDirective.Kinds.Run);
 
       string command = lexer.LexUntil('"');
+      lexer.Lex(); // Lex the closing quote.
       runDir.Command = command;
 
       string arguments = lexer.LexUntil('\n'); // Practically EOF in our case.
-      runDir.Arguments = arguments;
+      runDir.Arguments = arguments.TrimEnd('\r');
 
       return runDir;
     }
@@ -219,8 +223,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     public string LexUntil(char stopAt)
     {
       StringBuilder sb = new StringBuilder();
-      while (curPos != stopAt || !stream.EndOfStream)
-        sb.Append(curPos++);
+      while (curPos != stopAt && !stream.EndOfStream) {
+        sb.Append(curPos);
+        curPos = (char) stream.Read();
+      }
       return sb.ToString();
     }
 
