@@ -221,14 +221,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       p.StartInfo.RedirectStandardInput = true;
       p.StartInfo.RedirectStandardError = true;
       p.StartInfo.FileName = "ilasm";
+      p.StartInfo.WorkingDirectory = testCasesDir;
       if (runDir != null)
         p.StartInfo.FileName = runDir.Command;
       p.Start();
       string output = p.StandardOutput.ReadToEnd();
       string error = p.StandardError.ReadToEnd();
       p.WaitForExit();
-      Trace.WriteIf(p.ExitCode != 0, output + error);
-      //Assert.AreEqual(0, p.ExitCode, output + error);
+      Assert.AreEqual(0, p.ExitCode, output + error);
 
       return AssemblyDefinition.ReadAssembly(testCaseAssemblyName);
     }
