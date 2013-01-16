@@ -356,6 +356,5 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     }
 
     #endregion
-
   }
 }

@@ -33,6 +33,8 @@
   <ItemGroup>
     <Compile Include="test\BaseTestFixture.cs" />
     <Compile Include="test\TestCaseDirective.cs" />
+    <Compile Include="test\TestCaseDirectiveParser.cs" />
+    <Compile Include="test\DirectiveLexer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
