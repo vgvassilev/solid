@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services", "..\..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Multimodel", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj", "{02e6657d-3102-4d7e-94b5-6b38a0e34a86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Compatibility", "..\..\..\..\SolidOpt\trunk\src\Services\Compatibility\SolidOpt.Services.Compatibility.csproj", "{846d2563-5af8-4459-81c6-59a9da174849}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\SolidOpt.Services.Transformations.csproj", "{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ControlFlowGraph", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj", "{43A760A8-E789-4E27-A3C3-182CD847D07C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{FDF13ECC-517E-4C4A-956B-8627AC89CBC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,12 +46,6 @@ Global
 		{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}.Release|x86.Build.0 = Release|Any CPU
 		{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}.RunTest|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}.RunTest|Any CPU.Build.0 = Debug|Any CPU
-		{846d2563-5af8-4459-81c6-59a9da174849}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{846d2563-5af8-4459-81c6-59a9da174849}.Debug|x86.Build.0 = Debug|Any CPU
-		{846d2563-5af8-4459-81c6-59a9da174849}.Release|x86.ActiveCfg = Release|Any CPU
-		{846d2563-5af8-4459-81c6-59a9da174849}.Release|x86.Build.0 = Release|Any CPU
-		{846d2563-5af8-4459-81c6-59a9da174849}.RunTest|Any CPU.ActiveCfg = Debug|Any CPU
-		{846d2563-5af8-4459-81c6-59a9da174849}.RunTest|Any CPU.Build.0 = Debug|Any CPU
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Debug|x86.Build.0 = Debug|Any CPU
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Release|x86.ActiveCfg = Release|Any CPU
@@ -67,7 +61,6 @@ Global
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
 		{02e6657d-3102-4d7e-94b5-6b38a0e34a86} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
-		{846d2563-5af8-4459-81c6-59a9da174849} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
 		{6ea875ad-4277-4ef6-8d5c-03a0995db7fd} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
 		{43A760A8-E789-4E27-A3C3-182CD847D07C} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
 	EndGlobalSection
@@ -80,7 +73,6 @@ Global
 		$0.TextStylePolicy = $2
 		$2.FileWidth = 100
 		$2.TabWidth = 2
-		$2.RemoveTrailingWhitespace = True
 		$2.EolMarker = Windows
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
@@ -88,7 +80,6 @@ Global
 		$0.TextStylePolicy = $3
 		$3.FileWidth = 100
 		$3.TabWidth = 2
-		$3.RemoveTrailingWhitespace = True
 		$3.EolMarker = Windows
 		$3.inheritsSet = VisualStudio
 		$3.inheritsScope = text/plain
@@ -117,7 +108,6 @@ Global
 		$0.TextStylePolicy = $6
 		$6.FileWidth = 100
 		$6.TabWidth = 2
-		$6.RemoveTrailingWhitespace = True
 		$6.EolMarker = Windows
 		$6.inheritsSet = VisualStudio
 		$6.inheritsScope = text/plain
