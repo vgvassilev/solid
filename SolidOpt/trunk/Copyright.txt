@@ -1,1 +1,18 @@
-... coming soon ...
+                 RULES OF CONTRIBUTION AND COPYRIGHT OWNERSHIP
+
+ Everyone is permitted to copy and distribute verbatim copies of this document, 
+ but changing it is not allowed.
+
+0. LICENSE
+  License.txt describes SolidOpt as an open source project. By contributing to 
+the project you help not only SolidOpt to evolve but to develop the open
+source community. 
+
+1. COPYRIGHT OF CONTRIBUTIONS
+  Every contribution is very welcome and its copyright and any other related 
+rights become exclusive ownership of SolidOpt Founders (see Readme.txt).
+
+2. QUALITY OF CONTRIBUTIONS
+  In order for a contribution to be accepted it has to obey the previously 
+established rules for contribution acceptance in SolidOpt's work flow and rules.
+
