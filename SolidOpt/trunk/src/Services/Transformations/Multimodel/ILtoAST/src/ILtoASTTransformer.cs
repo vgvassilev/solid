@@ -26,7 +26,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST
   /// Creates Cecil.Decompiler AST representation of the specified method body.
   /// The Cecil.Decompiler is going to be replaced in the next versions with SolidOpt.Decompiler
   /// </summary>
-  public class ILtoASTTransformer : IDecompile<MethodDefinition, AstMethodDefinition>
+  public class ILtoASTTransformer : ITransform<MethodDefinition, AstMethodDefinition>
   {
     public ILtoASTTransformer()
     {

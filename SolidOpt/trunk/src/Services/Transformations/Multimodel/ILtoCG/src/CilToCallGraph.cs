@@ -18,7 +18,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
  /// <summary>
  /// Description of CilToControlFlowGraph.
  /// </summary>
- public class CilToCallGraph : DecompilationStep, IDecompile<MethodDefinition, CallGraph>
+ public class CilToCallGraph : DecompilationStep, ITransform<MethodDefinition, CallGraph>
  {   
     #region Constructors
     

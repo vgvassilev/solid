@@ -10,7 +10,7 @@ using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 {
-  public class CFGtoTACTransformer : DecompilationStep, IDecompile<ControlFlowGraph, ThreeAdressCode>
+  public class CFGtoTACTransformer : DecompilationStep, ITransform<ControlFlowGraph, ThreeAdressCode>
   {
 
     #region Constructors
@@ -49,12 +49,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return Decompile(source);
     }
 
-    #region IDecompile[ControlFlowGraph, ThreeAdressCode] implementation
     public ThreeAdressCode Decompile (ControlFlowGraph source)
     {
       return Process(source);
     }
-    #endregion
-
   }
 }

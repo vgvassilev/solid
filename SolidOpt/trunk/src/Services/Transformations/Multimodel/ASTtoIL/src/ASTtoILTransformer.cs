@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
   /// <summary>
   /// Compiles Cecil.Decompiler's AST to executable CIL.
   /// </summary>
-  public class ASTtoILTransformer : ICompile<AstMethodDefinition, MethodDefinition>
+  public class ASTtoILTransformer : ITransform<AstMethodDefinition, MethodDefinition>
   {
     public ASTtoILTransformer()
     {
