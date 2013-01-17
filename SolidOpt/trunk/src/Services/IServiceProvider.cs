@@ -9,13 +9,13 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services
 {
-	public interface IServiceProvider : IService
-	{
-		Service GetService<Service>() where Service : class;
-		List<Service> GetServices<Service>() where Service : class;
-		IService GetService(Type serviceType);
+  public interface IServiceProvider : IService
+  {
+    Service GetService<Service>() where Service : class;
+    List<Service> GetServices<Service>() where Service : class;
+    IService GetService(Type serviceType);
     List<IService> GetServices(Type serviceType);
     List<IService> GetServices();
-	}
-	
+  }
+  
 }

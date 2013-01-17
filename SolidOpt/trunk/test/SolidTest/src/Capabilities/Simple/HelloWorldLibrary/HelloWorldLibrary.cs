@@ -28,44 +28,44 @@ using System.Runtime.InteropServices;
 
 namespace SolidTest.Capabilities.Simple.HelloWorldLibrary
 {
-	class Hello
-	{
-		public static string SayHelloStatic()
-		{
-			return "Hello";
-		}
-		
-		public string SayHello()
-		{
-			return "Hello";
-		}
-	}
-	
-	class World
-	{
-		public static string SayWorldStatic()
-		{
-			return "World";
-		}
-		
-		public string SayWorld()
-		{
-			return "World";
-		}
-	}
+  class Hello
+  {
+    public static string SayHelloStatic()
+    {
+      return "Hello";
+    }
+    
+    public string SayHello()
+    {
+      return "Hello";
+    }
+  }
+  
+  class World
+  {
+    public static string SayWorldStatic()
+    {
+      return "World";
+    }
+    
+    public string SayWorld()
+    {
+      return "World";
+    }
+  }
 
-	class HelloWorld
-	{
-		public static string SayHelloWorldStatic()
-		{
-			return Hello.SayHelloStatic() + " " + World.SayWorldStatic() + "!";
-		}
-		
-		public  string SayHelloWorld()
-		{
-			Hello hello = new Hello();
-			World world = new World();
-			return hello.SayHello() + " " + world.SayWorld() + "!";
-		}
-	}
+  class HelloWorld
+  {
+    public static string SayHelloWorldStatic()
+    {
+      return Hello.SayHelloStatic() + " " + World.SayWorldStatic() + "!";
+    }
+    
+    public  string SayHelloWorld()
+    {
+      Hello hello = new Hello();
+      World world = new World();
+      return hello.SayHello() + " " + world.SayWorld() + "!";
+    }
+  }
 }

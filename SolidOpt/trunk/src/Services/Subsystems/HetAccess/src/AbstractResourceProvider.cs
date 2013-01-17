@@ -8,13 +8,13 @@ using System;
 
 namespace SolidOpt.Services.Subsystems.HetAccess
 {
-	/// <summary>
-	/// Description of AbstractResourceProvider.
-	/// </summary>
-	public abstract class AbstractResourceProvider : IProvider
-	{
-		
-		
-		
-	}
+  /// <summary>
+  /// Description of AbstractResourceProvider.
+  /// </summary>
+  public abstract class AbstractResourceProvider : IProvider
+  {
+    
+    
+    
+  }
 }

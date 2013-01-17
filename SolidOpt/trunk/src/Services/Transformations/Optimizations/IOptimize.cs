@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services.Transformations.Optimizations
 {
-	/// <summary>
-	/// Description of IOptimize.
-	/// </summary>
-	public interface IOptimize<Target> : ITransform<Target, Target>
-	{
-		Target Optimize(Target source);
-	}
+  /// <summary>
+  /// Description of IOptimize.
+  /// </summary>
+  public interface IOptimize<Target> : ITransform<Target, Target>
+  {
+    Target Optimize(Target source);
+  }
 }

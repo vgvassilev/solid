@@ -8,11 +8,11 @@ using System;
 
 namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline
 {
-	/// <summary>
-	/// Attribute with which the appropriate methods for inline are marked. 
-	/// </summary>
-	//TODO: Find suitable name
-	public class InlineableAttribute : Attribute
-	{
-	}
+  /// <summary>
+  /// Attribute with which the appropriate methods for inline are marked. 
+  /// </summary>
+  //TODO: Find suitable name
+  public class InlineableAttribute : Attribute
+  {
+  }
 }

@@ -15,23 +15,23 @@ using Mono.Cecil.Cil;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 {
-	/// <summary>
-	/// Description of CilToControlFlowGraph.
-	/// </summary>
-	public class CilToControlFlowGraph : DecompilationStep, IDecompile<MethodDefinition, ControlFlowGraph>
-	{		
-		#region Constructors
-		
-		public CilToControlFlowGraph ()
-		{
-		}
-		
-		#endregion
-		
-		public override object Process (object codeModel)
-		{
-			return Process (codeModel as MethodBody);
-		}
+  /// <summary>
+  /// Description of CilToControlFlowGraph.
+  /// </summary>
+  public class CilToControlFlowGraph : DecompilationStep, IDecompile<MethodDefinition, ControlFlowGraph>
+  {    
+    #region Constructors
+    
+    public CilToControlFlowGraph ()
+    {
+    }
+    
+    #endregion
+    
+    public override object Process (object codeModel)
+    {
+      return Process (codeModel as MethodBody);
+    }
 
     public override Type GetSourceType()
     {
@@ -43,25 +43,25 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       return typeof(ControlFlowGraph);
     }
 
-		public ControlFlowGraph Process (MethodBody source)
-		{
-			if (source == null)
-				throw new ArgumentNullException ("method");
-			if (!source.Method.HasBody)
-				throw new ArgumentException();
+    public ControlFlowGraph Process (MethodBody source)
+    {
+      if (source == null)
+        throw new ArgumentNullException ("method");
+      if (!source.Method.HasBody)
+        throw new ArgumentException();
 
-			var builder = new ControlFlowGraphBuilder (source.Method);
-			return builder.Create();
-		}
-		
+      var builder = new ControlFlowGraphBuilder (source.Method);
+      return builder.Create();
+    }
+    
     public ControlFlowGraph Transform(MethodDefinition source)
     {
       return Decompile(source);
     }
-		
-		public ControlFlowGraph Decompile(MethodDefinition source)
-		{
-			return Process(source.Body);
-		}
-	}
+    
+    public ControlFlowGraph Decompile(MethodDefinition source)
+    {
+      return Process(source.Body);
+    }
+  }
 }

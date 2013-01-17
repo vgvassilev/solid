@@ -8,8 +8,8 @@ using System;
 
 namespace SolidOpt.Services
 {
-	public interface IService
-	{
-	}
-	
+  public interface IService
+  {
+  }
+  
 }

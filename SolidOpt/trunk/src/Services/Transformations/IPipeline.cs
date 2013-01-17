@@ -10,10 +10,10 @@ namespace SolidOpt.Services.Transformations
 {
 
 
-	public interface IPipeline<Source, Target> 
-		where Source : class
-		where Target : class
-	{
-		Target Run(Source source);
-	}
+  public interface IPipeline<Source, Target> 
+    where Source : class
+    where Target : class
+  {
+    Target Run(Source source);
+  }
 }

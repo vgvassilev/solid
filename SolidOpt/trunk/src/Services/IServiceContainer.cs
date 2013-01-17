@@ -8,10 +8,10 @@ using System;
 
 namespace SolidOpt.Services
 {
-	public interface IServiceContainer : IServiceProvider
-	{
-		bool AddService(IService service);
-		bool RemoveService(IService service);
-	}
-	
+  public interface IServiceContainer : IServiceProvider
+  {
+    bool AddService(IService service);
+    bool RemoveService(IService service);
+  }
+  
 }

@@ -12,7 +12,7 @@ namespace SolidOpt.Services.Transformations.Multimodel
 {
 
 
-	public abstract class DecompilationStep : Step
-	{		
-	}
+  public abstract class DecompilationStep : Step
+  {    
+  }
 }

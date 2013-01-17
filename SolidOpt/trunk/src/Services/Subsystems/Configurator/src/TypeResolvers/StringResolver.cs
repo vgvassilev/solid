@@ -9,18 +9,18 @@ using System.Text;
 
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
-	/// <summary>
-	/// Tries to resolve strings.
-	/// </summary>
-	public class StringResolver : Resolver
-	{
-		public StringResolver()
-		{
-		}
-		
-		public override object TryResolve(object paramValue)
-		{
-			return paramValue.ToString();
-		}
-	}
+  /// <summary>
+  /// Tries to resolve strings.
+  /// </summary>
+  public class StringResolver : Resolver
+  {
+    public StringResolver()
+    {
+    }
+    
+    public override object TryResolve(object paramValue)
+    {
+      return paramValue.ToString();
+    }
+  }
 }

@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services.Transformations.Multimodel
 {
-	/// <summary>
-	/// Description of ICompile.
-	/// </summary>
-	public interface ICompile<Source, Target> : ITransform<Source, Target>
-	{
-		Target Compile(Source source);
-	}
+  /// <summary>
+  /// Description of ICompile.
+  /// </summary>
+  public interface ICompile<Source, Target> : ITransform<Source, Target>
+  {
+    Target Compile(Source source);
+  }
 }

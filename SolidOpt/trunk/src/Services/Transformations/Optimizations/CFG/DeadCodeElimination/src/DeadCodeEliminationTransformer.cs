@@ -13,32 +13,32 @@ using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
 namespace SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeElimination
 {
-	public class DeadCodeEliminationTransformer : IOptimize<ControlFlowGraph>
-	{
-		
-		public DeadCodeEliminationTransformer()
-		{
-		}
+  public class DeadCodeEliminationTransformer : IOptimize<ControlFlowGraph>
+  {
+    
+    public DeadCodeEliminationTransformer()
+    {
+    }
 
     public ControlFlowGraph Transform(ControlFlowGraph source)
     {
       return Optimize(source);
     }
 
-		#region IOptimize<ControlFlowGraph> implementation
-		public ControlFlowGraph Optimize(ControlFlowGraph source)
-		{
-			// Unreachable block is a block without predecessors, which is not the root block
-			foreach(BasicBlock block in source.RawBlocks) {
-				if (block != source.Root)
-					if (block.Predecessors.Count == 0)
-						source.RawBlocks.Remove(block);
-			}
+    #region IOptimize<ControlFlowGraph> implementation
+    public ControlFlowGraph Optimize(ControlFlowGraph source)
+    {
+      // Unreachable block is a block without predecessors, which is not the root block
+      foreach(BasicBlock block in source.RawBlocks) {
+        if (block != source.Root)
+          if (block.Predecessors.Count == 0)
+            source.RawBlocks.Remove(block);
+      }
 
-			return source;
-		}
-		#endregion
-		
-	}
+      return source;
+    }
+    #endregion
+    
+  }
 }
 

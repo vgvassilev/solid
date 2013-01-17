@@ -10,13 +10,13 @@ using SolidOpt.Services;
 
 namespace SolidOpt.Documentation.Samples.TestPluginService
 {
-	/// <summary>
-	/// Description of IAddService.
-	/// </summary>
-	public interface IAddService : IService
-	{
-		
-		int Add(int a, int b);
-		
-	}
+  /// <summary>
+  /// Description of IAddService.
+  /// </summary>
+  public interface IAddService : IService
+  {
+    
+    int Add(int a, int b);
+    
+  }
 }

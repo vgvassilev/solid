@@ -9,20 +9,20 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
 {
-	/// <summary>
-	/// The identity resolver is used for testing and demonstration what should contain
-	/// a resolver. When it is used it returns the same type.
-	/// </summary>
-	public class IdentityResolver : ITypeResolver
-	{
-		public IdentityResolver()
-		{
-		}
-		
-		public object TryResolve(object paramValue)
-		{
-			return paramValue;
-		}
-		
-	}
+  /// <summary>
+  /// The identity resolver is used for testing and demonstration what should contain
+  /// a resolver. When it is used it returns the same type.
+  /// </summary>
+  public class IdentityResolver : ITypeResolver
+  {
+    public IdentityResolver()
+    {
+    }
+    
+    public object TryResolve(object paramValue)
+    {
+      return paramValue;
+    }
+    
+  }
 }

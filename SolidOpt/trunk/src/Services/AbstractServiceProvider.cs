@@ -9,39 +9,39 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services
 {
-	public abstract class AbstractServiceProvider : AbstractService, IServiceProvider
-	{
-		public virtual Service GetService<Service>() where Service: class
-		{
-			return this as Service;
-		}
-		
-		public virtual List<Service> GetServices<Service>() where Service: class
-		{
-			Service found = GetService<Service>();
-			List<Service> result = new List<Service>();
-			if (found != default(Service))
-				result.Add(found);
-			return result;
-		}
+  public abstract class AbstractServiceProvider : AbstractService, IServiceProvider
+  {
+    public virtual Service GetService<Service>() where Service: class
+    {
+      return this as Service;
+    }
+    
+    public virtual List<Service> GetServices<Service>() where Service: class
+    {
+      Service found = GetService<Service>();
+      List<Service> result = new List<Service>();
+      if (found != default(Service))
+        result.Add(found);
+      return result;
+    }
     
     public virtual IService GetService(Type serviceType) {
       return IsTypeProvideService(this.GetType(), serviceType) ? this : null;
-		}
-		
+    }
+    
     public virtual List<IService> GetServices(Type serviceType) {
       List<IService> result = new List<IService>(1);
       IService found = GetService(serviceType);
-			if (found != null) result.Add(found);
+      if (found != null) result.Add(found);
       return result;
-		}
-		
-		public virtual List<IService> GetServices() {
+    }
+    
+    public virtual List<IService> GetServices() {
       List<IService> result = new List<IService>(1);
       result.Add(this);
-			return result;
-		}
-		
+      return result;
+    }
+    
     protected static bool IsTypeProvideService(Type type, Type serviceTypeOrOpenGeneric) {
       if (serviceTypeOrOpenGeneric.IsAssignableFrom(type)) return true;
       

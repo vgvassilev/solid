@@ -11,11 +11,11 @@ using SolidOpt.Services;
 
 namespace SolidOpt.Services.Transformations
 {
-	/// <summary>
-	/// Description of ITransform.
-	/// </summary>
-	public interface ITransform<Source, Target> : IService
-	{
+  /// <summary>
+  /// Description of ITransform.
+  /// </summary>
+  public interface ITransform<Source, Target> : IService
+  {
     Target Transform(Source source);
-	}
+  }
 }

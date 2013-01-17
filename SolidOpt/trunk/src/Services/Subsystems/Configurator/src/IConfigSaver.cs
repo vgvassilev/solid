@@ -8,12 +8,12 @@ using System;
 
 namespace SolidOpt.Services.Subsystems.Configurator
 {
-	
-	//FIXME: Fix the link between this interface and ConfigurationManager
-	public interface IConfigSaver
-	{
-		bool CanSave();
-		void Save();
-		void SaveAs();
-	}
+  
+  //FIXME: Fix the link between this interface and ConfigurationManager
+  public interface IConfigSaver
+  {
+    bool CanSave();
+    void Save();
+    void SaveAs();
+  }
 }

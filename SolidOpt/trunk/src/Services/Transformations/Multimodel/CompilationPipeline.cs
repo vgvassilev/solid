@@ -10,11 +10,11 @@ namespace SolidOpt.Services.Transformations.Multimodel
 {
 
 
-	public class CompilationPipeline
-	{
+  public class CompilationPipeline
+  {
 
-		public CompilationPipeline ()
-		{
-		}
-	}
+    public CompilationPipeline ()
+    {
+    }
+  }
 }

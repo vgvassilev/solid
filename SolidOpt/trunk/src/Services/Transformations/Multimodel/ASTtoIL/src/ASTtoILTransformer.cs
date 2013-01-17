@@ -20,26 +20,26 @@ using SolidOpt.Services.Transformations.Multimodel;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
 {
-	/// <summary>
-	/// Compiles Cecil.Decompiler's AST to executable CIL.
-	/// </summary>
-	public class ASTtoILTransformer : ICompile<AstMethodDefinition, MethodDefinition>
-	{
-		public ASTtoILTransformer()
-		{
-		}
-		
+  /// <summary>
+  /// Compiles Cecil.Decompiler's AST to executable CIL.
+  /// </summary>
+  public class ASTtoILTransformer : ICompile<AstMethodDefinition, MethodDefinition>
+  {
+    public ASTtoILTransformer()
+    {
+    }
+    
     public MethodDefinition Transform(AstMethodDefinition source)
     {
       return Compile(source);
     }
 
-		public MethodDefinition Compile(AstMethodDefinition source)
-		{
-			//Mono.Cecil 0.9.3 migration: Compiler compiler = new Compiler(source.Block, source.Method.Body.CilWorker);
-			Compiler compiler = new Compiler(source.Block, source.Method.Body.GetILProcessor(), source.Method.Body);
-			compiler.Compile();
-			return source.Method;
-		}
-	}
+    public MethodDefinition Compile(AstMethodDefinition source)
+    {
+      //Mono.Cecil 0.9.3 migration: Compiler compiler = new Compiler(source.Block, source.Method.Body.CilWorker);
+      Compiler compiler = new Compiler(source.Block, source.Method.Body.GetILProcessor(), source.Method.Body);
+      compiler.Compile();
+      return source.Method;
+    }
+  }
 }
