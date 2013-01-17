@@ -59,22 +59,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST
 			
 			
 			
-			var cfg = ControlFlowGraph.Create (source);
+//      var cfg = ControlFlowGraph.Create (source);
 
-//			FormatControlFlowGraph (Console.Out, cfg);
-			
-
-//			Console.WriteLine ("--------------------");
-
-//			var store = AnnotationStore.CreateStore (cfg, BlockOptimization.Detailed);
-//			PrintAnnotations (method, store);
-
-//			var language = CSharp.GetLanguage (CSharpVersion.V1);
-			
-
-			//var body = method.Body.Decompile (language);
-
-//			var writer = csharpLang.GetWriter (new PlainTextFormatter (Console.Out));
+//      FormatControlFlowGraph (Console.Out, cfg);
+//      Console.WriteLine ("--------------------");
+//      var store = AnnotationStore.CreateStore (cfg, BlockOptimization.Detailed);
+//      PrintAnnotations (method, store);
+//      var language = CSharp.GetLanguage (CSharpVersion.V1);
+//      var body = method.Body.Decompile (language);
+//      var writer = csharpLang.GetWriter (new PlainTextFormatter (Console.Out));
+      
 			Console.WriteLine(source.ToString());
 			var writer = csharpLang.GetWriter (new ColoredConsoleFormatter ());
 
