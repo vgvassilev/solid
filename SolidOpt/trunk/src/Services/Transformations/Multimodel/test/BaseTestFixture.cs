@@ -98,8 +98,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       expected = Normalize(DirectiveLexer.StripComments(stream)).Split('\n');
       testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
-        Transformer transformer = new Transformer();
-        Target target = transformer.Transform(source);
+        TestCaseDirective testClassDir 
+          = directives.Find(d => d.Kind == TestCaseDirective.Kinds.TestClass);
+        string testClass = testClassDir.QualifiedClassName;
+        Type unboundGeneric = typeof(ITransform<,>);
+        dynamic transformer = Activator.CreateInstance(testClassDir.AssemblyFile, testClass);
+        object target = transformer.Transform(source);
         seen = Normalize(target.ToString().Split('\n'));
       }
       catch (Exception e) {
