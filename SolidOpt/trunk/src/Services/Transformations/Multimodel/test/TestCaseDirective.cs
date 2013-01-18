@@ -18,7 +18,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
   {
     internal enum Kinds {
       Run,
-      TestClass,
       XFail
     }
 
@@ -56,33 +55,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       }
     }
 
-    private string qualifiedClassName;
-    public string QualifiedClassName {
-      get {
-        if (kind != Kinds.TestClass)
-          throw new InvalidOperationException("Getter should be called only if the kind is run");
-        return qualifiedClassName;
-      }
-      set {
-        if (kind != Kinds.TestClass)
-          throw new InvalidOperationException("Setter should be called only if the kind is run");
-        qualifiedClassName = value;
-      }
-    }
-
-    private string assemblyFile;
-    public string AssemblyFile {
-      get {
-        if (kind != Kinds.TestClass)
-          throw new InvalidOperationException("Getter should be called only if the kind is run");
-        return assemblyFile;
-      }
-      set {
-        if (kind != Kinds.TestClass)
-          throw new InvalidOperationException("Setter should be called only if the kind is run");
-        assemblyFile = value;
-      }
-    }
     public TestCaseDirective(Kinds kind)
     {
       this.kind = kind;

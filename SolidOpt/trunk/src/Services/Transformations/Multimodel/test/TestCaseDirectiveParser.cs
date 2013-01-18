@@ -55,8 +55,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
               dir = ParseXfailDirective();
             else if (tok.IdentName == "RUN")
               dir = ParseRunDirective();
-            else if (tok.IdentName == "TESTCLASS")
-              dir = ParseTestClassDirective();
 
             if (dir != null)
               directives.Add(dir);
@@ -84,7 +82,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     }
 
     /// <summary>
-    /// Parses the run directive. It is used to run a command to be run in the test case.
+    /// Parses the run directive. It is used to a command to be run in the test case.
     /// </summary>
     /// RUN has the syntax:
     /// <example>//RUN: "command" arguments</example>
@@ -110,37 +108,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       runDir.Arguments = arguments.TrimEnd('\r');
 
       return runDir;
-    }
-
-    /// <summary>
-    /// Parses the testclass directive. It is used specify the class, which the test case is for.
-    /// </summary>
-    /// TESTCLASS has the syntax:
-    /// <example>//TESTCLASS: fully.qualified.name "Full/Path/To/Assembly.dll"</example>
-    /// <returns>
-    /// The concrete testclass directive.
-    /// </returns>
-    internal TestCaseDirective ParseTestClassDirective()
-    {
-      Token tok = lexer.Lex();
-      if (tok.Kind != Token.Kinds.Colon)
-        return null;
-
-      TestCaseDirective testClassDir = new TestCaseDirective(TestCaseDirective.Kinds.TestClass);
-
-      string fullyQualName = lexer.LexUntil('"');
-      testClassDir.QualifiedClassName = fullyQualName;
-
-      tok = lexer.Lex();
-      if (tok.Kind != Token.Kinds.Quote)
-        return null;
-
-      // Get the assembly path
-      string assemblyFile = lexer.LexUntil('"');
-      testClassDir.AssemblyFile = assemblyFile;
-      lexer.Lex(); // lex the closing quote.
-
-      return testClassDir;
     }
   }
 }
