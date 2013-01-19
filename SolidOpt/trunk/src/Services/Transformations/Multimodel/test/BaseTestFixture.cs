@@ -92,22 +92,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
                     String.Format("{0} does not exist.", testCaseResultFile));
 
       string[] seen = new string[0]; // in case of exception preventing seen to get value.
-      string[] expected;
       string errMsg = String.Empty; 
-      StreamReader stream = new StreamReader(GetTestCaseResultFullPath(testCaseName));
-      expected = Normalize(DirectiveLexer.StripComments(stream)).Split('\n');
       testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
         Transformer transformer = new Transformer();
         Target target = transformer.Transform(source);
-        seen = Normalize(target.ToString().Split('\n'));
+        seen = target.ToString().Split('\n');
       }
       catch (Exception e) {
         if (!testXFail)
           throw e;
       }
       finally {
-        bool match = Validate(seen, expected, ref errMsg);
+        bool match = Validate(testCaseName, seen, ref errMsg);
         if (testXFail && match) {
           errMsg += "\nUnexpected pass.";
           Assert.Fail(errMsg);
@@ -141,29 +138,41 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// Errors if the match fails.
     /// </param>
     /// <returns>True on success.</returns>
-    public bool Validate(string[] seenLines, string[] expectedLines, ref string errMsg)
+    public bool Validate(string testCaseName, string[] seenLines, ref string errMsg)
     {
-      string seenLine, expectedLine;
-      bool match = true;
-      // take the min, because we don't want out of range exception
-      // the test may be marked as XFAIL
-      int minLineCount = Math.Min(seenLines.Length, expectedLines.Length);
-      // compare line by line
-      for (int i = 0; i < minLineCount; i++) {
-        seenLine = Normalize(seenLines[i]);
-        expectedLine = Normalize(expectedLines[i]);
-        if (seenLine != expectedLine) {
-          errMsg = String.Format("Difference at line {0}: ", (i + 1).ToString());
-          errMsg += String.Format("{0} != {1}", seenLine, expectedLine);
-          match = false;
-        }
-      }
-      if (seenLines.Length != expectedLines.Length) {
-        match = false;
-        errMsg += "More lines follow in either seen or expected.";
-      }
+      string resultFile = GetTestCaseResultFullPath(testCaseName);
+      string debugFile = GetTestCaseOutFullPath(testCaseName);
+      File.WriteAllLines(debugFile, seenLines);
 
-      return match;
+      Process p = new Process();
+      p.StartInfo.CreateNoWindow = true;
+      p.StartInfo.UseShellExecute = false;
+      p.StartInfo.RedirectStandardOutput = true;
+      p.StartInfo.RedirectStandardInput = true;
+      p.StartInfo.RedirectStandardError = true;
+      p.StartInfo.FileName = "diff";
+      // -B stays for ignore blank lines. TODO: Maybe we should consider fixing our tests.
+      p.StartInfo.Arguments = string.Format ("-y -w -B \"{0}\" \"{1}\"", resultFile, debugFile);
+      if (Environment.OSVersion.Platform == PlatformID.Win32Windows) {
+        p.StartInfo.Arguments = string.Format ("\"{0}\" \"{1}\"", resultFile, debugFile);
+        p.StartInfo.FileName = "FB";
+      }
+      p.Start();
+      string output = p.StandardOutput.ReadToEnd();
+      string error = p.StandardError.ReadToEnd();
+      p.WaitForExit();
+
+      if (error != String.Empty)
+        errMsg += string.Format("Errors: {0}", error);
+
+      // if the exit code is 0 this means there is no difference.
+      if (p.ExitCode > 0)
+        errMsg += output;
+      if (p.ExitCode == 0)
+        File.Delete(debugFile);
+      Console.WriteLine(output);
+
+      return p.ExitCode == 0;
     }
 
     /// <summary>
@@ -221,7 +230,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       p.StartInfo.RedirectStandardInput = true;
       p.StartInfo.RedirectStandardError = true;
       p.StartInfo.FileName = "ilasm";
-      p.StartInfo.WorkingDirectory = testCasesDir;
+      p.StartInfo.WorkingDirectory = testCasesTmpDir;
       if (runDir != null)
         p.StartInfo.FileName = runDir.Command;
       p.Start();
