@@ -1,11 +1,10 @@
-// RUN: "gmcs" /t:library /out:SimpleInline.dll /r:System.dll /r:/Users/vvassilev/workspace/my/solid/SolidOpt/build/lib/SolidOpt.Services.Transformations.Optimizations.Annotations.dll SimpleInline.cs
+// RUN: "gmcs" /t:library /out:SimpleInline.dll /r:System.dll /r:/Users/vvassilev/workspace/my/solid/SolidOpt/build/lib/SolidOpt.Services.Transformations.Optimizations.Annotations.dll ../SimpleInline.cs
 // XFAIL:
 
 using System;
 
 using SolidOpt.Services.Transformations.Optimizations.AST.MethodInline;
 
-namespace Test {
 class TestCase {
   [InlineableAttribute]
   public static void Main(string[] args) {
@@ -20,5 +19,4 @@ class TestCase {
     result = a + 10;
     return result;
   }
-}
 }
