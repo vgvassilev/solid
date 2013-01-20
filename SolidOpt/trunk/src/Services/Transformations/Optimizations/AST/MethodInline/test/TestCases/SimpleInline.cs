@@ -1,4 +1,4 @@
-// RUN: "gmcs" /t:library /out:SimpleInline.dll /r:System.dll /r:/Users/vvassilev/workspace/my/solid/SolidOpt/build/lib/SolidOpt.Services.Transformations.Optimizations.Annotations.dll ../SimpleInline.cs
+// RUN: "gmcs" /t:library /out:SimpleInline.dll /r:../../../../../../../../../../build/lib/SolidOpt.Services.Transformations.Optimizations.Annotations.dll ../SimpleInline.cs
 // XFAIL:
 
 using System;
