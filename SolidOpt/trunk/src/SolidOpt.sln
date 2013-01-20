@@ -191,6 +191,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ThreeAddr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.AbstractSyntacticTree", "Services\Transformations\CodeModel\AbstractSyntacticTree\SolidOpt.Services.AbstractSyntacticTree.csproj", "{009B19FC-7D5E-4F38-8421-7A63115C23E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildInformation", "BuildInformation\BuildInformation.csproj", "{A8D94E36-1B93-46AA-B9B0-3C873B7F4EEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -297,6 +299,10 @@ Global
 		{A035D611-94A5-458A-B879-292E4AB4C5B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A035D611-94A5-458A-B879-292E4AB4C5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A035D611-94A5-458A-B879-292E4AB4C5B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8D94E36-1B93-46AA-B9B0-3C873B7F4EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D94E36-1B93-46AA-B9B0-3C873B7F4EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D94E36-1B93-46AA-B9B0-3C873B7F4EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D94E36-1B93-46AA-B9B0-3C873B7F4EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1B6156A-908A-45AB-B77C-DF638DF1CD75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1B6156A-908A-45AB-B77C-DF638DF1CD75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B6156A-908A-45AB-B77C-DF638DF1CD75}.Release|Any CPU.ActiveCfg = Release|Any CPU
