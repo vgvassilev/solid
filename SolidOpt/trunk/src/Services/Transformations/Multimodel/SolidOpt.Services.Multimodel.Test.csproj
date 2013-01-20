@@ -53,6 +53,10 @@
       <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildInformation\BuildInformation.csproj">
+      <Project>{A8D94E36-1B93-46AA-B9B0-3C873B7F4EEC}</Project>
+      <Name>BuildInformation</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

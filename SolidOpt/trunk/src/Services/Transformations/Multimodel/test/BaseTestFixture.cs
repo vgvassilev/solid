@@ -239,7 +239,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       p.WaitForExit();
       Assert.AreEqual(0, p.ExitCode, output + error);
 
-      return AssemblyDefinition.ReadAssembly(testCaseAssemblyName);
+      var resolver = new DefaultAssemblyResolver();
+      resolver.AddSearchDirectory(SolidOpt.BuildInformation.BuildInfo.LibraryOutputDir);
+      ReaderParameters @params = new ReaderParameters();
+      @params.AssemblyResolver = resolver;
+      return AssemblyDefinition.ReadAssembly(testCaseAssemblyName, @params);
     }
 
     #region Util functions
