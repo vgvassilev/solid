@@ -33,7 +33,7 @@
     <Compile Include="src\BasicBlock.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\vendors\Mono.Cecil\v0.9.3\Mono.Cecil.csproj">
+    <ProjectReference Include="..\..\..\..\vendors\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
