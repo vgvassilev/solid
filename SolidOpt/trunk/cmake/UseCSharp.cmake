@@ -41,6 +41,10 @@ set_property(GLOBAL PROPERTY sln_projs_file_property)
 
 # Macros
 
+macro( CSHARP_ADD_TEST_LIBRARY name )
+  CSHARP_ADD_LIBRARY( ${name} ${ARGN} )
+endmacro( CSHARP_ADD_LIBRARY )
+
 macro( CSHARP_ADD_LIBRARY name )
   CSHARP_ADD_PROJECT( "library" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_LIBRARY )
