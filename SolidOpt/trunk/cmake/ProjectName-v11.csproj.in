@@ -14,7 +14,7 @@
 
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">@VAR_Project_Target@</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -26,20 +26,13 @@
     <TargetFrameworkProfile>@VAR_Project_TargetFrameworkProfile@</TargetFrameworkProfile>
     <BaseDirectory>@VAR_Project_BaseDirectory@</BaseDirectory>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>False</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>True</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '@VAR_Project_Target@|AnyCPU' ">
+    <DebugSymbols>@VAR_Project_DebugSymbols@</DebugSymbols>
+    <DebugType>@VAR_Project_DebugType@</DebugType>
+    <Optimize>@VAR_Project_Optimize@</Optimize>
+    <OutputPath>@VAR_Project_OutputPath@</OutputPath>
+    <IntermediateOutputPath>@VAR_Project_IntermediateOutputPath@</IntermediateOutputPath>
+    <DefineConstants>@VAR_Project_DefineConstants@</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
