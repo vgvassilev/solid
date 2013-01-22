@@ -42,7 +42,7 @@ set_property(GLOBAL PROPERTY sln_projs_file_property)
 # Macros
 
 macro( CSHARP_ADD_TEST_LIBRARY name )
-  CSHARP_ADD_LIBRARY( ${name} ${ARGN} )
+  CSHARP_ADD_PROJECT( "test_library" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_TEST_LIBRARY )
 
 macro( CSHARP_ADD_LIBRARY name )
@@ -91,13 +91,16 @@ macro( CSHARP_ADD_PROJECT type name )
 
   if( ${type} MATCHES "library" )
     set( output "dll" )
-    set( output_type "Library" )
+    set( output_type "library" )
   elseif( ${type} MATCHES "exe" )
     set( output "exe" )
-    set( output_type "Exe" )
+    set( output_type "exe" )
   elseif( ${type} MATCHES "gui" )
     set( output "exe" )
-    set( output_type "WinExe" )
+    set( output_type "winexe" )
+  elseif( ${type} MATCHES "test_library" )
+    set( output "dll" )
+    set( output_type "library" )
   endif( ${type} MATCHES "library" )
 
   # Step through each argument
@@ -135,12 +138,12 @@ macro( CSHARP_ADD_PROJECT type name )
   endif()
 
   # Add custom target and command
-  MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'" )
+  MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'" )
   add_custom_command(
-    COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'"
+    COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'"
     OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output}
     COMMAND ${CSHARP_COMPILER}
-    ARGS /t:${type} /out:${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}
+    ARGS /t:${output_type} /out:${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}
     WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
     DEPENDS ${sources_dep}
   )
