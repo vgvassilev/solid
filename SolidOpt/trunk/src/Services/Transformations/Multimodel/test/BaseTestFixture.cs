@@ -152,25 +152,27 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       p.StartInfo.RedirectStandardError = true;
       p.StartInfo.FileName = "diff";
       // -B stays for ignore blank lines. TODO: Maybe we should consider fixing our tests.
+      string output = string.Format("{0}\t\t\t\t{1}\n\n", Path.GetFileName(resultFile),
+                                    Path.GetFileName(debugFile));
       p.StartInfo.Arguments = string.Format ("-y -w -B \"{0}\" \"{1}\"", resultFile, debugFile);
       if (Environment.OSVersion.Platform == PlatformID.Win32Windows) {
         p.StartInfo.Arguments = string.Format ("\"{0}\" \"{1}\"", resultFile, debugFile);
         p.StartInfo.FileName = "FB";
       }
       p.Start();
-      string output = p.StandardOutput.ReadToEnd();
+      output += p.StandardOutput.ReadToEnd();
       string error = p.StandardError.ReadToEnd();
       p.WaitForExit();
 
       if (error != String.Empty)
         errMsg += string.Format("Errors: {0}", error);
 
+      File.WriteAllText(debugFile, output);
       // if the exit code is 0 this means there is no difference.
       if (p.ExitCode > 0)
         errMsg += output;
       if (p.ExitCode == 0)
         File.Delete(debugFile);
-      Console.WriteLine(output);
 
       return p.ExitCode == 0;
     }

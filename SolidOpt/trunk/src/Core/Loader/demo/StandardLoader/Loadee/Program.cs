@@ -27,103 +27,10 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
 //      Triangle();
 //      Triangle1();
       Console.WriteLine("test");
-      InlineTest();
+      //InlineTest();
       Console.ReadKey(true);
     }
     
-//    public static void Triangle()
-//    {
-//      int a = 5;
-//      int b = 8;
-//      int c = 10;
-//      int P = a + b + c;
-//      Console.WriteLine("Perimeter is {0}", P);
-//      
-//      int p = P/2;
-//      double S = Math.Sqrt(p * (p-a) * (p-b) * (p-c));
-//      Console.WriteLine("Area is {0}", S);
-//    }
-//    
-//    public static void PostTestLoop()
-//    {
-//      int a;
-//      int b;
-//      int s = 0;
-//      do {
-//        a = 5;
-//        b = 8;
-//        s = a + b;
-//        s = b;
-//      } while (a == 100);
-//    }
-//    
-//    public static void PreTestLoop()
-//    {
-//      int a = (int)Math.Sqrt(150*150);
-//      double s = 0;
-//      ;
-//      ;
-//      ;
-//      while (a >= 100) {
-//        a ++;
-//        int b = 8;
-//        s = Math.Sqrt(a + b);
-//        b = ++a;
-//        b = a++;
-//      } 
-//      Console.WriteLine(s);
-//    }
-    
-//    public static void PreTestLoop1()
-//    {
-//      while (new Random().Next() > 0.5) {
-//        int b = 8;
-//        b --;
-//        
-//        Console.WriteLine(b);
-//      } 
-//    }
-//    
-//    public static void Triangle1()
-//    {
-//      int a;
-//      int b;
-//      int c;
-//      int P;
-////      Console.WriteLine("a");
-//      do {
-//        a = 5;
-//        b = 8;
-//        c = 10;
-//        P = a + b + c;
-//        Console.WriteLine("Perimeter is {0}", P);
-//        
-//        int p = P/2;
-//        double S = Math.Sqrt(p * (p-a) * (p-b) * (p-c));
-//        if (S == 0)
-//          Console.WriteLine("Area is Zero");
-//        else
-//          Console.WriteLine("Area is {0}", S);
-//      } while (a == 5);
-//      a++;
-//      Console.WriteLine(a);
-//      b++;
-//      Console.WriteLine(b);
-//    }
-//    
-    
-    public static void InlineTest()
-    {
-      double a = 5;
-      double result;
-      result = CalculateDiag(a);
-      Console.WriteLine(a);
-    }
-    
-    public static double CalculateDiag(double a)
-    {
-      return Math.Sqrt(2) * a;
-    }
 
     public static void InlineTest1()
     {

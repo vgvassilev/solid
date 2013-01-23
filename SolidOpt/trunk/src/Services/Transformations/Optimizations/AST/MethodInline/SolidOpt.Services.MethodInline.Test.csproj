@@ -69,5 +69,11 @@
   <ItemGroup>
     <None Include="test\TestCases\SimpleInline.cs" />
     <None Include="test\TestCases\SimpleInline.cs.ast" />
+    <None Include="test\TestCases\Triangle.cs" />
+    <None Include="test\TestCases\Triangle.cs.ast" />
+    <None Include="test\TestCases\NestedInline.cs.ast" />
+    <None Include="test\TestCases\NestedInline.cs" />
+    <None Include="test\TestCases\Loops.cs.ast" />
+    <None Include="test\TestCases\Loops.cs" />
   </ItemGroup>
 </Project>

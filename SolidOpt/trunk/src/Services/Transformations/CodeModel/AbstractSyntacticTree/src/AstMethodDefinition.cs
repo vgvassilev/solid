@@ -65,7 +65,19 @@ namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
           else
             text.Append("---");
 
-        text.AppendLine(node.CodeNodeType.ToString());
+        text.Append(node.CodeNodeType.ToString());
+
+        if (node is MethodReferenceExpression)
+          text.Append(" " + (node as MethodReferenceExpression).Method.ToString());
+        else if (node is VariableDeclarationExpression)
+          text.AppendFormat(" ({0})", (node as VariableDeclarationExpression).Variable.ToString());
+        else if (node is VariableReferenceExpression)
+          text.AppendFormat(" ({0})", (node as VariableReferenceExpression).Variable.ToString());
+        else if (node is LiteralExpression)
+          text.AppendFormat(" ({0})", (node as LiteralExpression).Value.ToString());
+
+        text.AppendLine();
+          
         indent++;
         base.Visit(node);
         indent--;
