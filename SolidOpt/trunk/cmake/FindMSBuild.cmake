@@ -1,11 +1,16 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
 #
 # A CMake Module for finding MSBuild.
 #
 # The following variables are set:
 #   MSBUILD
 #
-# Copyright (c) SolidOpt Team
-#
+
 if( WIN32 )
   list( GET CSHARP_DOTNET_VERSIONS 0 newest_csharp_dotnet_version )
 endif( )

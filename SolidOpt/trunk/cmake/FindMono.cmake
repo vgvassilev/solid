@@ -1,3 +1,12 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
+## This file is based on the work of SimpleITK:
+##   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/FindMono.cmake
+
 #
 # A CMake Module for finding Mono.
 #
@@ -12,10 +21,6 @@
 #   http://www.mono-project.com/Main_Page
 #   http://www.mono-project.com/CSharp_Compiler
 #   http://mono-project.com/FAQ:_Technical (How can I tell where the Mono runtime is installed)
-#
-# This file is based on the work of SimpleITK:
-#   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/FindMono.cmake
-# Copyright (c) SolidOpt Team
 #
 
 set( csharp_mono_valid 1 )

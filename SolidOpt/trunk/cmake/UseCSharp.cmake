@@ -1,3 +1,12 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
+## This file is based on the work of SimpleITK:
+##   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/UseCSharp.cmake
+
 # A CMake Module for finding and using C# (.NET and Mono).
 #
 # The following variables are set:
@@ -14,10 +23,6 @@
 #   CSHARP_ADD_EXECUTABLE( MyExecutable "" "Program.cs" )
 #   CSHARP_ADD_EXECUTABLE( MyExecutable "ref1.dll ref2.dll" "Program.cs File1.cs" )
 #   CSHARP_ADD_EXECUTABLE( MyExecutable "ref1.dll;ref2.dll" "Program.cs;File1.cs" )
-#
-# This file is based on the work of SimpleITK:
-#   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/UseCSharp.cmake
-# Copyright (c) SolidOpt Team
 #
 
 # Check something was found

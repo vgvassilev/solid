@@ -1,3 +1,9 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
   configure_file(

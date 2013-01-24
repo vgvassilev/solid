@@ -1,3 +1,9 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
 project(SolidOpt)
 
 cmake_minimum_required(VERSION 2.6.2)

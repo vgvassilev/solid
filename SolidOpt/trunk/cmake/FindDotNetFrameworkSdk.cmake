@@ -1,3 +1,12 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
+## This file is based on the work of SimpleITK:
+##   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/UseCSharp.cmake
+
 #
 # A CMake Module for finding C# .NET.
 #
@@ -13,10 +22,6 @@
 #   .NET SDK 2.0: http://www.microsoft.com/downloads/details.aspx?FamilyID=fe6f2099-b7b4-4f47-a244-c96d69c35dec&displaylang=en
 #   .NET SDK 3.5: http://www.microsoft.com/downloads/details.aspx?familyid=333325fd-ae52-4e35-b531-508d977d32a6&displaylang=en
 #   C# Compiler options: http://msdn.microsoft.com/en-us/library/2fdbz5xd(v=VS.71).aspx
-#
-# This file is based on the work of SimpleITK:
-#   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/UseCSharp.cmake
-# Copyright (c) SolidOpt Team
 #
 
 set( csharp_dotnet_valid 1 )

@@ -1,3 +1,12 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
+## This file is based on the work of SimpleITK:
+##  https://github.com/SimpleITK/SimpleITK/blob/master/CMake/FindCSharp.cmake
+
 #
 # A CMake Module for finding and using C# (.NET and Mono).
 #
@@ -12,10 +21,6 @@
 #   CSHARP_SDK_COMPILER - the SDK commandline switch (empty for .NET, for Mono eg. "/sdk:2" or "/sdk:4")
 #   CSHARP_FRAMEWORK_VERSION - the Framework version (1.0, 1.1, 2.0, 3.0, 3.5, 4.0, 4.5, ...)
 #   CSHARP_FRAMEWORK_PROFILE - the Framework profile (empty, "Client", ...)
-#
-# This file is based on the work of SimpleITK:
-#   https://github.com/SimpleITK/SimpleITK/blob/master/CMake/FindCSharp.cmake
-# Copyright (c) SolidOpt Team
 #
 
 # TODO: ADD ABILITY TO SELECT WHICH C# COMPILER eg. .NET or Mono (if both exist). For the moment, .NET is selected above Mono.

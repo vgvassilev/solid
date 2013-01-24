@@ -1,3 +1,9 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
 macro( CSHARP_SAVE_PROJECT name )
   # Generate csproj
   if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)

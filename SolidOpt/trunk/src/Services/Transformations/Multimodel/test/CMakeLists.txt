@@ -1,3 +1,9 @@
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
 csharp_add_test_library(
   SolidOpt.Services.Transformations.MultiModel.Test
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.dll
