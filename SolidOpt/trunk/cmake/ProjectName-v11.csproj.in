@@ -55,12 +55,9 @@
   </ItemGroup>
 -->
   <ItemGroup>
-@VAR_Project_InternalReferences@
-  </ItemGroup>
+@VAR_Project_InternalReferences@  </ItemGroup>
   <ItemGroup>
-@VAR_Project_References@
-  </ItemGroup>
+@VAR_Project_References@  </ItemGroup>
   <ItemGroup>
-@VAR_Project_CompileItems@
-  </ItemGroup>
+@VAR_Project_CompileItems@  </ItemGroup>
 </Project>

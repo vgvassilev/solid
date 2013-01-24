@@ -9,6 +9,10 @@ csharp_add_test_library(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.ILtoAST.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.Test.dll
+  # Monodevelop 2.8 compatibility
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.Multimodel.ILtoAST.ILtoASTTransformer.dll
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll

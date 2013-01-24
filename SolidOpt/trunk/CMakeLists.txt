@@ -69,5 +69,8 @@ ADD_TEST(CDashTest1 CDashTest CDashTest)
 add_subdirectory(src)
 add_subdirectory(doc)
 
+# Resolve all target dependencies
+csharp_resolve_dependencies()
+
 # Save solution
 csharp_save_vs_solution(SolidOpt)

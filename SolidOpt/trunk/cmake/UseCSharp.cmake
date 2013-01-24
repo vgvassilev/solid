@@ -39,10 +39,16 @@ endif ( CSHARP_TYPE MATCHES ".NET" )
 
 include(VisualStudioGenerator)
 
-# Init global solution lists
-set_property(GLOBAL PROPERTY sln_projs_guid_property)
-set_property(GLOBAL PROPERTY sln_projs_name_property)
-set_property(GLOBAL PROPERTY sln_projs_file_property)
+# Init global solution info lists
+set_property(GLOBAL PROPERTY target_guid_property)
+set_property(GLOBAL PROPERTY target_proj_file_property)
+set_property(GLOBAL PROPERTY target_name_property)
+set_property(GLOBAL PROPERTY target_type_property)
+set_property(GLOBAL PROPERTY target_output_type_property)
+set_property(GLOBAL PROPERTY target_refs_property)
+set_property(GLOBAL PROPERTY target_sources_dep_property)
+set_property(GLOBAL PROPERTY target_src_dir_property)
+set_property(GLOBAL PROPERTY target_bin_dir_property)
 
 # Macros
 
@@ -70,7 +76,12 @@ macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
   STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" depends_on_we ${depends_on} )
 
   if ( TARGET ${depends_on_we} )
-    MESSAGE(STATUS "  ->Depends on[Target]: ${depends_on_we}")
+    list(FIND target_name ${depends_on_we} idx)
+    if (idx GREATER -1)
+      MESSAGE(STATUS "  ->Depends on[Target/Project]: ${depends_on_we}")
+    else ()
+      MESSAGE(STATUS "  ->Depends on[Target/Vendor]: ${depends_on_we}")
+    endif ()
     add_dependencies( ${cur_target_we} ${depends_on_we} )
   else ( )
     MESSAGE(STATUS "  ->Depends on[External]: ${depends_on}")
@@ -89,31 +100,34 @@ macro( CSHARP_ADD_PROJECT type name )
   )
 
   set( refs "/reference:System.dll" )
+  set( depRefs "System.dll" )
   set( sources )
   set( sources_dep )
 
   if( ${type} MATCHES "library" )
     set( output "dll" )
     set( output_type "library" )
+    set( TYPE_UPCASE "LIBRARY" )
   elseif( ${type} MATCHES "exe" )
     set( output "exe" )
     set( output_type "exe" )
+    set( TYPE_UPCASE "RUNTIME" )
   elseif( ${type} MATCHES "gui" )
     set( output "exe" )
     set( output_type "winexe" )
+    set( TYPE_UPCASE "RUNTIME" )
   elseif( ${type} MATCHES "test_library" )
     set( output "dll" )
     set( output_type "library" )
+    set( TYPE_UPCASE "LIBRARY" )
   endif( ${type} MATCHES "library" )
-
-  # We use that to determine where to put the binary
-  string(TOUPPER ${output_type} TYPE_UPCASE)
 
   # Step through each argument
   foreach( it ${ARGN} )
     if( ${it} MATCHES "(.*)(dll)" )
        # Argument is a dll, add reference
        list( APPEND refs /reference:${it} )
+       list( APPEND depRefs ${it} )
     else( )
       # Argument is a source file
       if( EXISTS ${it} )
@@ -159,19 +173,60 @@ macro( CSHARP_ADD_PROJECT type name )
     SOURCES ${sources_dep}
   )
 
-  # Resolve dependencies
-  MESSAGE( STATUS "Resolving dependencies for ${type}: ${name}" )
-  foreach( it ${ARGN} )
-    # Argument is a dll, add as dependency. csharp_add_dependency will decide if
-    # if it was a build target or not.
-    if( ${it} MATCHES "(.*)(dll)" )
-       # Get the filename only (no slashes)
-       get_filename_component(filename ${it} NAME)
-       csharp_add_dependency( ${name} ${filename} )
-     endif( )
-   endforeach( )
+  # Generate project GUID
+  find_program(guid_gen NAMES ${CMAKE_RUNTIME_OUTPUT_DIR}/guid.exe)
+  if( NOT guid_gen )
+    set( guid_src "${CMAKE_RUNTIME_OUTPUT_DIR}/guid.cs" )
+    set( guid_gen "${CMAKE_RUNTIME_OUTPUT_DIR}/guid.exe" )
+    file(TO_NATIVE_PATH "${guid_src}" guid_src)
+    file(TO_NATIVE_PATH "${guid_gen}" guid_gen)
+    file(WRITE ${guid_src} "class GUIDGen { static void Main() { System.Console.Write(System.Guid.NewGuid().ToString().ToUpper()); } }" )
+    execute_process(
+      COMMAND ${CSHARP_COMPILER} /t:exe /out:${guid_gen} /platform:anycpu ${guid_src}
+    )
+  endif ( )
+  execute_process(COMMAND ${CSHARP_INTERPRETER} ${guid_gen} OUTPUT_VARIABLE proj_guid )
 
-  # Generate csproj
-  csharp_save_project( ${name} )
+  # Save project info in global properties
+  set_property(GLOBAL APPEND PROPERTY target_name_property "${name}")
+  set_property(GLOBAL APPEND PROPERTY target_type_property "${type}")
+  set_property(GLOBAL APPEND PROPERTY target_output_type_property "${output_type}")
+  set_property(GLOBAL APPEND PROPERTY target_guid_property "${proj_guid}")
+  string(REPLACE ";" "#" r "${depRefs}")
+  set_property(GLOBAL APPEND PROPERTY target_refs_property "#${r}")
+  string(REPLACE ";" "#" sd "${sources_dep}")
+  set_property(GLOBAL APPEND PROPERTY target_sources_dep_property "#${sd}")
+  set_property(GLOBAL APPEND PROPERTY target_src_dir_property "${CMAKE_CURRENT_SOURCE_DIR}")
+  set_property(GLOBAL APPEND PROPERTY target_bin_dir_property "${CMAKE_CURRENT_BINARY_DIR}")
+  set_property(GLOBAL APPEND PROPERTY target_proj_file_property "${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj")
 
 endmacro( CSHARP_ADD_PROJECT )
+
+# Resolve dependencies
+macro( CSHARP_RESOLVE_DEPENDENCIES )
+  # Read global solution info lists
+  get_property(target_name GLOBAL PROPERTY target_name_property)
+  get_property(target_type GLOBAL PROPERTY target_type_property)
+  get_property(target_refs GLOBAL PROPERTY target_refs_property)
+
+  set( i 0 )
+  foreach( name ${target_name} )
+    list( GET target_type ${i} type )
+    list( GET target_refs ${i} r )
+    string(SUBSTRING "${r}" 1 -1 r)
+    string(REPLACE "#" ";" refs "${r}")
+    MESSAGE( STATUS "Resolving dependencies for ${type}: ${name}" )
+    foreach( it ${refs} )
+#      # Argument is a dll, add as dependency. csharp_add_dependency will decide if
+#      # if it was a build target or not.
+#      if( ${it} MATCHES "(.*)(dll)" )
+        # Get the filename only (no slashes)
+        get_filename_component(filename ${it} NAME)
+        csharp_add_dependency(${name} ${filename})
+#      endif( )
+    endforeach( )
+
+    math(EXPR i "${i}+1")
+  endforeach( )
+
+endmacro( CSHARP_RESOLVE_DEPENDENCIES )
