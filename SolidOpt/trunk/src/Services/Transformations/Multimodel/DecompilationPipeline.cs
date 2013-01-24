@@ -11,7 +11,7 @@ using SolidOpt.Services.Transformations;
 
 namespace SolidOpt.Services.Transformations.Multimodel
 {
-  public class DecompilationPipeline<Source, Target> : Pipeline<Source, Target>, IDecompile<Source, Target>
+  public class DecompilationPipeline<Source, Target> : Pipeline<Source, Target>
     where Source : class
     where Target : class    
   {
