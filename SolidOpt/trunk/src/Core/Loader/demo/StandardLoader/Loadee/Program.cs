@@ -30,58 +30,7 @@ namespace SolidOpt.Core.Loader.Demo.Loadee
       //InlineTest();
       Console.ReadKey(true);
     }
-    
 
-    public static void InlineTest1()
-    {
-//      int a = 0;
-//      Random rnd = new Random();
-//      int p = 4;
-//      p = Inlinee(2, 18);
-      double s, a, b, c, x;
-      a = 1;
-//      a = 1 + 2;
-//      b = (2 + 7) * 5;
-//      c = 3/2;
-//      Random rnd = new Random();
-//      a = Math.Sqrt(25.25);
-//      b = 8.2d;
-//      c = 1d;
-      s = CalculateArea(a, 1 + 2, 1 + 2 + 3);
-      Console.WriteLine(s);
-      s = CalculateArea1(9, 8, 7);
-      Console.WriteLine(s);
-      
-//      Console.WriteLine(p);
-//      TestThis.Inc();
-//      TestThis.Inc(6);
-//      TestThis td = new TestThis();
-//      int t = td.Test();
-//      Console.WriteLine(t);
-//      int f = 5;
-//      float f1 = 5.5f;
-//      Console.WriteLine(f + f1);
-      
-//      Console.WriteLine(p);
-//      Inlinee1(0, 1, 2);
-//      byte f = 2;
-//      OutTest(ref f);
-//      Console.WriteLine(f);
-    }
-//    public static void OutTest(ref byte p) {
-//      p = 5;
-//      
-//    }
-    
-//    public static void CalculateAreas()
-//    {
-//      double s;
-//      Random rnd = new Random();
-//      do {
-//        s = CalculateArea(rnd.Next(), rnd.Next(), rnd.Next());
-//      } while (s < 100);
-//     }
-    
 //    [MethodInliner.Inlineable]
     [SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Inlineable]
 //    [MethodInliner.SideEffects(false)]
