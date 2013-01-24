@@ -83,8 +83,6 @@ macro( CSHARP_ADD_PROJECT type name )
     @ONLY
   )
 
-  string(TOUPPER ${type} TYPE_UPCASE)
-
   set( refs "/reference:System.dll" )
   set( sources )
   set( sources_dep )
@@ -102,6 +100,9 @@ macro( CSHARP_ADD_PROJECT type name )
     set( output "dll" )
     set( output_type "library" )
   endif( ${type} MATCHES "library" )
+
+  # We use that to determine where to put the binary
+  string(TOUPPER ${output_type} TYPE_UPCASE)
 
   # Step through each argument
   foreach( it ${ARGN} )
