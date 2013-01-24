@@ -1,4 +1,4 @@
-csharp_add_library(
+csharp_add_test_library(
   SolidOpt.Services.Transformations.MultiModel.Test
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.BuildInformation.dll
