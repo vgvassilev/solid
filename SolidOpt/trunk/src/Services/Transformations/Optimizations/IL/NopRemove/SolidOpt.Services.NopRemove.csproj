@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
-    <ProjectGuid>{f1c147e3-8578-4d5c-b2f8-1516bb43211b}</ProjectGuid>
+    <ProjectGuid>{F1C147E3-8578-4D5C-B2F8-1516BB43211B}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
@@ -53,15 +53,15 @@
       <Name>Mono.Cecil.Rocks</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SolidOpt.Services.Optimizations.csproj">
-      <Project>{cccc9966-8ceb-4451-8ad4-fe48d7ad04bb}</Project>
+      <Project>{CCCC9966-8CEB-4451-8AD4-FE48D7AD04BB}</Project>
       <Name>SolidOpt.Services.Optimizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\SolidOpt.Services.Transformations.csproj">
-      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
+      <Project>{6EA875AD-4277-4EF6-8D5C-03A0995DB7FD}</Project>
       <Name>SolidOpt.Services.Transformations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\SolidOpt.Services.csproj">
-      <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
+      <Project>{C41B5FB4-DAE9-4A27-9D15-55109AB79660}</Project>
       <Name>SolidOpt.Services</Name>
     </ProjectReference>
   </ItemGroup>

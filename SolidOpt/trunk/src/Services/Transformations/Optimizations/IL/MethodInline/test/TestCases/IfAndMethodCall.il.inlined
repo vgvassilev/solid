@@ -1,0 +1,54 @@
+System.Void TestCase::Main(System.String[])
+{
+  L_0000: nop 
+  L_0001: ldc.r8 4
+  L_000a: ldc.r8 4
+  L_0013: ldc.r8 4
+  L_0000: nop 
+  L_0001: ldarg.0 
+  L_0002: ldc.r8 0
+  L_000b: beq.s L_002a
+  L_000d: ldarg.1 
+  L_000e: ldc.r8 0
+  L_0017: beq.s L_002a
+  L_0019: ldarg.2 
+  L_001a: ldc.r8 0
+  L_0023: ceq 
+  L_0025: ldc.i4.0 
+  L_0026: ceq 
+  L_0028: br.s L_002b
+  L_002a: ldc.i4.0 
+  L_002b: stloc.2 
+  L_002c: ldloc.2 
+  L_002d: brtrue.s L_003b
+  L_002f: ldc.r8 0
+  L_0038: stloc.1 
+  L_0039: br.s L_0060
+  L_003b: ldarg.0 
+  L_003c: ldarg.1 
+  L_003d: add 
+  L_003e: ldarg.2 
+  L_003f: add 
+  L_0040: ldc.r8 2
+  L_0049: div 
+  L_004a: stloc.0 
+  L_004b: ldloc.0 
+  L_004c: ldloc.0 
+  L_004d: ldarg.0 
+  L_004e: sub 
+  L_004f: mul 
+  L_0050: ldloc.0 
+  L_0051: ldarg.1 
+  L_0052: sub 
+  L_0053: mul 
+  L_0054: ldloc.0 
+  L_0055: ldarg.2 
+  L_0056: sub 
+  L_0057: mul 
+  L_0058: call float64 [mscorlib]System.Math::Sqrt(float64)
+  L_005d: stloc.1 
+  L_005e: br.s L_0060
+  L_0060: ldloc.1 
+  L_0021: pop 
+  L_0022: ret 
+}

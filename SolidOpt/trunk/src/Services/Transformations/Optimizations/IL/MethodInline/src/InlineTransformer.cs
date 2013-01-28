@@ -58,7 +58,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline
   /// }  
   /// </code>
   /// </summary>
-  public class InlineTransformer : IOptimize<MethodDefinition>
+  public class InlineTransformer : IOptimize<MethodDefinition>, ITransform<MethodDefinition, MethodDefinition>
   {
     public InlineTransformer()
     {
@@ -220,7 +220,5 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline
       }
       return false;
     }
-  }  
-  
-
+  }
 }
