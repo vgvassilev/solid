@@ -20,7 +20,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
 {
   [TestFixture]
   public class MethodInlineTestFixture 
-    : BaseTestFixture<AstMethodDefinition, AstMethodDefinition , InlineTransformer>
+    : BaseTestFixture<AstMethodDefinition, AstMethodDefinition, InlineTransformer>
   {
     protected override string GetTestCaseFileExtension()
     {
