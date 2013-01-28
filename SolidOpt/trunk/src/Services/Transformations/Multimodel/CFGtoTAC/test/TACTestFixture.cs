@@ -25,7 +25,9 @@ using SolidOpt.Services.Transformations.Multimodel.Test;
 namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
 {
   [TestFixture]
-  public class TACTestFixture : BaseTestFixture<ControlFlowGraph, ThreeAdressCode, CFGtoTACTransformer> {
+  public sealed class TACTestFixture 
+    : BaseTestFixture<ControlFlowGraph, ThreeAdressCode, CFGtoTACTransformer>
+  {
 
     protected override string GetTestCaseFileExtension()
     {

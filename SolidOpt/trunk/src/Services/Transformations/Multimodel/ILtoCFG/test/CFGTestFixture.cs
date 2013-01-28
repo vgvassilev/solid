@@ -19,7 +19,9 @@ using SolidOpt.Services.Transformations.Multimodel.Test;
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 {
   [TestFixture]
-  public class CFGTestFixture : BaseTestFixture<MethodDefinition, ControlFlowGraph, CilToControlFlowGraph> {
+  public sealed class CFGTestFixture
+    : BaseTestFixture<MethodDefinition, ControlFlowGraph, CilToControlFlowGraph>
+  {
 
     protected override string GetTestCaseFileExtension()
     {

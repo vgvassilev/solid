@@ -17,7 +17,8 @@ using SolidOpt.Services.Transformations.Multimodel.Test;
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST.Test
 {
   [TestFixture()]
-  public class ASTTestFixture : BaseTestFixture<MethodDefinition, AstMethodDefinition, ILtoASTTransformer>
+  public sealed class ASTTestFixture 
+    : BaseTestFixture<MethodDefinition, AstMethodDefinition, ILtoASTTransformer>
   {
     protected override string GetTestCaseFileExtension()
     {
