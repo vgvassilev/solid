@@ -35,7 +35,6 @@
     <Compile Include="CompilationPipeline.cs" />
     <Compile Include="DecompilationPipeline.cs" />
     <Compile Include="DecompilationStep.cs" />
-    <Compile Include="TransformationGraph.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Core">
