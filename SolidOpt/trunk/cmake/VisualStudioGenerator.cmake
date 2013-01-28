@@ -6,7 +6,7 @@
 
 macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
   # Generate csproj
-  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
+  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR VS10SLN)
 
     get_property(target_name GLOBAL PROPERTY target_name_property)
     get_property(target_guid GLOBAL PROPERTY target_guid_property)
@@ -122,8 +122,8 @@ endmacro( CSHARP_SAVE_PROJECT )
 
 macro( CSHARP_SAVE_VS_SOLUTION name )
   # Generate sln
-  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
-    MESSAGE( STATUS "Generating solution ${name}.sln" )
+  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR VS10SLN)
+    MESSAGE( STATUS "Generating projects for solution ${name}.sln" )
 
     # Read global solution info lists
     get_property(target_name GLOBAL PROPERTY target_name_property)
@@ -193,6 +193,8 @@ macro( CSHARP_SAVE_VS_SOLUTION name )
 
       math(EXPR i "${i}+1")
     endforeach(it)
+
+    MESSAGE( STATUS "Generating solution ${name}.sln" )
 
     # Configure solution
     configure_file(

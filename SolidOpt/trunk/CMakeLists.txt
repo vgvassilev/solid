@@ -22,7 +22,7 @@ if(INSOURCE OR INSOURCESUBDIR)
 endif()
 
 # Define generator properties
-set(FORCE_VISUAL_STUDIO_10_SLN OFF CACHE BOOL "Force generation of SLN.")
+set(VS10SLN OFF CACHE BOOL "Force generation of SLN.")
 
 # Find C#
 find_package( CSharp REQUIRED )

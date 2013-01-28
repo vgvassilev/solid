@@ -155,7 +155,8 @@ macro( CSHARP_ADD_PROJECT type name )
     file(TO_NATIVE_PATH "${guid_gen}" guid_gen)
     file(WRITE ${guid_src} "class GUIDGen { static void Main() { System.Console.Write(System.Guid.NewGuid().ToString().ToUpper()); } }" )
     execute_process(
-      COMMAND ${CSHARP_COMPILER} /t:exe /out:${guid_gen} /platform:anycpu ${guid_src}
+      WORKING_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIR}"
+      COMMAND ${CSHARP_COMPILER} /t:exe /out:guid.exe /platform:anycpu ${guid_src}
     )
   endif ( )
   execute_process(COMMAND ${CSHARP_INTERPRETER} ${guid_gen} OUTPUT_VARIABLE proj_guid )

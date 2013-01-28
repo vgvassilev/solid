@@ -33,7 +33,7 @@ macro( CSHARP_ADD_MSBUILD_PROJECT filename )
   )
 
   # TODO: For now build vendors if SLN generation is enabled. We nust rethink it!
-  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR FORCE_VISUAL_STUDIO_10_SLN)
+  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR VS10SLN)
     MESSAGE(STATUS "MSBuilding ${filename}...")
     execute_process(
       COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR} ${filename}
