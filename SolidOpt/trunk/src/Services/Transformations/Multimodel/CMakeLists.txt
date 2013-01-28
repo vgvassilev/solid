@@ -6,6 +6,11 @@
 
 csharp_add_library(
   SolidOpt.Services.Transformations.MultiModel
+  ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+  ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+  )
+csharp_add_dependencies(
+  SolidOpt.Services.Transformations.MultiModel
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.dll
   # External
@@ -13,9 +18,6 @@ csharp_add_library(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.core.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.core.interfaces.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll
-  ###
-  ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
-  ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 
 add_subdirectory(ASTtoIL)

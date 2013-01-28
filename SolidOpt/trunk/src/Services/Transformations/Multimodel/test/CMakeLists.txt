@@ -6,6 +6,11 @@
 
 csharp_add_library(
   SolidOpt.Services.Transformations.MultiModel.Test
+  ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+  #${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+  )
+csharp_add_dependencies(
+  SolidOpt.Services.Transformations.MultiModel.Test
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.BuildInformation.dll
   # Monodevelop 2.8 compatibility
@@ -14,7 +19,4 @@ csharp_add_library(
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll
-  ###
-  ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
-  #${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
