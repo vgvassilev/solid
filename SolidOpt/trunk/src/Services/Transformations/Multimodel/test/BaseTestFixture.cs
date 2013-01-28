@@ -97,7 +97,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       try {
         Transformer transformer = new Transformer();
         Target target = transformer.Transform(source);
-        seen = target.ToString().Split('\n');
+        seen = TargetToString(target).Split('\n');
       }
       catch (Exception e) {
         if (!testXFail)
@@ -121,6 +121,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
           Assert.IsTrue(match, errMsg);
         }
       }
+    }
+
+    public virtual string TargetToString(Target target) {
+      return target.ToString();
     }
 
     /// <summary>
