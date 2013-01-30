@@ -20,8 +20,8 @@ else( )
   message(STATUS "ILASM found : ${ILASM}")
 endif( )
 
-set(CSC, ${CSHARP_COMPILER})
-
+set(CSC ${CSHARP_COMPILER})
+message(STATUS "CSC=${CSHARP_COMPILER}.")
 if ( NOT CSC )
   message(FATAL_ERROR "CSC not found.")
 else( )

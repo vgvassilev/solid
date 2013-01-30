@@ -22,3 +22,5 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll
   )
+
+add_subdirectory(TestCases)

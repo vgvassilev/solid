@@ -4,5 +4,7 @@
 ## For further details see the nearest License.txt
 ##
 
-add_subdirectory(src)
-add_subdirectory(test)
+csharp_add_test_case(
+  SolidOpt.Services.Transformations.MultiModel.ILtoCG.Test
+  ${CMAKE_CURRENT_SOURCE_DIR}/*.il
+  )

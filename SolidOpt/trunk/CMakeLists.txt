@@ -32,6 +32,11 @@ include( ${CSHARP_USE_FILE} )
 find_package( MSBuild REQUIRED )
 include( ${MSBuild_USE_FILE} )
 
+# Find Testing Prerequisites
+# TODO: Maybe this should be a variable eg. Dev=1...
+find_package( TestingPrerequisites )
+include( ${TestingPrerequisites_USE_FILE} )
+
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIR)
   set(CMAKE_RUNTIME_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/bin)
