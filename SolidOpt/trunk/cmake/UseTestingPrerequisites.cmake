@@ -13,6 +13,7 @@
 #  
 
 macro( CSHARP_ADD_TEST_CASE target)
+  MESSAGE("Configuring tests for ${target}")
   set(test_cases)
   set(test_results)
   # Step through each argument. Argument is a test source file
@@ -28,6 +29,10 @@ macro( CSHARP_ADD_TEST_CASE target)
 
   foreach(it ${test_cases})
     get_filename_component(test_case ${it} NAME)
+    # Export that variable for the testsuite itself, pointing to the current 
+    # test case.
+    get_filename_component(TEST_CASE_NAME ${it} NAME_WE)
+    set(TEST_CASE ${CMAKE_CURRENT_BINARY_DIR}/${test_case})
     MESSAGE( STATUS "Configuring test case ${test_case} for ${target}" )
     configure_file(
       ${it}
@@ -48,7 +53,13 @@ macro( CSHARP_ADD_TEST_CASE target)
         )
       # Add the result files to the list of result files.
       list( APPEND test_results ${result_it} )
+
+      # Save test cases in target property
+      set_property(TARGET ${target} APPEND PROPERTY target_testcase_src_property "${result_it}")
     endforeach()
+
+    # Save test cases in target property
+    set_property(TARGET ${target} APPEND PROPERTY target_testcase_src_property "${it}")
   endforeach()
 
 endmacro( CSHARP_ADD_TEST_CASE )
