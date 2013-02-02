@@ -5,6 +5,6 @@
 ##
 
 csharp_add_test_case(
-  SolidOpt.Services.Transformations.MultiModel.ILtoCFG.Test
+  SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Test
   ${CMAKE_CURRENT_SOURCE_DIR}/*.il
   )
