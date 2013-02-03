@@ -9,11 +9,12 @@
 # tests.
 #
 # The following macros are set:
-#   CSHARP_ADD_TEST_CASE - Adds a single test case.
+#   CSHARP_ADD_TEST_CASE - Adds a single test case. It relies on the target 
+#                          being defined before the calling that macro.
 #  
 
-macro( CSHARP_ADD_TEST_CASE target)
-  MESSAGE("Configuring tests for ${target}")
+macro( CSHARP_ADD_TEST_CASE name)
+  MESSAGE("Configuring tests for ${name}")
   set(test_cases)
   set(test_results)
   # Step through each argument. Argument is a test source file
@@ -33,7 +34,7 @@ macro( CSHARP_ADD_TEST_CASE target)
     # test case.
     get_filename_component(TEST_CASE_NAME ${it} NAME_WE)
     set(TEST_CASE ${CMAKE_CURRENT_BINARY_DIR}/${test_case})
-    MESSAGE( STATUS "Configuring test case ${test_case} for ${target}" )
+    MESSAGE( STATUS "Configuring test case ${test_case} for ${name}" )
     configure_file(
       ${it}
       ${CMAKE_CURRENT_BINARY_DIR}/${test_case}
@@ -54,12 +55,37 @@ macro( CSHARP_ADD_TEST_CASE target)
       # Add the result files to the list of result files.
       list( APPEND test_results ${result_it} )
 
-      # Save test cases in target property
-      set_property(TARGET ${target} APPEND PROPERTY target_testcase_src_property "${result_it}")
     endforeach()
-
-    # Save test cases in target property
-    set_property(TARGET ${target} APPEND PROPERTY target_testcase_src_property "${it}")
   endforeach()
 
+  # Save project references info in global properties
+  # This relies on setting/creating the target first and then calling that macro
+  get_property(target_name GLOBAL PROPERTY target_name_property)
+  list(FIND target_name ${name} idx)
+  if (idx GREATER -1)
+    # If we have test cases to add
+    get_property(target_tests GLOBAL PROPERTY target_tests_property)
+    if (NOT ("${test_cases}" STREQUAL ""))
+      string(REPLACE ";" "#" r "${test_cases}")
+      list(GET target_tests ${idx} old_tests)
+      list(INSERT target_tests ${idx} "${old_tests}#${r}")
+      # Use another variable (index) because incrementing inc would cause the
+      # second if to fail
+      math(EXPR index "${idx}+1")
+      list(REMOVE_AT target_tests ${index})
+      set_property(GLOBAL PROPERTY target_tests_property "${target_tests}")
+    endif()
+    # If we have test case results to add
+    get_property(target_test_results GLOBAL PROPERTY target_test_results_property)
+    if (NOT ("${test_results}" STREQUAL ""))
+      string(REPLACE ";" "#" r "${test_results}")
+      list(GET target_test_results ${idx} old_test_results)
+      list(INSERT target_test_results ${idx} "${old_test_results}#${r}")
+      math(EXPR idx "${idx}+1")
+      list(REMOVE_AT target_test_results ${idx})
+      set_property(GLOBAL PROPERTY target_test_results_property "${target_test_results}")
+    endif()
+  else ()
+    message(WARNING "Project ${name} was not defined!?")
+  endif ()
 endmacro( CSHARP_ADD_TEST_CASE )

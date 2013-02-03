@@ -167,7 +167,18 @@ macro( CSHARP_ADD_PROJECT type name )
   set_property(GLOBAL APPEND PROPERTY target_output_type_property "${output_type}")
   set_property(GLOBAL APPEND PROPERTY target_out_property "${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output}")
   set_property(GLOBAL APPEND PROPERTY target_guid_property "${proj_guid}")
+  # The implementation relies on fixed numbering. I.e. every property should be
+  # set for each target in order CMAKE and VS sln generation to work. In the 
+  # case of references and test cases we have to insert sort-of empty property
+  # for each target. In the case where the current target has test cases or more
+  # references we have to edit the string at that position.
   set_property(GLOBAL APPEND PROPERTY target_refs_property "#System.dll")
+  set_property(GLOBAL APPEND PROPERTY target_tests_property "#")
+  set_property(GLOBAL APPEND PROPERTY target_test_results_property "#")
+  # Replace the ; with # in the list of sources. Thus the list becomes 
+  # "flattened". This is useful when we append the sources for another target
+  # and then it will become a list of target sources. 
+  # Eg. #target1_src1.cs#target1_src2#...;#target2_src1.cs#target2_src2#...
   string(REPLACE ";" "#" s "${sources}")
   set_property(GLOBAL APPEND PROPERTY target_sources_property "#${s}")
   string(REPLACE ";" "#" sd "${sources_dep}")
@@ -204,7 +215,7 @@ macro( CSHARP_ADD_DEPENDENCIES name )
       set_property(GLOBAL PROPERTY target_refs_property "${target_refs}")
     endif()
   else ()
-    message(WARNING "Project ${name} is not already defined")
+    message(WARNING "Project ${name} was not defined!?")
   endif ()
 
 endmacro( CSHARP_ADD_DEPENDENCIES )

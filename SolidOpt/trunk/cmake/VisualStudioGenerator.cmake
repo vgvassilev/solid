@@ -10,18 +10,45 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
 
     get_property(target_name GLOBAL PROPERTY target_name_property)
     get_property(target_guid GLOBAL PROPERTY target_guid_property)
+    # Read the tests
+    get_property(target_tests GLOBAL PROPERTY target_tests_property)
+    get_property(target_test_results GLOBAL PROPERTY target_test_results_property)
 
     MESSAGE( STATUS "Generating project ${proj_name}.csproj" )
 
     list( GET target_output_type ${proj_ix} output_type )
     list( GET target_bin_dir ${proj_ix} bin_dir )
-    list( GET target_src_dir ${proj_ix} src_dir )
+    list( GET target_src_dir ${proj_ix} src_dir ) 
+    list( GET target_sources_dep ${proj_ix} sd )
     list( GET target_refs ${proj_ix} r )
+    list( GET target_tests ${proj_ix} t )
+    list( GET target_test_results ${proj_ix} tr )
+
+    # Transform back #-delimited string into list and remove the dublicates.
+    # References
     string(SUBSTRING "${r}" 1 -1 r)
     string(REPLACE "#" ";" refs "${r}")
-    list( GET target_sources_dep ${proj_ix} sd )
+    if (refs)
+      list( REMOVE_DUPLICATES refs )
+    endif (refs)
+    # Source files
     string(SUBSTRING "${sd}" 1 -1 sd)
     string(REPLACE "#" ";" sources_dep "${sd}")
+    if (sources_dep)
+      list( REMOVE_DUPLICATES sources_dep )
+    endif (sources_dep)
+    # Test cases
+    string(SUBSTRING "${t}" 1 -1 t)
+    string(REPLACE "#" ";" tests "${t}")
+    if (tests)
+      list( REMOVE_DUPLICATES tests )
+    endif (tests)
+    # Test results
+    string(SUBSTRING "${tr}" 1 -1 tr)
+    string(REPLACE "#" ";" test_results "${tr}")
+    if (test_results)
+      list( REMOVE_DUPLICATES test_results )
+    endif (test_results)
 
     # Set substitution variables
     set( VAR_Project_GUID ${proj_guid} )
@@ -59,10 +86,6 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
     # Base path
     #set( VAR_Project_BaseDirectory ${CMAKE_CURRENT_SOURCE_DIR} )
     file(TO_NATIVE_PATH "${bin_dir}" VAR_Project_BaseDirectory)
-
-    if (refs)
-      list( REMOVE_DUPLICATES refs )
-    endif (refs)
 
     foreach ( it ${refs} )
       get_filename_component(filename ${it} NAME)
@@ -109,6 +132,36 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
       else()
         set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <${item_type} Include=\"${rel_it}\">\n      <Link>${link_it}</Link>\n    </${item_type}>\n" )
       endif()
+    endforeach(it)
+
+    # Add the tests to the project
+    foreach( it ${tests})
+      file(RELATIVE_PATH rel_it "${bin_dir}" "${it}")
+      file(RELATIVE_PATH link_it "${src_dir}" "${it}")
+      file(TO_NATIVE_PATH "${rel_it}" rel_it)
+      #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
+      set(item_type "None")
+      if (link_it MATCHES "^\\.\\.")
+        set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <${item_type} Include=\"${rel_it}\" />\n" )
+      else()
+        set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <${item_type} Include=\"${rel_it}\">\n      <Link>${link_it}</Link>\n    </${item_type}>\n" )
+      endif()
+
+    endforeach(it)
+
+    # Add the test results to the project
+    foreach( it ${test_results})
+      file(RELATIVE_PATH rel_it "${bin_dir}" "${it}")
+      file(RELATIVE_PATH link_it "${src_dir}" "${it}")
+      file(TO_NATIVE_PATH "${rel_it}" rel_it)
+      #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
+      set(item_type "None")
+      if (link_it MATCHES "^\\.\\.")
+        set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <${item_type} Include=\"${rel_it}\" />\n" )
+      else()
+        set( VAR_Project_CompileItems "${VAR_Project_CompileItems}    <${item_type} Include=\"${rel_it}\">\n      <Link>${link_it}</Link>\n    </${item_type}>\n" )
+      endif()
+
     endforeach(it)
 
     # Configure project
