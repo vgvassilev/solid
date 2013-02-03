@@ -22,6 +22,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
   public sealed class CFGTestFixture
     : BaseTestFixture<MethodDefinition, ControlFlowGraph, CilToControlFlowGraph>
   {
+    private string testCasesDirCache = null;
 
     protected override string GetTestCaseFileExtension()
     {
@@ -31,6 +32,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
     protected override string GetTestCaseResultFileExtension()
     {
       return "il.cfg";
+    }
+
+    protected override string GetTestCasesDir() 
+    {
+      if (testCasesDirCache != null)
+        return testCasesDirCache;
+      
+      testCasesDirCache = base.GetTestCasesDir();
+      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Multimodel");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "ILtoCFG");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
+      return testCasesDirCache;
     }
 
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/

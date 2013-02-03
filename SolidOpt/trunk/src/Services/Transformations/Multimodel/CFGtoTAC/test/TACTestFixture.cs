@@ -28,7 +28,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
   public sealed class TACTestFixture 
     : BaseTestFixture<ControlFlowGraph, ThreeAdressCode, CFGtoTACTransformer>
   {
-
+    private string testCasesDirCache = null;
     protected override string GetTestCaseFileExtension()
     {
       return "il";
@@ -38,6 +38,24 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
     {
       return "il.tac";
     }
+
+    protected override string GetTestCasesDir() 
+    {
+      if (testCasesDirCache != null)
+        return testCasesDirCache;
+      
+      testCasesDirCache = base.GetTestCasesDir();
+      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Multimodel");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "CFGtoTAC");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
+      return testCasesDirCache;
+    }
+
 
     private ControlFlowGraph getCfg(string testCaseName) {
       MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);

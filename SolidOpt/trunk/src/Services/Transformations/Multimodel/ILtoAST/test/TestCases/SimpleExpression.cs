@@ -1,4 +1,4 @@
-// RUN: "gmcs" /t:library /out:SimpleExpression.dll ../SimpleExpression.cs
+// RUN: "@CSC@" /t:library @TEST_CASE@
 // XFAIL:
 public static class TestCase {
   public static void Main() {

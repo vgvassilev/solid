@@ -1,3 +1,4 @@
+// RUN: "@ILASM@" /DLL @TEST_CASE@
 // XFAIL:
 .assembly extern System.Exception {}
 .assembly TestCase {}

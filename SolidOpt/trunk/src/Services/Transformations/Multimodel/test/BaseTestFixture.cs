@@ -25,27 +25,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
   public abstract class BaseTestFixture<Source, Target, Transformer>
     where Transformer: SolidOpt.Services.Transformations.ITransform<Source, Target>, new()
   {
-
-    /// <summary>
-    /// The test case current dir.
-    /// </summary>
-    protected static string testCasesDir
-      = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-             Path.Combine ("..",
-             Path.Combine("..",
-                   Path.Combine ("test", "TestCases" + Path.DirectorySeparatorChar))));
-    /// <summary>
-    /// The test cases tmp dir, where the temporary files will be stored.
-    /// </summary>
-    protected static string testCasesTmpDir = Path.Combine(testCasesDir, "Tmp");
-
     private List<TestCaseDirective> directives = null;
 
     public BaseTestFixture()
     {
-      if (!Directory.Exists(testCasesTmpDir)) {
-        Directory.CreateDirectory(testCasesTmpDir);
-      }
+      // Cleanup the last invocation.
+      string[] testCases = Directory.GetFiles(GetTestCasesDir(), "*." + GetTestCaseFileExtension());
+      foreach (string testCaseName in testCases)
+        Cleanup(testCaseName);
     }
 
     /// <summary>
@@ -61,7 +48,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// </returns>
     protected IEnumerable GetTestCases()
     {
-      string[] testCases = Directory.GetFiles(testCasesDir, "*." + GetTestCaseFileExtension());
+      string[] testCases = Directory.GetFiles(GetTestCasesDir(), "*." + GetTestCaseFileExtension());
       HashSet<string> excludedTestCases = GetOverridenTestCases();
 
       foreach (string testCase in testCases) {
@@ -163,6 +150,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
         p.StartInfo.Arguments = string.Format ("\"{0}\" \"{1}\"", resultFile, debugFile);
         p.StartInfo.FileName = "FB";
       }
+      // Log the invocation.
+      LogProcessInvocation(p, testCaseName);
       p.Start();
       output += p.StandardOutput.ReadToEnd();
       string error = p.StandardError.ReadToEnd();
@@ -176,9 +165,36 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       if (p.ExitCode > 0)
         errMsg += output;
       if (p.ExitCode == 0)
-        File.Delete(debugFile);
+        Cleanup(testCaseName);
 
       return p.ExitCode == 0;
+    }
+
+    private void LogProcessInvocation(Process p, string testCaseName) {
+      string invokeFile = GetTestCaseOutFullPath(testCaseName) + ".invoke";
+      StringBuilder sb = new StringBuilder();
+      sb.AppendFormat("{0} {1}",p.StartInfo.FileName, p.StartInfo.Arguments);
+      sb.AppendLine();
+      File.AppendAllText(invokeFile, sb.ToString()); 
+    }
+
+    /// <summary>
+    /// In the process of testing we write a debug output to different files. However if the 
+    /// test was successful there is no need of keeping those files around.
+    /// </summary>
+    /// <param name="testCaseName">Test case name.</param>
+    private void Cleanup(string testCaseName)
+    {
+      string debugFile = GetTestCaseOutFullPath(testCaseName);
+      string invokeFile = debugFile + ".invoke";
+      string dllFile 
+        = Path.Combine(GetTestCasesDir(), Path.GetFileNameWithoutExtension(testCaseName) + ".dll");
+      if (File.Exists(debugFile))
+        File.Delete(debugFile);
+      if (File.Exists(invokeFile))
+        File.Delete(invokeFile);
+      if (File.Exists(dllFile))
+        File.Delete(dllFile);
     }
 
     /// <summary>
@@ -220,25 +236,22 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       string sourceFile = GetTestCaseFullPath(testCase);
       Assert.IsTrue(File.Exists(sourceFile), sourceFile + " not found!");
       string testCaseAssemblyName
-          = Path.Combine(testCasesTmpDir, Path.GetFileNameWithoutExtension(sourceFile)+".dll");
+          = Path.Combine(GetTestCasesDir(), Path.GetFileNameWithoutExtension(sourceFile)+".dll");
 
       TestCaseDirective runDir = directives.Find(d => d.Kind == TestCaseDirective.Kinds.Run);
-
-      string args = string.Format ("/DLL \"/OUTPUT:{0}\" {1}", testCaseAssemblyName, sourceFile);
-      if (runDir != null)
-        args = runDir.Arguments;
+      Assert.NotNull(runDir, "Are you missing RUN: directive?");
 
       Process p = new Process();
-      p.StartInfo.Arguments = args;
+      p.StartInfo.Arguments = runDir.Arguments;
       p.StartInfo.CreateNoWindow = true;
       p.StartInfo.UseShellExecute = false;
       p.StartInfo.RedirectStandardOutput = true;
       p.StartInfo.RedirectStandardInput = true;
       p.StartInfo.RedirectStandardError = true;
-      p.StartInfo.FileName = "ilasm";
-      p.StartInfo.WorkingDirectory = testCasesTmpDir;
-      if (runDir != null)
-        p.StartInfo.FileName = runDir.Command;
+      p.StartInfo.FileName = runDir.Command;
+      p.StartInfo.WorkingDirectory = GetTestCasesDir();
+      // Log the invocation
+      LogProcessInvocation(p, testCase);
       p.Start();
       string output = p.StandardOutput.ReadToEnd();
       string error = p.StandardError.ReadToEnd();
@@ -271,16 +284,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       return res;
     }
 
+    protected virtual string GetTestCasesDir()
+    {
+      return BuildInformation.BuildInfo.LibraryOutputDir;
+    }
+
     protected string GetTestCaseFullPath(string testCaseName)
     {
-      string result = Path.Combine(testCasesDir, testCaseName);
+      string result = Path.Combine(GetTestCasesDir(), testCaseName);
       result = Path.ChangeExtension(result, GetTestCaseFileExtension());
       return result;
     }
 
     protected string GetTestCaseResultFullPath(string testCaseName)
     {
-      string result = Path.Combine(testCasesDir, testCaseName);
+      string result = Path.Combine(GetTestCasesDir(), testCaseName);
       result = Path.ChangeExtension(result, GetTestCaseResultFileExtension());
       return result;
     }

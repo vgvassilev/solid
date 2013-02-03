@@ -22,6 +22,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
   public class MethodInlineTestFixture 
     : BaseTestFixture<AstMethodDefinition, AstMethodDefinition, InlineTransformer>
   {
+    private string testCasesDirCache = null;
     protected override string GetTestCaseFileExtension()
     {
       return "cs";
@@ -30,6 +31,23 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
     protected override string GetTestCaseResultFileExtension()
     {
       return "cs.ast";
+    }
+
+    protected override string GetTestCasesDir() {
+      if (testCasesDirCache != null)
+        return testCasesDirCache;
+
+      testCasesDirCache = base.GetTestCasesDir();
+      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Optimizations");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "AST");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "MethodInline");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
+      return testCasesDirCache;
     }
 
     private AstMethodDefinition getAstMethodDef(string testCaseName) {

@@ -20,6 +20,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST.Test
   public sealed class ASTTestFixture 
     : BaseTestFixture<MethodDefinition, AstMethodDefinition, ILtoASTTransformer>
   {
+    private string testCasesDirCache = null;
     protected override string GetTestCaseFileExtension()
     {
       return "cs";
@@ -29,6 +30,24 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST.Test
     {
       return "cs.ast";
     }
+
+    protected override string GetTestCasesDir() 
+    {
+      if (testCasesDirCache != null)
+        return testCasesDirCache;
+      
+      testCasesDirCache = base.GetTestCasesDir();
+      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Multimodel");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "ILtoAST");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
+      return testCasesDirCache;
+    }
+
     
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)

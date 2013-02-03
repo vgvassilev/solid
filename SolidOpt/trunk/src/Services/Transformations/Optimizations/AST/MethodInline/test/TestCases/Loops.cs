@@ -1,4 +1,4 @@
-// RUN: "gmcs" /t:library /out:Loops.dll /r:System.dll /r:../../../../../../../../../../build/lib/SolidOpt.Services.Transformations.Optimizations.Annotations.dll ../Loops.cs
+// RUN: "@CSC@" /t:library /out:@TEST_CASE_NAME@.dll /r:System.dll /r:@CMAKE_LIBRARY_OUTPUT_DIR@/SolidOpt.Services.Transformations.Optimizations.Annotations.dll @TEST_CASE@
 // XFAIL:
 
 using System;

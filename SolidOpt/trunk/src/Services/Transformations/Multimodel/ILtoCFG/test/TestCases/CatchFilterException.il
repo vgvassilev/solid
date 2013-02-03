@@ -1,3 +1,4 @@
+// RUN: "@ILASM@" /DLL @TEST_CASE@
 .assembly extern mscorlib { }
 .assembly TestCase { }
 

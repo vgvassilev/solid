@@ -1,3 +1,4 @@
+// RUN: "@ILASM@" /DLL @TEST_CASE@
 .assembly TestCase {}
 
 .class public auto ansi beforefieldinit TestCase

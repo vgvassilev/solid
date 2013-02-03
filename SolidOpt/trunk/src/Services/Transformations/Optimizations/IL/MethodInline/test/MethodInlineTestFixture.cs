@@ -24,6 +24,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Test
   public sealed class MethodInlineTestFixture
     : BaseTestFixture<MethodDefinition, MethodDefinition, InlineTransformer>
   {
+    private string testCasesDirCache = null;
     protected override string GetTestCaseFileExtension()
     {
       return "il";
@@ -32,6 +33,24 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Test
     protected override string GetTestCaseResultFileExtension()
     {
       return "il.inlined";
+    }
+
+    protected override string GetTestCasesDir() 
+    {
+      if (testCasesDirCache != null)
+        return testCasesDirCache;
+      
+      testCasesDirCache = base.GetTestCasesDir();
+      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "Optimizations");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "IL");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "MethodInline");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
+      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
+      return testCasesDirCache;
     }
 
     public override string TargetToString(MethodDefinition target) {
