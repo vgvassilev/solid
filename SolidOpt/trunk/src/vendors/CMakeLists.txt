@@ -16,3 +16,6 @@ csharp_add_msbuild_project(${CMAKE_CURRENT_SOURCE_DIR}/NUnit/NUnitCore/core/nuni
 csharp_add_msbuild_project(${CMAKE_CURRENT_SOURCE_DIR}/NUnit/NUnitCore/interfaces/nunit.core.interfaces.dll.csproj)
 # NUnit Framework
 csharp_add_msbuild_project(${CMAKE_CURRENT_SOURCE_DIR}/NUnit/NUnitFramework/framework/nunit.framework.dll.csproj)
+# NUnit console
+#csharp_add_msbuild_project(${CMAKE_CURRENT_SOURCE_DIR}/NUnit/ConsoleRunner/nunit-console/nunit-console.csproj)
+csharp_add_msbuild_project(${CMAKE_CURRENT_SOURCE_DIR}/NUnit/ConsoleRunner/nunit-console-exe/nunit-console.exe.csproj)

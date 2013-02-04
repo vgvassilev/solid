@@ -14,7 +14,7 @@
 #  
 
 macro( CSHARP_ADD_TEST_CASE name)
-  MESSAGE("Configuring tests for ${name}")
+  MESSAGE(STATUS "Configuring tests for ${name}")
   set(test_cases)
   set(test_results)
   # Step through each argument. Argument is a test source file
@@ -41,7 +41,7 @@ macro( CSHARP_ADD_TEST_CASE name)
       @ONLY
       )
 
-    # Consider it.* as result files and copy them over. 
+    # Consider it.* as result files and copy them over.
     # Expand wildcards first.
     FILE( GLOB test_case_results ${it}.* )
     foreach(result_it ${test_case_results})

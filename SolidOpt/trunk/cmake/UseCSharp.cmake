@@ -275,6 +275,12 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       SOURCES ${sources_dep}
     )
 
+    # Add a test if target is Test Library - nunit console test runner
+    if (type STREQUAL "test_library")
+      MESSAGE(STATUS "Add test case runner for ${name}")
+      ADD_TEST("${name}" ${CSHARP_INTERPRETER} "${NUNIT_CONSOLE}" "${out}")
+    endif()
+
     math(EXPR i "${i}+1")
   endforeach( )
 

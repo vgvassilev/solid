@@ -66,10 +66,6 @@ IF(BUILD_TESTING)
   MARK_AS_ADVANCED(BUILDNAME)
 ENDIF(BUILD_TESTING)
 
-# Add a simple test
-ADD_TEST(CDashTest1 CDashTest CDashTest)
-#-----------------------------------------------------------------------------
-
 # ...
 add_subdirectory(src)
 add_subdirectory(doc)
