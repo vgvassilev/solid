@@ -118,7 +118,11 @@ else( UNIX )
   set( chsarp_mono_names "mcs" "mcs.exe" "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" )
   #TODO: CSHARP_MONO_VERSION is undefined in first cmake run
   if (CSHARP_MONO_VERSION VERSION_LESS "2.11")
-    set( chsarp_mono_names "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" "mcs" "mcs.exe" )
+    if (CSHARP_FRAMEWORK_VERSION VERSION_LESS "4.0")
+      set( chsarp_mono_names "gmcs" "gmcs.exe" "smcs" "smcs.exe" "dmcs" "dmcs.exe" "mcs" "mcs.exe" )
+    else()
+      set( chsarp_mono_names "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" "mcs" "mcs.exe" )
+    endif()
   endif()
 
   set(
