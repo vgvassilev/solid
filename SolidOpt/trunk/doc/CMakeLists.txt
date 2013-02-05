@@ -21,9 +21,11 @@ if (DOXYGEN_FOUND)
     ${PROJECT_BINARY_DIR}/doxygen/doxygen.conf
     @ONLY
     )
+  # Copy the css next to the index.html so that it will be at the document root
+  # scope of a regular server configuration.
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/custom.css 
-    ${PROJECT_BINARY_DIR}/doxygen/custom.css
+    ${PROJECT_BINARY_DIR}/doxygen/html-new/custom.css
     COPYONLY
     )
   configure_file(
