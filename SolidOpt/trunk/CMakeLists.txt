@@ -70,6 +70,10 @@ ENDIF(BUILD_TESTING)
 
 # ...
 add_subdirectory(src)
+# FIXME:
+# This is a bit hackish way, but it adds support for configuring just docs
+# it is needed by our online doxygen system.
+set(DOXYGEN_INPUT_DIR ${CMAKE_SOURCE_DIR})
 add_subdirectory(doc)
 
 # Resolve all target dependencies
