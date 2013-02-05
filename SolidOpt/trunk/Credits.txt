@@ -9,10 +9,14 @@ beautification by scripts.  The fields are: name (N), email (E), web-address
 (S), and (I) IRC handle.
 
 N: Alexander Penev
-E: alexander_penev [at] yahoo.com
-W: http://alexander-penev.info
+E: alexander_penev [at] yahoo.com; apenev [at] uni-plovdiv.bg
+W: http://www.alexander-penev.info
 D: Founder, provider of much wisdom, and motivator for SolidOpt
 
 N: Vassil Vassilev
 E: v.g.vassilev [at] gmail.com
 D: Founder
+
+N: Martin Vassilev
+E: mrtn.vassilev [at] gmail.com
+D: Developer; SolidReflector maintainer
