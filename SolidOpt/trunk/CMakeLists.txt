@@ -4,7 +4,9 @@
 ## For further details see the nearest License.txt
 ##
 
-project(SolidOpt)
+# TODO: Implement it as project(SolidOpt CS), it should need just renaming of
+# the existing modules
+project(SolidOpt NONE)
 
 cmake_minimum_required(VERSION 2.6.2)
 
