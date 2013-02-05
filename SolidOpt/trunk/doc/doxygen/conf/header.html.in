@@ -4,7 +4,7 @@
       <LINK HREF="doxygen.css" REL="stylesheet" TYPE="text/css">
       <LINK HREF="tabs.css" REL="stylesheet" TYPE="text/css">
       <LINK HREF="search/search.css" REL="stylesheet" TYPE="text/css">
-      <LINK HREF="@PROJECT_BINARY_DIR@/doxygen/custom.css" REL="stylesheet" TYPE="text/css">
+      <LINK HREF="../custom.css" REL="stylesheet" TYPE="text/css">
       <script src="jquery.js" type="text/javascript"></script>
       <script src="search/search.js" type="text/javascript"></script>
     </HEAD>
