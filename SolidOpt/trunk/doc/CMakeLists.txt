@@ -10,6 +10,12 @@ cmake_minimum_required(VERSION 2.6.2)
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
+  # This relevant when configuring just docs standalone. This is useful for 
+  # doxygen to be able to display Generated on `date` for rXXX by Doxygen
+  if (NOT SolidOpt_Revision)
+    include (../Version.cmake)
+  endif()
+
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/conf/doxygen.conf.in 
     ${PROJECT_BINARY_DIR}/doxygen/doxygen.conf
