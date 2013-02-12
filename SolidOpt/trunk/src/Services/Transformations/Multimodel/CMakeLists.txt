@@ -21,6 +21,7 @@ csharp_add_dependencies(
   )
 
 add_subdirectory(ASTtoIL)
+add_subdirectory(CFGtoIL)
 add_subdirectory(CFGtoTAC)
 add_subdirectory(ILtoAST)
 add_subdirectory(ILtoCFG)
