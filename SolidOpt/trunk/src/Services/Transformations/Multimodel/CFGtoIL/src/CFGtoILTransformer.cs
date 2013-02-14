@@ -14,7 +14,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 
 /// <summary>
-/// The namespace contains classes helping the multimodel transformation from control flow grap
+/// The namespace contains classes helping the multimodel transformation from control flow graph
 /// into intermediate language.
 /// </summary>
 namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
