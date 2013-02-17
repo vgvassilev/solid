@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using SolidOpt.Services.Transformations.Multimodel;
@@ -35,18 +36,36 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
       ILProcessor cil = result.Body.GetILProcessor();
       BasicBlock bb = source.Root;
       Instruction instr = null;
-      int i = 0;
+      List<BasicBlock> notVisited = new List<BasicBlock>();
+      List<BasicBlock> visited = new List<BasicBlock>();
+      notVisited.Add(bb);
       while(bb != null) {
         instr = bb.First;
-        while (instr != null) {
+        while (instr != bb.Last.Next) {
           cil.Append(instr);
           instr = instr.Next;
         }
-        bb = (i < bb.Successors.Count) ? bb.Successors[i++] : null;
+        notVisited.Remove(bb);
+        visited.Add(bb);
+        bb.Successors.Sort(new BBComparer());
+        notVisited.AddRange(bb.Successors);
+        GetExclusiveSet(ref notVisited, visited);
+        bb = (notVisited.Count > 0) ? notVisited[0] : null;
       }
       return result;
     }
+
     #endregion
-    
+
+    private void GetExclusiveSet(ref List<BasicBlock> excludeFrom, List<BasicBlock> excludes) {
+      foreach (BasicBlock bb in excludes)
+        excludeFrom.Remove(bb);
+    }
   }
+  
+  internal sealed class BBComparer : IComparer<BasicBlock> {
+    public int Compare(BasicBlock x, BasicBlock y) {
+      return x.First.Offset.CompareTo(y.First.Offset);
+    }
+  }           
 }

@@ -6,8 +6,10 @@
 
 using System;
 using System.IO;
+using System.Text;
 
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 using NUnit.Framework;
 
@@ -32,7 +34,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL.Test
 
     protected override string GetTestCaseResultFileExtension()
     {
-      return "il.il";
+      return "il.stored";
     }
 
     protected override string GetTestCasesDir() 
@@ -59,6 +61,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL.Test
       CilToControlFlowGraph transformer = new CilToControlFlowGraph();
       ControlFlowGraph cfg = transformer.Transform(mDef);
       RunTestCase(filename, cfg);
+    }
+
+    public override string TargetToString(MethodDefinition target) {
+      StringBuilder sb = new StringBuilder();
+      sb.AppendLine(target.FullName);
+      sb.AppendLine("{");
+      foreach(Instruction instr in target.Body.Instructions)
+        sb.AppendFormat("  {0}\n", instr.ToString());
+      sb.AppendLine("}");
+      return sb.ToString();
     }
   }
 }

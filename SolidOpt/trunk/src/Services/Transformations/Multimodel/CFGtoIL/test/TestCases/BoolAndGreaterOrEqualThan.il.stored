@@ -1,0 +1,19 @@
+System.Boolean Main()
+{
+  IL_0000: ldarg.0
+  IL_0001: ldstr "A"
+  IL_0006: callvirt System.Boolean System.String::StartsWith(System.String)
+  IL_000b: brfalse.s IL_001b
+  IL_000d: ldarg.0
+  IL_000e: callvirt System.Int32 System.String::get_Length()
+  IL_0013: ldc.i4.3
+  IL_0014: clt
+  IL_0016: ldc.i4.0
+  IL_0017: ceq
+  IL_0019: br.s IL_001c
+  IL_001b: ldc.i4.0
+  IL_001c: stloc.0
+  IL_001d: br.s IL_001f
+  IL_001f: ldloc.0
+  IL_0020: ret
+}
