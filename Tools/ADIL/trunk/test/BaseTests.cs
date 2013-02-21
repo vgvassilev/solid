@@ -63,7 +63,7 @@ namespace SolidOpt.Tools.ADIL.Test
             Assert.AreEqual(4, mi.Invoke(null, new Object[]{2}));
             Assert.AreEqual(6, mi.Invoke(null, new Object[]{3}));
         }
-        
+
         [Test]
         public void dxf1_again()
         {
@@ -73,7 +73,7 @@ namespace SolidOpt.Tools.ADIL.Test
             Assert.AreEqual(4, mi.Invoke(null, new Object[]{2}));
             Assert.AreEqual(6, mi.Invoke(null, new Object[]{3}));
         }
-        
+
     }
 }
 
