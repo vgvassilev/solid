@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{74E4A0EC-6572-42C2-8D20-AB36EEF56B71}</ProjectGuid>
+    <ProjectGuid>{7B099C57-F8B2-4211-A46E-509679C6E8BB}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SolidOpt.Tools.ADIL.Test</RootNamespace>
-    <AssemblyName>ADIL.Test</AssemblyName>
+    <RootNamespace>ADIL.Test.Func</RootNamespace>
+    <AssemblyName>ADIL.Test.Func</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,25 +33,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseTests.cs" />
+    <Compile Include="TestFuncs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\src\ADIL.csproj">
-      <Project>{1DCC3904-999B-47F2-BE84-7F9F3C8771D3}</Project>
-      <Name>ADIL</Name>
-    </ProjectReference>
-    <ProjectReference Include="ADIL.Test.Func\ADIL.Test.Func.csproj">
-      <Project>{7B099C57-F8B2-4211-A46E-509679C6E8BB}</Project>
-      <Name>ADIL.Test.Func</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\vendors\SolidOpt\src\vendors\NUnit\NUnitFramework\framework\nunit.framework.dll.csproj">
-      <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
-      <Name>nunit.framework.dll</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\vendors\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
-      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
-      <Name>Mono.Cecil</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
