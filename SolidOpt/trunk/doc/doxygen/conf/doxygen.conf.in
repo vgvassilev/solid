@@ -125,7 +125,7 @@ FULL_PATH_NAMES        = NO
 # path to strip.
 
 #STRIP_FROM_PATH        = /var/tmp/
-STRIP_FROM_PATH        = 
+STRIP_FROM_PATH        = @DOXYGEN_INPUT_DIR@
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of 
 # the path mentioned in the documentation of a class, which tells 
