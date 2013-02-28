@@ -13,7 +13,7 @@ csharp_add_dependencies(
   SolidOpt.Services.Transformations.MultiModel.ILtoAST.Test
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.ILtoAST.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.Test.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.Test.dll
   # Monodevelop 2.8 compatibility
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.dll

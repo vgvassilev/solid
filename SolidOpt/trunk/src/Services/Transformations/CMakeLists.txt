@@ -17,4 +17,5 @@ csharp_add_dependencies(
 add_subdirectory(CodeModel)
 add_subdirectory(Multimodel)
 add_subdirectory(Optimizations)
+add_subdirectory(test)
 
