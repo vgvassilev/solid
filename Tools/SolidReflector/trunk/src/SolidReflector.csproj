@@ -32,32 +32,49 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-      <Package>glib-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-      <Package>glade-sharp-2.0</Package>
-    </Reference>
     <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <SpecificVersion>False</SpecificVersion>
       <Package>gtk-sharp-2.0</Package>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>glade-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>glib-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
       <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="Mono.Posix" />
-    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ILWriter.cs" />
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="gtk-gui\MainWindow.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -65,19 +82,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="MainWindow.cs" />
-    <Compile Include="gtk-gui\MainWindow.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ILWriter.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SolidOpt\vendors\Mono.Cecil\v0.9.3\Mono.Cecil.csproj">
+    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
       <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
@@ -85,18 +90,21 @@
       <Project>{c41b5fb4-dae9-4a27-9d15-55109ab79660}</Project>
       <Name>SolidOpt.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj">
-      <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
-      <Name>SolidOpt.Services.Multimodel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj">
       <Project>{43A760A8-E789-4E27-A3C3-182CD847D07C}</Project>
       <Name>SolidOpt.Services.ControlFlowGraph</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\app.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj">
+      <Project>{02e6657d-3102-4d7e-94b5-6b38a0e34a86}</Project>
+      <Name>SolidOpt.Services.Multimodel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\CodeModel\ThreeAddressCode\SolidOpt.Services.ThreeAddressCode.csproj">
+      <Project>{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}</Project>
+      <Name>SolidOpt.Services.ThreeAddressCode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SolidOpt\trunk\src\Services\Transformations\SolidOpt.Services.Transformations.csproj">
+      <Project>{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}</Project>
+      <Name>SolidOpt.Services.Transformations</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

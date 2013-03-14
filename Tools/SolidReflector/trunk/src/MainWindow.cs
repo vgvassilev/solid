@@ -6,6 +6,7 @@
 
 using SolidOpt.Services;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
+using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 using SolidOpt.Services.Transformations.Multimodel;
 
 using System;
@@ -420,6 +421,17 @@ public partial class MainWindow: Gtk.Window
       disassemblyText.Buffer.Insert(ref textIter, cfg.ToString() + "\n");
   }
 
+  protected void DumpThreeAddressCode(ThreeAdressCode tac) {
+    disassemblyText.Buffer.Clear();
+
+    Gtk.TextIter textIter = disassemblyText.Buffer.EndIter;
+
+    if (tac == null)
+      disassemblyText.Buffer.Insert(ref textIter, "Cannot dump TAC\n");
+    else
+      disassemblyText.Buffer.Insert(ref textIter, tac.ToString() + "\n");
+  }
+
 
   protected void DumpEventDef(EventDefinition evtDef) {
     disassemblyText.Buffer.Clear();
@@ -459,6 +471,23 @@ public partial class MainWindow: Gtk.Window
           if (ds.GetSourceType() == mDef.GetType() && ds.GetTargetType() == typeof(ControlFlowGraph)) {
             object cfg = ds.Process(mDef.Body);
             DumpControlFlowGraph(cfg as ControlFlowGraph);
+        }
+      }
+    }
+
+    else if (val == typeof(ThreeAdressCode).FullName) {
+      Gtk.TreeIter selIter;
+      if (assemblyView.Selection.GetSelected(out selIter)) {
+        object cfg = null;
+        MethodDefinition mDef = assemblyView.Model.GetValue(selIter, 0) as MethodDefinition;
+        foreach (DecompilationStep ds in decompilationSteps)
+          if (ds.GetSourceType() == mDef.GetType() && ds.GetTargetType() == typeof(ControlFlowGraph)) {
+            cfg = ds.Process(mDef.Body);
+            //DumpControlFlowGraph(cfg as ControlFlowGraph);
+        }
+        foreach (DecompilationStep ds in decompilationSteps)
+          if (ds.GetSourceType() == cfg.GetType() && ds.GetTargetType() == typeof(ThreeAdressCode)) {
+            DumpThreeAddressCode(ds.Process(cfg as ControlFlowGraph) as ThreeAdressCode);
         }
       }
     }

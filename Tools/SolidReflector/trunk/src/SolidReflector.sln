@@ -1,21 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidReflector", "SolidReflector.csproj", "{2F7448D6-7206-4758-BB48-F48D4C75AB5F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{0A9C2665-0F6D-44B5-880B-DDDF36798594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\SolidOpt\vendors\Mono.Cecil\v0.9.3\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\..\..\..\SolidOpt\trunk\src\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services", "..\..\..\..\SolidOpt\trunk\src\Services\SolidOpt.Services.csproj", "{c41b5fb4-dae9-4a27-9d15-55109ab79660}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ControlFlowGraph", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj", "{43A760A8-E789-4E27-A3C3-182CD847D07C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Multimodel", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\Multimodel\SolidOpt.Services.Multimodel.csproj", "{02e6657d-3102-4d7e-94b5-6b38a0e34a86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ThreeAddressCode", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\CodeModel\ThreeAddressCode\SolidOpt.Services.ThreeAddressCode.csproj", "{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\SolidOpt.Services.Transformations.csproj", "{6ea875ad-4277-4ef6-8d5c-03a0995db7fd}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.ControlFlowGraph", "..\..\..\..\SolidOpt\trunk\src\Services\Transformations\CodeModel\ControlFlowGraph\SolidOpt.Services.ControlFlowGraph.csproj", "{43A760A8-E789-4E27-A3C3-182CD847D07C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{FDF13ECC-517E-4C4A-956B-8627AC89CBC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5897D065-B889-41AE-BFB1-FC9EF0F0A216}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidReflector", "SolidReflector.csproj", "{2F7448D6-7206-4758-BB48-F48D4C75AB5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,17 +56,27 @@ Global
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.Release|x86.Build.0 = Release|Any CPU
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.RunTest|Any CPU.ActiveCfg = RunTest|Any CPU
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660}.RunTest|Any CPU.Build.0 = RunTest|Any CPU
+		{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}.Debug|x86.Build.0 = Debug|Any CPU
+		{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}.Release|x86.ActiveCfg = Release|Any CPU
+		{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}.Release|x86.Build.0 = Release|Any CPU
+		{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}.RunTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25}.RunTest|Any CPU.Build.0 = Debug|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|x86.Build.0 = Debug|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|x86.ActiveCfg = Release|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|x86.Build.0 = Release|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.RunTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.RunTest|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
 		{c41b5fb4-dae9-4a27-9d15-55109ab79660} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
-		{02e6657d-3102-4d7e-94b5-6b38a0e34a86} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
-		{6ea875ad-4277-4ef6-8d5c-03a0995db7fd} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
 		{43A760A8-E789-4E27-A3C3-182CD847D07C} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
+		{02e6657d-3102-4d7e-94b5-6b38a0e34a86} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
+		{D1E7E58A-C1F7-4684-8E71-68D5A5BDCC25} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
+		{6ea875ad-4277-4ef6-8d5c-03a0995db7fd} = {0A9C2665-0F6D-44B5-880B-DDDF36798594}
+		{2F7448D6-7206-4758-BB48-F48D4C75AB5F} = {5897D065-B889-41AE-BFB1-FC9EF0F0A216}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SolidReflector.csproj
