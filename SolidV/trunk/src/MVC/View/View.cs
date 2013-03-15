@@ -1,3 +1,9 @@
+// /*
+//  * $Id:
+//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+//  * For further details see the nearest License.txt
+//  */
+//
 using System;
 using System.Collections.Generic;
 
@@ -24,17 +30,18 @@ namespace SolidV.MVC
 			get { return context; }
 			set { context = value; }
 		}
-		public View ()
+    
+		public View()
 		{
 		}
 
-		public View (Context context, Model model)
+		public View(Context context, Model model)
 		{
 			this.Context = context;
 			this.Model = model;
 		}
 
-		public void Draw (Context context, Model model)
+		public void Draw(Context context, Model model)
 		{
 			foreach (Model mod in model.SubModels) {
 				DrawItem(context, mod);
@@ -47,9 +54,10 @@ namespace SolidV.MVC
 				viewer.DrawItem(context, item);
 			}
 		}
-		public void Update (Model subject)
+    
+		public void Update(Model subject)
 		{
-			throw new System.NotImplementedException ();
+			throw new System.NotImplementedException();
 		}
 	}
 }

@@ -1,4 +1,11 @@
+// /*
+//  * $Id:
+//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+//  * For further details see the nearest License.txt
+//  */
+//
 using System;
+using Cairo;
 
 namespace SolidV.MVC
 {
@@ -10,7 +17,7 @@ namespace SolidV.MVC
 			set { parent = value; }
 		}
 
-		public Viewer ()
+		public Viewer()
 		{
 		}
 
@@ -18,7 +25,7 @@ namespace SolidV.MVC
 			this.Parent = parent;
 		}
 
-		public virtual void DrawItem(Cairo.Context context, object item)
+		public virtual void DrawItem(Context context, object item)
 		{
 		}
 	}

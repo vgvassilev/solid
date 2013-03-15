@@ -6,13 +6,10 @@
 //
 using System;
 
-using Cairo;
-
 namespace SolidV.MVC
 {
-	public interface IView
+	public interface IModel
 	{
-		void Draw(Context context, Model model);
 	}
 }
 

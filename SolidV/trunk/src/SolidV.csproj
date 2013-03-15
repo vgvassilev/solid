@@ -11,24 +11,24 @@
     <AssemblyName>SolidV</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -39,25 +39,28 @@
     <Folder Include="MVC\Model\" />
     <Folder Include="MVC\View\" />
     <Folder Include="MVC\Model\VisualCodeModels\" />
+    <Folder Include="MVC\View\VisualCodeViewers\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MVC\Model\VisualCodeModels\Model.cs" />
-    <Compile Include="MVC\Model\VisualCodeModels\IModel.cs" />
-    <Compile Include="MVC\Model\VisualCodeModels\IObserver.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\RectangleShape.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\EllipseShape.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\BaseModel.cs" />
-    <Compile Include="MVC\View\ShapeViewer.cs" />
     <Compile Include="MVC\View\IViewer.cs" />
-    <Compile Include="MVC\View\RectangleShapeViewer.cs" />
-    <Compile Include="MVC\View\EllipseShapeViewer.cs" />
     <Compile Include="MVC\View\IView.cs" />
     <Compile Include="MVC\View\View.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\ShapesModel.cs" />
-    <Compile Include="MVC\View\ShapeModelViewer.cs" />
-    <Compile Include="MVC\Model\VisualCodeModels\object.cs" />
     <Compile Include="MVC\View\Viewer.cs" />
-    <Compile Include="MVC\View\ModelViewer.cs" />
+    <Compile Include="Cairo\ExtendedContext.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\Shape.cs" />
+    <Compile Include="MVC\Model\Model.cs" />
+    <Compile Include="MVC\Model\IObserver.cs" />
+    <Compile Include="MVC\Model\IModel.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\EllipseShapeViewer.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\RectangleShapeViewer.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\ShapeModelViewer.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\ModelViewer.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\ShapeViewer.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\Style.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Cairo" />
