@@ -17,7 +17,12 @@ namespace SolidV.MVC
     
     public override void DrawItem(IView<Context, Model> view, Context context, object item)
     {
-      context.Rectangle(((Shape)item).Rectangle);
+      Shape shape = (Shape)item;
+      context.Rectangle(shape.Rectangle);
+      context.Color = shape.Style.FillColor;
+      context.FillPreserve();
+      context.Color = shape.Style.BorderColor;
+      context.Stroke();
     }
   }
 }
