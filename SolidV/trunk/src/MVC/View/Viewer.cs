@@ -1,33 +1,21 @@
-// /*
-//  * $Id:
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
-//
+/*
+ * $Id:
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
 using System;
-using Cairo;
 
 namespace SolidV.MVC
 {
-	public class Viewer : IViewer
-	{
-		private View parent;
-		public View Parent {
-			get { return parent; }
-			set { parent = value; }
-		}
-
-		public Viewer()
-		{
-		}
-
-		public Viewer(View parent) {
-			this.Parent = parent;
-		}
-
-		public virtual void DrawItem(Context context, object item)
-		{
-		}
-	}
+  public class Viewer<C, M> : IViewer<C, M>
+  {
+    public Viewer()
+    {
+    }
+    
+    public virtual void DrawItem(IView<C, M> view, C context, object item)
+    {
+    }
+    
+  }
 }
-

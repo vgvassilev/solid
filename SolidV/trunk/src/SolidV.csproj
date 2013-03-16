@@ -50,10 +50,8 @@
     <Compile Include="MVC\View\View.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\ShapesModel.cs" />
     <Compile Include="MVC\View\Viewer.cs" />
-    <Compile Include="Cairo\ExtendedContext.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\Shape.cs" />
     <Compile Include="MVC\Model\Model.cs" />
-    <Compile Include="MVC\Model\IObserver.cs" />
     <Compile Include="MVC\Model\IModel.cs" />
     <Compile Include="MVC\View\VisualCodeViewers\EllipseShapeViewer.cs" />
     <Compile Include="MVC\View\VisualCodeViewers\RectangleShapeViewer.cs" />
@@ -61,6 +59,7 @@
     <Compile Include="MVC\View\VisualCodeViewers\ModelViewer.cs" />
     <Compile Include="MVC\View\VisualCodeViewers\ShapeViewer.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\Style.cs" />
+    <Compile Include="Cairo\ContextExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Cairo" />

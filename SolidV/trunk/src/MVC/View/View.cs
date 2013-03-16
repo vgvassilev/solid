@@ -1,64 +1,35 @@
-// /*
-//  * $Id:
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
-//
+/*
+ * $Id:
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
 using System;
 using System.Collections.Generic;
 
-using Cairo;
-
 namespace SolidV.MVC
 {
-	public class View : IView, IObserver
-	{
-		private Dictionary<Type, IViewer> viewers = new Dictionary<Type, IViewer>();
-		public Dictionary<Type, IViewer> Viewers {
-			get { return viewers; }
-			set { viewers = value; }
-		}
-
-		private Model model;
-		public Model Model {
-			get { return model; }
-			set { model = value; }
-		}
-
-		private Context context;
-		public Context Context {
-			get { return context; }
-			set { context = value; }
-		}
+  public class View<C, M> : IView<C, M>
+  {
+    private Dictionary<Type, IViewer<C, M>> viewers = new Dictionary<Type, IViewer<C, M>>();
+    public Dictionary<Type, IViewer<C, M>> Viewers {
+      get { return viewers; }
+      set { viewers = value; }
+    }
     
-		public View()
-		{
-		}
-
-		public View(Context context, Model model)
-		{
-			this.Context = context;
-			this.Model = model;
-		}
-
-		public void Draw(Context context, Model model)
-		{
-			foreach (Model mod in model.SubModels) {
-				DrawItem(context, mod);
-			}
-		}
-
-		public void DrawItem(Context context, object item) {
-			IViewer viewer;
-			if (Viewers.TryGetValue(item.GetType(), out viewer)){
-				viewer.DrawItem(context, item);
-			}
-		}
+    public View()
+    {
+    }
     
-		public void Update(Model subject)
-		{
-			throw new System.NotImplementedException();
-		}
-	}
+    public void Draw(C context, M model) {
+      DrawItem(context, model);
+    }
+    
+    public void DrawItem(C context, object item) {
+      IViewer<C, M> viewer;
+      if (Viewers.TryGetValue(item.GetType(), out viewer)) {
+        viewer.DrawItem(this, context, item);
+      }
+    }
+    
+  }
 }
-
