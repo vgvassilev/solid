@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="MVC\Model\VisualCodeModels\RectangleShape.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\EllipseShape.cs" />
-    <Compile Include="MVC\Model\VisualCodeModels\BaseModel.cs" />
     <Compile Include="MVC\View\IViewer.cs" />
     <Compile Include="MVC\View\IView.cs" />
     <Compile Include="MVC\View\View.cs" />
@@ -60,6 +59,12 @@
     <Compile Include="MVC\View\VisualCodeViewers\ShapeViewer.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\Style.cs" />
     <Compile Include="Cairo\ContextExtensions.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\SelectionModel.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\BaseStateModel.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\RelationShape.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\BinaryRelationShape.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\ArrowShape.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\ArrowShapeViewer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Cairo" />
