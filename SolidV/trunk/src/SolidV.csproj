@@ -11,24 +11,24 @@
     <AssemblyName>SolidV</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>False</ConsolePause>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>True</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>False</ConsolePause>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -40,6 +40,7 @@
     <Folder Include="MVC\View\" />
     <Folder Include="MVC\Model\VisualCodeModels\" />
     <Folder Include="MVC\View\VisualCodeViewers\" />
+    <Folder Include="MVC\Controller\VisualCodeControllers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVC\Model\VisualCodeModels\RectangleShape.cs" />
@@ -65,8 +66,20 @@
     <Compile Include="MVC\Model\VisualCodeModels\BinaryRelationShape.cs" />
     <Compile Include="MVC\Model\VisualCodeModels\ArrowShape.cs" />
     <Compile Include="MVC\View\VisualCodeViewers\ArrowShapeViewer.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\BaseShapeDecorator.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\ConnectorShape.cs" />
+    <Compile Include="MVC\Controller\IController.cs" />
+    <Compile Include="MVC\Controller\ICommand.cs" />
+    <Compile Include="MVC\Controller\ITool.cs" />
+    <Compile Include="MVC\Controller\AbstractController.cs" />
+    <Compile Include="MVC\Controller\CompositeController.cs" />
+    <Compile Include="MVC\Controller\VisualCodeControllers\SelectionController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Cairo" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
   </ItemGroup>
 </Project>

@@ -21,7 +21,7 @@ namespace SolidV.Cairo
       context.RelMoveTo(1, 0);
       context.RelLineTo(-1, 0);
       context.RelLineTo(0, -1);
-      context.RelMoveTo(0, 1);
+      //context.RelMoveTo(0, 1);
       context.Restore();
     }
     
