@@ -74,6 +74,9 @@
     <Compile Include="MVC\Controller\AbstractController.cs" />
     <Compile Include="MVC\Controller\CompositeController.cs" />
     <Compile Include="MVC\Controller\VisualCodeControllers\SelectionController.cs" />
+    <Compile Include="MVC\Controller\VisualCodeControllers\ShapeSelectionController.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\SelectionModelViewer.cs" />
+    <Compile Include="MVC\Controller\VisualCodeControllers\ShapeDragController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Cairo" />

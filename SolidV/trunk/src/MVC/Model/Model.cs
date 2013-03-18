@@ -63,7 +63,7 @@ namespace SolidV.MVC
     public Model()
     {
     }
-    
+
     public void BeginUpdate()
     {
       updateLockCount++;
@@ -73,8 +73,11 @@ namespace SolidV.MVC
     {
       updateLockCount--;
       if (updateLockCount == 0)
-        ModelChanged(this);
+        OnModelChanged();
     }
-    
+
+    protected void OnModelChanged() {
+      if (ModelChanged != null) ModelChanged(this);
+    }
   }
 }

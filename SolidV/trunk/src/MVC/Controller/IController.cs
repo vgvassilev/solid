@@ -9,8 +9,9 @@ namespace SolidV.MVC
 {
   public delegate void EventHandler<Event>(Event evnt);
 
-  public interface IController<Event>
+  public interface IController<Event, C, M>
   {
-    event EventHandler<Event> EventHandlers;
+    //event EventHandler<Event> EventHandlers;
+    void Handle(Event evnt);
   }
 }

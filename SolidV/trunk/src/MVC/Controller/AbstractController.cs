@@ -7,14 +7,30 @@ using System;
 
 namespace SolidV.MVC
 {
-  public abstract class AbstractController<Event> : IController<Event>
+  public abstract class AbstractController<Event, C, M> : IController<Event, C, M>
   {
-    public event EventHandler<Event> EventHandlers;
+    //public event EventHandler<Event> EventHandlers;
 
-    public AbstractController() {
+    private M model;
+    public M Model {
+      get { return model; }
+      set { model = value; }
     }
 
+    private IView<C, M> view;
+    public IView<C, M> View {
+      get { return view; }
+      set { view = value; }
+    }
 
+    public virtual void Handle(Event evnt) {}
+
+    public AbstractController() {}
+
+    public AbstractController(M model, IView<C, M> view) {
+      this.Model = model;
+      this.View = view;
+    }
   }
 }
 

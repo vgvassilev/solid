@@ -8,17 +8,22 @@ using System.Collections.Generic;
 
 namespace SolidV.MVC
 {
-  public class CompositeController<Event> : AbstractController<Event>
+  public class CompositeController<Event, C, M> : AbstractController<Event, C, M>
   {
-    private List<IController<Event>> subControllers = new List<IController<Event>>();
-    public List<IController<Event>> SubControllers {
+    private List<IController<Event, C, M>> subControllers = new List<IController<Event, C, M>>();
+    public List<IController<Event, C, M>> SubControllers {
       get { return subControllers; }
       set { subControllers = value; }
     }
 
-    public CompositeController() {
+    public CompositeController() : base() {}
+    public CompositeController(M model, IView<C, M> view) : base(model, view) {}
+
+    public override void Handle(Event evnt) {
+      foreach (IController<Event, C, M> controller in SubControllers) {
+        controller.Handle(evnt);
+      }
     }
-    
   }
 }
 
