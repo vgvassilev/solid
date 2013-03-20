@@ -19,8 +19,10 @@ namespace SolidV.MVC
         {
             ArrowShape shape = (ArrowShape)item;
             context.MoveTo(shape.Form.Location);
+            context.ArrowLineTo(shape.To.Location, ArrowType.TriangleRoundArrow, null);
+            context.Color = shape.Style.FillColor;
+            context.FillPreserve();
             context.Color = shape.Style.BorderColor;
-            context.ArrowLineTo(shape.To.Location);
             context.Stroke();
         }
         

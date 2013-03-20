@@ -18,9 +18,11 @@ namespace SolidV.MVC
     public override void DrawItem(IView<Context, Model> view, Context context, object item)
     {
       Shape shape = (Shape)item;
-      //context.Scale(shape.Width / shape.Height, 1);
-      context.Arc(shape.Location.X + shape.Width / 2, shape.Location.Y + shape.Height / 2, shape.Width / 2, 0, 2 * Math.PI);
-      //context.Arc(0, 0, 1, 0, 2 * Math.PI);
+      context.Save();
+      context.Matrix = shape.Matrix;
+      context.Scale(shape.Width, shape.Height);
+      context.Arc(shape.Location.X/shape.Width+0.5, shape.Location.Y/shape.Height+0.5, 0.5, 0, 2 * Math.PI);
+      context.Restore();
       context.Color = shape.Style.FillColor;
       context.FillPreserve();
       context.Color = shape.Style.BorderColor;
