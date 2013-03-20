@@ -77,6 +77,10 @@
     <Compile Include="MVC\Controller\VisualCodeControllers\ShapeSelectionController.cs" />
     <Compile Include="MVC\View\VisualCodeViewers\SelectionModelViewer.cs" />
     <Compile Include="MVC\Controller\VisualCodeControllers\ShapeDragController.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\PolylineArrowShape.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\PolylineArrowShapeViewer.cs" />
+    <Compile Include="MVC\View\VisualCodeViewers\CurvedArrowShapeViewer.cs" />
+    <Compile Include="MVC\Model\VisualCodeModels\CurvedArrowShape.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Cairo" />

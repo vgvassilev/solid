@@ -119,11 +119,11 @@ namespace SolidV.Cairo
 
     public static void ArrowCurveTo(this Context context, double x1, double y1, double x2, double y2, double x3, double y3, DrawArrowDelegate headArrow, DrawArrowDelegate tailArrow, Matrix headMatrix, Matrix tailMatrix)
     {
-      double angle = Math.Atan2(context.CurrentPoint.X - x1, context.CurrentPoint.Y - y1) + Math.PI/4;
-      double angle1 = Math.Atan2(x3 - x2, y3 - y2) + Math.PI/4;
-      DrawArrow(context, tailArrow, angle, tailMatrix);
+      double headAngle = Math.PI - Math.PI/4 - Math.Atan2(x2 - x3, y2 - y3);
+      double tailAngle = Math.PI - Math.PI/4 - Math.Atan2(x1 - context.CurrentPoint.X, y1 - context.CurrentPoint.Y);
+      DrawArrow(context, tailArrow, tailAngle, tailMatrix);
       context.CurveTo(x1, y1, x2, y2, x3, y3);
-      DrawArrow(context, headArrow, angle1, headMatrix);
+      DrawArrow(context, headArrow, headAngle, headMatrix);
     }
 
     public static void ArrowCurveTo(this Context context, double x1, double y1, double x2, double y2, double x3, double y3, DrawArrowDelegate headArrow, DrawArrowDelegate tailArrow, Matrix headMatrix) {
