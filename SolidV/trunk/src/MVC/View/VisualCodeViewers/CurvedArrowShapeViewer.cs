@@ -27,7 +27,7 @@ namespace SolidV.MVC
         i += 3; 
       }
       PointD cp = context.CurrentPoint;
-      context.ArrowCurveTo(cp.X + shape.Points[i].Dx, cp.Y + shape.Points[i].Dy, cp.X + shape.Points[i+1].Dx, cp.Y + shape.Points[i+1].Dy, shape.To.Location.X, shape.To.Location.Y, ArrowType.TriangleRoundArrow, ArrowType.TriangleRoundArrow);
+      context.ArrowCurveTo(cp.X + shape.Points[i].Dx, cp.Y + shape.Points[i].Dy, cp.X + shape.Points[i+1].Dx, cp.Y + shape.Points[i+1].Dy, shape.To.Location.X, shape.To.Location.Y, ArrowType.DefaultArrow, ArrowType.DefaultArrow);
       //context.Color = shape.Style.FillColor;
       //context.FillPreserve();
       context.Color = shape.Style.BorderColor;

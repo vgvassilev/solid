@@ -14,58 +14,50 @@ namespace SolidV.Cairo
     public static void NoArrow(Context context) {
     }
     
-    public static void SharpArrow(Context context) {
-      context.RelMoveTo(10, 0);
-      context.RelLineTo(-10, 0);
-      context.RelLineTo(0, -10);
-      context.RelMoveTo(0, 10);
+    public static void DefaultArrow(Context context) {
+      context.RelMoveTo(10, 10);
+      context.RelLineTo(-10, -10);
+      context.RelLineTo(10, -10);
+      context.RelMoveTo(-10, 10);
     }
-    
+
     public static void TriangleArrow(Context context) {
-      context.RelMoveTo(10, 0);
-      context.RelLineTo(-10, 0);
-      context.RelLineTo(0, -10);
-      context.ClosePath();
-      context.RelMoveTo(-10, 0);
+      context.RelLineTo(10, 10);
+      context.RelLineTo(0, -20);
+      context.RelLineTo(-10, 10);
     }
     
     public static void TriangleRoundArrow(Context context) {
-      context.RelMoveTo(10, 0);
-      context.RelLineTo(-10, 0);
-      context.RelLineTo(0, -10);
-      context.RelLineTo(2, 5);
-      context.RelLineTo(3, 3);
-      context.ClosePath();
-      context.RelMoveTo(-10, 0);
+      context.RelLineTo(10, 10);
+      context.RelLineTo(-3, -6);
+      context.RelLineTo(0, -8);
+      context.RelLineTo(3, -6);
+      context.RelLineTo(-10, 10);
     }
     
     public static void CircleArrow(Context context) {
       PointD cp = context.CurrentPoint;
       context.NewSubPath();
-      context.Arc(cp.X, cp.Y, 10/2, 0, 2 * Math.PI);
+      context.Arc(cp.X + 10, cp.Y, 10, 0, 2 * Math.PI);
       context.ClosePath();
-      context.RelMoveTo(-5, 0);
+      context.MoveTo(cp);
     }
     
     public static void DiamondArrow(Context context) {
-      context.RelMoveTo(10, 0);
-      context.RelLineTo(0, -10);
-      context.RelLineTo(-10, 0);
-      context.RelLineTo(0, 10);
-      context.RelLineTo(10, 0);
+      context.RelLineTo(10, 10);
+      context.RelLineTo(10, -10);
+      context.RelLineTo(-10, -10);
+      context.RelLineTo(-10, 10);
       context.ClosePath();
-      context.RelMoveTo(-10, 0);
     }
     
     public static void SquareArrow(Context context) {
-      context.Rotate(Math.PI/4);
-      context.RelMoveTo(5, 0);
+      context.RelLineTo(0, 5);
+      context.RelLineTo(10, 0);
       context.RelLineTo(0, -10);
       context.RelLineTo(-10, 0);
-      context.RelLineTo(0, 10);
-      context.RelLineTo(10, 0);
+      context.RelLineTo(0, 5);
       context.ClosePath();
-      context.RelMoveTo(-5, 0);
     }
     
   }
@@ -81,14 +73,14 @@ namespace SolidV.Cairo
       if (arrow == null) return;
 
       context.Save();
-      context.Matrix.Multiply(matrix);
       context.Rotate(angle);
+      context.Transform(matrix);
       arrow(context);
       context.Restore();
     }
 
     public static void ArrowLineTo(this Context context, double x, double y, DrawArrowDelegate headArrow, DrawArrowDelegate tailArrow, Matrix headMatrix, Matrix tailMatrix) {
-      double headAngle = - Math.PI/4 - Math.Atan2(x - context.CurrentPoint.X, y - context.CurrentPoint.Y);
+      double headAngle = Math.PI/2 - Math.Atan2(context.CurrentPoint.X - x, context.CurrentPoint.Y - y);
       double tailAngle = headAngle + Math.PI;
       DrawArrow(context, tailArrow, tailAngle, tailMatrix);
       context.LineTo(x, y);
@@ -119,8 +111,8 @@ namespace SolidV.Cairo
 
     public static void ArrowCurveTo(this Context context, double x1, double y1, double x2, double y2, double x3, double y3, DrawArrowDelegate headArrow, DrawArrowDelegate tailArrow, Matrix headMatrix, Matrix tailMatrix)
     {
-      double headAngle = Math.PI - Math.PI/4 - Math.Atan2(x2 - x3, y2 - y3);
-      double tailAngle = Math.PI - Math.PI/4 - Math.Atan2(x1 - context.CurrentPoint.X, y1 - context.CurrentPoint.Y);
+      double headAngle = Math.PI/2 - Math.Atan2(x2 - x3, y2 - y3);
+      double tailAngle = Math.PI/2 - Math.Atan2(x1 - context.CurrentPoint.X, y1 - context.CurrentPoint.Y);
       DrawArrow(context, tailArrow, tailAngle, tailMatrix);
       context.CurveTo(x1, y1, x2, y2, x3, y3);
       DrawArrow(context, headArrow, headAngle, headMatrix);
