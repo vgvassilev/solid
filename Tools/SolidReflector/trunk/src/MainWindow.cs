@@ -18,6 +18,11 @@ using Mono.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
+using SolidV.MVC;
+using SolidV.Cairo;
+
+using Cairo;
+
 public partial class MainWindow: Gtk.Window
 {
   private PluginServiceContainer plugins = new PluginServiceContainer();
@@ -25,24 +30,77 @@ public partial class MainWindow: Gtk.Window
   //FIXME: Put them in combobox model.
   private List<DecompilationStep> decompilationSteps = new List<DecompilationStep>();
 
-	public MainWindow(): base(Gtk.WindowType.Toplevel)
-	{
+  Model model = new Model();
+  ShapesModel scene = new ShapesModel();
+  SelectionModel selection = new SelectionModel();
+  View<Context, Model> view = new View<Context, Model>();
+  CompositeController<Gdk.Event, Context, Model> controller = new CompositeController<Gdk.Event, Context, Model>();
+
+ public MainWindow(): base(Gtk.WindowType.Toplevel)
+ {
     // That's a hack because of the designer. If one needs to attach an event the designer attaches
     // it in the end of the file after the call to Initialize. Works for the most of the events
     // but not for events like Realize which happen in the initialization. This function is used
     // to attach the event handlers before the initialization part.
     PreBuild();
-		Build();
-	}
+  Build();
+    
+    DrawingArea1.ButtonPressEvent += HandleDrawingArea1ButtonPressEvent;
+    DrawingArea1.ButtonReleaseEvent += HandleDrawingArea1ButtonReleaseEvent;
+    DrawingArea1.ExposeEvent += HandleDrawingArea1ExposeEvent;
+    DrawingArea1.MotionNotifyEvent += HandleDrawingArea1MotionNotifyEvent;
+    //
+    model.RegisterSubModel<ShapesModel>(scene);
+    model.RegisterSubModel<SelectionModel>(selection);
 
-	protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
-	{
+    model.ModelChanged += HandleModelChanged;
+        combobox6.Changed += OnCombobox6Changed;
+
+    view.Viewers.Add(typeof(Model), new ModelViewer<Context>());
+    view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
+    view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
+    view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
+    view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
+    view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
+    view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
+    //
+    controller.SubControllers.Add(new ShapeSelectionController(model, view));
+    controller.SubControllers.Add(new ShapeDragController(model, view));
+ }
+
+  void HandleModelChanged(object model)
+  {
+    DrawingArea1.QueueDraw();
+  }
+
+  void HandleDrawingArea1ButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
+    controller.Handle(args.Event);
+  }
+  
+  void HandleDrawingArea1MotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args)
+  {
+    controller.Handle(args.Event);
+  }
+
+  void HandleDrawingArea1ButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args)
+  {
+    controller.Handle(args.Event);
+  }
+  
+  void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
+    using (Cairo.Context context = Gdk.CairoHelper.Create(((Gtk.DrawingArea)o).GdkWindow)) {
+      view.Draw(context, model);
+    }
+  }
+
+ protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
+ {
     SaveEnvironment();
-		Gtk.Application.Quit();
-		a.RetVal = true;
-	}
+  Gtk.Application.Quit();
+  a.RetVal = true;
+ }
 
-	protected void OnOpenActionActivated(object sender, System.EventArgs e)
+ protected void OnOpenActionActivated(object sender, System.EventArgs e)
   {
     var fc = new Gtk.FileChooserDialog("Choose the file to open",
                                         this, Gtk.FileChooserAction.Open,
@@ -106,11 +164,11 @@ public partial class MainWindow: Gtk.Window
     msgBox.Destroy();
   }
 
-	protected void OnExitActionActivated(object sender, System.EventArgs e)
-	{
+ protected void OnExitActionActivated(object sender, System.EventArgs e)
+ {
     SaveEnvironment();
-		Gtk.Application.Quit();
-	}
+  Gtk.Application.Quit();
+ }
 
   protected void OnRealized(object sender, System.EventArgs e)
   {
@@ -379,10 +437,10 @@ public partial class MainWindow: Gtk.Window
           writer.WriteExceptionDirective(".filter {");
         }
 
-        if (handler.FilterEnd == inst) {
-          writer.Outdent();
-          writer.WriteExceptionDirective("}");
-        }
+        //if (handler.FilterEnd == inst) {
+        //  writer.Outdent();
+        //  writer.WriteExceptionDirective("}");
+        //}
 
         if (handler.TryStart == inst) {
           writer.WriteExceptionDirective(".try {");
@@ -419,6 +477,48 @@ public partial class MainWindow: Gtk.Window
       disassemblyText.Buffer.Insert(ref textIter, "Cannot dump CFG\n");
     else
       disassemblyText.Buffer.Insert(ref textIter, cfg.ToString() + "\n");
+    
+    if (cfg != null) {
+      scene.Shapes.Clear();
+      DrawTextBlocks(cfg);
+    }
+  }
+
+  private void DrawTextBlocks(ControlFlowGraph cfg) {
+    Dictionary<string, TextBlockShape> basicBlocks = new Dictionary<string, TextBlockShape>();
+    List<BasicBlock> drawnBlocks = new List<BasicBlock>();
+    TextBlockShape textBlock = new TextBlockShape();
+    foreach (BasicBlock basicBlock in cfg.RawBlocks) {
+      textBlock = new TextBlockShape();
+      textBlock.BlockText = Environment.NewLine + "Block Name: " + basicBlock.Name + Environment.NewLine;
+      textBlock.BlockText = textBlock.BlockText + basicBlock.First.ToString() + Environment.NewLine;
+      textBlock.BlockText = textBlock.BlockText + "..." + Environment.NewLine;
+      textBlock.BlockText = textBlock.BlockText + basicBlock.Last.ToString() + Environment.NewLine;
+      basicBlocks.Add(basicBlock.Name, textBlock);
+      scene.Shapes.Add(textBlock);
+    }
+    
+    TextBlockShape fromTextShape = null;
+    TextBlockShape toTextShape = null;
+    int blockX = DrawingArea1.Allocation.Width / 2;
+    int blockY = 10;
+    foreach (BasicBlock block in cfg.RawBlocks) {
+      basicBlocks.TryGetValue(block.Name, out fromTextShape);
+      if (!drawnBlocks.Contains(block)) {        
+        fromTextShape.Rectangle = new Rectangle(blockX, blockY, 150, 100);
+        drawnBlocks.Add(block);
+      }
+      blockY += 140;
+      blockX = 160;
+      for (int i = 0; i < block.Successors.Count; i++) {
+        basicBlocks.TryGetValue(block.Successors[i].Name, out toTextShape);
+        drawnBlocks.Add(block.Successors[i]);
+        toTextShape.Rectangle = new Rectangle(blockX, blockY, 150, 100);
+        ArrowShape arrow = new ArrowShape(fromTextShape, toTextShape);
+        scene.Shapes.Add(arrow);
+        blockX += 160;
+      }
+    }
   }
 
   protected void DumpThreeAddressCode(ThreeAdressCode tac) {

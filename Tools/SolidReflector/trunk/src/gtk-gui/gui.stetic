@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/SolidReflector.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="780 723">
+  <widget class="Gtk.Window" id="MainWindow" design-size="882 723">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -79,7 +79,7 @@
                   <widget class="Gtk.HPaned" id="hpaned1">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Position">308</property>
+                    <property name="Position">207</property>
                     <child>
                       <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
                         <property name="MemberName" />
@@ -105,28 +105,61 @@
                         <child>
                           <widget class="Gtk.ComboBox" id="combobox6">
                             <property name="MemberName" />
+                            <property name="Events">FocusChangeMask</property>
+                            <property name="ExtensionEvents">All</property>
                             <property name="IsTextCombo">True</property>
                             <property name="Items" translatable="yes">IL</property>
                             <property name="Active">0</property>
-                            <signal name="Changed" handler="OnCombobox6Changed" />
                           </widget>
                           <packing>
                             <property name="Resize">False</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
+                          <widget class="Gtk.Notebook" id="notebook2">
                             <property name="MemberName" />
-                            <property name="ShadowType">In</property>
+                            <property name="CanFocus">True</property>
+                            <property name="CurrentPage">1</property>
                             <child>
-                              <widget class="Gtk.TextView" id="disassemblyText">
+                              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
                                 <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="ShowScrollbars">True</property>
-                                <property name="Editable">False</property>
-                                <property name="CursorVisible">False</property>
-                                <property name="Text" translatable="yes" />
+                                <property name="ShadowType">In</property>
+                                <child>
+                                  <widget class="Gtk.TextView" id="disassemblyText">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="ShowScrollbars">True</property>
+                                    <property name="Text" translatable="yes" />
+                                  </widget>
+                                </child>
                               </widget>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="label2">
+                                <property name="MemberName" />
+                                <property name="LabelProp" translatable="yes">Text</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.DrawingArea" id="DrawingArea1">
+                                <property name="MemberName" />
+                                <property name="Events">ExposureMask, PointerMotionMask, ButtonPressMask, ButtonReleaseMask, KeyPressMask, KeyReleaseMask</property>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="label3">
+                                <property name="MemberName" />
+                                <property name="LabelProp" translatable="yes">Graphics</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                              </packing>
                             </child>
                           </widget>
                         </child>

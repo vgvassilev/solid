@@ -18,8 +18,12 @@ public partial class MainWindow
 	private global::Gtk.TreeView assemblyView;
 	private global::Gtk.VPaned vpaned1;
 	private global::Gtk.ComboBox combobox6;
+	private global::Gtk.Notebook notebook2;
 	private global::Gtk.ScrolledWindow GtkScrolledWindow1;
 	private global::Gtk.TextView disassemblyText;
+	private global::Gtk.Label label2;
+	private global::Gtk.DrawingArea DrawingArea1;
+	private global::Gtk.Label label3;
 	
 	protected virtual void Build ()
 	{
@@ -71,7 +75,7 @@ public partial class MainWindow
 		this.hpaned1 = new global::Gtk.HPaned ();
 		this.hpaned1.CanFocus = true;
 		this.hpaned1.Name = "hpaned1";
-		this.hpaned1.Position = 308;
+		this.hpaned1.Position = 207;
 		// Container child hpaned1.Gtk.Paned+PanedChild
 		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
 		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
@@ -92,12 +96,19 @@ public partial class MainWindow
 		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.combobox6 = global::Gtk.ComboBox.NewText ();
 		this.combobox6.AppendText (global::Mono.Unix.Catalog.GetString ("IL"));
+		this.combobox6.Events = ((global::Gdk.EventMask)(16384));
+		this.combobox6.ExtensionEvents = ((global::Gdk.ExtensionMode)(1));
 		this.combobox6.Name = "combobox6";
 		this.combobox6.Active = 0;
 		this.vpaned1.Add (this.combobox6);
 		global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.combobox6]));
 		w5.Resize = false;
 		// Container child vpaned1.Gtk.Paned+PanedChild
+		this.notebook2 = new global::Gtk.Notebook ();
+		this.notebook2.CanFocus = true;
+		this.notebook2.Name = "notebook2";
+		this.notebook2.CurrentPage = 1;
+		// Container child notebook2.Gtk.Notebook+NotebookChild
 		this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
 		this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
 		this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -105,29 +116,46 @@ public partial class MainWindow
 		this.disassemblyText = new global::Gtk.TextView ();
 		this.disassemblyText.CanFocus = true;
 		this.disassemblyText.Name = "disassemblyText";
-		this.disassemblyText.Editable = false;
-		this.disassemblyText.CursorVisible = false;
 		this.GtkScrolledWindow1.Add (this.disassemblyText);
-		this.vpaned1.Add (this.GtkScrolledWindow1);
+		this.notebook2.Add (this.GtkScrolledWindow1);
+		// Notebook tab
+		this.label2 = new global::Gtk.Label ();
+		this.label2.Name = "label2";
+		this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Text");
+		this.notebook2.SetTabLabel (this.GtkScrolledWindow1, this.label2);
+		this.label2.ShowAll ();
+		// Container child notebook2.Gtk.Notebook+NotebookChild
+		this.DrawingArea1 = new global::Gtk.DrawingArea ();
+		this.DrawingArea1.Events = ((global::Gdk.EventMask)(3846));
+		this.DrawingArea1.Name = "DrawingArea1";
+		this.notebook2.Add (this.DrawingArea1);
+		global::Gtk.Notebook.NotebookChild w8 = ((global::Gtk.Notebook.NotebookChild)(this.notebook2 [this.DrawingArea1]));
+		w8.Position = 1;
+		// Notebook tab
+		this.label3 = new global::Gtk.Label ();
+		this.label3.Name = "label3";
+		this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Graphics");
+		this.notebook2.SetTabLabel (this.DrawingArea1, this.label3);
+		this.label3.ShowAll ();
+		this.vpaned1.Add (this.notebook2);
 		this.hpaned1.Add (this.vpaned1);
 		this.alignment1.Add (this.hpaned1);
 		this.hbox1.Add (this.alignment1);
-		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.alignment1]));
-		w10.Position = 0;
+		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.alignment1]));
+		w12.Position = 0;
 		this.vbox1.Add (this.hbox1);
-		global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
-		w11.Position = 1;
+		global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
+		w13.Position = 1;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 780;
+		this.DefaultWidth = 882;
 		this.DefaultHeight = 723;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.openAction.Activated += new global::System.EventHandler (this.OnOpenActionActivated);
 		this.quitAction.Activated += new global::System.EventHandler (this.OnExitActionActivated);
 		this.assemblyView.RowActivated += new global::Gtk.RowActivatedHandler (this.OnAssemblyViewRowActivated);
-		this.combobox6.Changed += new global::System.EventHandler (this.OnCombobox6Changed);
 	}
 }
