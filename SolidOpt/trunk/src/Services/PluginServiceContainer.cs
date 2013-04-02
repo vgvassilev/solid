@@ -58,7 +58,7 @@ namespace SolidOpt.Services
     public void LoadPlugins()
     {
       foreach (PluginInfo pluginInfo in plugins)
-        pluginInfo.Register(this);
+        pluginInfo.CreateAndRegisterAnInstance(this);
 
       foreach (PluginInfo pluginInfo in plugins)
         if (pluginInfo.status == PluginInfo.Status.Error)
@@ -66,6 +66,18 @@ namespace SolidOpt.Services
     }
   }
 
+  /// <summary>
+  /// Plugin info. This class wraps a plugin. It is responsible for loading, unloading and creating
+  /// a plugin.
+  /// </summary>
+  /// <description>
+  /// Once a PluginInfo object for a plugin is created it describes its state. In the terms of
+  /// the PluginInfo class a plugin can be in the following states:
+  /// <item>Unloaded</item> - An initial state of every plugin.
+  /// <item>Loaded</item> - Plugin's codebase is loaded in the current application domain.
+  /// <item>Created</item> - The class is created/instantiated using its default no arg ctor.
+  /// <item>Error</item> - An error has occured while trying to load the assembly.
+  /// </description>
   public class PluginInfo
   {
     public enum Status {UnLoaded, Loaded, Created, Error};
@@ -80,12 +92,9 @@ namespace SolidOpt.Services
       this.codeBase = Path.GetFullPath(fileName);
       this.status = Status.UnLoaded;
       this.appDomain = AppDomain.CurrentDomain;
-      
     }
-    
-//    private static int domainId = 0;
 
-    public void Load() {
+    internal void LoadPluginInCurrentAppDomain() {
       if (status == Status.UnLoaded) {
         try {
 //          foreach (Assembly a in appDomain.GetAssemblies()) {
@@ -126,9 +135,9 @@ namespace SolidOpt.Services
       }
     }
     
-    public void Register(IServiceContainer serviceContainer)
+    internal void CreateAndRegisterAnInstance(IServiceContainer serviceContainer)
     {
-      Load();
+      LoadPluginInCurrentAppDomain();
       if (status != Status.Loaded) return;
 
       IService service;
@@ -136,7 +145,7 @@ namespace SolidOpt.Services
         if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
           try {
             service = (IService)(assembly.CreateInstance(type.FullName));
-            // //service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
+            //service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
             //service = (IService)(appDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
             if (service != null)
               serviceContainer.AddService(service);
