@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyBrowser", "AssemblyBrowser\AssemblyBrowser.csproj", "{BD74C0D8-547A-448F-B7FD-AD4FA077A497}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{F5181A68-3D5A-4506-8782-DBAC833F7F69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidReflector", "..\src\SolidReflector.csproj", "{2F7448D6-7206-4758-BB48-F48D4C75AB5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services", "..\src\vendors\SolidOpt-build\src\Services\SolidOpt.Services.csproj", "{E811F1C8-582F-4313-8B32-3E821AE23F9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations", "..\src\vendors\SolidOpt-build\src\Services\Transformations\SolidOpt.Services.Transformations.csproj", "{B599E21F-8155-46BD-8538-19349E78B89F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph", "..\src\vendors\SolidOpt-build\src\Services\Transformations\CodeModel\ControlFlowGraph\src\SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.csproj", "{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode", "..\src\vendors\SolidOpt-build\src\Services\Transformations\CodeModel\ThreeAddressCode\src\SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.csproj", "{EE4DC4C0-B416-4381-80A3-D7B57FC201BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations.MultiModel", "..\src\vendors\SolidOpt-build\src\Services\Transformations\Multimodel\SolidOpt.Services.Transformations.MultiModel.csproj", "{ADB38744-D0BB-43A3-B94D-520AB54B4CF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidV", "..\src\vendors\SolidV\src\SolidV.csproj", "{2F7FC64C-1463-41FA-BD8B-26478757DD85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "..\src\vendors\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations.MultiModel.ILtoCFG", "..\src\vendors\SolidOpt-build\src\Services\Transformations\Multimodel\ILtoCFG\src\SolidOpt.Services.Transformations.MultiModel.ILtoCFG.csproj", "{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILVisualizer", "ILVisualizer\ILVisualizer.csproj", "{D346E109-37CD-44B3-A652-FC6A8D66D0EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFGVisualizer", "CFGVisualizer\CFGVisualizer.csproj", "{D8B83672-8E9A-4453-B3DE-5A82085E0C17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F7448D6-7206-4758-BB48-F48D4C75AB5F}.Debug|x86.ActiveCfg = Debug|x86
+		{2F7448D6-7206-4758-BB48-F48D4C75AB5F}.Debug|x86.Build.0 = Debug|x86
+		{2F7448D6-7206-4758-BB48-F48D4C75AB5F}.Release|x86.ActiveCfg = Release|x86
+		{2F7448D6-7206-4758-BB48-F48D4C75AB5F}.Release|x86.Build.0 = Release|x86
+		{2F7FC64C-1463-41FA-BD8B-26478757DD85}.Debug|x86.ActiveCfg = Debug|x86
+		{2F7FC64C-1463-41FA-BD8B-26478757DD85}.Debug|x86.Build.0 = Debug|x86
+		{2F7FC64C-1463-41FA-BD8B-26478757DD85}.Release|x86.ActiveCfg = Release|x86
+		{2F7FC64C-1463-41FA-BD8B-26478757DD85}.Release|x86.Build.0 = Release|x86
+		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}.Debug|x86.Build.0 = Debug|Any CPU
+		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}.Release|x86.ActiveCfg = Debug|Any CPU
+		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}.Release|x86.Build.0 = Debug|Any CPU
+		{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B}.Release|x86.ActiveCfg = Debug|Any CPU
+		{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B}.Release|x86.Build.0 = Debug|Any CPU
+		{ADB38744-D0BB-43A3-B94D-520AB54B4CF1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ADB38744-D0BB-43A3-B94D-520AB54B4CF1}.Debug|x86.Build.0 = Debug|Any CPU
+		{ADB38744-D0BB-43A3-B94D-520AB54B4CF1}.Release|x86.ActiveCfg = Debug|Any CPU
+		{ADB38744-D0BB-43A3-B94D-520AB54B4CF1}.Release|x86.Build.0 = Debug|Any CPU
+		{B599E21F-8155-46BD-8538-19349E78B89F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B599E21F-8155-46BD-8538-19349E78B89F}.Debug|x86.Build.0 = Debug|Any CPU
+		{B599E21F-8155-46BD-8538-19349E78B89F}.Release|x86.ActiveCfg = Debug|Any CPU
+		{B599E21F-8155-46BD-8538-19349E78B89F}.Release|x86.Build.0 = Debug|Any CPU
+		{BD74C0D8-547A-448F-B7FD-AD4FA077A497}.Debug|x86.ActiveCfg = Debug|x86
+		{BD74C0D8-547A-448F-B7FD-AD4FA077A497}.Debug|x86.Build.0 = Debug|x86
+		{BD74C0D8-547A-448F-B7FD-AD4FA077A497}.Release|x86.ActiveCfg = Release|x86
+		{BD74C0D8-547A-448F-B7FD-AD4FA077A497}.Release|x86.Build.0 = Release|x86
+		{D346E109-37CD-44B3-A652-FC6A8D66D0EB}.Debug|x86.ActiveCfg = Debug|x86
+		{D346E109-37CD-44B3-A652-FC6A8D66D0EB}.Debug|x86.Build.0 = Debug|x86
+		{D346E109-37CD-44B3-A652-FC6A8D66D0EB}.Release|x86.ActiveCfg = Release|x86
+		{D346E109-37CD-44B3-A652-FC6A8D66D0EB}.Release|x86.Build.0 = Release|x86
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|x86.Build.0 = Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|x86.ActiveCfg = Release|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Release|x86.Build.0 = Release|Any CPU
+		{D8B83672-8E9A-4453-B3DE-5A82085E0C17}.Debug|x86.ActiveCfg = Debug|x86
+		{D8B83672-8E9A-4453-B3DE-5A82085E0C17}.Debug|x86.Build.0 = Debug|x86
+		{D8B83672-8E9A-4453-B3DE-5A82085E0C17}.Release|x86.ActiveCfg = Release|x86
+		{D8B83672-8E9A-4453-B3DE-5A82085E0C17}.Release|x86.Build.0 = Release|x86
+		{E811F1C8-582F-4313-8B32-3E821AE23F9A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E811F1C8-582F-4313-8B32-3E821AE23F9A}.Debug|x86.Build.0 = Debug|Any CPU
+		{E811F1C8-582F-4313-8B32-3E821AE23F9A}.Release|x86.ActiveCfg = Debug|Any CPU
+		{E811F1C8-582F-4313-8B32-3E821AE23F9A}.Release|x86.Build.0 = Debug|Any CPU
+		{EE4DC4C0-B416-4381-80A3-D7B57FC201BE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE4DC4C0-B416-4381-80A3-D7B57FC201BE}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE4DC4C0-B416-4381-80A3-D7B57FC201BE}.Release|x86.ActiveCfg = Debug|Any CPU
+		{EE4DC4C0-B416-4381-80A3-D7B57FC201BE}.Release|x86.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2F7448D6-7206-4758-BB48-F48D4C75AB5F} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{E811F1C8-582F-4313-8B32-3E821AE23F9A} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{B599E21F-8155-46BD-8538-19349E78B89F} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{EE4DC4C0-B416-4381-80A3-D7B57FC201BE} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{ADB38744-D0BB-43A3-B94D-520AB54B4CF1} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{2F7FC64C-1463-41FA-BD8B-26478757DD85} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ..\src\SolidReflector.csproj
+	EndGlobalSection
+EndGlobal

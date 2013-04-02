@@ -32,45 +32,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-      <Package>glade-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-      <Package>glib-sharp-2.0</Package>
-    </Reference>
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
       <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="MonoDevelop.Dock">
+      <HintPath>bin\Debug\MonoDevelop.Dock.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix" />
-    <Reference Include="Mono.Cecil">
-      <HintPath>vendors\SolidOpt-build\lib\Mono.Cecil.dll</HintPath>
-      <Package>monodevelop</Package>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-2.0</Package>
     </Reference>
-    <Reference Include="Mono.Cairo" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ILWriter.cs" />
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="gtk-gui\MainWindow.cs" />
+    <Compile Include="IPlugin.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -86,30 +65,19 @@
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy FileWidth="100" TabWidth="1" IndentWidth="2" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
   <ItemGroup>
     <ProjectReference Include="vendors\SolidOpt-build\src\Services\SolidOpt.Services.csproj">
-      <Project>{1AFB7F4B-48C2-4828-997B-4CDFC1E21328}</Project>
+      <Project>{E811F1C8-582F-4313-8B32-3E821AE23F9A}</Project>
       <Name>SolidOpt.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="vendors\SolidOpt-build\src\Services\Transformations\SolidOpt.Services.Transformations.csproj">
-      <Project>{99CAB33D-DAB2-48DA-950D-769312DF1420}</Project>
-      <Name>SolidOpt.Services.Transformations</Name>
-    </ProjectReference>
-    <ProjectReference Include="vendors\SolidOpt-build\src\Services\Transformations\CodeModel\ControlFlowGraph\src\SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.csproj">
-      <Project>{965D75AA-D35D-4F82-A68F-1DCCD735311A}</Project>
-      <Name>SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph</Name>
-    </ProjectReference>
-    <ProjectReference Include="vendors\SolidOpt-build\src\Services\Transformations\CodeModel\ThreeAddressCode\src\SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.csproj">
-      <Project>{FFA852D0-DFFD-4800-BC13-8E182DB9ABDB}</Project>
-      <Name>SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode</Name>
-    </ProjectReference>
-    <ProjectReference Include="vendors\SolidOpt-build\src\Services\Transformations\Multimodel\SolidOpt.Services.Transformations.MultiModel.csproj">
-      <Project>{64C70C6E-658F-4622-99BB-BB6CB0771609}</Project>
-      <Name>SolidOpt.Services.Transformations.MultiModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\SolidV\trunk\src\SolidV.csproj">
-      <Project>{2F7FC64C-1463-41FA-BD8B-26478757DD85}</Project>
-      <Name>SolidV</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

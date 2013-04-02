@@ -5,25 +5,12 @@ public partial class MainWindow
 {
 	private global::Gtk.UIManager UIManager;
 	private global::Gtk.Action FileAction;
-	private global::Gtk.Action openAction;
 	private global::Gtk.Action quitAction;
 	private global::Gtk.Action HelpAction;
 	private global::Gtk.Action AboutAction;
 	private global::Gtk.VBox vbox1;
 	private global::Gtk.MenuBar MainMenuBar;
 	private global::Gtk.HBox hbox1;
-	private global::Gtk.Alignment alignment1;
-	private global::Gtk.HPaned hpaned1;
-	private global::Gtk.ScrolledWindow GtkScrolledWindow;
-	private global::Gtk.TreeView assemblyView;
-	private global::Gtk.VPaned vpaned1;
-	private global::Gtk.ComboBox combobox6;
-	private global::Gtk.Notebook notebook2;
-	private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-	private global::Gtk.TextView disassemblyText;
-	private global::Gtk.Label label2;
-	private global::Gtk.DrawingArea DrawingArea1;
-	private global::Gtk.Label label3;
 	
 	protected virtual void Build ()
 	{
@@ -34,9 +21,6 @@ public partial class MainWindow
 		this.FileAction = new global::Gtk.Action ("FileAction", global::Mono.Unix.Catalog.GetString ("File"), null, null);
 		this.FileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("File");
 		w1.Add (this.FileAction, null);
-		this.openAction = new global::Gtk.Action ("openAction", global::Mono.Unix.Catalog.GetString ("Open"), null, "gtk-open");
-		this.openAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open");
-		w1.Add (this.openAction, null);
 		this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("Exit"), null, "gtk-quit");
 		this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Exit");
 		w1.Add (this.quitAction, null);
@@ -56,7 +40,7 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='MainMenuBar'><menu name='FileAction' action='FileAction'><menuitem name='openAction' action='openAction'/><menuitem name='quitAction' action='quitAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name='MainMenuBar'><menu name='FileAction' action='FileAction'><menuitem name='quitAction' action='quitAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
 		this.MainMenuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/MainMenuBar")));
 		this.MainMenuBar.Name = "MainMenuBar";
 		this.vbox1.Add (this.MainMenuBar);
@@ -68,94 +52,17 @@ public partial class MainWindow
 		this.hbox1 = new global::Gtk.HBox ();
 		this.hbox1.Name = "hbox1";
 		this.hbox1.Spacing = 6;
-		// Container child hbox1.Gtk.Box+BoxChild
-		this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
-		this.alignment1.Name = "alignment1";
-		// Container child alignment1.Gtk.Container+ContainerChild
-		this.hpaned1 = new global::Gtk.HPaned ();
-		this.hpaned1.CanFocus = true;
-		this.hpaned1.Name = "hpaned1";
-		this.hpaned1.Position = 207;
-		// Container child hpaned1.Gtk.Paned+PanedChild
-		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
-		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
-		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
-		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-		this.assemblyView = new global::Gtk.TreeView ();
-		this.assemblyView.CanFocus = true;
-		this.assemblyView.Name = "assemblyView";
-		this.GtkScrolledWindow.Add (this.assemblyView);
-		this.hpaned1.Add (this.GtkScrolledWindow);
-		global::Gtk.Paned.PanedChild w4 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.GtkScrolledWindow]));
-		w4.Resize = false;
-		// Container child hpaned1.Gtk.Paned+PanedChild
-		this.vpaned1 = new global::Gtk.VPaned ();
-		this.vpaned1.CanFocus = true;
-		this.vpaned1.Name = "vpaned1";
-		this.vpaned1.Position = 31;
-		// Container child vpaned1.Gtk.Paned+PanedChild
-		this.combobox6 = global::Gtk.ComboBox.NewText ();
-		this.combobox6.AppendText (global::Mono.Unix.Catalog.GetString ("IL"));
-		this.combobox6.Events = ((global::Gdk.EventMask)(16384));
-		this.combobox6.ExtensionEvents = ((global::Gdk.ExtensionMode)(1));
-		this.combobox6.Name = "combobox6";
-		this.combobox6.Active = 0;
-		this.vpaned1.Add (this.combobox6);
-		global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.combobox6]));
-		w5.Resize = false;
-		// Container child vpaned1.Gtk.Paned+PanedChild
-		this.notebook2 = new global::Gtk.Notebook ();
-		this.notebook2.CanFocus = true;
-		this.notebook2.Name = "notebook2";
-		this.notebook2.CurrentPage = 1;
-		// Container child notebook2.Gtk.Notebook+NotebookChild
-		this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
-		this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
-		this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-		// Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
-		this.disassemblyText = new global::Gtk.TextView ();
-		this.disassemblyText.CanFocus = true;
-		this.disassemblyText.Name = "disassemblyText";
-		this.GtkScrolledWindow1.Add (this.disassemblyText);
-		this.notebook2.Add (this.GtkScrolledWindow1);
-		// Notebook tab
-		this.label2 = new global::Gtk.Label ();
-		this.label2.Name = "label2";
-		this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Text");
-		this.notebook2.SetTabLabel (this.GtkScrolledWindow1, this.label2);
-		this.label2.ShowAll ();
-		// Container child notebook2.Gtk.Notebook+NotebookChild
-		this.DrawingArea1 = new global::Gtk.DrawingArea ();
-		this.DrawingArea1.Events = ((global::Gdk.EventMask)(3846));
-		this.DrawingArea1.Name = "DrawingArea1";
-		this.notebook2.Add (this.DrawingArea1);
-		global::Gtk.Notebook.NotebookChild w8 = ((global::Gtk.Notebook.NotebookChild)(this.notebook2 [this.DrawingArea1]));
-		w8.Position = 1;
-		// Notebook tab
-		this.label3 = new global::Gtk.Label ();
-		this.label3.Name = "label3";
-		this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Graphics");
-		this.notebook2.SetTabLabel (this.DrawingArea1, this.label3);
-		this.label3.ShowAll ();
-		this.vpaned1.Add (this.notebook2);
-		this.hpaned1.Add (this.vpaned1);
-		this.alignment1.Add (this.hpaned1);
-		this.hbox1.Add (this.alignment1);
-		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.alignment1]));
-		w12.Position = 0;
 		this.vbox1.Add (this.hbox1);
-		global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
-		w13.Position = 1;
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
+		w3.Position = 1;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 882;
-		this.DefaultHeight = 723;
+		this.DefaultWidth = 1008;
+		this.DefaultHeight = 555;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-		this.openAction.Activated += new global::System.EventHandler (this.OnOpenActionActivated);
 		this.quitAction.Activated += new global::System.EventHandler (this.OnExitActionActivated);
-		this.assemblyView.RowActivated += new global::Gtk.RowActivatedHandler (this.OnAssemblyViewRowActivated);
 	}
 }
