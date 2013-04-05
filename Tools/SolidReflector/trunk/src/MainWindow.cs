@@ -29,7 +29,6 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
      // so that they could attach themselves in the menus.
      plugins.AddService((ISolidReflector)this);
 
-
      // That's a hack because of the designer. If one needs to attach an event the designer attaches
      // it in the end of the file after the call to Initialize. Works for the most of the events
      // but not for events like Realize which happen in the initialization. This function is used
@@ -64,6 +63,7 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
    protected void OnExitActionActivated(object sender, System.EventArgs e)
    {
       //SaveEnvironment();
+      ShutDownEvent(this, new EventArgs());
       Gtk.Application.Quit();
    }
 
@@ -113,6 +113,19 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   }
 
   #region ISolidReflector implementation
+  event EventHandler<EventArgs> ShutDownEvent = null;
+  event EventHandler<EventArgs> ISolidReflector.OnShutDown {
+    add {
+      if (ShutDownEvent == null)
+        ShutDownEvent += value;
+      else
+        ShutDownEvent = new EventHandler<EventArgs>(value);
+    } remove {
+      if (ShutDownEvent != null)
+        ShutDownEvent -= value;
+    }
+  }
+
   Gtk.MenuBar ISolidReflector.GetMainMenu()
   {
     return this.MainMenuBar;

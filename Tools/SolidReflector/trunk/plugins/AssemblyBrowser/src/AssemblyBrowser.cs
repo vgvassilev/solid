@@ -46,6 +46,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     {
       var MainWindow = reflector.GetMainWindow();
       Gtk.MenuBar mainMenuBar = reflector.GetMainMenu();
+      reflector.OnShutDown += HandleOnShutDown;
 
       Gtk.MenuItem fileMenu = null;
       // Find the File menu if present
@@ -72,6 +73,32 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       LoadEnvironment();
       assemblyTree.RowActivated += HandleRowActivated;
       assemblyTree.DeleteEvent += HandleDeleteEvent;
+    }
+
+    void HandleOnShutDown (object sender, EventArgs e)
+    {
+      SaveEnvironment();
+    }
+
+    private void SaveEnvironment() {
+      List<string> filesLoaded = null;
+      GetLoadedFiles(out filesLoaded);
+
+      saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env"),
+                          filesLoaded);
+      //saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Plugin.env"),
+      //                    plugins.plugins.ConvertAll<string>(x => x.ToString()));
+    }
+
+    private void saveEnvironmentData(string curEnv, List<string> items) {
+      FileStream file = new FileStream(curEnv, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+      using (StreamWriter writer = new StreamWriter(file)) {
+        writer.Write("");
+        writer.Flush();
+        foreach (string line in items)
+          writer.WriteLine(line);
+        writer.Flush();
+      }
     }
 
     void OnActivated(object sender, EventArgs args)

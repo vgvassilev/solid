@@ -11,6 +11,7 @@ namespace SolidReflector.Plugins
 
   public interface ISolidReflector : IService
   {
+    event EventHandler<EventArgs> OnShutDown;
     MainWindow GetMainWindow();
     Gtk.MenuBar GetMainMenu();
     PluginServiceContainer GetPlugins();
