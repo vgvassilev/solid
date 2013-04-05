@@ -5,12 +5,12 @@
 ##
 
 csharp_add_test_library(
-  SolidOpt.Services.Transformations.MultiModel.ILtoCFG.Test
+  SolidOpt.Services.Transformations.MultiModel.ILtoCFG.Test.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
-  SolidOpt.Services.Transformations.MultiModel.ILtoCFG.Test
+  SolidOpt.Services.Transformations.MultiModel.ILtoCFG.Test.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.ILtoCFG.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.Test.dll

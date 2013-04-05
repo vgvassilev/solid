@@ -11,7 +11,7 @@ configure_file(
   )
 
 csharp_add_library(
-  SolidOpt.BuildInformation
+  SolidOpt.BuildInformation.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   #${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )

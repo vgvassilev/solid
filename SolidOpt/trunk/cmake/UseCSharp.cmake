@@ -72,27 +72,38 @@ macro( CSHARP_ADD_GUI_EXECUTABLE name )
 endmacro( CSHARP_ADD_GUI_EXECUTABLE )
 
 macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
-  # For now we assume all dependencies are libs
-  # The targets doesn't contain the file extension.
-  # If we have an extension we have to strip it
-  STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" cur_target_we ${cur_target} )
-  STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" depends_on_we ${depends_on} )
-
-  if ( TARGET ${depends_on_we} )
-    list(FIND target_name ${depends_on_we} idx)
+  if ( TARGET ${depends_on} )
+    list(FIND target_name ${depends_on} idx)
     if (idx GREATER -1)
-      MESSAGE(STATUS "  ->Depends on[Target/Project]: ${depends_on_we}")
+      MESSAGE(STATUS "  ->Depends on[Target/Project]: ${depends_on}")
     else ()
-      MESSAGE(STATUS "  ->Depends on[Target/Vendor]: ${depends_on_we}")
+      MESSAGE(STATUS "  ->Depends on[Target/Vendor]: ${depends_on}")
     endif ()
-    add_dependencies( ${cur_target_we} ${depends_on_we} )
+    add_dependencies( ${cur_target} ${depends_on} )
   else ( )
     MESSAGE(STATUS "  ->Depends on[External]: ${depends_on}")
-  endif ( TARGET ${depends_on_we} )
+  endif ( TARGET ${depends_on} )
 endmacro( CSHARP_ADD_DEPENDENCY )
 
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
+  set( sources )
+  set( sources_dep )
+
+  if( ${type} MATCHES "library" )
+    set( output_type "library" )
+    set( TYPE_UPCASE "LIBRARY" )
+  elseif( ${type} MATCHES "exe" )
+    set( output_type "exe" )
+    set( TYPE_UPCASE "RUNTIME" )
+  elseif( ${type} MATCHES "gui" )
+    set( output_type "winexe" )
+    set( TYPE_UPCASE "RUNTIME" )
+  elseif( ${type} MATCHES "test_library" )
+    set( output_type "library" )
+    set( TYPE_UPCASE "LIBRARY" )
+  endif( ${type} MATCHES "library" )
+
   # Generate AssemblyInfo.cs
   MESSAGE( STATUS "Generating AssemblyInfo.cs for ${name}" )
   string(SUBSTRING "${SolidOpt_LastDate}" 0 4 SolidOpt_LastYear)
@@ -101,27 +112,6 @@ macro( CSHARP_ADD_PROJECT type name )
     ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
     @ONLY
   )
-
-  set( sources )
-  set( sources_dep )
-
-  if( ${type} MATCHES "library" )
-    set( output "dll" )
-    set( output_type "library" )
-    set( TYPE_UPCASE "LIBRARY" )
-  elseif( ${type} MATCHES "exe" )
-    set( output "exe" )
-    set( output_type "exe" )
-    set( TYPE_UPCASE "RUNTIME" )
-  elseif( ${type} MATCHES "gui" )
-    set( output "exe" )
-    set( output_type "winexe" )
-    set( TYPE_UPCASE "RUNTIME" )
-  elseif( ${type} MATCHES "test_library" )
-    set( output "dll" )
-    set( output_type "library" )
-    set( TYPE_UPCASE "LIBRARY" )
-  endif( ${type} MATCHES "library" )
 
   # Step through each argument
   foreach( it ${ARGN} )
@@ -165,19 +155,19 @@ macro( CSHARP_ADD_PROJECT type name )
   set_property(GLOBAL APPEND PROPERTY target_name_property "${name}")
   set_property(GLOBAL APPEND PROPERTY target_type_property "${type}")
   set_property(GLOBAL APPEND PROPERTY target_output_type_property "${output_type}")
-  set_property(GLOBAL APPEND PROPERTY target_out_property "${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}.${output}")
+  set_property(GLOBAL APPEND PROPERTY target_out_property "${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name}")
   set_property(GLOBAL APPEND PROPERTY target_guid_property "${proj_guid}")
   # The implementation relies on fixed numbering. I.e. every property should be
-  # set for each target in order CMAKE and VS sln generation to work. In the 
+  # set for each target in order CMAKE and VS sln generation to work. In the
   # case of references and test cases we have to insert sort-of empty property
   # for each target. In the case where the current target has test cases or more
   # references we have to edit the string at that position.
   set_property(GLOBAL APPEND PROPERTY target_refs_property "#System.dll")
   set_property(GLOBAL APPEND PROPERTY target_tests_property "#")
   set_property(GLOBAL APPEND PROPERTY target_test_results_property "#")
-  # Replace the ; with # in the list of sources. Thus the list becomes 
+  # Replace the ; with # in the list of sources. Thus the list becomes
   # "flattened". This is useful when we append the sources for another target
-  # and then it will become a list of target sources. 
+  # and then it will become a list of target sources.
   # Eg. #target1_src1.cs#target1_src2#...;#target2_src1.cs#target2_src2#...
   string(REPLACE ";" "#" s "${sources}")
   set_property(GLOBAL APPEND PROPERTY target_sources_property "#${s}")
@@ -191,13 +181,12 @@ endmacro( CSHARP_ADD_PROJECT )
 
 # Define dependencies macro
 macro( CSHARP_ADD_DEPENDENCIES name )
+
   set(refs)
 
   # Step through each argument
   foreach( it ${ARGN} )
-    if( ${it} MATCHES "(.*)(dll)" )
-       list( APPEND refs ${it} )
-    endif ( )
+    list( APPEND refs ${it} )
   endforeach( )
 
   # Save project references info in global properties
@@ -240,40 +229,59 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
   # Define custom targets and commands
   set( i 0 )
   foreach( name ${target_name} )
-    list( GET target_type ${i} type )
-    list( GET target_output_type ${i} output_type )
-    list( GET target_out ${i} out )
+    if (TARGET "${name}")
+      # Target is already defined
+    else()
+      list( GET target_type ${i} type )
+      list( GET target_output_type ${i} output_type )
+      list( GET target_out ${i} out )
 
-    list( GET target_sources ${i} s )
-    string(SUBSTRING "${s}" 1 -1 s)
-    string(REPLACE "#" ";" sources "${s}")
+      list( GET target_sources ${i} s )
+      string(SUBSTRING "${s}" 1 -1 s)
+      string(REPLACE "#" ";" sources "${s}")
 
-    list( GET target_sources_dep ${i} sd )
-    string(SUBSTRING "${sd}" 1 -1 sd)
-    string(REPLACE "#" ";" sources_dep "${sd}")
+      list( GET target_sources_dep ${i} sd )
+      string(SUBSTRING "${sd}" 1 -1 sd)
+      string(REPLACE "#" ";" sources_dep "${sd}")
 
-    list( GET target_refs ${i} r )
-    string(REPLACE "#" "#/reference:" r "${r}")
-    string(SUBSTRING "${r}" 1 -1 r)
-    string(REPLACE "#" ";" refs "${r}")
+      list( GET target_refs ${i} r )
+      string(REPLACE "#" "#/reference:" r "${r}")
+      string(SUBSTRING "${r}" 1 -1 r)
+      string(REPLACE "#" ";" refs "${r}")
 
-    # Add custom target and command
-    get_filename_component(out_name "${out}" NAME)
-    get_filename_component(out_dir "${out}" PATH)
-    MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'" )
-    add_custom_command(
-      COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}'"
-      OUTPUT ${out}
-      COMMAND ${CSHARP_COMPILER}
-      ARGS /t:${output_type} /out:${out} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${refs} ${sources}
-      WORKING_DIRECTORY ${out_dir}
-      DEPENDS ${sources_dep}
-    )
-    add_custom_target(
-      ${name} ALL
-      DEPENDS ${out}
-      SOURCES ${sources_dep}
-    )
+      # Separate resources
+      set(separated_sources)
+      set(separated_embd_resources)
+      set(separated_copy_resources)
+      foreach(s ${sources})
+        if ("${s}" MATCHES "\\.(stetic)$")
+          get_filename_component(res_name "${s}" NAME)
+          list(APPEND separated_embd_resources "/resource:${s},${res_name}")
+        elseif ("${s}" MATCHES "\\.(config)$")
+          list(APPEND separated_copy_resources "${s}")
+        else()
+          list(APPEND separated_sources "${s}")
+        endif()
+      endforeach()
+
+      # Add custom target and command
+      get_filename_component(out_name "${out}" NAME)
+      get_filename_component(out_dir "${out}" PATH)
+      MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${refs}'" )
+      add_custom_command(
+        COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${refs}'"
+        OUTPUT ${out}
+        COMMAND ${CSHARP_COMPILER}
+        ARGS /t:${output_type} /out:${out} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${refs}
+        WORKING_DIRECTORY ${out_dir}
+        DEPENDS ${sources_dep}
+      )
+      add_custom_target(
+        ${name} ALL
+        DEPENDS ${out}
+        SOURCES ${sources_dep}
+      )
+    endif()
 
     # Add a test if target is Test Library - nunit console test runner
     if (type STREQUAL "test_library")

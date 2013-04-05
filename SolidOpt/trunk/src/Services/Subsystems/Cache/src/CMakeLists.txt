@@ -5,7 +5,7 @@
 ##
 
 csharp_add_library(
-  SolidOpt.Services.Subsystems.Cache
+  SolidOpt.Services.Subsystems.Cache.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )

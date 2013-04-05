@@ -16,9 +16,9 @@ using System.Runtime.CompilerServices;
 // The assembly version has following format: Major.Minor.Build.Revision
 [assembly: AssemblyVersion("@SolidOpt_Major@.@SolidOpt_Minor@.@SolidOpt_Revision@")]
 // TODO: Add the target name
-[assembly: AssemblyTitle("@PROJECT_NAME@ Optimization Framework.")]
+[assembly: AssemblyTitle("@Project_Title@")]
 [assembly: AssemblyCopyright("Copyright (c) 2009-@SolidOpt_LastYear@ SolidOpt.org")]
-[assembly: AssemblyDescription("@PROJECT_NAME@ Optimization Framework")]
+[assembly: AssemblyDescription("@Project_Description@")]
 [assembly: AssemblyCompany("SolidOpt.org")]
 [assembly: AssemblyFileVersion("@SolidOpt_Major@.@SolidOpt_Minor@.0.@SolidOpt_Revision@")]
 [assembly: AssemblyCulture("")]

@@ -5,7 +5,7 @@
 ##
 
 csharp_add_library(
-  SolidOpt.Services.Subsystems.Configurator
+  SolidOpt.Services.Subsystems.Configurator.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Mappers/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Sources/*.cs
@@ -14,7 +14,7 @@ csharp_add_library(
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
-  SolidOpt.Services.Subsystems.Configurator
+  SolidOpt.Services.Subsystems.Configurator.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Subsystems.Cache.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Subsystems.HetAccess.dll
   # External

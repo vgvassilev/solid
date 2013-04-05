@@ -5,12 +5,12 @@
 ##
 
 csharp_add_library(
-  SolidOpt.Services.Transformations.Test
+  SolidOpt.Services.Transformations.Test.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   #${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
-  SolidOpt.Services.Transformations.Test
+  SolidOpt.Services.Transformations.Test.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.BuildInformation.dll
   # Monodevelop 2.8 compatibility
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll

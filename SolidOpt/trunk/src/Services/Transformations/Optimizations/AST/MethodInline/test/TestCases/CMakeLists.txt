@@ -5,6 +5,6 @@
 ##
 
 csharp_add_test_case(
-  SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
+  SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   )

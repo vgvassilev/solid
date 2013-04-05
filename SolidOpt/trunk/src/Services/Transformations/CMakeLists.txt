@@ -5,12 +5,12 @@
 ##
 
 csharp_add_library(
-  SolidOpt.Services.Transformations
+  SolidOpt.Services.Transformations.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
-  SolidOpt.Services.Transformations
+  SolidOpt.Services.Transformations.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   )
 

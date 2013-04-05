@@ -18,7 +18,7 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
 
     list( GET target_output_type ${proj_ix} output_type )
     list( GET target_bin_dir ${proj_ix} bin_dir )
-    list( GET target_src_dir ${proj_ix} src_dir ) 
+    list( GET target_src_dir ${proj_ix} src_dir )
     list( GET target_sources_dep ${proj_ix} sd )
     list( GET target_refs ${proj_ix} r )
     list( GET target_tests ${proj_ix} t )
