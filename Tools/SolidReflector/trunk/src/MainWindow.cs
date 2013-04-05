@@ -36,17 +36,16 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
      PreBuild();
      Build();
 
-     //SetSizeRequest(800, 600);
-
      vbox1.Add(dockFrame);
-         
-     if (File.Exists("config.layout"))
-       dockFrame.LoadLayouts("config.layout");
-     else
-       dockFrame.CreateLayout("test", true);
+          
+     if (File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, "config.layout")))
+       dockFrame.LoadLayouts(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout"));
+     else {
+       dockFrame.CreateLayout("BasicLayout", true);
+     }
   
      dockFrame.HeightRequest = vbox1.Allocation.Height;
-     dockFrame.CurrentLayout = "test";
+     dockFrame.CurrentLayout = "BasicLayout";
      dockFrame.HandlePadding = 0;
      dockFrame.HandleSize = 2;
 
@@ -55,14 +54,14 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
 
    protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
    {
-      //SaveEnvironment();
       Gtk.Application.Quit();
       a.RetVal = true;
    }
 
    protected void OnExitActionActivated(object sender, System.EventArgs e)
    {
-      //SaveEnvironment();
+      SaveLayout();
+
       ShutDownEvent(this, new EventArgs());
       Gtk.Application.Quit();
    }
@@ -72,25 +71,15 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
     LoadRegisteredPlugins();
   }
 
-  private void SaveEnvironment() {
-    List<string> filesLoaded = null;
-    //GetLoadedFiles(out filesLoaded);
+  /// <summary>
+  /// Saves the current window components layout and their last changed state.
+  /// </summary>
+  private void SaveLayout()
+  {
+    if (!File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout")))
+      File.Create(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout")).Dispose();
 
-    saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env"),
-                        filesLoaded);
-    saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Plugin.env"),
-                        plugins.plugins.ConvertAll<string>(x => x.ToString()));
-  }
-
-  private void saveEnvironmentData(string curEnv, List<string> items) {
-    FileStream file = new FileStream(curEnv, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-    using (StreamWriter writer = new StreamWriter(file)) {
-      writer.Write("");
-      writer.Flush();
-      foreach (string line in items)
-        writer.WriteLine(line);
-      writer.Flush();
-    }
+    dockFrame.SaveLayouts(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout"));
   }
 
   private void LoadRegisteredPlugins() {
