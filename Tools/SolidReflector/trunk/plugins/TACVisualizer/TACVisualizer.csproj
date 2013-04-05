@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E4E6B7C6-CBD9-4D43-BD9F-773C0D39E47F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TACVisualizer</RootNamespace>
+    <AssemblyName>TACVisualizer</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\TACVisualizer.cs" />
+    <Compile Include="src\TACPrettyPrinter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssemblyBrowser\AssemblyBrowser.csproj">
+      <Project>{BD74C0D8-547A-448F-B7FD-AD4FA077A497}</Project>
+      <Name>AssemblyBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\vendors\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\SolidReflector.csproj">
+      <Project>{2F7448D6-7206-4758-BB48-F48D4C75AB5F}</Project>
+      <Name>SolidReflector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\vendors\SolidOpt-build\src\Services\Transformations\CodeModel\ThreeAddressCode\src\SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.csproj">
+      <Project>{EE4DC4C0-B416-4381-80A3-D7B57FC201BE}</Project>
+      <Name>SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\vendors\SolidOpt-build\src\Services\Transformations\CodeModel\ControlFlowGraph\src\SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.csproj">
+      <Project>{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B}</Project>
+      <Name>SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\vendors\SolidOpt-build\src\Services\Transformations\Multimodel\ILtoCFG\src\SolidOpt.Services.Transformations.MultiModel.ILtoCFG.csproj">
+      <Project>{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}</Project>
+      <Name>SolidOpt.Services.Transformations.MultiModel.ILtoCFG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\vendors\SolidOpt-build\src\Services\Transformations\Multimodel\CFGtoTAC\src\SolidOpt.Services.Transformations.MultiModel.CFGtoTAC.csproj">
+      <Project>{4DED3FDD-68EF-4137-8281-29E22934C3D9}</Project>
+      <Name>SolidOpt.Services.Transformations.MultiModel.CFGtoTAC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoDevelop.Dock">
+      <HintPath>..\..\..\..\..\..\Experimental\MonoDocking\MonoDocking\bin\Debug\MonoDevelop.Dock.dll</HintPath>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+  </ItemGroup>
+</Project>

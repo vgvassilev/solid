@@ -27,11 +27,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transform
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations.CodeModel.CallGraph", "..\src\vendors\SolidOpt-build\src\Services\Transformations\CodeModel\CallGraph\src\SolidOpt.Services.Transformations.CodeModel.CallGraph.csproj", "{85F199F5-EAB8-42E6-AF95-FCD323309415}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidOpt.Services.Transformations.MultiModel.CFGtoTAC", "..\src\vendors\SolidOpt-build\src\Services\Transformations\Multimodel\CFGtoTAC\src\SolidOpt.Services.Transformations.MultiModel.CFGtoTAC.csproj", "{4DED3FDD-68EF-4137-8281-29E22934C3D9}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILVisualizer", "ILVisualizer\ILVisualizer.csproj", "{D346E109-37CD-44B3-A652-FC6A8D66D0EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFGVisualizer", "CFGVisualizer\CFGVisualizer.csproj", "{D8B83672-8E9A-4453-B3DE-5A82085E0C17}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGVisualizer", "CGVisualizer\CGVisualizer.csproj", "{7CC064E4-9040-44C0-9A4C-D3D85A73581C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TACVisualizer", "TACVisualizer\TACVisualizer.csproj", "{E4E6B7C6-CBD9-4D43-BD9F-773C0D39E47F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,10 @@ Global
 		{2F7FC64C-1463-41FA-BD8B-26478757DD85}.Debug|x86.Build.0 = Debug|x86
 		{2F7FC64C-1463-41FA-BD8B-26478757DD85}.Release|x86.ActiveCfg = Release|x86
 		{2F7FC64C-1463-41FA-BD8B-26478757DD85}.Release|x86.Build.0 = Release|x86
+		{4DED3FDD-68EF-4137-8281-29E22934C3D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4DED3FDD-68EF-4137-8281-29E22934C3D9}.Debug|x86.Build.0 = Debug|Any CPU
+		{4DED3FDD-68EF-4137-8281-29E22934C3D9}.Release|x86.ActiveCfg = Debug|Any CPU
+		{4DED3FDD-68EF-4137-8281-29E22934C3D9}.Release|x86.Build.0 = Debug|Any CPU
 		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}.Debug|x86.Build.0 = Debug|Any CPU
 		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}.Release|x86.ActiveCfg = Debug|Any CPU
@@ -91,6 +99,10 @@ Global
 		{D8B83672-8E9A-4453-B3DE-5A82085E0C17}.Debug|x86.Build.0 = Debug|x86
 		{D8B83672-8E9A-4453-B3DE-5A82085E0C17}.Release|x86.ActiveCfg = Release|x86
 		{D8B83672-8E9A-4453-B3DE-5A82085E0C17}.Release|x86.Build.0 = Release|x86
+		{E4E6B7C6-CBD9-4D43-BD9F-773C0D39E47F}.Debug|x86.ActiveCfg = Debug|x86
+		{E4E6B7C6-CBD9-4D43-BD9F-773C0D39E47F}.Debug|x86.Build.0 = Debug|x86
+		{E4E6B7C6-CBD9-4D43-BD9F-773C0D39E47F}.Release|x86.ActiveCfg = Release|x86
+		{E4E6B7C6-CBD9-4D43-BD9F-773C0D39E47F}.Release|x86.Build.0 = Release|x86
 		{E811F1C8-582F-4313-8B32-3E821AE23F9A}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{E811F1C8-582F-4313-8B32-3E821AE23F9A}.Debug|x86.Build.0 = Debug|Any CPU
 		{E811F1C8-582F-4313-8B32-3E821AE23F9A}.Release|x86.ActiveCfg = Debug|Any CPU
@@ -112,6 +124,7 @@ Global
 		{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
 		{D3BB087A-9A4D-40A6-A54B-608E9435F24F} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
 		{85F199F5-EAB8-42E6-AF95-FCD323309415} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
+		{4DED3FDD-68EF-4137-8281-29E22934C3D9} = {F5181A68-3D5A-4506-8782-DBAC833F7F69}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ..\src\SolidReflector.csproj
