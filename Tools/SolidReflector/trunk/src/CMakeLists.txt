@@ -10,9 +10,7 @@ csharp_add_gui_executable(
   SolidReflector.exe
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/gtk-gui/*.cs
-#  ${CMAKE_CURRENT_SOURCE_DIR}/gtk-gui/*.stetic
-  ${CMAKE_CURRENT_SOURCE_DIR}/gtk-gui/gui.stetic
-  ${CMAKE_CURRENT_SOURCE_DIR}/Properties/app.config
+  ${CMAKE_CURRENT_SOURCE_DIR}/gtk-gui/*.stetic
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
@@ -26,10 +24,22 @@ csharp_add_dependencies(
   gdk-sharp.dll
   )
 
+# Configure application config
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/Properties/app.config
+  ${CMAKE_RUNTIME_OUTPUT_DIR}/SolidReflector.exe.config
+  @ONLY
+)
+
+# Plugin config and dev symlink
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/Properties/Plugins.env.in
   ${CMAKE_RUNTIME_OUTPUT_DIR}/Plugins.env
   @ONLY
+)
+execute_process(
+  COMMAND ${CMAKE_COMMAND} -E create_symlink ../lib ${CMAKE_RUNTIME_OUTPUT_DIR}/plugins
+  WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIR}
 )
 
 
