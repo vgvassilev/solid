@@ -82,3 +82,11 @@ csharp_resolve_dependencies()
 
 # Save solution
 csharp_save_vs_solution(SolidReflector)
+
+#Give the user some instructions how to proceed.
+
+MESSAGE(STATUS "==============================================================")
+MESSAGE(STATUS "== Please run:") 
+MESSAGE(STATUS "== source ${CMAKE_SOURCE_DIR}/setenv.sh") 
+MESSAGE(STATUS "== make") 
+MESSAGE(STATUS "==============================================================")
