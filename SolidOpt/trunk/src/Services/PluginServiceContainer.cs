@@ -15,28 +15,70 @@ using System.Threading;
 
 namespace SolidOpt.Services
 {
+  /// <summary>
+  /// A service container for plugins.
+  /// </summary>
+  /// <description>
+  /// It contains plugins, which might provide services. Once the plugin is loaded,
+  /// its services (if any) get registered to the service container. 
+  /// </description>
   public class PluginServiceContainer : ServiceContainer
   {
-    public List<PluginInfo> plugins = new List<PluginInfo>();
+    private ICollection<PluginInfo> plugins = new List<PluginInfo>();
+    public ICollection<PluginInfo> Plugins {
+      get { return plugins; }
+    }
     
     public PluginServiceContainer(): base() {}
     public PluginServiceContainer(IServiceProvider parent): base(parent) {}
-    
+
+    /// <summary>
+    /// Adds all plugins found in the given path.
+    /// </summary>
+    /// <description>
+    /// Search the path with mask * and try to load each file found.
+    /// </description>
+    /// <param name="path">Path.</param>
+    ///
     public void AddPlugins(string path)
     {
       AddPlugins(new DirectoryInfo(path));
     }
-    
+
+    /// <summary>
+    /// Adds all plugins found in the given path, with a given mask.
+    /// </summary>
+    /// <param name="path">Path.</param>
+    /// <param name="mask">Mask.</param>
+    ///
     public void AddPlugins(string path, string mask)
     {
       AddPlugins(new DirectoryInfo(path), mask);
     }
-    
+
+    /// <summary>
+    /// Adds all plugins found in the given path.
+    /// </summary>
+    /// <description>
+    /// Search the path with mask * and try to load each file found.
+    /// </description>
+    /// <param name="dirInfo">Dir info.</param>
+    /// 
     public void AddPlugins(DirectoryInfo dirInfo)
     {
       AddPlugins(dirInfo, "*");
     }
-    
+
+    /// <summary>
+    /// Adds all plugins found in the given path.
+    /// </summary>
+    /// <description>
+    /// Search the path with a given mask and try to load each file found.
+    /// </description>
+    /// </summary>
+    /// <param name="dirInfo">Dir info.</param>
+    /// <param name="mask">Mask.</param>
+    /// 
     public void AddPlugins(DirectoryInfo dirInfo, string mask)
     {
       try {
@@ -49,12 +91,26 @@ namespace SolidOpt.Services
         throw e;
       }
     }
-    
+
+    /// <summary>
+    /// Adds a given plugin.
+    /// </summary>
+    /// <param name="fullName">Full name.</param>
+    ///
     public void AddPlugin(string fullName)
     {
       plugins.Add(new PluginInfo(fullName));
     }
-    
+
+    /// <summary>
+    /// Loads all plugins.
+    /// </summary>
+    /// <description>
+    /// Iterates over all added plugins and tries to call the plugin's default
+    /// constructor. If the plugin implements the IService interface the instance
+    /// gets registered to the services, provided by the PluginServiceContainer.
+    /// </description>
+    /// 
     public void LoadPlugins()
     {
       foreach (PluginInfo pluginInfo in plugins)
@@ -134,7 +190,12 @@ namespace SolidOpt.Services
         if (assembly == null) status = Status.Error;
       }
     }
-    
+
+    /// <summary>
+    /// Creates and register an instance of the plugin to the plugin container.
+    /// </summary>
+    /// <param name="serviceContainer">Service container.</param>
+    /// 
     internal void CreateAndRegisterAnInstance(IServiceContainer serviceContainer)
     {
       LoadPluginInCurrentAppDomain();
@@ -145,8 +206,6 @@ namespace SolidOpt.Services
         if (type.IsClass && !type.IsAbstract && typeof(IService).IsAssignableFrom(type))
           try {
             service = (IService)(assembly.CreateInstance(type.FullName));
-            //service = (IService)(AppDomain.CurrentDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
-            //service = (IService)(appDomain.CreateInstanceAndUnwrap(assembly.FullName, type.FullName));
             if (service != null)
               serviceContainer.AddService(service);
           } catch (Exception e) {
