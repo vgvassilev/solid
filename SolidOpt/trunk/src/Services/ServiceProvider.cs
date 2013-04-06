@@ -9,6 +9,9 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services
 {
+  /// <summary>
+  /// Default implementation for the IServiceProvider's members.
+  /// </summary>
   public class ServiceProvider : Service, IServiceProvider
   {
     public virtual Service GetService<Service>() where Service: class

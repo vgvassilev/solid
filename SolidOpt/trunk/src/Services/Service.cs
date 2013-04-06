@@ -8,6 +8,9 @@ using System;
 
 namespace SolidOpt.Services
 {
+  /// <summary>
+  /// Default implementation for the IService's members.
+  /// </summary>
   public class Service : IService
   {
     

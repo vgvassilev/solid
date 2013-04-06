@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services
 {
+  /// <summary>
+  /// Default implementation for the IServiceContainer's members.
+  /// </summary>
   public class ServiceContainer : ServiceProvider, IServiceContainer
   {
     public List<IService> services;
