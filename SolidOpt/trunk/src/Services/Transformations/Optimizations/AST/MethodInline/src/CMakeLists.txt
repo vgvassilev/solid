@@ -26,5 +26,5 @@ csharp_add_dependencies(
   )
 csharp_add_project_meta(
   SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.dll
-  "Framework" "4.0"
+  "TargetFrameworkVersion" "4.0"
   )
