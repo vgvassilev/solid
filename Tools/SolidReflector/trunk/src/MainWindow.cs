@@ -37,13 +37,13 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
      Build();
 
      vbox1.Add(dockFrame);
-          
+
      if (File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, "config.layout")))
        dockFrame.LoadLayouts(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout"));
      else {
        dockFrame.CreateLayout("BasicLayout", true);
      }
-  
+
      dockFrame.HeightRequest = vbox1.Allocation.Height;
      dockFrame.CurrentLayout = "BasicLayout";
      dockFrame.HandlePadding = 0;

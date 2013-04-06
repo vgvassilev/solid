@@ -11,24 +11,24 @@
     <AssemblyName>CFGVisualizer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -40,26 +40,27 @@
     <Compile Include="src\CFGPrettyDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoDevelop.Dock">
-      <HintPath>..\..\..\..\..\..\Experimental\MonoDocking\MonoDocking\bin\Debug\MonoDevelop.Dock.dll</HintPath>
-    </Reference>
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
-      <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
-      <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="Mono.Cairo" />
+    <Reference Include="MonoDevelop.Dock">
+      <HintPath>..\..\src\vendors\MonoDevelopDock\MonoDevelop.Dock.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\src\vendors\SolidOpt-build\lib\Mono.Cecil.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\vendors\SolidOpt-build\src\Services\Transformations\CodeModel\ControlFlowGraph\src\SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.csproj">
-      <Project>{7B4B3BB8-CCD7-42D1-8C14-2DD427CE558B}</Project>
+      <Project>{82854CB3-3FA4-40BC-89C8-5A5200A78955}</Project>
       <Name>SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\vendors\SolidOpt-build\src\Services\Transformations\Multimodel\ILtoCFG\src\SolidOpt.Services.Transformations.MultiModel.ILtoCFG.csproj">
-      <Project>{766BEFA7-33C4-4A60-A49B-6FEE06CAABF8}</Project>
+      <Project>{613A2FC2-C357-4214-8040-496D8FCF8CC0}</Project>
       <Name>SolidOpt.Services.Transformations.MultiModel.ILtoCFG</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\vendors\SolidV\src\SolidV.csproj">
@@ -73,10 +74,6 @@
     <ProjectReference Include="..\..\src\SolidReflector.csproj">
       <Project>{2F7448D6-7206-4758-BB48-F48D4C75AB5F}</Project>
       <Name>SolidReflector</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\vendors\SolidOpt\src\vendors\Mono.Cecil\Mono.Cecil.csproj">
-      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
-      <Name>Mono.Cecil</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

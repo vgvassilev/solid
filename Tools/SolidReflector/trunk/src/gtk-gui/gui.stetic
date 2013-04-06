@@ -5,7 +5,7 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../bin/Debug/MonoDevelop.Dock.dll" />
+    <widget-library name="../vendors/MonoDevelopDock/MonoDevelop.Dock.dll" />
     <widget-library name="../bin/Debug/SolidReflector.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="1008 555">
