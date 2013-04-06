@@ -12,6 +12,9 @@ fi
 
 if [[ $platform == 'linux' ]]; then
     export MONO_PATH="$MONO_PATH:/usr/lib/cli/gtk-sharp-2.0/:/usr/lib/cli/gdk-sharp-2.0/:/usr/lib/cli/pango-sharp-2.0/"
+    # Fix a know bug in mono. We mix runtime 2.0 and 4.0 and mono thinks that 
+    # we use only 2.0 and cannot run (see https://bugs.launchpad.net/ubuntu/+source/mono/+bug/882501).
+    alias SolidReflector.exe='mono --runtime=v4.0 @CMAKE_RUNTIME_OUTPUT_DIR@/SolidReflector.exe'
 elif [[ $platform == 'macos' ]]; then
     export DYLD_FALLBACK_LIBRARY_PATH="$DYLD_FALLBACK_LIBRARY_PATH:/Library/Frameworks/Mono.framework/Versions/Current/lib:/usr/lib"
     export MONO_PATH="$MONO_PATH:/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/gtk-sharp-2.0:/Library/Frameworks/Mono.framework/Versions/Current/lib"
