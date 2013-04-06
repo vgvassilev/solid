@@ -5,12 +5,12 @@
 ##
 
 csharp_add_library(
-  CFGVisualizer.dll
+  CGVisualizer.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
-  CFGVisualizer.dll
+  CGVisualizer.dll
   ${CMAKE_RUNTIME_OUTPUT_DIR}/SolidReflector.exe
   ${CMAKE_LIBRARY_OUTPUT_DIR}/AssemblyBrowser.dll
   # External
