@@ -8,7 +8,7 @@ using System;
 
 namespace SolidOpt.Services
 {
-  public abstract class AbstractService : IService
+  public class Service : IService
   {
     
   }

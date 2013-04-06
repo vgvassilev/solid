@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace SolidOpt.Services
 {
-  public abstract class AbstractServiceProvider : AbstractService, IServiceProvider
+  public class ServiceProvider : Service, IServiceProvider
   {
     public virtual Service GetService<Service>() where Service: class
     {
