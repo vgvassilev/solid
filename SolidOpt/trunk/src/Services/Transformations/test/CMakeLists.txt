@@ -18,4 +18,9 @@ csharp_add_dependencies(
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll
+  System.Core.dll
+  )
+csharp_add_project_meta(
+  SolidOpt.Services.Transformations.Test.dll
+  "Framework" "4.0"
   )

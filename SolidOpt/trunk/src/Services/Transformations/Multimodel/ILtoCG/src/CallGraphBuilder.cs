@@ -16,6 +16,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG
   public class CallGraphBuilder
   {
     private readonly MethodDefinition rootMethod;
+    //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>)?
     private HashSet<MethodDefinition> mDefsInFlight = new HashSet<MethodDefinition>();
 
     #region Constructors

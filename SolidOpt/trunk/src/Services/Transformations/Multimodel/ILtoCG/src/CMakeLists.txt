@@ -18,4 +18,9 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   # Externals
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
+  System.Core.dll
+  )
+csharp_add_project_meta(
+  SolidOpt.Services.Transformations.MultiModel.ILtoCG.dll
+  "Framework" "4.0"
   )

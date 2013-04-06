@@ -46,6 +46,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
     BasicBlock root = null;
     private List<Instruction> labels = new List<Instruction>();
     private List<BasicBlock> rawBlocks = new List<BasicBlock>();
+    //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>) or bool array?
     private HashSet<int> exceptionData = new HashSet<int>();
 
     #endregion

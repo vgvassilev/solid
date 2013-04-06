@@ -21,9 +21,12 @@
 #
 #   CSHARP_ADD_DEPENDENCIES( name references* ) - Define C# dependencies for project with the given name. For now dependencies must be defined after library.
 #
+#   CSHARP_ADD_PROJECT_META( name (key value)* ) - Define C# project meta data. For now dependencies must be defined after library.
+#
 # Examples:
-#   CSHARP_ADD_EXECUTABLE( MyExecutable "Program.cs" )
-#   CSHARP_ADD_DEPENDENCIES( MyExecutable "ref1.dll" "ref2.dll" )
+#   CSHARP_ADD_EXECUTABLE( MyExecutable.exe "Program.cs" )
+#   CSHARP_ADD_DEPENDENCIES( MyExecutable.exe "ref1.dll" "ref2.dll" )
+#   CSHARP_ADD_PROJECT_META( MyExecutable.exe "TargetFrameworkVersion" "4.0" "Meta2" "Meta2Value" )
 #
 
 # Check something was found
@@ -48,6 +51,8 @@ set_property(GLOBAL PROPERTY target_type_property)
 set_property(GLOBAL PROPERTY target_output_type_property)
 set_property(GLOBAL PROPERTY target_out_property)
 set_property(GLOBAL PROPERTY target_refs_property)
+set_property(GLOBAL PROPERTY target_metas_key_property)
+set_property(GLOBAL PROPERTY target_metas_value_property)
 set_property(GLOBAL PROPERTY target_sources_property)
 set_property(GLOBAL PROPERTY target_sources_dep_property)
 set_property(GLOBAL PROPERTY target_src_dir_property)
@@ -163,6 +168,8 @@ macro( CSHARP_ADD_PROJECT type name )
   # for each target. In the case where the current target has test cases or more
   # references we have to edit the string at that position.
   set_property(GLOBAL APPEND PROPERTY target_refs_property "#System.dll")
+  set_property(GLOBAL APPEND PROPERTY target_metas_key_property "#")
+  set_property(GLOBAL APPEND PROPERTY target_metas_value_property "#")
   set_property(GLOBAL APPEND PROPERTY target_tests_property "#")
   set_property(GLOBAL APPEND PROPERTY target_test_results_property "#")
   # Replace the ; with # in the list of sources. Thus the list becomes
@@ -175,7 +182,9 @@ macro( CSHARP_ADD_PROJECT type name )
   set_property(GLOBAL APPEND PROPERTY target_sources_dep_property "#${sd}")
   set_property(GLOBAL APPEND PROPERTY target_src_dir_property "${CMAKE_CURRENT_SOURCE_DIR}")
   set_property(GLOBAL APPEND PROPERTY target_bin_dir_property "${CMAKE_CURRENT_BINARY_DIR}")
-  set_property(GLOBAL APPEND PROPERTY target_proj_file_property "${CMAKE_CURRENT_BINARY_DIR}/${name}.csproj")
+  STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name} )
+  STRING( REGEX REPLACE "(\\.exe)[^\\.exe]*$" "" name_we ${name_we} )
+  set_property(GLOBAL APPEND PROPERTY target_proj_file_property "${CMAKE_CURRENT_BINARY_DIR}/${name_we}.csproj")
 
 endmacro( CSHARP_ADD_PROJECT )
 
@@ -314,3 +323,48 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
   endforeach( )
 
 endmacro( CSHARP_RESOLVE_DEPENDENCIES )
+
+# Define project meta data macro
+macro( CSHARP_ADD_PROJECT_META name )
+  set(metas_key)
+  set(metas_value)
+
+  set(flag TRUE)
+
+  # Step through each argument
+  foreach( it ${ARGN} )
+    if (flag)
+      list( APPEND metas_key ${it} )
+      set(flag FALSE)
+    else()
+      list( APPEND metas_value ${it} )
+      set(flag TRUE)
+    endif()
+  endforeach( )
+
+  # Save project meta data in global properties
+  get_property(target_name GLOBAL PROPERTY target_name_property)
+  get_property(target_metas_key GLOBAL PROPERTY target_metas_key_property)
+  get_property(target_metas_value GLOBAL PROPERTY target_metas_value_property)
+  list(FIND target_name ${name} idx)
+  if (idx GREATER -1)
+    if (NOT ("${metas_key}" STREQUAL ""))
+      string(REPLACE ";" "#" mk "${metas_key}")
+      get_property(target_metas_key GLOBAL PROPERTY target_metas_key_property)
+      list(GET target_metas_key ${idx} old_metas_key)
+      list(INSERT target_metas_key ${idx} "${old_metas_key}#${mk}")
+      string(REPLACE ";" "#" mv "${metas_value}")
+      get_property(target_metas_value GLOBAL PROPERTY target_metas_value_property)
+      list(GET target_metas_value ${idx} old_metas_value)
+      list(INSERT target_metas_value ${idx} "${old_metas_value}#${mv}")
+      math(EXPR idx "${idx}+1")
+      list(REMOVE_AT target_metas_key ${idx})
+      set_property(GLOBAL PROPERTY target_metas_key_property "${target_metas_key}")
+      list(REMOVE_AT target_metas_value ${idx})
+      set_property(GLOBAL PROPERTY target_metas_value_property "${target_metas_value}")
+    endif()
+  else ()
+    message(WARNING "Project ${name} was not defined!?")
+  endif ()
+
+endmacro( CSHARP_ADD_PROJECT_META )

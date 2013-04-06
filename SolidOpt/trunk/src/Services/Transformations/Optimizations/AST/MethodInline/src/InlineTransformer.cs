@@ -870,6 +870,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
       
       private AstMethodDefinition source;
       private Dictionary<VariableDefinition, VariableDefinition> localVarSubstitution;
+      //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>)?
       private HashSet<VariableDefinition> isVariableDefined = new HashSet<VariableDefinition>();
       private AssignExpression lastAssignment;
       

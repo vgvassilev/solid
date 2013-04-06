@@ -275,6 +275,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// </returns>
     protected HashSet<string> GetOverridenTestCases()
     {
+      //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>)?
       HashSet<string> res = new HashSet<string>();
       Type ty = GetType();
       foreach(System.Reflection.MethodInfo mInfo in ty.GetMethods()) {

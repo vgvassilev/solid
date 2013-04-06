@@ -19,4 +19,9 @@ csharp_add_dependencies(
   # Externals
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Cecil.Decompiler.dll
+  System.Core.dll
+  )
+csharp_add_project_meta(
+  SolidOpt.Services.Transformations.MultiModel.ASTtoIL.dll
+  "Framework" "4.0"
   )
