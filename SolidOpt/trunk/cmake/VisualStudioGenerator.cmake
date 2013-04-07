@@ -99,7 +99,8 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
     file(TO_NATIVE_PATH "${VAR_Project_OutputPath}" VAR_Project_OutputPath)
     # Base path
     #set( VAR_Project_BaseDirectory ${CMAKE_CURRENT_SOURCE_DIR} )
-    file(TO_NATIVE_PATH "${bin_dir}" VAR_Project_BaseDirectory)
+    ###file(TO_NATIVE_PATH "${bin_dir}" VAR_Project_BaseDirectory)
+    file(TO_NATIVE_PATH "${src_dir}" VAR_Project_BaseDirectory)
 
     foreach ( it ${refs} )
       get_filename_component(filename ${it} NAME)

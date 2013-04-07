@@ -277,15 +277,27 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
         endif()
       endforeach()
 
+      # Process references
+      set(processed_refs)
+      foreach (r ${refs})
+        string(REGEX MATCH "^[^,]*," s "${r}")
+        if (s)
+          string(REGEX MATCH "^[^,]*" s "${s}")
+          list(APPEND processed_refs "${s}")
+        else()
+          list(APPEND processed_refs "${r}")
+        endif()
+      endforeach()
+
       # Add custom target and command
       get_filename_component(out_name "${out}" NAME)
       get_filename_component(out_dir "${out}" PATH)
-      MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${refs}'" )
+      MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'" )
       add_custom_command(
-        COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${refs}'"
+        COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'"
         OUTPUT ${out}
         COMMAND ${CSHARP_COMPILER}
-        ARGS /t:${output_type} /out:${out} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${refs}
+        ARGS /t:${output_type} /out:${out} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}
         WORKING_DIRECTORY ${out_dir}
         DEPENDS ${sources_dep}
       )
