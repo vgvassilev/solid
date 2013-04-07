@@ -71,8 +71,8 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="vendors\SolidOpt-build\src\Services\SolidOpt.Services.csproj">
-      <Project>{990B2FCC-86B8-4813-81E1-30E02BA3182C}</Project>
+    <ProjectReference Include="..\..\build\src\vendors\SolidOpt\src\Services\SolidOpt.Services.csproj">
+      <Project>{1763B323-5B2C-4B73-94B6-22C74FDA5CF2}</Project>
       <Name>SolidOpt.Services</Name>
     </ProjectReference>
   </ItemGroup>
