@@ -39,6 +39,10 @@ include( ${MSBuild_USE_FILE} )
 find_package( TestingPrerequisites )
 include( ${TestingPrerequisites_USE_FILE} )
 
+# Force minimal sdk and framework versions (overrides the default ones from 2.0/2)
+set( CSHARP_FRAMEWORK_VERSION "4.0" CACHE STRING "C# .NET SDK version (e.g. 1.0, 1.1, 2.0, 3.0, 3.5, 4.0, 4.5, ...)" FORCE )
+set( CSHARP_SDK_COMPILER "/sdk:4" CACHE STRING "C# Mono SDK commandline switch (e.g. /sdk:2, /sdk:4, /sdk:5)" FORCE )
+
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIR)
   set(CMAKE_RUNTIME_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/bin)
