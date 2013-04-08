@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 using MonoDevelop.Components.Docking;
 
@@ -16,54 +17,69 @@ using SolidReflector.Plugins;
 
 public partial class MainWindow: Gtk.Window, ISolidReflector
 {
-  DockFrame dockFrame = new DockFrame();
+  private DockFrame dockFrame = new DockFrame();
   public DockFrame DockFrame {
     get { return dockFrame; }
   }
 
   private PluginServiceContainer plugins = new PluginServiceContainer();
+  private string applicationDataDir = "";
+  private string layoutFile = "";
+  private string pluginsDir = "";
+  private string pluginsFile = "Plugins.env";
 
   public MainWindow(): base(Gtk.WindowType.Toplevel)
   {
-     // Register the MainWindow as service so that it can be passed to the rest of the plugins
-     // so that they could attach themselves in the menus.
-     plugins.AddService((ISolidReflector)this);
+    // Register the MainWindow as service so that it can be passed to the rest of the plugins
+    // so that they could attach themselves in the menus.
+    plugins.AddService((ISolidReflector)this);
 
-     // That's a hack because of the designer. If one needs to attach an event the designer attaches
-     // it in the end of the file after the call to Initialize. Works for the most of the events
-     // but not for events like Realize which happen in the initialization. This function is used
-     // to attach the event handlers before the initialization part.
-     PreBuild();
-     Build();
+    string confDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+    applicationDataDir = System.IO.Path.Combine(confDir, Assembly.GetExecutingAssembly().GetName().Name);
+    pluginsDir = System.IO.Path.Combine(applicationDataDir, "plugins");
 
-     vbox1.Add(dockFrame);
+    if (!Directory.Exists(applicationDataDir))
+      Directory.CreateDirectory(applicationDataDir);
 
-     if (File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, "config.layout")))
-       dockFrame.LoadLayouts(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout"));
-     else {
-       dockFrame.CreateLayout("BasicLayout", true);
-     }
+    if (!Directory.Exists(pluginsDir))
+      Directory.CreateDirectory(pluginsDir);
 
-     dockFrame.HeightRequest = vbox1.Allocation.Height;
-     dockFrame.CurrentLayout = "BasicLayout";
-     dockFrame.HandlePadding = 0;
-     dockFrame.HandleSize = 2;
+    // That's a hack because of the designer. If one needs to attach an event the designer attaches
+    // it in the end of the file after the call to Initialize. Works for the most of the events
+    // but not for events like Realize which happen in the initialization. This function is used
+    // to attach the event handlers before the initialization part.
+    PreBuild();
+    Build();
 
-     this.ShowAll();
+    vbox1.Add(dockFrame);
+
+    layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
+    if (File.Exists(layoutFile))
+      dockFrame.LoadLayouts(System.IO.Path.Combine(applicationDataDir, "config.layout"));
+    else {
+      dockFrame.CreateLayout("BasicLayout", true);
+    }
+
+    dockFrame.HeightRequest = vbox1.Allocation.Height;
+    dockFrame.CurrentLayout = "BasicLayout";
+    dockFrame.HandlePadding = 0;
+    dockFrame.HandleSize = 2;
+
+    this.ShowAll();
    }
 
    protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
    {
-      Gtk.Application.Quit();
-      a.RetVal = true;
+     Gtk.Application.Quit();
+     a.RetVal = true;
    }
 
    protected void OnExitActionActivated(object sender, System.EventArgs e)
    {
-      SaveLayout();
+     SaveLayout();
 
-      ShutDownEvent(this, new EventArgs());
-      Gtk.Application.Quit();
+     ShutDownEvent(this, new EventArgs());
+     Gtk.Application.Quit();
    }
 
   protected void OnRealized(object sender, System.EventArgs e)
@@ -76,17 +92,15 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   /// </summary>
   private void SaveLayout()
   {
-    if (!File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout")))
-      File.Create(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout")).Dispose();
+    if (!File.Exists(layoutFile))
+      File.Create(layoutFile).Dispose();
 
-    dockFrame.SaveLayouts(System.IO.Path.Combine(Environment.CurrentDirectory,"config.layout"));
+    dockFrame.SaveLayouts(layoutFile);
   }
 
   private void LoadRegisteredPlugins() {
-    string registeredPlugins =
-        System.IO.Path.Combine(Environment.CurrentDirectory, "Plugins.env");
-    if (File.Exists(registeredPlugins)) {
-      foreach (string s in File.ReadAllLines(registeredPlugins))
+    if (File.Exists(pluginsFile)) {
+      foreach (string s in File.ReadAllLines(pluginsFile))
         if (File.Exists(s))
           plugins.AddPlugin(s);
     }
@@ -113,6 +127,11 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
       if (ShutDownEvent != null)
         ShutDownEvent -= value;
     }
+  }
+
+  string ISolidReflector.GetConfigurationDirectory()
+  {
+    return this.applicationDataDir;
   }
 
   Gtk.MenuBar ISolidReflector.GetMainMenu()

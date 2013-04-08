@@ -14,6 +14,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 {
   public class AssemblyBrowser : IPlugin, IAssemblyBrowser
   {
+    private ISolidReflector reflector = null;
     private DockItem dockItem;
     Gtk.TreeView assemblyTree = new Gtk.TreeView();
     public AssemblyBrowser() {
@@ -44,6 +45,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     #region IPlugin implementation
     void IPlugin.Init(ISolidReflector reflector)
     {
+      this.reflector = reflector;
       var MainWindow = reflector.GetMainWindow();
       Gtk.MenuBar mainMenuBar = reflector.GetMainMenu();
       reflector.OnShutDown += HandleOnShutDown;
@@ -77,20 +79,21 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
     void HandleOnShutDown (object sender, EventArgs e)
     {
-      SaveEnvironment();
+      SaveLoadedAssemblies();
     }
 
-    private void SaveEnvironment() {
+    private void SaveLoadedAssemblies() {
       List<string> filesLoaded = null;
       GetLoadedFiles(out filesLoaded);
 
-      saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env"),
+      if (!File.Exists(System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env"))) {
+        File.Create(System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env")).Dispose();
+      }
+      saveLoadedAssembliesData(System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env"),
                           filesLoaded);
-      //saveEnvironmentData(System.IO.Path.Combine(Environment.CurrentDirectory, "Plugin.env"),
-      //                    plugins.plugins.ConvertAll<string>(x => x.ToString()));
     }
 
-    private void saveEnvironmentData(string curEnv, List<string> items) {
+    private void saveLoadedAssembliesData(string curEnv, List<string> items) {
       FileStream file = new FileStream(curEnv, FileMode.OpenOrCreate, FileAccess.ReadWrite);
       using (StreamWriter writer = new StreamWriter(file)) {
         writer.Write("");
@@ -240,7 +243,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     }
 
     private void LoadEnvironment() {
-      string curEnv = System.IO.Path.Combine(Environment.CurrentDirectory, "Current.env");
+      string curEnv = System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env");
       if (File.Exists(curEnv)) {
         LoadFilesInTreeView(File.ReadAllLines(curEnv));
       }
