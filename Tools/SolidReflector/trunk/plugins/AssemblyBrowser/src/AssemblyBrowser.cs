@@ -66,9 +66,10 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
       Gtk.MenuItem open = new Gtk.MenuItem("Open");
       open.Activated += OnActivated;
-      (fileMenu.Submenu as Gtk.Menu).Append(open);
+      (fileMenu.Submenu as Gtk.Menu).Prepend(open);
 
       dockItem = MainWindow.DockFrame.AddItem("AssemblyBrowser");
+      dockItem.DrawFrame = true;
       dockItem.Label = "Assembly";
       dockItem.Content = assemblyTree;
 

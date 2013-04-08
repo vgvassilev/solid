@@ -51,7 +51,7 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
     PreBuild();
     Build();
 
-    vbox1.Add(dockFrame);
+    hbox1.Add(dockFrame);
 
     layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
     if (File.Exists(layoutFile))
@@ -60,10 +60,11 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
       dockFrame.CreateLayout("BasicLayout", true);
     }
 
-    dockFrame.HeightRequest = vbox1.Allocation.Height;
+    dockFrame.HeightRequest = hbox1.Allocation.Height;
+    dockFrame.WidthRequest = hbox1.Allocation.Width;
     dockFrame.CurrentLayout = "BasicLayout";
     dockFrame.HandlePadding = 0;
-    dockFrame.HandleSize = 2;
+    dockFrame.HandleSize = 4;
 
     this.ShowAll();
    }

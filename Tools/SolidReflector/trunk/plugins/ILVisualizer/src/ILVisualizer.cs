@@ -27,7 +27,7 @@ namespace SolidReflector.Plugins.ILVisualizer
 
       ilVisualizingDock = MainWindow.DockFrame.AddItem("ILVisualizer");
       ilVisualizingDock.Expand = true;
-      ilVisualizingDock.DrawFrame = false;
+      ilVisualizingDock.DrawFrame = true;
       ilVisualizingDock.Label = "IL Visualizer";
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage( new TextView(), new Gtk.Label("IL Text"));

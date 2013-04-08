@@ -17,7 +17,7 @@ namespace SolidReflector.Plugins.TACVisualizer
       browser.SelectionChanged += OnSelectionChanged;
 
       tacVisualizingDock = MainWindow.DockFrame.AddItem("TACVisualizer");
-      tacVisualizingDock.DrawFrame = false;
+      tacVisualizingDock.DrawFrame = true;
       tacVisualizingDock.Label = "Three Address Code Visualizer";
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage(new Gtk.TextView(), new Gtk.Label("TAC Text"));

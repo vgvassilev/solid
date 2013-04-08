@@ -33,7 +33,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       cfgVisualizingDock = MainWindow.DockFrame.AddItem("CFG Visualizer");
       //ilVisualizingDock.Behavior = DockItemBehavior.Locked;
       cfgVisualizingDock.Expand = true;
-      cfgVisualizingDock.DrawFrame = false;
+      cfgVisualizingDock.DrawFrame = true;
       cfgVisualizingDock.Label = "CFG Visualizer";
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage(new TextView(), new Gtk.Label("CFG Text"));

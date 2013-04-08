@@ -23,7 +23,7 @@ namespace SolidReflector.Plugins.CGVisualizer
 
       cgVisualizingDock = MainWindow.DockFrame.AddItem("CGVisualizer");
       //cgVisualizingDock.Expand = true;
-      cgVisualizingDock.DrawFrame = false;
+      cgVisualizingDock.DrawFrame = true;
       cgVisualizingDock.Label = "Call Graph Visualizer";
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage(new TextView(), new Gtk.Label("CG Text"));
