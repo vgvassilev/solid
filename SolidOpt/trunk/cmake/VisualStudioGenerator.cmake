@@ -19,7 +19,6 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
 
     MESSAGE( STATUS "Generating project ${proj_name_we}.csproj" )
 
-    list( GET target_output_type ${proj_ix} output_type )
     list( GET target_bin_dir ${proj_ix} bin_dir )
     list( GET target_src_dir ${proj_ix} src_dir )
     list( GET target_sources_dep ${proj_ix} sd )
@@ -28,6 +27,7 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
     list( GET target_metas_value ${proj_ix} mv )
     list( GET target_tests ${proj_ix} t )
     list( GET target_test_results ${proj_ix} tr )
+    list( GET target_output_type ${proj_ix} output_type )
 
     # Transform back #-delimited string into list and remove the dublicates.
     # References
@@ -185,19 +185,9 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
     foreach ( key ${metas_key} )
       list(GET metas_value ${meta_idx} val)
       math(EXPR meta_idx "${meta_idx}+1")
-
-      if (key STREQUAL "TargetFrameworkVersion")
-        set( VAR_Project_TargetFrameworkVersion "v${val}")
-      elseif(key STREQUAL "TargetFrameworkProfile")
-        set( VAR_Project_TargetFrameworkProfile "${val}" )
-      elseif(key STREQUAL "GUID")
-        set( VAR_Project_GUID "${val}" )
-      elseif(key STREQUAL "DefaultNamespace")
-        set( VAR_Project_DefaultNamespace "${val}" )
-      elseif(key STREQUAL "RootNamespace")
-        set( VAR_Project_RootNamespace "${val}" )
-      elseif(key STREQUAL "DefineConstants")
-        set( VAR_Project_RootNamespace "${VAR_Project_RootNamespace};${val}" )
+      set(VAR_Project_${key} "${val}")
+      if ((key STREQUAL "StartupProject") AND (val))
+        file( RELATIVE_PATH VAR_Solution_StartupItem ${CMAKE_CURRENT_BINARY_DIR} "${bin_dir}/${proj_name_we}.csproj" )
       endif()
     endforeach(key)
 

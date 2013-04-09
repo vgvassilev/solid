@@ -22,7 +22,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
   GlobalSection(NestedProjects) = preSolution
 @VAR_Solution_NestedProjects@  EndGlobalSection
   GlobalSection(MonoDevelopProperties) = preSolution
-#    StartupItem = ProjectFolder\ProjectName.csproj
+    StartupItem = @VAR_Solution_StartupItem@
     Policies = $0
     $0.TextStylePolicy = $1
     $1.FileWidth = 100

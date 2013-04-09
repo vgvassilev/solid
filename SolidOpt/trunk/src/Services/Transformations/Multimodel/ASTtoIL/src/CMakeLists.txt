@@ -23,5 +23,5 @@ csharp_add_dependencies(
   )
 csharp_add_project_meta(
   SolidOpt.Services.Transformations.MultiModel.ASTtoIL.dll
-  "TargetFrameworkVersion" "4.0"
+  "TargetFrameworkVersion" "v4.0"
   )

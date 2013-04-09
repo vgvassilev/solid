@@ -109,24 +109,15 @@ macro( CSHARP_ADD_PROJECT type name )
     set( TYPE_UPCASE "LIBRARY" )
   endif( ${type} MATCHES "library" )
 
-  # Generate AssemblyInfo.cs
-  MESSAGE( STATUS "Generating AssemblyInfo.cs for ${name}" )
-  string(SUBSTRING "${SolidOpt_LastDate}" 0 4 SolidOpt_LastYear)
-  configure_file(
-    ${CMAKE_MODULE_PATH}/AssemblyInfo.cs.in
-    ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
-    @ONLY
-  )
-
   # Step through each argument
   foreach( it ${ARGN} )
     # Argument is a source file
     if( EXISTS ${it} )
       list( APPEND sources ${it} )
       list( APPEND sources_dep ${it} )
-###    elseif( EXISTS ${CMAKE_CURRENT_BINARY_DIR}/${it} )
-###      list( APPEND sources ${it} )
-###      list( APPEND sources_dep ${it} )
+    elseif( ${it} MATCHES "AssemblyInfo.cs" )
+      list( APPEND sources ${it} )
+      list( APPEND sources_dep ${it} )
     elseif( ${it} MATCHES "[*]" )
       # We try to expand wildcards
       FILE( GLOB it_glob ${it} )
@@ -228,6 +219,9 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
   get_property(target_sources GLOBAL PROPERTY target_sources_property)
   get_property(target_sources_dep GLOBAL PROPERTY target_sources_dep_property)
   get_property(target_refs GLOBAL PROPERTY target_refs_property)
+  get_property(target_metas_key GLOBAL PROPERTY target_metas_key_property)
+  get_property(target_metas_value GLOBAL PROPERTY target_metas_value_property)
+  get_property(target_bin_dir GLOBAL PROPERTY target_bin_dir_property)
 
   # Set up the compiler flag for Debug/Release mode.
   set(BUILD_TYPE "optimize")
@@ -244,19 +238,31 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       list( GET target_type ${i} type )
       list( GET target_output_type ${i} output_type )
       list( GET target_out ${i} out )
+      list( GET target_bin_dir ${i} bin_dir )
 
+      # Sources
       list( GET target_sources ${i} s )
       string(SUBSTRING "${s}" 1 -1 s)
       string(REPLACE "#" ";" sources "${s}")
 
+      # Sources dep-s
       list( GET target_sources_dep ${i} sd )
       string(SUBSTRING "${sd}" 1 -1 sd)
       string(REPLACE "#" ";" sources_dep "${sd}")
 
+      # References
       list( GET target_refs ${i} r )
       string(REPLACE "#" "#/reference:" r "${r}")
       string(SUBSTRING "${r}" 1 -1 r)
       string(REPLACE "#" ";" refs "${r}")
+
+      # Project meta data
+      list( GET target_metas_key ${i} mk )
+      list( GET target_metas_value ${i} mv )
+      string(SUBSTRING "${mk}" 1 -1 mk)
+      string(REPLACE "#" ";" metas_key "${mk}")
+      string(SUBSTRING "${mv}" 1 -1 mv)
+      string(REPLACE "#" ";" metas_value "${mv}")
 
       # Separate resources
       set(separated_sources)
@@ -288,6 +294,25 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
           list(APPEND processed_refs "${r}")
         endif()
       endforeach()
+
+      # Generate AssemblyInfo.cs
+      MESSAGE( STATUS "Generating AssemblyInfo.cs for ${name}" )
+      set(VAR_Project_Title "${Project_Title}")
+      set(VAR_Project_Description "${Project_Description}")
+      string(SUBSTRING "${SolidOpt_LastDate}" 0 4 SolidOpt_LastYear)
+      # Project meta data
+      set(meta_idx 1)
+      foreach ( key ${metas_key} )
+        list(GET metas_value ${meta_idx} val)
+        math(EXPR meta_idx "${meta_idx}+1")
+        set(VAR_Project_${key} "${val}")
+      endforeach(key)
+      # Configure AssemblyInfo.cs
+      configure_file(
+        ${CMAKE_MODULE_PATH}/AssemblyInfo.cs.in
+        ${bin_dir}/AssemblyInfo.cs
+        @ONLY
+      )
 
       # Add custom target and command
       get_filename_component(out_name "${out}" NAME)
