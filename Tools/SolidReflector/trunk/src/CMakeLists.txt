@@ -27,6 +27,10 @@ csharp_add_dependencies(
   "pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
   "atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
   )
+csharp_add_project_meta(
+  SolidReflector.exe
+  "StartupProject" "true"
+  )
 
 # Configure application config
 configure_file(
