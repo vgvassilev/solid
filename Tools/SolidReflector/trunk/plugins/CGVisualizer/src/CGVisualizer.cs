@@ -1,33 +1,31 @@
+using MonoDevelop.Components.Docking;
+using Gtk;
 using System;
 
 using SolidReflector.Plugins.AssemblyBrowser;
-
-using MonoDevelop.Components.Docking;
-
-using Gtk;
 
 namespace SolidReflector.Plugins.CGVisualizer
 {
   public class CGVisualizer : IPlugin
   {
     private DockItem cgVisualizingDock = null;
-    public CGVisualizer ()
-    {
-    }
+
+    public CGVisualizer() { }
+
     #region IPlugin implementation
-    void IPlugin.Init (ISolidReflector reflector)
+    void IPlugin.Init(ISolidReflector reflector)
     {
       var MainWindow = reflector.GetMainWindow();
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
-      cgVisualizingDock = MainWindow.DockFrame.AddItem("CGVisualizer");
-      //cgVisualizingDock.Expand = true;
-      cgVisualizingDock.DrawFrame = true;
-      cgVisualizingDock.Label = "Call Graph Visualizer";
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage(new TextView(), new Gtk.Label("CG Text"));
       nb.ShowAll();
+
+      cgVisualizingDock = MainWindow.DockFrame.AddItem("CGVisualizer");
+      cgVisualizingDock.DrawFrame = true;
+      cgVisualizingDock.Label = "Call Graph Visualizer";
       cgVisualizingDock.Content = nb;
       cgVisualizingDock.DefaultVisible = true;
       cgVisualizingDock.Visible = true;
@@ -50,4 +48,3 @@ namespace SolidReflector.Plugins.CGVisualizer
     }
   }
 }
-

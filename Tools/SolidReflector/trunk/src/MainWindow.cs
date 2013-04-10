@@ -4,12 +4,10 @@
  * For further details see the nearest License.txt
  */
 
+using MonoDevelop.Components.Docking;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-
-using MonoDevelop.Components.Docking;
 
 using SolidOpt.Services;
 using SolidReflector.Plugins;
@@ -17,16 +15,16 @@ using SolidReflector.Plugins;
 
 public partial class MainWindow: Gtk.Window, ISolidReflector
 {
-  private DockFrame dockFrame = new DockFrame();
-  public DockFrame DockFrame {
-    get { return dockFrame; }
-  }
-
   private PluginServiceContainer plugins = new PluginServiceContainer();
   private string applicationDataDir = "";
   private string layoutFile = "";
   private string pluginsDir = "";
   private string pluginsFile = "Plugins.env";
+
+  private DockFrame dockFrame = new DockFrame();
+  public DockFrame DockFrame {
+    get { return dockFrame; }
+  }
 
   public MainWindow(): base(Gtk.WindowType.Toplevel)
   {
@@ -35,7 +33,8 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
     plugins.AddService((ISolidReflector)this);
 
     string confDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-    applicationDataDir = System.IO.Path.Combine(confDir, Assembly.GetExecutingAssembly().GetName().Name);
+    applicationDataDir = System.IO.Path.Combine(confDir, 
+                                                Assembly.GetExecutingAssembly().GetName().Name);
     pluginsDir = System.IO.Path.Combine(applicationDataDir, "plugins");
 
     if (!Directory.Exists(applicationDataDir))
@@ -67,21 +66,21 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
     dockFrame.HandleSize = 4;
 
     this.ShowAll();
-   }
+  }
 
-   protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
-   {
-     Gtk.Application.Quit();
-     a.RetVal = true;
-   }
+  protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
+  {
+    Gtk.Application.Quit();
+    a.RetVal = true;
+  }
 
-   protected void OnExitActionActivated(object sender, System.EventArgs e)
-   {
-     SaveLayout();
+  protected void OnExitActionActivated(object sender, System.EventArgs e)
+  {
+    SaveLayout();
+    ShutDownEvent(this, new EventArgs());
 
-     ShutDownEvent(this, new EventArgs());
-     Gtk.Application.Quit();
-   }
+    Gtk.Application.Quit();
+  }
 
   protected void OnRealized(object sender, System.EventArgs e)
   {

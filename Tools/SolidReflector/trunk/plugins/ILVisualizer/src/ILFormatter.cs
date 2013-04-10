@@ -80,27 +80,27 @@ namespace SolidReflector.Plugins.ILVisualizer
         Out.Insert(ref endIter, " ");
 
         switch (inst.OpCode.OperandType) {
-        case OperandType.ShortInlineBrTarget:
-        case OperandType.InlineBrTarget:
-          WriteInstLabel((Instruction) inst.Operand);
-          break;
-        case OperandType.InlineSwitch:
-          var labels = (Instruction[]) inst.Operand;
-          for (int i = 0; i < labels.Length; i++) {
-            if (i > 0)
-              Out.Insert(ref endIter,",");
+          case OperandType.ShortInlineBrTarget:
+          case OperandType.InlineBrTarget:
+            WriteInstLabel((Instruction) inst.Operand);
+            break;
+          case OperandType.InlineSwitch:
+            var labels = (Instruction[]) inst.Operand;
+            for (int i = 0; i < labels.Length; i++) {
+              if (i > 0)
+                Out.Insert(ref endIter,",");
 
-            WriteInstLabel(labels[i]);
-          }
-          break;
-        case OperandType.InlineString:
-          Out.Insert(ref endIter, "\"");
-          Out.Insert(ref endIter, inst.Operand.ToString());
-          Out.Insert(ref endIter, "\"");
-          break;
-        default:
-          Out.Insert(ref endIter, inst.Operand.ToString());
-          break;
+              WriteInstLabel(labels[i]);
+            }
+            break;
+          case OperandType.InlineString:
+            Out.Insert(ref endIter, "\"");
+            Out.Insert(ref endIter, inst.Operand.ToString());
+            Out.Insert(ref endIter, "\"");
+            break;
+          default:
+            Out.Insert(ref endIter, inst.Operand.ToString());
+            break;
         }
       }
 

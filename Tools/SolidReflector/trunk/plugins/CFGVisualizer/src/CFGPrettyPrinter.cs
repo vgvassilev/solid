@@ -1,9 +1,8 @@
+using Mono.Cecil;
 using System;
 
-using SolidOpt.Services.Transformations;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
-using Mono.Cecil;
 
 namespace SolidReflector.Plugins.CFGVisualizer
 {
@@ -20,9 +19,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
         PrintField(memberRef as FieldDefinition, textView);
     }
 
-    private static void PrintType(TypeDefinition typeDef, Gtk.TextView textView) {
-
-    }
+    private static void PrintType(TypeDefinition typeDef, Gtk.TextView textView) { }
 
     private static void PrintMethod(MethodDefinition methodDef, Gtk.TextView textView) {
       textView.Buffer.Clear();
@@ -35,7 +32,6 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
     private static void PrintEvent(EventDefinition evtDef, Gtk.TextView textView) {
       textView.Buffer.Clear();
-
       Gtk.TextIter textIter = textView.Buffer.EndIter;
 
       foreach (MethodDefinition mDef in evtDef.OtherMethods) {
@@ -50,4 +46,3 @@ namespace SolidReflector.Plugins.CFGVisualizer
     }
   }
 }
-

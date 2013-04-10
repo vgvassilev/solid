@@ -1,7 +1,6 @@
-using System;
 using MonoDevelop.Components.Docking;
+using System;
 
-using SolidReflector.Plugins;
 using SolidReflector.Plugins.AssemblyBrowser;
 
 namespace SolidReflector.Plugins.TACVisualizer
@@ -9,6 +8,9 @@ namespace SolidReflector.Plugins.TACVisualizer
   public class TACVisualizer : IPlugin
   {
     private DockItem tacVisualizingDock = null;
+
+    public TACVisualizer() { }
+
     #region IPlugin implementation
     void IPlugin.Init(ISolidReflector reflector)
     {
@@ -16,12 +18,13 @@ namespace SolidReflector.Plugins.TACVisualizer
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
-      tacVisualizingDock = MainWindow.DockFrame.AddItem("TACVisualizer");
-      tacVisualizingDock.DrawFrame = true;
-      tacVisualizingDock.Label = "Three Address Code Visualizer";
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage(new Gtk.TextView(), new Gtk.Label("TAC Text"));
       nb.ShowAll();
+
+      tacVisualizingDock = MainWindow.DockFrame.AddItem("TACVisualizer");
+      tacVisualizingDock.DrawFrame = true;
+      tacVisualizingDock.Label = "Three Address Code Visualizer";
       tacVisualizingDock.Content = nb;
       tacVisualizingDock.DefaultVisible = true;
       tacVisualizingDock.Visible = true;
@@ -44,4 +47,3 @@ namespace SolidReflector.Plugins.TACVisualizer
     }
   }
 }
-

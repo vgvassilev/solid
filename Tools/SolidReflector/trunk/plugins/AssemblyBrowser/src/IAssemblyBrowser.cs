@@ -1,6 +1,5 @@
-using System;
-
 using Mono.Cecil;
+using System;
 
 namespace SolidReflector.Plugins.AssemblyBrowser
 {
@@ -9,13 +8,13 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     public ModuleDefinition module;
     public AssemblyDefinition assembly;
 
-    public SelectionEventArgs(MemberReference definition, ModuleDefinition module, 
-                              AssemblyDefinition assembly) {
+    public SelectionEventArgs(MemberReference definition, ModuleDefinition module,
+                                AssemblyDefinition assembly) {
       this.definition = definition;
       this.module = module;
       this.assembly = assembly;
     }
-}
+  }
 
   public interface IAssemblyBrowser
   {
@@ -23,4 +22,3 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     AssemblyBrowser GetAssemblyBrowser();
   }
 }
-

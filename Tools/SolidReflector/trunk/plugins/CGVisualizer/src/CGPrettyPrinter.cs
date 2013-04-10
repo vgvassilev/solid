@@ -1,9 +1,6 @@
-using System;
 using Mono.Cecil;
+using System;
 
-using SolidReflector.Plugins.CGVisualizer;
-
-using SolidOpt.Services;
 using SolidOpt.Services.Transformations.CodeModel.CallGraph;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCG;
 
@@ -38,4 +35,3 @@ namespace SolidReflector.Plugins.CGVisualizer
     private static void PrintField(FieldDefinition fieldDefinition, Gtk.TextView textView) { }
   }
 }
-

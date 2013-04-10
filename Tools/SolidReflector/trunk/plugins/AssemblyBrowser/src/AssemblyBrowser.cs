@@ -1,14 +1,10 @@
+using Mono.Cecil;
+using MonoDevelop.Components.Docking;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-
-using SolidOpt.Services;
-
-using SolidReflector.Plugins;
-
-using Mono.Cecil;
-using MonoDevelop.Components.Docking;
 
 namespace SolidReflector.Plugins.AssemblyBrowser
 {
@@ -16,9 +12,9 @@ namespace SolidReflector.Plugins.AssemblyBrowser
   {
     private ISolidReflector reflector = null;
     private DockItem dockItem;
-    Gtk.TreeView assemblyTree = new Gtk.TreeView();
-    public AssemblyBrowser() {
-    }
+    private Gtk.TreeView assemblyTree = new Gtk.TreeView();
+
+    public AssemblyBrowser() { }
 
     #region IAssemblyBrowser implementation
     event EventHandler<SelectionEventArgs> SelectionChangedEvent = null;
@@ -32,7 +28,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       remove {
         if (SelectionChangedEvent != null)
           SelectionChangedEvent -= value;
-      }    
+      }
     }
 
     AssemblyBrowser IAssemblyBrowser.GetAssemblyBrowser()
@@ -46,6 +42,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     void IPlugin.Init(ISolidReflector reflector)
     {
       this.reflector = reflector;
+
       var MainWindow = reflector.GetMainWindow();
       Gtk.MenuBar mainMenuBar = reflector.GetMainMenu();
       reflector.OnShutDown += HandleOnShutDown;
@@ -74,6 +71,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       dockItem.Content = assemblyTree;
 
       LoadEnvironment();
+
       assemblyTree.RowActivated += HandleRowActivated;
       assemblyTree.DeleteEvent += HandleDeleteEvent;
     }
@@ -87,11 +85,13 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       List<string> filesLoaded = null;
       GetLoadedFiles(out filesLoaded);
 
-      if (!File.Exists(System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env"))) {
-        File.Create(System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env")).Dispose();
+      if (!File.Exists(System.IO.Path.Combine(reflector.GetConfigurationDirectory(),
+                                              "Assemblies.env"))) {
+        File.Create(System.IO.Path.Combine(reflector.GetConfigurationDirectory(),
+                                           "Assemblies.env")).Dispose();
       }
-      saveLoadedAssembliesData(System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env"),
-                          filesLoaded);
+      saveLoadedAssembliesData(System.IO.Path.Combine(reflector.GetConfigurationDirectory(), 
+                                                      "Assemblies.env"), filesLoaded);
     }
 
     private void saveLoadedAssembliesData(string curEnv, List<string> items) {
@@ -107,9 +107,9 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
     void OnActivated(object sender, EventArgs args)
     {
-      var fc = new Gtk.FileChooserDialog("Choose the file to open", null, Gtk.FileChooserAction.Open,
-                                       "Cancel", Gtk.ResponseType.Cancel, "Open",
-                                       Gtk.ResponseType.Accept);
+      var fc = new Gtk.FileChooserDialog("Choose the file to open", null, 
+                                         Gtk.FileChooserAction.Open, "Cancel", 
+                                         Gtk.ResponseType.Cancel, "Open", Gtk.ResponseType.Accept);
       try {
         fc.SelectMultiple = true;
         fc.SetCurrentFolder(Environment.CurrentDirectory);
@@ -169,45 +169,46 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       //SelectionChangedEvent(o, selectionArgs);
       Gtk.TreeIter iter;
       assemblyTree.Model.GetIter(out iter, args.Path);
+
       object currentObj = (object) assemblyTree.Model.GetValue(iter, 0);
       SelectionEventArgs selectionArgs;
-
       AssemblyDefinition curAssembly = null;
       ModuleDefinition curModule = null;
       MemberReference curMember = null;
+
       switch(args.Path.Depth) {
-      case 1:
-        curAssembly = currentObj as AssemblyDefinition;
-        Debug.Assert(curAssembly != null, "Assembly cannot be null.");
-        AttachSubTree(assemblyTree.Model, iter, curAssembly.Modules.ToArray());
-        selectionArgs = new SelectionEventArgs(null, null, curAssembly);
-        SelectionChangedEvent(o, selectionArgs);
-        break;
-      case 2:
-        curModule = currentObj as ModuleDefinition;
-        Debug.Assert(curModule != null, "CurModule is null!?");
-        AttachSubTree(assemblyTree.Model, iter, curModule.Types.ToArray());
-        selectionArgs = new SelectionEventArgs(null, curModule, curAssembly);
-        SelectionChangedEvent(o, selectionArgs);
-        break;
-      case 3:
-        TypeDefinition curType = currentObj as TypeDefinition;
-        Debug.Assert(curType != null, "CurType is null!?");
-        List<IMemberDefinition> members = new List<IMemberDefinition>();
-        members.AddRange(curType.Fields.ToArray());
-        members.AddRange(curType.Methods.ToArray());
-        members.AddRange(curType.Events.ToArray());
-        AttachSubTree(assemblyTree.Model, iter, members.ToArray());
-        selectionArgs = new SelectionEventArgs(curType, curModule, curAssembly);
-        SelectionChangedEvent(o, selectionArgs);
-        break;
-      case 4:
-        curMember = currentObj as MemberReference;
-        Debug.Assert(curMember != null, "MemberDef is null!?");
-        selectionArgs = new SelectionEventArgs(curMember, curModule, curAssembly);
-        SelectionChangedEvent(o, selectionArgs);
-        //DumpMember(memberDef);
-        break;
+        case 1:
+          curAssembly = currentObj as AssemblyDefinition;
+          Debug.Assert(curAssembly != null, "Assembly cannot be null.");
+          AttachSubTree(assemblyTree.Model, iter, curAssembly.Modules.ToArray());
+          selectionArgs = new SelectionEventArgs(null, null, curAssembly);
+          SelectionChangedEvent(o, selectionArgs);
+          break;
+        case 2:
+          curModule = currentObj as ModuleDefinition;
+          Debug.Assert(curModule != null, "CurModule is null!?");
+          AttachSubTree(assemblyTree.Model, iter, curModule.Types.ToArray());
+          selectionArgs = new SelectionEventArgs(null, curModule, curAssembly);
+          SelectionChangedEvent(o, selectionArgs);
+          break;
+        case 3:
+          TypeDefinition curType = currentObj as TypeDefinition;
+          Debug.Assert(curType != null, "CurType is null!?");
+          List<IMemberDefinition> members = new List<IMemberDefinition>();
+          members.AddRange(curType.Fields.ToArray());
+          members.AddRange(curType.Methods.ToArray());
+          members.AddRange(curType.Events.ToArray());
+          AttachSubTree(assemblyTree.Model, iter, members.ToArray());
+          selectionArgs = new SelectionEventArgs(curType, curModule, curAssembly);
+          SelectionChangedEvent(o, selectionArgs);
+          break;
+        case 4:
+          curMember = currentObj as MemberReference;
+          Debug.Assert(curMember != null, "MemberDef is null!?");
+          selectionArgs = new SelectionEventArgs(curMember, curModule, curAssembly);
+          SelectionChangedEvent(o, selectionArgs);
+          //DumpMember(memberDef);
+          break;
       }
       assemblyTree.ShowAll();
       //ShowAll();
@@ -244,7 +245,8 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     }
 
     private void LoadEnvironment() {
-      string curEnv = System.IO.Path.Combine(reflector.GetConfigurationDirectory(), "Assemblies.env");
+      string curEnv = System.IO.Path.Combine(reflector.GetConfigurationDirectory(),
+                                             "Assemblies.env");
       if (File.Exists(curEnv)) {
         LoadFilesInTreeView(File.ReadAllLines(curEnv));
       }
@@ -252,10 +254,9 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
     private void LoadFilesInTreeView(string [] files) {
       Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
-
       Gtk.CellRendererText colAssemblyCell = new Gtk.CellRendererText();
-      col.PackStart(colAssemblyCell, true);
 
+      col.PackStart(colAssemblyCell, true);
       col.AddAttribute(colAssemblyCell, "text", 0);
 
       if (assemblyTree.GetColumn(0) != null)
@@ -280,36 +281,36 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       assemblyTree.Model = store;
       assemblyTree.ShowAll();
     }
-      #endregion
+    #endregion
 
     private void RenderAssemblyDefinition(Gtk.TreeViewColumn column, Gtk.CellRenderer cell,
                                           Gtk.TreeModel model, Gtk.TreeIter iter) {
       object curObject = model.GetValue(iter, 0);
       switch (model.GetPath(iter).Depth) {
-        // Assemblies
-        case 1:
-          AssemblyDefinition aDef = curObject as AssemblyDefinition;
-          Debug.Assert(aDef != null, "Must have assembly.");
-          (cell as Gtk.CellRendererText).Text =  aDef.Name.Name;
-          break;
-        // Modules
-        case 2:
-          ModuleDefinition modDef = curObject as ModuleDefinition;
-          Debug.Assert(modDef != null, "Must have module.");
-          (cell as Gtk.CellRendererText).Text =  modDef.Name;
-          break;
-        // Types
-        case 3:
-          TypeDefinition tDef = curObject as TypeDefinition;
-          Debug.Assert(tDef != null, "Must have type (definition).");
-          (cell as Gtk.CellRendererText).Text =  tDef.Name;
-          break;
-        // Methods
-        case 4:
-          IMemberDefinition memberDef = curObject as IMemberDefinition;
-          Debug.Assert(memberDef != null, "Must have member.");
-          (cell as Gtk.CellRendererText).Text =  memberDef.Name;
-          break;
+      // Assemblies
+      case 1:
+        AssemblyDefinition aDef = curObject as AssemblyDefinition;
+        Debug.Assert(aDef != null, "Must have assembly.");
+        (cell as Gtk.CellRendererText).Text =  aDef.Name.Name;
+        break;
+      // Modules
+      case 2:
+        ModuleDefinition modDef = curObject as ModuleDefinition;
+        Debug.Assert(modDef != null, "Must have module.");
+        (cell as Gtk.CellRendererText).Text =  modDef.Name;
+        break;
+      // Types
+      case 3:
+        TypeDefinition tDef = curObject as TypeDefinition;
+        Debug.Assert(tDef != null, "Must have type (definition).");
+        (cell as Gtk.CellRendererText).Text =  tDef.Name;
+        break;
+      // Methods
+      case 4:
+        IMemberDefinition memberDef = curObject as IMemberDefinition;
+        Debug.Assert(memberDef != null, "Must have member.");
+        (cell as Gtk.CellRendererText).Text =  memberDef.Name;
+        break;
       }
     }
 
@@ -327,4 +328,3 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     }
   }
 }
-

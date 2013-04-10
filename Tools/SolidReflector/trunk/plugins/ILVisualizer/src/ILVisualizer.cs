@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-
-using SolidOpt.Services;
-
-using SolidReflector.Plugins;
-using SolidReflector.Plugins.AssemblyBrowser;
-
-using Mono.Cecil;
-using MonoDevelop.Components.Docking;
 using Gtk;
+using MonoDevelop.Components.Docking;
+using System;
+
+using SolidReflector.Plugins.AssemblyBrowser;
 
 namespace SolidReflector.Plugins.ILVisualizer
 {
   public class ILVisualizer : IPlugin
   {
-
     private DockItem ilVisualizingDock = null;
+
     public ILVisualizer() { }
 
     #region IPlugin implementation
@@ -25,13 +19,14 @@ namespace SolidReflector.Plugins.ILVisualizer
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
+      Gtk.Notebook nb = new Gtk.Notebook();
+      nb.AppendPage( new TextView(), new Gtk.Label("IL Text"));
+      nb.ShowAll();
+
       ilVisualizingDock = MainWindow.DockFrame.AddItem("ILVisualizer");
       ilVisualizingDock.Expand = true;
       ilVisualizingDock.DrawFrame = true;
       ilVisualizingDock.Label = "IL Visualizer";
-      Gtk.Notebook nb = new Gtk.Notebook();
-      nb.AppendPage( new TextView(), new Gtk.Label("IL Text"));
-      nb.ShowAll();
       ilVisualizingDock.Content = nb;
       ilVisualizingDock.DefaultVisible = true;
       ilVisualizingDock.Visible = true;
@@ -54,4 +49,3 @@ namespace SolidReflector.Plugins.ILVisualizer
     }
   }
 }
-

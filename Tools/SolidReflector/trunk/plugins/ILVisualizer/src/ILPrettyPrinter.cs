@@ -7,7 +7,6 @@ namespace SolidReflector.Plugins.ILVisualizer
 {
   public static class ILPrettyPrinter
   {
-
     public static void PrintPretty(MemberReference memberRef, Gtk.TextView textView) {
       if (memberRef is TypeDefinition)
         PrintType(memberRef as TypeDefinition, textView);
@@ -19,9 +18,7 @@ namespace SolidReflector.Plugins.ILVisualizer
         PrintField(memberRef as FieldDefinition, textView);
     }
 
-    private static void PrintType(TypeDefinition typeDef, Gtk.TextView textView) {
-
-    }
+    private static void PrintType(TypeDefinition typeDef, Gtk.TextView textView) { }
 
     private static void PrintMethod(MethodDefinition methodDef, Gtk.TextView textView) {
       textView.Buffer.Clear();
@@ -70,7 +67,7 @@ namespace SolidReflector.Plugins.ILVisualizer
           writer.WriteType(methodDef.Body.Variables[i].VariableType.Name.ToString());
           writer.WriteName(methodDef.Body.Variables[i].ToString());
           if (i + 1 != methodDef.Body.Variables.Count)
-              writer.Write(", ");
+            writer.Write(", ");
         }
         writer.Write(")");
         writer.NewLine();
@@ -111,8 +108,8 @@ namespace SolidReflector.Plugins.ILVisualizer
         }
         writer.WriteInstruction(inst);
       }
-        writer.Outdent();
-        writer.Write("}");
+      writer.Outdent();
+      writer.Write("}");
     }
 
     private static void PrintEvent(EventDefinition evtDef, Gtk.TextView textView) {
@@ -120,9 +117,8 @@ namespace SolidReflector.Plugins.ILVisualizer
 
       Gtk.TextIter textIter = textView.Buffer.EndIter;
 
-      foreach (MethodDefinition mDef in evtDef.OtherMethods) {
+      foreach (MethodDefinition mDef in evtDef.OtherMethods)
         textView.Buffer.Insert(ref textIter, evtDef.ToString() + "\n");
-      }
     }
 
     private static void PrintField(FieldDefinition fldDef, Gtk.TextView textView) {

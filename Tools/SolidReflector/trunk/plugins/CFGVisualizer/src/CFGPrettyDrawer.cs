@@ -1,43 +1,38 @@
+using Cairo;
+using Mono.Cecil;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-
-using SolidV.MVC;
-using SolidV.Cairo;
 
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
-
-using Mono.Cecil;
-
-using Cairo;
+using SolidV.MVC;
 
 namespace SolidReflector.Plugins.CFGVisualizer
 {
-
   public class CFGPrettyDrawer
   {
     Gtk.DrawingArea canvas = null;
-
     Model model = new Model();
     ShapesModel scene = new ShapesModel();
     SelectionModel selection = new SelectionModel();
     View<Context, Model> view = new View<Context, Model>();
-    CompositeController<Gdk.Event, Context, Model> controller = new CompositeController<Gdk.Event, Context, Model>();
+    CompositeController<Gdk.Event, Context, Model> controller = new CompositeController<Gdk.Event,
+                                                                                Context, Model>();
 
     public CFGPrettyDrawer(Gtk.DrawingArea drawingArea) {
       this.canvas = drawingArea;
+
       canvas.AddEvents((int) Gdk.EventMask.ButtonPressMask);
       canvas.AddEvents((int) Gdk.EventMask.ButtonReleaseMask);
       canvas.AddEvents((int) Gdk.EventMask.PointerMotionMask);
+
       canvas.ButtonPressEvent += HandleDrawingArea1ButtonPressEvent;
       canvas.ButtonReleaseEvent += HandleDrawingArea1ButtonReleaseEvent;
       canvas.ExposeEvent += HandleDrawingArea1ExposeEvent;
       canvas.MotionNotifyEvent += HandleDrawingArea1MotionNotifyEvent;
-      //
+
       model.RegisterSubModel<ShapesModel>(scene);
       model.RegisterSubModel<SelectionModel>(selection);
-
       model.ModelChanged += HandleModelChanged;
 
       view.Viewers.Add(typeof(Model), new ModelViewer<Context>());
@@ -60,7 +55,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     void HandleDrawingArea1ButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
       controller.Handle(args.Event);
     }
-    
+
     void HandleDrawingArea1MotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args)
     {
       controller.Handle(args.Event);
@@ -70,7 +65,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     {
       controller.Handle(args.Event);
     }
-    
+
     void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
       using (Cairo.Context context = Gdk.CairoHelper.Create(((Gtk.DrawingArea)o).GdkWindow)) {
         view.Draw(context, model);
@@ -89,28 +84,36 @@ namespace SolidReflector.Plugins.CFGVisualizer
       Dictionary<string, TextBlockShape> basicBlocks = new Dictionary<string, TextBlockShape>();
       List<BasicBlock> drawnBlocks = new List<BasicBlock>();
       TextBlockShape textBlock = new TextBlockShape();
+
       foreach (BasicBlock basicBlock in cfg.RawBlocks) {
         textBlock = new TextBlockShape();
-        textBlock.BlockText = Environment.NewLine + "Block Name: " + basicBlock.Name + Environment.NewLine;
-        textBlock.BlockText = textBlock.BlockText + basicBlock.First.ToString() + Environment.NewLine;
+        textBlock.BlockText = Environment.NewLine + "Block Name: " + basicBlock.Name +
+                                                                              Environment.NewLine;
+        textBlock.BlockText = textBlock.BlockText + basicBlock.First.ToString() +
+                                                                              Environment.NewLine;
         textBlock.BlockText = textBlock.BlockText + "..." + Environment.NewLine;
-        textBlock.BlockText = textBlock.BlockText + basicBlock.Last.ToString() + Environment.NewLine;
+        textBlock.BlockText = textBlock.BlockText + basicBlock.Last.ToString() +
+                                                                              Environment.NewLine;
         basicBlocks.Add(basicBlock.Name, textBlock);
         scene.Shapes.Add(textBlock);
       }
-      
+
       TextBlockShape fromTextShape = null;
       TextBlockShape toTextShape = null;
       int blockX = canvas.Allocation.Width / 2;
       int blockY = 10;
+
       foreach (BasicBlock block in cfg.RawBlocks) {
         basicBlocks.TryGetValue(block.Name, out fromTextShape);
-        if (!drawnBlocks.Contains(block)) {        
+
+        if (!drawnBlocks.Contains(block)) {
           fromTextShape.Rectangle = new Cairo.Rectangle(blockX, blockY, 150, 100);
           drawnBlocks.Add(block);
         }
+
         blockY += 140;
         blockX = 160;
+
         for (int i = 0; i < block.Successors.Count; i++) {
           basicBlocks.TryGetValue(block.Successors[i].Name, out toTextShape);
           drawnBlocks.Add(block.Successors[i]);
@@ -123,4 +126,3 @@ namespace SolidReflector.Plugins.CFGVisualizer
     }
   }
 }
-
