@@ -47,6 +47,7 @@ if (DOXYGEN_FOUND)
     doxygen
     COMMAND ${DOXYGEN_EXECUTABLE}
     "${PROJECT_BINARY_DIR}/doxygen/doxygen.conf"
+    DEPENDES ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/*in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/*css
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     SOURCES "${DOXYGEN_INPUT_DIR}"
     COMMENT "Generating API documentation with Doxygen" VERBATIM
