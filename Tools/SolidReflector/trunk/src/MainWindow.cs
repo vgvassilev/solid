@@ -109,14 +109,14 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   /// <param name='sender'>
   /// The application window (MainWindow).
   /// </param>
-  /// <param name='a'>
-  /// A.
+  /// <param name='args'>
+  /// Arguments.
   /// </param>
   /// 
-  protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs a)
+  protected void OnDeleteEvent(object sender, Gtk.DeleteEventArgs args)
   {
     Gtk.Application.Quit();
-    a.RetVal = true;
+    args.RetVal = true;
   }
 
   /// <summary>
@@ -126,11 +126,11 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   /// <param name='sender'>
   /// The application window (MainWindow).
   /// </param>
-  /// <param name='e'>
-  /// E.
+  /// <param name='args'>
+  /// Arguments.
   /// </param>
   /// 
-  protected void OnExitActionActivated(object sender, System.EventArgs e)
+  protected void OnExitActionActivated(object sender, System.EventArgs args)
   {
     SaveLayout();
     ShutDownEvent(this, new EventArgs());
@@ -144,11 +144,11 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   /// <param name='sender'>
   /// The application window (MainWindow).
   /// </param>
-  /// <param name='e'>
-  /// E.
+  /// <param name='args'>
+  /// Arguments.
   /// </param>
   /// 
-  protected void OnRealized(object sender, System.EventArgs e)
+  protected void OnRealized(object sender, System.EventArgs args)
   {
     LoadRegisteredPlugins();
   }
