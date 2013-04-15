@@ -4,17 +4,38 @@ using SolidOpt.Services;
 
 namespace SolidReflector.Plugins
 {
+  /// <summary>
+  /// Interface ensuring the plugin is compatible with the SolidReflector/DataMorphose project.
+  /// </summary>
+  /// 
   public interface IPlugin : IService
   {
+    /// <summary>
+    /// The initializing method of the plugin. The plugin is loaded via this method.
+    /// </summary>
+    /// <param name='reflector'>
+    /// Reflector.
+    /// </param>
+    /// 
     void Init(ISolidReflector reflector);
   }
 
+  /// <summary>
+  /// Exposes methods and events an application has to implement in order to be compatible with
+  /// the SolidReflector/DataMorphose plugins
+  /// </summary>
+  /// 
   public interface ISolidReflector : IService
   {
+    /// <summary>
+    /// Occurs when the main application (SolidReflector, DataMorphose) is requested to terminate.
+    /// The event is sent to the subscribed plugins allowing them to do some work before the
+    /// application is terminated.
+    /// </summary>
     event EventHandler<EventArgs> OnShutDown;
 
     /// <summary>
-    /// Gets the current user's configuration directory.
+    /// Gets the current user configuration directory.
     /// </summary>
     /// <description>
     /// On Unix it is /home/user/.config/SolidReflector

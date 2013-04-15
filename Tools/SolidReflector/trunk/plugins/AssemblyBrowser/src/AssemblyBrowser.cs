@@ -8,16 +8,39 @@ using System.IO;
 
 namespace SolidReflector.Plugins.AssemblyBrowser
 {
+  /// <summary>
+  /// Assembly browser plugin representing the assembly structure in tree like form.
+  /// </summary>
+  /// 
   public class AssemblyBrowser : IPlugin, IAssemblyBrowser
   {
+    /// <summary>
+    /// The main application instance.
+    /// </summary>
+    /// 
     private ISolidReflector reflector = null;
+
+    /// <summary>
+    /// The dock item that will be attached to the DockFrame from the main application.
+    /// </summary>
+    /// 
     private DockItem dockItem;
+
+    /// <summary>
+    /// The TreeView component representing the assembly structure.
+    /// </summary>
+    /// 
     private Gtk.TreeView assemblyTree = new Gtk.TreeView();
 
     public AssemblyBrowser() { }
 
     #region IAssemblyBrowser implementation
     event EventHandler<SelectionEventArgs> SelectionChangedEvent = null;
+
+    /// <summary>
+    /// Sent to the subscribed plugins notifying them the selection in the TreeView is changed.
+    /// </summary>
+    /// 
     event EventHandler<SelectionEventArgs> IAssemblyBrowser.SelectionChanged {
       add {
         if (SelectionChangedEvent != null)
@@ -31,6 +54,12 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       }
     }
 
+    /// <summary>
+    /// Gets the AssemblyBrowser plugin.
+    /// </summary>
+    /// <returns>
+    /// The AssemblyBrowser plugin.
+    /// </returns>
     AssemblyBrowser IAssemblyBrowser.GetAssemblyBrowser()
     {
       return this;
@@ -61,10 +90,12 @@ namespace SolidReflector.Plugins.AssemblyBrowser
         mainMenuBar.Append(fileMenu);
       }
 
+      // Setting up the Open menu item in File
       Gtk.MenuItem open = new Gtk.MenuItem("Open");
       open.Activated += OnActivated;
       (fileMenu.Submenu as Gtk.Menu).Prepend(open);
 
+      // Attaching the current dockItem in the DockFrame
       dockItem = MainWindow.DockFrame.AddItem("AssemblyBrowser");
       dockItem.DrawFrame = true;
       dockItem.Label = "Assembly";
@@ -73,14 +104,28 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       LoadEnvironment();
 
       assemblyTree.RowActivated += HandleRowActivated;
-      assemblyTree.DeleteEvent += HandleDeleteEvent;
     }
 
+    /// <summary>
+    /// Saves the loaded assemblies when the shut down event is received.
+    /// </summary>
+    /// <param name='sender'>
+    /// The MainWindow.
+    /// </param>
+    /// <param name='e'>
+    /// E.
+    /// </param>
+    /// 
     void HandleOnShutDown (object sender, EventArgs e)
     {
       SaveLoadedAssemblies();
     }
 
+    /// <summary>
+    /// Saves the list of loaded assemblies in the Assemblies.env
+    /// located in the main app configuration directory.
+    /// </summary>
+    /// 
     private void SaveLoadedAssemblies() {
       List<string> filesLoaded = null;
       GetLoadedFiles(out filesLoaded);
@@ -94,6 +139,16 @@ namespace SolidReflector.Plugins.AssemblyBrowser
                                                       "Assemblies.env"), filesLoaded);
     }
 
+    /// <summary>
+    /// Saves the loaded assemblies file paths in the Assemblies.env.
+    /// </summary>
+    /// <param name='curEnv'>
+    /// The path to the Assemlies.env.
+    /// </param>
+    /// <param name='items'>
+    /// The list of file paths that have to be written in the curEnv.
+    /// </param>
+    /// 
     private void saveLoadedAssembliesData(string curEnv, List<string> items) {
       FileStream file = new FileStream(curEnv, FileMode.OpenOrCreate, FileAccess.ReadWrite);
       using (StreamWriter writer = new StreamWriter(file)) {
@@ -105,6 +160,17 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       }
     }
 
+    /// <summary>
+    /// Raises the activated event when then Open menu item is invoked.
+    /// Adds an assembly to the assemblyTree.
+    /// </summary>
+    /// <param name='sender'>
+    /// The Gtk.MenuItem.
+    /// </param>
+    /// <param name='args'>
+    /// Arguments.
+    /// </param>
+    /// 
     void OnActivated(object sender, EventArgs args)
     {
       var fc = new Gtk.FileChooserDialog("Choose the file to open", null, 
@@ -155,14 +221,15 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       while (assemblyTree.Model.IterNext(ref iter));
     }
 
-    void HandleDeleteEvent (object o, Gtk.DeleteEventArgs args)
-    {
-      ShowMessageGtk("asd");
-      //SaveEnvironment();
-      //Gtk.Application.Quit();
-      //a.RetVal = true;
-    }
-
+    /// <summary>
+    /// Displays the proper assembly definition according to the depth of the activated row.
+    /// </summary>
+    /// <param name='o'>
+    /// The Gtk.TreeView assemblyTree.
+    /// </param>
+    /// <param name='args'>
+    /// Arguments.
+    /// </param>
     void HandleRowActivated (object o, Gtk.RowActivatedArgs args)
     {
       //SelectionEventArgs selectionArgs = new SelectionEventArgs();
@@ -244,6 +311,10 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       }
     }
 
+    /// <summary>
+    /// Loads the assemblies from the Assemblies.env.
+    /// </summary>
+    /// 
     private void LoadEnvironment() {
       string curEnv = System.IO.Path.Combine(reflector.GetConfigurationDirectory(),
                                              "Assemblies.env");
@@ -252,6 +323,13 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       }
     }
 
+    /// <summary>
+    /// Loads the files in the Assemblies.env into the TreeView.
+    /// </summary>
+    /// <param name='files'>
+    /// Files.
+    /// </param>
+    /// 
     private void LoadFilesInTreeView(string [] files) {
       Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
       Gtk.CellRendererText colAssemblyCell = new Gtk.CellRendererText();
