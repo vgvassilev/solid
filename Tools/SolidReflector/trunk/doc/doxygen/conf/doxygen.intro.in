@@ -1,0 +1,14 @@
+/// @mainpage SolidReflector
+///
+/// @section main_intro Introduction
+/// <h1>Welcome to the SolidReflector project.</h1>
+///
+/// <p>SolidReflector is a tool for multi model interactive analysis and decompilation of .NET/Mono based applications. It can be used both as a standalone application and as a service of SolidOpt.</p>
+/// <p>Its main purpose is to provide multiple intermediate representations and the following are available:</p>
+/// 
+/// <ul>
+/// <li>Control Flow Graph</li>
+/// <li>Call Graph</li>
+/// <li>Three Address Code</li>
+/// </ul>
+

@@ -78,8 +78,8 @@ add_subdirectory(plugins)
 # FIXME:
 # This is a bit hackish way, but it adds support for configuring just docs
 # it is needed by our online doxygen system.
-###set(DOXYGEN_INPUT_DIR ${CMAKE_SOURCE_DIR})
-###add_subdirectory(doc)
+set(DOXYGEN_INPUT_DIR ${CMAKE_SOURCE_DIR})
+add_subdirectory(doc)
 
 # Resolve all target dependencies
 csharp_resolve_dependencies()
