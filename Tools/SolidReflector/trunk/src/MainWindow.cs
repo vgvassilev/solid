@@ -159,6 +159,9 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   /// 
   private void SaveLayout()
   {
+    // Save all loaded plugins
+    plugins.SavePluginsToFile(pluginsFile);
+
     if (!File.Exists(layoutFile))
       File.Create(layoutFile).Dispose();
 
@@ -170,13 +173,9 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   /// </summary>
   /// 
   private void LoadRegisteredPlugins() {
-    if (File.Exists(pluginsFile)) {
-      foreach (string s in File.ReadAllLines(pluginsFile))
-        if (File.Exists(s))
-          plugins.AddPlugin(s);
-    }
-
+    plugins.AddPluginsFromFile(pluginsFile);
     plugins.LoadPlugins();
+
     foreach (IPlugin p in plugins.GetServices<IPlugin>()) {
       p.Init(this);
     }

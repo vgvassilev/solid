@@ -22,6 +22,7 @@ namespace SolidOpt.Services
   /// It contains plugins, which might provide services. Once the plugin is loaded,
   /// its services (if any) get registered to the service container. 
   /// </description>
+  /// 
   public class PluginServiceContainer : ServiceContainer
   {
     private ICollection<PluginInfo> plugins = new List<PluginInfo>();
@@ -31,6 +32,38 @@ namespace SolidOpt.Services
     
     public PluginServiceContainer(): base() {}
     public PluginServiceContainer(IServiceProvider parent): base(parent) {}
+
+    /// <summary>
+    /// Adds the plugins from a file.
+    /// </summary>
+    /// <returns><c>false</c>, if the specified file doesn't exist.</returns>
+    /// <param name="file">File (must exist).</param>
+    /// 
+    public bool AddPluginsFromFile(string file)
+    {
+      if (!File.Exists(file))
+        return false;
+
+      foreach (string s in File.ReadAllLines(file))
+        if (File.Exists(s))
+          AddPlugin(s);
+
+      return true;
+    }
+
+    /// <summary>
+    /// Saves the plugins to file, overwrites the file if it exists.
+    /// </summary>
+    /// <param name="file">File (created if it doesn't exist).</param>
+    /// 
+    public void SavePluginsToFile(string file)
+    {
+      List<string> paths = new List<string>();
+      foreach (PluginInfo p in plugins)
+        paths.Add(p.codeBase);
+
+      File.AppendAllLines(file, paths);
+    }
 
     /// <summary>
     /// Adds all plugins found in the given path.
