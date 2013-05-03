@@ -62,7 +62,7 @@ namespace SolidOpt.Services
       foreach (PluginInfo p in plugins)
         paths.Add(p.codeBase);
 
-      File.AppendAllLines(file, paths);
+      File.WriteAllLines(file, paths.ToArray());
     }
 
     /// <summary>
