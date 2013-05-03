@@ -163,7 +163,7 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
     plugins.SavePluginsToFile(pluginsFile);
 
     if (!File.Exists(layoutFile))
-      File.Create(layoutFile).Dispose();
+      File.Create(layoutFile).Close();
 
     dockFrame.SaveLayouts(layoutFile);
   }
