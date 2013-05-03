@@ -15,18 +15,19 @@ namespace SolidOpt.Services
   /// </summary>
   public class ServiceContainer : ServiceProvider, IServiceContainer
   {
-    public List<IService> services;
-    public IServiceProvider parent;
+    protected List<IService> services = new List<IService>();
+    public List<IService> Services {
+      get { return services; }
+    }
+
+    public IServiceProvider parent = null;
     
     public ServiceContainer()
     {
-      this.services = new List<IService>();
-      this.parent = null;
     }
     
     public ServiceContainer(IServiceProvider parent)
     {
-      this.services = new List<IService>();
       this.parent = parent;
     }
     
