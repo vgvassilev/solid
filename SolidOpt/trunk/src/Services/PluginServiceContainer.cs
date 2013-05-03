@@ -25,8 +25,8 @@ namespace SolidOpt.Services
   /// 
   public class PluginServiceContainer : ServiceContainer
   {
-    private ICollection<PluginInfo> plugins = new List<PluginInfo>();
-    public ICollection<PluginInfo> Plugins {
+    private List<PluginInfo> plugins = new List<PluginInfo>();
+    public List<PluginInfo> Plugins {
       get { return plugins; }
     }
     
