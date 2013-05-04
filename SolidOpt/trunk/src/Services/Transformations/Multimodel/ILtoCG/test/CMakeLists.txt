@@ -23,4 +23,9 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll
   )
 
+csharp_add_project_meta(
+  SolidOpt.Services.Transformations.MultiModel.ILtoCG.Test.dll
+  "TargetFrameworkVersion" "v4.0"
+  )
+
 add_subdirectory(TestCases)
