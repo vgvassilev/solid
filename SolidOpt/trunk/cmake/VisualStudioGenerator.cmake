@@ -188,6 +188,7 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
       set(VAR_Project_${key} "${val}")
       if ((key STREQUAL "StartupProject") AND (val))
         file( RELATIVE_PATH VAR_Solution_StartupItem ${CMAKE_CURRENT_BINARY_DIR} "${bin_dir}/${proj_name_we}.csproj" )
+        set( VAR_Solution_StartupItem "    StartupItem = ${VAR_Solution_StartupItem}\n" )
       endif()
     endforeach(key)
 
