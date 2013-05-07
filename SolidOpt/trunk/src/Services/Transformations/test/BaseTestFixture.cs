@@ -145,7 +145,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       // -B stays for ignore blank lines. TODO: Maybe we should consider fixing our tests.
       string output = string.Format("{0}\t\t\t\t{1}\n\n", Path.GetFileName(resultFile),
                                     Path.GetFileName(debugFile));
-      p.StartInfo.Arguments = string.Format ("-y -w -B \"{0}\" \"{1}\"", resultFile, debugFile);
+      p.StartInfo.Arguments = string.Format ("-u --strip-trailing-cr \"{0}\" \"{1}\"", resultFile, debugFile);
       if (Environment.OSVersion.Platform == PlatformID.Win32Windows) {
         p.StartInfo.Arguments = string.Format ("\"{0}\" \"{1}\"", resultFile, debugFile);
         p.StartInfo.FileName = "FB";
@@ -162,8 +162,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
       File.WriteAllText(debugFile, output);
       // if the exit code is 0 this means there is no difference.
-      if (p.ExitCode > 0)
-        errMsg += output;
+      if (p.ExitCode > 0) {
+        //errMsg += output;
+        errMsg += GetTestCaseRunInfo(testCaseName);
+      }
       if (p.ExitCode == 0)
         Cleanup(testCaseName);
 
@@ -176,6 +178,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       sb.AppendFormat("{0} {1}",p.StartInfo.FileName, p.StartInfo.Arguments);
       sb.AppendLine();
       File.AppendAllText(invokeFile, sb.ToString()); 
+    }
+
+    private string GetTestCaseRunInfo(string testCaseName)
+    {
+      string result = "";
+      string debugFile = GetTestCaseOutFullPath(testCaseName);
+      string invokeFile = debugFile + ".invoke";
+      if (File.Exists(invokeFile))
+        result = File.ReadAllText(invokeFile);
+      if (File.Exists(debugFile))
+        result += File.ReadAllText(debugFile);
+
+      return result;
     }
 
     /// <summary>
