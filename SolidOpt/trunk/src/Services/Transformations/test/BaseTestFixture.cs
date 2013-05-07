@@ -142,10 +142,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       p.StartInfo.RedirectStandardInput = true;
       p.StartInfo.RedirectStandardError = true;
       p.StartInfo.FileName = "diff";
-      // -B stays for ignore blank lines. TODO: Maybe we should consider fixing our tests.
-      string output = string.Format("{0}\t\t\t\t{1}\n\n", Path.GetFileName(resultFile),
-                                    Path.GetFileName(debugFile));
-      p.StartInfo.Arguments = string.Format ("-u --strip-trailing-cr \"{0}\" \"{1}\"", resultFile, debugFile);
+      // --strip-trailing-cr avoid comparing the new lines, which are different for the different platforms.
+      // --ignore-blank-lines because all test expected results end with blank line.
+      p.StartInfo.Arguments = string.Format ("-u --strip-trailing-cr --ignore-blank-lines \"{0}\" \"{1}\"", 
+                                             resultFile, debugFile);
       if (Environment.OSVersion.Platform == PlatformID.Win32Windows) {
         p.StartInfo.Arguments = string.Format ("\"{0}\" \"{1}\"", resultFile, debugFile);
         p.StartInfo.FileName = "FB";
@@ -153,7 +153,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       // Log the invocation.
       LogProcessInvocation(p, testCaseName);
       p.Start();
-      output += p.StandardOutput.ReadToEnd();
+      string output = p.StandardOutput.ReadToEnd();
       string error = p.StandardError.ReadToEnd();
       p.WaitForExit();
 
