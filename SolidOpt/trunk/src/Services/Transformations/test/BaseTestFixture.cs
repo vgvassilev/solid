@@ -163,7 +163,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       File.WriteAllText(debugFile, output);
       // if the exit code is 0 this means there is no difference.
       if (p.ExitCode > 0) {
-        //errMsg += output;
         errMsg += GetTestCaseRunInfo(testCaseName);
       }
       if (p.ExitCode == 0)
