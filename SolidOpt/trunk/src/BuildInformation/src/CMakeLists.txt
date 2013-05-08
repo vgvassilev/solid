@@ -6,12 +6,12 @@
 
 configure_file(
   ${CMAKE_MODULE_PATH}/BuildInfo.cs.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/BuildInfo.cs
+  ${CMAKE_CURRENT_BINARY_DIR}/BuildInfo.cs
   @ONLY
   )
 
 csharp_add_library(
   SolidOpt.BuildInformation.dll
-  ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+  ${CMAKE_CURRENT_BINARY_DIR}/*.cs
   #${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
