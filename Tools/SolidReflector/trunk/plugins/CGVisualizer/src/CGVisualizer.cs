@@ -2,6 +2,7 @@ using MonoDevelop.Components.Docking;
 using Gtk;
 using System;
 
+using SolidOpt.Services;
 using SolidReflector.Plugins.AssemblyBrowser;
 
 namespace SolidReflector.Plugins.CGVisualizer
@@ -13,8 +14,9 @@ namespace SolidReflector.Plugins.CGVisualizer
     public CGVisualizer() { }
 
     #region IPlugin implementation
-    void IPlugin.Init(ISolidReflector reflector)
+    void IPlugin.Init(object context)
     {
+      ISolidReflector reflector = context as ISolidReflector;
       var MainWindow = reflector.GetMainWindow();
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;

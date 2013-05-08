@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using SolidOpt.Services;
 using SolidReflector.Plugins.AssemblyBrowser;
 
 namespace SolidReflector.Plugins.CFGVisualizer
@@ -15,8 +16,9 @@ namespace SolidReflector.Plugins.CFGVisualizer
     public CFGVisualizer() { }
 
     #region IPlugin implementation
-    void IPlugin.Init(ISolidReflector reflector)
+    void IPlugin.Init(object context)
     {
+      ISolidReflector reflector = context as ISolidReflector;
       var MainWindow = reflector.GetMainWindow();
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;

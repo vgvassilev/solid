@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
+using SolidOpt.Services;
+
 namespace SolidReflector.Plugins.AssemblyBrowser
 {
   /// <summary>
@@ -68,9 +70,9 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     #endregion
 
     #region IPlugin implementation
-    void IPlugin.Init(ISolidReflector reflector)
+    void IPlugin.Init(object context)
     {
-      this.reflector = reflector;
+      reflector = context as ISolidReflector;
 
       var MainWindow = reflector.GetMainWindow();
       Gtk.MenuBar mainMenuBar = reflector.GetMainMenu();

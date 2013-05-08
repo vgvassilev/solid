@@ -5,22 +5,6 @@ using SolidOpt.Services;
 namespace SolidReflector.Plugins
 {
   /// <summary>
-  /// Interface ensuring the plugin is compatible with the SolidReflector/DataMorphose project.
-  /// </summary>
-  /// 
-  public interface IPlugin : IService
-  {
-    /// <summary>
-    /// The initializing method of the plugin. The plugin is loaded via this method.
-    /// </summary>
-    /// <param name='reflector'>
-    /// Reflector.
-    /// </param>
-    /// 
-    void Init(ISolidReflector reflector);
-  }
-
-  /// <summary>
   /// Exposes methods and events an application has to implement in order to be compatible with
   /// the SolidReflector/DataMorphose plugins
   /// </summary>
