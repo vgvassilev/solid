@@ -8,6 +8,16 @@ namespace SolidReflector.Plugins.CFGVisualizer
 {
   public static class CFGPrettyPrinter
   {
+    /// <summary>
+    /// Prints the text representation of the CFG using descendant of MemberReference.
+    /// </summary>
+    /// <param name='memberRef'>
+    /// Member reference.
+    /// </param>
+    /// <param name='textView'>
+    /// The Gtk.TextView used to be printed on.
+    /// </param>
+    /// 
     public static void PrintPretty(MemberReference memberRef, Gtk.TextView textView) {
       if (memberRef is TypeDefinition)
         PrintType(memberRef as TypeDefinition, textView);
@@ -21,6 +31,16 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
     private static void PrintType(TypeDefinition typeDef, Gtk.TextView textView) { }
 
+    /// <summary>
+    /// Prints the text representation of the CFG using MethodDefinition object.
+    /// </summary>
+    /// <param name='methodDef'>
+    /// Method def.
+    /// </param>
+    /// <param name='textView'>
+    /// The Gtk.TextView used to be printed on.
+    /// </param>
+    /// 
     private static void PrintMethod(MethodDefinition methodDef, Gtk.TextView textView) {
       textView.Buffer.Clear();
 

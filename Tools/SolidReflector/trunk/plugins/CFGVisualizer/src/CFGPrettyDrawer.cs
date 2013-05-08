@@ -11,6 +11,10 @@ namespace SolidReflector.Plugins.CFGVisualizer
 {
   public class CFGPrettyDrawer
   {
+    /// <summary>
+    /// The surface that is being painted on.
+    /// </summary>
+    /// 
     Gtk.DrawingArea canvas = null;
     Model model = new Model();
     ShapesModel scene = new ShapesModel();
@@ -47,6 +51,12 @@ namespace SolidReflector.Plugins.CFGVisualizer
       controller.SubControllers.Add(new ShapeDragController(model, view));
     }
 
+    /// <summary>
+    /// Invalidate the canvas.
+    /// </summary>
+    /// <param name='model'>
+    /// Model.
+    /// </param>
     void HandleModelChanged(object model)
     {
       canvas.QueueDraw();
@@ -80,6 +90,12 @@ namespace SolidReflector.Plugins.CFGVisualizer
       }
     }
 
+    /// <summary>
+    /// Draws the CFG on the canvas using its model.
+    /// </summary>
+    /// <param name='cfg'>
+    /// The CFG object.
+    /// </param>
     private void DrawCFG(ControlFlowGraph cfg) {
       Dictionary<string, TextBlockShape> basicBlocks = new Dictionary<string, TextBlockShape>();
       List<BasicBlock> drawnBlocks = new List<BasicBlock>();
