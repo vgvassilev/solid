@@ -84,15 +84,6 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
 
     hbox1.Add(dockFrame);
 
-    // Handling the application startup layout.
-    // If layout file is found the dock items would be restored as they were before the shut down.
-    layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
-    if (File.Exists(layoutFile))
-      dockFrame.LoadLayouts(System.IO.Path.Combine(applicationDataDir, "config.layout"));
-    else {
-      dockFrame.CreateLayout("BasicLayout", true);
-    }
-
     dockFrame.HeightRequest = hbox1.Allocation.Height;
     dockFrame.WidthRequest = hbox1.Allocation.Width;
     dockFrame.CurrentLayout = "BasicLayout";
@@ -151,6 +142,18 @@ public partial class MainWindow: Gtk.Window, ISolidReflector
   protected void OnRealized(object sender, System.EventArgs args)
   {
     LoadRegisteredPlugins();
+    LoadLayout();
+  }
+
+  // Handling the application startup layout.
+  // If layout file is found the dock items would be restored as they were before the shut down.
+  private void LoadLayout() {
+    layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
+    if (File.Exists(layoutFile))
+      dockFrame.LoadLayouts(System.IO.Path.Combine(applicationDataDir, "config.layout"));
+    else {
+      dockFrame.CreateLayout("BasicLayout", true);
+    }
   }
 
   /// <summary>
