@@ -2,6 +2,8 @@ namespace SolidOpt.BuildInformation {
   public static class BuildInfo {
     public const string LibraryOutputDir = "@CMAKE_LIBRARY_OUTPUT_DIR@";
     public const string ExecutableOutputDir = "@CMAKE_RUNTIME_OUTPUT_DIR@";
+    public const string SourceDir = "@CMAKE_SOURCE_DIR@";
+    public const string BinaryDir = "@CMAKE_BINARY_DIR@";
     public const string ILASMCompiler = "@ILASM@";
     public const string CSCCompiler = "@CSC@";
   }
