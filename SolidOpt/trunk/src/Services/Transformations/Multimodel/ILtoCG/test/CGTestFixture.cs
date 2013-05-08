@@ -22,7 +22,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
  public sealed class CGTestFixture
    : BaseTestFixture<MethodDefinition, CallGraph, CilToCallGraph>
   {
-    private string testCasesDirCache = null;
+    private readonly string testCasesDirCache = Path.Combine("src",
+                                                             "Services",
+                                                             "Transformations",
+                                                             "Multimodel",
+                                                             "ILtoCG",
+                                                             "test",
+                                                             "TestCases");
+    
+    public CGTestFixture()
+    {
+      // Do not implement. NUnit uses reflection. Moreover the base class does things 
+      // on static init.
+    }
 
     protected override string GetTestCaseFileExtension()
     {
@@ -34,20 +46,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
       return "il.cg";
     }
 
-    protected override string GetTestCasesDir() 
+    protected override string GetTestCaseDirOffset() 
     {
-      if (testCasesDirCache != null)
-        return testCasesDirCache;
-      
-      testCasesDirCache = base.GetTestCasesDir();
-      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Multimodel");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "ILtoCG");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
       return testCasesDirCache;
     }
 

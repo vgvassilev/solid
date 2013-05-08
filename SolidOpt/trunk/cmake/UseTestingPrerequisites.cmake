@@ -14,7 +14,6 @@
 #  
 
 macro( CSHARP_ADD_TEST_CASE name)
-  MESSAGE(STATUS "Configuring tests for ${name}")
   set(test_cases)
   set(test_results)
   # Step through each argument. Argument is a test source file
@@ -34,27 +33,14 @@ macro( CSHARP_ADD_TEST_CASE name)
     # test case.
     get_filename_component(TEST_CASE_NAME ${it} NAME_WE)
     set(TEST_CASE ${CMAKE_CURRENT_BINARY_DIR}/${test_case})
-    MESSAGE( STATUS "Configuring test case ${test_case} for ${name}" )
-    configure_file(
-      ${it}
-      ${CMAKE_CURRENT_BINARY_DIR}/${test_case}
-      @ONLY
-      )
 
     # Consider it.* as result files and copy them over.
     # Expand wildcards first.
     FILE( GLOB test_case_results ${it}.* )
     foreach(result_it ${test_case_results})
       get_filename_component(test_case_result ${result_it} NAME)
-
-      configure_file(
-        ${test_case_result}
-        ${CMAKE_CURRENT_BINARY_DIR}/${test_case_result}
-        COPYONLY
-        )
       # Add the result files to the list of result files.
       list( APPEND test_results ${result_it} )
-
     endforeach()
   endforeach()
 

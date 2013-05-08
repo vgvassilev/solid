@@ -22,7 +22,21 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
   public class MethodInlineTestFixture 
     : BaseTestFixture<AstMethodDefinition, AstMethodDefinition, InlineTransformer>
   {
-    private string testCasesDirCache = null;
+    private readonly string testCasesDirCache = Path.Combine("src",
+                                                             "Services",
+                                                             "Transformations",
+                                                             "Optimizations",
+                                                             "AST",
+                                                             "MethodInline",
+                                                             "test",
+                                                             "TestCases");
+    
+    public MethodInlineTestFixture()
+    {
+      // Do not implement. NUnit uses reflection. Moreover the base class does things 
+      // on static init.
+    }
+
     protected override string GetTestCaseFileExtension()
     {
       return "cs";
@@ -33,20 +47,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
       return "cs.ast";
     }
 
-    protected override string GetTestCasesDir() {
-      if (testCasesDirCache != null)
-        return testCasesDirCache;
-
-      testCasesDirCache = base.GetTestCasesDir();
-      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Optimizations");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "AST");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "MethodInline");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
+    protected override string GetTestCaseDirOffset() {
       return testCasesDirCache;
     }
 

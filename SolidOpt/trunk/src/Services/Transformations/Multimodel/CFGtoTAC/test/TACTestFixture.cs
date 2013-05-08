@@ -28,7 +28,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
   public sealed class TACTestFixture 
     : BaseTestFixture<ControlFlowGraph, ThreeAdressCode, CFGtoTACTransformer>
   {
-    private string testCasesDirCache = null;
+    private readonly string testCasesDirCache = Path.Combine("src",
+                                                             "Services",
+                                                             "Transformations",
+                                                             "Multimodel",
+                                                             "CFGtoTAC",
+                                                             "test",
+                                                             "TestCases");
+
+    public TACTestFixture()
+    {
+      // Do not implement. NUnit uses reflection. Moreover the base class does things 
+      // on static init.
+    }
+
+
     protected override string GetTestCaseFileExtension()
     {
       return "il";
@@ -39,23 +53,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
       return "il.tac";
     }
 
-    protected override string GetTestCasesDir() 
+    protected override string GetTestCaseDirOffset() 
     {
-      if (testCasesDirCache != null)
-        return testCasesDirCache;
-      
-      testCasesDirCache = base.GetTestCasesDir();
-      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Multimodel");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "CFGtoTAC");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
       return testCasesDirCache;
     }
-
 
     private ControlFlowGraph getCfg(string testCaseName) {
       MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);

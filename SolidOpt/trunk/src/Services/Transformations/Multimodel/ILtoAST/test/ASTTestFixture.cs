@@ -20,7 +20,20 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST.Test
   public sealed class ASTTestFixture 
     : BaseTestFixture<MethodDefinition, AstMethodDefinition, ILtoASTTransformer>
   {
-    private string testCasesDirCache = null;
+    private readonly string testCasesDirCache = Path.Combine("src",
+                                                             "Services",
+                                                             "Transformations",
+                                                             "Multimodel",
+                                                             "ILtoAST",
+                                                             "test",
+                                                             "TestCases");
+    
+    public ASTTestFixture()
+    {
+      // Do not implement. NUnit uses reflection. Moreover the base class does things 
+      // on static init.
+    }
+
     protected override string GetTestCaseFileExtension()
     {
       return "cs";
@@ -31,23 +44,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoAST.Test
       return "cs.ast";
     }
 
-    protected override string GetTestCasesDir() 
+    protected override string GetTestCaseDirOffset() 
     {
-      if (testCasesDirCache != null)
-        return testCasesDirCache;
-      
-      testCasesDirCache = base.GetTestCasesDir();
-      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Multimodel");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "ILtoAST");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
       return testCasesDirCache;
     }
-
     
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)

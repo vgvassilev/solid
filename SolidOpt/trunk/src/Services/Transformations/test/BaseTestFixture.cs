@@ -30,7 +30,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     public BaseTestFixture()
     {
       // Cleanup the last invocation.
-      string[] testCases = Directory.GetFiles(GetTestCasesDir(), "*." + GetTestCaseFileExtension());
+      string[] testCases = Directory.GetFiles(GetTestCasesBuildDir(), "*." + GetTestCaseFileExtension());
       foreach (string testCaseName in testCases)
         Cleanup(testCaseName);
     }
@@ -222,8 +222,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// </param>
     protected MethodDefinition LoadTestCaseMethod(string testCaseName)
     {
-      StreamReader stream = new StreamReader(GetTestCaseFullPath(testCaseName));
-      TestCaseDirectiveParser dirParser = new TestCaseDirectiveParser(stream);
+      TestCaseDirectiveParser dirParser = new TestCaseDirectiveParser(GetTestCaseFullPath(testCaseName));
       directives = dirParser.ParseDirectives();
 
       AssemblyDefinition assembly = CompileTestCase(testCaseName);
@@ -299,9 +298,24 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       return res;
     }
 
-    protected virtual string GetTestCasesDir()
+    protected string GetTestCasesDir()
     {
-      return BuildInformation.BuildInfo.LibraryOutputDir;
+      return Path.Combine(BuildInformation.BuildInfo.SourceDir, GetTestCaseDirOffset());
+    }
+
+    protected string GetTestCasesBuildDir()
+    {
+      return Path.Combine(BuildInformation.BuildInfo.BinaryDir, GetTestCaseDirOffset());
+    }
+
+    /// <summary>
+    /// Usually the test cases are contained in a sub-folder.
+    /// </summary>
+    /// <returns>The the offset from the SourceDir.</returns>
+    ///
+    protected virtual string GetTestCaseDirOffset()
+    {
+      return "";
     }
 
     protected string GetTestCaseFullPath(string testCaseName)

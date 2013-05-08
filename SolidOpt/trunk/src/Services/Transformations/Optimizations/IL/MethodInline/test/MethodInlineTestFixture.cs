@@ -24,7 +24,21 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Test
   public sealed class MethodInlineTestFixture
     : BaseTestFixture<MethodDefinition, MethodDefinition, InlineTransformer>
   {
-    private string testCasesDirCache = null;
+    private readonly string testCasesDirCache = Path.Combine("src",
+                                                             "Services",
+                                                             "Transformations",
+                                                             "Optimizations",
+                                                             "IL",
+                                                             "MethodInline",
+                                                             "test",
+                                                             "TestCases");
+    
+    public MethodInlineTestFixture()
+    {
+      // Do not implement. NUnit uses reflection. Moreover the base class does things 
+      // on static init.
+    }
+
     protected override string GetTestCaseFileExtension()
     {
       return "il";
@@ -35,21 +49,8 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.Test
       return "il.inlined";
     }
 
-    protected override string GetTestCasesDir() 
+    protected override string GetTestCaseDirOffset() 
     {
-      if (testCasesDirCache != null)
-        return testCasesDirCache;
-      
-      testCasesDirCache = base.GetTestCasesDir();
-      testCasesDirCache = Path.Combine(testCasesDirCache, "..");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "src");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Services");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Transformations");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "Optimizations");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "IL");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "MethodInline");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "test");
-      testCasesDirCache = Path.Combine(testCasesDirCache, "TestCases");
       return testCasesDirCache;
     }
 
