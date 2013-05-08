@@ -18,5 +18,5 @@ System.String TestCase::Main(System.Int32 a) {
   L16: V_0 = "!"
   L17: T_2 = a > 0
   L18: iftrue T_2 goto L1
-  L19: return V_0 
+  L19: return V_0
 }
