@@ -30,9 +30,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     public BaseTestFixture()
     {
       // Cleanup the last invocation.
-      string[] testCases = Directory.GetFiles(GetTestCasesBuildDir(), "*." + GetTestCaseFileExtension());
+      string[] testCases = Directory.GetFiles(GetTestCasesDir(), "*." + GetTestCaseFileExtension());
       foreach (string testCaseName in testCases)
-        Cleanup(testCaseName);
+        Cleanup(Path.GetFileNameWithoutExtension(testCaseName)); // FIXME: Be smarter here. Don't cut.
     }
 
     /// <summary>
@@ -67,6 +67,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// Test case name.
     /// </param>
     public virtual void RunTestCase(string testCaseName, Source source) {
+      //FIXME: Here we do that and then reconstrunct the same path to source.
+      testCaseName = Path.GetFileNameWithoutExtension(testCaseName);
       bool testXFail = false;
       string testCaseFile = GetTestCaseFullPath(testCaseName);
       // Check whether the file exists first.
@@ -222,6 +224,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// </param>
     protected MethodDefinition LoadTestCaseMethod(string testCaseName)
     {
+      //FIXME: Here we do that and then reconstrunct the same path to source.
+      testCaseName = Path.GetFileNameWithoutExtension(testCaseName);
       TestCaseDirectiveParser dirParser = new TestCaseDirectiveParser(GetTestCaseFullPath(testCaseName));
       directives = dirParser.ParseDirectives();
 
@@ -334,7 +338,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
     protected string GetTestCaseOutFullPath(string testCaseName)
     {
-      return GetTestCaseResultFullPath(testCaseName) + '.' + GetTestCaseOutFileExtension();
+      string result = Path.Combine(GetTestCasesBuildDir(), testCaseName);
+      result = Path.ChangeExtension(result, GetTestCaseResultFileExtension());
+      result = Path.GetFullPath(result);
+      return result + '.' + GetTestCaseOutFileExtension();
     }
 
     /// <summary>

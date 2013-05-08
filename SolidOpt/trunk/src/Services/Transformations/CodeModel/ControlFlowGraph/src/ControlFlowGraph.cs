@@ -55,22 +55,22 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
       
       foreach (BasicBlock block in RawBlocks) {
        sb.AppendLine(String.Format("block {0}:", block.Name));
-       sb.AppendLine(String.Format("\tkind: {0}", block.Kind.ToString().ToLower()));
-       sb.AppendLine("\tbody:");
+       sb.AppendLine(String.Format("  kind: {0}", block.Kind.ToString().ToLower()));
+       sb.AppendLine("  body:");
        foreach (Instruction instruction in block)
-         sb.AppendLine(String.Format("\t\t{0}", instruction.ToString()));
+         sb.AppendLine(String.Format("    {0}", instruction.ToString()));
       
        if (block.Successors != null && block.Successors.Count > 0) {
-         sb.AppendLine("\tsuccessors:");
+         sb.AppendLine("  successors:");
          foreach (BasicBlock succ in block.Successors) {
-           sb.AppendLine(String.Format("\t\tblock {0}", succ.Name));
+           sb.AppendLine(String.Format("    block {0}", succ.Name));
          }
        }
       
        if (block.Predecessors != null && block.Predecessors.Count > 0) {
-         sb.AppendLine("\tpredecessors:");
+         sb.AppendLine("  predecessors:");
          foreach (BasicBlock pred in block.Predecessors) {
-           sb.AppendLine(String.Format("\t\tblock {0}", pred.Name));
+           sb.AppendLine(String.Format("    block {0}", pred.Name));
          }
        }
       }
