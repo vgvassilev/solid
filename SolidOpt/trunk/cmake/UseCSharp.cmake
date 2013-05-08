@@ -320,7 +320,7 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'" )
       # Transform the ;-separated lists into ' '-separated. This helps copy paste of the command on the terminal
       set(ESCAPED_COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'")
-      string(REGEX REPLACE ";" " " ESCAPED_COMMENT ${ESCAPED_COMMENT})
+      string(REPLACE ";" " " ESCAPED_COMMENT "${ESCAPED_COMMENT}")
       add_custom_command(
         COMMENT "${ESCAPED_COMMENT}"
         OUTPUT ${out}
