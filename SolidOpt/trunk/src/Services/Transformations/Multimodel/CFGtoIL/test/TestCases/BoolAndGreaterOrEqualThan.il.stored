@@ -1,4 +1,4 @@
-System.Boolean Main()
+System.Boolean TestCase::Main(System.String)
 {
   IL_0000: ldarg.0
   IL_0001: ldstr "A"
