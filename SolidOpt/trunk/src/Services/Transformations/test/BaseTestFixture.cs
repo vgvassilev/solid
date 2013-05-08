@@ -308,14 +308,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     {
       string result = Path.Combine(GetTestCasesDir(), testCaseName);
       result = Path.ChangeExtension(result, GetTestCaseFileExtension());
-      return result;
+      return Path.GetFullPath(result);
     }
 
     protected string GetTestCaseResultFullPath(string testCaseName)
     {
       string result = Path.Combine(GetTestCasesDir(), testCaseName);
       result = Path.ChangeExtension(result, GetTestCaseResultFileExtension());
-      return result;
+      return Path.GetFullPath(result);
     }
 
     protected string GetTestCaseOutFullPath(string testCaseName)
