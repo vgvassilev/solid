@@ -9,7 +9,7 @@ using System;
 namespace SolidOpt.Services
 {
   /// <summary>
-  /// Interface ensuring the plugin is compatible with the SolidReflector/DataMorphose project.
+  /// Interface helping implementing custom plugin, which need different contexts.
   /// </summary>
   /// 
   public interface IPlugin : IService
