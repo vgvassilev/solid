@@ -338,8 +338,12 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
 
     # Add a test if target is Test Library - nunit console test runner
     if (type STREQUAL "test_library")
-      # We need to specify runtime 4.0 to make our own nunit-console work.
-      set(run_test "${name}" ${CSHARP_INTERPRETER} --runtime=v4.0 "${NUNIT_CONSOLE}" "${out}")
+      set(CSHARP_INTEPRETER_INVOCATION ${CSHARP_INTERPRETER})
+      if ( UNIX )
+        # We need to specify runtime 4.0 to make our own nunit-console work.
+        set(CSHARP_INTEPRETER_INVOCATION ${CSHARP_INTERPRETER} --runtime=v4.0)
+      endif()
+      set(run_test "${name}" ${CSHARP_INTEPRETER_INVOCATION}  "${NUNIT_CONSOLE}" "${out}")
       MESSAGE(STATUS "Add test ${run_test}")
 
       ADD_TEST(${run_test})
