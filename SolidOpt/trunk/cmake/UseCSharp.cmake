@@ -317,7 +317,7 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       # Add custom target and command
       get_filename_component(out_name "${out}" NAME)
       get_filename_component(out_dir "${out}" PATH)
-      MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'" )
+      MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /doc:${out}.xml /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'" )
       # Transform the ;-separated lists into ' '-separated. This helps copy paste of the command on the terminal
       set(ESCAPED_COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'")
       string(REPLACE ";" " " ESCAPED_COMMENT "${ESCAPED_COMMENT}")
@@ -325,7 +325,7 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
         COMMENT "${ESCAPED_COMMENT}"
         OUTPUT ${out}
         COMMAND ${CSHARP_COMPILER}
-        ARGS /t:${output_type} /out:${out} /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}
+        ARGS /t:${output_type} /out:${out} /doc:${out}.xml /platform:${CSHARP_PLATFORM} /${BUILD_TYPE} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}
         WORKING_DIRECTORY ${out_dir}
         DEPENDS ${sources_dep}
       )
