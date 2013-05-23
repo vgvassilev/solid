@@ -221,7 +221,7 @@ public partial class MainWindow: Gtk.Window, ISampleTool
         plugin.UnInit(null);
       }
     }
-    plugins.RemovePlugin(pluginToDelete);
+    //plugins.RemovePlugin(pluginToDelete);
   }
 
   /// <summary>
