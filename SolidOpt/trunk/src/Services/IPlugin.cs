@@ -22,6 +22,15 @@ namespace SolidOpt.Services
     /// </param>
     /// 
     void Init(object context);
+
+    /// <summary>
+    /// The uninitializing method of the plugin. The plugin is unloaded via this method.
+    /// </summary>
+    /// <param name='context'>
+    /// Context.
+    /// </param>
+    /// 
+    void UnInit(object context);
   }
 }
 
