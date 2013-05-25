@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyTrademark("@PROJECT_NAME@")]
 [assembly: AssemblyProduct("@PROJECT_NAME@")]
-[assembly: AssemblyInformationalVersion("@SolidOpt_Major@.@SolidOpt_Minor@.0.@SolidOpt_Revision@")]
+[assembly: AssemblyInformationalVersion("@SolidOpt_Version@")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDelaySign(true)]
 [assembly: AssemblyKeyName("")]

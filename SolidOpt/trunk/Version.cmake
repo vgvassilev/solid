@@ -8,6 +8,7 @@
 #   SolidOpt_Minor - Framework minor version
 #   SolidOpt_Revision - Svn working copy revision.
 #   SolidOpt_LastDate - Svn working copy last revision date.
+#   SolidOpt_Version - The framework current version string.
 
 set(SolidOpt_Major 0)
 set(SolidOpt_Minor 0)
@@ -44,3 +45,5 @@ if (NOT SolidOpt_LastDate)
   endif ()
 endif ()
 string(STRIP "${SolidOpt_LastDate}" SolidOpt_LastDate)
+
+set(SolidOpt_Version ${SolidOpt_Major}.${SolidOpt_Minor}.0.${SolidOpt_Revision})
