@@ -58,6 +58,19 @@ if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Debug CACHE STRING "Choose a build type: [Debug Release]" FORCE )
 endif()
 
+# Set some default build flags.
+set(CSBUILDFLAGS "")
+set(MSBUILDFLAGS "")
+
+# Set up the compiler flag for Debug/Release mode.
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  list(APPEND CSBUILDFLAGS "/debug:full" "/debug+" "/optimize-")
+  list(APPEND MSBUILDFLAGS "/p:Configuration=Debug")
+else()
+  list(APPEND CSBUILDFLAGS "/debug-" "/optimize+")
+  list(APPEND MSBUILDFLAGS "/p:Configuration=Release")
+endif()
+
 #-----------------------------------------------------------------------------
 # Configure Dart testing support.  This should be done before any
 # MESSAGE(FATAL_ERROR ...) commands are invoked.
