@@ -81,3 +81,7 @@ csharp_resolve_dependencies()
 
 # Save solution
 csharp_save_vs_solution(SolidOpt)
+
+# Display the welcome msg.
+file (READ "${CMAKE_MODULE_PATH}/Welcome.txt" WELCOME)
+MESSAGE(STATUS ${WELCOME})
