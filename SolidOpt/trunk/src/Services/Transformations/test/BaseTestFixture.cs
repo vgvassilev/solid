@@ -69,7 +69,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     public virtual void RunTestCase(string testCaseName, Source source) {
       //FIXME: Here we do that and then reconstrunct the same path to source.
       testCaseName = Path.GetFileNameWithoutExtension(testCaseName);
-      bool testXFail = false;
       string testCaseFile = GetTestCaseFullPath(testCaseName);
       // Check whether the file exists first.
       Assert.IsTrue(File.Exists(testCaseFile),
@@ -81,8 +80,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
                     String.Format("{0} does not exist.", testCaseResultFile));
 
       string[] seen = new string[0]; // in case of exception preventing seen to get value.
-      string errMsg = String.Empty; 
-      testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
+      bool testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
         Transformer transformer = new Transformer();
         Target target = transformer.Transform(source);
@@ -93,22 +91,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
           throw e;
       }
       finally {
-        bool match = Validate(testCaseName, seen, ref errMsg);
-        if (testXFail && match) {
-          errMsg += "\nUnexpected pass.";
-          Assert.Fail(errMsg);
-        }
-        else if (testXFail) {
-          errMsg += "\nExpected to fail.";
-          Assert.Ignore(errMsg);
-        }
-        else {
-          if (!match) {
-            // if the test wasn't expected to fail write out the what was seen so that one can diff
-            File.WriteAllLines(GetTestCaseOutFullPath(testCaseName), seen);
-          }
-          Assert.IsTrue(match, errMsg);
-        }
+        Validate(testCaseName, seen);
       }
     }
 
@@ -127,11 +110,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// <param name='expected'>
     /// What we expect to see.
     /// </param>
-    /// <param name='errMsg'>
-    /// Errors if the match fails.
-    /// </param>
     /// <returns>True on success.</returns>
-    public bool Validate(string testCaseName, string[] seenLines, ref string errMsg)
+    public bool Validate(string testCaseName, string[] seenLines)
     {
       string resultFile = GetTestCaseResultFullPath(testCaseName);
       string debugFile = GetTestCaseOutFullPath(testCaseName);
@@ -156,21 +136,46 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       LogProcessInvocation(p, testCaseName);
       p.Start();
       string output = p.StandardOutput.ReadToEnd();
-      string error = p.StandardError.ReadToEnd();
+      //string error = p.StandardError.ReadToEnd();
       p.WaitForExit();
 
-      if (error != String.Empty)
-        errMsg += string.Format("Errors: {0}", error);
+      //if (error != String.Empty)
+      //  errMsg += string.Format("Errors: {0}", error);
 
       File.WriteAllText(debugFile, output);
       // if the exit code is 0 this means there is no difference.
       if (p.ExitCode > 0) {
-        errMsg += GetTestCaseRunInfo(testCaseName);
-      }
-      if (p.ExitCode == 0)
+        //errMsg += PrintTestCaseRunInfo(testCaseName);
+        PrintTestCaseRunInfo(testCaseName);
+      } 
+      else if (p.ExitCode == 0)
         Cleanup(testCaseName);
 
-      return p.ExitCode == 0;
+      bool match = p.ExitCode == 0;
+
+      bool testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
+      if (testXFail && match) {
+        //errMsg += "\nUnexpected pass.";
+        //Assert.Fail(errMsg);
+        Assert.Fail("\nUnexpected pass, see the output to debug");
+        return false;
+      }
+      else if (testXFail) {
+        //errMsg += "\nExpected to fail.";
+        //Assert.Ignore(errMsg);
+        Assert.Ignore("\nExpected to fail, see the output to debug");
+        return true;
+      }
+      else {
+        if (!match) {
+          // if the test wasn't expected to fail write out the what was seen so that one can diff
+          File.WriteAllLines(GetTestCaseOutFullPath(testCaseName), seenLines);
+        }
+        //Assert.IsTrue(match, errMsg);
+        Assert.IsTrue(match, "\nTest failed, see the output to debug");
+        return match;
+      }
+
     }
 
     private void LogProcessInvocation(Process p, string testCaseName) {
@@ -181,17 +186,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       File.AppendAllText(invokeFile, sb.ToString()); 
     }
 
-    private string GetTestCaseRunInfo(string testCaseName)
+    private void PrintTestCaseRunInfo(string testCaseName)
     {
-      string result = "";
       string debugFile = GetTestCaseOutFullPath(testCaseName);
       string invokeFile = debugFile + ".invoke";
-      if (File.Exists(invokeFile))
-        result = File.ReadAllText(invokeFile);
-      if (File.Exists(debugFile))
-        result += File.ReadAllText(debugFile);
-
-      return result;
+      if (File.Exists(invokeFile)) {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine((char)27 + "[31Invocation:");
+        Console.WriteLine(File.ReadAllText(invokeFile));
+        Console.ResetColor();
+      }
+      if (File.Exists(debugFile)) {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(File.ReadAllText(debugFile));
+        Console.ResetColor();
+      }
     }
 
     /// <summary>
