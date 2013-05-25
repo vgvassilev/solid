@@ -38,10 +38,10 @@ macro( CSHARP_ADD_MSBUILD_PROJECT filename )
     MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
 
     add_custom_command(
-      COMMENT "MSBuilding ${filename}."
+      COMMENT "MSBuilding: ${MSBUILD} /p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR} ${MSBUILDFLAGS} ${filename}"
       OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
       COMMAND ${MSBUILD}
-      ARGS /p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR} ${filename}
+      ARGS /p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR} ${MSBUILDFLAGS} ${filename}
       WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
     )
     add_custom_target(
@@ -51,18 +51,4 @@ macro( CSHARP_ADD_MSBUILD_PROJECT filename )
     )
   endif()
 
-  # TODO: For now build vendors if SLN generation is enabled. We nust rethink it!
-  if ( (${CMAKE_GENERATOR} MATCHES "Visual Studio 10") OR VS10SLN)
-    if ( "${filename}" MATCHES "^.*\\.dll$" )
-      MESSAGE(STATUS "Coping binary library ${filename}...")
-      file(COPY ${filename} DESTINATION ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/)
-    else()
-      MESSAGE(STATUS "MSBuilding ${filename}...")
-      execute_process(
-        COMMAND ${MSBUILD} /p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR} ${filename}
-        WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
-      )
-      #OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
-    endif()
-  endif()
 endmacro( CSHARP_ADD_MSBUILD_PROJECT )
