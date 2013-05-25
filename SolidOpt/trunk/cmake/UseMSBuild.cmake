@@ -37,11 +37,13 @@ macro( CSHARP_ADD_MSBUILD_PROJECT filename )
     # Add custom target and command
     MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
 
+    #
+    list(APPEND MSBUILDFLAGS "/p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}")
     add_custom_command(
-      COMMENT "MSBuilding: ${MSBUILD} /p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR} ${MSBUILDFLAGS} ${filename}"
+      COMMENT "MSBuilding: ${MSBUILD} ${MSBUILDFLAGS} ${filename}"
       OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
       COMMAND ${MSBUILD}
-      ARGS /p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR} ${MSBUILDFLAGS} ${filename}
+      ARGS ${MSBUILDFLAGS} ${filename}
       WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
     )
     add_custom_target(
