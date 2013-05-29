@@ -20,4 +20,5 @@ elif [[ $platform == 'macos' ]]; then
     alias DataMorphose.exe='mono @CMAKE_RUNTIME_OUTPUT_DIR@/DataMorphose.exe'
 fi
 # FIXME: Remove when we merge with SolidOpt v0.2
+rm -f @CMAKE_SOURCE_DIR@/public.snk
 ln -s @CMAKE_SOURCE_DIR@/src/vendors/SolidOpt/public.snk @CMAKE_SOURCE_DIR@/public.snk
