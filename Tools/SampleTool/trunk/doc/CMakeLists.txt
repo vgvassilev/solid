@@ -1,5 +1,5 @@
 # Those two are relevant when configuring just docs standalone
-project(SampleTool)
+project(SampleTool NONE)
 cmake_minimum_required(VERSION 2.6.2)
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
