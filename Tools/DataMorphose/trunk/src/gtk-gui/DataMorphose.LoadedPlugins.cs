@@ -8,7 +8,7 @@ namespace DataMorphose
 		private global::Gtk.TreeView treeview1;
 		private global::Gtk.Button buttonCancel;
 		private global::Gtk.Button buttonOk;
-
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
