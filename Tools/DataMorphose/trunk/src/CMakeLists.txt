@@ -13,8 +13,6 @@ csharp_add_gui_executable(
   ${CMAKE_CURRENT_SOURCE_DIR}/gtk-gui/*.stetic
   ${CMAKE_CURRENT_SOURCE_DIR}/Controller/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Controller/Deduce/*.cs
-  ${CMAKE_CURRENT_SOURCE_DIR}/Controller/Import/*.cs
-  ${CMAKE_CURRENT_SOURCE_DIR}/Controller/Export/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Controller/Map/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Controller/ReversibleActions/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Controller/Tools/*.cs

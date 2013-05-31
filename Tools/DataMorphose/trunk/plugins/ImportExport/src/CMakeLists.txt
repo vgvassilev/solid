@@ -2,6 +2,8 @@ csharp_add_library(
   ImportExport.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Import/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Export/*.cs
   )
 csharp_add_dependencies(
   ImportExport.dll
