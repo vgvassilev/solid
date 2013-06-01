@@ -9,7 +9,7 @@ using System.IO;
 
 using DataMorphose.Model;
 
-namespace DataMorphose.Import
+namespace DataMorphose.Plugins.ImportExport.Export
 {
   public class CSVExporter
   {

@@ -11,7 +11,7 @@ using System.Diagnostics;
 using SolidOpt.Services;
 using MonoDevelop.Components.Docking;
 
-namespace DataMorphose
+namespace DataMorphose.Plugins.ImportExport
 {
   public class ImportExport : IPlugin
   {
@@ -147,6 +147,7 @@ namespace DataMorphose
     /// <param name='msg'>
     /// The message.
     /// </param>
+    /// 
     private void ShowMessageGtk(string msg) {
       var msgBox = new Gtk.MessageDialog(null, Gtk.DialogFlags.Modal, Gtk.MessageType.Info,
                                          Gtk.ButtonsType.Ok, msg);

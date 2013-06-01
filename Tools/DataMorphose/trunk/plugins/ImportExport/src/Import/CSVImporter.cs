@@ -9,7 +9,7 @@ using System;
 using System.IO;
 
 
-namespace DataMorphose.Import
+namespace DataMorphose.Plugins.ImportExport.Import
 {
   public class CSVImporter
   {

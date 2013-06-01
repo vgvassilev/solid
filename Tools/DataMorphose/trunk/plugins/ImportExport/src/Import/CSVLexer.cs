@@ -3,7 +3,7 @@
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
-namespace DataMorphose.Import
+namespace DataMorphose.Plugins.ImportExport.Import
 {
   class CSVLexer {
     private string line = null;
