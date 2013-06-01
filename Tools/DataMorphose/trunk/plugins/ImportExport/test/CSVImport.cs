@@ -1,32 +1,34 @@
-// /*
-//  * $Id$
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
+/*
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
 
 using DataMorphose.Model;
-using DataMorphose.Import;
+using DataMorphose.Plugins.ImportExport.Import;
 
 using System;
 using System.IO;
 
+using NUnit;
 using NUnit.Framework;
 
-namespace DataMorphose.Test
+namespace DataMorphose.Plugins.ImportExport.Test
 {
 
   [TestFixture]
-  public class CSVImport : BaseTestFixture
+  public class CSVImport 
   {
+    private string filePath = Path.Combine(SolidOpt.BuildInformation.BuildInfo.SourceDir,
+                                           "plugins", "ImportExport", "test", "DemoDB", "Text");
     private CSVImporter importer = new CSVImporter(/*firstRawIsHeader*/true);
 
     public CSVImport() {
-      filePath = Path.Combine(filePath, "DemoDB");
-      filePath = Path.Combine(filePath, "Text");
     }
 
     [Test]
     public void CheckCategories() {
+      Console.WriteLine(filePath);
       Table Categories = importer.importFromFile(Path.Combine(filePath, "Categories.txt"));
       CheckTable(Categories, "Categories", 8, 4);
     }

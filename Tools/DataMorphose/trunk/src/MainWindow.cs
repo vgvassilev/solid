@@ -1,5 +1,5 @@
 /*
- * $Id: MainWindow.cs 956 2013-05-08 09:26:53Z mvassilev $
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */

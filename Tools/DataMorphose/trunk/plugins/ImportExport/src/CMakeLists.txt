@@ -1,12 +1,12 @@
 csharp_add_library(
-  ImportExport.dll
+  DataMorphose.Plugins.ImportExport.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Import/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Export/*.cs
   )
 csharp_add_dependencies(
-  ImportExport.dll
+  DataMorphose.Plugins.ImportExport.dll
   ${CMAKE_RUNTIME_OUTPUT_DIR}/DataMorphose.exe
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll

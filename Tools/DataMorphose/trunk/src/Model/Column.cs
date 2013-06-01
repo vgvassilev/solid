@@ -1,5 +1,5 @@
 /*
- * $Id: Column.cs 557 2012-04-29 20:34:57Z ppetrova $
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */

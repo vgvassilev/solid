@@ -1,5 +1,5 @@
 ##
-## $Id: CMakeLists.txt 945 2013-04-15 19:36:32Z mvassilev $
+## $Id$
 ## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
 ## For further details see the nearest License.txt
 ##
