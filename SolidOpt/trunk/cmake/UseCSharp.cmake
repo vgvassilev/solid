@@ -15,6 +15,7 @@
 #   CSHARP_VERSION - the version number of the C# compiler (eg. "v4.0.30319")
 #
 # The following macros are defined:
+#   CSHARP_ADD_LIBRARY_BINARY( name source_files* ) - Adds binary library and a target corresponding to it
 #   CSHARP_ADD_EXECUTABLE( name source_files* ) - Define C# executable with the given name
 #   CSHARP_ADD_GUI_EXECUTABLE( name source_files* ) - Define C# gui executable with the given name
 #   CSHARP_ADD_LIBRARY( name source_files* ) - Define C# library with the given name
@@ -59,6 +60,15 @@ set_property(GLOBAL PROPERTY target_src_dir_property)
 set_property(GLOBAL PROPERTY target_bin_dir_property)
 
 # Macros
+
+macro( CSHARP_ADD_LIBRARY_BINARY name)
+  get_filename_component(filename "${name}" NAME)
+  add_custom_target(${filename})
+  add_custom_command(TARGET ${filename} PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E
+    copy ${name} ${CMAKE_LIBRARY_OUTPUT_DIR}
+    )
+endmacro( CSHARP_ADD_LIBRARY_BINARY )
 
 macro( CSHARP_ADD_TEST_LIBRARY name )
   CSHARP_ADD_PROJECT( "test_library" ${name} ${ARGN} )
