@@ -10,4 +10,4 @@
 add_subdirectory(SolidOpt)
 
 # MonoDevelop Dock (binary vendor library)
-csharp_add_msbuild_project(${CMAKE_CURRENT_SOURCE_DIR}/MonoDevelop/MonoDevelop.Dock.dll)
+csharp_add_library_binary(${CMAKE_CURRENT_SOURCE_DIR}/MonoDevelop/MonoDevelop.Dock.dll)
