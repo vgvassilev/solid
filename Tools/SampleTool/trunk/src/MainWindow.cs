@@ -121,8 +121,6 @@ public partial class MainWindow: Gtk.Window, ISampleTool
     args.RetVal = true;
   }
 
-
-
   /// <summary>
   /// Raises the realized event. The plugins are loaded when the MainWindow is realized.
   /// </summary>
@@ -241,6 +239,40 @@ public partial class MainWindow: Gtk.Window, ISampleTool
     this.Realized += new global::System.EventHandler (this.OnRealized);
   }
 
+  /// <summary>
+  /// Loads a plugin using the Add command from the Plugins menu.
+  /// </summary>
+  /// <param name='sender'>
+  /// Sender.
+  /// </param>
+  /// <param name='e'>
+  /// Event args.
+  /// </param>
+  protected void OnAddActionActivated (object sender, EventArgs e)
+  {
+    var fc = new Gtk.FileChooserDialog("Choose the file to open", null, 
+                                         Gtk.FileChooserAction.Open, "Cancel", 
+                                         Gtk.ResponseType.Cancel, "Open", Gtk.ResponseType.Accept);
+      try {
+        fc.SelectMultiple = true;
+        fc.SetCurrentFolder(Environment.CurrentDirectory);
+        if (fc.Run() == (int)Gtk.ResponseType.Accept) {
+          PluginServiceContainer pluginsToAdd = new PluginServiceContainer();
+          for (int i = 0; i < fc.Filenames.Length; i++) {
+            plugins.AddPlugin(fc.Filenames[i]);
+            pluginsToAdd.AddPlugin(fc.Filenames[i]);
+          }
+
+          pluginsToAdd.LoadPlugins();
+          foreach (IPlugin p in pluginsToAdd.GetServices<IPlugin>()) {
+            p.Init(this);
+          }
+        }
+      } finally {
+        fc.Destroy();
+      }
+  }
+
   #region ISolidReflector implementation
   event EventHandler<EventArgs> ShutDownEvent = null;
 
@@ -305,26 +337,6 @@ public partial class MainWindow: Gtk.Window, ISampleTool
   /// 
   PluginServiceContainer ISampleTool.GetPlugins() {
     return this.plugins;
-  }  
-
-  protected void OnAddActionActivated (object sender, EventArgs e)
-  {
-    var fc = new Gtk.FileChooserDialog("Choose the file to open", null, 
-                                         Gtk.FileChooserAction.Open, "Cancel", 
-                                         Gtk.ResponseType.Cancel, "Open", Gtk.ResponseType.Accept);
-      try {
-        fc.SelectMultiple = true;
-        fc.SetCurrentFolder(Environment.CurrentDirectory);
-        if (fc.Run() == (int)Gtk.ResponseType.Accept) {
-          for (int i = 0; i < fc.Filenames.Length; i++) {
-            plugins.AddPlugin(fc.Filenames[i]);
-          }
-          SaveLayout();
-        plugins.LoadPlugins();
-        }
-      } finally {
-        fc.Destroy();
-      }
   }
   #endregion
 }
