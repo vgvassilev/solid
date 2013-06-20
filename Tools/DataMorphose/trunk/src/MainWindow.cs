@@ -12,6 +12,7 @@ using System.Reflection;
 
 using SolidOpt.Services;
 using DataMorphose;
+using DataMorphose.Model;
 
 
 public partial class MainWindow: Gtk.Window, IDataMorphose
@@ -21,6 +22,8 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   /// </summary>
   /// 
   private PluginServiceContainer plugins = new PluginServiceContainer();
+
+  private Database model;
 
   /// <summary>
   /// The application data dir located in the OS specific configuration dir.
@@ -241,7 +244,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     this.Realized += new global::System.EventHandler (this.OnRealized);
   }
 
-  #region ISolidReflector implementation
+  #region IDataMorphose implementation
   event EventHandler<EventArgs> ShutDownEvent = null;
 
   /// <summary>
@@ -305,7 +308,18 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   /// 
   PluginServiceContainer IDataMorphose.GetPlugins() {
     return this.plugins;
-  }  
+  }
+
+  Database IDataMorphose.GetModel()
+  {
+    return model;
+  }
+
+  void IDataMorphose.SetModel(Database db)
+  {
+    model = db;
+  }
+  #endregion
 
   protected void OnAddActionActivated (object sender, EventArgs e)
   {
@@ -326,5 +340,4 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
         fc.Destroy();
       }
   }
-  #endregion
 }

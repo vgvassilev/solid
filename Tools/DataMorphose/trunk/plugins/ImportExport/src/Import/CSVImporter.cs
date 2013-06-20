@@ -74,6 +74,8 @@ namespace DataMorphose.Plugins.ImportExport.Import
             table.Columns[i].Values.Add(colValue);
             i++;
           }
+          if (table.Columns[i-1].Values.Count != table.Columns[0].Values.Count)
+            throw new ArgumentOutOfRangeException();
         }
         return table;
       }

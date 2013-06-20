@@ -28,7 +28,6 @@ namespace DataMorphose.Plugins.ImportExport.Test
 
     [Test]
     public void CheckCategories() {
-      Console.WriteLine(filePath);
       Table Categories = importer.importFromFile(Path.Combine(filePath, "Categories.txt"));
       CheckTable(Categories, "Categories", 8, 4);
     }
@@ -72,7 +71,7 @@ namespace DataMorphose.Plugins.ImportExport.Test
     [Test]
     public void CheckSuppliers() {
       Table Suppliers = importer.importFromFile(Path.Combine(filePath, "Suppliers.txt"));
-      CheckTable(Suppliers, "Suppliers", 38, 12);
+      CheckTable(Suppliers, "Suppliers", 29, 12);
     }
 
     private void CheckTable(Table table, string expectedName, int expectedRows,

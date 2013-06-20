@@ -2,6 +2,8 @@ using System;
 
 using SolidOpt.Services;
 
+using DataMorphose.Model;
+
 namespace DataMorphose
 {
   /// <summary>
@@ -59,5 +61,8 @@ namespace DataMorphose
     /// </returns>
     /// 
     PluginServiceContainer GetPlugins();
+
+    Database GetModel();
+    void SetModel(Database db);
   }
 }

@@ -22,6 +22,14 @@ namespace DataMorphose.Model
       get { return this.data; }
     }
 
+    public string[] GetAsStringArray() {
+      string[] result = new string[Data.Length];
+      for (int i = 0, e = Data.Length; i < e; ++i)
+        result[i] = Data[i].ToString();
+
+      return result;
+    }
+
     public Row(object[] data) {
       this.data = data;
     }

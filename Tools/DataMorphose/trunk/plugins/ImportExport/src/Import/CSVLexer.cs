@@ -24,8 +24,9 @@ namespace DataMorphose.Plugins.ImportExport.Import
     public string Lex() {
       System.Text.StringBuilder sb = new System.Text.StringBuilder();
       while (curLineIndex < line.Length) {
-        if (line[curLineIndex] != separator)
+        if (line[curLineIndex] != separator) {
           sb.Append(line[curLineIndex]);
+        }
         else {
           curLineIndex++;
           return sb.ToString().Trim();

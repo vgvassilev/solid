@@ -71,7 +71,6 @@ namespace DataMorphose.Model
       }
       sb.AppendLine();
 
-
       for (int i = 0; i < Columns[0].Values.Count; i++) {
         for (int j = 0; j < Columns.Count; j++) {
           sb.Append(Columns[j].Values[i].ToString());

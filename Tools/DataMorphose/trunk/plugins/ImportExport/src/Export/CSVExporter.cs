@@ -14,13 +14,13 @@ namespace DataMorphose.Plugins.ImportExport.Export
   public class CSVExporter
   {
     // TODO: Add documentation and test for that.
-    public void ExportDatabase(Database db, string path) {
-      string dbFile = Path.Combine(path, db.Name + ".csvdb");
+    public void ExportDatabase(Database db, string dbFile) {
+      string path = Path.GetDirectoryName(dbFile);
       foreach (Table table in db.Tables) {
         // Append the contents of the table to a file.
         File.WriteAllText(Path.Combine(path, table.Name + ".csv"), table.ToString());
         // Append the file name to the database description file.
-        File.AppendText(dbFile).WriteLine(Path.Combine(db.Name + ".csv"));
+        File.AppendText(dbFile).WriteLine(path + table.Name + ".csv");
       }
     }
   }

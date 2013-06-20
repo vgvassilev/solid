@@ -28,6 +28,13 @@ namespace DataMorphose.Model
       this.name = name;
     }
 
+    public Table GetTable(string tableName) {
+      foreach (Table t in Tables)
+        if (t.Name == tableName)
+          return t;
+      return null;
+    }
+
     public override string ToString()
     {
       StringBuilder sb = new StringBuilder();
