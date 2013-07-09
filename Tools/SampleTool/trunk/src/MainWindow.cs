@@ -191,35 +191,27 @@ public partial class MainWindow: Gtk.Window, ISampleTool
       responseType = (Gtk.ResponseType) loadedPlugins.Run();
 
       if (responseType == Gtk.ResponseType.Ok) {
-        Gtk.TreeModel model;
+        Gtk.TreeModel treeModel;
         Gtk.TreeIter iter;
-        Gtk.TreeSelection selection = loadedPlugins.treeView.Selection;
+        Gtk.TreePath[] selectedRows = null;
+        selectedRows = loadedPlugins.treeView.Selection.GetSelectedRows();
 
-        selection.GetSelected(out model, out iter);
+        for (int i = 0; i < selectedRows.Length; i++) {
+          loadedPlugins.lsLoadedPlugins.GetIter(out iter, selectedRows[i]);
+          string pluginPath = (string)loadedPlugins.lsLoadedPlugins.GetValue(iter, 0);
+          PluginInfo pluginInfo = plugins.Plugins.Find(x => x.codeBase == pluginPath);
+          List<IService> services = plugins.GetServices(pluginInfo);
 
-        string pluginToDelete = (model.GetValue(iter, 0).ToString());
-        removePlugin(pluginToDelete);
-        //plugins.RemovePlugin(pluginToDelete);
-        //DockItem item = DockFrame.GetItem(pluginToDelete);
-        //item.Visible = false;
-        //dockFrame.RemoveItem(item);
-        SaveLayout();
+          foreach (IService service in services) {
+            plugins.RemovePlugin(pluginInfo.codeBase);
+            (service as IPlugin).UnInit(null);
+          }
+        }
       }
     }
     finally {
       loadedPlugins.Hide();
-      loadedPlugins.Dispose();
     }
-  }
-
-  private void removePlugin(string pluginToDelete)
-  {
-    foreach (IPlugin plugin in plugins.GetServices<IPlugin>()) {
-      if (System.IO.Path.GetFileName(plugin.ToString()) == pluginToDelete) {
-        plugin.UnInit(null);
-      }
-    }
-    //plugins.RemovePlugin(pluginToDelete);
   }
 
   /// <summary>

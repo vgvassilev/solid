@@ -135,6 +135,11 @@ namespace SolidOpt.Services
       plugins.Add(new PluginInfo(fullName));
     }
 
+    public void RemovePlugin(string fullName)
+    {
+      plugins.Remove(plugins.Find(x => x.codeBase == fullName));
+    }
+
     /// <summary>
     /// Loads all plugins.
     /// </summary>
@@ -152,6 +157,14 @@ namespace SolidOpt.Services
       foreach (PluginInfo pluginInfo in plugins)
         if (pluginInfo.status == PluginInfo.Status.Error)
           pluginInfo.assembly = null;
+    }
+
+    public List<IService> GetServices(PluginInfo pInfo) {
+      List<IService> result = new List<IService>(2);
+      foreach (IService srv in GetServices())
+        if (srv.GetType().Assembly.Location == pInfo.codeBase)
+          result.Add(srv);
+      return result;
     }
   }
 
