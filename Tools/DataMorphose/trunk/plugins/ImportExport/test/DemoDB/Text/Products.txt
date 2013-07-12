@@ -76,3 +76,4 @@
 75|Rhonbrau Klosterbier|12|1|24 - 0.5 l bottles|7,75 лв|125|0|25|0
 76|Lakkalikoori|23|1|500 ml|18,00 лв|57|0|20|0
 77|Original Frankfurter grune So?e|12|2|12 boxes|13,00 лв|32|0|15|0
+
