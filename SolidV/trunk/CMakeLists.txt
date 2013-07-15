@@ -5,7 +5,7 @@ project(SolidV NONE)
 cmake_minimum_required(VERSION 2.6.2)
 
 # Tell cmake to look for modules in that path first.
-set(CMAKE_MODULE_PATH "../../SolidOpt/trunk/cmake")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Disallow insource build since I never test that
 string(COMPARE EQUAL "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}" INSOURCE)
