@@ -68,6 +68,8 @@ namespace DataMorphose.Plugins.ImportExport.Import
         string s;
         int i;
         while((s = reader.ReadLine()) != null) {
+          if (s.Length == 0)
+            continue;
           lexer = new CSVLexer(s);
           i = 0;
           while((colValue = lexer.Lex()) != null) {

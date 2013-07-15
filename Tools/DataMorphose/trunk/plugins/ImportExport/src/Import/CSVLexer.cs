@@ -3,6 +3,8 @@
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
+using System.Text;
+
 namespace DataMorphose.Plugins.ImportExport.Import
 {
   class CSVLexer {
@@ -22,16 +24,23 @@ namespace DataMorphose.Plugins.ImportExport.Import
     /// Reads symbol by symbol
     /// </summary>
     public string Lex() {
-      System.Text.StringBuilder sb = new System.Text.StringBuilder();
+      if (curLineIndex > line.Length)
+        return null;
+
+      StringBuilder sb = new StringBuilder();
       while (curLineIndex < line.Length) {
         if (line[curLineIndex] != separator) {
           sb.Append(line[curLineIndex]);
         }
         else {
           curLineIndex++;
-          return sb.ToString().Trim();
+          return sb.ToString();
         }
         curLineIndex++;
+      }
+      if (sb.Length == 0 && line[curLineIndex - 1] == separator && curLineIndex == line.Length) {
+        curLineIndex++;
+        return "";
       }
       return (sb.Length == 0) ? null : sb.ToString().Trim();
     }

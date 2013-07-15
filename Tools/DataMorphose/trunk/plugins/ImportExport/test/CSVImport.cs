@@ -53,7 +53,7 @@ namespace DataMorphose.Plugins.ImportExport.Test
     [Test]
     public void CheckOrders() {
       Table Orders = importer.importFromFile(Path.Combine(filePath, "Orders.txt"));
-      CheckTable(Orders, "Orders", 500, 14);
+      CheckTable(Orders, "Orders", 499, 14);
     }
 
     [Test]

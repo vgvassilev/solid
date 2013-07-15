@@ -151,11 +151,13 @@ namespace DataMorphose.Plugins.ImportExport
       var fc = new Gtk.FileChooserDialog("Save", null, Gtk.FileChooserAction.Save, "Cancel", 
                                  Gtk.ResponseType.Cancel, "Export", Gtk.ResponseType.Accept);
       try {
-        fc.SetCurrentFolder("/media/LocalD/SolidProject/Tools/DataMorphose/trunk/plugins/ImportExport/test/DemoDB/Text/");
+        Directory.CreateDirectory("/media/LocalD/SolidProject/Tools/DataMorphose/trunk/plugins/ImportExport/test/DemoDB/Text/ExportedFiles");
+
+        fc.SetCurrentFolder("/media/LocalD/SolidProject/Tools/DataMorphose/trunk/plugins/ImportExport/test/DemoDB/Text/ExportedFiles/");
         if (fc.Run() == (int)Gtk.ResponseType.Accept) {
           CSVExporter exporter = new CSVExporter();
           exporter.ExportDatabase(morphose.GetModel(), fc.Filename);
-          Console.WriteLine(morphose.GetModel());
+          morphose.GetModel();
         }
       } finally {
         fc.Destroy(); 

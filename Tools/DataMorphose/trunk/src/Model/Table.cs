@@ -67,20 +67,22 @@ namespace DataMorphose.Model
 
       for (int i = 0; i < Columns.Count; i++) {
         sb.Append(Columns[i].Meta.Name);
-        sb.Append('|');
+        if (i != columns.Count - 1)
+          sb.Append('|');
       }
       sb.AppendLine();
 
       for (int i = 0; i < Columns[0].Values.Count; i++) {
         for (int j = 0; j < Columns.Count; j++) {
           sb.Append(Columns[j].Values[i].ToString());
-          sb.Append('|');
+          if (j != Columns.Count - 1)
+            sb.Append('|');
         }
-        sb.AppendLine();
+        //if (i != Columns[0].Values.Count - 1)
+          sb.AppendLine();
       }
 
       return sb.ToString();
     }
   }
 }
-

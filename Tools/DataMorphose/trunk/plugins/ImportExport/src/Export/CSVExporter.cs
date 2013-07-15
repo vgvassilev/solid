@@ -5,7 +5,9 @@
  */
 
 using System.Text;
+using System.Collections.Generic;
 using System.IO;
+using System;
 
 using DataMorphose.Model;
 
@@ -13,15 +15,18 @@ namespace DataMorphose.Plugins.ImportExport.Export
 {
   public class CSVExporter
   {
-    // TODO: Add documentation and test for that.
     public void ExportDatabase(Database db, string dbFile) {
-      string path = Path.GetDirectoryName(dbFile);
-      foreach (Table table in db.Tables) {
-        // Append the contents of the table to a file.
-        File.WriteAllText(Path.Combine(path, table.Name + ".csv"), table.ToString());
-        // Append the file name to the database description file.
-        File.AppendText(dbFile).WriteLine(path + table.Name + ".csv");
+    string path = Path.GetDirectoryName(dbFile);
+    StringBuilder sb = new StringBuilder();
+
+    foreach (Table table in db.Tables) {
+      string file = table.Name + ".txt";
+      // Append the contents of the table to a file.
+      File.WriteAllText(Path.Combine(path, file), table.ToString(), Encoding.UTF8);      
+      sb.AppendLine(file);
       }
+      // Append the file name to the database description file.
+      File.WriteAllText(Path.Combine(path, dbFile), sb.ToString());
     }
   }
 }

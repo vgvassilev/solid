@@ -41,7 +41,6 @@ namespace DataMorphose.Model
       foreach (Table table in Tables) {
         sb.AppendLine("---" + table.Name + "---");
         sb.AppendLine(table.ToString());
-        sb.AppendLine();
       }
 
       return sb.ToString();
