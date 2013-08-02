@@ -26,6 +26,3 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("@PROJECT_NAME@")]
 [assembly: AssemblyInformationalVersion("@SolidOpt_Version@")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDelaySign(true)]
-[assembly: AssemblyKeyName("")]
-[assembly: AssemblyKeyFile("@CMAKE_SOURCE_DIR@/public.snk")]

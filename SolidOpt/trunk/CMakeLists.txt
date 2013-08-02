@@ -62,6 +62,8 @@ endif()
 set(CSBUILDFLAGS "")
 set(MSBUILDFLAGS "")
 
+list(APPEND CSBUILDFLAGS "/delaysign+" "/keyfile:${CMAKE_SOURCE_DIR}/public.snk")
+
 # Set up the compiler flag for Debug/Release mode.
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   list(APPEND CSBUILDFLAGS "/debug:full" "/debug+" "/optimize-")
