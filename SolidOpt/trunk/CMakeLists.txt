@@ -64,6 +64,10 @@ set(MSBUILDFLAGS "")
 
 list(APPEND CSBUILDFLAGS "/delaysign+" "/keyfile:${CMAKE_SOURCE_DIR}/public.snk")
 
+# Suppress the warnings coming from the /doc switch. There is no point warning 
+# about missing documentation for certain methods. We all know about it :)
+list(APPEND CSBUILDFLAGS "/nowarn:1591")
+
 # Set up the compiler flag for Debug/Release mode.
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   list(APPEND CSBUILDFLAGS "/debug:full" "/debug+" "/optimize-")
