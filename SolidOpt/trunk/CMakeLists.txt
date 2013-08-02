@@ -89,6 +89,7 @@ ENDIF(BUILD_TESTING)
 
 # ...
 add_subdirectory(src)
+add_subdirectory(cmake/BuildInformation)
 # FIXME:
 # This is a bit hackish way, but it adds support for configuring just docs
 # it is needed by our online doxygen system.
