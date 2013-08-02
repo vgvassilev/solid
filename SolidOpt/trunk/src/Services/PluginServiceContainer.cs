@@ -108,7 +108,6 @@ namespace SolidOpt.Services
     /// <description>
     /// Search the path with a given mask and try to load each file found.
     /// </description>
-    /// </summary>
     /// <param name="dirInfo">Dir info.</param>
     /// <param name="mask">Mask.</param>
     /// 
