@@ -3,7 +3,7 @@
 # For further details see the nearest License.txt
 
 # Defaults from SolidOpt build
-include(src/vendors/SolidOpt/Version.cmake)
+include(${CMAKE_MODULE_PATH}/Version.cmake)
 
 # Override
 #TODO: Replace SolidOpt with SolidReflector or Project

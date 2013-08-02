@@ -13,7 +13,7 @@ cmake_minimum_required(VERSION 2.6.2)
 set(PUBLIC_KEY "${CMAKE_SOURCE_DIR}/src/vendors/SolidOpt/public.snk")
 
 # Tell cmake to look for modules in that path first.
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src/vendors/SolidOpt/cmake")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Disallow insource build since I never test that
 string(COMPARE EQUAL "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}" INSOURCE)
@@ -89,6 +89,7 @@ IF(BUILD_TESTING)
 ENDIF(BUILD_TESTING)
 
 # ...
+add_subdirectory(cmake/BuildInformation)
 add_subdirectory(src)
 add_subdirectory(plugins)
 # FIXME:
