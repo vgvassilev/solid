@@ -1,8 +1,9 @@
-// /*
-//  * $Id$
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
+/*
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
+
 using Gtk;
 using System;
 
@@ -15,21 +16,20 @@ namespace TestPlugin
 {
   public class TestPlugin : IPlugin
   {
-    private Gtk.TreeView assemblyTree = new Gtk.TreeView();
+    DockItem dockItem = null;
+    MainWindow mainWindow = null;
 
     void IPlugin.Init(object context)
     {
-      DockItem dockItem = null;
       ISampleTool reflector = context as ISampleTool;
-      var MainWindow = reflector.GetMainWindow();
+      mainWindow = reflector.GetMainWindow();
 
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage(new TextView(), new Gtk.Label("TestPlugin Visualizer"));
       nb.AppendPage(new DrawingArea(), new Gtk.Label("TestPlugin Visualizer"));
       nb.ShowAll();
 
-      dockItem = MainWindow.DockFrame.AddItem("TestPlugin Visualizer");
-
+      dockItem = mainWindow.DockFrame.AddItem("TestPlugin Visualizer");
       dockItem.Visible = true;
       dockItem.Behavior = DockItemBehavior.Normal;
       dockItem.Expand = true;
@@ -42,6 +42,10 @@ namespace TestPlugin
 
     void IPlugin.UnInit(object context)
     {
+      dockItem.Visible = false;
+      // BUG: Object not set to an instance of an object exception if only one plugin is loaded
+      // and attempted to be UnInit-ed
+      mainWindow.DockFrame.RemoveItem(dockItem);
     }
   }
 }
