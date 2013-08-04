@@ -4,5 +4,5 @@
 ## For further details see the nearest License.txt
 ##
 
-add_subdirectory(ImportExport)
-add_subdirectory(Visualizer)
+add_subdirectory(src)
+add_subdirectory(test)

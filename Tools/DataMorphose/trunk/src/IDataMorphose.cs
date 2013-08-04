@@ -62,7 +62,6 @@ namespace DataMorphose
     /// 
     PluginServiceContainer GetPlugins();
 
-    Database GetModel();
-    void SetModel(Database db);
+    DataModel GetModel();
   }
 }

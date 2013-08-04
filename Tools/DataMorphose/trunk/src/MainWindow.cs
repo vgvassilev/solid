@@ -23,7 +23,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   /// 
   private PluginServiceContainer plugins = new PluginServiceContainer();
 
-  private Database model;
+  private DataModel model = new DataModel(null);
 
   /// <summary>
   /// The application data dir located in the OS specific configuration dir.
@@ -310,15 +310,11 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     return this.plugins;
   }
 
-  Database IDataMorphose.GetModel()
+  DataModel IDataMorphose.GetModel()
   {
     return model;
   }
 
-  void IDataMorphose.SetModel(Database db)
-  {
-    model = db;
-  }
   #endregion
 
   protected void OnAddActionActivated (object sender, EventArgs e)
