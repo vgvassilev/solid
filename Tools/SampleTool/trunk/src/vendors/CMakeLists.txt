@@ -7,7 +7,7 @@
 # Build our vendor drops using MSBuild, CMake, Copy, ...
 
 # SolidOpt
-add_subdirectory(SolidOpt)
+add_subdirectory(SolidOpt.Services)
 
 # MonoDevelop Dock (binary vendor library)
 csharp_add_msbuild_project(${CMAKE_CURRENT_SOURCE_DIR}/MonoDevelop/MonoDevelop.Dock.dll)
