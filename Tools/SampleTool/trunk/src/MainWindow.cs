@@ -251,8 +251,10 @@ public partial class MainWindow: Gtk.Window, ISampleTool
         if (fc.Run() == (int)Gtk.ResponseType.Accept) {
           PluginServiceContainer pluginsToAdd = new PluginServiceContainer();
           for (int i = 0; i < fc.Filenames.Length; i++) {
-            plugins.AddPlugin(fc.Filenames[i]);
-            pluginsToAdd.AddPlugin(fc.Filenames[i]);
+            if (plugins.Plugins.FindAll(x => x.codeBase == fc.Filenames[i]) == null) {
+              plugins.AddPlugin(fc.Filenames[i]);
+              pluginsToAdd.AddPlugin(fc.Filenames[i]);
+            }
           }
 
           pluginsToAdd.LoadPlugins();
