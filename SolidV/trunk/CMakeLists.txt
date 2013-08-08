@@ -49,7 +49,7 @@ endif()
 file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIR})
 file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIR})
 
-include(Version.cmake)
+include(cmake/Version.cmake)
 
 # If no build type is set it should defaults to debug
 if( NOT CMAKE_BUILD_TYPE )
