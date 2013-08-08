@@ -20,4 +20,6 @@ elif [[ $platform == 'macos' ]]; then
     alias SolidReflector.exe='mono @CMAKE_RUNTIME_OUTPUT_DIR@/SolidReflector.exe'
 fi
 # FIXME: Remove when we merge with SolidOpt v0.2
-ln -s @CMAKE_SOURCE_DIR@/src/vendors/SolidOpt/public.snk @CMAKE_SOURCE_DIR@/public.snk
+if [ ! -f @CMAKE_SOURCE_DIR@/public.snk ]; then
+   ln -s @CMAKE_SOURCE_DIR@/src/vendors/SolidOpt/public.snk @CMAKE_SOURCE_DIR@/public.snk
+fi
