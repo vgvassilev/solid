@@ -22,3 +22,6 @@ csharp_add_library_binary(${CMAKE_CURRENT_SOURCE_DIR}/MonoDevelop/MonoDevelop.Do
 
 # SolidOpt.Serives
 add_subdirectory(SolidOpt.Services)
+
+# SolidV
+add_subdirectory(SolidV)
