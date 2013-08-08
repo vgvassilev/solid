@@ -10,7 +10,7 @@ project(DataMorphose NONE)
 
 cmake_minimum_required(VERSION 2.6.2)
 
-set(PUBLIC_KEY "${CMAKE_SOURCE_DIR}/src/vendors/SolidOpt/public.snk")
+set(PUBLIC_KEY "${CMAKE_SOURCE_DIR}/public.snk")
 
 # Tell cmake to look for modules in that path first.
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -57,7 +57,7 @@ endif()
 file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIR})
 file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIR})
 
-include(Version.cmake)
+include(${CMAKE_MODULE_PATH}/Version.cmake)
 
 # If no build type is set it should defaults to debug
 if( NOT CMAKE_BUILD_TYPE )
