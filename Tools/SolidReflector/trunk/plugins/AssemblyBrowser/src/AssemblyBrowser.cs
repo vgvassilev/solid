@@ -17,6 +17,10 @@ namespace SolidReflector.Plugins.AssemblyBrowser
   public class AssemblyBrowser : IPlugin, IAssemblyBrowser
   {
     /// <summary>
+    /// The main application window.
+    /// </summary>
+    private MainWindow mainWindow = null;
+    /// <summary>
     /// The main application instance.
     /// </summary>
     /// 
@@ -74,7 +78,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     {
       reflector = context as ISolidReflector;
 
-      var MainWindow = reflector.GetMainWindow();
+      mainWindow = reflector.GetMainWindow();
       Gtk.MenuBar mainMenuBar = reflector.GetMainMenu();
       reflector.OnShutDown += HandleOnShutDown;
 
@@ -98,7 +102,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       (fileMenu.Submenu as Gtk.Menu).Prepend(open);
 
       // Attaching the current dockItem in the DockFrame
-      dockItem = MainWindow.DockFrame.AddItem("AssemblyBrowser");
+      dockItem = mainWindow.DockFrame.AddItem("AssemblyBrowser");
       dockItem.DrawFrame = true;
       dockItem.Label = "Assembly";
       dockItem.Content = assemblyTree;
@@ -106,6 +110,14 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       LoadEnvironment();
 
       assemblyTree.RowActivated += HandleRowActivated;
+    }
+
+    void IPlugin.UnInit(object context)
+    {
+      dockItem.Visible = false;
+      // BUG: Object not set to an instance of an object exception if only one plugin is loaded
+      // and attempted to be UnInit-ed
+      mainWindow.DockFrame.RemoveItem(dockItem);
     }
 
     /// <summary>

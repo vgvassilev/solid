@@ -11,6 +11,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
 {
   public class CFGVisualizer : IPlugin
   {
+    private MainWindow mainWindow = null;
     private DockItem cfgVisualizingDock = null;
 
     public CFGVisualizer() { }
@@ -19,7 +20,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     void IPlugin.Init(object context)
     {
       ISolidReflector reflector = context as ISolidReflector;
-      var MainWindow = reflector.GetMainWindow();
+      mainWindow = reflector.GetMainWindow();
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
@@ -28,13 +29,21 @@ namespace SolidReflector.Plugins.CFGVisualizer
       nb.AppendPage(new DrawingArea(), new Gtk.Label("CFG Visualizer"));
       nb.ShowAll();
 
-      cfgVisualizingDock = MainWindow.DockFrame.AddItem("CFG Visualizer");
+      cfgVisualizingDock = mainWindow.DockFrame.AddItem("CFG Visualizer");
       cfgVisualizingDock.Expand = true;
       cfgVisualizingDock.DrawFrame = true;
       cfgVisualizingDock.Label = "CFG Visualizer";
       cfgVisualizingDock.Content = nb;
       cfgVisualizingDock.DefaultVisible = true;
       cfgVisualizingDock.Visible = true;
+    }
+
+    void IPlugin.UnInit(object context)
+    {
+      cfgVisualizingDock.Visible = false;
+      // BUG: Object not set to an instance of an object exception if only one plugin is loaded
+      // and attempted to be UnInit-ed
+      mainWindow.DockFrame.RemoveItem(cfgVisualizingDock);
     }
     #endregion
 

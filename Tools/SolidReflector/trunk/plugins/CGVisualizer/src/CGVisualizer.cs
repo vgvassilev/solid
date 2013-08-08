@@ -9,6 +9,7 @@ namespace SolidReflector.Plugins.CGVisualizer
 {
   public class CGVisualizer : IPlugin
   {
+    private MainWindow mainWindow = null;
     private DockItem cgVisualizingDock = null;
 
     public CGVisualizer() { }
@@ -17,7 +18,7 @@ namespace SolidReflector.Plugins.CGVisualizer
     void IPlugin.Init(object context)
     {
       ISolidReflector reflector = context as ISolidReflector;
-      var MainWindow = reflector.GetMainWindow();
+      mainWindow = reflector.GetMainWindow();
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
@@ -25,12 +26,20 @@ namespace SolidReflector.Plugins.CGVisualizer
       nb.AppendPage(new TextView(), new Gtk.Label("CG Text"));
       nb.ShowAll();
 
-      cgVisualizingDock = MainWindow.DockFrame.AddItem("CGVisualizer");
+      cgVisualizingDock = mainWindow.DockFrame.AddItem("CGVisualizer");
       cgVisualizingDock.DrawFrame = true;
       cgVisualizingDock.Label = "Call Graph Visualizer";
       cgVisualizingDock.Content = nb;
       cgVisualizingDock.DefaultVisible = true;
       cgVisualizingDock.Visible = true;
+    }
+
+    void IPlugin.UnInit(object context)
+    {
+      cgVisualizingDock.Visible = false;
+      // BUG: Object not set to an instance of an object exception if only one plugin is loaded
+      // and attempted to be UnInit-ed
+      mainWindow.DockFrame.RemoveItem(cgVisualizingDock);
     }
     #endregion
 

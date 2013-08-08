@@ -8,6 +8,7 @@ namespace SolidReflector.Plugins.TACVisualizer
 {
   public class TACVisualizer : IPlugin
   {
+    private MainWindow mainWindow = null;
     private DockItem tacVisualizingDock = null;
 
     public TACVisualizer() { }
@@ -16,7 +17,7 @@ namespace SolidReflector.Plugins.TACVisualizer
     void IPlugin.Init(object context)
     {
       ISolidReflector reflector = context as ISolidReflector;
-      var MainWindow = reflector.GetMainWindow();
+      mainWindow = reflector.GetMainWindow();
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
@@ -24,12 +25,20 @@ namespace SolidReflector.Plugins.TACVisualizer
       nb.AppendPage(new Gtk.TextView(), new Gtk.Label("TAC Text"));
       nb.ShowAll();
 
-      tacVisualizingDock = MainWindow.DockFrame.AddItem("TACVisualizer");
+      tacVisualizingDock = mainWindow.DockFrame.AddItem("TACVisualizer");
       tacVisualizingDock.DrawFrame = true;
       tacVisualizingDock.Label = "Three Address Code Visualizer";
       tacVisualizingDock.Content = nb;
       tacVisualizingDock.DefaultVisible = true;
       tacVisualizingDock.Visible = true;
+    }
+
+    void IPlugin.UnInit(object context)
+    {
+      tacVisualizingDock.Visible = false;
+      // BUG: Object not set to an instance of an object exception if only one plugin is loaded
+      // and attempted to be UnInit-ed
+      mainWindow.DockFrame.RemoveItem(tacVisualizingDock);
     }
     #endregion
 

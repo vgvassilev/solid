@@ -9,6 +9,7 @@ namespace SolidReflector.Plugins.ILVisualizer
 {
   public class ILVisualizer : IPlugin
   {
+    private MainWindow mainWindow;
     private DockItem ilVisualizingDock = null;
 
     public ILVisualizer() { }
@@ -17,7 +18,7 @@ namespace SolidReflector.Plugins.ILVisualizer
     void IPlugin.Init(object context)
     {
       ISolidReflector reflector = context as ISolidReflector;
-      var MainWindow = reflector.GetMainWindow();
+      mainWindow = reflector.GetMainWindow();
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
@@ -25,13 +26,21 @@ namespace SolidReflector.Plugins.ILVisualizer
       nb.AppendPage( new TextView(), new Gtk.Label("IL Text"));
       nb.ShowAll();
 
-      ilVisualizingDock = MainWindow.DockFrame.AddItem("ILVisualizer");
+      ilVisualizingDock = mainWindow.DockFrame.AddItem("ILVisualizer");
       ilVisualizingDock.Expand = true;
       ilVisualizingDock.DrawFrame = true;
       ilVisualizingDock.Label = "IL Visualizer";
       ilVisualizingDock.Content = nb;
       ilVisualizingDock.DefaultVisible = true;
       ilVisualizingDock.Visible = true;
+    }
+
+    void IPlugin.UnInit(object context)
+    {
+      ilVisualizingDock.Visible = false;
+      // BUG: Object not set to an instance of an object exception if only one plugin is loaded
+      // and attempted to be UnInit-ed
+      mainWindow.DockFrame.RemoveItem(ilVisualizingDock);
     }
     #endregion
 
