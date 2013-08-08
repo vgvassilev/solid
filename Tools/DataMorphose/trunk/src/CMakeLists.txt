@@ -59,8 +59,3 @@ execute_process(
   COMMAND ${CMAKE_COMMAND} -E create_symlink ../lib ${CMAKE_RUNTIME_OUTPUT_DIR}/plugins
   WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIR}
 )
-
-
-#add_subdirectory(gtk-gui)
-#add_subdirectory(BuildInformation)
-
