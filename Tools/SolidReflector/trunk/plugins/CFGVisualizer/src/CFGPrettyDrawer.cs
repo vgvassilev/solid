@@ -103,7 +103,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
       foreach (BasicBlock basicBlock in cfg.RawBlocks) {
         textBlock = new TextBlockShape();
-        textBlock.BlockText = Environment.NewLine + "Block Name: " + basicBlock.Name +
+        textBlock.BlockText = "Block Name: " + basicBlock.Name +
                                                                               Environment.NewLine;
         textBlock.BlockText = textBlock.BlockText + basicBlock.First.ToString() +
                                                                               Environment.NewLine;
