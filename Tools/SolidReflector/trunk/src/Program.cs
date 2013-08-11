@@ -7,7 +7,7 @@
 using System;
 using Gtk;
 
-namespace SampleTool
+namespace SolidReflector
 {
  class MainClass
  {
