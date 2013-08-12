@@ -42,8 +42,11 @@ namespace SolidReflector.Plugins.ILVisualizer
       writer.WriteName(methodDef.Name);
       writer.Write(" (");
       if (methodDef.Parameters.Count > 0) {
-        writer.WriteType(methodDef.Parameters[0].ParameterType.ToString());
-        writer.WriteName(methodDef.Parameters[0].Name.ToString());
+        for (int i = 0; i < methodDef.Parameters.Count; i++) {
+          writer.WriteType(methodDef.Parameters[i].ParameterType.ToString());
+          writer.WriteName(methodDef.Parameters[i].Name.ToString());
+          writer.Write(" ");
+        }
       }
       writer.Write(") ");
       if (methodDef.IsIL)
