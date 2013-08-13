@@ -47,13 +47,13 @@ namespace SolidReflector.Plugins.ILVisualizer
     private void OnSelectionChanged(object sender, SelectionEventArgs args) {
       Gtk.Notebook nb = ilVisualizingDock.Content as Gtk.Notebook;
       Gtk.TextView textView = nb.CurrentPageWidget as Gtk.TextView;
-      if (args.definition != null) {
-        // Dump the definition
-        ILPrettyPrinter.PrintPretty(args.definition, textView);
-        if (args.module != null) {
-          // Dump the module
-          if (args.assembly != null) {
-            // Dump assembly modules.
+      if (args.assembly != null) {
+        ILPrettyPrinter.PrintAssembly(args.assembly, textView);
+        if (args.definition != null) {
+          // Dump the definition
+          ILPrettyPrinter.PrintPretty(args.definition, textView);
+          if (args.module != null) {
+            // Dump the modulе
           }
         }
       }

@@ -7,6 +7,21 @@ namespace SolidReflector.Plugins.ILVisualizer
 {
   public static class ILPrettyPrinter
   {
+    public static void PrintAssembly(AssemblyDefinition assemblyDefinition, Gtk.TextView textView) {
+      textView.Buffer.Clear();
+      ILFormatter writer = new ILFormatter(textView.Buffer);
+      foreach (CustomAttribute attr in assemblyDefinition.CustomAttributes) {
+        writer.Write(attr.AttributeType.Name);
+        writer.Write("(\"");
+        if (attr.ConstructorArguments.Count > 0)
+          writer.Write(attr.ConstructorArguments[0].Value.ToString());
+        else
+          writer.Write("");
+        writer.Write("\")");
+        writer.NewLine();
+      }
+    }
+
     public static void PrintPretty(MemberReference memberRef, Gtk.TextView textView) {
       if (memberRef is TypeDefinition)
         PrintType(memberRef as TypeDefinition, textView);
