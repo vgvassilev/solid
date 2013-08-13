@@ -33,7 +33,116 @@ namespace SolidReflector.Plugins.ILVisualizer
         PrintField(memberRef as FieldDefinition, textView);
     }
 
-    private static void PrintType(TypeDefinition typeDef, Gtk.TextView textView) { }
+    private static void PrintType(TypeDefinition typeDef, Gtk.TextView textView) {
+      textView.Buffer.Clear();
+      
+      ILFormatter writer = new ILFormatter(textView.Buffer);
+
+      if (typeDef.Fields.Count > 0) {
+        writer.NewLine();
+        writer.Write("// Fields");
+        writer.NewLine();
+        writer.NewLine();
+      }
+
+      foreach (FieldDefinition fieldDef in typeDef.Fields) {
+        if (fieldDef.IsPublic)
+          writer.WriteMethodAttribute("public");
+        else if (fieldDef.IsPrivate)
+          writer.WriteMethodAttribute("private");
+        writer.Write(" ");
+        
+        if (fieldDef.IsStatic)
+          writer.WriteMethodAttribute("static");
+        writer.Write(" ");
+
+        writer.WriteType(fieldDef.FieldType.Name);
+        writer.Write(" ");
+        
+        writer.WriteName(fieldDef.Name);
+
+        writer.NewLine();
+      }
+
+      if (typeDef.Properties.Count > 0) {
+        writer.NewLine();
+        writer.Write("// Properties");
+        writer.NewLine();
+        writer.NewLine();
+      }
+      
+      foreach (PropertyDefinition property in typeDef.Properties) {        
+        writer.WriteType(property.PropertyType.Name);
+        writer.Write(" ");
+        writer.WriteName(property.Name);
+        writer.Write(" ");
+
+        if ((property.GetMethod) != null || (property.SetMethod != null)) {
+          writer.Write("{");
+          writer.NewLine();
+          if (property.GetMethod != null) {
+            writer.Write("  ");
+            writer.WriteType(property.GetMethod.Name);
+            writer.NewLine();
+          }
+          if (property.SetMethod != null) {
+            writer.Write("  ");
+            writer.WriteType(property.SetMethod.Name);
+            writer.NewLine();
+          }
+          writer.Write("}");
+        }
+
+        writer.NewLine();
+      }
+
+      if (typeDef.Methods.Count > 0) {
+        writer.NewLine();
+        writer.Write("// Methods");
+        writer.NewLine();
+        writer.NewLine();
+      }
+
+      foreach (MethodDefinition method in typeDef.Methods) {
+        if (method.IsPublic)
+          writer.WriteMethodAttribute("public");
+        else if (method.IsPrivate)
+          writer.WriteMethodAttribute("private");
+        writer.Write(" ");
+
+        if (method.IsAbstract)
+          writer.Write("abstract");
+        else if (method.IsVirtual)
+          writer.Write("virtual");
+        writer.Write(" ");
+
+        if (method.IsStatic)
+          writer.WriteMethodAttribute("static");
+        writer.Write(" ");
+
+        if (method.IsFinal)
+          writer.Write("final");
+        writer.Write(" ");
+
+        writer.WriteType(method.ReturnType.Name);
+        writer.Write(" ");
+
+        writer.WriteName(method.Name);
+        writer.Write("(");
+
+
+        foreach (ParameterDefinition paramDef in method.Parameters) {
+          writer.WriteType(paramDef.ParameterType.Name);
+          writer.Write(" ");
+
+          writer.Write(paramDef.ToString());
+          writer.Write(" ");
+        }
+
+        writer.Write(")");
+        writer.NewLine();
+      }
+    }
 
     private static void PrintMethod(MethodDefinition methodDef, Gtk.TextView textView) {
       textView.Buffer.Clear();
