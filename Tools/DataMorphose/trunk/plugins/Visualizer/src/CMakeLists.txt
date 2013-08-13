@@ -9,7 +9,9 @@ csharp_add_dependencies(
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   # GAC
   gtk-sharp.dll
   gdk-sharp.dll
+  Mono.Cairo.dll
   )

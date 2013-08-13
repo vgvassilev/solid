@@ -21,12 +21,13 @@ namespace DataMorphose.Plugins.Visualizer
   public class Visualizer : IPlugin, IObserver
   {
     private IDataMorphose morphose = null;
-    private DockItem importPanel = null;
+    private DockItem dockItem = null;
 
     private Gtk.Notebook nb = new Gtk.Notebook();
-    private Gtk.VBox box = new Gtk.VBox();
-    private Gtk.TreeView treeView = new TreeView();
+    private Gtk.VBox vbox = new Gtk.VBox();
+    private Gtk.TreeView treeView = new Gtk.TreeView();
     private Gtk.ComboBox comboBox = new Gtk.ComboBox();
+    private SchemaVisualizer schemaV = null;
 
     private TreeIter iter;
     private string selectedTable = "";
@@ -37,34 +38,44 @@ namespace DataMorphose.Plugins.Visualizer
     #region IPlugin implementation
     void IPlugin.Init (object context)
     {
-
       morphose = context as IDataMorphose;
-      var MainWindow = morphose.GetMainWindow(); 
+      morphose.GetModel().Attach(this);
 
+      // Set up basic visualizer tab 
       // Attach the comboBox first
-      box.PackStart(comboBox, false, false, 0);
-
+      vbox.PackStart(comboBox, false, false, 0);
       ScrolledWindow scroll =  new ScrolledWindow();
       // Attach the treeView to the scroll bar.
       scroll.AddWithViewport(treeView);
-      // Attach the scrollBar 
-      box.PackStart(scroll, true, true, 0);
-
+      // Attach the scrollBar to the box
+      vbox.PackStart(scroll, true, true, 0);
       // Add the box to the main window
-      nb.AppendPage(box, new Gtk.Label("DataBrowser"));
+      nb.AppendPage(vbox, new Gtk.Label("Data Browser"));
+
+      // Set up DrawingArea tab
+      Gtk.DrawingArea drawingArea = new DrawingArea();
+      ScrolledWindow scrollDA =  new ScrolledWindow();
+      Viewport view = new Viewport();
+      Gtk.VBox vBoxDA = new Gtk.VBox();
+      view.Add(drawingArea);
+      scrollDA.Add(view);
+      vBoxDA.PackStart(scrollDA, true, true, 0);
+      nb.AppendPage(vBoxDA, new Gtk.Label("Schema Visualizer"));
+      schemaV = new SchemaVisualizer(drawingArea);
 
       nb.ShowAll();
+      
       // Attaching the current dockItem in the DockFrame
-      importPanel = MainWindow.DockFrame.AddItem("Visualizer");
-      importPanel.DrawFrame = true;
-      importPanel.Label = "Grid";
-      importPanel.Expand = true;
-      importPanel.DrawFrame = true;
-      importPanel.DefaultVisible = true;
-      importPanel.Visible = true;
-      importPanel.Content = nb;
-
-      morphose.GetModel().Attach(this);
+      var MainWindow = morphose.GetMainWindow();
+      
+      dockItem = MainWindow.DockFrame.AddItem("Visualizer");
+      dockItem.DrawFrame = true;
+      dockItem.Label = "Grid";
+      dockItem.Expand = true;
+      dockItem.DrawFrame = true;
+      dockItem.DefaultVisible = true;
+      dockItem.Visible = true;
+      dockItem.Content = nb;
     }
 
     void IPlugin.UnInit (object context)
@@ -85,7 +96,7 @@ namespace DataMorphose.Plugins.Visualizer
       }
 
       // Construct the array of types which is the size of the columns.
-      Type[] types = new Type[table.Columns.Count];
+       Type[] types = new Type[table.Columns.Count];
       for(int i = 0, e = table.Columns.Count; i < e; ++i)
         types[i] = typeof(string);
 
@@ -115,6 +126,7 @@ namespace DataMorphose.Plugins.Visualizer
     void IObserver.Update (DataModel model)
     {
       populateComboBox(model.DB);
+      schemaV.DrawSchema(model);
     }
     #endregion
 
