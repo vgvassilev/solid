@@ -38,6 +38,24 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     /// 
     private Gtk.TreeView assemblyTree = new Gtk.TreeView();
 
+    /// <summary>
+    /// The AssemblyDefinition data of the currently reviewed assembly.
+    /// </summary>
+    /// 
+    private AssemblyDefinition curAssembly = null;
+
+    /// <summary>
+    /// The ModuleDefinition data of the currently reviewed assembly.
+    /// </summary>
+    /// 
+    private ModuleDefinition curModule = null;
+
+    /// <summary>
+    /// The MemberReference data of the currently reviewed assembly.
+    /// </summary>
+    /// 
+    private MemberReference curMember = null;
+
     public AssemblyBrowser() { }
 
     #region IAssemblyBrowser implementation
@@ -253,9 +271,6 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
       object currentObj = (object) assemblyTree.Model.GetValue(iter, 0);
       SelectionEventArgs selectionArgs;
-      AssemblyDefinition curAssembly = null;
-      ModuleDefinition curModule = null;
-      MemberReference curMember = null;
 
       switch(args.Path.Depth) {
         case 1:
