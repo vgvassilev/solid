@@ -7,10 +7,10 @@ namespace SolidReflector.Plugins.ILVisualizer
 {
   public static class ILPrettyPrinter
   {
-    public static void PrintAssembly(AssemblyDefinition assemblyDefinition, Gtk.TextView textView) {
+    public static void PrintAssembly(AssemblyDefinition assemblyDef, Gtk.TextView textView) {
       textView.Buffer.Clear();
       ILFormatter writer = new ILFormatter(textView.Buffer);
-      foreach (CustomAttribute attr in assemblyDefinition.CustomAttributes) {
+      foreach (CustomAttribute attr in assemblyDef.CustomAttributes) {
         writer.Write(attr.AttributeType.Name);
         writer.Write("(\"");
         if (attr.ConstructorArguments.Count > 0)
@@ -18,6 +18,23 @@ namespace SolidReflector.Plugins.ILVisualizer
         else
           writer.Write("");
         writer.Write("\")");
+        writer.NewLine();
+      }
+    }
+
+    public static void PrintModule(ModuleDefinition moduleDef, Gtk.TextView textView) {
+      textView.Buffer.Clear();
+      ILFormatter writer = new ILFormatter(textView.Buffer);
+
+      if (moduleDef.Types.Count > 0) {
+        writer.NewLine();
+        writer.Write("// Types");
+        writer.NewLine();
+        writer.NewLine();
+      }
+
+      foreach (TypeDefinition typeDef in moduleDef.Types) {
+        writer.Write(typeDef.Name);
         writer.NewLine();
       }
     }
