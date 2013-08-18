@@ -9,7 +9,7 @@ using Cairo;
 namespace SolidV.Cairo
 {
   public delegate void DrawArrowDelegate(Context context);
-  public static class ArrowType
+  public static class ArrowKinds
   {
     public static void NoArrow(Context context) {
     }

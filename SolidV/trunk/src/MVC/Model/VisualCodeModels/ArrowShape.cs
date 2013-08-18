@@ -6,26 +6,20 @@
 using System;
 
 using Cairo;
+using SolidV.Cairo;
 
 namespace SolidV.MVC
 {
   public class ArrowShape : ConnectorShape
   {
-
-    public enum ArrowKinds {
-      Squared,
-      Rounded,
-      Triangled
-    }
-
-    private ArrowKinds arrowKindHead = ArrowKinds.Squared;
-    public ArrowKinds ArrowKindHead {
+    private DrawArrowDelegate arrowKindHead = ArrowKinds.TriangleRoundArrow;
+    public DrawArrowDelegate ArrowKindHead {
       get { return arrowKindHead; }
       set { arrowKindHead = value; }
     }
 
-    private ArrowKinds arrowKindTail = ArrowKinds.Rounded;
-    public ArrowKinds ArrowKindTail {
+    private DrawArrowDelegate arrowKindTail = ArrowKinds.NoArrow;
+    public DrawArrowDelegate ArrowKindTail {
       get { return arrowKindTail; }
       set { arrowKindTail = value; }
     }
