@@ -5,6 +5,8 @@
  */
 using System;
 
+using Cairo;
+
 namespace SolidV.MVC
 {
   public class RectangleShape : Shape
@@ -13,6 +15,6 @@ namespace SolidV.MVC
     {
     }
 
-    public RectangleShape() : base() {}
+    public RectangleShape(Rectangle rectangle) : base(rectangle) {}
   }
 }

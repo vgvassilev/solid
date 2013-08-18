@@ -9,7 +9,6 @@ namespace SolidV.MVC
 {
   public class ConnectorShape : BinaryRelationShape 
   {
-    public ConnectorShape(): base() { }
     public ConnectorShape(Shape from, Shape to): base(from, to) { }
   }
 }

@@ -18,7 +18,6 @@ namespace SolidV.MVC
       set { points = value; }
     }
 
-    public PolylineArrowShape(): base() { }
     public PolylineArrowShape(Shape from, Shape to): base(from, to) { }
     public PolylineArrowShape(Shape from, Shape to, List<Distance> polyline): base(from, to) {
       this.Points = polyline;

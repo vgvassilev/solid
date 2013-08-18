@@ -6,6 +6,8 @@
 
 using System;
 
+using Cairo;
+
 namespace SolidV.MVC
 {
     public class TextBlockShape : Shape
@@ -47,11 +49,11 @@ namespace SolidV.MVC
           set { title = value; }
         }
         
-        public TextBlockShape() {
+        public TextBlockShape(Rectangle rectangle): base(rectangle) {
           this.autoSize = false;
         }
 
-        public TextBlockShape(bool autoSize) {
+        public TextBlockShape(Rectangle rectangle, bool autoSize): this(rectangle) {
           this.autoSize = autoSize;
         }
 

@@ -19,7 +19,7 @@ namespace SolidV.MVC
     public override void DrawItem(IView<Context, Model> view, Context context, object item)
     {
       PolylineArrowShape shape = (PolylineArrowShape)item;
-      context.MoveTo(shape.Form.Location);
+      context.MoveTo(shape.From.Location);
       foreach (Distance d in shape.Points) {
         context.RelLineTo(d);
       }

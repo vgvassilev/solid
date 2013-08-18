@@ -5,6 +5,8 @@
  */
 using System;
 
+using Cairo;
+
 namespace SolidV.MVC
 {
   public class EllipseShape : Shape
@@ -13,6 +15,6 @@ namespace SolidV.MVC
     {
     }
 
-    public EllipseShape() : base() {}
+    public EllipseShape(Rectangle rectangle) : base(rectangle) {}
   }
 }

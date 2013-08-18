@@ -5,11 +5,13 @@
  */
 using System;
 
+using Cairo;
+
 namespace SolidV.MVC
 {
   public class BinaryRelationShape : RelationShape
   {
-    public Shape Form {
+    public Shape From {
       get { return related[0]; }
       set { related[0] = value; }
     }
@@ -19,12 +21,9 @@ namespace SolidV.MVC
       set { related[1] = value; }
     }
 
-    public BinaryRelationShape(): base() {
-      related.Add(null);
-      related.Add(null);
-    }
-
-    public BinaryRelationShape(Shape from, Shape to): base() {
+    public BinaryRelationShape(Shape from, Shape to)
+    : base(new Rectangle(from.Location.X, from.Location.Y, // FIXME: Use min and max
+                         from.Location.X + to.Width, from.Location.Y + from.Height)) {
         related.Add(from);
         related.Add(to);
     }

@@ -26,7 +26,8 @@ namespace SolidV.MVC
         if (shape.LineCount < 28) {
           height = shape.LineCount * 16;
         }
-
+        //FIXME: This is absolutely wrong. This has to be moved outside of the visualization.
+        // The visualization part only 'reads' the model doesn't 'write' or change it.
         shape.Rectangle = new Rectangle(shape.Location.X, shape.Location.Y, width, height);
       }
 

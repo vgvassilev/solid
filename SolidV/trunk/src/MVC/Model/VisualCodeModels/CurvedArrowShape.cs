@@ -12,7 +12,6 @@ namespace SolidV.MVC
 {
   public class CurvedArrowShape : PolylineArrowShape
   {
-    public CurvedArrowShape(): base() { }
     public CurvedArrowShape(Shape from, Shape to): base(from, to) { }
     public CurvedArrowShape(Shape from, Shape to, List<Distance> controlPoints): base(from, to, controlPoints) { }
   }

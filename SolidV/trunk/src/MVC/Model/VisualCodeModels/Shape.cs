@@ -25,12 +25,14 @@ namespace SolidV.MVC
     public double Width {
       get { return Rectangle.Width; }
       set { 
+        // Cannot be assigned to Cairo.Rectangle
 //        rectangle.Width = value;
       }
     }
     public double Height {
       get { return Rectangle.Height; }
       set { 
+        // Cannot be assigned to Cairo.Rectangle
 //        rectangle.Height = value;
       }
     }
@@ -38,6 +40,7 @@ namespace SolidV.MVC
     public PointD Location {
       get { return new PointD(Rectangle.X, Rectangle.Y); }
       set { 
+        // Cannot be assigned to Cairo.Rectangle
 //        rectangle.Location = value;
       }
     }
@@ -47,15 +50,10 @@ namespace SolidV.MVC
       get { return rectangle; }
       set { rectangle = value; }
     }
-    
-    
-    public Shape()
+
+    public Shape(Rectangle rect)
     {
       style = Style.DefaultStyle;
-    }
-
-    public Shape(Rectangle rect): this()
-    {
       rectangle = rect;
     }
 
