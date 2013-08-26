@@ -91,16 +91,15 @@ namespace DataMorphose.Plugins.Visualizer
     }
 
     public void DrawSchema(DataModel model) {
-      int x = 20, y = 30;
-      TextBlockShape textBlock = new TextBlockShape(/*autoSize*/true);
       List<TextBlockShape> drawnBlocks = new List<TextBlockShape>();
       Dictionary<string, TextBlockShape> basicBlocks = 
         new Dictionary<string, TextBlockShape>();
 
+      int x = 20, y = 30;
+      TextBlockShape textBlock = new TextBlockShape(new Rectangle(x, y, 40, 40), /*autoSize*/true);
       foreach (Table t in model.DB.Tables) {
+        textBlock = new TextBlockShape(new Cairo.Rectangle(x, y, 40, 40), /*autoSize*/true);
         x += 200; 
-        textBlock = new TextBlockShape(/*autoSize*/true);
-        textBlock.Rectangle = new Cairo.Rectangle(x - 200, y, 40, 40);
 
         textBlock.Style.BorderColor = new Color(0, 0, 0);
         textBlock.Title = t.Name;
@@ -117,14 +116,20 @@ namespace DataMorphose.Plugins.Visualizer
         drawnBlocks.Add(textBlock);
       }
 
+      int maxY = 0;
       // Add some test arrows to the canvas
-      for (int i = 0; i < drawnBlocks.Count - 1; i++) {
+      for (int i = 0, e = drawnBlocks.Count - 1; i < e; i++) {
         ArrowShape arrow = new ArrowShape(drawnBlocks[i], drawnBlocks[i+1]);
+        if (maxY < drawnBlocks[i].Height)
+          maxY = (int)drawnBlocks[i].Height;
+
         scene.Shapes.Add(arrow);
       }
 
       // Set the size of the DrawingArea in order to have the scroller moving properly
-      canvas.SetSizeRequest(x, y);     
+
+      canvas.SetSizeRequest((int)(drawnBlocks[drawnBlocks.Count -1].Rectangle.X 
+                              + drawnBlocks[drawnBlocks.Count -1].Rectangle.Width), maxY);
     }
   }
 }

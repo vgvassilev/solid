@@ -13,44 +13,51 @@ using System.Reflection;
 using SolidOpt.Services;
 using DataMorphose;
 using DataMorphose.Model;
+using Gtk;
+using Gdk;
 
 
 public partial class MainWindow: Gtk.Window, IDataMorphose
 {
+  
+  private int count = 2;
+  private Gtk.ToolButton undo;
+  private Gtk.ToolButton redo;
+
   /// <summary>
   /// The collection of loaded plugins.
   /// </summary>
   /// 
   private PluginServiceContainer plugins = new PluginServiceContainer();
-
+  
   private DataModel model = new DataModel(null);
-
+  
   /// <summary>
   /// The application data dir located in the OS specific configuration dir.
   /// </summary>
   /// 
   private string applicationDataDir = "";
-
+  
   /// <summary>
   /// The dir holding the user created plugins located in the OS specific configuration dir.
   /// </summary>
   /// 
   private string pluginsDir = "";
-
+  
   /// <summary>
   /// The file containing the locations of plugins that have to be loaded.
   /// </summary>
   /// 
   private string pluginsFile = "Plugins.env";
-
+  
   private string PluginsFilePath = null;
-
+  
   /// <summary>
   /// The layout file containing the dock items state and placement.
   /// </summary>
   /// 
   private string layoutFile = "";
-
+  
   /// <summary>
   /// The dock frame that contains the dock items.
   /// </summary>
@@ -60,7 +67,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     get { return dockFrame; }
     set { dockFrame = value; }
   }
-
+  
   /// <summary>
   /// The main application window.
   /// </summary>
@@ -70,43 +77,149 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     // Register the MainWindow as service so that it can be passed to the rest of the plugins
     // so that they could attach themselves in the menus.
     plugins.AddService((IDataMorphose)this);
-
+    
     string confDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
     applicationDataDir = System.IO.Path.Combine(confDir, 
                                                 Assembly.GetExecutingAssembly().GetName().Name);
     pluginsDir = System.IO.Path.Combine(applicationDataDir, "plugins");
-
+    
     if (!Directory.Exists(applicationDataDir))
       Directory.CreateDirectory(applicationDataDir);
-
+    
     if (!Directory.Exists(pluginsDir))
       Directory.CreateDirectory(pluginsDir);
-
+    
     PluginsFilePath = System.IO.Path.Combine(pluginsDir, pluginsFile);
     if (!File.Exists(PluginsFilePath)) {
       File.Create(PluginsFilePath).Close();
     }
+    
+    //layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
 
-    layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
-
-    // That's a hack because of the designer. If one needs to attach an event the designer attaches
-    // it in the end of the file after the call to Initialize. Works for the most of the events
-    // but not for events like Realize which happen in the initialization. This function is used
-    // to attach the event handlers before the initialization part.
-    PreBuild();
     Build();
 
+    // Add code for our tools palette
+
+    // Left toolbar
+    HBox LHbox = new HBox();
+    Gtk.Toolbar LToolbar = new Gtk.Toolbar();
+    LHbox.PackStart(LToolbar, false, false, 0);
+
+    ToolButton btn1 = new ToolButton(Stock.About);
+    ToolButton btn2 = new ToolButton(Stock.Apply);
+    ToolButton btn3 = new ToolButton(Stock.Close);
+    ToolButton btn4 = new ToolButton(Stock.Edit);
+    btn1.Label = "Favorite";
+
+    // Show only text on the buttons
+    LToolbar.ToolbarStyle = Gtk.ToolbarStyle.Text;
+    LToolbar.Orientation = Orientation.Vertical;
+
+    // Add sample buttons
+    Gtk.ToolButton btn = new Gtk.ToolButton(Stock.New);
+    Gtk.ToolButton btn0 = new Gtk.ToolButton(Stock.Copy);
+    SeparatorToolItem sep = new SeparatorToolItem();
+    ToolButton quit = new ToolButton(Stock.Quit);
+    
+    LToolbar.Insert(btn, 0);
+    LToolbar.Insert(btn0, 1);
+    LToolbar.Insert(sep, 2);
+    LToolbar.Insert(quit, 3);
+    LToolbar.Insert(btn1, 4);
+    LToolbar.Insert(btn2, 5);
+    LToolbar.Insert(btn3, 6);
+    LToolbar.Insert(btn4, 7);    
+
+    quit.Clicked += OnExitActionActivated;
+
+    // Right toolbar 
+    VBox RVbox = new VBox();
+    Gtk.Toolbar RToolbar = new Gtk.Toolbar();
+    
+    // Add TreeView for the history 
+    TreeView historyView = new TreeView();
+    TreeViewColumn languages = new TreeViewColumn();
+    languages.Title = "History";
+
+    // Write some sample data to see how it looks like
+    CellRendererText cell = new CellRendererText();
+    languages.PackStart(cell, true);
+    languages.AddAttribute(cell, "text", 0);
+    
+    TreeStore treestore = new TreeStore(typeof(string));
+    treestore.AppendValues("Import database");
+    treestore.AppendValues("Set primary keys");
+    treestore.AppendValues("Delete row");
+    
+    historyView.AppendColumn(languages);
+    historyView.Model = treestore;
+
+    // We need to set the expand and fill properties to false, because that way we can resize 
+    // the buttons.
+    RVbox.PackStart(RToolbar, false, false, 0);
+    RVbox.PackStart(historyView, true, true, 0);
+    
+    RToolbar.ToolbarStyle = Gtk.ToolbarStyle.Icons;
+    RToolbar.Orientation = Orientation.Horizontal;
+
+    undo = new Gtk.ToolButton(Stock.Undo);
+    redo = new Gtk.ToolButton(Stock.Redo);
+    RToolbar.Insert(undo, 0);
+    RToolbar.Insert(redo, 1);    
+
+    undo.Clicked += OnUndo;
+    redo.Clicked += OnRedo;
+
+    // Docking 
+    AddDockItem("Tools", LHbox);
+
+    OnRealized(this, new EventArgs());
+
+    dockFrame.CurrentLayout = "BasicLayout";
     hbox1.Add(dockFrame);
 
-    dockFrame.HeightRequest = hbox1.Allocation.Height;
-    dockFrame.WidthRequest = hbox1.Allocation.Width;
-    dockFrame.CurrentLayout = "BasicLayout";
-    dockFrame.HandlePadding = 0;
-    dockFrame.HandleSize = 4;
+    AddDockItem("Actions", RVbox);
 
     this.ShowAll();
   }
 
+  private void AddDockItem(string label, Container container) {
+    DockItem rightToolbar = DockFrame.AddItem(label);
+    rightToolbar.DrawFrame = true;
+    rightToolbar.Label = label;
+    rightToolbar.Expand = false;
+    rightToolbar.DefaultVisible = true;
+    rightToolbar.Visible = true;
+    rightToolbar.Content = container;
+    container.ShowAll();
+  }
+  
+  void OnClicked(object sender, EventArgs args)
+  {
+    Application.Quit();
+  }
+  
+  void OnUndo(object sender, EventArgs args)
+  {
+    count -= 1;
+    
+    if (count <= 0) {
+      undo.Sensitive = false;
+      redo.Sensitive = true;
+    }
+  }
+  
+  void OnRedo(object sender, EventArgs args)
+  {
+    count += 1;
+    
+    if (count >= 5) {
+      redo.Sensitive = false;
+      undo.Sensitive = true;
+    }
+  }
+  
+  
   /// <summary>
   /// Raises the delete event when the user attempts to close the application
   /// using the close button from the title bar.
@@ -123,9 +236,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     Gtk.Application.Quit();
     args.RetVal = true;
   }
-
-
-
+  
   /// <summary>
   /// Raises the realized event. The plugins are loaded when the MainWindow is realized.
   /// </summary>
@@ -141,7 +252,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     LoadRegisteredPlugins();
     LoadLayout();
   }
-
+  
   /// <summary>
   /// Raises the exit action activated event when the user attempts to close the application using
   /// the main menu 'Exit' menu item. Saves the current dock layout and sends the shut down event.
@@ -155,13 +266,13 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   /// 
   protected void OnExitActionActivated(object sender, System.EventArgs args)
   {
-    SaveLayout();
+    //SaveLayout(); // FIXME: This produces a bogus layout file
     if (ShutDownEvent != null)
       ShutDownEvent(this, args);
-
+    
     Gtk.Application.Quit();
   }
-
+  
   // Handling the application startup layout.
   // If layout file is found the dock items would be restored as they were before the shut down.
   private void LoadLayout() {
@@ -169,10 +280,10 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
       dockFrame.LoadLayouts(System.IO.Path.Combine(applicationDataDir, "config.layout"));
     }
     else {
-      dockFrame.CreateLayout("BasicLayout", true);
+      dockFrame.CreateLayout("BasicLayout", /*copyCurrent*/true);
     }
   }
-
+  
   /// <summary>
   /// Saves the current window components layout and their last changed state.
   /// </summary>
@@ -181,27 +292,27 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   {
     // Save all loaded plugins
     plugins.SavePluginsToFile(pluginsFile);
-
+    
     File.Delete(layoutFile);
     File.Create(layoutFile).Close();
-
-    dockFrame.SaveLayouts(layoutFile);
+    
+    //dockFrame.SaveLayouts(layoutFile);
   }
-
+  
   protected void OnRemoveActionActivated (object sender, EventArgs e)
   {
     Gtk.ResponseType responseType = Gtk.ResponseType.None;
     LoadedPlugins loadedPlugins = new LoadedPlugins(plugins);
     try {
       responseType = (Gtk.ResponseType) loadedPlugins.Run();
-
+      
       if (responseType == Gtk.ResponseType.Ok) {
         Gtk.TreeModel model;
         Gtk.TreeIter iter;
         Gtk.TreeSelection selection = loadedPlugins.treeView.Selection;
-
+        
         selection.GetSelected(out model, out iter);
-
+        
         string pluginToDelete = (model.GetValue(iter, 0).ToString());
         removePlugin(pluginToDelete);
         //plugins.RemovePlugin(pluginToDelete);
@@ -216,7 +327,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
       loadedPlugins.Dispose();
     }
   }
-
+  
   private void removePlugin(string pluginToDelete)
   {
     foreach (IPlugin plugin in plugins.GetServices<IPlugin>()) {
@@ -226,7 +337,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     }
     //plugins.RemovePlugin(pluginToDelete);
   }
-
+  
   /// <summary>
   /// Loads the plugins from the Plugins.env.
   /// </summary>
@@ -234,19 +345,15 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   private void LoadRegisteredPlugins() {
     plugins.AddPluginsFromFile(pluginsFile);
     plugins.LoadPlugins();
-
+    
     foreach (IPlugin p in plugins.GetServices<IPlugin>()) {
       p.Init(this);
     }
   }
-
-  protected virtual void PreBuild() {
-    this.Realized += new global::System.EventHandler (this.OnRealized);
-  }
-
+  
   #region IDataMorphose implementation
   event EventHandler<EventArgs> ShutDownEvent = null;
-
+  
   /// <summary>
   /// Sent to the subscribed plugins notifying them the main application is terminating.
   /// </summary>
@@ -262,7 +369,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
         ShutDownEvent -= value;
     }
   }
-
+  
   /// <summary>
   /// Gets the OS specific configuration directory.
   /// </summary>
@@ -274,7 +381,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   {
     return this.applicationDataDir;
   }
-
+  
   /// <summary>
   /// Gets the main application main menu.
   /// </summary>
@@ -286,7 +393,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   {
     return this.MainMenuBar;
   }
-
+  
   /// <summary>
   /// Gets the main window (MainWindow).
   /// </summary>
@@ -298,7 +405,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   {
     return this;
   }
-
+  
   /// <summary>
   /// Gets the collection of currently loaded plugins in the main application.
   /// </summary>
@@ -309,31 +416,31 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   PluginServiceContainer IDataMorphose.GetPlugins() {
     return this.plugins;
   }
-
+  
   DataModel IDataMorphose.GetModel()
   {
     return model;
   }
-
+  
   #endregion
-
+  
   protected void OnAddActionActivated (object sender, EventArgs e)
   {
     var fc = new Gtk.FileChooserDialog("Choose the file to open", null, 
-                                         Gtk.FileChooserAction.Open, "Cancel", 
-                                         Gtk.ResponseType.Cancel, "Open", Gtk.ResponseType.Accept);
-      try {
-        fc.SelectMultiple = true;
-        fc.SetCurrentFolder(Environment.CurrentDirectory);
-        if (fc.Run() == (int)Gtk.ResponseType.Accept) {
-          for (int i = 0; i < fc.Filenames.Length; i++) {
-            plugins.AddPlugin(fc.Filenames[i]);
-          }
-          SaveLayout();
-        plugins.LoadPlugins();
+                                       Gtk.FileChooserAction.Open, "Cancel", 
+                                       Gtk.ResponseType.Cancel, "Open", Gtk.ResponseType.Accept);
+    try {
+      fc.SelectMultiple = true;
+      fc.SetCurrentFolder(Environment.CurrentDirectory);
+      if (fc.Run() == (int)Gtk.ResponseType.Accept) {
+        for (int i = 0; i < fc.Filenames.Length; i++) {
+          plugins.AddPlugin(fc.Filenames[i]);
         }
-      } finally {
-        fc.Destroy();
+        SaveLayout();
+        plugins.LoadPlugins();
       }
+    } finally {
+      fc.Destroy();
+    }
   }
 }
