@@ -17,20 +17,6 @@ namespace SolidV.MVC
     public override void DrawItem(IView<Context, Model> view, Context context, object item)
     {
       TextBlockShape shape = (TextBlockShape)item;
-      if (shape.AutoSize) {
-        double width = 100;
-        double height = shape.LineCount;
-        if (shape.LongestLine < 100) {
-          width = shape.LongestLine * 8;
-        }
-        if (shape.LineCount < 28) {
-          height = shape.LineCount * 16;
-        }
-        //FIXME: This is absolutely wrong. This has to be moved outside of the visualization.
-        // The visualization part only 'reads' the model doesn't 'write' or change it.
-        shape.Rectangle = new Rectangle(shape.Location.X, shape.Location.Y, width, height);
-      }
-
       context.Rectangle(shape.Rectangle);
       context.Color = shape.Style.FillColor;
       context.FillPreserve();

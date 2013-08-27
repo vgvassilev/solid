@@ -34,6 +34,7 @@ namespace SolidV.MVC
                 for (int i = 0, e = blockText.Length; i < e; i++)
                   if (longestLine < blockText[i].Length)
                     longestLine = blockText[i].Length;
+                UpdateAutoSize();
               }
         }
 
@@ -64,6 +65,19 @@ namespace SolidV.MVC
           }
           return result;
         }
+
+        private void UpdateAutoSize() {
+          if (!AutoSize)
+            return;
+          double width = 100;
+          double height = LineCount;
+          if (LongestLine < 100) {
+            width = LongestLine * 8;
+          }
+          if (LineCount < 28) {
+            height = LineCount * 16;
+          }
+          Rectangle = new Rectangle(Location.X, Location.Y, width, height);
+        }
   }
 }
-

@@ -39,7 +39,7 @@ namespace SolidV.MVC
 
     public PointD Location {
       get { return new PointD(Rectangle.X, Rectangle.Y); }
-      set { 
+      set { rectangle = new Rectangle(value.X, value.Y, Width, Height);
         // Cannot be assigned to Cairo.Rectangle
 //        rectangle.Location = value;
       }
