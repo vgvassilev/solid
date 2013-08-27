@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 using Mono.Cecil.Cil;
 
@@ -112,6 +113,16 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     }
 
     #endregion
+
+    public override string ToString() {
+      StringBuilder sb = new StringBuilder();
+
+      foreach (Instruction instr in body) {
+        sb.AppendLine(instr.ToString());
+      }
+
+      return sb.ToString();
+    }
   }
 }
 
