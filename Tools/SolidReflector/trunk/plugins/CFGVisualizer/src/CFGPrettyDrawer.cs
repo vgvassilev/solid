@@ -90,6 +90,27 @@ namespace SolidReflector.Plugins.CFGVisualizer
       }
     }
 
+    private void DrawBasicBlock(BasicBlock basicBlock, 
+                                ref Dictionary<BasicBlock, TextBlockShape> visited) {
+      if (visited.ContainsKey(basicBlock))
+        return;
+
+      ArrowShape arrow = null;
+      // When autoSize is on the rectangle parameter will be 'ignored'.
+      TextBlockShape blockShape = new TextBlockShape(new Rectangle(1,1,50,50), /*autosize*/true);
+      blockShape.Title = String.Format("Block Name: {0}", basicBlock.Name);
+      blockShape.BlockText = basicBlock.ToString();
+      visited.Add(basicBlock, blockShape);
+      scene.Shapes.Add(blockShape);
+      foreach (BasicBlock successor in basicBlock.Successors) {
+        DrawBasicBlock(successor, ref visited);
+        arrow = new ArrowShape(visited[basicBlock], visited[successor]);
+        arrow.ArrowKindHead = SolidV.Cairo.ArrowKinds.TriangleRoundArrow;
+        arrow.ArrowKindTail = SolidV.Cairo.ArrowKinds.NoArrow;
+        scene.Shapes.Add(arrow);
+      }
+    }
+
     /// <summary>
     /// Draws the CFG on the canvas using its model.
     /// </summary>
@@ -97,48 +118,13 @@ namespace SolidReflector.Plugins.CFGVisualizer
     /// The CFG object.
     /// </param>
     private void DrawCFG(ControlFlowGraph cfg) {
-      Dictionary<string, TextBlockShape> basicBlocks = new Dictionary<string, TextBlockShape>();
-      List<BasicBlock> drawnBlocks = new List<BasicBlock>();
-      TextBlockShape textBlock = new TextBlockShape();
+      var visited = new Dictionary<BasicBlock, TextBlockShape>(10);
+      DrawBasicBlock(cfg.Root, ref visited);
 
-      foreach (BasicBlock basicBlock in cfg.RawBlocks) {
-        textBlock = new TextBlockShape();
-        textBlock.BlockText = "Block Name: " + basicBlock.Name +
-                                                                              Environment.NewLine;
-        textBlock.BlockText = textBlock.BlockText + basicBlock.First.ToString() +
-                                                                              Environment.NewLine;
-        textBlock.BlockText = textBlock.BlockText + "..." + Environment.NewLine;
-        textBlock.BlockText = textBlock.BlockText + basicBlock.Last.ToString() +
-                                                                              Environment.NewLine;
-        basicBlocks.Add(basicBlock.Name, textBlock);
-        scene.Shapes.Add(textBlock);
-      }
-
-      TextBlockShape fromTextShape = null;
-      TextBlockShape toTextShape = null;
-      int blockX = canvas.Allocation.Width / 2;
-      int blockY = 10;
-
-      foreach (BasicBlock block in cfg.RawBlocks) {
-        basicBlocks.TryGetValue(block.Name, out fromTextShape);
-
-        if (!drawnBlocks.Contains(block)) {
-          fromTextShape.Rectangle = new Cairo.Rectangle(blockX, blockY, 150, 100);
-          drawnBlocks.Add(block);
-        }
-
-        blockY += 140;
-        blockX = 160;
-
-        for (int i = 0; i < block.Successors.Count; i++) {
-          basicBlocks.TryGetValue(block.Successors[i].Name, out toTextShape);
-          drawnBlocks.Add(block.Successors[i]);
-          toTextShape.Rectangle = new Cairo.Rectangle(blockX, blockY, 150, 100);
-          ArrowShape arrow = new ArrowShape(fromTextShape, toTextShape);
-          scene.Shapes.Add(arrow);
-          blockX += 160;
-        }
-      }
+      scene.BeginUpdate();
+      IAutoArrange arrainger = new ForceDirectedBlockAutoArrangment(scene);
+      arrainger.Arrange();
+      scene.EndUpdate();
     }
   }
 }
