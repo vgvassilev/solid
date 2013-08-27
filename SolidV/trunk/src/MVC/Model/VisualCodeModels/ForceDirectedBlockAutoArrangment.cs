@@ -37,6 +37,7 @@ namespace SolidV.MVC
     /// or deterministic layout.
     /// </summary>
     /// <param name="deterministic">Whether to use a random or deterministic layout.</param>
+    /// 
     public void Arrange(bool deterministic) {
       Arrange(DEFAULT_DAMPING, DEFAULT_SPRING_LENGTH, DEFAULT_MAX_ITERATIONS, deterministic);
     }
@@ -158,6 +159,7 @@ namespace SolidV.MVC
     /// <param name="start">The node that the angle is measured from.</param>
     /// <param name="end">The node that creates the angle.</param>
     /// <returns>The bearing angle, in degrees.</returns>
+    /// 
     private double GetBearingAngle(PointD start, PointD end) {
       PointD half = new PointD(start.X + ((end.X - start.X) / 2), start.Y + ((end.Y - start.Y) / 2));
       
@@ -260,6 +262,7 @@ namespace SolidV.MVC
       /// <param name="node"></param>
       /// <param name="velocity"></param>
       /// <param name="nextPosition"></param>
+      /// 
       public NodeLayoutInfo(Shape node, Vector velocity, PointD nextPosition) {
         Node = node;
         Velocity = velocity;
@@ -271,6 +274,7 @@ namespace SolidV.MVC
     /// Represents a vector whose magnitude and direction are both expressed as System.Double. 
     /// Vector addition and scalar multiplication are supported.
     /// </summary>
+    /// 
     public struct Vector {
       
       private double mMagnitude;
@@ -279,6 +283,7 @@ namespace SolidV.MVC
       /// <summary>
       /// Gets or sets the magnitude of the vector.
       /// </summary>
+      /// 
       public double Magnitude {
         get { return mMagnitude; }
         set { mMagnitude = value; }
@@ -286,6 +291,7 @@ namespace SolidV.MVC
       /// <summary>
       /// Gets or sets the direction of the vector.
       /// </summary>
+      /// 
       public double Direction {
         get { return mDirection; }
         set { mDirection = value; }
@@ -297,6 +303,7 @@ namespace SolidV.MVC
       /// </summary>
       /// <param name="magnitude">The magnitude of the vector.</param>
       /// <param name="direction">The direction of the vector, in degrees.</param>
+      /// 
       public Vector(double magnitude, double direction) {
         mMagnitude = magnitude;
         mDirection = direction;
@@ -317,6 +324,7 @@ namespace SolidV.MVC
       /// <param name="a">The first operand.</param>
       /// <param name="b">The second operand.</param>
       /// <returns>The result of vector addition.</returns>
+      /// 
       public static Vector operator +(Vector a, Vector b) {
         // break into x-y components
         double aX = a.Magnitude * Math.Cos((Math.PI / 180.0) * a.Direction);
@@ -348,6 +356,7 @@ namespace SolidV.MVC
       /// <param name="vector">The Vector that forms the first operand.</param>
       /// <param name="multiplier">The System.Double that forms the second operand.</param>
       /// <returns>A Vector whose magnitude has been multiplied by the scalar value.</returns>
+      /// 
       public static Vector operator *(Vector vector, double multiplier) {
         // only magnitude is affected by scalar multiplication
         return new Vector(vector.Magnitude * multiplier, vector.Direction);
@@ -369,6 +378,7 @@ namespace SolidV.MVC
       /// Returns a string representation of the vector.
       /// </summary>
       /// <returns>A System.String representing the vector.</returns>
+      /// 
       public override string ToString() {
         return mMagnitude.ToString("N5") + " " + mDirection.ToString("N2") + "°";
       }
