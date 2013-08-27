@@ -12,4 +12,3 @@ namespace SolidV.MVC
     public ConnectorShape(Shape from, Shape to): base(from, to) { }
   }
 }
-

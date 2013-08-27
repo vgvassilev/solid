@@ -27,7 +27,5 @@ namespace SolidV.MVC
     public ArrowShape(Shape from, Shape to): base(from, to) {
       
     }
-
- 
   }
 }

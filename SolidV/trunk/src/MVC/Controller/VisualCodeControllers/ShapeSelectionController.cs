@@ -20,7 +20,8 @@ namespace SolidV.MVC
           SelectionModel selection = this.Model.GetSubModel<SelectionModel>();
           foreach (Shape shape in this.Model.GetSubModel<ShapesModel>().Shapes) {
             if (shape.Rectangle.X <= eventButton.X && shape.Rectangle.Y <= eventButton.Y &&
-              shape.Rectangle.X + shape.Rectangle.Width >= eventButton.X && shape.Rectangle.Y + shape.Rectangle.Height >= eventButton.Y) { //shape.RectContains(args.Event.X, args.Event.Y)) { 
+              shape.Rectangle.X + shape.Rectangle.Width >= eventButton.X && shape.Rectangle.Y + 
+                shape.Rectangle.Height >= eventButton.Y) {
               if (selection.Selected.IndexOf(shape) < 0) {
                 this.Model.BeginUpdate();
                 if ((eventButton.State & Gdk.ModifierType.ControlMask) == 0)

@@ -29,6 +29,5 @@ namespace SolidV.MVC
       context.MoveTo(shape.From.Location);
       context.ArrowLineTo(shape.To.Location, shape.ArrowKindHead, shape.ArrowKindTail);
     }
-    
   }
 }
