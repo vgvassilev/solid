@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace SolidV.MVC
 {
-  public class ForceDirectedBlockAutoArraingment
+  public class ForceDirectedBlockAutoArrangment : IAutoArrange
   {
     private const double ATTRACTION_CONSTANT = 0.2;   // spring constant
     private const double REPULSION_CONSTANT = 10000;  // charge constant
@@ -384,9 +384,8 @@ namespace SolidV.MVC
       }
     }
 
-    public ForceDirectedBlockAutoArraingment(ShapesModel model) {
+    public ForceDirectedBlockAutoArrangment(ShapesModel model) {
       this.Shapes = model.Shapes;
-      Arrange();
     }
   }
 }
