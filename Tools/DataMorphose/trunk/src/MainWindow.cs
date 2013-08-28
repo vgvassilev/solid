@@ -13,8 +13,6 @@ using System.Reflection;
 using SolidOpt.Services;
 using DataMorphose;
 using DataMorphose.Model;
-using Gtk;
-using Gdk;
 
 
 public partial class MainWindow: Gtk.Window, IDataMorphose
@@ -99,29 +97,33 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     Build();
 
     // Add code for our tools palette
-
     // Left toolbar
-    HBox LHbox = new HBox();
+    Gtk.VBox LVbox = new Gtk.VBox();
     Gtk.Toolbar LToolbar = new Gtk.Toolbar();
-    LHbox.PackStart(LToolbar, false, false, 0);
+    LVbox.PackStart(LToolbar, true, true, 0);
 
-    ToolButton btn1 = new ToolButton(Stock.About);
-    ToolButton btn2 = new ToolButton(Stock.Apply);
-    ToolButton btn3 = new ToolButton(Stock.Close);
-    ToolButton btn4 = new ToolButton(Stock.Edit);
+
+    Gtk.ToolButton btn1 = new Gtk.ToolButton(Gtk.Stock.About);
+    Gtk.ToolButton btn2 = new Gtk.ToolButton(Gtk.Stock.Apply);
+    Gtk.ToolButton btn3 = new Gtk.ToolButton(Gtk.Stock.Close);
+    Gtk.ToolButton btn4 = new Gtk.ToolButton(Gtk.Stock.Edit);
     btn1.Label = "Favorite";
 
     // Show only text on the buttons
     LToolbar.ToolbarStyle = Gtk.ToolbarStyle.Text;
-    LToolbar.Orientation = Orientation.Vertical;
+    LToolbar.Orientation = Gtk.Orientation.Vertical;
 
     // Add sample buttons
-    Gtk.ToolButton btn = new Gtk.ToolButton(Stock.New);
-    Gtk.ToolButton btn0 = new Gtk.ToolButton(Stock.Copy);
-    SeparatorToolItem sep = new SeparatorToolItem();
-    ToolButton quit = new ToolButton(Stock.Quit);
-    
-    LToolbar.Insert(btn, 0);
+    Gtk.ToolItem item = new Gtk.ToolItem();
+    Gtk.Button b = new Gtk.Button();
+    item.Add(b);
+    b.Label = "Check for PKs";
+
+    Gtk.ToolButton btn0 = new Gtk.ToolButton(Gtk.Stock.Copy);
+    Gtk.SeparatorToolItem sep = new Gtk.SeparatorToolItem();
+    Gtk.ToolButton quit = new Gtk.ToolButton(Gtk.Stock.Quit);
+
+    LToolbar.Insert(item, 0);
     LToolbar.Insert(btn0, 1);
     LToolbar.Insert(sep, 2);
     LToolbar.Insert(quit, 3);
@@ -133,20 +135,20 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     quit.Clicked += OnExitActionActivated;
 
     // Right toolbar 
-    VBox RVbox = new VBox();
+    Gtk.VBox RVbox = new Gtk.VBox();
     Gtk.Toolbar RToolbar = new Gtk.Toolbar();
     
     // Add TreeView for the history 
-    TreeView historyView = new TreeView();
-    TreeViewColumn languages = new TreeViewColumn();
+    Gtk.TreeView historyView = new Gtk.TreeView();
+    Gtk.TreeViewColumn languages = new Gtk.TreeViewColumn();
     languages.Title = "History";
 
     // Write some sample data to see how it looks like
-    CellRendererText cell = new CellRendererText();
+    Gtk.CellRendererText cell = new Gtk.CellRendererText();
     languages.PackStart(cell, true);
     languages.AddAttribute(cell, "text", 0);
     
-    TreeStore treestore = new TreeStore(typeof(string));
+    Gtk.TreeStore treestore = new Gtk.TreeStore(typeof(string));
     treestore.AppendValues("Import database");
     treestore.AppendValues("Set primary keys");
     treestore.AppendValues("Delete row");
@@ -160,10 +162,10 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     RVbox.PackStart(historyView, true, true, 0);
     
     RToolbar.ToolbarStyle = Gtk.ToolbarStyle.Icons;
-    RToolbar.Orientation = Orientation.Horizontal;
+    RToolbar.Orientation = Gtk.Orientation.Horizontal;
 
-    undo = new Gtk.ToolButton(Stock.Undo);
-    redo = new Gtk.ToolButton(Stock.Redo);
+    undo = new Gtk.ToolButton(Gtk.Stock.Undo);
+    redo = new Gtk.ToolButton(Gtk.Stock.Redo);
     RToolbar.Insert(undo, 0);
     RToolbar.Insert(redo, 1);    
 
@@ -171,7 +173,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     redo.Clicked += OnRedo;
 
     // Docking 
-    AddDockItem("Tools", LHbox);
+    AddDockItem("Tools", LVbox);
 
     OnRealized(this, new EventArgs());
 
@@ -183,7 +185,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     this.ShowAll();
   }
 
-  private void AddDockItem(string label, Container container) {
+  private void AddDockItem(string label, Gtk.Container container) {
     DockItem rightToolbar = DockFrame.AddItem(label);
     rightToolbar.DrawFrame = true;
     rightToolbar.Label = label;
@@ -196,7 +198,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   
   void OnClicked(object sender, EventArgs args)
   {
-    Application.Quit();
+    Gtk.Application.Quit();
   }
   
   void OnUndo(object sender, EventArgs args)
