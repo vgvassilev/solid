@@ -121,10 +121,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       var visited = new Dictionary<BasicBlock, TextBlockShape>(10);
       DrawBasicBlock(cfg.Root, ref visited);
 
-      scene.BeginUpdate();
-      IAutoArrange arrainger = new ForceDirectedBlockAutoArrangment(scene);
-      arrainger.Arrange();
-      scene.EndUpdate();
+      scene.AutoArrange();
     }
   }
 }
