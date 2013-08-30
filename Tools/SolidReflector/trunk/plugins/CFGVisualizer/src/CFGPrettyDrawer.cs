@@ -122,6 +122,17 @@ namespace SolidReflector.Plugins.CFGVisualizer
       DrawBasicBlock(cfg.Root, ref visited);
 
       scene.AutoArrange();
+
+      int maxX = 0, maxY = 0;
+
+      foreach (Shape shape in scene.Shapes) {
+        if ((shape.Rectangle.X + shape.Rectangle.Width) > maxX)
+          maxX = (int)(shape.Rectangle.X + shape.Rectangle.Width);
+        if ((shape.Rectangle.Y + shape.Rectangle.Height) > maxY) 
+          maxY = (int)(shape.Rectangle.Y + shape.Rectangle.Height);
+      }
+
+      canvas.SetSizeRequest(maxX + 10, maxY + 10);
     }
   }
 }

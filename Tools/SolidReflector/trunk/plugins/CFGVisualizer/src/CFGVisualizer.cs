@@ -12,6 +12,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
   public class CFGVisualizer : IPlugin
   {
     private MainWindow mainWindow = null;
+    private DrawingArea drawingArea = null;
     private DockItem cfgVisualizingDock = null;
 
     public CFGVisualizer() { }
@@ -24,9 +25,17 @@ namespace SolidReflector.Plugins.CFGVisualizer
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
+      drawingArea = new DrawingArea();
+
+      ScrolledWindow scrollWindow = new ScrolledWindow();
+      Viewport viewport = new Viewport();
+
+      scrollWindow.Add(viewport);
+      viewport.Add(drawingArea);
+      
       Gtk.Notebook nb = new Gtk.Notebook();
       nb.AppendPage(new TextView(), new Gtk.Label("CFG Text"));
-      nb.AppendPage(new DrawingArea(), new Gtk.Label("CFG Visualizer"));
+      nb.AppendPage(scrollWindow, new Gtk.Label("CFG Visualizer"));
       nb.ShowAll();
 
       cfgVisualizingDock = mainWindow.DockFrame.AddItem("CFG Visualizer");
@@ -50,7 +59,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     private void OnSelectionChanged(object sender, SelectionEventArgs args) {
       Gtk.Notebook nb = cfgVisualizingDock.Content as Gtk.Notebook;
       Gtk.TextView textView = nb.GetNthPage(0) as Gtk.TextView;
-      Gtk.DrawingArea drawingArea = nb.GetNthPage(1) as Gtk.DrawingArea;
+      //Gtk.DrawingArea drawingArea = nb.GetNthPage(1) as Gtk.DrawingArea;
 
       if (args.definition != null) {
         // Dump the definition
