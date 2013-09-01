@@ -7,6 +7,9 @@
 # Those two are relevant when configuring just docs standalone
 project(SolidOpt NONE)
 cmake_minimum_required(VERSION 2.6.2)
+if(NOT CMAKE_MODULE_PATH)
+  set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
+endif()
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
