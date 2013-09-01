@@ -82,12 +82,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
       }
     }
 
-    public void DrawTextBlocks(MemberReference memberRef) {
-      if (memberRef is MethodDefinition) {
-        var builder = new ControlFlowGraphBuilder(memberRef as MethodDefinition);
-        ControlFlowGraph cfg = builder.Create();
-        DrawCFG(cfg);
-      }
+    public void DrawTextBlocks(ControlFlowGraph cfg) {
+      DrawCFG(cfg);
     }
 
     private void DrawBasicBlock(BasicBlock basicBlock, 

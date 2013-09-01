@@ -1,4 +1,5 @@
 using Gtk;
+using Mono.Cecil;
 using MonoDevelop.Components.Docking;
 using System;
 using System.Collections;
@@ -6,6 +7,8 @@ using System.Collections.Generic;
 
 using SolidOpt.Services;
 using SolidReflector.Plugins.AssemblyBrowser;
+using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
+using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
 
 namespace SolidReflector.Plugins.CFGVisualizer
 {
@@ -15,6 +18,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     private DrawingArea drawingArea = null;
     private DockItem cfgVisualizingDock = null;
     private DockItem simulationDock = null;
+    private ControlFlowGraph currentCfg = null;
 
     public CFGVisualizer() { }
 
@@ -83,17 +87,23 @@ namespace SolidReflector.Plugins.CFGVisualizer
         // Dump the definition
         CFGPrettyPrinter.PrintPretty(args.definition, textView);
         CFGPrettyDrawer drawer = new CFGPrettyDrawer(drawingArea);
-        drawer.DrawTextBlocks(args.definition);
-        if (args.module != null) {
-          // Dump the module
-          if (args.assembly != null) {
-            // Dump assembly modules.
+
+        if (args.definition is MethodDefinition) {
+          var builder = new ControlFlowGraphBuilder(args.definition as MethodDefinition);
+          currentCfg = builder.Create();
+
+          drawer.DrawTextBlocks(currentCfg);
+          if (args.module != null) {
+            // Dump the module
+            if (args.assembly != null) {
+              // Dump assembly modules.
+            }
           }
         }
       }
     }
 
-    void HandleClicked (object sender, EventArgs e)
+    void HandleClicked(object sender, EventArgs e)
     {
       
     }
