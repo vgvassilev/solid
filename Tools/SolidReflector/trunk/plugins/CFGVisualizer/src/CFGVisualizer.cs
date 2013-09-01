@@ -47,11 +47,20 @@ namespace SolidReflector.Plugins.CFGVisualizer
       cfgVisualizingDock.DefaultVisible = true;
       cfgVisualizingDock.Visible = true;
 
+      VBox vBox = new VBox(false, 0);
+      TextView textView = new TextView();
+      Button simulateButton = new Button("Simulate");
+      simulateButton.Clicked += HandleClicked;
+      vBox.PackStart(simulateButton, false, false, 0);
+      vBox.PackStart(textView, true, true, 0);
+      
+      vBox.ShowAll();
+
       simulationDock = mainWindow.DockFrame.AddItem("Simulation Visualizer");
       simulationDock.Expand = true;
       simulationDock.DrawFrame = true;
       simulationDock.Label = "Simulation Visualizer";
-      simulationDock.Content = new TextView();
+      simulationDock.Content = vBox;
       simulationDock.DefaultVisible = true;
       simulationDock.Visible = true;
     }
@@ -82,6 +91,11 @@ namespace SolidReflector.Plugins.CFGVisualizer
           }
         }
       }
+    }
+
+    void HandleClicked (object sender, EventArgs e)
+    {
+      
     }
   }
 }
