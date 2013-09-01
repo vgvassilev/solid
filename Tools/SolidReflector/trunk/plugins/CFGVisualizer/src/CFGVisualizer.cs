@@ -14,6 +14,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     private MainWindow mainWindow = null;
     private DrawingArea drawingArea = null;
     private DockItem cfgVisualizingDock = null;
+    private DockItem simulationDock = null;
 
     public CFGVisualizer() { }
 
@@ -45,6 +46,14 @@ namespace SolidReflector.Plugins.CFGVisualizer
       cfgVisualizingDock.Content = nb;
       cfgVisualizingDock.DefaultVisible = true;
       cfgVisualizingDock.Visible = true;
+
+      simulationDock = mainWindow.DockFrame.AddItem("Simulation Visualizer");
+      simulationDock.Expand = true;
+      simulationDock.DrawFrame = true;
+      simulationDock.Label = "Simulation Visualizer";
+      simulationDock.Content = new TextView();
+      simulationDock.DefaultVisible = true;
+      simulationDock.Visible = true;
     }
 
     void IPlugin.UnInit(object context)
