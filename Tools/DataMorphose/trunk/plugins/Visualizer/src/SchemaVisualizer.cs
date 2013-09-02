@@ -101,7 +101,7 @@ namespace DataMorphose.Plugins.Visualizer
         textBlock = new TextBlockShape(new Cairo.Rectangle(x, y, 40, 40), /*autoSize*/true);
         x += 200; 
 
-        textBlock.Style.BorderColor = new Color(0, 0, 0);
+        textBlock.Style.Border = new SolidPattern(new Color(0, 0, 0));
         textBlock.Title = t.Name;
         StringBuilder sb = new StringBuilder();
 
