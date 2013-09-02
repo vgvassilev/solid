@@ -18,7 +18,7 @@ using DataMorphose.View;
 
 namespace DataMorphose.Plugins.Visualizer
 {
-  public class Visualizer : IPlugin, IObserver
+  public class Visualizer : IPlugin
   {
     private IDataMorphose morphose = null;
     private DockItem dockItem = null;
@@ -28,6 +28,7 @@ namespace DataMorphose.Plugins.Visualizer
     private Gtk.TreeView treeView = new Gtk.TreeView();
     private Gtk.ComboBox comboBox = new Gtk.ComboBox();
     private SchemaVisualizer schemaV = null;
+    private Gtk.DrawingArea drawingArea = null;
 
     private TreeIter iter;
     private string selectedTable = "";
@@ -39,7 +40,8 @@ namespace DataMorphose.Plugins.Visualizer
     void IPlugin.Init (object context)
     {
       morphose = context as IDataMorphose;
-      morphose.GetModel().Attach(this);
+
+      morphose.GetModel().ModelChanged += HandleModelChanged;
 
       // Set up basic visualizer tab 
       // Attach the comboBox first
@@ -53,7 +55,7 @@ namespace DataMorphose.Plugins.Visualizer
       nb.AppendPage(vbox, new Gtk.Label("Data Browser"));
 
       // Set up DrawingArea tab
-      Gtk.DrawingArea drawingArea = new DrawingArea();
+      drawingArea = new DrawingArea();
       ScrolledWindow scrollDA =  new ScrolledWindow();
       Viewport view = new Viewport();
       Gtk.VBox vBoxDA = new Gtk.VBox();
@@ -84,6 +86,12 @@ namespace DataMorphose.Plugins.Visualizer
     }    
 
     #endregion
+
+    private void HandleModelChanged(object model) {
+      DataModel morphoseModel = (DataModel)model;
+      populateComboBox(morphoseModel.DB);
+      schemaV.DrawSchema(morphoseModel);
+    }
 
     private void populateGrid(Model.Table table) {
       Gtk.ListStore store = treeView.Model as Gtk.ListStore;
@@ -121,14 +129,6 @@ namespace DataMorphose.Plugins.Visualizer
       }
       treeView.ShowAll();
     }
-    
-    #region IObserver implementation
-    void IObserver.Update (DataModel model)
-    {
-      populateComboBox(model.DB);
-      schemaV.DrawSchema(model);
-    }
-    #endregion
 
     private void populateComboBox(Database db) {
       // Set up the comboBox

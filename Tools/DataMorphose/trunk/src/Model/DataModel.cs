@@ -16,20 +16,8 @@ namespace DataMorphose.Model
   /// DataModel is the class that represents the whole structure of the data. 
   /// The Observer pattern will be used for all of the classes that need the data.
   /// </summary>
-  public class DataModel
+  public class DataModel : SolidV.MVC.Model
   {
-    int updateLockCount = 0;
-
-    private List<IObserver> observers;
-    public List<IObserver> Observers {
-      get { 
-        if (observers == null)
-          observers = new List<IObserver>(); 
-        return observers; 
-      }
-      set { observers = value; }
-    }
-
     public Database db;
     public Database DB {
       get { return db; }
@@ -38,32 +26,6 @@ namespace DataMorphose.Model
 
     public DataModel(Database db) {
       this.db = db;
-    }
-
-    public void BeginUpdate()
-    {
-      updateLockCount++;
-    }
-
-    public void EndUpdate()
-    {
-      updateLockCount--;
-      if (updateLockCount == 0)
-        Notify();
-    }
-
-    public void Attach(IObserver observer) {
-      Observers.Add(observer);
-    }
-
-    public void Detach(IObserver observer) {
-      observers.Remove(observer);
-    }
-    
-    public void Notify()
-    {
-      foreach (IObserver observer in Observers)
-        observer.Update(this);
     }
   }
 }

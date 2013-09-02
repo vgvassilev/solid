@@ -53,6 +53,7 @@ namespace DataMorphose.Plugins.Visualizer
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
+      view.Viewers.Add(typeof(ConnectorGluePoint), new GlueViewer());
 
       controller.SubControllers.Add(new ShapeSelectionController(model, view));
       controller.SubControllers.Add(new ShapeDragController(model, view));
@@ -70,6 +71,7 @@ namespace DataMorphose.Plugins.Visualizer
     /// </param>
     public void HandleModelChanged(object model) {
       canvas.QueueDraw();
+//      scene.AutoArrange();
     }
 
     public void HandleDrawingArea1ButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
@@ -103,6 +105,7 @@ namespace DataMorphose.Plugins.Visualizer
 
         textBlock.Style.Border = new SolidPattern(new Color(0, 0, 0));
         textBlock.Title = t.Name;
+        textBlock.Font.Size = 15;
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < t.Columns.Count; i++) 
@@ -119,9 +122,17 @@ namespace DataMorphose.Plugins.Visualizer
       int maxY = 0;
       // Add some test arrows to the canvas
       for (int i = 0, e = drawnBlocks.Count - 1; i < e; i++) {
-        ArrowShape arrow = new ArrowShape(drawnBlocks[i], drawnBlocks[i+1]);
-        if (maxY < drawnBlocks[i].Height)
-          maxY = (int)drawnBlocks[i].Height;
+        var cBlock = drawnBlocks[i];
+        var nBlock = drawnBlocks[i+1];
+        ConnectorGluePoint glue0 = new ConnectorGluePoint(
+          new PointD(cBlock.Location.X + cBlock.Width, cBlock.Location.Y));
+        ConnectorGluePoint glue1 = new ConnectorGluePoint(new PointD(nBlock.Location.X, 
+                                                                     nBlock.Location.Y));
+        cBlock.Items.Add(glue0);
+        nBlock.Items.Add(glue1);
+        ArrowShape arrow = new ArrowShape(cBlock, glue0, nBlock, glue1);
+        if (maxY < cBlock.Height)
+          maxY = (int)cBlock.Height;
 
         scene.Shapes.Add(arrow);
       }
