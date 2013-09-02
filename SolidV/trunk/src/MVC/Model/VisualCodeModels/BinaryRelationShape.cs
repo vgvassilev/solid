@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -21,8 +21,8 @@ namespace SolidV.MVC
       set { related[1] = value; }
     }
 
-    public BinaryRelationShape(Shape from, Shape to)
-    : base(new Rectangle(from.Location.X, from.Location.Y, // FIXME: Use min and max
+    public BinaryRelationShape(Shape from, Shape to) : 
+      base(new Rectangle(from.Location.X, from.Location.Y, // FIXME: Use min and max
                          from.Location.X + to.Width, from.Location.Y + from.Height)) {
         related.Add(from);
         related.Add(to);

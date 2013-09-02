@@ -7,10 +7,10 @@ using System;
 
 namespace SolidV.MVC
 {
-  public class BaseStateModel : Model
+  public interface IGlue: IConstrain
   {
-    public BaseStateModel()
-    {
-    }
+    //TODO: define glue interface
   }
+
 }
+

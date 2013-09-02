@@ -33,10 +33,14 @@ namespace SolidV.MVC
       if (eventMotion != null) {
         if (isDragging) {
           this.Model.BeginUpdate();
-          foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
-            shape.Rectangle = new Rectangle(shape.Rectangle.X + eventMotion.X - lastX, 
-                                              shape.Rectangle.Y + eventMotion.Y - lastY,
-                                              shape.Rectangle.Width, shape.Rectangle.Height);
+          using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
+            foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
+              context.Matrix = shape.Matrix;
+              double dx = eventMotion.X - lastX;
+              double dy = eventMotion.Y - lastY;
+              context.DeviceToUserDistance(ref dx, ref dy);
+              shape.Matrix.Translate(dx, dy);
+            }
           }
           this.Model.EndUpdate();
           lastX = eventMotion.X;

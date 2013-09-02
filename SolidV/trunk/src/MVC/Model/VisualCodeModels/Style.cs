@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -14,21 +14,24 @@ namespace SolidV.MVC
     
     static Style() {
       DefaultStyle = new Style();
-      DefaultStyle.borderColor = new Color(0,0,0);
-      DefaultStyle.fillColor = new Color(1,1,1);
+      DefaultStyle.border = new SolidPattern(0,0,0);
+      //DefaultStyle.border = new LinearGradient(0,0,100,100);
+      //(DefaultStyle.border as LinearGradient).AddColorStop(0, new Color(0,0,0));
+      //(DefaultStyle.border as LinearGradient).AddColorStop(1, new Color(1,1,1));
+      DefaultStyle.fill = new SolidPattern(1,1,1);
       DefaultStyle.borderWidth = 1;
     }
     
-    private Color fillColor;    
-    public virtual Color FillColor {
-      get { return fillColor; }
-      set { fillColor = value; }
+    private Pattern fill;    
+    public virtual Pattern Fill {
+      get { return fill; }
+      set { fill = value; }
     }
     
-    private Color borderColor;
-    public virtual Color BorderColor {
-      get { return borderColor; }
-      set { borderColor = value; }
+    private Pattern border;
+    public virtual Pattern Border {
+      get { return border; }
+      set { border = value; }
     }
     
     private int borderWidth;

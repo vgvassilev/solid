@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -17,7 +17,6 @@ namespace SolidV.MVC
       get { return related; }
     }
     
-    public RelationShape(Rectangle rectangle) : base (rectangle) {
-    }
+    public RelationShape(Rectangle rectangle) : base(rectangle) { }
   }
 }

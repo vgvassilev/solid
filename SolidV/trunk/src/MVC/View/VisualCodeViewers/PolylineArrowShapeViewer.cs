@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -16,18 +16,21 @@ namespace SolidV.MVC
     {
     }
     
-    public override void DrawItem(IView<Context, Model> view, Context context, object item)
+    public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
-      PolylineArrowShape shape = (PolylineArrowShape)item;
-      context.MoveTo(shape.From.Location);
-      foreach (Distance d in shape.Points) {
+      PolylineArrowShape sh = (PolylineArrowShape)shape;
+      context.MoveTo(sh.From.Location);
+      foreach (Distance d in sh.Points) {
         context.RelLineTo(d);
       }
-      context.ArrowLineTo(shape.To.Location, ArrowKinds.TriangleRoundArrow, null);
-      //context.Color = shape.Style.FillColor;
-      //context.FillPreserve();
-      context.Color = shape.Style.BorderColor;
-      context.Stroke();
+      context.ArrowLineTo(sh.To.Location, ArrowKinds.TriangleRoundArrow, null);
+
+      if (view.Mode == ViewMode.Render) {
+        //context.Color = shape.Style.FillColor;
+        //context.FillPreserve();
+        context.Pattern = sh.Style.Border;
+        context.Stroke();
+      }
     }
     
   }

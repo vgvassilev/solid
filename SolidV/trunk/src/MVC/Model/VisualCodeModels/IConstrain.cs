@@ -7,10 +7,10 @@ using System;
 
 namespace SolidV.MVC
 {
-  public class BaseStateModel : Model
+  public interface IConstrain
   {
-    public BaseStateModel()
-    {
-    }
+    //TODO: Define constrain interface
   }
+  
 }
+

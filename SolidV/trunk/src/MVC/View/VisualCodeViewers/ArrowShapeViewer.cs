@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -16,18 +16,42 @@ namespace SolidV.MVC
     {
     }
 
-    public override void DrawItem(IView<Context, Model> view, Context context, object item)
+    public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
-      ArrowShape shape = (ArrowShape)item;
+      ArrowShape sh = (ArrowShape)shape;
 
-      context.Color = shape.Style.FillColor;
-      context.FillPreserve();
-      context.Color = shape.Style.BorderColor;
-      context.LineWidth = 1.5;
+      double x, y;
 
-      context.Stroke();
-      context.MoveTo(shape.From.Location);
-      context.ArrowLineTo(shape.To.Location, shape.ArrowKindHead, shape.ArrowKindTail);
+      if (sh.FromGlue != null) {
+        x = sh.FromGlue.Center.X;
+        y = sh.FromGlue.Center.Y;
+      } else {
+        x = 0;
+        y = 0;
+      }
+      if (sh.FromGlue != null) sh.FromGlue.Matrix.TransformPoint(ref x, ref y);
+      sh.From.Matrix.TransformPoint(ref x, ref y);
+      context.MoveTo(x, y);
+
+      if (sh.ToGlue != null) {
+        x = sh.ToGlue.Center.X;
+        y = sh.ToGlue.Center.Y;
+      } else {
+        x = 0;
+        y = 0;
+      }
+      if (sh.ToGlue != null) sh.ToGlue.Matrix.TransformPoint(ref x, ref y);
+      sh.To.Matrix.TransformPoint(ref x, ref y);
+
+      context.ArrowLineTo(x, y, sh.ArrowKindHead, sh.ArrowKindTail);
+
+      if (view.Mode == ViewMode.Render) {
+        context.Pattern = sh.Style.Fill;
+        context.FillPreserve();
+        context.Pattern = sh.Style.Border;
+        context.LineWidth = 1.5;
+        context.Stroke();
+      }
     }
   }
 }

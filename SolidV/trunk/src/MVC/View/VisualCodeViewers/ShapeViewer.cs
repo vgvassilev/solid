@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -14,15 +14,24 @@ namespace SolidV.MVC
     public ShapeViewer()
     {
     }
+
+    public virtual void DrawShape(IView<Context, Model> view, Context context, Shape shape) {
+      //
+    }
     
     public override void DrawItem(IView<Context, Model> view, Context context, object item)
     {
       Shape shape = (Shape)item;
-      context.Rectangle(shape.Rectangle);
-      context.Color = shape.Style.FillColor;
-      context.FillPreserve();
-      context.Color = shape.Style.BorderColor;
-      context.Stroke();
+      
+      context.Transform(shape.Matrix);
+      context.Save();
+      DrawShape(view, context, shape);
+      context.Restore();
+      foreach (Shape subShape in shape.Items) {
+        context.Save();
+        view.DrawItem(context, subShape);
+        context.Restore();
+      }
     }
   }
 }

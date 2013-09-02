@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -18,7 +18,9 @@ namespace SolidV.MVC
     public override void DrawItem(IView<Context, Model> view, Context context, object item)
     {
       foreach (Shape shape in ((ShapesModel)item).Shapes) {
+        context.Save();
         view.DrawItem(context, shape);
+        context.Restore();
       }
     }
   }

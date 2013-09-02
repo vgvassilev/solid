@@ -1,9 +1,10 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
 using System;
+using System.Collections.Generic;
 using Cairo;
 
 namespace SolidV.MVC
@@ -44,17 +45,37 @@ namespace SolidV.MVC
 //        rectangle.Location = value;
       }
     }
-    
+
+    public PointD Center {
+      get { return new PointD(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2); }
+      set { 
+        // Cannot be assigned to Cairo.Rectangle
+        //        rectangle.Location = value;
+      }
+    }
+
     private Rectangle rectangle;    
     public virtual Rectangle Rectangle {
       get { return rectangle; }
       set { rectangle = value; }
     }
 
+	  private List<Shape> items;
+	  public List<Shape> Items {
+		  get { return items; }
+		  set { items = value; }
+	  }
+    public Shape this[int i]
+    {
+      get { return Items[i]; }
+      set { Items [i] = value; }
+    }
+    
     public Shape(Rectangle rect)
     {
       style = Style.DefaultStyle;
       rectangle = rect;
+      items = new List<Shape>();
     }
 
     public Shape(Shape shape)
@@ -65,20 +86,8 @@ namespace SolidV.MVC
       this.Matrix = new Matrix(shape.Matrix.Xx, shape.Matrix.Yx, shape.Matrix.Xy, shape.Matrix.Yy, shape.Matrix.X0, shape.Matrix.Y0); // (Matrix)shape.matrix.Clone();
       this.Rectangle = shape.rectangle;
       this.Width = shape.Width;
+	    this.items = shape.Items; //TODO: Recursive copy? Parameter memberwise/deepcopy?
     }
     
-
-    public virtual void AddItem(Shape Item)
-    {  
-    }
-    
-    public virtual void RemoveItem(Shape Item)
-    {  
-    }
-    
-    public virtual void RemoveItem(int Index)
-    {  
-    }
-
   }
 }

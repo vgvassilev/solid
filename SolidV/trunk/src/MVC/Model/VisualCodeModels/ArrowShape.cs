@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -24,8 +24,8 @@ namespace SolidV.MVC
       set { arrowKindTail = value; }
     }
 
-    public ArrowShape(Shape from, Shape to): base(from, to) {
-      
-    }
+    public ArrowShape(Shape from, Shape to): base(from, to) { }
+    public ArrowShape(Shape from, Glue fromGlue, Shape to, Glue toGlue): base(from, fromGlue, to, toGlue) { }
+
   }
 }

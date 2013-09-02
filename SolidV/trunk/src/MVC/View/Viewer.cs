@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -16,6 +16,5 @@ namespace SolidV.MVC
     public virtual void DrawItem(IView<C, M> view, C context, object item)
     {
     }
-    
   }
 }

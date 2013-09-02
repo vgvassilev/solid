@@ -4,13 +4,14 @@
  * For further details see the nearest License.txt
  */
 using System;
+using Cairo;
 
 namespace SolidV.MVC
 {
-  public class BaseStateModel : Model
+  public class Glue: Shape, IGlue
   {
-    public BaseStateModel()
-    {
-    }
+    public Glue(Glue glue) : base(glue) {}
+    public Glue(Rectangle rectangle) : base(rectangle) {}
   }
 }
+

@@ -1,5 +1,5 @@
 /*
- * $Id:
+ * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
@@ -15,9 +15,16 @@ namespace SolidV.MVC
     {
     }
     
-    public override void DrawItem(IView<Context, Model> view, Context context, object item)
+    public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
-      base.DrawItem(view, context, (Shape)item);
+      context.Rectangle(shape.Rectangle);
+
+      if (view.Mode == ViewMode.Render) {
+        context.Pattern = shape.Style.Fill;
+        context.FillPreserve();
+        context.Pattern = shape.Style.Border;
+        context.Stroke();
+      }
     }
     
   }
