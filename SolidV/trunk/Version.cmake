@@ -1,5 +1,5 @@
 # Defaults from SolidOpt build
-include(../../SolidOpt/trunk/Version.cmake)
+include(${CMAKE_MODULE_PATH}/Version.cmake)
 
 # Override
 #TODO: Replace SolidOpt with SolidReflector or Project

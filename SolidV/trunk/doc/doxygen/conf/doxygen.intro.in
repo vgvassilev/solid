@@ -1,0 +1,9 @@
+/// @mainpage SolidV
+///
+/// @section main_intro Introduction
+/// <h1>Welcome to the SolidV project.</h1>
+///
+/// <p>SolidV is a framework that offers tools for visualization and interacting with models.</p>
+/// <p>It is designed as a basis for domain-specific visual programming languages and data visualizations.</p>
+/// <p>SolidV has complete MVC architecture and uses some features of .NET (Generics, Delegates, Events).</p>
+
