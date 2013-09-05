@@ -23,14 +23,16 @@ namespace DataMorphose.Plugins.Visualizer
     private SolidV.MVC.Model model = new SolidV.MVC.Model();
     private ShapesModel scene = new ShapesModel();
     private SelectionModel selection = new SelectionModel();
+    public SelectionModel Selection {
+      get { return selection; }
+    }
+
     private View<Context, SolidV.MVC.Model> view = new View<Context, SolidV.MVC.Model>();
     private CompositeController<Gdk.Event, Context, SolidV.MVC.Model> controller = 
                                     new CompositeController<Gdk.Event, Context, SolidV.MVC.Model>();
-    
+
     public SchemaVisualizer(Gtk.DrawingArea canvas) {
       this.canvas = canvas;
-
-      model.RegisterSubModel<ShapesModel>(scene);
 
       canvas.AddEvents((int) Gdk.EventMask.ButtonPressMask);
       canvas.AddEvents((int) Gdk.EventMask.ButtonReleaseMask);
@@ -93,16 +95,15 @@ namespace DataMorphose.Plugins.Visualizer
     }
 
     public void DrawSchema(DataModel model) {
+      Dictionary<string, TextBlockShape> basicBlocks = new Dictionary<string, TextBlockShape>();
       List<TextBlockShape> drawnBlocks = new List<TextBlockShape>();
-      Dictionary<string, TextBlockShape> basicBlocks = 
-        new Dictionary<string, TextBlockShape>();
 
       int x = 20, y = 30;
-      TextBlockShape textBlock = new TextBlockShape(new Rectangle(x, y, 40, 40), /*autoSize*/true);
+      TextBlockShape textBlock = new TextBlockShape(new Cairo.Rectangle(x, y, 40, 40), /*autoSize*/true);
       foreach (Table t in model.DB.Tables) {
-        textBlock = new TextBlockShape(new Cairo.Rectangle(x, y, 40, 40), /*autoSize*/true);
+        textBlock = new TextBlockShape(new Rectangle(x, y, 40, 40), /*autoSize*/true);
         x += 200; 
-
+        
         textBlock.Style.Border = new SolidPattern(new Color(0, 0, 0));
         textBlock.Title = t.Name;
         textBlock.Font.Size = 15;
@@ -140,7 +141,7 @@ namespace DataMorphose.Plugins.Visualizer
       // Set the size of the DrawingArea in order to have the scroller moving properly
 
       canvas.SetSizeRequest((int)(drawnBlocks[drawnBlocks.Count -1].Rectangle.X 
-                              + drawnBlocks[drawnBlocks.Count -1].Rectangle.Width), maxY);
+                              + drawnBlocks[drawnBlocks.Count -1].Rectangle.Width + 10), maxY);
     }
   }
 }

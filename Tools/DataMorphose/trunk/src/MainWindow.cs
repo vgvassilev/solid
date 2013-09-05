@@ -1,3 +1,4 @@
+
 /*
  * $Id$
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
@@ -16,8 +17,7 @@ using DataMorphose.Model;
 
 
 public partial class MainWindow: Gtk.Window, IDataMorphose
-{
-  
+{  
   private int count = 2;
   private Gtk.ToolButton undo;
   private Gtk.ToolButton redo;
@@ -92,7 +92,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
       File.Create(PluginsFilePath).Close();
     }
     
-    //layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
+    layoutFile = System.IO.Path.Combine(applicationDataDir, "config.layout");
 
     Build();
 
@@ -173,9 +173,11 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     redo.Clicked += OnRedo;
 
     // Docking 
+
     AddDockItem("Tools", LVbox);
 
     OnRealized(this, new EventArgs());
+
 
     dockFrame.CurrentLayout = "BasicLayout";
     hbox1.Add(dockFrame);
@@ -184,15 +186,16 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
 
     this.ShowAll();
   }
+ 
 
   private void AddDockItem(string label, Gtk.Container container) {
-    DockItem rightToolbar = DockFrame.AddItem(label);
-    rightToolbar.DrawFrame = true;
-    rightToolbar.Label = label;
-    rightToolbar.Expand = false;
-    rightToolbar.DefaultVisible = true;
-    rightToolbar.Visible = true;
-    rightToolbar.Content = container;
+    DockItem dockToolbar = DockFrame.AddItem(label);
+    dockToolbar.DrawFrame = true;
+    dockToolbar.Label = label;
+    dockToolbar.Expand = false;
+    dockToolbar.DefaultVisible = true;
+    dockToolbar.Visible = true;
+    dockToolbar.Content = container;
     container.ShowAll();
   }
   
@@ -268,7 +271,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
   /// 
   protected void OnExitActionActivated(object sender, System.EventArgs args)
   {
-    //SaveLayout(); // FIXME: This produces a bogus layout file
+    SaveLayout(); // FIXME: This produces a bogus layout file
     if (ShutDownEvent != null)
       ShutDownEvent(this, args);
     
@@ -298,7 +301,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     File.Delete(layoutFile);
     File.Create(layoutFile).Close();
     
-    //dockFrame.SaveLayouts(layoutFile);
+    dockFrame.SaveLayouts(layoutFile);
   }
   
   protected void OnRemoveActionActivated (object sender, EventArgs e)
