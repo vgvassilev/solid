@@ -41,16 +41,16 @@ namespace SolidV.MVC
               //  shape.Rectangle.X + shape.Rectangle.Width >= x && shape.Rectangle.Y + shape.Rectangle.Height >= y &&
               if (pointInShape(x, y, evnt, shape, context)) {
                 if (selection.Selected.IndexOf(shape) < 0) {
-                  this.Model.BeginUpdate();
+                  selection.BeginUpdate();
                   if ((eventButton.State & Gdk.ModifierType.ControlMask) == 0)
                     selection.Selected.Clear();
                   selection.Selected.Add(shape);
-                  this.Model.EndUpdate();
+                  selection.EndUpdate();
                 } else {
-                  this.Model.BeginUpdate();
+                  selection.BeginUpdate();
                   if ((eventButton.State & Gdk.ModifierType.ControlMask) != 0)
                     selection.Selected.Remove(shape);
-                  this.Model.EndUpdate();
+                  selection.EndUpdate();
                 }
                 View.Mode = oldViewMode;
                 return;
@@ -58,9 +58,9 @@ namespace SolidV.MVC
             }
             View.Mode = oldViewMode;
           }
-          this.Model.BeginUpdate();
+          selection.BeginUpdate();
           selection.Selected.Clear();
-          this.Model.EndUpdate();
+          selection.EndUpdate();
         }
       }
     }
