@@ -17,6 +17,7 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.ILtoCFG.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.CFGtoIL.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
