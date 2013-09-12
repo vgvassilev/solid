@@ -128,6 +128,10 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       LoadEnvironment();
 
       assemblyTree.RowActivated += HandleRowActivated;
+
+      assemblyTree.Realized += delegate(object sender, EventArgs e) {
+        LoadSelectedAssembliesTreePaths();
+      };
     }
 
     void IPlugin.UnInit(object context)
@@ -137,6 +141,8 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       // and attempted to be UnInit-ed
       mainWindow.DockFrame.RemoveItem(dockItem);
     }
+
+    #endregion
 
     /// <summary>
     /// Saves the loaded assemblies when the shut down event is received.
@@ -172,7 +178,8 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     }
 
     /// <summary>
-    /// Saves the loaded assemblies file paths in the Assemblies.env.
+    /// Saves the loaded assemblies file paths in the Assemblies.env
+    /// and the currently selected assembly tree path.
     /// </summary>
     /// <param name='curEnv'>
     /// The path to the Assemlies.env.
@@ -190,6 +197,8 @@ namespace SolidReflector.Plugins.AssemblyBrowser
           writer.WriteLine(line);
         writer.Flush();
       }
+
+      SaveSelectedAssembliesTreePaths();
     }
 
     /// <summary>
@@ -388,7 +397,56 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       assemblyTree.Model = store;
       assemblyTree.ShowAll();
     }
-    #endregion
+
+    /// <summary>
+    /// Saves the TreePaths (expanded rows) of the selected assemblies in a file.
+    /// </summary>
+    ///
+    private void SaveSelectedAssembliesTreePaths() {
+      Gtk.TreePath[] paths = assemblyTree.Selection.GetSelectedRows();
+      
+      FileStream file = new FileStream(Path.Combine(reflector.GetConfigurationDirectory(),
+                                       "SolidReflector.session"), FileMode.Create,
+                                       FileAccess.ReadWrite);
+
+      using (StreamWriter writer = new StreamWriter(file)) {
+        foreach (Gtk.TreePath path in paths)
+          writer.Write(path.ToString());
+        
+        writer.Flush();
+      }
+    }
+
+    /// <summary>
+    /// Restores the TreePaths (expanded rows) from a file
+    /// </summary>
+    ///
+    private void LoadSelectedAssembliesTreePaths() {
+      string filepath = Path.Combine(reflector.GetConfigurationDirectory(), "SolidReflector.session");
+      string[] lines = null;
+      if (File.Exists(file)) {
+        lines = File.ReadAllLines(file);
+        foreach (string treePath in lines) {
+          expandPath(treePath);
+        }
+      }
+    }
+
+    /// <summary>
+    /// Incrementally expands the given TreePath
+    /// because the lazy loaded rows do not support regular expanding.
+    /// </summary>
+    /// <param name="path">Path.</param>
+    /// 
+    private void expandPath(string path) {
+      string[] pathNodes = path.Split(':');
+      string currentPath = pathNodes[0];
+      for (int i = 1; i < pathNodes.Length; i++) {
+        assemblyTree.ActivateRow(new Gtk.TreePath(currentPath), assemblyTree.GetColumn(0));
+        assemblyTree.ExpandRow(new Gtk.TreePath(currentPath), true);
+        currentPath += ":" + pathNodes[i];
+      }
+    }
 
     private void RenderAssemblyDefinition(Gtk.TreeViewColumn column, Gtk.CellRenderer cell,
                                           Gtk.TreeModel model, Gtk.TreeIter iter) {
