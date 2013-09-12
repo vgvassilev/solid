@@ -55,6 +55,8 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     /// </summary>
     /// 
     private MemberReference curMember = null;
+    private Gtk.TreeIter iter;
+    private TypeDefinition curType = null;
 
     public AssemblyBrowser() { }
 
@@ -140,6 +142,19 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       // BUG: Object not set to an instance of an object exception if only one plugin is loaded
       // and attempted to be UnInit-ed
       mainWindow.DockFrame.RemoveItem(dockItem);
+    }
+
+    #endregion
+
+    #region IAssemblyBrowser implementation
+
+    void IAssemblyBrowser.SelectClass(string name) {
+      List<IMemberDefinition> members = new List<IMemberDefinition>();
+      members.AddRange(curType.Fields.ToArray());
+      members.AddRange(curType.Methods.ToArray());
+      members.AddRange(curType.Events.ToArray());
+      
+      AttachSubTree(assemblyTree.Model, iter, members.ToArray());
     }
 
     #endregion
@@ -275,7 +290,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     {
       //SelectionEventArgs selectionArgs = new SelectionEventArgs();
       //SelectionChangedEvent(o, selectionArgs);
-      Gtk.TreeIter iter;
+
       assemblyTree.Model.GetIter(out iter, args.Path);
 
       object currentObj = (object) assemblyTree.Model.GetValue(iter, 0);
@@ -297,7 +312,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
           SelectionChangedEvent(o, selectionArgs);
           break;
         case 3:
-          TypeDefinition curType = currentObj as TypeDefinition;
+          curType = currentObj as TypeDefinition;
           Debug.Assert(curType != null, "CurType is null!?");
           List<IMemberDefinition> members = new List<IMemberDefinition>();
           members.AddRange(curType.Fields.ToArray());
@@ -424,8 +439,8 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     private void LoadSelectedAssembliesTreePaths() {
       string filepath = Path.Combine(reflector.GetConfigurationDirectory(), "SolidReflector.session");
       string[] lines = null;
-      if (File.Exists(file)) {
-        lines = File.ReadAllLines(file);
+      if (File.Exists(filepath)) {
+        lines = File.ReadAllLines(filepath);
         foreach (string treePath in lines) {
           expandPath(treePath);
         }
