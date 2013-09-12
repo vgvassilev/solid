@@ -59,10 +59,15 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
       VBox vBox = new VBox(false, 0);
       TextView textView = new TextView();
+      TextView outputView = new TextView();
       Button simulateButton = new Button("Simulate");
       simulateButton.Clicked += HandleClicked;
+
       vBox.PackStart(simulateButton, false, false, 0);
+      vBox.PackStart(new Label("New CFG: "), false, false, 0);
       vBox.PackStart(textView, true, true, 0);
+      vBox.PackStart(new Label("Method output: "), false, false, 0);
+      vBox.PackEnd(outputView, true, true, 0);
       
       vBox.ShowAll();
 
@@ -116,7 +121,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
         CFGPrettyDrawer drawer = new CFGPrettyDrawer(drawingArea);
         drawer.DrawTextBlocks(currentCfg);
 
-        TextView textView = (simulationDock.Content as Gtk.VBox).Children[1] as TextView;
+        TextView textView = (simulationDock.Content as Gtk.VBox).Children[2] as TextView;
         textView.Buffer.Clear();
         textView.Buffer.Text = currentCfg.ToString();
         //CFGPrettyPrinter.PrintPretty(mDef, textView);
@@ -182,6 +187,9 @@ namespace SolidReflector.Plugins.CFGVisualizer
       assemblyDef.Write(assemblyPath);
 
       Sandbox sandbox = new Sandbox(assemblyPath, trampolineMethod.Name);
+      TextView textView = (simulationDock.Content as Gtk.VBox).Children[4] as TextView;
+      textView.Buffer.Clear();
+      textView.Buffer.Text = sandbox.SimulationMethodOutput;
     }
   }
 
@@ -192,6 +200,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
   /// 
   public class Sandbox : MarshalByRefObject
   {
+    public string SimulationMethodOutput = null;
     public Sandbox() { }
     public Sandbox(string assemblyPath, string method) {
 
@@ -201,15 +210,13 @@ namespace SolidReflector.Plugins.CFGVisualizer
       
       AppDomainSetup adSetup = new AppDomainSetup();
       adSetup.ApplicationName = "AppDomainSetup";
-
-      
       AppDomain domain = AppDomain.CreateDomain("SandboxDomain");
       ObjectHandle handle = Activator.CreateInstanceFrom(domain, 
                                        typeof(Sandbox).Assembly.ManifestModule.FullyQualifiedName,
                                        typeof(Sandbox).FullName);
       
       Sandbox sandboxInstance = (Sandbox) handle.Unwrap();
-      sandboxInstance.ExecuteAssembly(assemblyPath, "Simulation.MainClass", method);
+      SimulationMethodOutput = sandboxInstance.ExecuteAssembly(assemblyPath, "Simulation.MainClass", method);
     }
 
     /// <summary>
@@ -219,14 +226,13 @@ namespace SolidReflector.Plugins.CFGVisualizer
     /// <param name="typeName">Type name.</param>
     /// <param name="method">Method.</param>
     /// 
-    public void ExecuteAssembly(string assemblyPath, string typeName, string method) {
+    public string ExecuteAssembly(string assemblyPath, string typeName, string method) {
       System.Reflection.Assembly a = System.Reflection.Assembly.LoadFrom(assemblyPath);
       System.Reflection.Module module = a.GetModule("<Module>");
       Type namespaceType = module.GetType(typeName);
-      Console.WriteLine("1");
       System.Reflection.MethodInfo methodToExecute = namespaceType.GetMethod(method);
-      Console.WriteLine("1");
       System.Reflection.ParameterInfo[] parameters = methodToExecute.GetParameters();
+
       Random r = new Random();
       List<object> sampleArgs = new List<object>();
       long sample = 0;
@@ -246,8 +252,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
         }
       }
 
-      methodToExecute.Invoke(null, sampleArgs.ToArray());
-      System.Reflection.ParameterInfo[] pInfo = methodToExecute.GetParameters();
+      return methodToExecute.Invoke(null, sampleArgs.ToArray()).ToString();
     }
   }
 }
