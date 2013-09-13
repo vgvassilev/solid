@@ -24,9 +24,10 @@ namespace DataMorphose.Plugins.Visualizer
   {
     private IDataMorphose morphose = null;
     private DockItem dockItem = null;
+        
+    private  Toolbar LToolbar;
 
     private Gtk.Notebook nb = new Gtk.Notebook();
-//    private Gtk.Notebook nbBottom = new Gtk.Notebook();
     private Gtk.VBox vBoxTV = new Gtk.VBox();
     private Gtk.TreeView treeView = new Gtk.TreeView();
     private Gtk.ComboBox comboBox = new Gtk.ComboBox();
@@ -57,6 +58,7 @@ namespace DataMorphose.Plugins.Visualizer
 
       // Set up DrawingArea tab.
       drawingArea = new DrawingArea();
+      drawingArea.SetSizeRequest(800, 500);
       ScrolledWindow scrollDA =  new ScrolledWindow();
       Gtk.VBox vBoxDA = new Gtk.VBox();
       Viewport viewPortDA = new Viewport();
@@ -68,11 +70,12 @@ namespace DataMorphose.Plugins.Visualizer
       Gtk.VPaned splitter = new Gtk.VPaned();
       splitter.Pack1(vBoxDA, true, true);
       splitter.Pack2(vBoxTV, true, true);
-      splitter.Position = 200;
+      splitter.Position = 400;
       splitter.ShowAll();
 
       nb.AppendPage(splitter, new Gtk.Label("Schema Visualizer"));
       schemaV = new SchemaVisualizer(drawingArea);
+
       // Get the selected shape.
       SelectionModel selectionModel = schemaV.Selection;
       selectionModel.ModelChanged += HandleSelectionModelChanged;
@@ -80,9 +83,9 @@ namespace DataMorphose.Plugins.Visualizer
       nb.ShowAll();
       
       // Attaching the current dockItem in the DockFrame.
-      var MainWindow = morphose.GetMainWindow();
+      var mainWindow = morphose.GetMainWindow();
 
-      dockItem = MainWindow.DockFrame.AddItem("Visualizer");
+      dockItem = mainWindow.DockFrame.AddItem("Visualizer");
       dockItem.DrawFrame = true;
       dockItem.Label = "Visualizer";
       dockItem.Expand = true;
@@ -90,6 +93,9 @@ namespace DataMorphose.Plugins.Visualizer
       dockItem.DefaultVisible = true;
       dockItem.Visible = true;
       dockItem.Content = nb;
+
+      // Left toolbar
+      LToolbar = mainWindow.GetToolbar("LeftToolbar"); 
     }
 
     void IPlugin.UnInit (object context)
@@ -101,22 +107,71 @@ namespace DataMorphose.Plugins.Visualizer
 
     private void HandleModelChanged(object model) {
       DataModel morphoseModel = (DataModel)model;
+      AddLToolbarButtons(morphose.GetModel().DB);
       populateComboBox(morphoseModel.DB);
-      schemaV.DrawSchema(morphoseModel);
     }
 
     /// <summary>
     /// When a textblock shape is selected make a preview of the selected table.
     /// </summary>
-    /// <param name="model">Model.</param>
+    /// <param name="model">SelectionModel.</param>
     private void HandleSelectionModelChanged(object model) {
       SelectionModel selectionModel = model as SelectionModel;
       if (selectionModel.Selected.Count != 0) {
-        string title = (selectionModel.Selected[0] as TextBlockShape).Title;
-        populateGrid(morphose.GetModel().DB.GetTable(title));
+        var selected = selectionModel.Selected[0];
+        if (selected is TextBlockShape){
+          string title = (selected as TextBlockShape).Title;
+          populateGrid(morphose.GetModel().DB.GetTable(title));
+        }
       }
     }
 
+    /// <summary>
+    /// Adds buttons that will put a table on the screen.
+    /// </summary>
+    /// <param name="db">Database</param>
+    private void AddLToolbarButtons(Database db) {
+      for(int i = 0; i < db.Tables.Count; i++) {
+        Gtk.ToolButton btn = new Gtk.ToolButton(Gtk.Stock.About);        
+        btn.Label = db.Tables[i].Name;
+        LToolbar.Insert(btn, i);
+        btn.Clicked += OnTableBtnClick;
+      }
+      Gtk.ToolButton filterBtn = new Gtk.ToolButton(Gtk.Stock.About);
+      filterBtn.Label = "Add Filter";
+      LToolbar.Insert(filterBtn, LToolbar.NItems);
+      LToolbar.ShowAll();
+      filterBtn.Clicked += OnFilterBtnPressed;
+    }
+
+    /// <summary>
+    /// Draws a table on the screen when a table-button is clicked. 
+    /// </summary>
+    /// <param name="sender">ToolButton</param>
+    /// <param name="args">Arguments.</param>
+    private void OnTableBtnClick(object sender, EventArgs args) {
+      Gtk.ToolButton btn = (Gtk.ToolButton)sender;
+      schemaV.Scene.BeginUpdate();
+      schemaV.DrawSchema(morphose.GetModel().DB.GetTable(btn.Label));
+      schemaV.Scene.AutoArrange();
+      schemaV.Scene.EndUpdate();
+    }
+
+    /// <summary>
+    /// Draws a shape used as a filter.
+    /// </summary>
+    /// <param name="o">O.</param>
+    /// <param name="args">Arguments.</param>
+    private void OnFilterBtnPressed(object o, EventArgs args) {
+//      morphose.GetModel().DB.Tables[0].Columns[0].Filter 
+//        = new Filter(1, Filter.ConditionRelations.LessThan);
+      schemaV.DrawFilter();
+    }
+
+    /// <summary>
+    /// Populates the data from a selected table.
+    /// </summary>
+    /// <param name="table">Table.</param>
     private void populateGrid(Model.Table table) {
       Gtk.ListStore store = treeView.Model as Gtk.ListStore;
 
@@ -128,7 +183,7 @@ namespace DataMorphose.Plugins.Visualizer
       }
 
       // Construct the array of types which is the size of the columns.
-       Type[] types = new Type[table.Columns.Count];
+      Type[] types = new Type[table.Columns.Count];
       for(int i = 0, e = table.Columns.Count; i < e; ++i)
         types[i] = typeof(string);
 
@@ -182,7 +237,7 @@ namespace DataMorphose.Plugins.Visualizer
         selectedTable = (string) combo.Model.GetValue(iter, 0);
 
       populateGrid(morphose.GetModel().DB.GetTable(selectedTable));
-    }   
+    }
   }
 }
 

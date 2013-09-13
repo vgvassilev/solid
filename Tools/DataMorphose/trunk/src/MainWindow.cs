@@ -65,7 +65,10 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     get { return dockFrame; }
     set { dockFrame = value; }
   }
-  
+
+  private List<Gtk.Toolbar> toolbars = new List<Gtk.Toolbar>();
+  private List<Gtk.Container> containers = new List<Gtk.Container>();
+
   /// <summary>
   /// The main application window.
   /// </summary>
@@ -100,43 +103,18 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     // Left toolbar
     Gtk.VBox LVbox = new Gtk.VBox();
     Gtk.Toolbar LToolbar = new Gtk.Toolbar();
+    LToolbar.Name = "LeftToolbar";
+    toolbars.Add(LToolbar);
     LVbox.PackStart(LToolbar, true, true, 0);
-
-
-    Gtk.ToolButton btn1 = new Gtk.ToolButton(Gtk.Stock.About);
-    Gtk.ToolButton btn2 = new Gtk.ToolButton(Gtk.Stock.Apply);
-    Gtk.ToolButton btn3 = new Gtk.ToolButton(Gtk.Stock.Close);
-    Gtk.ToolButton btn4 = new Gtk.ToolButton(Gtk.Stock.Edit);
-    btn1.Label = "Favorite";
-
+    LToolbar.Orientation = Gtk.Orientation.Vertical;
     // Show only text on the buttons
     LToolbar.ToolbarStyle = Gtk.ToolbarStyle.Text;
-    LToolbar.Orientation = Gtk.Orientation.Vertical;
-
-    // Add sample buttons
-    Gtk.ToolItem item = new Gtk.ToolItem();
-    Gtk.Button b = new Gtk.Button();
-    item.Add(b);
-    b.Label = "Check for PKs";
-
-    Gtk.ToolButton btn0 = new Gtk.ToolButton(Gtk.Stock.Copy);
-    Gtk.SeparatorToolItem sep = new Gtk.SeparatorToolItem();
-    Gtk.ToolButton quit = new Gtk.ToolButton(Gtk.Stock.Quit);
-
-    LToolbar.Insert(item, 0);
-    LToolbar.Insert(btn0, 1);
-    LToolbar.Insert(sep, 2);
-    LToolbar.Insert(quit, 3);
-    LToolbar.Insert(btn1, 4);
-    LToolbar.Insert(btn2, 5);
-    LToolbar.Insert(btn3, 6);
-    LToolbar.Insert(btn4, 7);    
-
-    quit.Clicked += OnExitActionActivated;
 
     // Right toolbar 
     Gtk.VBox RVbox = new Gtk.VBox();
     Gtk.Toolbar RToolbar = new Gtk.Toolbar();
+    RToolbar.Name = "RightToolbar";
+    toolbars.Add(RToolbar);
     
     // Add TreeView for the history 
     Gtk.TreeView historyView = new Gtk.TreeView();
@@ -178,15 +156,22 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
 
     OnRealized(this, new EventArgs());
 
-
     dockFrame.CurrentLayout = "BasicLayout";
     hbox1.Add(dockFrame);
 
     AddDockItem("Actions", RVbox);
 
+//    this.SizeRequest = MainWindow.SetDefaultIconFromFile();
     this.ShowAll();
   }
  
+  public Gtk.Toolbar GetToolbar(string name) {
+    foreach (Gtk.Toolbar toolbar in toolbars) {
+      if (name == toolbar.Name)
+        return toolbar;
+    }
+    return null;
+  }
 
   private void AddDockItem(string label, Gtk.Container container) {
     DockItem dockToolbar = DockFrame.AddItem(label);
@@ -222,8 +207,7 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
       redo.Sensitive = false;
       undo.Sensitive = true;
     }
-  }
-  
+  } 
   
   /// <summary>
   /// Raises the delete event when the user attempts to close the application

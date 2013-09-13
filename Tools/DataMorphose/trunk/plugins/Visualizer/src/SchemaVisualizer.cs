@@ -20,8 +20,13 @@ namespace DataMorphose.Plugins.Visualizer
   public class SchemaVisualizer
   {
     private Gtk.DrawingArea canvas = null;
-    private SolidV.MVC.Model model = new SolidV.MVC.Model();
+
     private ShapesModel scene = new ShapesModel();
+    public ShapesModel Scene {
+      get { return scene; }
+      set { scene = value; }
+    }
+
     private SelectionModel selection = new SelectionModel();
     public SelectionModel Selection {
       get { return selection; }
@@ -44,21 +49,21 @@ namespace DataMorphose.Plugins.Visualizer
       canvas.ConfigureEvent += HandleConfigureEvent;
       canvas.MotionNotifyEvent += HandleDrawingArea1MotionNotifyEvent;
 
-      model.RegisterSubModel<ShapesModel>(scene);
-      model.RegisterSubModel<SelectionModel>(selection);
-      model.ModelChanged += HandleModelChanged;
+      scene.RegisterSubModel<ShapesModel>(scene);
+      scene.RegisterSubModel<SelectionModel>(selection);
+      scene.ModelChanged += HandleModelChanged;
 
-      view.Viewers.Add(typeof(SolidV.MVC.Model), new ModelViewer<Context>());
       view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
       view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
+      view.Viewers.Add(typeof(FilterShape), new FilterShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
       view.Viewers.Add(typeof(ConnectorGluePoint), new GlueViewer());
 
-      controller.SubControllers.Add(new ShapeSelectionController(model, view));
-      controller.SubControllers.Add(new ShapeDragController(model, view));
+      controller.SubControllers.Add(new ShapeSelectionController(scene, view));
+      controller.SubControllers.Add(new ShapeDragController(scene, view));
     }
 
     void HandleConfigureEvent (object o, Gtk.ConfigureEventArgs args) {
@@ -73,7 +78,6 @@ namespace DataMorphose.Plugins.Visualizer
     /// </param>
     public void HandleModelChanged(object model) {
       canvas.QueueDraw();
-//      scene.AutoArrange();
     }
 
     public void HandleDrawingArea1ButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
@@ -90,58 +94,63 @@ namespace DataMorphose.Plugins.Visualizer
 
     public void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
       using (Cairo.Context context = Gdk.CairoHelper.Create(((Gtk.DrawingArea)o).GdkWindow)) {
-        view.Draw(context, model);
+        view.Draw(context, scene);
       }
     }
 
-    public void DrawSchema(DataModel model) {
+    public void DrawSchema(Model.Table t) {
       Dictionary<string, TextBlockShape> basicBlocks = new Dictionary<string, TextBlockShape>();
-      List<TextBlockShape> drawnBlocks = new List<TextBlockShape>();
-
+      
       int x = 20, y = 30;
-      TextBlockShape textBlock = new TextBlockShape(new Cairo.Rectangle(x, y, 40, 40), /*autoSize*/true);
-      foreach (Table t in model.DB.Tables) {
-        textBlock = new TextBlockShape(new Rectangle(x, y, 40, 40), /*autoSize*/true);
-        x += 200; 
-        
-        textBlock.Style.Border = new SolidPattern(new Color(0, 0, 0));
-        textBlock.Title = t.Name;
-        textBlock.Font.Size = 15;
-        StringBuilder sb = new StringBuilder();
+      TextBlockShape textBlock = new TextBlockShape(new Cairo.Rectangle(x, y, 40, 40),
+                                                    /*autoSize*/true);
+      textBlock = new TextBlockShape(new Rectangle(x, y, 40, 40), /*autoSize*/true); 
+      
+      textBlock.Style.Border = new SolidPattern(new Color(0, 0, 0));
+      textBlock.Title = t.Name;
+      textBlock.Font.Size = 15;
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < t.Columns.Count; i++) 
+        sb.AppendLine(t.Columns[i].Meta.Name);
+      
+      textBlock.BlockText = sb.ToString();
+      
+      basicBlocks.Add(t.Name, textBlock);
+      scene.Shapes.Add(textBlock);
+    }
 
-        for (int i = 0; i < t.Columns.Count; i++) 
-          sb.AppendLine(t.Columns[i].Meta.Name);
+    public void DrawFilter() {
+      int x = 100, y = 300;
+      EllipseShape filter = new EllipseShape(new Cairo.Rectangle(x, y, 150, 100));
+      List<ArrowShape> arrows = new List<ArrowShape>();
+      
+      for (int i = 0; i < scene.Shapes.Count; i++) {
+        filter = new EllipseShape(new Cairo.Rectangle(x, y, 100, 50));
+        filter.Style.Border = new SolidPattern(new Color(0, 0, 0));
 
-        textBlock.BlockText = sb.ToString();
+        ConnectorGluePoint filterGlue = new ConnectorGluePoint(
+          new PointD(filter.Location.X + (filter.Width/2), filter.Location.Y));
 
-        basicBlocks.Add(t.Name, textBlock);
-        scene.Shapes.Add(textBlock);
+        var block = scene.Shapes[i];
+        ConnectorGluePoint blockGlue = new ConnectorGluePoint(new PointD(block.Location.X + block.Width / 2, 
+                                                      block.Location.Y + block.Height));
 
-        drawnBlocks.Add(textBlock);
+        // Add the gluePoints to the shapes
+        block.Items.Add(blockGlue);
+        filter.Items.Add(filterGlue);
+
+        // Link the filter and the textBlock with an arrow 
+        ArrowShape arrow = new ArrowShape(block, blockGlue, filter, filterGlue);
+        arrows.Add(arrow); 
       }
+      
+      scene.BeginUpdate();
+      // Add all shapes to the scene
+      scene.Shapes.Add(filter);
+      foreach(ArrowShape a in arrows)
+        scene.Shapes.Add(a);
 
-      int maxY = 0;
-      // Add some test arrows to the canvas
-      for (int i = 0, e = drawnBlocks.Count - 1; i < e; i++) {
-        var cBlock = drawnBlocks[i];
-        var nBlock = drawnBlocks[i+1];
-        ConnectorGluePoint glue0 = new ConnectorGluePoint(
-          new PointD(cBlock.Location.X + cBlock.Width, cBlock.Location.Y));
-        ConnectorGluePoint glue1 = new ConnectorGluePoint(new PointD(nBlock.Location.X, 
-                                                                     nBlock.Location.Y));
-        cBlock.Items.Add(glue0);
-        nBlock.Items.Add(glue1);
-        ArrowShape arrow = new ArrowShape(cBlock, glue0, nBlock, glue1);
-        if (maxY < cBlock.Height)
-          maxY = (int)cBlock.Height;
-
-        scene.Shapes.Add(arrow);
-      }
-
-      // Set the size of the DrawingArea in order to have the scroller moving properly
-
-      canvas.SetSizeRequest((int)(drawnBlocks[drawnBlocks.Count -1].Rectangle.X 
-                              + drawnBlocks[drawnBlocks.Count -1].Rectangle.Width + 10), maxY);
+      scene.EndUpdate();
     }
   }
 }
