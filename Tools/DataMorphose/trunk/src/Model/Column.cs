@@ -16,6 +16,12 @@ namespace DataMorphose.Model
   /// </summary>
   public class Column
   {
+    private Filter filter;
+    public Filter Filter {
+      get { return filter; }
+      set { filter = value; }
+    }
+
     private MetaData meta;
     public MetaData Meta {
       get { return meta; }
