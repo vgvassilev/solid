@@ -90,7 +90,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
                                 ref Dictionary<BasicBlock, TextBlockShape> visited) {
       if (visited.ContainsKey(basicBlock))
         return;
-
+      
       ArrowShape arrow = null;
       // When autoSize is on the rectangle parameter will be 'ignored'.
       TextBlockShape blockShape = new TextBlockShape(new Rectangle(1,1,50,50), /*autosize*/true);
@@ -98,12 +98,21 @@ namespace SolidReflector.Plugins.CFGVisualizer
       blockShape.BlockText = basicBlock.ToString();
       visited.Add(basicBlock, blockShape);
       scene.Shapes.Add(blockShape);
+      
+      ConnectorGluePoint gluePointStart = null;
+      ConnectorGluePoint gluePointEnd = null;
+      
       foreach (BasicBlock successor in basicBlock.Successors) {
         DrawBasicBlock(successor, ref visited);
-        arrow = new ArrowShape(visited[basicBlock], visited[successor]);
+        gluePointStart = new ConnectorGluePoint(new PointD(visited[basicBlock].Location.X, visited[basicBlock].Location.Y));
+        gluePointEnd = new ConnectorGluePoint(new PointD(visited[successor].Location.X, visited[successor].Location.Y));
+        
+        arrow = new ArrowShape(visited[basicBlock], gluePointStart, visited[successor], gluePointEnd);
         arrow.ArrowKindHead = SolidV.Cairo.ArrowKinds.TriangleRoundArrow;
         arrow.ArrowKindTail = SolidV.Cairo.ArrowKinds.NoArrow;
         scene.Shapes.Add(arrow);
+        visited[basicBlock].Items.Add(gluePointStart);
+        visited[successor].Items.Add(gluePointEnd);
       }
     }
 
