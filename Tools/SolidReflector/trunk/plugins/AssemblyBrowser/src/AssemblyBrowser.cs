@@ -146,19 +146,6 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
     #endregion
 
-    #region IAssemblyBrowser implementation
-
-    void IAssemblyBrowser.SelectClass(string name) {
-      List<IMemberDefinition> members = new List<IMemberDefinition>();
-      members.AddRange(curType.Fields.ToArray());
-      members.AddRange(curType.Methods.ToArray());
-      members.AddRange(curType.Events.ToArray());
-      
-      AttachSubTree(assemblyTree.Model, iter, members.ToArray());
-    }
-
-    #endregion
-
     /// <summary>
     /// Saves the loaded assemblies when the shut down event is received.
     /// </summary>
