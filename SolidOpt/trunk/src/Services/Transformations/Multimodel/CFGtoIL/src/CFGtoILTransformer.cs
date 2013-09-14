@@ -30,7 +30,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
     public MethodDefinition Transform (ControlFlowGraph source)
     {
       var result = CloneMethodWithoutIL(source.Method);
-      result.Body = new MethodBody(result);
       ILProcessor cil = result.Body.GetILProcessor();
       BasicBlock bb = source.Root;
       Instruction instr = null;
@@ -130,8 +129,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
       if (method.IsPInvokeImpl) df.PInvokeInfo = method.PInvokeInfo;
       df.SemanticsAttributes = method.SemanticsAttributes;
       
-      df.Body = new Mono.Cecil.Cil.MethodBody(df);
-      
+      df.Body = new MethodBody(df);
+      foreach (VariableDefinition varInfo in method.Body.Variables)
+        df.Body.Variables.Add(varInfo);
       return df;
     }
 
@@ -140,7 +140,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
         excludeFrom.Remove(bb);
     }
   }
-  
+    
   internal sealed class BBComparer : IComparer<BasicBlock> {
     public int Compare(BasicBlock x, BasicBlock y) {
       return x.First.Offset.CompareTo(y.First.Offset);
