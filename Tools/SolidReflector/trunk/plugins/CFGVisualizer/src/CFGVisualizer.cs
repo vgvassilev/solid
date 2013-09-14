@@ -137,9 +137,11 @@ namespace SolidReflector.Plugins.CFGVisualizer
       ControlFlowGraphToCil cfgTransformer = new ControlFlowGraphToCil();
       MethodDefinition methodDef = cfgTransformer.Transform(currentCfg);
 
-      AssemblyNameDefinition assemblyName = new AssemblyNameDefinition("Program", new Version("1.0.0.0"));
+      AssemblyNameDefinition assemblyName = new AssemblyNameDefinition("Program",
+                                                                       new Version("1.0.0.0"));
+
       AssemblyDefinition assemblyDef = AssemblyDefinition.CreateAssembly(assemblyName, "<Module>",
-                                                                    ModuleKind.Console);
+                                                                        ModuleKind.Console);
 
       TypeReference objTypeRef = assemblyDef.MainModule.Import(typeof(System.Object));
       TypeDefinition typeDef = new TypeDefinition("Simulation", "MainClass", TypeAttributes.Public,
@@ -155,13 +157,20 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
       // Cannot use methodDef due to it is already in use
       // so we have to create identical MethodDefinition that would be able to be called
-      MethodDefinition trampolineMethod = new MethodDefinition(methodDef.Name, methodDef.Attributes,
+      // and we give the method name a "simulated_" prefix
+      MethodDefinition trampolineMethod = new MethodDefinition("simulated_" + methodDef.Name,
+                                                               methodDef.Attributes,
                                                                methodDef.ReturnType);
 
-      // Add the parameters of the callable method
+      // Add the parameters to the callable method
       foreach(ParameterDefinition pDef in methodDef.Parameters)
         trampolineMethod.Parameters.Add(new ParameterDefinition(pDef.Name, pDef.Attributes, 
                                                                 pDef.ParameterType));
+
+      // Add the local variables to the callable method
+      foreach(VariableDefinition varInfo in methodDef.Body.Variables) {
+        trampolineMethod.Body.Variables.Add(varInfo);
+      }
 
       // Add the instructions to the callable method
       ILProcessor trampolineCIL = trampolineMethod.Body.GetILProcessor();
@@ -176,8 +185,9 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
       MethodReference importedMRef = assemblyDef.MainModule.Import(methodDef);
 
-      // Add just ret to the Main method
+      // Add call to the simulated method and ret instructions to the Main method
       ILProcessor cil = mainMethodDef.Body.GetILProcessor();
+      cil.Append(cil.Create(OpCodes.Call, trampolineMethod));
       cil.Append(cil.Create(OpCodes.Ret));
 
       typeDef.Methods.Add(mainMethodDef);
@@ -232,11 +242,11 @@ namespace SolidReflector.Plugins.CFGVisualizer
       Type namespaceType = module.GetType(typeName);
       System.Reflection.MethodInfo methodToExecute = namespaceType.GetMethod(method);
       System.Reflection.ParameterInfo[] parameters = methodToExecute.GetParameters();
-
+      
       Random r = new Random();
       List<object> sampleArgs = new List<object>();
-      long sample = 0;
 
+      // Only int parameters are supported for now
       foreach (System.Reflection.ParameterInfo param in parameters) {
         switch (Type.GetTypeCode(param.ParameterType)) {
           case TypeCode.Int16:
@@ -251,8 +261,10 @@ namespace SolidReflector.Plugins.CFGVisualizer
             break;
         }
       }
-
-      return methodToExecute.Invoke(null, sampleArgs.ToArray()).ToString();
+      object[] sampleArgsArray = sampleArgs.ToArray();
+      if (methodToExecute.Invoke(null, sampleArgsArray) != null)
+        return methodToExecute.Invoke(null, sampleArgsArray).ToString();
+      return "Nothing to return.";
     }
   }
 }
