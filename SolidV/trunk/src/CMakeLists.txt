@@ -4,7 +4,7 @@ csharp_add_library(
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Cairo/*.cs
-  ${CMAKE_CURRENT_SOURCE_DIR}/Gtk/PropertyGrid/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Gtk/ObjectInspector/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/VisualCodeControllers/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Model/*.cs

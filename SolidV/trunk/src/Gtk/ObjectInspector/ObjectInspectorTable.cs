@@ -3,6 +3,9 @@
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
+
+// Inspired (copied and modified) by Monodevelop with MIT license.
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,8 +14,21 @@ namespace SolidV.Gtk
 {
   using Cairo = global::Cairo; // We need those because the lookup won't fall back into the global
   using Gtk = global::Gtk; // namespace.
-  public class PropertyGridTable : Gtk.EventBox {
+
+  /// <summary>
+  /// The property table, which contains TableRows, which represent the properties and their values.
+  /// </summary>
+  /// 
+  public class ObjectInspectorTable : Gtk.EventBox {
+    /// <summary>
+    /// The set of property name and property value.
+    /// </summary>
+    /// 
     private List<TableRow> rows = new List<TableRow>();
+
+    /// <summary>
+    /// The current active row.
+    /// </summary>
     private TableRow currentEditorRow;
 
     public PropertySort PropertySort { get; set; }
@@ -135,7 +151,6 @@ namespace SolidV.Gtk
       layout.Dispose ();
     }
 
-
     protected override bool OnExposeEvent (Gdk.EventExpose evnt)
     {
       bool result = base.OnExposeEvent (evnt);
@@ -184,7 +199,6 @@ namespace SolidV.Gtk
       //}
     }
 
-
     static readonly Cairo.Color CategoryLabelColor = new Cairo.Color (128d/255d, 128d/255d, 128d/255d);
 
     PropertyEditorCell GetCell (TableRow row) {
@@ -193,7 +207,6 @@ namespace SolidV.Gtk
       e.Initialize(this, row.Property, row.Instance);
       return e;
     }
-
 
     void Draw (Cairo.Context ctx, List<TableRow> rowList, int dividerX, int x, ref int y)
     {
@@ -287,164 +300,5 @@ namespace SolidV.Gtk
         }
       }
     }
-
-
-
   }
-
-  public enum PropertySort
-  {
-    NoSort = 0,
-    Alphabetical,
-    Categorized,
-    CategorizedAlphabetical
-  }
-
-  class TableRow
-  {
-    public bool IsCategory;
-    public string Label;
-    public object Instance;
-    public PropertyDescriptor Property;
-    public List<TableRow> ChildRows;
-    public bool Expanded;
-    public bool Enabled = true;
-    public Gdk.Rectangle EditorBounds;
-    public bool AnimatingExpand;
-    public int AnimationHeight;
-    public int ChildrenHeight;
-    public uint AnimationHandle;
-  }
-
-
-  public class PropertyGrid : Gtk.VBox
-  {
-    private object currentObject;
-    public object CurrentObject {
-      get { return currentObject; }
-      set { 
-        currentObject = value;
-        Populate();
-      }
-    }
-
-    private PropertyGridTable tree;
-    public PropertyGrid() {
-      tree = new PropertyGridTable();
-      this.Add(tree);
-    }
-
-    public void Populate ()
-    {
-      PropertyDescriptorCollection properties;
-      
-      //tree.SaveStatus ();
-      tree.Clear ();
-      //tree.PropertySort = propertySort;
-      properties = GetProperties(currentObject);
-      tree.Populate (properties, currentObject);
-      if (currentObject == null) {
-        //properties = new PropertyDescriptorCollection (new PropertyDescriptor[0] {});
-        //tree.Populate (properties, currentObject);
-      }
-      else {
-        //foreach (object prov in propertyProviders) {
-        //  properties = selectedTab.GetProperties (prov);
-        //  tree.Populate (properties, prov);
-        //}
-      }
-      //tree.RestoreStatus ();
-      tree.ShowAll();
-      this.ShowAll();
-      base.ShowAll();
-    }
-
-    public PropertyDescriptor GetDefaultProperty (object component) {
-      if (component == null)
-        return null;
-      return TypeDescriptor.GetDefaultProperty (component);     
-    }
-
-    public PropertyDescriptorCollection GetProperties (object component) {
-      if (component == null)
-        return new PropertyDescriptorCollection (new PropertyDescriptor[] {});
-      return TypeDescriptor.GetProperties (component);
-    }
-
-  }
-
-  public class PropertyEditorCell {
-    private Pango.Layout layout;
-    private PropertyDescriptor property; 
-    private object obj;
-    private Gtk.Widget container;
-
-    internal void Initialize (Gtk.Widget container, PropertyDescriptor property, object obj) {
-      this.container = container;
-
-      layout = new Pango.Layout (container.PangoContext);
-      layout.Width = -1;
-      
-      Pango.FontDescription des = container.Style.FontDescription.Copy();
-      layout.FontDescription = des;
-      
-      this.property = property;
-      this.obj = obj;
-      Initialize();
-    }
-
-    protected virtual void Initialize() {
-      string s = null;//GetValueMarkup();
-      if (s != null)
-        layout.SetMarkup(GetNormalizedText(s));
-      else
-        layout.SetText (GetNormalizedText(GetValueText()));
-    }
-
-    protected virtual string GetValueText() {
-      string result = "";
-      if (obj == null)
-        return result;
-      object val = property.GetValue(obj);
-      if (val != null)
-        result = property.Converter.ConvertToString(val);
-
-      return result;
-    }
-
-    private string GetNormalizedText (string s) {
-      if (s == null)
-        return "";
-      
-      int i = s.IndexOf ('\n');
-      if (i == -1)
-        return s;
-      
-      s = s.TrimStart ('\n',' ','\t');
-      i = s.IndexOf ('\n');
-      if (i != -1)
-        return s.Substring (0, i) + "...";
-      else
-        return s;
-    }
-
-    public virtual void GetSize (int availableWidth, out int width, out int height)
-    {
-      layout.GetPixelSize (out width, out height);
-    }
-
-    public virtual void Render (Gdk.Drawable window, Gdk.Rectangle bounds, Gtk.StateType state)
-    {
-      int w, h;
-      layout.GetPixelSize (out w, out h);
-      int dy = (bounds.Height - h) / 2;
-      window.DrawLayout (container.Style.TextGC (state), bounds.X, dy + bounds.Y, layout);
-    }
-
-  }
-
-
 }
- 
-
-
