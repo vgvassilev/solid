@@ -16,6 +16,12 @@ namespace SolidV.MVC
       set { mode = value; }
     }
 
+    /// <summary>
+    /// This is the dictionary that links the type of the Shape to its corresponding Viewer. 
+    /// For example: view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
+    /// It is mandatory for any visualizer to add to the Viewers the required values in order to 
+    /// visualize SolidV components.
+    /// </summary>
     private Dictionary<Type, IViewer<C, M>> viewers = new Dictionary<Type, IViewer<C, M>>();
     public Dictionary<Type, IViewer<C, M>> Viewers {
       get { return viewers; }
