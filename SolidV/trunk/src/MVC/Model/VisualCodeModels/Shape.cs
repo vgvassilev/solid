@@ -11,6 +11,12 @@ namespace SolidV.MVC
 {
   public abstract class Shape
   {
+    private Shape parent;
+    public Shape Parent {
+      get { return parent; }
+      set { parent = value; }
+    }
+
     private Matrix matrix = new Matrix();
     public Matrix Matrix {
       get { return matrix; }
@@ -68,7 +74,7 @@ namespace SolidV.MVC
     public Shape this[int i]
     {
       get { return Items[i]; }
-      set { Items [i] = value; }
+      set { Items[i] = value; }
     }
     
     public Shape(Rectangle rect)
@@ -80,6 +86,7 @@ namespace SolidV.MVC
 
     public Shape(Shape shape)
     {
+      this.Parent = shape.Parent;
       this.Style = shape.Style;
       this.Height = shape.Height;
       this.Location = shape.Location;

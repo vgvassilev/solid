@@ -12,8 +12,9 @@ namespace SolidV.MVC
     public SelectionController() : base() {}
     public SelectionController(M model, IView<C, M> view) : base(model, view) {}
 
-    public override void Handle(Event evnt) {
+    public override bool Handle(Event evnt) {
       //TODO: implementation
+      return false;
     }
   }
 }

@@ -10,22 +10,26 @@ namespace SolidV.MVC
 {
   public class ShapeDragController : AbstractController<Gdk.Event, Context, Model>
   {
-    private bool isDragging = false;
-    private double lastX;
-    private double lastY;
+    protected bool isDragging = false;
+    protected double lastX;
+    protected double lastY;
+    protected bool moved = false;
 
     public ShapeDragController() : base() {}
     public ShapeDragController(Model model, IView<Context, Model> view) : base(model, view) {}
 
-    public override void Handle(Gdk.Event evnt) {
+    public override bool Handle(Gdk.Event evnt) {
       Gdk.EventButton eventButton = evnt as Gdk.EventButton;
       if (eventButton != null) {
         if (eventButton.Type == Gdk.EventType.ButtonPress) {
           isDragging = true;
+          moved = false;
           lastX = eventButton.X;
           lastY = eventButton.Y;
+          return true;
         } else if (eventButton.Type == Gdk.EventType.ButtonRelease) {
           isDragging = false;
+          return true;
         }
       }
 
@@ -35,18 +39,22 @@ namespace SolidV.MVC
           this.Model.BeginUpdate();
           using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
             foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
+              context.Save();
               context.Matrix = shape.Matrix;
-              double dx = eventMotion.X - lastX;
-              double dy = eventMotion.Y - lastY;
-              context.DeviceToUserDistance(ref dx, ref dy);
-              shape.Matrix.Translate(dx, dy);
+              Distance dist = shape.DistanceToLocal(new Distance(eventMotion.X - lastX, eventMotion.Y - lastY), context);
+              shape.Matrix.Translate(dist.Dx, dist.Dy);
+              context.Restore();
             }
           }
           this.Model.EndUpdate();
           lastX = eventMotion.X;
           lastY = eventMotion.Y;
+          moved = true;
+          return true;
         }
       }
+
+      return false;
     }
   }
 }

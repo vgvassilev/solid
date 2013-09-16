@@ -12,6 +12,6 @@ namespace SolidV.MVC
   public interface IController<Event, C, M>
   {
     //event EventHandler<Event> EventHandlers;
-    void Handle(Event evnt);
+    bool Handle(Event evnt);
   }
 }
