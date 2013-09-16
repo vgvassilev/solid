@@ -27,7 +27,6 @@ csharp_add_dependencies(
   )
 csharp_add_project_meta(
   SolidV.dll
-  "StartupProject" "true"
   )
 
 execute_process(
