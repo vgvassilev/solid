@@ -120,24 +120,23 @@ namespace DataMorphose.Plugins.Visualizer
     }
 
     public void DrawFilter() {
-      int x = 100, y = 300;
-      EllipseShape filter = new EllipseShape(new Cairo.Rectangle(x, y, 150, 100));
       List<ArrowShape> arrows = new List<ArrowShape>();
+
+      int x = 100, y = 300;
+      EllipseShape filter = new EllipseShape(new Cairo.Rectangle(x, y, 100, 50));
+      filter.Style.Border = new SolidPattern(new Color(0, 0, 0));
+
+
+      ConnectorGluePoint filterGlue = new ConnectorGluePoint(
+        new PointD(filter.Location.X + (filter.Width/2), filter.Location.Y));
+      filter.Items.Add(filterGlue);
       
       for (int i = 0; i < scene.Shapes.Count; i++) {
-        filter = new EllipseShape(new Cairo.Rectangle(x, y, 100, 50));
-        filter.Style.Border = new SolidPattern(new Color(0, 0, 0));
-
-        ConnectorGluePoint filterGlue = new ConnectorGluePoint(
-          new PointD(filter.Location.X + (filter.Width/2), filter.Location.Y));
-
         var block = scene.Shapes[i];
-        ConnectorGluePoint blockGlue = new ConnectorGluePoint(new PointD(block.Location.X + block.Width / 2, 
-                                                      block.Location.Y + block.Height));
-
+        ConnectorGluePoint blockGlue = new ConnectorGluePoint(new PointD(block.Location.X 
+                                             + block.Width / 2, block.Location.Y + block.Height));
         // Add the gluePoints to the shapes
         block.Items.Add(blockGlue);
-        filter.Items.Add(filterGlue);
 
         // Link the filter and the textBlock with an arrow 
         ArrowShape arrow = new ArrowShape(block, blockGlue, filter, filterGlue);
