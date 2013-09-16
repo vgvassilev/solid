@@ -17,11 +17,7 @@ using DataMorphose.Model;
 
 
 public partial class MainWindow: Gtk.Window, IDataMorphose
-{  
-  private int count = 2;
-  private Gtk.ToolButton undo;
-  private Gtk.ToolButton redo;
-
+{ 
   /// <summary>
   /// The collection of loaded plugins.
   /// </summary>
@@ -66,9 +62,6 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
     set { dockFrame = value; }
   }
 
-  private List<Gtk.Toolbar> toolbars = new List<Gtk.Toolbar>();
-  private List<Gtk.Container> containers = new List<Gtk.Container>();
-
   /// <summary>
   /// The main application window.
   /// </summary>
@@ -99,116 +92,13 @@ public partial class MainWindow: Gtk.Window, IDataMorphose
 
     Build();
 
-    // Add code for our tools palette
-    // Left toolbar
-    Gtk.VBox LVbox = new Gtk.VBox();
-    Gtk.Toolbar LToolbar = new Gtk.Toolbar();
-    LToolbar.Name = "LeftToolbar";
-    toolbars.Add(LToolbar);
-    LVbox.PackStart(LToolbar, true, true, 0);
-    LToolbar.Orientation = Gtk.Orientation.Vertical;
-    // Show only text on the buttons
-    LToolbar.ToolbarStyle = Gtk.ToolbarStyle.Text;
-
-    // Right toolbar 
-    Gtk.VBox RVbox = new Gtk.VBox();
-    Gtk.Toolbar RToolbar = new Gtk.Toolbar();
-    RToolbar.Name = "RightToolbar";
-    toolbars.Add(RToolbar);
-    
-    // Add TreeView for the history 
-    Gtk.TreeView historyView = new Gtk.TreeView();
-    Gtk.TreeViewColumn languages = new Gtk.TreeViewColumn();
-    languages.Title = "History";
-
-    // Write some sample data to see how it looks like
-    Gtk.CellRendererText cell = new Gtk.CellRendererText();
-    languages.PackStart(cell, true);
-    languages.AddAttribute(cell, "text", 0);
-    
-    Gtk.TreeStore treestore = new Gtk.TreeStore(typeof(string));
-    treestore.AppendValues("Import database");
-    treestore.AppendValues("Set primary keys");
-    treestore.AppendValues("Delete row");
-    
-    historyView.AppendColumn(languages);
-    historyView.Model = treestore;
-
-    // We need to set the expand and fill properties to false, because that way we can resize 
-    // the buttons.
-    RVbox.PackStart(RToolbar, false, false, 0);
-    RVbox.PackStart(historyView, true, true, 0);
-    
-    RToolbar.ToolbarStyle = Gtk.ToolbarStyle.Icons;
-    RToolbar.Orientation = Gtk.Orientation.Horizontal;
-
-    undo = new Gtk.ToolButton(Gtk.Stock.Undo);
-    redo = new Gtk.ToolButton(Gtk.Stock.Redo);
-    RToolbar.Insert(undo, 0);
-    RToolbar.Insert(redo, 1);    
-
-    undo.Clicked += OnUndo;
-    redo.Clicked += OnRedo;
-
-    // Docking 
-
-    AddDockItem("Tools", LVbox);
-
     OnRealized(this, new EventArgs());
-
     dockFrame.CurrentLayout = "BasicLayout";
     hbox1.Add(dockFrame);
 
-    AddDockItem("Actions", RVbox);
-
-//    this.SizeRequest = MainWindow.SetDefaultIconFromFile();
     this.ShowAll();
   }
- 
-  public Gtk.Toolbar GetToolbar(string name) {
-    foreach (Gtk.Toolbar toolbar in toolbars) {
-      if (name == toolbar.Name)
-        return toolbar;
-    }
-    return null;
-  }
 
-  private void AddDockItem(string label, Gtk.Container container) {
-    DockItem dockToolbar = DockFrame.AddItem(label);
-    dockToolbar.DrawFrame = true;
-    dockToolbar.Label = label;
-    dockToolbar.Expand = false;
-    dockToolbar.DefaultVisible = true;
-    dockToolbar.Visible = true;
-    dockToolbar.Content = container;
-    container.ShowAll();
-  }
-  
-  void OnClicked(object sender, EventArgs args)
-  {
-    Gtk.Application.Quit();
-  }
-  
-  void OnUndo(object sender, EventArgs args)
-  {
-    count -= 1;
-    
-    if (count <= 0) {
-      undo.Sensitive = false;
-      redo.Sensitive = true;
-    }
-  }
-  
-  void OnRedo(object sender, EventArgs args)
-  {
-    count += 1;
-    
-    if (count >= 5) {
-      redo.Sensitive = false;
-      undo.Sensitive = true;
-    }
-  } 
-  
   /// <summary>
   /// Raises the delete event when the user attempts to close the application
   /// using the close button from the title bar.
