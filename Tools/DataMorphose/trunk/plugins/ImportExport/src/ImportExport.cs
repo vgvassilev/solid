@@ -17,6 +17,8 @@ using DataMorphose.Model;
 using DataMorphose.Plugins.ImportExport.Import;
 using DataMorphose.Plugins.ImportExport.Export;
 
+using SolidV.MVC;
+
 namespace DataMorphose.Plugins.ImportExport
 {
   public class ImportExport : IPlugin
