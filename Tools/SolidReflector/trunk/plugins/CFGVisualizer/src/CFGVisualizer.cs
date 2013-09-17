@@ -21,7 +21,9 @@ namespace SolidReflector.Plugins.CFGVisualizer
   public class CFGVisualizer : IPlugin
   {
     private MainWindow mainWindow = null;
-    private DrawingArea drawingArea = null;
+    private DrawingArea drawingArea = new DrawingArea();
+    private TextView cfgTextView = new TextView();
+    private TextView simulationTextView = new TextView();
     private DockItem cfgVisualizingDock = null;
     private DockItem simulationDock = null;
     private ControlFlowGraph currentCfg = null;
@@ -36,17 +38,21 @@ namespace SolidReflector.Plugins.CFGVisualizer
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
-      drawingArea = new DrawingArea();
+      ScrolledWindow cfgDrawingAreaWindow = new ScrolledWindow();
+      Viewport cfgDrawingAreaViewport = new Viewport();
 
-      ScrolledWindow scrollWindow = new ScrolledWindow();
-      Viewport viewport = new Viewport();
+      cfgDrawingAreaWindow.Add(cfgDrawingAreaViewport);
+      cfgDrawingAreaViewport.Add(drawingArea);
 
-      scrollWindow.Add(viewport);
-      viewport.Add(drawingArea);
+      ScrolledWindow cfgTextAreaWindow = new ScrolledWindow();
+      Viewport cfgTextAreaViewport = new Viewport();
+      
+      cfgTextAreaWindow.Add(cfgTextAreaViewport);
+      cfgTextAreaViewport.Add(cfgTextView);
       
       Gtk.Notebook nb = new Gtk.Notebook();
-      nb.AppendPage(new TextView(), new Gtk.Label("CFG Text"));
-      nb.AppendPage(scrollWindow, new Gtk.Label("CFG Visualizer"));
+      nb.AppendPage(cfgTextAreaWindow, new Gtk.Label("CFG Text"));
+      nb.AppendPage(cfgDrawingAreaWindow, new Gtk.Label("CFG Visualizer"));
       nb.ShowAll();
 
       cfgVisualizingDock = mainWindow.DockFrame.AddItem("CFG Visualizer");
@@ -57,25 +63,27 @@ namespace SolidReflector.Plugins.CFGVisualizer
       cfgVisualizingDock.DefaultVisible = true;
       cfgVisualizingDock.Visible = true;
 
-      VBox vBox = new VBox(false, 0);
-      TextView textView = new TextView();
-      TextView outputView = new TextView();
+      ScrolledWindow simulationTextViewWindow = new ScrolledWindow();
+      VBox simulationVBox = new VBox(false, 0);
+      simulationTextView = new TextView();
+      simulationTextViewWindow.Add(simulationTextView);
+      TextView outputTextView = new TextView();
       Button simulateButton = new Button("Simulate");
       simulateButton.Clicked += HandleClicked;
 
-      vBox.PackStart(simulateButton, false, false, 0);
-      vBox.PackStart(new Label("New CFG: "), false, false, 0);
-      vBox.PackStart(textView, true, true, 0);
-      vBox.PackStart(new Label("Method output: "), false, false, 0);
-      vBox.PackEnd(outputView, true, true, 0);
+      simulationVBox.PackStart(simulateButton, false, false, 0);
+      simulationVBox.PackStart(new Label("New CFG: "), false, false, 0);
+      simulationVBox.PackStart(simulationTextViewWindow, true, true, 0);
+      simulationVBox.PackStart(new Label("Method output: "), false, false, 0);
+      simulationVBox.PackEnd(outputTextView, true, true, 0);
       
-      vBox.ShowAll();
+      simulationVBox.ShowAll();
 
       simulationDock = mainWindow.DockFrame.AddItem("Simulation Visualizer");
       simulationDock.Expand = true;
       simulationDock.DrawFrame = true;
       simulationDock.Label = "Simulation Visualizer";
-      simulationDock.Content = vBox;
+      simulationDock.Content = simulationVBox;
       simulationDock.DefaultVisible = true;
       simulationDock.Visible = true;
     }
@@ -90,13 +98,9 @@ namespace SolidReflector.Plugins.CFGVisualizer
     #endregion
 
     private void OnSelectionChanged(object sender, SelectionEventArgs args) {
-      Gtk.Notebook nb = cfgVisualizingDock.Content as Gtk.Notebook;
-      Gtk.TextView textView = nb.GetNthPage(0) as Gtk.TextView;
-      //Gtk.DrawingArea drawingArea = nb.GetNthPage(1) as Gtk.DrawingArea;
-
       if (args.definition != null) {
         // Dump the definition
-        CFGPrettyPrinter.PrintPretty(args.definition, textView);
+        CFGPrettyPrinter.PrintPretty(args.definition, cfgTextView);
         CFGPrettyDrawer drawer = new CFGPrettyDrawer(drawingArea);
 
         if (args.definition is MethodDefinition) {
@@ -121,10 +125,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
         CFGPrettyDrawer drawer = new CFGPrettyDrawer(drawingArea);
         drawer.DrawTextBlocks(currentCfg);
 
-        TextView textView = (simulationDock.Content as Gtk.VBox).Children[2] as TextView;
-        textView.Buffer.Clear();
-        textView.Buffer.Text = currentCfg.ToString();
-        //CFGPrettyPrinter.PrintPretty(mDef, textView);
+        simulationTextView.Buffer.Clear();
+        simulationTextView.Buffer.Text = currentCfg.ToString();
       }
     }
 
@@ -197,9 +199,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
       assemblyDef.Write(assemblyPath);
 
       Sandbox sandbox = new Sandbox(assemblyPath, trampolineMethod.Name);
-      TextView textView = (simulationDock.Content as Gtk.VBox).Children[4] as TextView;
-      textView.Buffer.Clear();
-      textView.Buffer.Text = sandbox.SimulationMethodOutput;
+      simulationTextView.Buffer.Clear();
+      simulationTextView.Buffer.Text = sandbox.SimulationMethodOutput;
     }
   }
 
