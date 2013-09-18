@@ -101,14 +101,13 @@ namespace DataMorphose.Plugins.Visualizer
     public void DrawSchema(Model.Table t) {
       Dictionary<string, TextBlockShape> basicBlocks = new Dictionary<string, TextBlockShape>();
       
-      int x = 20, y = 30;
+      int x = 100, y = 100;
       TextBlockShape textBlock = new TextBlockShape(new Cairo.Rectangle(x, y, 40, 40),
                                                     /*autoSize*/true);
-      textBlock = new TextBlockShape(new Rectangle(x, y, 40, 40), /*autoSize*/true); 
       
       textBlock.Style.Border = new SolidPattern(new Color(0, 0, 0));
       textBlock.Title = t.Name;
-      textBlock.Font.Size = 15;
+//      textBlock.FontSize = 12;
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < t.Columns.Count; i++) 
         sb.AppendLine(t.Columns[i].Meta.Name);
@@ -125,7 +124,6 @@ namespace DataMorphose.Plugins.Visualizer
       int x = 100, y = 300;
       EllipseShape filter = new EllipseShape(new Cairo.Rectangle(x, y, 100, 50));
       filter.Style.Border = new SolidPattern(new Color(0, 0, 0));
-
 
       ConnectorGluePoint filterGlue = new ConnectorGluePoint(
         new PointD(filter.Location.X + (filter.Width/2), filter.Location.Y));
