@@ -32,14 +32,15 @@ namespace SolidV.MVC
           double titleY = sh.Rectangle.Y;
           if (titleY - 10 > 0)
             titleY -= 10;
-          context.SetFontSize(14);
+          context.SetFontSize(sh.FontSize);
           context.SelectFontFace("Arial", FontSlant.Normal, FontWeight.Bold) ;
           context.MoveTo(titleX, titleY);
           context.ShowText(sh.Title);
         }
 
         context.SelectFontFace("Arial", FontSlant.Normal, FontWeight.Normal);
-        context.SetFontSize(12);
+
+        context.SetFontSize(sh.FontSize);
         context.MoveTo(lineX, lineY);
 
         foreach (string line in sh.Lines) {

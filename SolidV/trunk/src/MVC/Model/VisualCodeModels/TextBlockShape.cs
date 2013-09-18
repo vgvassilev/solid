@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 using Cairo;
 
@@ -14,14 +15,19 @@ namespace SolidV.MVC
   public class TextBlockShape : Shape
     {
         private int longestLine = -1;
-
         public int LongestLine {
           get { return longestLine; }
-        }
-        
+        }        
+
         public int LineCount {
           get { return blockText.Length; }
         }
+        
+        private uint fontSize = 12;
+        public uint FontSize {
+          get { return fontSize; }
+          set { fontSize = value; }
+        }         
 
         private string[] blockText = new string[]{""};
         public string[] Lines {
@@ -30,13 +36,14 @@ namespace SolidV.MVC
         public string BlockText {
           get { return ToString(); }
           set { 
-                blockText = value.Split(new string[] { Environment.NewLine },
-                                        StringSplitOptions.None); 
-                for (int i = 0, e = blockText.Length; i < e; i++)
-                  if (longestLine < blockText[i].Length)
-                    longestLine = blockText[i].Length;
-                UpdateAutoSize();
+            blockText = value.Split(new string[] { Environment.NewLine },
+                                    StringSplitOptions.None); 
+            for (int i = 0, e = blockText.Length; i < e; i++)
+              if (longestLine < blockText[i].Length){
+                longestLine = blockText[i].Length;
               }
+            UpdateAutoSize();
+          }
         }
 
         private bool autoSize;
@@ -66,18 +73,33 @@ namespace SolidV.MVC
           }
           return result;
         }
-
+        
         private void UpdateAutoSize() {
           if (!AutoSize)
             return;
-          double width = 100;
-          double height = LineCount;
-          if (LongestLine < 100) {
-            width = LongestLine * 8;
+          Pango.Layout layout = new Pango.Layout(Gdk.PangoHelper.ContextGet());
+          Pango.FontDescription font = new Pango.FontDescription();
+          font.Family = "Arial";
+          font.Size = (int)fontSize * (int)Pango.Scale.PangoScale;
+          layout.FontDescription = font;
+
+          double width, height;
+          int w, h;          
+          int maxW = int.MinValue;          
+          
+          for (int i = 0; i < blockText.Length; i++) {
+            layout.SetText(blockText[i]);            
+            layout.GetPixelSize(out w, out h);
+            if (maxW < w)
+              maxW = w;
           }
-          if (LineCount < 28) {
-            height = LineCount * 16;
-          }
+
+          layout.GetPixelSize(out w, out h);
+
+          // FIXME: Very strange! The height somehow is not accurate. It is too big. 
+          width = maxW;
+          height = (h - 4) * LineCount;
+
           Rectangle = new Rectangle(Location.X, Location.Y, width, height);
         }
   }
