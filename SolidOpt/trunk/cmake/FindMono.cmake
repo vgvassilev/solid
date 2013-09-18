@@ -115,10 +115,10 @@ else( UNIX )
   # smcs: compiler to target the 2.1 mscorlib, to build Moonlight applications.
   # dmcs: compiler to target the 4.0 mscorlib.
   # The (mcs) compiler defaults to the latest language specification available. Only after 2.11
-  set( chsarp_mono_names "mcs" "mcs.exe" "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" )
+  set( csharp_mono_names "mcs" "mcs.exe" "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" )
   #TODO: CSHARP_MONO_VERSION is undefined in first cmake run
   if (CSHARP_MONO_VERSION VERSION_LESS "2.11")
-    set( chsarp_mono_names "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" "mcs" "mcs.exe" )
+    set( csharp_mono_names "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" "mcs" "mcs.exe" )
   endif()
 
   set(
@@ -130,7 +130,7 @@ else( UNIX )
   )
   find_program(
     csharp_mono_compiler # variable is added to the cache, we removed it below
-    NAMES ${chsarp_mono_names}
+    NAMES ${csharp_mono_names}
     PATHS ${csharp_mono_paths}
   )
 
