@@ -58,6 +58,12 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     private Gtk.TreeIter iter;
     private TypeDefinition curType = null;
 
+    /// <summary>
+    /// Containg all the loaded assemblies in the tree view.
+    /// </summary>
+    /// 
+    private string[] loadedAssemblies;
+
     public AssemblyBrowser() { }
 
     #region IAssemblyBrowser implementation
@@ -358,8 +364,11 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     private void LoadEnvironment() {
       string curEnv = System.IO.Path.Combine(reflector.GetConfigurationDirectory(),
                                              "Assemblies.env");
+
+      loadedAssemblies = File.ReadAllLines(curEnv);
       if (File.Exists(curEnv)) {
-        LoadFilesInTreeView(File.ReadAllLines(curEnv));
+        LoadFilesInTreeView(loadedAssemblies);
+        WatchFilesForChanges(loadedAssemblies);
       }
     }
 
@@ -398,6 +407,46 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
       assemblyTree.Model = store;
       assemblyTree.ShowAll();
+    }
+
+    /// <summary>
+    /// Reloads assemblies if they are modified after they are loaded in the SolidReflector.
+    /// </summary>
+    /// <param name="filepaths">Filepaths of the assemblies that will be monitored.</param>
+    /// 
+    private void WatchFilesForChanges(string[] filepaths) {
+      FileSystemWatcher watcher;
+      List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
+      foreach (string filepath in filepaths) {
+        if (File.Exists(filepath)) {
+          watcher = new FileSystemWatcher(Path.GetDirectoryName(filepath));
+          watcher.NotifyFilter = NotifyFilters.LastWrite;
+
+          watcher.Changed += delegate(object sender, FileSystemEventArgs e) {
+            Gtk.TreeStore store = assemblyTree.Model as Gtk.TreeStore;
+            Gtk.TreeIter assemblyIter;
+            store.GetIterFirst(out assemblyIter);
+
+            foreach (string file in loadedAssemblies) {
+              if (file == e.FullPath) {
+                do  {
+                  AssemblyDefinition assDef = store.GetValue(assemblyIter, 0) as AssemblyDefinition;
+                  if (assDef.MainModule.FullyQualifiedName == file) {
+                    store.Remove(ref assemblyIter);
+                  }
+                } while (store.IterNext(ref assemblyIter));
+
+                AssemblyDefinition ad1 = AssemblyDefinition.ReadAssembly(file);
+                store.AppendValues(ad1);
+              }
+            }
+          };
+
+          watcher.EnableRaisingEvents = true;
+          watcher.IncludeSubdirectories = false;
+          watchers.Add(watcher);
+        }
+      }
     }
 
     /// <summary>
@@ -488,7 +537,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     /// The message.
     /// </param>
     private void ShowMessageGtk(string msg) {
-      var msgBox = new Gtk.MessageDialog(null, Gtk.DialogFlags.Modal, Gtk.MessageType.Info,
+      var msgBox = new Gtk.MessageDialog(mainWindow, Gtk.DialogFlags.Modal, Gtk.MessageType.Info,
                                          Gtk.ButtonsType.Ok, msg);
       msgBox.Run();
       msgBox.Destroy();
