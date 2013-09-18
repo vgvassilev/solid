@@ -4,17 +4,19 @@
  * For further details see the nearest License.txt
  */
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Cairo;
 
 namespace SolidV.MVC
 {
   /// <summary>
-  /// Helper methods for shape model. Use only in controllers.
+  /// Helper methods for shape model. Use only in controllers and viewers.
   /// </summary>
-  public static class ShapeHelper
+  public static partial class ShapeHelper
   {
     /// <summary>
-    /// Transforms the point to global. Use only in controllers.
+    /// Transforms the point to global. Use only in controllers and viewers.
     /// </summary>
     /// <returns>Converted point to global coordinate system (screen).</returns>
     /// <param name="shape">Shape.</param>

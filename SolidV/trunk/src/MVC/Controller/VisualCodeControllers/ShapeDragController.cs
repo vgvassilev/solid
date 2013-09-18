@@ -4,6 +4,7 @@
  * For further details see the nearest License.txt
  */
 using System;
+using System.Collections.Generic;
 using Cairo;
 
 namespace SolidV.MVC
@@ -13,6 +14,8 @@ namespace SolidV.MVC
     protected bool isDragging = false;
     protected double lastX;
     protected double lastY;
+    protected double firstX;
+    protected double firstY;
     protected bool moved = false;
 
     public ShapeDragController() : base() {}
@@ -24,11 +27,31 @@ namespace SolidV.MVC
         if (eventButton.Type == Gdk.EventType.ButtonPress) {
           isDragging = true;
           moved = false;
-          lastX = eventButton.X;
-          lastY = eventButton.Y;
+          firstX = eventButton.X;
+          firstY = eventButton.Y;
+          lastX = firstX;
+          lastY = firstY;
+          //
+          InteractionStateModel interState = this.Model.GetSubModel<InteractionStateModel>();
+          this.Model.BeginUpdate();
+          interState.Interaction.AddRange((List<Shape>)this.Model.GetSubModel<SelectionModel>().Selected.DeepCopy());
+          this.Model.EndUpdate();
+          //
           return true;
         } else if (eventButton.Type == Gdk.EventType.ButtonRelease) {
           isDragging = false;
+          this.Model.BeginUpdate();
+          using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
+            foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
+              context.Save();
+              context.Matrix = shape.Matrix;
+              Distance dist = shape.DistanceToLocal(new Distance(eventButton.X - firstX, eventButton.Y - firstY), context);
+              shape.Matrix.Translate(dist.Dx, dist.Dy);
+              context.Restore();
+            }
+          }
+          this.Model.GetSubModel<InteractionStateModel>().Interaction.Clear();
+          this.Model.EndUpdate();
           return true;
         }
       }
@@ -38,7 +61,7 @@ namespace SolidV.MVC
         if (isDragging) {
           this.Model.BeginUpdate();
           using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
-            foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
+            foreach (Shape shape in this.Model.GetSubModel<InteractionStateModel>().Interaction) {
               context.Save();
               context.Matrix = shape.Matrix;
               Distance dist = shape.DistanceToLocal(new Distance(eventMotion.X - lastX, eventMotion.Y - lastY), context);

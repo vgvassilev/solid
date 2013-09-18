@@ -8,12 +8,12 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class ConnectorGluePoint: GlueRegion
   {
     public const double PointSize = 6;
     public const double PointCenter = 3;
 
-    public ConnectorGluePoint(ConnectorGluePoint connectorGluePoint) : base(connectorGluePoint) {}
     public ConnectorGluePoint(Rectangle rectangle) : base(rectangle) {}
     public ConnectorGluePoint(PointD point) : base(new Rectangle(point.X-PointCenter, point.Y-PointCenter, PointSize, PointSize)) {}
   }

@@ -10,6 +10,7 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class RelationShape : Shape
   {
     public List<Shape> related = new List<Shape>();

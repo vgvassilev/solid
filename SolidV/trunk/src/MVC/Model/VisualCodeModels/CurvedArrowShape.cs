@@ -10,6 +10,7 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class CurvedArrowShape : PolylineArrowShape
   {
     public CurvedArrowShape(Shape from, Shape to): base(from, to) { }

@@ -9,6 +9,7 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public abstract class Shape
   {
     private Shape parent;
@@ -31,33 +32,22 @@ namespace SolidV.MVC
     
     public double Width {
       get { return Rectangle.Width; }
-      set { 
-        // Cannot be assigned to Cairo.Rectangle
-//        rectangle.Width = value;
-      }
+      set { Rectangle = new Rectangle(Rectangle.X, Rectangle.Y, value, Height); }
     }
+
     public double Height {
       get { return Rectangle.Height; }
-      set { 
-        // Cannot be assigned to Cairo.Rectangle
-//        rectangle.Height = value;
-      }
+      set { Rectangle = new Rectangle(Rectangle.X, Rectangle.Y, Width, value); }
     }
 
     public PointD Location {
       get { return new PointD(Rectangle.X, Rectangle.Y); }
-      set { rectangle = new Rectangle(value.X, value.Y, Width, Height);
-        // Cannot be assigned to Cairo.Rectangle
-//        rectangle.Location = value;
-      }
+      set { rectangle = new Rectangle(value.X, value.Y, Width, Height); }
     }
 
     public PointD Center {
       get { return new PointD(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2); }
-      set { 
-        // Cannot be assigned to Cairo.Rectangle
-        //        rectangle.Location = value;
-      }
+      set { Rectangle = new Rectangle(value.X - Width / 2, value.Y - Height / 2, Width, Height); }
     }
 
     private Rectangle rectangle;    
@@ -84,17 +74,5 @@ namespace SolidV.MVC
       items = new List<Shape>();
     }
 
-    public Shape(Shape shape)
-    {
-      this.Parent = shape.Parent;
-      this.Style = shape.Style;
-      this.Height = shape.Height;
-      this.Location = shape.Location;
-      this.Matrix = new Matrix(shape.Matrix.Xx, shape.Matrix.Yx, shape.Matrix.Xy, shape.Matrix.Yy, shape.Matrix.X0, shape.Matrix.Y0); // (Matrix)shape.matrix.Clone();
-      this.Rectangle = shape.rectangle;
-      this.Width = shape.Width;
-	    this.items = shape.Items; //TODO: Recursive copy? Parameter memberwise/deepcopy?
-    }
-    
   }
 }

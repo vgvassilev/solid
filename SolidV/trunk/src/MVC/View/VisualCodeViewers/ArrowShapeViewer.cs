@@ -20,30 +20,15 @@ namespace SolidV.MVC
     {
       ArrowShape sh = (ArrowShape)shape;
 
-      double x, y;
+      PointD p = (sh.FromGlue != null) ?
+        sh.FromGlue.TransformPointToGlobal(sh.FromGlue.Center, context) : sh.From.Center;
+      p = sh.TransformPointToLocal(p, context);
+      context.MoveTo(p);
 
-      if (sh.FromGlue != null) {
-        x = sh.FromGlue.Center.X;
-        y = sh.FromGlue.Center.Y;
-      } else {
-        x = 0;
-        y = 0;
-      }
-      if (sh.FromGlue != null) sh.FromGlue.Matrix.TransformPoint(ref x, ref y);
-      sh.From.Matrix.TransformPoint(ref x, ref y);
-      context.MoveTo(x, y);
-
-      if (sh.ToGlue != null) {
-        x = sh.ToGlue.Center.X;
-        y = sh.ToGlue.Center.Y;
-      } else {
-        x = 0;
-        y = 0;
-      }
-      if (sh.ToGlue != null) sh.ToGlue.Matrix.TransformPoint(ref x, ref y);
-      sh.To.Matrix.TransformPoint(ref x, ref y);
-
-      context.ArrowLineTo(x, y, sh.ArrowKindHead, sh.ArrowKindTail);
+      p = (sh.ToGlue != null) ?
+        sh.ToGlue.TransformPointToGlobal(sh.ToGlue.Center, context) : sh.To.Center;
+      p = shape.TransformPointToLocal(p, context);
+      context.ArrowLineTo(p, sh.ArrowKindHead, sh.ArrowKindTail);
 
       if (view.Mode == ViewMode.Render) {
         context.Pattern = sh.Style.Fill;

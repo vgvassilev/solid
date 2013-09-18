@@ -8,6 +8,7 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class Style
   {
     public static Style DefaultStyle;

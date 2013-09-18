@@ -9,12 +9,9 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class RectangleShape : Shape
   {
-    public RectangleShape(RectangleShape rect) : base(rect)
-    {
-    }
-
     public RectangleShape(Rectangle rectangle) : base(rectangle) {}
   }
 }

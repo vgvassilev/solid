@@ -7,6 +7,7 @@ using System;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class ConnectorShape : BinaryRelationShape 
   {
     private Glue fromGlue;

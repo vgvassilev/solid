@@ -8,9 +8,9 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class GlueRegion: Glue
   {
-    public GlueRegion(GlueRegion glueRegion) : base(glueRegion) {}
     public GlueRegion(Rectangle rectangle) : base(rectangle) {}
   }
 }

@@ -10,7 +10,8 @@ using Cairo;
 
 namespace SolidV.MVC
 {
-    public class TextBlockShape : Shape
+  [Serializable]
+  public class TextBlockShape : Shape
     {
         private int longestLine = -1;
 

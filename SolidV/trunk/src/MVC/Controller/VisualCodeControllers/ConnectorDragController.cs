@@ -47,8 +47,22 @@ namespace SolidV.MVC
                   isDragging = true;
                   moved = false;
                   dragConnector = shape as ConnectorShape;
-//                  lastX = eventButton.X;
-//                  lastY = eventButton.Y;
+                  //
+                  InteractionStateModel interState = this.Model.GetSubModel<InteractionStateModel>();
+                  this.Model.BeginUpdate();
+                  ConnectorShape interDragConnector = dragConnector.DeepCopy();
+                  interState.Interaction.Add(interDragConnector);
+                  Glue interDragGlue = dragGlue.DeepCopy();
+                  if (dragGlue == dragConnector.FromGlue)
+                    interDragConnector.FromGlue = interDragGlue;
+                  else
+                    interDragConnector.ToGlue = interDragGlue;
+                  interDragGlue.Parent = null;
+                  interDragGlue.Matrix.InitIdentity();
+                  interDragGlue.Center = new PointD(eventButton.X, eventButton.Y);
+                  interState.Interaction.Add(interDragGlue);
+                  this.Model.EndUpdate();
+                  //
                   return true;
                 }
               }
@@ -84,6 +98,10 @@ namespace SolidV.MVC
               }
             }
 
+            this.Model.BeginUpdate();
+            this.Model.GetSubModel<InteractionStateModel>().Interaction.Clear();
+            this.Model.EndUpdate();
+
             isDragging = false;
             dragGlue = null;
             return true;
@@ -94,21 +112,12 @@ namespace SolidV.MVC
       Gdk.EventMotion eventMotion = evnt as Gdk.EventMotion;
       if (eventMotion != null) {
         if (isDragging && dragGlue != null) {
-/*
           this.Model.BeginUpdate();
-          using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
-            foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
-              context.Save();
-              context.Matrix = shape.Matrix;
-              Distance dist = shape.DistanceToLocal(new Distance(eventMotion.X - lastX, eventMotion.Y - lastY), context);
-              shape.Matrix.Translate(dist.Dx, dist.Dy);
-              context.Restore();
-            }
-          }
+          ConnectorShape interConnector = (ConnectorShape)this.Model.GetSubModel<InteractionStateModel>().Interaction[0];
+          Glue interDragGlue = (Glue)this.Model.GetSubModel<InteractionStateModel>().Interaction[1];
+          interDragGlue.Center = new PointD(eventMotion.X, eventMotion.Y);
           this.Model.EndUpdate();
-          lastX = eventMotion.X;
-          lastY = eventMotion.Y;
-*/
+          moved = true;
           return true;
         }
       }

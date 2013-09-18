@@ -8,9 +8,9 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class Glue: Shape, IGlue
   {
-    public Glue(Glue glue) : base(glue) {}
     public Glue(Rectangle rectangle) : base(rectangle) {}
   }
 }

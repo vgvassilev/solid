@@ -10,6 +10,7 @@ using SolidV.Cairo;
 
 namespace SolidV.MVC
 {
+  [Serializable]
   public class ArrowShape : ConnectorShape
   {
     private DrawArrowDelegate arrowKindHead = ArrowKinds.TriangleRoundArrow;

@@ -18,7 +18,6 @@ namespace SolidV.MVC
     public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
       context.Save();
-      //context.Matrix = shape.Matrix;
       context.Scale(shape.Width, shape.Height);
       context.Arc(shape.Location.X / shape.Width + 0.5, shape.Location.Y/shape.Height + 0.5, 0.5, 0, 2 * Math.PI);
       context.Restore();
