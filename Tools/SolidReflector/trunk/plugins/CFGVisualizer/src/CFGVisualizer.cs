@@ -225,9 +225,11 @@ namespace SolidReflector.Plugins.CFGVisualizer
       ObjectHandle handle = Activator.CreateInstanceFrom(domain, 
                                        typeof(Sandbox).Assembly.ManifestModule.FullyQualifiedName,
                                        typeof(Sandbox).FullName);
-      
+
       Sandbox sandboxInstance = (Sandbox) handle.Unwrap();
-      SimulationMethodOutput = sandboxInstance.ExecuteAssembly(assemblyPath, "Simulation.MainClass", method);
+      SimulationMethodOutput = sandboxInstance.ExecuteAssembly(assemblyPath, "Simulation.MainClass",
+                                                               method);
+      AppDomain.Unload(domain);
     }
 
     /// <summary>
