@@ -26,7 +26,7 @@ csharp_add_gui_executable(
 csharp_add_dependencies(
   DataMorphose.exe
   # External
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   Mono.Posix.dll
