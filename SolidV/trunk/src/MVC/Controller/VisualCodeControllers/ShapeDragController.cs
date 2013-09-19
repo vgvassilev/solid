@@ -39,20 +39,22 @@ namespace SolidV.MVC
           //
           return true;
         } else if (eventButton.Type == Gdk.EventType.ButtonRelease) {
-          isDragging = false;
-          this.Model.BeginUpdate();
-          using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
-            foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
-              context.Save();
-              context.Matrix = shape.Matrix;
-              Distance dist = shape.DistanceToLocal(new Distance(eventButton.X - firstX, eventButton.Y - firstY), context);
-              shape.Matrix.Translate(dist.Dx, dist.Dy);
-              context.Restore();
+          if (isDragging) {
+            isDragging = false;
+            this.Model.BeginUpdate();
+            using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
+              foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
+                context.Save();
+                context.Matrix = shape.Matrix;
+                Distance dist = shape.DistanceToLocal(new Distance(eventButton.X - firstX, eventButton.Y - firstY), context);
+                shape.Matrix.Translate(dist.Dx, dist.Dy);
+                context.Restore();
+              }
             }
+            this.Model.GetSubModel<InteractionStateModel>().Interaction.Clear();
+            this.Model.EndUpdate();
+            return true;
           }
-          this.Model.GetSubModel<InteractionStateModel>().Interaction.Clear();
-          this.Model.EndUpdate();
-          return true;
         }
       }
 
@@ -73,6 +75,18 @@ namespace SolidV.MVC
           lastX = eventMotion.X;
           lastY = eventMotion.Y;
           moved = true;
+          return true;
+        }
+      }
+
+      Gdk.EventKey eventKey = evnt as Gdk.EventKey;
+      if (eventKey != null) {
+        if (isDragging && eventKey.Key == Gdk.Key.Escape) {
+          this.Model.BeginUpdate();
+          this.Model.GetSubModel<InteractionStateModel>().Interaction.Clear();
+          this.Model.EndUpdate();
+          isDragging = false;
+          moved = false;
           return true;
         }
       }
