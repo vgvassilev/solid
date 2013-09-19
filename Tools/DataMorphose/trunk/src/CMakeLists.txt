@@ -30,13 +30,8 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   Mono.Posix.dll
-  # GAC
-  "gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
-  "gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
-  "glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
-  "glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
-  "pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
-  "atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f"
+  # Packages
+  "pkg:gtk-sharp-2.0"
   )
 csharp_add_project_meta(
   DataMorphose.exe
