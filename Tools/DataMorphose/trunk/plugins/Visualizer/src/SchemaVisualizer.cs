@@ -32,6 +32,7 @@ namespace DataMorphose.Plugins.Visualizer
       get { return selection; }
     }
 
+    private InteractionStateModel interaction = new InteractionStateModel();
     private View<Context, SolidV.MVC.Model> view = new View<Context, SolidV.MVC.Model>();
     private CompositeController<Gdk.Event, Context, SolidV.MVC.Model> controller = 
                                     new CompositeController<Gdk.Event, Context, SolidV.MVC.Model>();
@@ -45,12 +46,16 @@ namespace DataMorphose.Plugins.Visualizer
 
       canvas.ButtonPressEvent += HandleDrawingArea1ButtonPressEvent;
       canvas.ButtonReleaseEvent += HandleDrawingArea1ButtonReleaseEvent;
+      canvas.KeyPressEvent += HandleKeyPressEvent;
+      canvas.KeyReleaseEvent += HandleKeyReleaseEvent;
+
       canvas.ExposeEvent += HandleDrawingArea1ExposeEvent;
       canvas.ConfigureEvent += HandleConfigureEvent;
       canvas.MotionNotifyEvent += HandleDrawingArea1MotionNotifyEvent;
 
       scene.RegisterSubModel<ShapesModel>(scene);
       scene.RegisterSubModel<SelectionModel>(selection);
+      scene.RegisterSubModel<InteractionStateModel>(interaction);
       scene.ModelChanged += HandleModelChanged;
 
       view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
@@ -58,9 +63,9 @@ namespace DataMorphose.Plugins.Visualizer
       view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
-      view.Viewers.Add(typeof(FilterShape), new FilterShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
       view.Viewers.Add(typeof(ConnectorGluePoint), new GlueViewer());
+      view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
 
       controller.SubControllers.Add(new ShapeSelectionController(scene, view));
       controller.SubControllers.Add(new ShapeDragController(scene, view));
@@ -81,6 +86,17 @@ namespace DataMorphose.Plugins.Visualizer
     }
 
     public void HandleDrawingArea1ButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
+      canvas.GrabFocus();
+      controller.Handle(args.Event);
+    }
+    
+    protected void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+    {
+      controller.Handle(args.Event);
+    }
+    
+    protected void HandleKeyReleaseEvent (object o, Gtk.KeyReleaseEventArgs args)
+    {
       controller.Handle(args.Event);
     }
 
