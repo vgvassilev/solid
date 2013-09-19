@@ -68,10 +68,9 @@ namespace DataMorphose.Plugins.Visualizer
       view.Viewers.Add(typeof(ConnectorGluePoint), new GlueViewer());
       view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
 
-//      controller.SubControllers.Add(new ShapeSelectionController(scene, view));
+      controller.SubControllers.Add(new ShapeSelectionController(scene, view));
       ChainController<Gdk.Event, Context, SolidV.MVC.Model> cc = 
                                         new ChainController<Gdk.Event, Context, SolidV.MVC.Model>();
-      cc.SubControllers.Add(new ShapeSelectionController(scene, view));
       cc.SubControllers.Add(new ConnectorDragController(scene, view));
       cc.SubControllers.Add(new ShapeDragController(scene, view));
       controller.SubControllers.Add(cc);
