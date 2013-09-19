@@ -131,6 +131,50 @@ namespace SolidReflector.Plugins.CFGVisualizer
     }
 
     /// <summary>
+    /// Swaps the successors of a given block.
+    /// </summary>
+    /// <param name="currentBlock">Current block.</param>
+    /// <param name="oldSuccessor">Old successor.</param>
+    /// <param name="newSuccessor">New successor.</param>
+    /// 
+    void swapSuccessors(BasicBlock currentBlock, BasicBlock oldSuccessor, BasicBlock newSuccessor) {
+      if ((newSuccessor.Last.OpCode.FlowControl != FlowControl.Branch) || 
+          (newSuccessor.Last.OpCode.FlowControl != FlowControl.Cond_Branch)) {
+        Instruction br = Instruction.Create(OpCodes.Br, newSuccessor.Last.Next);
+        br.Next = newSuccessor.Last.Next;
+        newSuccessor.Last.Next = br;
+        newSuccessor.Add(br);
+      }
+
+      BasicBlock block = currentBlock.Successors.Find(x => x.Name == oldSuccessor.Name);
+      currentBlock.Successors.Remove(block);
+      block.Predecessors.Remove(currentBlock);
+      
+      currentBlock.Successors.Add(newSuccessor);
+      newSuccessor.Predecessors.Add(currentBlock);
+    }
+
+    /// <summary>
+    /// Fixes the branch instructions Operand, Next and Previous properties.
+    /// Modifying CFG may make some branch instructions invalid.
+    /// Has to be executed after CFG modification in order to get an assembly with valid branches.
+    /// </summary>
+    /// 
+    private void fixBranches() {
+      foreach (BasicBlock block in currentCfg.RawBlocks) {
+        if (block.Successors.Count == 2) {
+          if ((block.Last.OpCode.FlowControl == FlowControl.Branch) || 
+              (block.Last.OpCode.FlowControl == FlowControl.Cond_Branch)) {
+            block.Last.Operand = block.Successors[1].First;
+            
+            block.Last.Next = block.Successors[0].First;
+            //block.Successors[0].First.Previous = block.Last.Next;
+          }
+        }
+      }
+    }
+
+    /// <summary>
     /// Dynamically creates an assembly from a control flow graph.
     /// </summary>
     /// <param name="cfg">Control flow graph</param>
@@ -143,7 +187,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
                                                                        new Version("1.0.0.0"));
 
       AssemblyDefinition assemblyDef = AssemblyDefinition.CreateAssembly(assemblyName, "<Module>",
-                                                                        ModuleKind.Console);
+                                                                         ModuleKind.Console);
 
       TypeReference objTypeRef = assemblyDef.MainModule.Import(typeof(System.Object));
       TypeDefinition typeDef = new TypeDefinition("Simulation", "MainClass", TypeAttributes.Public,
