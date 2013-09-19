@@ -233,10 +233,10 @@ namespace DataMorphose.Plugins.Visualizer
     /// <param name="args">Arguments.</param>
     private void OnTableBtnClick(object sender, EventArgs args) {
       Gtk.ToolButton btn = (Gtk.ToolButton)sender;
-      schemaV.Scene.BeginUpdate();
+      schemaV.Model.BeginUpdate();
       schemaV.DrawSchema(morphose.GetModel().DB.GetTable(btn.Label));
       schemaV.Scene.AutoArrange();
-      schemaV.Scene.EndUpdate();
+      schemaV.Model.EndUpdate();
     }
 
     /// <summary>

@@ -32,6 +32,11 @@ namespace DataMorphose.Plugins.Visualizer
       get { return selection; }
     }
 
+    private SolidV.MVC.Model model = new SolidV.MVC.Model();
+    public SolidV.MVC.Model Model {
+      get { return model; }
+    }
+
     private InteractionStateModel interaction = new InteractionStateModel();
     private View<Context, SolidV.MVC.Model> view = new View<Context, SolidV.MVC.Model>();
     private CompositeController<Gdk.Event, Context, SolidV.MVC.Model> controller = 
@@ -54,25 +59,27 @@ namespace DataMorphose.Plugins.Visualizer
       canvas.ConfigureEvent += HandleConfigureEvent;
       canvas.MotionNotifyEvent += HandleDrawingArea1MotionNotifyEvent;
 
-      scene.RegisterSubModel<ShapesModel>(scene);
-      scene.RegisterSubModel<SelectionModel>(selection);
-      scene.RegisterSubModel<InteractionStateModel>(interaction);
-      scene.ModelChanged += HandleModelChanged;
+      model.RegisterSubModel<ShapesModel>(scene);                                                                     
+      model.RegisterSubModel<SelectionModel>(selection);                                                                          
+      model.RegisterSubModel<InteractionStateModel>(interaction);                                                                 
+      
+      model.ModelChanged += HandleModelChanged;
 
+      view.Viewers.Add(typeof(SolidV.MVC.Model), new ModelViewer<Context>());
       view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
       view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
-      view.Viewers.Add(typeof(ConnectorGluePoint), new GlueViewer());
+      view.Viewers.Add(typeof(Glue), new GlueViewer());
       view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
 
-      controller.SubControllers.Add(new ShapeSelectionController(scene, view));
+      controller.SubControllers.Add(new ShapeSelectionController(model, view));
       ChainController<Gdk.Event, Context, SolidV.MVC.Model> cc = 
                                         new ChainController<Gdk.Event, Context, SolidV.MVC.Model>();
-      cc.SubControllers.Add(new ConnectorDragController(scene, view));
-      cc.SubControllers.Add(new ShapeDragController(scene, view));
+      cc.SubControllers.Add(new ConnectorDragController(model, view));
+      cc.SubControllers.Add(new ShapeDragController(model, view));
       controller.SubControllers.Add(cc);
     }
 
@@ -115,7 +122,7 @@ namespace DataMorphose.Plugins.Visualizer
 
     public void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
       using (Cairo.Context context = Gdk.CairoHelper.Create(((Gtk.DrawingArea)o).GdkWindow)) {
-        view.Draw(context, scene);
+        view.Draw(context, model);
       }
     }
 
