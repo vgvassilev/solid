@@ -223,11 +223,13 @@ endmacro( CSHARP_ADD_DEPENDENCIES )
 macro ( CSHARP_EXPAND_PACKAGE package_name expanded_package)
 
 # We need to call something like that: 
-#PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig/ pkg-config --libs gtk-sharp-2.0
+#[PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig/] pkg-config --libs gtk-sharp-2.0
 
 find_package( PkgConfig REQUIRED )
 unset(expanded_package)
-set(ENV{PKG_CONFIG_PATH} "${CSHARP_MONO_FRAMEWORK}/Versions/Current/lib/pkgconfig/")
+if(APPLE)
+  set(ENV{PKG_CONFIG_PATH} "${CSHARP_MONO_FRAMEWORK}/Versions/Current/lib/pkgconfig/")
+endif()
 set(command "${PKG_CONFIG_EXECUTABLE}")
 execute_process(COMMAND ${command}  --libs ${package_name} OUTPUT_VARIABLE output_var)
 
