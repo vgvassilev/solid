@@ -12,5 +12,5 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   # Packages
   "pkg:gtk-sharp-2.0"
-  "pkg:mono-cairo"
+  Mono.Cairo.dll
   )
