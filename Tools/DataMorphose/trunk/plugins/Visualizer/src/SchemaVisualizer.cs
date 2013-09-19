@@ -37,6 +37,7 @@ namespace DataMorphose.Plugins.Visualizer
     private CompositeController<Gdk.Event, Context, SolidV.MVC.Model> controller = 
                                     new CompositeController<Gdk.Event, Context, SolidV.MVC.Model>();
 
+
     public SchemaVisualizer(Gtk.DrawingArea canvas) {
       this.canvas = canvas;
 
@@ -67,8 +68,13 @@ namespace DataMorphose.Plugins.Visualizer
       view.Viewers.Add(typeof(ConnectorGluePoint), new GlueViewer());
       view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
 
-      controller.SubControllers.Add(new ShapeSelectionController(scene, view));
-      controller.SubControllers.Add(new ShapeDragController(scene, view));
+//      controller.SubControllers.Add(new ShapeSelectionController(scene, view));
+      ChainController<Gdk.Event, Context, SolidV.MVC.Model> cc = 
+                                        new ChainController<Gdk.Event, Context, SolidV.MVC.Model>();
+      cc.SubControllers.Add(new ShapeSelectionController(scene, view));
+      cc.SubControllers.Add(new ConnectorDragController(scene, view));
+      cc.SubControllers.Add(new ShapeDragController(scene, view));
+      controller.SubControllers.Add(cc);
     }
 
     void HandleConfigureEvent (object o, Gtk.ConfigureEventArgs args) {
@@ -90,6 +96,10 @@ namespace DataMorphose.Plugins.Visualizer
       controller.Handle(args.Event);
     }
     
+    public void HandleDrawingArea1ButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args) {
+      controller.Handle(args.Event);
+    }
+    
     protected void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
     {
       controller.Handle(args.Event);
@@ -101,10 +111,6 @@ namespace DataMorphose.Plugins.Visualizer
     }
 
     public void HandleDrawingArea1MotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args) {
-      controller.Handle(args.Event);
-    }
-
-    public void HandleDrawingArea1ButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args) {
       controller.Handle(args.Event);
     }
 
