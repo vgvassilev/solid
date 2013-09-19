@@ -16,6 +16,7 @@
 #   CSHARP_MONO_INTERPRETER_${version} eg. "CSHARP_MONO_INTERPRETER_2.10.2"
 #   CSHARP_MONO_VERSION eg. "2.10.2"
 #   CSHARP_MONO_VERSIONS eg. "2.10.2, 2.6.7"
+#   CSHARP_MONO_FRAMEWORK eg. /Library/Frameworks/Mono.framework/
 #
 # Additional references can be found here:
 #   http://www.mono-project.com/Main_Page
@@ -161,6 +162,12 @@ else( UNIX )
     set( CSHARP_MONO_FOUND 1 CACHE INTERNAL "Boolean indicating if C# Mono was found" )
 
     unset( csharp_mono_interpreter CACHE )
+
+    # Lets find the framework location
+    FIND_LIBRARY(CSHARP_MONO_FRAMEWORK NAMES Mono)
+    if( NOT DEFINED CSHARP_MONO_FRAMEWORK )
+      set( CSHARP_MONO_FOUND 0 )
+    endif()
   endif( EXISTS ${csharp_mono_compiler} )
 
   # Remove temp variable from cache

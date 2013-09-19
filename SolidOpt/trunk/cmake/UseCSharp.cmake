@@ -219,6 +219,25 @@ macro( CSHARP_ADD_DEPENDENCIES name )
 
 endmacro( CSHARP_ADD_DEPENDENCIES )
 
+# Find Pkg config to expand the packages coming in the style pkg:package
+macro ( CSHARP_EXPAND_PACKAGE package_name expanded_package)
+
+# We need to call something like that: 
+#PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig/ pkg-config --libs gtk-sharp-2.0
+
+find_package( PkgConfig REQUIRED )
+unset(expanded_package)
+set(ENV{PKG_CONFIG_PATH} "${CSHARP_MONO_FRAMEWORK}/Versions/Current/lib/pkgconfig/")
+set(command "${PKG_CONFIG_EXECUTABLE}")
+execute_process(COMMAND ${command}  --libs ${package_name} OUTPUT_VARIABLE output_var)
+
+#Remove the trailing new line.
+string(REPLACE "\n" "" output_var "${output_var}")
+
+set(${expanded_package} ${output_var})
+unset(output_var) #FIXME: We really need functions instead of macros - they have scope
+endmacro( CSHARP_EXPAND_PACKAGE )
+
 # Resolve dependencies
 macro( CSHARP_RESOLVE_DEPENDENCIES )
   # Read global solution info lists
@@ -257,6 +276,20 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       # References
       list( GET target_refs ${i} r )
       string(REPLACE "#" "#/reference:" r "${r}")
+
+      # Replace the references that are packages.
+      while("${r}" MATCHES "#/reference:pkg:")
+        STRING(REGEX REPLACE ".*#/reference:pkg:([^#]+).*" "\\1" package "${r}")
+        MESSAGE(STATUS "Package=${package}")
+        if(package)
+          CSHARP_EXPAND_PACKAGE(${package} expansion)
+          STRING(REGEX REPLACE "-r:" "#/reference:" expansion "${expansion}" )
+          STRING(REGEX REPLACE " " "" expansion "${expansion}" )
+          STRING(REGEX REPLACE "#/reference:pkg:${package}" "${expansion}" r "${r}" )
+          MESSAGE(STATUS "After Subst: ${r}")
+        endif()
+      endwhile()
+
       string(SUBSTRING "${r}" 1 -1 r)
       string(REPLACE "#" ";" refs "${r}")
 
