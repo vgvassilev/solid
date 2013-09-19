@@ -254,6 +254,22 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
   get_property(target_metas_value GLOBAL PROPERTY target_metas_value_property)
   get_property(target_bin_dir GLOBAL PROPERTY target_bin_dir_property)
 
+  string(REPLACE "#" "#/reference:" target_refs "${target_refs}")
+
+  # Replace the references that are packages.
+  while("${target_refs}" MATCHES "#/reference:pkg:")
+    STRING(REGEX REPLACE ".*#/reference:pkg:([^#]+).*" "\\1" package "${target_refs}")
+    if(package)
+      CSHARP_EXPAND_PACKAGE(${package} expansion)
+      STRING(REGEX REPLACE "-r:" "#/reference:" expansion "${expansion}" )
+      STRING(REGEX REPLACE " " "" expansion "${expansion}")
+      STRING(REGEX REPLACE "#/reference:pkg:${package}" "${expansion}" target_refs "${target_refs}" )
+    endif()
+  endwhile()
+
+  # Store the expanded list
+  set_property(GLOBAL PROPERTY target_refs_property "${target_refs}")
+
   # Define custom targets and commands
   set( i 0 )
   foreach( name ${target_name} )
@@ -277,19 +293,6 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
 
       # References
       list( GET target_refs ${i} r )
-      string(REPLACE "#" "#/reference:" r "${r}")
-
-      # Replace the references that are packages.
-      while("${r}" MATCHES "#/reference:pkg:")
-        STRING(REGEX REPLACE ".*#/reference:pkg:([^#]+).*" "\\1" package "${r}")
-        if(package)
-          CSHARP_EXPAND_PACKAGE(${package} expansion)
-          STRING(REGEX REPLACE "-r:" "#/reference:" expansion "${expansion}" )
-          STRING(REGEX REPLACE " " "" expansion "${expansion}")
-          STRING(REGEX REPLACE "#/reference:pkg:${package}" "${expansion}" r "${r}" )
-          MESSAGE(STATUS "After Subst: ${r}")
-        endif()
-      endwhile()
 
       string(SUBSTRING "${r}" 1 -1 r)
       string(REPLACE "#" ";" refs "${r}")
