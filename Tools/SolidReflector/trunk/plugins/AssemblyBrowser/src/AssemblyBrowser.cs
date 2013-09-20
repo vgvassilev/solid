@@ -64,6 +64,16 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     /// 
     private string[] loadedAssemblies;
 
+    /// <summary>
+    /// Contains all the rows' tree paths.
+    /// </summary>
+    private List<string> treePaths = new List<string>();
+
+    /// <summary>
+    /// The assembly treeview model.
+    /// </summary>
+    private Gtk.TreeStore store = null;
+
     public AssemblyBrowser() { }
 
     #region IAssemblyBrowser implementation
@@ -323,6 +333,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
           //DumpMember(memberDef);
           break;
       }
+
       assemblyTree.ShowAll();
       //ShowAll();
     }
@@ -341,7 +352,6 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     /// </param>
     protected void AttachSubTree(Gtk.TreeModel model, Gtk.TreeIter parent, object[] elements)
     {
-      Gtk.TreeStore store = model as Gtk.TreeStore;
       Debug.Assert(store != null, "TreeModel shouldn't be flat");
 
       // remove the values if they were added before.
@@ -391,7 +401,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       else
         assemblyTree.AppendColumn(col);
 
-      Gtk.TreeStore store = assemblyTree.Model as Gtk.TreeStore;
+      store = assemblyTree.Model as Gtk.TreeStore;
       if (store == null)
         store = new Gtk.TreeStore(typeof(object));
 
@@ -423,7 +433,6 @@ namespace SolidReflector.Plugins.AssemblyBrowser
           watcher.NotifyFilter = NotifyFilters.LastWrite;
 
           watcher.Changed += delegate(object sender, FileSystemEventArgs e) {
-            Gtk.TreeStore store = assemblyTree.Model as Gtk.TreeStore;
             Gtk.TreeIter assemblyIter;
             store.GetIterFirst(out assemblyIter);
 
@@ -438,6 +447,7 @@ namespace SolidReflector.Plugins.AssemblyBrowser
 
                 AssemblyDefinition ad1 = AssemblyDefinition.ReadAssembly(file);
                 store.AppendValues(ad1);
+                LoadSelectedAssembliesTreePaths();
               }
             }
           };
@@ -454,18 +464,34 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     /// </summary>
     ///
     private void SaveSelectedAssembliesTreePaths() {
-      Gtk.TreePath[] paths = assemblyTree.Selection.GetSelectedRows();
+      // Get the state of all the rows
+      store.Foreach(ForeachRow);
+      Gtk.TreePath p = null;
+      Gtk.TreeViewColumn c = null;
+
+      // Get the current activated row
+      assemblyTree.GetCursor(out p, out c);
       
       FileStream file = new FileStream(Path.Combine(reflector.GetConfigurationDirectory(),
                                        "SolidReflector.session"), FileMode.Create,
                                        FileAccess.ReadWrite);
 
+      // Save the states of the rows in file
       using (StreamWriter writer = new StreamWriter(file)) {
-        foreach (Gtk.TreePath path in paths)
-          writer.Write(path.ToString());
-        
+        foreach (string path in treePaths)
+          writer.WriteLine(path.ToString());
+
+        // Save the current activated row so it will be reactivated when the app is restarted
+        // The entry is saved last in the file
+        writer.WriteLine(p.ToString());
         writer.Flush();
       }
+    }
+
+    private bool ForeachRow (Gtk.TreeModel model, Gtk.TreePath path, Gtk.TreeIter iter) {
+      if (assemblyTree.GetRowExpanded(path))
+        treePaths.Add(path.ToString());
+      return false;
     }
 
     /// <summary>
@@ -477,9 +503,11 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       string[] lines = null;
       if (File.Exists(filepath)) {
         lines = File.ReadAllLines(filepath);
-        foreach (string treePath in lines) {
-          expandPath(treePath);
-        }
+        for (int i = 0; i < lines.Length; i++)
+          expandPath(lines[i]);
+        
+        assemblyTree.SetCursor(new Gtk.TreePath(lines[lines.Length -1]), assemblyTree.GetColumn(0), true);
+        assemblyTree.ActivateRow(new Gtk.TreePath(lines[lines.Length -1]), assemblyTree.GetColumn(0));
       }
     }
 
@@ -490,13 +518,9 @@ namespace SolidReflector.Plugins.AssemblyBrowser
     /// <param name="path">Path.</param>
     /// 
     private void expandPath(string path) {
-      string[] pathNodes = path.Split(':');
-      string currentPath = pathNodes[0];
-      for (int i = 1; i < pathNodes.Length; i++) {
-        assemblyTree.ActivateRow(new Gtk.TreePath(currentPath), assemblyTree.GetColumn(0));
-        assemblyTree.ExpandRow(new Gtk.TreePath(currentPath), true);
-        currentPath += ":" + pathNodes[i];
-      }
+      Gtk.TreePath treePath = new Gtk.TreePath(path);
+      assemblyTree.ActivateRow(treePath, assemblyTree.GetColumn(0));
+      assemblyTree.ExpandRow(treePath, true);
     }
 
     private void RenderAssemblyDefinition(Gtk.TreeViewColumn column, Gtk.CellRenderer cell,
