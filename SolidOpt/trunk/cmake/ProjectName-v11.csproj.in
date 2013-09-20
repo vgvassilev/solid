@@ -25,8 +25,8 @@
     <TargetFrameworkVersion>@VAR_Project_TargetFrameworkVersion@</TargetFrameworkVersion>
     <TargetFrameworkProfile>@VAR_Project_TargetFrameworkProfile@</TargetFrameworkProfile>
     <BaseDirectory>@VAR_Project_BaseDirectory@</BaseDirectory>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
+    <SignAssembly>@DELAY_SIGN@</SignAssembly>
+    <DelaySign>@DELAY_SIGN@</DelaySign>
     <AssemblyOriginatorKeyFile>@CMAKE_SOURCE_DIR@\public.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == '@VAR_Project_Target@|AnyCPU' ">

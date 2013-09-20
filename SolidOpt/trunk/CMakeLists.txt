@@ -62,12 +62,6 @@ endif()
 set(CSBUILDFLAGS "")
 set(MSBUILDFLAGS "")
 
-list(APPEND CSBUILDFLAGS "/delaysign+" "/keyfile:${CMAKE_SOURCE_DIR}/public.snk")
-
-# Suppress the warnings coming from the /doc switch. There is no point warning 
-# about missing documentation for certain methods. We all know about it :)
-list(APPEND CSBUILDFLAGS "/nowarn:1591")
-
 # Set up the compiler flag for Debug/Release mode.
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   list(APPEND CSBUILDFLAGS "/debug:full" "/debug+" "/optimize-")
@@ -76,6 +70,21 @@ else()
   list(APPEND CSBUILDFLAGS "/debug-" "/optimize+")
   list(APPEND MSBUILDFLAGS "/p:Configuration=Release")
 endif()
+
+# Define whether to use assembly deleyed signing or not
+set(DELAY_SIGN OFF CACHE BOOL "Enable delayed assembly signing.")
+if(DELAY_SIGN)
+  # The if-stmt converts On Y, YES to bool and from here on we want only a real
+  # true or false.
+  set(DELAY_SIGN "True") 
+  list(APPEND CSBUILDFLAGS "/delaysign+" "/keyfile:${CMAKE_SOURCE_DIR}/public.snk")
+else()
+  set(DELAY_SIGN "False")
+endif(DELAY_SIGN)
+
+# Suppress the warnings coming from the /doc switch. There is no point warning 
+# about missing documentation for certain methods. We all know about it :)
+list(APPEND CSBUILDFLAGS "/nowarn:1591")
 
 #-----------------------------------------------------------------------------
 # Configure Dart testing support.  This should be done before any

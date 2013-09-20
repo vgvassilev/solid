@@ -56,6 +56,29 @@ if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Debug CACHE STRING "Choose a build type: [Debug Release]" FORCE )
 endif()
 
+# Set some default build flags.
+set(CSBUILDFLAGS "")
+set(MSBUILDFLAGS "")
+
+# Set up the compiler flag for Debug/Release mode.
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  list(APPEND CSBUILDFLAGS "/debug:full" "/debug+" "/optimize-")
+  list(APPEND MSBUILDFLAGS "/p:Configuration=Debug")
+else()
+  list(APPEND CSBUILDFLAGS "/debug-" "/optimize+")
+  list(APPEND MSBUILDFLAGS "/p:Configuration=Release")
+endif()
+
+# Define whether to use assembly deleyed signing or not
+set(DELAY_SIGN OFF CACHE BOOL "Enable delayed assembly signing.")
+if(DELAY_SIGN)
+  list(APPEND CSBUILDFLAGS "/delaysign+" "/keyfile:${CMAKE_SOURCE_DIR}/public.snk")
+endif(DELAY_SIGN)
+
+# Suppress the warnings coming from the /doc switch. There is no point warning 
+# about missing documentation for certain methods. We all know about it :)
+list(APPEND CSBUILDFLAGS "/nowarn:1591")
+
 #-----------------------------------------------------------------------------
 # Configure Dart testing support.  This should be done before any
 # MESSAGE(FATAL_ERROR ...) commands are invoked.
