@@ -154,13 +154,15 @@ namespace DataMorphose.Plugins.Visualizer
       filter.Style.Border = new SolidPattern(new Color(0, 0, 0));
 
       ConnectorGluePoint filterGlue = new ConnectorGluePoint(
-        new PointD(filter.Location.X + (filter.Width/2), filter.Location.Y));
+      new PointD(filter.Location.X + (filter.Width/2), filter.Location.Y));
       filter.Items.Add(filterGlue);
+      filterGlue.Parent = filter;
       
       for (int i = 0; i < scene.Shapes.Count; i++) {
         var block = scene.Shapes[i];
         ConnectorGluePoint blockGlue = new ConnectorGluePoint(new PointD(block.Location.X 
                                              + block.Width / 2, block.Location.Y + block.Height));
+        blockGlue.Parent = block;
         // Add the gluePoints to the shapes
         block.Items.Add(blockGlue);
 
@@ -169,13 +171,13 @@ namespace DataMorphose.Plugins.Visualizer
         arrows.Add(arrow); 
       }
       
-      scene.BeginUpdate();
+      model.BeginUpdate();
       // Add all shapes to the scene
       scene.Shapes.Add(filter);
       foreach(ArrowShape a in arrows)
         scene.Shapes.Add(a);
 
-      scene.EndUpdate();
+      model.EndUpdate();
     }
   }
 }

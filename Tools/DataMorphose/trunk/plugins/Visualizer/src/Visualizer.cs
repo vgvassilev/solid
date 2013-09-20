@@ -64,13 +64,15 @@ namespace DataMorphose.Plugins.Visualizer
     /// <param name="label">Label.</param>
     /// <param name="container">Container.</param>
     private void AddDockItem(string label, Gtk.Container container) {
-      DockItem dockToolbar = morphose.GetMainWindow().DockFrame.AddItem(label);
-      dockToolbar.DrawFrame = true;
-      dockToolbar.Label = label;
-      dockToolbar.Expand = true;
-      dockToolbar.DefaultVisible = true;
-      dockToolbar.Visible = true;
-      dockToolbar.Content = container;
+      DockItem dockItem = morphose.GetMainWindow().DockFrame.AddItem(label);
+      if (label != "Visualizer")
+        dockItem.DefaultWidth = 50;
+      dockItem.DrawFrame = true;
+      dockItem.Label = label;
+      dockItem.Expand = true;
+      dockItem.DefaultVisible = true;
+      dockItem.Visible = true;
+      dockItem.Content = container;
       container.ShowAll();
     }
 
@@ -84,8 +86,12 @@ namespace DataMorphose.Plugins.Visualizer
       tbLeft.Orientation = Gtk.Orientation.Vertical;
       // Show only text on the buttons
       tbLeft.ToolbarStyle = Gtk.ToolbarStyle.Text;
+
+      ScrolledWindow scroll = new ScrolledWindow();
+      // Attach the treeView to the scroll bar.
+      scroll.AddWithViewport(vbox);
       
-      nbLeftDock.Add(vbox);;
+      nbLeftDock.Add(scroll);;
       
       this.propertyGrid = new SolidV.Gtk.ObjectInspector();
       nbLeftDock.AppendPage(propertyGrid, new Label("Properties"));
