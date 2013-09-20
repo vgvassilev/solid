@@ -11,6 +11,8 @@ namespace SolidReflector.Plugins.ILVisualizer
   {
     private MainWindow mainWindow;
     private DockItem ilVisualizingDock = null;
+    private Gtk.Notebook nb = new Gtk.Notebook();
+    private TextView textView = new TextView();
 
     public ILVisualizer() { }
 
@@ -22,15 +24,19 @@ namespace SolidReflector.Plugins.ILVisualizer
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
-      Gtk.Notebook nb = new Gtk.Notebook();
-      nb.AppendPage( new TextView(), new Gtk.Label("IL Text"));
-      nb.ShowAll();
+      nb.AppendPage(textView, new Gtk.Label("IL Text"));
+
+      ScrolledWindow scrollWindow = new ScrolledWindow();
+      Viewport viewport = new Viewport();
+      scrollWindow.Add(viewport);
+      viewport.Add(nb);
+      scrollWindow.ShowAll();
 
       ilVisualizingDock = mainWindow.DockFrame.AddItem("ILVisualizer");
       ilVisualizingDock.Expand = true;
       ilVisualizingDock.DrawFrame = true;
       ilVisualizingDock.Label = "IL Visualizer";
-      ilVisualizingDock.Content = nb;
+      ilVisualizingDock.Content = scrollWindow;
       ilVisualizingDock.DefaultVisible = true;
       ilVisualizingDock.Visible = true;
     }
@@ -45,8 +51,6 @@ namespace SolidReflector.Plugins.ILVisualizer
     #endregion
 
     private void OnSelectionChanged(object sender, SelectionEventArgs args) {
-      Gtk.Notebook nb = ilVisualizingDock.Content as Gtk.Notebook;
-      Gtk.TextView textView = nb.CurrentPageWidget as Gtk.TextView;
       if (args.assembly != null) {
         ILPrettyPrinter.PrintAssembly(args.assembly, textView);
         if (args.module != null) {
