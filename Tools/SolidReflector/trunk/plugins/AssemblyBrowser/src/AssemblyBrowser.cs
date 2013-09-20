@@ -137,11 +137,18 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       open.Activated += OnActivated;
       (fileMenu.Submenu as Gtk.Menu).Prepend(open);
 
+      // Setting up the window scrollers
+      Gtk.ScrolledWindow scrollWindow = new Gtk.ScrolledWindow();
+      Gtk.Viewport viewport = new Gtk.Viewport();
+      scrollWindow.Add(viewport);
+      viewport.Add(assemblyTree);
+      scrollWindow.ShowAll();
+
       // Attaching the current dockItem in the DockFrame
       dockItem = mainWindow.DockFrame.AddItem("AssemblyBrowser");
       dockItem.DrawFrame = true;
       dockItem.Label = "Assembly";
-      dockItem.Content = assemblyTree;
+      dockItem.Content = scrollWindow;
 
       LoadEnvironment();
 
