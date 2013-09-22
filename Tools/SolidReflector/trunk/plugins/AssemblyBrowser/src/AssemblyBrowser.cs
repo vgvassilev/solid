@@ -382,8 +382,8 @@ namespace SolidReflector.Plugins.AssemblyBrowser
       string curEnv = System.IO.Path.Combine(reflector.GetConfigurationDirectory(),
                                              "Assemblies.env");
 
-      loadedAssemblies = File.ReadAllLines(curEnv);
       if (File.Exists(curEnv)) {
+        loadedAssemblies = File.ReadAllLines(curEnv);
         LoadFilesInTreeView(loadedAssemblies);
         WatchFilesForChanges(loadedAssemblies);
       }
