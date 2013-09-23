@@ -44,21 +44,6 @@ endif ( CSHARP_TYPE MATCHES ".NET" )
 
 include(VisualStudioGenerator)
 
-# Init global solution info lists
-set_property(GLOBAL PROPERTY target_guid_property)
-set_property(GLOBAL PROPERTY target_proj_file_property)
-set_property(GLOBAL PROPERTY target_name_property)
-set_property(GLOBAL PROPERTY target_type_property)
-set_property(GLOBAL PROPERTY target_output_type_property)
-set_property(GLOBAL PROPERTY target_out_property)
-set_property(GLOBAL PROPERTY target_refs_property)
-set_property(GLOBAL PROPERTY target_metas_key_property)
-set_property(GLOBAL PROPERTY target_metas_value_property)
-set_property(GLOBAL PROPERTY target_sources_property)
-set_property(GLOBAL PROPERTY target_sources_dep_property)
-set_property(GLOBAL PROPERTY target_src_dir_property)
-set_property(GLOBAL PROPERTY target_bin_dir_property)
-
 # Macros
 
 macro( CSHARP_ADD_LIBRARY_BINARY name)
