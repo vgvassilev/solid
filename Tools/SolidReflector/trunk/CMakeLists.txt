@@ -121,15 +121,6 @@ add_subdirectory(doc)
 # Resolve all target dependencies
 csharp_resolve_dependencies()
 
-# The lock is used to avoid regeneration of the sln-s and csproj-s if the
-# build system is steered by another one. For example if SolidV is embedded
-# as a vendor to say SolidReflector. 
-get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
-if(NOT SLN_GEN_LOCK)
-  set_property(GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY "SolidReflector")
-endif()
-get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
-
 get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
 if (SLN_GEN_LOCK STREQUAL "SolidReflector")
   # Save solution
