@@ -58,6 +58,11 @@ if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Debug CACHE STRING "Choose a build type: [Debug Release]" FORCE )
 endif()
 
+# Build allow SolidOpt libraries to be built all-in-one.
+if( NOT SOLIDOPT_BUNDLE )
+  set( SOLIDOPT_BUNDLE MultiLib CACHE STRING "Choose a SolidOpt Bundle type: [MultiLib All-in-One]" FORCE )
+endif()
+
 # Set some default build flags.
 set(CSBUILDFLAGS "")
 set(MSBUILDFLAGS "")
