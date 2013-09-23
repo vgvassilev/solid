@@ -72,7 +72,12 @@ endif()
 # Define whether to use assembly deleyed signing or not
 set(DELAY_SIGN OFF CACHE BOOL "Enable delayed assembly signing.")
 if(DELAY_SIGN)
+  # The if-stmt converts On Y, YES to bool and from here on we want only a real
+  # true or false.
+  set(DELAY_SIGN "True") 
   list(APPEND CSBUILDFLAGS "/delaysign+" "/keyfile:${CMAKE_SOURCE_DIR}/public.snk")
+else()
+  set(DELAY_SIGN "False")
 endif(DELAY_SIGN)
 
 # Suppress the warnings coming from the /doc switch. There is no point warning 
@@ -90,7 +95,18 @@ IF(BUILD_TESTING)
 ENDIF(BUILD_TESTING)
 
 # ...
+
+# The lock is used to avoid regeneration of the sln-s and csproj-s if the
+# build system is steered by another one. For example if SolidV is embedded
+# as a vendor to say SolidReflector. 
+get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
+if(NOT SLN_GEN_LOCK)
+  set_property(GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY "SolidV")
+endif()
+get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
+
 add_subdirectory(src)
+
 # FIXME:
 # This is a bit hackish way, but it adds support for configuring just docs
 # it is needed by our online doxygen system.
@@ -99,8 +115,11 @@ set(DOXYGEN_INPUT_DIR ${CMAKE_SOURCE_DIR})
 # Resolve all target dependencies
 csharp_resolve_dependencies()
 
-# Save solution
-csharp_save_vs_solution(SolidV)
+get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
+if (SLN_GEN_LOCK STREQUAL "SolidV")
+  # Save solution
+  csharp_save_vs_solution(SolidV)
+endif()
 
 #Configure the setenv script.
 configure_file(
