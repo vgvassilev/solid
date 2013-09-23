@@ -2,8 +2,11 @@ using MonoDevelop.Components.Docking;
 using Gtk;
 using System;
 
-using SolidOpt.Services;
 using SolidReflector.Plugins.AssemblyBrowser;
+using SolidOpt.Services;
+using SolidOpt.Services.Transformations.CodeModel.CallGraph;
+using SolidOpt.Services.Transformations.Multimodel.ILtoCG;
+using Mono.Cecil;
 
 namespace SolidReflector.Plugins.CGVisualizer
 {
@@ -11,6 +14,9 @@ namespace SolidReflector.Plugins.CGVisualizer
   {
     private MainWindow mainWindow = null;
     private DockItem cgVisualizingDock = null;
+    private Gtk.Notebook nb = new Gtk.Notebook();
+    private Gtk.TextView textView = new TextView();
+    private Gtk.DrawingArea drawingArea = new Gtk.DrawingArea();
 
     public CGVisualizer() { }
 
@@ -22,14 +28,20 @@ namespace SolidReflector.Plugins.CGVisualizer
       IAssemblyBrowser browser = reflector.GetPlugins().GetService<IAssemblyBrowser>();
       browser.SelectionChanged += OnSelectionChanged;
 
-      Gtk.Notebook nb = new Gtk.Notebook();
-      nb.AppendPage(new TextView(), new Gtk.Label("CG Text"));
+      ScrolledWindow scrollWindow = new ScrolledWindow();
+      Viewport viewport = new Viewport();
+      scrollWindow.Add(viewport);
+      viewport.Add(nb);
+      scrollWindow.ShowAll();
+
+      nb.AppendPage(textView, new Gtk.Label("CG Text"));
+      nb.AppendPage(drawingArea, new Gtk.Label("CG Visualizer"));
       nb.ShowAll();
 
       cgVisualizingDock = mainWindow.DockFrame.AddItem("CGVisualizer");
       cgVisualizingDock.DrawFrame = true;
       cgVisualizingDock.Label = "Call Graph Visualizer";
-      cgVisualizingDock.Content = nb;
+      cgVisualizingDock.Content = scrollWindow;
       cgVisualizingDock.DefaultVisible = true;
       cgVisualizingDock.Visible = true;
     }
@@ -44,11 +56,14 @@ namespace SolidReflector.Plugins.CGVisualizer
     #endregion
 
     private void OnSelectionChanged(object sender, SelectionEventArgs args) {
-      Gtk.Notebook nb = cgVisualizingDock.Content as Gtk.Notebook;
-      Gtk.TextView textView = nb.CurrentPageWidget as Gtk.TextView;
-      if (args.definition != null) {
-        // Dump the definition
+      if (args.definition is MethodDefinition) {
         CGPrettyPrinter.PrintPretty(args.definition, textView);
+        CGPrettyDrawer drawer = new CGPrettyDrawer(drawingArea);
+
+        var builder = new CallGraphBuilder(args.definition as MethodDefinition);
+        CallGraph currentCg = builder.Create(2);
+
+        drawer.DrawCallGraph(currentCg);
         if (args.module != null) {
           // Dump the module
           if (args.assembly != null) {
