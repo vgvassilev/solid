@@ -67,6 +67,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// Test case name.
     /// </param>
     public virtual void RunTestCase(string testCaseName, Source source) {
+      // Set invariant culture
+      System.Threading.Thread.CurrentThread.CurrentCulture =
+        System.Globalization.CultureInfo.InvariantCulture; 
+
       //FIXME: Here we do that and then reconstrunct the same path to source.
       testCaseName = Path.GetFileNameWithoutExtension(testCaseName);
       string testCaseFile = GetTestCaseFullPath(testCaseName);
