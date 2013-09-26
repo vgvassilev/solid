@@ -12,7 +12,7 @@
      IL_0000:  ldarg.0 
      IL_0001:  call instance void object::'.ctor'()
      IL_0006:  ret 
-   } // end of method MainClass::.ctor
+   } // end of method TestCase::.ctor
 
 
   // public static void Main() {
