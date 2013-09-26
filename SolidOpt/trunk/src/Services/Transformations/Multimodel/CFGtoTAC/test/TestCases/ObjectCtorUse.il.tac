@@ -1,7 +1,9 @@
 System.Void TestCase::Main() {
   L0: T_0 = new System.Object()
-  L1: pushparam T_0
-  L2: T_1 = callvirt ToString()
-  L3: pushparam T_1
-  L2: T_2 = call Console.WriteLine()
+  L1: V_0 = T_0
+  L2: pushparam V_0
+  L3: T_1 = callvirt System.String System.Object::ToString()
+  L4: pushparam T_1
+  L5: call System.Void System.Console::WriteLine(System.String)
+  L6: return
 }

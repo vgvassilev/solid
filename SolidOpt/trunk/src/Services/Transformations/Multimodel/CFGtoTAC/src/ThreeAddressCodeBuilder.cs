@@ -695,7 +695,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Ldstr:
             simulationStack.Push(instr.Operand);
             break;
-//        case Code.Newobj:
+        case Code.Newobj:
+            Stack<object> ctorReverseStack = new Stack<object>();
+            MethodReference ctorMethod = instr.Operand as MethodReference;
+            int ctorMethodHasThis = ctorMethod.HasThis ? 1 : 0;
+            
+            for (int i = ctorMethod.Parameters.Count; i > 0; i--)
+              ctorReverseStack.Push(simulationStack.Pop());
+            for (int i = ctorMethod.Parameters.Count; i > 0; i--) {
+              obj1 = ctorReverseStack.Pop();
+              triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj1));
+            }
+            tmpVarRef = GenerateTempVar(tempVariables, ctorMethod.DeclaringType);
+            triplets.Add(new Triplet(TripletOpCode.New, tmpVarRef, instr.Operand));
+            simulationStack.Push(tmpVarRef);
+            break;
 //        case Code.Castclass:
 //        case Code.Isinst:
           case Code.Conv_R_Un:
@@ -806,7 +820,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
               break;    
 //        case Code.Refanyval:
-//        case Code.Ckfinite:
+        case Code.Ckfinite:
+            triplets.Add(new Triplet(TripletOpCode.CheckFinite));
+            break;
 //        case Code.Mkrefany:
 //        case Code.Ldtoken:
           case Code.Conv_U2:

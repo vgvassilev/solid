@@ -4,6 +4,7 @@
  * For further details see the nearest License.txt
  */
 
+using System;
 using System.Text;
 using System.Collections.Generic;
 
@@ -17,8 +18,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Assignment,     // result = op1
     
     // Array deref etc
+    ArrayElement,   // result = op1[op2]
+    ArrayLength,    // result = length op1
     //...
-    
+
     // Aritmetic
     Addition,       // result = op1 + op2
     Substraction,   // result = op1 - op2
@@ -32,7 +35,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Not,            // result = ! op1
     ShiftLeft,      // result = op1 << op2
     ShiftRight,     // result = op1 >> op2
+    Sizeof,         // result = sizeof op1/type
     CheckOverflow,  // checkoverflow
+    CheckFinite,    // checkfinite
     //...
     
     // Cast
@@ -59,6 +64,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     //...
     
     // Object model
+    New,            // result = new op1/method/signature
+    Field,          // result = op1.op2
+    As,             // result = op1 as op2/type/signature
+    Token,          // result = token op1/token
     //...
     
     // Exceptions handling
@@ -179,6 +188,20 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       }
       if (obj is ParameterReference && (obj as ParameterReference).Index == -1)
         return "this";
+      if (obj is MethodReference) {
+        MethodDefinition md = (obj as MethodReference).Resolve();
+        if (md != null && md.IsConstructor) {
+          //StringBuilder sb = new StringBuilder();
+          //sb.Append(md.DeclaringType.ToString());
+          //md.MethodSignatureFullName(sb);
+          //return sb.ToString();
+          StringBuilder sb = new StringBuilder(md.ToString());
+          sb.Remove(0, md.ReturnType.ToString().Length + 1);
+          sb.Replace("::.cctor", "");
+          sb.Replace("::.ctor", "");
+          return sb.ToString();
+        }
+      }
       return obj.ToString();
     }
 
@@ -267,6 +290,32 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         case TripletOpCode.Switch:
             sb.AppendFormat("switch {0} goto {1}", op(operand1), op(operand2));
             break;
+
+        case TripletOpCode.New:
+          sb.AppendFormat("new {0}", op(operand1));
+          break;
+        case TripletOpCode.Field:
+          sb.AppendFormat("{0}.{1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.As:
+          sb.AppendFormat("{0} as {1}", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.Token:
+          sb.AppendFormat("token {0}", op(operand1));
+          break;
+        case TripletOpCode.ArrayElement:
+          sb.AppendFormat("{0}[{1}]", op(operand1), op(operand2));
+          break;
+        case TripletOpCode.ArrayLength:
+          sb.AppendFormat("length {0}", op(operand1));
+          break;
+        case TripletOpCode.Sizeof:
+          sb.AppendFormat("sizeof {0}", op(operand1));
+          break;
+        case TripletOpCode.CheckFinite:
+          sb.Append("checkfinite");
+          break;
+
         default:
           sb.Append(" UNKNOWN ");
           break;
