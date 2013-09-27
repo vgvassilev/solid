@@ -4,9 +4,10 @@ System.Void TestCase::Main() {
   L2: pushparam V_0
   L3: T_1 = callvirt System.Int32 System.Random::Next()
   L4: V_1 = T_1
-  L5: T_2 = &V_1
+  L5: T_2 = addressof V_1
   L6: pushparam T_2
-  L7: call System.Void System.Console::WriteLine(System.Int32)
-  L8: return
+  L7: T_3 = call System.String System.Int32::ToString()
+  L8: pushparam T_3
+  L9: call System.Void System.Console::WriteLine(System.String)
+  L10: return
 }
-

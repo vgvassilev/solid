@@ -145,7 +145,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Ldloc_S:
             simulationStack.Push(instr.Operand);
             break;
-//        case Code.Ldloca_S:
+          case Code.Ldloca_S:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Stloc_S:
             triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
             break;
@@ -947,7 +951,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Ldloc:
             simulationStack.Push(instr.Operand);
             break;
-//        case Code.Ldloca:
+          case Code.Ldloca:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Stloc:
             triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
             break;
