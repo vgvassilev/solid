@@ -16,6 +16,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
   public enum TripletOpCode {
     // Basic
     Assignment,     // result = op1
+    AddressOf,      // result = addressof op
     
     // Array deref etc
     ArrayElement,   // result = op1[op2]
@@ -211,6 +212,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       if (result != null)
         sb.AppendFormat("{0} = ", op(result));
       switch(opcode) {
+        case TripletOpCode.AddressOf:
+          sb.AppendFormat("addressof {0}", op(operand1));
+          break;
         case TripletOpCode.Addition:
           sb.AppendFormat("{0} + {1}", op(operand1), op(operand2));
           break;
