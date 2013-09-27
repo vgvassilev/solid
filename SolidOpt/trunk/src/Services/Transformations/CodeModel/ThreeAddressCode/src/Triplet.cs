@@ -189,7 +189,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       }
       if (obj is ParameterReference && (obj as ParameterReference).Index == -1)
         return "this";
-      if (obj is MethodReference) {
+/*      if (obj is MethodReference) {
         MethodDefinition md = (obj as MethodReference).Resolve();
         if (md != null && md.IsConstructor) {
           //StringBuilder sb = new StringBuilder();
@@ -203,6 +203,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           return sb.ToString();
         }
       }
+*/
       return obj.ToString();
     }
 

@@ -702,11 +702,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
         case Code.Newobj:
             Stack<object> ctorReverseStack = new Stack<object>();
             MethodReference ctorMethod = instr.Operand as MethodReference;
-            int ctorMethodHasThis = ctorMethod.HasThis ? 1 : 0;
+            //int ctorMethodHasThis = ctorMethod.HasThis ? 1 : 0;
+            int ctorMethodHasThis = 0;
             
-            for (int i = ctorMethod.Parameters.Count; i > 0; i--)
+            for (int i = ctorMethod.Parameters.Count + ctorMethodHasThis; i > 0; i--)
               ctorReverseStack.Push(simulationStack.Pop());
-            for (int i = ctorMethod.Parameters.Count; i > 0; i--) {
+            for (int i = ctorMethod.Parameters.Count + ctorMethodHasThis; i > 0; i--) {
               obj1 = ctorReverseStack.Pop();
               triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj1));
             }
