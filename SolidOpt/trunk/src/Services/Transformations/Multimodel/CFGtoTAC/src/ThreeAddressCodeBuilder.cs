@@ -711,7 +711,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             simulationStack.Push(tmpVarRef);
             break;
 //        case Code.Castclass:
-//        case Code.Isinst:
+          case Code.Isinst:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, instr.Operand as TypeReference);  
+            triplets.Add(new Triplet(TripletOpCode.As, tmpVarRef, obj1, instr.Operand as TypeReference));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Conv_R_Un:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.DoubleTypeRef); //TODO: Push "F"-type to evaluation stack 

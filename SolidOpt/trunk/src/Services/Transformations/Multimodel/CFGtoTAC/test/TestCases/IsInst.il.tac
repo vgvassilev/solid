@@ -1,13 +1,12 @@
 System.Void TestCase::Main() {
-  L0: T_0 = 'a'
-  L1: T_1 = 1
-  L2: pushparam T_0
-  L3: pushparam T_1
-  L4: T_2 = new System.String(System.Char, System.Int32)
-  L5: T_3 = T_2 as System.String
-  L6: T_4 = T_3 == null
-  L7: iftrue T_4 goto L10
-  L8: pushparam T_3
-  L9: T_5 = call Console.WriteLine(System.String)
-  L10:
+  L0: pushparam 97
+  L1: pushparam 1
+  L2: T_0 = new System.String(System.Char,System.Int32)
+  L3: V_0 = T_0
+  L4: T_1 = V_0 as System.String
+  L5: iffalse T_1 goto L9
+  L6: T_2 = V_0 as System.String
+  L7: pushparam T_2
+  L8: call System.Void System.Console::WriteLine(System.String)
+  L9: return
 }
