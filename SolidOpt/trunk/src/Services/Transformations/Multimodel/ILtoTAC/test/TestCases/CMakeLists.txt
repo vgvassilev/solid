@@ -5,6 +5,6 @@
 ##
 
 csharp_add_test_case(
-  SolidOpt.Services.Transformations.MultiModel.CFGtoTAC.Test.dll
+  SolidOpt.Services.Transformations.MultiModel.ILtoTAC.Test.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.il
   )
