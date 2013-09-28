@@ -12,7 +12,7 @@ using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 {
-  public class CFGtoTACTransformer : DecompilationStep, ITransform<ControlFlowGraph<Instruction>, ThreeAdressCode>
+  public class CFGtoTACTransformer : DecompilationStep, ITransform<ControlFlowGraph<Instruction>, ThreeAddressCode>
   {
 
     #region Constructors
@@ -34,10 +34,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 
     public override Type GetTargetType()
     {
-      return typeof(ThreeAdressCode);
+      return typeof(ThreeAddressCode);
     }
 
-    public ThreeAdressCode Process(ControlFlowGraph<Instruction> source)
+    public ThreeAddressCode Process(ControlFlowGraph<Instruction> source)
     {
       if (source == null)
         throw new ArgumentNullException ("method");
@@ -46,12 +46,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return builder.Create();
     }
 
-    public ThreeAdressCode Transform(ControlFlowGraph<Instruction> source)
+    public ThreeAddressCode Transform(ControlFlowGraph<Instruction> source)
     {
       return Decompile(source);
     }
 
-    public ThreeAdressCode Decompile (ControlFlowGraph<Instruction> source)
+    public ThreeAddressCode Decompile (ControlFlowGraph<Instruction> source)
     {
       return Process(source);
     }

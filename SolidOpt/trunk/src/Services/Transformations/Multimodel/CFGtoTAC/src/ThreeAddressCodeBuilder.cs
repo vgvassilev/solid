@@ -71,7 +71,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       }
     }
     
-    public ThreeAdressCode Create() {
+    public ThreeAddressCode Create() {
       List<Triplet> triplets = new List<Triplet>();
       Stack<object> simulationStack = new Stack<object>();
       List<VariableDefinition> tempVariables = new List<VariableDefinition>();
@@ -1119,7 +1119,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           default:
             string msg = String.Format("Unknown instruction: {0}\n", instr.OpCode.ToString());
             if (triplets.Count > 0) {
-              ThreeAdressCode partiallyBuiltTac = new ThreeAdressCode(cfg.Method, triplets[0], triplets, tempVariables);
+              ThreeAddressCode partiallyBuiltTac = new ThreeAddressCode(cfg.Method, triplets[0], triplets, tempVariables);
               msg = String.Format("\n Model built partially:\n{0}", partiallyBuiltTac);
             }
             throw new NotImplementedException(msg);
@@ -1142,7 +1142,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
         if (i < triplets.Count-1) triplets[i].Next = triplets[i+1];
       }
       
-      return new ThreeAdressCode(cfg.Method, triplets[0], triplets, tempVariables);
+      return new ThreeAddressCode(cfg.Method, triplets[0], triplets, tempVariables);
     }
   }
 

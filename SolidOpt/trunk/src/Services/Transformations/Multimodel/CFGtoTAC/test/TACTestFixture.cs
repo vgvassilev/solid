@@ -26,7 +26,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
 {
   [TestFixture]
   public sealed class TACTestFixture 
-    : BaseTestFixture<ControlFlowGraph, ThreeAdressCode, CFGtoTACTransformer>
+    : BaseTestFixture<ControlFlowGraph<Instruction>, ThreeAddressCode, CFGtoTACTransformer>
   {
     private readonly string testCasesDirCache = Path.Combine("src",
                                                              "Services",
@@ -58,7 +58,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
       return testCasesDirCache;
     }
 
-    private ControlFlowGraph getCfg(string testCaseName) {
+    private ControlFlowGraph<Instruction> getCfg(string testCaseName) {
       MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);
       return new CilToControlFlowGraph().Decompile(mainMethodDef);
     }

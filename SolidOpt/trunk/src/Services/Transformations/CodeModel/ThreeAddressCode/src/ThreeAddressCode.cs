@@ -13,7 +13,7 @@ using Mono.Cecil.Cil;
 
 namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
-    public class ThreeAdressCode
+    public class ThreeAddressCode
     {
         private Triplet root;
         public Triplet Root {
@@ -35,7 +35,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
             get { return temporaryVariables; }
         }
 
-        public ThreeAdressCode(MethodDefinition method, Triplet root, List<Triplet> rawTriplets, List<VariableDefinition> temporaryVariables)
+        public ThreeAddressCode(MethodDefinition method, Triplet root, List<Triplet> rawTriplets, List<VariableDefinition> temporaryVariables)
         {
             this.method = method;
             this.root = root;
