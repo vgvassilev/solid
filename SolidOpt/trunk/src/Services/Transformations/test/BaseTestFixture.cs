@@ -91,8 +91,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
         seen = TargetToString(target).Split('\n');
       }
       catch (Exception e) {
-        if (!testXFail)
+        if (!testXFail) {
+          // Fill in the debug files with the exception message.
+          // This is useful when there is partially built 'stuff'.
+          seen = e.Message.Split('\n');
           throw e;
+        }
       }
       finally {
         Validate(testCaseName, seen);
