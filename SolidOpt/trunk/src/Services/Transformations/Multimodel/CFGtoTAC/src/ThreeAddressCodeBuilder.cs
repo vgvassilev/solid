@@ -137,7 +137,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             else
               simulationStack.Push(cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
             break;
-//        case Code.Ldarga_S:
+//          case Code.Ldarga_S:
           case Code.Starg_S:
             if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
               triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.ThisParameter, simulationStack.Pop()));
@@ -248,7 +248,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               simulationStack.Push(tmpVarRef);
             }
             break;
-//        case Code.Calli:
+//          case Code.Calli:
           case Code.Callvirt:
             Stack<object> callVirtReverseStack = new Stack<object>();
             MethodReference callVirtMethod = instr.Operand as MethodReference;
@@ -357,10 +357,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
-//        case Code.Bge_Un_S:
-//        case Code.Bgt_Un_S:
-//        case Code.Ble_Un_S:
-//        case Code.Blt_Un_S:
+//          case Code.Bge_Un_S:
+//          case Code.Bgt_Un_S:
+//          case Code.Ble_Un_S:
+//          case Code.Blt_Un_S:
           case Code.Br:
             triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand1 == FixupTriplet)
@@ -458,10 +458,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
-//        case Code.Bge_Un:
-//        case Code.Bgt_Un:
-//        case Code.Ble_Un:
-//        case Code.Blt_Un:
+//          case Code.Bge_Un:
+//          case Code.Bgt_Un:
+//          case Code.Ble_Un:
+//          case Code.Blt_Un:
           case Code.Switch:
             obj1 = simulationStack.Pop();
             Triplet[] labels = new Triplet[((Instruction[])instr.Operand).Length];
@@ -478,24 +478,24 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
-//        case Code.Ldind_I1:
-//        case Code.Ldind_U1:
-//        case Code.Ldind_I2:
-//        case Code.Ldind_U2:
-//        case Code.Ldind_I4:
-//        case Code.Ldind_U4:
-//        case Code.Ldind_I8:
-//        case Code.Ldind_I:
-//        case Code.Ldind_R4:
-//        case Code.Ldind_R8:
-//        case Code.Ldind_Ref:
-//        case Code.Stind_Ref:
-//        case Code.Stind_I1:
-//        case Code.Stind_I2:
-//        case Code.Stind_I4:
-//        case Code.Stind_I8:
-//        case Code.Stind_R4:
-//        case Code.Stind_R8:
+//          case Code.Ldind_I1:
+//          case Code.Ldind_U1:
+//          case Code.Ldind_I2:
+//          case Code.Ldind_U2:
+//          case Code.Ldind_I4:
+//          case Code.Ldind_U4:
+//          case Code.Ldind_I8:
+//          case Code.Ldind_I:
+//          case Code.Ldind_R4:
+//          case Code.Ldind_R8:
+//          case Code.Ldind_Ref:
+//          case Code.Stind_Ref:
+//          case Code.Stind_I1:
+//          case Code.Stind_I2:
+//          case Code.Stind_I4:
+//          case Code.Stind_I8:
+//          case Code.Stind_R4:
+//          case Code.Stind_R8:
           case Code.Add:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -614,7 +614,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             simulationStack.Push(tmpVarRef);
             break;
             
-        case Code.And:
+          case Code.And:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.IntegerOperations(obj1, obj2));
@@ -649,7 +649,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.ShiftRight, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Shr_Un:
+//          case Code.Shr_Un:
           case Code.Neg:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UnaryNumericOperations(obj1));
@@ -710,8 +710,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt64TypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Cpobj:
-//        case Code.Ldobj:
+//          case Code.Cpobj:
+//          case Code.Ldobj:
           case Code.Ldstr:
             simulationStack.Push(instr.Operand);
             break;
@@ -749,27 +749,27 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.DoubleTypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Unbox:
-//        case Code.Throw:
-//        case Code.Ldfld:
-//        case Code.Ldflda:
-//        case Code.Stfld:
-//        case Code.Ldsfld:
-//        case Code.Ldsflda:
-//        case Code.Stsfld:
-//        case Code.Stobj:
-//        case Code.Conv_Ovf_I1_Un:
-//        case Code.Conv_Ovf_I2_Un:
-//        case Code.Conv_Ovf_I4_Un:
-//        case Code.Conv_Ovf_I8_Un:
-//        case Code.Conv_Ovf_U1_Un:
-//        case Code.Conv_Ovf_U2_Un:
-//        case Code.Conv_Ovf_U4_Un:
-//        case Code.Conv_Ovf_U8_Un:
-//        case Code.Conv_Ovf_I_Un:
-//        case Code.Conv_Ovf_U_Un:
-//        case Code.Box:
-        case Code.Newarr:
+//          case Code.Unbox:
+//          case Code.Throw:
+//          case Code.Ldfld:
+//          case Code.Ldflda:
+//          case Code.Stfld:
+//          case Code.Ldsfld:
+//          case Code.Ldsflda:
+//          case Code.Stsfld:
+//          case Code.Stobj:
+//          case Code.Conv_Ovf_I1_Un:
+//          case Code.Conv_Ovf_I2_Un:
+//          case Code.Conv_Ovf_I4_Un:
+//          case Code.Conv_Ovf_I8_Un:
+//          case Code.Conv_Ovf_U1_Un:
+//          case Code.Conv_Ovf_U2_Un:
+//          case Code.Conv_Ovf_U4_Un:
+//          case Code.Conv_Ovf_U8_Un:
+//          case Code.Conv_Ovf_I_Un:
+//          case Code.Conv_Ovf_U_Un:
+//          case Code.Box:
+          case Code.Newarr:
             object numElems = simulationStack.Pop();
             TypeReference eType = (TypeReference)instr.Operand;
             TypeReference arrType = new ArrayType(eType, 1);
@@ -893,70 +893,72 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               new ArrayElementReference(simulationStack.Pop(), obj2), obj1));
             break;
 
-//        case Code.Unbox_Any:
-
+//          case Code.Unbox_Any:
+          
           case Code.Conv_Ovf_I1:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int8TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int8TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
           case Code.Conv_Ovf_U1:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt8TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt8TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt8TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt8TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
           case Code.Conv_Ovf_I2:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.Int16TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int16TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int16TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int16TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
           case Code.Conv_Ovf_U2:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt16TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt16TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt16TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt16TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
           case Code.Conv_Ovf_I4:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int32TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int32TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
           case Code.Conv_Ovf_U4:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt32TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt32TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
           case Code.Conv_Ovf_I8:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.Int64TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int64TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int64TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.Int64TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
           case Code.Conv_Ovf_U8:
-              obj1 = simulationStack.Pop();
-              tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
-              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt64TypeRef, obj1));
-              simulationStack.Push(tmpVarRef);
-              triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-              break;    
-//        case Code.Refanyval:
-        case Code.Ckfinite:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt64TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt64TypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;    
+//          case Code.Refanyval:
+          case Code.Ckfinite:
             triplets.Add(new Triplet(TripletOpCode.CheckFinite));
             break;
-//        case Code.Mkrefany:
-//        case Code.Ldtoken:
+//          case Code.Mkrefany:
+          case Code.Ldtoken:
+            simulationStack.Push(instr.Operand);
+            break;
           case Code.Conv_U2:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt16TypeRef);
@@ -975,58 +977,58 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.IntPtrTypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
-        case Code.Conv_Ovf_I:
+          case Code.Conv_Ovf_I:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.IntPtrTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.IntPtrTypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
             break;
-        case Code.Conv_Ovf_U:
-          obj1 = simulationStack.Pop();
-          tmpVarRef = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
-          triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UIntPtrTypeRef, obj1));
-          simulationStack.Push(tmpVarRef);
-          triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-          break;
-        case Code.Add_Ovf:
-          obj2 = simulationStack.Pop();
-          obj1 = simulationStack.Pop();
-          tmpVarRef = GenerateTempVar(tempVariables, Helper.OverflowArithmeticOperations(obj1, obj2));
-          triplets.Add(new Triplet(TripletOpCode.Addition, tmpVarRef, obj1, obj2));
-          simulationStack.Push(tmpVarRef);
-          triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-          break;
-//        case Code.Add_Ovf_Un:
-        case Code.Mul_Ovf:
-          obj2 = simulationStack.Pop();
-          obj1 = simulationStack.Pop();
-          tmpVarRef = GenerateTempVar(tempVariables, Helper.OverflowArithmeticOperations(obj1, obj2));
-          triplets.Add(new Triplet(TripletOpCode.Multiplication, tmpVarRef, obj1, obj2));
-          simulationStack.Push(tmpVarRef);
-          triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-          break;
-//        case Code.Mul_Ovf_Un:
-        case Code.Sub_Ovf:
-          obj2 = simulationStack.Pop();
-          obj1 = simulationStack.Pop();
-          tmpVarRef = GenerateTempVar(tempVariables, Helper.OverflowArithmeticOperations(obj1, obj2));
-          triplets.Add(new Triplet(TripletOpCode.Substraction, tmpVarRef, obj1, obj2));
-          simulationStack.Push(tmpVarRef);
-          triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
-          break;
-//        case Code.Sub_Ovf_Un:
-//        case Code.Endfinally:
-//        case Code.Leave:
-//        case Code.Leave_S:
-//        case Code.Stind_I:
+          case Code.Conv_Ovf_U:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UIntPtrTypeRef, obj1));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
+          case Code.Add_Ovf:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.OverflowArithmeticOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Addition, tmpVarRef, obj1, obj2));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
+//          case Code.Add_Ovf_Un:
+          case Code.Mul_Ovf:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.OverflowArithmeticOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Multiplication, tmpVarRef, obj1, obj2));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
+//          case Code.Mul_Ovf_Un:
+          case Code.Sub_Ovf:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.OverflowArithmeticOperations(obj1, obj2));
+            triplets.Add(new Triplet(TripletOpCode.Substraction, tmpVarRef, obj1, obj2));
+            simulationStack.Push(tmpVarRef);
+            triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
+            break;
+//          case Code.Sub_Ovf_Un:
+//          case Code.Endfinally:
+//          case Code.Leave:
+//          case Code.Leave_S:
+//          case Code.Stind_I:
           case Code.Conv_U:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UIntPtrTypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Arglist:
+//          case Code.Arglist:
           case Code.Ceq:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -1045,7 +1047,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Cgt_Un:
+//          case Code.Cgt_Un:
           case Code.Clt:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -1055,16 +1057,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Clt_Un:
-//        case Code.Ldftn:
-//        case Code.Ldvirtftn:
+//          case Code.Clt_Un:
+//          case Code.Ldftn:
+//          case Code.Ldvirtftn:
           case Code.Ldarg:
             if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
               simulationStack.Push(cfg.Method.Body.ThisParameter);
             else
               simulationStack.Push(cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
             break;
-//        case Code.Ldarga:
+//          case Code.Ldarga:
           case Code.Starg:
             if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
               triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.ThisParameter, simulationStack.Pop()));
@@ -1083,20 +1085,20 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Stloc:
             triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
             break;
-//        case Code.Localloc:
-//        case Code.Endfilter:
-//        case Code.Unaligned:
-//        case Code.Volatile:
-//        case Code.Tail:
-//        case Code.Initobj:
-//        case Code.Constrained:
-//        case Code.Cpblk:
-//        case Code.Initblk:
-//        case Code.No:
-//        case Code.Rethrow:
-//        case Code.Sizeof:
-//        case Code.Refanytype:
-//        case Code.Readonly:
+//          case Code.Localloc:
+//          case Code.Endfilter:
+//          case Code.Unaligned:
+//          case Code.Volatile:
+//          case Code.Tail:
+//          case Code.Initobj:
+//          case Code.Constrained:
+//          case Code.Cpblk:
+//          case Code.Initblk:
+//          case Code.No:
+//          case Code.Rethrow:
+//          case Code.Sizeof:
+//          case Code.Refanytype:
+//          case Code.Readonly:
 
           default:
             throw new NotImplementedException(instr.OpCode.ToString());
