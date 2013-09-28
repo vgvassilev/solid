@@ -5,6 +5,7 @@
  */
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using Cairo;
 
@@ -81,6 +82,44 @@ namespace SolidV.MVC
       }
       ApplyAllParenTransforms(shape.Parent, context);
       context.Transform(shape.Matrix);
+    }
+
+    /// <summary>
+    /// Gets the leftmost top and bottom, and the rightmost top and bottom coordinates of all 
+    /// shapes on scene.
+    /// </summary>
+    /// <returns>The scene rectangle.</returns>
+    public static Rectangle CalculateEnclosingRectangle(List<Shape> shapes, Context context) {
+      double minX, maxX, minY, maxY;
+      minX = double.MaxValue;
+      maxX = double.MinValue;
+      minY = double.MaxValue;
+      maxY = double.MinValue;
+      
+      double topLeftX, topLeftY, bottomRightX, bottomRightY;
+      
+      foreach (Shape shape in shapes) {
+        PointD pos = shape.TransformPointToGlobal(shape.Location, context);
+        
+        topLeftX = pos.X;
+        topLeftY = pos.Y;
+        bottomRightX = pos.X + shape.Width;
+        bottomRightY = pos.Y + shape.Height;
+        
+        if (minX > topLeftX)
+          minX = topLeftX;
+        if (minY > topLeftY)
+          minY = topLeftY;
+        if (maxX < bottomRightX)
+          maxX = bottomRightX;
+        if (maxY < bottomRightY)
+          maxY = bottomRightY;
+      }
+      
+      double width = maxX - minX;
+      double height = maxY - minY;
+      
+      return new Rectangle(minX, minY, width, height);
     }
 
   }
