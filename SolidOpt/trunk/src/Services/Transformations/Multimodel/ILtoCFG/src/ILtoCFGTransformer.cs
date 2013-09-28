@@ -18,7 +18,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
   /// <summary>
   /// Description of CilToControlFlowGraph.
   /// </summary>
-  public class CilToControlFlowGraph : DecompilationStep, ITransform<MethodDefinition, ControlFlowGraph>
+  public class CilToControlFlowGraph : DecompilationStep, ITransform<MethodDefinition, ControlFlowGraph<Instruction>>
   {    
     #region Constructors
     
@@ -40,10 +40,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
     public override Type GetTargetType()
     {
-      return typeof(ControlFlowGraph);
+      return typeof(ControlFlowGraph<Instruction>);
     }
 
-    public ControlFlowGraph Process (MethodBody source)
+    public ControlFlowGraph<Instruction> Process (MethodBody source)
     {
       if (source == null)
         throw new ArgumentNullException ("method");
@@ -54,12 +54,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       return builder.Create();
     }
     
-    public ControlFlowGraph Transform(MethodDefinition source)
+    public ControlFlowGraph<Instruction> Transform(MethodDefinition source)
     {
       return Decompile(source);
     }
     
-    public ControlFlowGraph Decompile(MethodDefinition source)
+    public ControlFlowGraph<Instruction> Decompile(MethodDefinition source)
     {
       return Process(source.Body);
     }

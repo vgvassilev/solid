@@ -21,12 +21,12 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
   /// predecessors, which represent the explicit change (branches) of the 
   /// control flow.
   /// </summary>
-  public class ControlFlowGraph {
+  public class ControlFlowGraph<T> {
     
     #region Fields & Properties
     
-    private BasicBlock root;
-    public BasicBlock Root {
+    private BasicBlock<T> root;
+    public BasicBlock<T> Root {
       get { return root; }
     }
 
@@ -35,14 +35,14 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
         get { return method; }
     }
 
-    private List<BasicBlock> rawBlocks = null;
-    public List<BasicBlock> RawBlocks {
+    private List<BasicBlock<T>> rawBlocks = null;
+    public List<BasicBlock<T>> RawBlocks {
       get { return this.rawBlocks; }
     }    
     
     #endregion
 
-    public ControlFlowGraph(MethodDefinition method, BasicBlock root, List<BasicBlock> rawBlocks)
+    public ControlFlowGraph(MethodDefinition method, BasicBlock<T> root, List<BasicBlock<T>> rawBlocks)
     {
       this.method = method;
       this.root = root;
@@ -53,30 +53,29 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     {
       StringBuilder sb = new StringBuilder();
       
-      foreach (BasicBlock block in RawBlocks) {
+      foreach (BasicBlock<T> block in RawBlocks) {
        sb.AppendLine(String.Format("block {0}:", block.Name));
        sb.AppendLine(String.Format("  kind: {0}", block.Kind.ToString().ToLower()));
        sb.AppendLine("  body:");
-       foreach (Instruction instruction in block)
+       foreach (T instruction in block)
          sb.AppendLine(String.Format("    {0}", instruction.ToString()));
       
        if (block.Successors != null && block.Successors.Count > 0) {
          sb.AppendLine("  successors:");
-         foreach (BasicBlock succ in block.Successors) {
+         foreach (BasicBlock<T> succ in block.Successors) {
            sb.AppendLine(String.Format("    block {0}", succ.Name));
          }
        }
       
        if (block.Predecessors != null && block.Predecessors.Count > 0) {
          sb.AppendLine("  predecessors:");
-         foreach (BasicBlock pred in block.Predecessors) {
+         foreach (BasicBlock<T> pred in block.Predecessors) {
            sb.AppendLine(String.Format("    block {0}", pred.Name));
          }
        }
       }
       
       return sb.ToString();
-
     }
   }
 }

@@ -43,9 +43,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
     
     #region Fields & Properties
     MethodBody body;
-    BasicBlock root = null;
+    BasicBlock<Instruction> root = null;
     private List<Instruction> labels = new List<Instruction>();
-    private List<BasicBlock> rawBlocks = new List<BasicBlock>();
+    private List<BasicBlock<Instruction>> rawBlocks = new List<BasicBlock<Instruction>>();
     //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>) or bool array?
     private HashSet<int> exceptionData = new HashSet<int>();
 
@@ -58,23 +58,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       body = method.Body;
     }
 
-    public ControlFlowGraph Create()
+    public ControlFlowGraph<Instruction> Create()
     {
       CreateBlocks();
       ConnectBlocks();
       CreateConnectSEHBlocks();
 
-      return new ControlFlowGraph(body.Method, root, rawBlocks);
+      return new ControlFlowGraph<Instruction>(body.Method, root, rawBlocks);
     }
     
     #endregion
 
     void CreateBlocks()
     {
-      BasicBlock curBlock = null;
+      BasicBlock<Instruction> curBlock = null;
       foreach(Instruction instr in body.Instructions) {
         if (IsBlockLeader(instr))
-          curBlock = new BasicBlock(rawBlocks.Count.ToString());
+          curBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
         
         if (root == null)
           root = curBlock;
@@ -175,13 +175,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         
     void ConnectBlocks()
     {
-      foreach (BasicBlock node in rawBlocks) {
+      foreach (BasicBlock<Instruction> node in rawBlocks) {
         if (node.Kind == BlockKind.Structure)
           ConnectBlock(node);
       }
     }
     
-    void ConnectBlock(BasicBlock block)
+    void ConnectBlock(BasicBlock<Instruction> block)
     {
       if (block.Last == null)
         throw new ArgumentException ("Undelimited node at offset " + block.Last.Offset);
@@ -194,7 +194,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
           foreach (var target in targets) {
             Debug.Assert(target != null, "Target cannot be null!");
 
-            BasicBlock successor = GetNodeContaining(target);
+            BasicBlock<Instruction> successor = GetNodeContaining(target);
             block.Successors.Add(successor);
             successor.Predecessors.Add(block);
           }
@@ -209,7 +209,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
           foreach (var target in targets) {
             Debug.Assert(target != null, "Target cannot be null!");
 
-            BasicBlock successor = GetNodeContaining(target);
+            BasicBlock<Instruction> successor = GetNodeContaining(target);
             // Check whether the successor already exists. Can happen when having branches pointing
             // to one and the same block. Eg. switch with no break.
             if (block.Successors.IndexOf(successor) < 0) {
@@ -219,7 +219,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
           }
           // Make sure we don't have a branch pointing to the next instruction as a target
           if (block.Last.Next != null) {
-            BasicBlock successor = GetNodeContaining(block.Last.Next);
+            BasicBlock<Instruction> successor = GetNodeContaining(block.Last.Next);
             if (block.Successors.IndexOf(successor) < 0) {
               block.Successors.Add(successor);
               successor.Predecessors.Add(block);
@@ -242,7 +242,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
     void CreateConnectSEHBlocks()
     {
       foreach (ExceptionHandler handler in body.ExceptionHandlers) {
-        BasicBlock TryBlock = new BasicBlock(rawBlocks.Count.ToString());
+        BasicBlock<Instruction> TryBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
         TryBlock.Kind = BlockKind.SEH;
         Instruction instr = handler.TryStart;
         if (!exceptionData.Contains(handler.TryEnd.Offset)) {
@@ -255,7 +255,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         }
 
         if (handler.HandlerStart != null && handler.HandlerEnd != null) {
-          BasicBlock HandlerBlock = new BasicBlock(rawBlocks.Count.ToString());
+          BasicBlock<Instruction> HandlerBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
           TryBlock.Successors.Add(HandlerBlock);
           HandlerBlock.Predecessors.Add(TryBlock);
           HandlerBlock.Kind = BlockKind.SEH;
@@ -268,7 +268,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         }
 
         if (handler.FilterStart != null && handler.FilterEnd != null) {
-          BasicBlock FilterBlock = new BasicBlock(rawBlocks.Count.ToString());
+          BasicBlock<Instruction> FilterBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
           TryBlock.Successors.Add(FilterBlock);
           FilterBlock.Predecessors.Add(TryBlock);
           FilterBlock.Kind = BlockKind.SEH;
@@ -282,9 +282,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       }
     }
     
-    BasicBlock GetNodeContaining(Instruction i)
+    BasicBlock<Instruction> GetNodeContaining(Instruction i)
     {
-      foreach (BasicBlock block in rawBlocks) {
+      foreach (BasicBlock<Instruction> block in rawBlocks) {
         if (block.Contains(i))
           return block;
       }

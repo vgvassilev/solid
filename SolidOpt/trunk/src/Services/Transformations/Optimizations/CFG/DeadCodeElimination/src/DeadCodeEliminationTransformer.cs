@@ -8,25 +8,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using Mono.Cecil.Cil;
+
 using SolidOpt.Services.Transformations.Optimizations;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 
 namespace SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeElimination
 {
-  public class DeadCodeEliminationTransformer : IOptimize<ControlFlowGraph>
+  public class DeadCodeEliminationTransformer : IOptimize<ControlFlowGraph<Instruction>>
   {
     
     public DeadCodeEliminationTransformer()
     {
     }
 
-    public ControlFlowGraph Transform(ControlFlowGraph source)
+    public ControlFlowGraph Transform(ControlFlowGraph<Instruction> source)
     {
       return Optimize(source);
     }
 
     #region IOptimize<ControlFlowGraph> implementation
-    public ControlFlowGraph Optimize(ControlFlowGraph source)
+    public ControlFlowGraph Optimize(ControlFlowGraph<Instruction> source)
     {
       // Unreachable block is a block without predecessors, which is not the root block
       foreach(BasicBlock block in source.RawBlocks) {

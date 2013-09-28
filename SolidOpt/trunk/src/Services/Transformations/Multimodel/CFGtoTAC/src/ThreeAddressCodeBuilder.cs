@@ -23,9 +23,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     private readonly TypeReference BoolTypeReference;
     private readonly Triplet FixupTriplet;
 
-    private ControlFlowGraph cfg = null;
+    private ControlFlowGraph<Instruction> cfg = null;
     
-    public ThreeAddressCodeBuilder(ControlFlowGraph cfg) {
+    public ThreeAddressCodeBuilder(ControlFlowGraph<Instruction> cfg) {
       this.cfg = cfg;
       Int32TypeReference = new TypeReference("System", "Int32", null, /*valueType*/true);
       BoolTypeReference = new TypeReference("System", "Bool", null, /*valueType*/true);

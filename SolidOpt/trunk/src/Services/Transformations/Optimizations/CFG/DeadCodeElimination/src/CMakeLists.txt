@@ -11,6 +11,7 @@ csharp_add_library(
   )
 csharp_add_dependencies(
   SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeElimination.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.Optimizations.dll

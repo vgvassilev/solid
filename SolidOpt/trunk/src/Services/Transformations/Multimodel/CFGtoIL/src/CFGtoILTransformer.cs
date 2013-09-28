@@ -23,18 +23,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
   /// <summary>
   /// Control flow graph to CIL transforms a given control flow graph into a method definition.
   /// </summary>
-  public class ControlFlowGraphToCil : ITransform<ControlFlowGraph, MethodDefinition>
+  public class ControlFlowGraphToCil : ITransform<ControlFlowGraph<Instruction>, MethodDefinition>
   {
 
     #region ITransform implementation
-    public MethodDefinition Transform (ControlFlowGraph source)
+    public MethodDefinition Transform (ControlFlowGraph<Instruction> source)
     {
       var result = CloneMethodWithoutIL(source.Method);
       ILProcessor cil = result.Body.GetILProcessor();
-      BasicBlock bb = source.Root;
+      BasicBlock<Instruction> bb = source.Root;
       Instruction instr = null;
-      List<BasicBlock> notVisited = new List<BasicBlock>();
-      List<BasicBlock> visited = new List<BasicBlock>();
+      List<BasicBlock<Instruction>> notVisited = new List<BasicBlock<Instruction>>();
+      List<BasicBlock<Instruction>> visited = new List<BasicBlock<Instruction>>();
       notVisited.Add(bb);
       while(bb != null) {
         instr = bb.First;
@@ -135,14 +135,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
       return df;
     }
 
-    private void GetExclusiveSet(ref List<BasicBlock> excludeFrom, List<BasicBlock> excludes) {
-      foreach (BasicBlock bb in excludes)
+    private void GetExclusiveSet(ref List<BasicBlock<Instruction>> excludeFrom, 
+                                 List<BasicBlock<Instruction>> excludes) {
+      foreach (BasicBlock<Instruction> bb in excludes)
         excludeFrom.Remove(bb);
     }
   }
     
-  internal sealed class BBComparer : IComparer<BasicBlock> {
-    public int Compare(BasicBlock x, BasicBlock y) {
+  internal sealed class BBComparer : IComparer<BasicBlock<Instruction>> {
+    public int Compare(BasicBlock<Instruction> x, BasicBlock<Instruction> y) {
       return x.First.Offset.CompareTo(y.First.Offset);
     }
   }

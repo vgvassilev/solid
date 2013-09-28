@@ -8,6 +8,7 @@ using System;
 using System.IO;
 
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 using NUnit.Framework;
 
@@ -20,7 +21,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG.Test
 {
   [TestFixture]
   public sealed class CFGTestFixture
-    : BaseTestFixture<MethodDefinition, ControlFlowGraph, CilToControlFlowGraph>
+    : BaseTestFixture<MethodDefinition, ControlFlowGraph<Instruction>, CilToControlFlowGraph>
   {
     private readonly string testCasesDirCache = Path.Combine("src",
                                                              "Services",

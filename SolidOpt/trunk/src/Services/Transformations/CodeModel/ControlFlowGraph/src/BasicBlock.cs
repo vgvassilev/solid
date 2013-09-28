@@ -25,10 +25,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
   /// label on the following instruction. In the absence of jumps and 
   /// labels, control proceeds sequentially from one instruction to the next.
   /// </summary>
-  public class BasicBlock : IEnumerable<Instruction>
+  public class BasicBlock<T> : IEnumerable<T>
   {
     public BlockKind Kind;
-    private List<Instruction> body = new List<Instruction>();
+    private List<T> body = new List<T>();
     private string name;
     public string Name {
       get { return this.name;  }
@@ -41,7 +41,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     /// <value>
     /// The last instruction of the given basic block.
     /// </value>
-    public Instruction Last {
+    public T Last {
       get { return body[body.Count - 1]; }
     }
     
@@ -51,20 +51,20 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     /// <value>
     /// The first instruction of the given block or null if not set.
     /// </value>
-    public Instruction First {
+    public T First {
       get { 
         if (body.Count > 0)
           return body[0];
         else
-          return null;
+          return default(T);
       }
     }
     
     /// <summary>
     /// The successors a basic block may have.
     /// </summary>
-    private List<BasicBlock> successors = new List<BasicBlock>();
-    public List<BasicBlock> Successors {
+    private List<BasicBlock<T>> successors = new List<BasicBlock<T>>();
+    public List<BasicBlock<T>> Successors {
       get { return this.successors; }
       set { successors = value; }
     }
@@ -72,8 +72,8 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     /// <summary>
     /// The predecessors a basic block may have.
     /// </summary>
-    private List<BasicBlock> predecessors = new List<BasicBlock>();
-    public List<BasicBlock> Predecessors {
+    private List<BasicBlock<T>> predecessors = new List<BasicBlock<T>>();
+    public List<BasicBlock<T>> Predecessors {
       get { return this.predecessors;  }
       set { predecessors = value;  }
     }
@@ -83,26 +83,26 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
       this.name = name;
     }
     
-    public BasicBlock(List<BasicBlock> successors, List<BasicBlock> predecessors)
+    public BasicBlock(List<BasicBlock<T>> successors, List<BasicBlock<T>> predecessors)
     {
       this.successors = successors;
       this.predecessors = predecessors;
     }
 
-    public void Add(Instruction i)
+    public void Add(T i)
     {
       //TODO: enforce checking whether we are adding non linear instr
       body.Add(i);
     }
     
-    public bool Contains(Instruction i)
+    public bool Contains(T i)
     {
       return body.Contains(i);  
     }
     
     #region IEnumerable
     
-    IEnumerator<Instruction> IEnumerable<Instruction>.GetEnumerator()
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
       return body.GetEnumerator();
     }
@@ -117,7 +117,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     public override string ToString() {
       StringBuilder sb = new StringBuilder();
 
-      foreach (Instruction instr in body) {
+      foreach (T instr in body) {
         sb.AppendLine(instr.ToString());
       }
 
@@ -125,4 +125,3 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     }
   }
 }
-

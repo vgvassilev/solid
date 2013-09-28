@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL.Test
 {
   [TestFixture]
   public sealed class CFGtoILTestFixture
-    : BaseTestFixture<ControlFlowGraph, MethodDefinition, ControlFlowGraphToCil>
+    : BaseTestFixture<ControlFlowGraph<Instruction>, MethodDefinition, ControlFlowGraphToCil>
   {
     private readonly string testCasesDirCache = Path.Combine("src", 
                                                              "Services",
@@ -59,7 +59,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL.Test
     {
       MethodDefinition mDef = LoadTestCaseMethod(filename);
       CilToControlFlowGraph transformer = new CilToControlFlowGraph();
-      ControlFlowGraph cfg = transformer.Transform(mDef);
+      ControlFlowGraph<Instruction> cfg = transformer.Transform(mDef);
       RunTestCase(filename, cfg);
     }
 
