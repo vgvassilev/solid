@@ -5,16 +5,16 @@
 ##
 
 csharp_add_test_library(
-  SolidOpt.Services.Transformations.MultiModel.CFGtoTAC.Test.dll
+  SolidOpt.Services.Transformations.MultiModel.ILtoTAC.Test.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
-  SolidOpt.Services.Transformations.MultiModel.CFGtoTAC.Test.dll
+  SolidOpt.Services.Transformations.MultiModel.ILtoTAC.Test.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.CFGtoTAC.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.ILtoCFG.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.ILtoTAC.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.Test.dll
   # Monodevelop 2.8 compatibility
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
@@ -26,7 +26,7 @@ csharp_add_dependencies(
   )
 
 csharp_add_project_meta(
-  SolidOpt.Services.Transformations.MultiModel.CFGtoTAC.Test.dll
+  SolidOpt.Services.Transformations.MultiModel.ILtoTAC.Test.dll
   "TargetFrameworkVersion" "v4.0"
   )
   

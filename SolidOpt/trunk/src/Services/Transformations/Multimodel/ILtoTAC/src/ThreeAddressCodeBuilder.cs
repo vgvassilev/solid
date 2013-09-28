@@ -11,10 +11,9 @@ using System.Diagnostics;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
-namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
+namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 {
   public class ThreeAddressCodeBuilder
   {
@@ -23,10 +22,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     private readonly TypeReference BoolTypeReference;
     private readonly Triplet FixupTriplet;
 
-    private ControlFlowGraph<Instruction> cfg = null;
+    private MethodDefinition method = null;
     
-    public ThreeAddressCodeBuilder(ControlFlowGraph<Instruction> cfg) {
-      this.cfg = cfg;
+    public ThreeAddressCodeBuilder(MethodDefinition method) {
+      this.method = method;
       Int32TypeReference = new TypeReference("System", "Int32", null, /*valueType*/true);
       BoolTypeReference = new TypeReference("System", "Bool", null, /*valueType*/true);
       FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
@@ -75,7 +74,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       List<Triplet> triplets = new List<Triplet>();
       Stack<object> simulationStack = new Stack<object>();
       List<VariableDefinition> tempVariables = new List<VariableDefinition>();
-      Instruction instr = cfg.Root.First;
+      Instruction instr = method.Body.Instructions[0];
 
       VariableReference tmpVarRef;
       object obj1, obj2;
@@ -83,7 +82,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 
       int tripletIndex = triplets.Count;
       Instruction start = instr;
-      int paramOffset = cfg.Method.HasThis ? 1 : 0;
+      int paramOffset = method.HasThis ? 1 : 0;
       while (instr != null) {
         switch (instr.OpCode.Code) {
           case Code.Nop:
@@ -93,56 +92,56 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             // Nothing to do
             break;
           case Code.Ldarg_0:
-            if (cfg.Method.HasThis)
-              simulationStack.Push(cfg.Method.Body.ThisParameter);
+            if (method.HasThis)
+              simulationStack.Push(method.Body.ThisParameter);
             else
-              simulationStack.Push(cfg.Method.Parameters[0]);
+              simulationStack.Push(method.Parameters[0]);
             break;
           case Code.Ldarg_1:
-            simulationStack.Push(cfg.Method.Parameters[1 - paramOffset]);
+            simulationStack.Push(method.Parameters[1 - paramOffset]);
             break;
           case Code.Ldarg_2:
-            simulationStack.Push(cfg.Method.Parameters[2 - paramOffset]);
+            simulationStack.Push(method.Parameters[2 - paramOffset]);
             break;
           case Code.Ldarg_3:
-            simulationStack.Push(cfg.Method.Parameters[3 - paramOffset]);
+            simulationStack.Push(method.Parameters[3 - paramOffset]);
             break;
           case Code.Ldloc_0:
-            simulationStack.Push(cfg.Method.Body.Variables[0]);
+            simulationStack.Push(method.Body.Variables[0]);
             break;
           case Code.Ldloc_1:
-            simulationStack.Push(cfg.Method.Body.Variables[1]);
+            simulationStack.Push(method.Body.Variables[1]);
             break;
           case Code.Ldloc_2:
-            simulationStack.Push(cfg.Method.Body.Variables[2]);
+            simulationStack.Push(method.Body.Variables[2]);
             break;
           case Code.Ldloc_3:
-            simulationStack.Push(cfg.Method.Body.Variables[3]);
+            simulationStack.Push(method.Body.Variables[3]);
             break;
           case Code.Stloc_0:
-            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[0], simulationStack.Pop()));
+            triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.Variables[0], simulationStack.Pop()));
             break;
           case Code.Stloc_1:
-            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[1], simulationStack.Pop()));
+            triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.Variables[1], simulationStack.Pop()));
             break;
           case Code.Stloc_2:
-            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[2], simulationStack.Pop()));
+            triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.Variables[2], simulationStack.Pop()));
             break;
           case Code.Stloc_3:
-            triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.Variables[3], simulationStack.Pop()));
+            triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.Variables[3], simulationStack.Pop()));
             break;
           case Code.Ldarg_S:
-            if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
-              simulationStack.Push(cfg.Method.Body.ThisParameter);
+            if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+              simulationStack.Push(method.Body.ThisParameter);
             else
-              simulationStack.Push(cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
+              simulationStack.Push(method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
             break;
 //          case Code.Ldarga_S:
           case Code.Starg_S:
-            if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
-              triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.ThisParameter, simulationStack.Pop()));
+            if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+              triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.ThisParameter, simulationStack.Pop()));
             else
-              triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
+              triplets.Add(new Triplet(TripletOpCode.Assignment, method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
             break;
           case Code.Ldloc_S:
             simulationStack.Push(instr.Operand);
@@ -218,13 +217,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Jmp:
             MethodReference jmpMethod = instr.Operand as MethodReference;
             // Make sure that argument lists are the same
-            Debug.Assert(jmpMethod.CallingConvention == cfg.Method.CallingConvention,
+            Debug.Assert(jmpMethod.CallingConvention == method.CallingConvention,
                          "Calling convention differs.");
-            Debug.Assert(jmpMethod.HasThis == cfg.Method.HasBody, "One of the methods has this");
+            Debug.Assert(jmpMethod.HasThis == method.HasBody, "One of the methods has this");
             ParameterDefinition paramDef = null;
             for (int i = jmpMethod.Parameters.Count - 1; i >= 0; i--) {
               paramDef = jmpMethod.Parameters[i];
-              Debug.Assert(paramDef == cfg.Method.Parameters[i], "Args differ");
+              Debug.Assert(paramDef == method.Parameters[i], "Args differ");
             }
             triplets.Add(new Triplet(TripletOpCode.Goto, null, jmpMethod));
             break;
@@ -1077,17 +1076,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Ldftn:
 //          case Code.Ldvirtftn:
           case Code.Ldarg:
-            if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
-              simulationStack.Push(cfg.Method.Body.ThisParameter);
+            if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+              simulationStack.Push(method.Body.ThisParameter);
             else
-              simulationStack.Push(cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
+              simulationStack.Push(method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
             break;
 //          case Code.Ldarga:
           case Code.Starg:
-            if (cfg.Method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
-              triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Body.ThisParameter, simulationStack.Pop()));
+            if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
+              triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.ThisParameter, simulationStack.Pop()));
             else
-              triplets.Add(new Triplet(TripletOpCode.Assignment, cfg.Method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
+              triplets.Add(new Triplet(TripletOpCode.Assignment, method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
             break;
           case Code.Ldloc:
             simulationStack.Push(instr.Operand);
@@ -1119,7 +1118,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           default:
             string msg = String.Format("Unknown instruction: {0}\n", instr.OpCode.ToString());
             if (triplets.Count > 0) {
-              ThreeAddressCode partiallyBuiltTac = new ThreeAddressCode(cfg.Method, triplets[0], triplets, tempVariables);
+              ThreeAddressCode partiallyBuiltTac = new ThreeAddressCode(method, triplets[0], triplets, tempVariables);
               msg = String.Format("\n Model built partially:\n{0}", partiallyBuiltTac);
             }
             throw new NotImplementedException(msg);
@@ -1142,7 +1141,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
         if (i < triplets.Count-1) triplets[i].Next = triplets[i+1];
       }
       
-      return new ThreeAddressCode(cfg.Method, triplets[0], triplets, tempVariables);
+      return new ThreeAddressCode(method, triplets[0], triplets, tempVariables);
     }
   }
 

@@ -5,31 +5,31 @@
  */
 using System;
 
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
-namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
+namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 {
-  public class CFGtoTACTransformer : DecompilationStep, ITransform<ControlFlowGraph<Instruction>, ThreeAddressCode>
+  public class ILtoTACTransformer : DecompilationStep, ITransform<MethodDefinition, ThreeAddressCode>
   {
 
     #region Constructors
 
-    public CFGtoTACTransformer() {
+    public ILtoTACTransformer() {
     }
 
     #endregion
 
     public override object Process(object codeModel)
     {
-      return Process(codeModel as ControlFlowGraph<Instruction>);
+      return Process(codeModel as MethodDefinition);
     }
 
     public override Type GetSourceType()
     {
-      return typeof(ControlFlowGraph<Instruction>);
+      return typeof(MethodDefinition);
     }
 
     public override Type GetTargetType()
@@ -37,7 +37,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return typeof(ThreeAddressCode);
     }
 
-    public ThreeAddressCode Process(ControlFlowGraph<Instruction> source)
+    public ThreeAddressCode Process(MethodDefinition source)
     {
       if (source == null)
         throw new ArgumentNullException ("method");
@@ -46,12 +46,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       return builder.Create();
     }
 
-    public ThreeAddressCode Transform(ControlFlowGraph<Instruction> source)
+    public ThreeAddressCode Transform(MethodDefinition source)
     {
       return Decompile(source);
     }
 
-    public ThreeAddressCode Decompile (ControlFlowGraph<Instruction> source)
+    public ThreeAddressCode Decompile (MethodDefinition source)
     {
       return Process(source);
     }

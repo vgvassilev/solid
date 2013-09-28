@@ -16,23 +16,23 @@ using Mono.Cecil.Cil;
 using NUnit.Framework;
 
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
-using SolidOpt.Services.Transformations.Multimodel.CFGtoTAC;
+using SolidOpt.Services.Transformations.Multimodel.ILtoTAC;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 using SolidOpt.Services.Transformations.Multimodel.Test;
 
-namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
+namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
 {
   [TestFixture]
   public sealed class TACTestFixture 
-    : BaseTestFixture<ControlFlowGraph<Instruction>, ThreeAddressCode, CFGtoTACTransformer>
+    : BaseTestFixture<MethodDefinition, ThreeAddressCode, ILtoTACTransformer>
   {
     private readonly string testCasesDirCache = Path.Combine("src",
                                                              "Services",
                                                              "Transformations",
                                                              "Multimodel",
-                                                             "CFGtoTAC",
+                                                             "ILtoTAC",
                                                              "test",
                                                              "TestCases");
 
@@ -58,15 +58,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC.Test
       return testCasesDirCache;
     }
 
-    private ControlFlowGraph<Instruction> getCfg(string testCaseName) {
-      MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);
-      return new CilToControlFlowGraph().Decompile(mainMethodDef);
-    }
-
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)
     {
-      RunTestCase(filename, getCfg(filename));
+      RunTestCase(filename, LoadTestCaseMethod(filename));
     }
   }
 }
