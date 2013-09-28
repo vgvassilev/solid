@@ -22,16 +22,16 @@ namespace SolidOpt.Services.Transformations.Optimizations.CFG.DeadCodeEliminatio
     {
     }
 
-    public ControlFlowGraph Transform(ControlFlowGraph<Instruction> source)
+    public ControlFlowGraph<Instruction> Transform(ControlFlowGraph<Instruction> source)
     {
       return Optimize(source);
     }
 
     #region IOptimize<ControlFlowGraph> implementation
-    public ControlFlowGraph Optimize(ControlFlowGraph<Instruction> source)
+    public ControlFlowGraph<Instruction> Optimize(ControlFlowGraph<Instruction> source)
     {
       // Unreachable block is a block without predecessors, which is not the root block
-      foreach(BasicBlock block in source.RawBlocks) {
+      foreach(BasicBlock<Instruction> block in source.RawBlocks) {
         if (block != source.Root)
           if (block.Predecessors.Count == 0)
             source.RawBlocks.Remove(block);
