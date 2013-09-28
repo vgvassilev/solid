@@ -1112,9 +1112,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //          case Code.Readonly:
 
           default:
-            ThreeAdressCode partiallyBuiltTac = new ThreeAdressCode(cfg.Method, triplets[0], triplets, tempVariables);
-            string msg = String.Format("Unknown instruction {0}.\n Model built partially:\n{1}", 
-                                       instr.OpCode.ToString(), partiallyBuiltTac);
+            string msg = String.Format("Unknown instruction: {0}\n", instr.OpCode.ToString());
+            if (triplets.Count > 0) {
+              ThreeAdressCode partiallyBuiltTac = new ThreeAdressCode(cfg.Method, triplets[0], triplets, tempVariables);
+              msg = String.Format("\n Model built partially:\n{0}", partiallyBuiltTac);
+            }
             throw new NotImplementedException(msg);
         }
 
