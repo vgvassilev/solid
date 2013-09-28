@@ -751,9 +751,20 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             break;
 //          case Code.Unbox:
 //          case Code.Throw:
-//          case Code.Ldfld:
-//          case Code.Ldflda:
-//          case Code.Stfld:
+          case Code.Ldfld:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef, 
+                                   new CompositeFieldReference(obj1, (FieldReference)instr.Operand)));
+            simulationStack.Push(tmpVarRef);
+            break;
+//        case Code.Ldflda:
+          case Code.Stfld:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, 
+                                     new CompositeFieldReference(obj1, (FieldReference)instr.Operand), obj2));
+            break;
 //          case Code.Ldsfld:
 //          case Code.Ldsflda:
 //          case Code.Stsfld:
@@ -1168,6 +1179,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       Type t = op.GetType();
       if (op is VariableReference) return (op as VariableReference).VariableType;
       if (op is ParameterReference) return (op as ParameterReference).ParameterType;
+      if (op is FieldReference) return (op as FieldReference).FieldType;
       return new TypeReference(t.Namespace, t.Name, null, t.IsValueType);
     }
     
