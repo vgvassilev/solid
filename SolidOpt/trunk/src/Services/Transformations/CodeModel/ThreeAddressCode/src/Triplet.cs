@@ -226,7 +226,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         return "this";
       if (obj is CompositeFieldReference) {
         CompositeFieldReference cfr = obj as CompositeFieldReference;
-        return string.Format("{0}.{1}", cfr.Instance, cfr.Field);
+        return string.Format("{0}.{1}", cfr.Instance, cfr.Field.Name);
       }
       if (obj is ArrayElementReference) {
         ArrayElementReference aer = obj as ArrayElementReference;
