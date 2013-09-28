@@ -20,13 +20,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private readonly TypeReference Int32TypeReference;
+    private readonly TypeReference BoolTypeReference;
     private readonly Triplet FixupTriplet;
 
     private ControlFlowGraph cfg = null;
     
     public ThreeAddressCodeBuilder(ControlFlowGraph cfg) {
       this.cfg = cfg;
-      Int32TypeReference = new TypeReference("System", "Int32", null, true);
+      Int32TypeReference = new TypeReference("System", "Int32", null, /*valueType*/true);
+      BoolTypeReference = new TypeReference("System", "Bool", null, /*valueType*/true);
       FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
     }
     
@@ -355,7 +357,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
-//        case Code.Bne_Un_S:
 //        case Code.Bge_Un_S:
 //        case Code.Bgt_Un_S:
 //        case Code.Ble_Un_S:
@@ -437,12 +438,26 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               throw new Exception(InvalidILExceptionString);
             tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
-            triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
+            triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef,
+                                  GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
-//        case Code.Bne_Un:
+          case Code.Bne_Un_S: // Intentional fall through
+          case Code.Bne_Un:
+            obj2 = simulationStack.Pop();
+            obj1 = simulationStack.Pop();
+            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
+              throw new Exception(InvalidILExceptionString);
+            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
+            triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
+            triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, 
+                                  GetLabeledTripletByIL((Instruction)instr.Operand));
+            if (triplet.Operand2 == FixupTriplet)
+              ForwardBranchTriplets[triplet] = instr;
+            triplets.Add(triplet);
+            break;
 //        case Code.Bge_Un:
 //        case Code.Bgt_Un:
 //        case Code.Ble_Un:
@@ -1248,9 +1263,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 
     public static bool BinaryComparisonOrBranchOperations(object op1, object op2)
     {
-      bool result = BinaryComparisonOrBranchOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(op2))];
+      int op1Kind = GetTypeKindUn(GetOperandType(op1));
+      int op2Kind = GetTypeKindUn(GetOperandType(op2));
+      bool result = BinaryComparisonOrBranchOperationsResultTypes[op1Kind, op2Kind];
 
-      //TODO: PointerType and Object/Object result are valid only with beq[.s], bne.un[.s] and ceq IL instructions. See CIL specification Table III.4
+      //TODO: PointerType and Object/Object result are valid only with beq[.s], bne.un[.s] and 
+      // ceq IL instructions. See CIL specification Table III.4
 
       return result;
     }
