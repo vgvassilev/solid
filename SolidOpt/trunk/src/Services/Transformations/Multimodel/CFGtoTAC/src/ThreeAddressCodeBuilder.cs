@@ -765,9 +765,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             triplets.Add(new Triplet(TripletOpCode.Assignment, 
                                      new CompositeFieldReference(obj1, (FieldReference)instr.Operand), obj2));
             break;
-//          case Code.Ldsfld:
+          case Code.Ldsfld:
+            simulationStack.Push(instr.Operand);
+            break;
 //          case Code.Ldsflda:
-//          case Code.Stsfld:
+          case Code.Stsfld:
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, obj1));
+            break;
 //          case Code.Stobj:
 //          case Code.Conv_Ovf_I1_Un:
 //          case Code.Conv_Ovf_I2_Un:

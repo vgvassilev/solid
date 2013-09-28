@@ -232,6 +232,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         ArrayElementReference aer = obj as ArrayElementReference;
         return string.Format("{0}[{1}]", aer.Array, aer.Index);
       }
+      if (obj is FieldReference) {
+        FieldReference fldRef = (FieldReference)obj;
+        return string.Format("{0}.{1}", fldRef.DeclaringType.FullName, fldRef.Name);
+      }
       return obj.ToString();
     }
 
