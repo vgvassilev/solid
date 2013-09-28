@@ -146,7 +146,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             simulationStack.Push(instr.Operand);
             break;
           case Code.Ldloca_S:
-            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
             triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
             simulationStack.Push(tmpVarRef);
             break;
@@ -699,7 +700,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
           case Code.Ldstr:
             simulationStack.Push(instr.Operand);
             break;
-        case Code.Newobj:
+          case Code.Newobj:
             Stack<object> ctorReverseStack = new Stack<object>();
             MethodReference ctorMethod = instr.Operand as MethodReference;
             //int ctorMethodHasThis = ctorMethod.HasThis ? 1 : 0;
@@ -712,10 +713,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
               triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj1));
             }
             tmpVarRef = GenerateTempVar(tempVariables, ctorMethod.DeclaringType);
-            triplets.Add(new Triplet(TripletOpCode.New, tmpVarRef, instr.Operand));
+            triplets.Add(new Triplet(TripletOpCode.New, tmpVarRef, ctorMethod));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Castclass:
+          case Code.Castclass:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, (TypeReference)instr.Operand);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, (TypeReference)instr.Operand, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Isinst:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, instr.Operand as TypeReference);  
@@ -748,31 +754,132 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
 //        case Code.Conv_Ovf_I_Un:
 //        case Code.Conv_Ovf_U_Un:
 //        case Code.Box:
-//        case Code.Newarr:
-//        case Code.Ldlen:
-//        case Code.Ldelema:
-//        case Code.Ldelem_I1:
-//        case Code.Ldelem_U1:
-//        case Code.Ldelem_I2:
-//        case Code.Ldelem_U2:
-//        case Code.Ldelem_I4:
-//        case Code.Ldelem_U4:
-//        case Code.Ldelem_I8:
-//        case Code.Ldelem_I:
-//        case Code.Ldelem_R4:
-//        case Code.Ldelem_R8:
-//        case Code.Ldelem_Ref:
-//        case Code.Stelem_I:
-//        case Code.Stelem_I1:
-//        case Code.Stelem_I2:
-//        case Code.Stelem_I4:
-//        case Code.Stelem_I8:
-//        case Code.Stelem_R4:
-//        case Code.Stelem_R8:
-//        case Code.Stelem_Ref:
-//        case Code.Ldelem_Any:
-//        case Code.Stelem_Any:
+        case Code.Newarr:
+            object numElems = simulationStack.Pop();
+            TypeReference eType = (TypeReference)instr.Operand;
+            TypeReference arrType = new ArrayType(eType, 1);
+
+            tmpVarRef = GenerateTempVar(tempVariables, arrType);
+            triplets.Add(new Triplet(TripletOpCode.New, tmpVarRef, arrType, numElems));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldlen:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef); // native unsigned int
+            triplets.Add(new Triplet(TripletOpCode.ArrayLength, tmpVarRef, simulationStack.Pop()));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelema:
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)) //TODO: Check: instr.Operand is unused?
+            );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_I1:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_U1:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt8TypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_I2:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int16TypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_U2:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt16TypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_I4:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_U4:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_I8:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int64TypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_I:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.IntPtrTypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_R4:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.SingleTypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_R8:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.DoubleTypeRef);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_Ref:
+            obj1 = simulationStack.Pop();
+            obj2 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(obj2).GetElementType());
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+              new ArrayElementReference(obj2, obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldelem_Any:
+            tmpVarRef = GenerateTempVar(tempVariables, (TypeReference)instr.Operand);
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new ArrayElementReference(simulationStack.Pop(), obj1)));
+            simulationStack.Push(tmpVarRef);
+            break;
+
+          case Code.Stelem_Any: // instr.Operand is unused for now for this opcode.
+          case Code.Stelem_I:
+          case Code.Stelem_I1:
+          case Code.Stelem_I2:
+          case Code.Stelem_I4:
+          case Code.Stelem_I8:
+          case Code.Stelem_R4:
+          case Code.Stelem_R8:
+          case Code.Stelem_Ref:
+            obj1 = simulationStack.Pop();
+            obj2 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment,
+              new ArrayElementReference(simulationStack.Pop(), obj2), obj1));
+            break;
+
 //        case Code.Unbox_Any:
+
           case Code.Conv_Ovf_I1:
               obj1 = simulationStack.Pop();
               tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
@@ -953,7 +1060,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
             simulationStack.Push(instr.Operand);
             break;
           case Code.Ldloca:
-            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
             triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
             simulationStack.Push(tmpVarRef);
             break;
@@ -1000,6 +1108,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     }
   }
 
+  //TODO: Add support to Native Float (R)
   public static class Helper
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
@@ -1017,6 +1126,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     public static readonly TypeReference UInt64TypeRef;
     public static readonly TypeReference IntPtrTypeRef;
     public static readonly TypeReference UIntPtrTypeRef;
+    public static readonly TypeReference PointerTypeRef;
 
     static Helper()
     {
@@ -1032,6 +1142,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
       UInt64TypeRef = new TypeReference("System", "UInt64", null, true);
       IntPtrTypeRef = new TypeReference("System", "IntPtr", null, true);
       UIntPtrTypeRef = new TypeReference("System", "UIntPtr", null, true);
+      //TODO: Check CLI managed pointer "&" type spec; Check last param: false or true?
+      PointerTypeRef = new TypeReference("Mono.Cecil", "PointerType", null, false); 
     }
     
     public static TypeReference GetOperandType(object op)
@@ -1085,14 +1197,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoTAC
     
     public readonly static Type[,] BinaryNumericOperationsResultTypes =
       {
-        //              Int32           Int64           IntPtr                Single          Double          &                     Obj
-        /* Int32  */  { typeof(Int32),  null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
-        /* Int64  */  { null,           typeof(Int64),  null,                 null,           null,           null,                 null },
-        /* IntPtr */  { typeof(IntPtr), null,           typeof(IntPtr),       null,           null,           typeof(PointerType),  null },
-        /* Single */  { null,           null,           null,                 typeof(Single), null,           null,                 null },
-        /* Double */  { null,           null,           null,                 null,           typeof(Double), null,                 null },
-        /* &      */  { typeof(PointerType), null,      typeof(PointerType),  null,           null,           typeof(IntPtr),       null },
-        /* Obj    */  { null,           null,           null,                 null,           null,           null,                 null }
+        //              Int32           Int64           IntPtr                Single          Double          &                    Obj
+        /* Int32  */  { typeof(Int32),  null,           typeof(IntPtr),       null,           null,           typeof(PointerType), null },
+        /* Int64  */  { null,           typeof(Int64),  null,                 null,           null,           null,                null },
+        /* IntPtr */  { typeof(IntPtr), null,           typeof(IntPtr),       null,           null,           typeof(PointerType), null },
+        /* Single */  { null,           null,           null,                 typeof(Single), null,           null,                null },
+        /* Double */  { null,           null,           null,                 null,           typeof(Double), null,                null },
+        /* &      */  { typeof(PointerType), null,      typeof(PointerType),  null,           null,           typeof(IntPtr),      null },
+        /* Obj    */  { null,           null,           null,                 null,           null,           null,                null }
         };
 
     public static TypeReference BinaryNumericOperations(object op1, object op2)

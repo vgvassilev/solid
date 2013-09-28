@@ -15,67 +15,102 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
   public enum TripletOpCode {
     // Basic
-    Assignment,     // result = op1
-    AddressOf,      // result = addressof op
+
+    /// result = op1
+    Assignment,
+    /// result = addressof op
+    AddressOf,
     
     // Array deref etc
-    ArrayElement,   // result = op1[op2]
-    ArrayLength,    // result = length op1
-    //...
+
+    /// result = length op1
+    ArrayLength,
 
     // Aritmetic
-    Addition,       // result = op1 + op2
-    Substraction,   // result = op1 - op2
-    Multiplication, // result = op1 * op2
-    Division,       // result = op1 / op2
-    Reminder,       // result = op1 % op2
-    Negate,         // result = - op1
-    And,            // result = op1 & op2
-    Or,             // result = op1 | op2
-    Xor,            // result = op1 ^ op2
-    Not,            // result = ! op1
-    ShiftLeft,      // result = op1 << op2
-    ShiftRight,     // result = op1 >> op2
-    Sizeof,         // result = sizeof op1/type
-    CheckOverflow,  // checkoverflow
-    CheckFinite,    // checkfinite
-    //...
+
+    /// result = op1 + op2
+    Addition,
+    /// result = op1 - op2
+    Substraction,
+    /// result = op1 * op2
+    Multiplication,
+    /// result = op1 / op2
+    Division,
+    /// result = op1 % op2
+    Reminder,
+    /// result = - op1
+    Negate,
+    /// result = op1 & op2
+    And,
+    /// result = op1 | op2
+    Or,
+    /// result = op1 ^ op2
+    Xor,
+    /// result = ! op1
+    Not,
+    /// result = op1 << op2
+    ShiftLeft,
+    /// result = op1 >> op2
+    ShiftRight,
+    /// result = sizeof op1/type
+    Sizeof,
+    /// checkoverflow
+    CheckOverflow,
+    /// checkfinite
+    CheckFinite,
     
     // Cast
-    Cast,           // result = (op1) op2
+
+    /// result = (op1) op2
+    Cast,
     
     // Logic
-    Equal,          // result = op1 == op2
-    Less,           // result = op1 < op2
-    Great,          // result = op1 > op2
-    //...
+
+    /// result = op1 == op2
+    Equal,
+    /// result = op1 < op2
+    Less,
+    /// result = op1 > op2
+    Great,
     
     // Control
-    Goto,           // goto op1/label
-    IfFalse,        // iffalse op1 goto op2/label
-    IfTrue,         // iftrue op1 goto op2/label
-    Switch,         // switch op1 goto op2/array/labels
-    //...
+
+    /// goto op1/label
+    Goto,
+    /// iffalse op1 goto op2/label
+    IfFalse,
+    /// iftrue op1 goto op2/label
+    IfTrue,
+    /// switch op1 goto op2/array/labels
+    Switch,
     
     // Methods
-    Call,           // result = call op1/method/signature
-    CallVirt,       // result = callvirt op1/method/signature
-    PushParam,      // pushparam op1
-    Return,         // return op1
-    //...
+
+    /// result = call op1/method/signature
+    Call,
+    /// result = callvirt op1/method/signature
+    CallVirt,
+    /// pushparam op1
+    PushParam,
+    /// return op1
+    Return,
     
     // Object model
-    New,            // result = new op1/method/signature
-    Field,          // result = op1.op2
-    As,             // result = op1 as op2/type/signature
-    Token,          // result = token op1/token
-    //...
-    
+
+    /// result = new op1/method/signature/array_type op2/optional-array_elements
+    New,
+    /// result = op1 as op2/type/signature
+    As,
+    /// result = token op1/token
+    Token,
+
     // Exceptions handling
     //...
 
     // Other
-    Nop             // nop
+
+    /// nop
+    Nop
   }
 
   public class Triplet
@@ -189,21 +224,14 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       }
       if (obj is ParameterReference && (obj as ParameterReference).Index == -1)
         return "this";
-/*      if (obj is MethodReference) {
-        MethodDefinition md = (obj as MethodReference).Resolve();
-        if (md != null && md.IsConstructor) {
-          //StringBuilder sb = new StringBuilder();
-          //sb.Append(md.DeclaringType.ToString());
-          //md.MethodSignatureFullName(sb);
-          //return sb.ToString();
-          StringBuilder sb = new StringBuilder(md.ToString());
-          sb.Remove(0, md.ReturnType.ToString().Length + 1);
-          sb.Replace("::.cctor", "");
-          sb.Replace("::.ctor", "");
-          return sb.ToString();
-        }
+      if (obj is CompositeFieldReference) {
+        CompositeFieldReference cfr = obj as CompositeFieldReference;
+        return string.Format("{0}.{1}", cfr.Instance, cfr.Field);
       }
-*/
+      if (obj is ArrayElementReference) {
+        ArrayElementReference aer = obj as ArrayElementReference;
+        return string.Format("{0}[{1}]", aer.Array, aer.Index);
+      }
       return obj.ToString();
     }
 
@@ -298,18 +326,15 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
         case TripletOpCode.New:
           sb.AppendFormat("new {0}", op(operand1));
-          break;
-        case TripletOpCode.Field:
-          sb.AppendFormat("{0}.{1}", op(operand1), op(operand2));
+          if (operand1 is TypeReference) {
+            sb.Insert(sb.ToString().IndexOf("[") + 1, op(operand2));
+          }
           break;
         case TripletOpCode.As:
           sb.AppendFormat("{0} as {1}", op(operand1), op(operand2));
           break;
         case TripletOpCode.Token:
           sb.AppendFormat("token {0}", op(operand1));
-          break;
-        case TripletOpCode.ArrayElement:
-          sb.AppendFormat("{0}[{1}]", op(operand1), op(operand2));
           break;
         case TripletOpCode.ArrayLength:
           sb.AppendFormat("length {0}", op(operand1));

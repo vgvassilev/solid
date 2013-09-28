@@ -1,5 +1,5 @@
 // RUN: "@ILASM@" /DLL @TEST_CASE@
-// XFAIL:*
+//TODO: remove XFAIL:*
 //TODO: We should have a look how array inits are implemented in .NET too.
 .assembly TestCase {
   .custom instance void class [mscorlib]System.Reflection.AssemblyTitleAttribute::'.ctor'(string) =  (01 00 05 54 65 73 74 73 00 00 )
