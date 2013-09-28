@@ -29,8 +29,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
     public BaseTestFixture()
     {
+      string path = GetTestCasesDir();
+      if (!Directory.Exists(path))
+        throw new DirectoryNotFoundException("Directory not found. Please check testCasesDirCache variable");
       // Cleanup the last invocation.
-      string[] testCases = Directory.GetFiles(GetTestCasesDir(), "*." + GetTestCaseFileExtension());
+      string[] testCases = Directory.GetFiles(path, "*." + GetTestCaseFileExtension());
       foreach (string testCaseName in testCases)
         Cleanup(Path.GetFileNameWithoutExtension(testCaseName)); // FIXME: Be smarter here. Don't cut.
     }
