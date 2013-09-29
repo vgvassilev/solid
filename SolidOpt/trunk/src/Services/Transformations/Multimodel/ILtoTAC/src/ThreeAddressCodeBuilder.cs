@@ -500,6 +500,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 //          case Code.Stind_I2:
 //          case Code.Stind_I4:
 //          case Code.Stind_I8:
+//          case Code.Stind_I:
 //          case Code.Stind_R4:
 //          case Code.Stind_R8:
           case Code.Add:
@@ -755,7 +756,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.DoubleTypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
+
+//          case Code.Box:
 //          case Code.Unbox:
+//          case Code.Unbox_Any:
+
 //          case Code.Throw:
           case Code.Ldfld:
             obj1 = simulationStack.Pop();
@@ -801,7 +806,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 //          case Code.Conv_Ovf_U8_Un:
 //          case Code.Conv_Ovf_I_Un:
 //          case Code.Conv_Ovf_U_Un:
-//          case Code.Box:
           case Code.Newarr:
             object numElems = simulationStack.Pop();
             TypeReference eType = (TypeReference)instr.Operand;
@@ -926,8 +930,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               new ArrayElementReference(simulationStack.Pop(), obj2), obj1));
             break;
 
-//          case Code.Unbox_Any:
-          
           case Code.Conv_Ovf_I1:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
@@ -1054,7 +1056,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 //          case Code.Endfinally:
 //          case Code.Leave:
 //          case Code.Leave_S:
-//          case Code.Stind_I:
           case Code.Conv_U:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UIntPtrTypeRef);
@@ -1062,6 +1063,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             simulationStack.Push(tmpVarRef);
             break;
 //          case Code.Arglist:
+//            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetTypeReference(typeof(RuntimeArgumentHandle)));
+//            triplets.Add(new Triplet(TripletOpCode.ArgList, tmpVarRef));
+//            break;
           case Code.Ceq:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -1196,6 +1200,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
       UIntPtrTypeRef = new TypeReference("System", "UIntPtr", null, true);
       //TODO: Check CLI managed pointer "&" type spec; Check last param: false or true?
       PointerTypeRef = new TypeReference("Mono.Cecil", "PointerType", null, false); 
+    }
+    
+    public static TypeReference GetTypeReference(Type t)
+    {
+      return new TypeReference(t.Namespace, t.Name, null, t.IsValueType);
     }
     
     public static TypeReference GetOperandType(object op)
