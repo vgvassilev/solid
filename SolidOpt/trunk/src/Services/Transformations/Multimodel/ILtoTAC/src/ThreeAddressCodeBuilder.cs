@@ -136,7 +136,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             else
               simulationStack.Push(method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
             break;
-//          case Code.Ldarga_S:
+          case Code.Ldarga:
+          case Code.Ldarga_S:
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Starg_S:
             if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
               triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.ThisParameter, simulationStack.Pop()));
@@ -146,6 +152,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
           case Code.Ldloc_S:
             simulationStack.Push(instr.Operand);
             break;
+          case Code.Ldloca:
           case Code.Ldloca_S:
             //TODO: Check - Use reference to GetOperandType(instr.Operand)?
             tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
@@ -757,7 +764,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
                                    new CompositeFieldReference(obj1, (FieldReference)instr.Operand)));
             simulationStack.Push(tmpVarRef);
             break;
-//        case Code.Ldflda:
+          case Code.Ldflda:
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, new CompositeFieldReference(obj1, (FieldReference)instr.Operand)));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Stfld:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -767,7 +780,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
           case Code.Ldsfld:
             simulationStack.Push(instr.Operand);
             break;
-//          case Code.Ldsflda:
+          case Code.Ldsflda:
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Stsfld:
             obj1 = simulationStack.Pop();
             triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, obj1));
@@ -1081,7 +1099,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             else
               simulationStack.Push(method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
             break;
-//          case Code.Ldarga:
           case Code.Starg:
             if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
               triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.ThisParameter, simulationStack.Pop()));
@@ -1090,12 +1107,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             break;
           case Code.Ldloc:
             simulationStack.Push(instr.Operand);
-            break;
-          case Code.Ldloca:
-            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
-            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
-            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
-            simulationStack.Push(tmpVarRef);
             break;
           case Code.Stloc:
             triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
