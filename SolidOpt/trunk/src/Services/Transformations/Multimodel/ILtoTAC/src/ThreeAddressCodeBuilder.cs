@@ -1111,7 +1111,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 //          case Code.Initblk:
 //          case Code.No:
 //          case Code.Rethrow:
-//          case Code.Sizeof:
+          case Code.Sizeof:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.SizeOf, tmpVarRef, instr.Operand));
+            simulationStack.Push(tmpVarRef);
+            break;
 //          case Code.Refanytype:
 //          case Code.Readonly:
 

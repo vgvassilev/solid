@@ -53,7 +53,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     /// result = op1 >> op2
     ShiftRight,
     /// result = sizeof op1/type
-    Sizeof,
+    SizeOf,
     /// checkoverflow
     CheckOverflow,
     /// checkfinite
@@ -343,7 +343,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         case TripletOpCode.ArrayLength:
           sb.AppendFormat("length {0}", op(operand1));
           break;
-        case TripletOpCode.Sizeof:
+        case TripletOpCode.SizeOf:
           sb.AppendFormat("sizeof {0}", op(operand1));
           break;
         case TripletOpCode.CheckFinite:
