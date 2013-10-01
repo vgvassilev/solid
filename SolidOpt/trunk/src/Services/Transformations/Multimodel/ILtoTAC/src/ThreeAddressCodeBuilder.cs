@@ -757,9 +757,33 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             simulationStack.Push(tmpVarRef);
             break;
 
-//          case Code.Box:
-//          case Code.Unbox:
-//          case Code.Unbox_Any:
+          case Code.Box:
+            TypeReference typeTok = (TypeReference)instr.Operand;
+            if (typeTok.IsValueType) {
+              obj1 = simulationStack.Pop();
+              tmpVarRef = GenerateTempVar(tempVariables, Helper.ObjectTypeRef); //TODO: Boxed-form type?
+              triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.ObjectTypeRef, obj1)); //TODO: Use (TypeReference)instr.Operand to construct "&" pointer type; Unbox === address_of?
+              //triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef, obj1)); //TODO: Use (TypeReference)instr.Operand to construct "&" pointer type; Unbox === address_of?
+              simulationStack.Push(tmpVarRef);
+            } else if (typeTok.IsByReference) {
+              // the box instruction does returns val unchanged as obj
+            } // else if (?nullable?) {
+            //}
+            break;
+          case Code.Unbox:
+            //TODO: Check implementation semantic described in spec.
+            //TODO: Add test cases for box/unbox Nullable<T>
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef); //TODO: Make type valueTypePtr (&); (TypeReference)instr.Operand
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, obj1)); //TODO: Use (TypeReference)instr.Operand to construct "&" pointer type; Unbox === address_of?
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Unbox_Any:
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, (TypeReference)instr.Operand);
+            triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, (TypeReference)instr.Operand, obj1));
+            simulationStack.Push(tmpVarRef);
+            break;
 
 //          case Code.Throw:
           case Code.Ldfld:
@@ -1183,6 +1207,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
     public static readonly TypeReference IntPtrTypeRef;
     public static readonly TypeReference UIntPtrTypeRef;
     public static readonly TypeReference PointerTypeRef;
+    public static readonly TypeReference ObjectTypeRef;
 
     static Helper()
     {
@@ -1200,6 +1225,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
       UIntPtrTypeRef = new TypeReference("System", "UIntPtr", null, true);
       //TODO: Check CLI managed pointer "&" type spec; Check last param: false or true?
       PointerTypeRef = new TypeReference("Mono.Cecil", "PointerType", null, false); 
+      ObjectTypeRef = new TypeReference("System", "Object", null, false); 
     }
     
     public static TypeReference GetTypeReference(Type t)
