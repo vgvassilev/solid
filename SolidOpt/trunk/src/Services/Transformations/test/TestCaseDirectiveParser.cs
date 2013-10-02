@@ -30,8 +30,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// Initializes a new instance of the
     /// <see cref="SolidOpt.Services.Transformations.Multimodel.Test.TestCaseDirectiveParser"/> class.
     /// </summary>
-    /// <param name='stream'>
-    /// Stream, representing the test case being analyzed.
+    /// <param name='filename'>
+    /// The file containing the test case being analyzed.
     /// </param>
     public TestCaseDirectiveParser(string filename)
     {
