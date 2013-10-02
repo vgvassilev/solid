@@ -69,6 +69,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// <param name='testCaseName'>
     /// Test case name.
     /// </param>
+    /// The list of the Source entities to be transformed and verified.
+    /// <param name='sources'>
+    /// </param>
     public virtual void RunTestCase(string testCaseName, Source[] sources) {
       // Set invariant culture
       System.Threading.Thread.CurrentThread.CurrentCulture =
@@ -117,11 +120,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// to check against. If the check fails the error is written to a string so that proper
     /// diagnostics can be produced..
     /// </summary>
-    /// <param name='seen'>
-    /// What the algorithm actually produced.
+    /// <param name='testCaseName'>
+    /// The testcase name from which we will pickup the expected results.
     /// </param>
-    /// <param name='expected'>
-    /// What we expect to see.
+    /// <param name='seenLines'>
+    /// What the algorithm actually produced.
     /// </param>
     /// <returns>True on success.</returns>
     public bool Validate(string testCaseName, string[] seenLines)
@@ -243,6 +246,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// </returns>
     /// <param name='testCaseName'>
     /// The test case to be loaded.
+    /// </param>
+    /// <param name='methods'>
+    /// List of optional 'other' methods to check besides Main.
     /// </param>
     protected MethodDefinition[] LoadTestCaseMethod(string testCaseName, params string[] methods)
     {
