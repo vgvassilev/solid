@@ -59,8 +59,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
     }
 
     [Test]
-    public void StInd_Ref() {
-      string testCaseName = "StInd_Ref";
+    public void StInd_RefLdInd_Ref() {
+      string testCaseName = "StInd_RefLdInd_Ref";
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ByRef"));
     }
 
