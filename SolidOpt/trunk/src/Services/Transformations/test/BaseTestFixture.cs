@@ -96,10 +96,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
         }
       }
       catch (Exception e) {
+        // Fill in the debug files with the exception message.
+        // This is useful when there is partially built 'stuff'.
+        seen.AddRange(e.Message.Split('\n'));
         if (!testXFail) {
-          // Fill in the debug files with the exception message.
-          // This is useful when there is partially built 'stuff'.
-          seen.AddRange(e.Message.Split('\n'));
           throw e;
         }
       }
