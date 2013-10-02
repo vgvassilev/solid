@@ -51,9 +51,9 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
       return testCasesDirCache;
     }
 
-    private AstMethodDefinition getAstMethodDef(string testCaseName) {
-      MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName);
-      return new ILtoASTTransformer().Decompile(mainMethodDef);
+    private AstMethodDefinition[] getAstMethodDef(string testCaseName) {
+      MethodDefinition mainMethodDef = LoadTestCaseMethod(testCaseName)[0];
+      return new AstMethodDefinition[] {new ILtoASTTransformer().Decompile(mainMethodDef)};
     }
     
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
@@ -63,4 +63,3 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
     }
   }
 }
-

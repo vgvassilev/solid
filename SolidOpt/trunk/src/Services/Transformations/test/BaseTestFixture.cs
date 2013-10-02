@@ -69,7 +69,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// <param name='testCaseName'>
     /// Test case name.
     /// </param>
-    public virtual void RunTestCase(string testCaseName, Source source) {
+    public virtual void RunTestCase(string testCaseName, Source[] sources) {
       // Set invariant culture
       System.Threading.Thread.CurrentThread.CurrentCulture =
         System.Globalization.CultureInfo.InvariantCulture; 
@@ -86,23 +86,25 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       Assert.IsTrue(File.Exists(testCaseResultFile),
                     String.Format("{0} does not exist.", testCaseResultFile));
 
-      string[] seen = new string[0]; // in case of exception preventing seen to get value.
+      List<string> seen = new List<string>(); // in case of exception preventing seen to get value.
       bool testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
         Transformer transformer = new Transformer();
-        Target target = transformer.Transform(source);
-        seen = TargetToString(target).Split('\n');
+        foreach(Source source in sources) {
+          Target target = transformer.Transform(source);
+          seen.AddRange(TargetToString(target).Split('\n'));
+        }
       }
       catch (Exception e) {
         if (!testXFail) {
           // Fill in the debug files with the exception message.
           // This is useful when there is partially built 'stuff'.
-          seen = e.Message.Split('\n');
+          seen.AddRange(e.Message.Split('\n'));
           throw e;
         }
       }
       finally {
-        Validate(testCaseName, seen);
+        Validate(testCaseName, seen.ToArray());
       }
     }
 
@@ -242,7 +244,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// <param name='testCaseName'>
     /// The test case to be loaded.
     /// </param>
-    protected MethodDefinition LoadTestCaseMethod(string testCaseName)
+    protected MethodDefinition[] LoadTestCaseMethod(string testCaseName, params string[] methods)
     {
       //FIXME: Here we do that and then reconstrunct the same path to source.
       testCaseName = Path.GetFileNameWithoutExtension(testCaseName);
@@ -253,9 +255,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
       TypeDefinition type = assembly.MainModule.GetType("TestCase");
       Assert.IsNotNull (type, "Type TestCase not found!");
+      List<MethodDefinition> result = new List<MethodDefinition>();
+      // Add by default the Main method.
       MethodDefinition found = GetMethod(type.Methods, "Main");
-      Assert.IsNotNull (found, "Method TestCase.Main not found!");
-      return found;
+      Assert.IsNotNull(found, "Method TestCase.Main not found!");
+      result.Add(found);
+      foreach (string s in methods) {
+        found = GetMethod(type.Methods, s);
+        Assert.IsNotNull(found, String.Format("Method {0} not found!", s));
+        result.Add(found);
+      }
+      return result.ToArray();
     }
 
     /// <summary>

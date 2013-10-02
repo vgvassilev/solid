@@ -55,7 +55,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
     public void TwoSystemCalls()
     {
       string testCaseName = "TwoSystemCalls";
-      MethodDefinition mDef = LoadTestCaseMethod(testCaseName);
+      MethodDefinition mDef = LoadTestCaseMethod(testCaseName)[0];
       CallGraph cg = new CallGraphBuilder(mDef).Create(/*maxDepth*/1);
       string[] seen = cg.ToString().Split('\n');
       Assert.IsTrue(Validate(testCaseName, seen));

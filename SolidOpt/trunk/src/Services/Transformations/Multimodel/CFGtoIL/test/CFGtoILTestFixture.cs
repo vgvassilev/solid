@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -57,10 +58,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL.Test
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)
     {
-      MethodDefinition mDef = LoadTestCaseMethod(filename);
+      MethodDefinition[] mDefs = LoadTestCaseMethod(filename);
       CilToControlFlowGraph transformer = new CilToControlFlowGraph();
-      ControlFlowGraph<Instruction> cfg = transformer.Transform(mDef);
-      RunTestCase(filename, cfg);
+      List<ControlFlowGraph<Instruction>> cfgs = new List<ControlFlowGraph<Instruction>>();
+      foreach (MethodDefinition mDef in mDefs)
+        cfgs.Add(transformer.Transform(mDef));
+      RunTestCase(filename, cfgs.ToArray());
     }
 
     public override string TargetToString(MethodDefinition target) {
