@@ -24,6 +24,10 @@
     IL_0014:  ret 
   } // end of method TestCase::Main
   
+  // private static void ByRef(ref object x) {
+  //   Console.WriteLine(x);
+  //   x = new Int32();
+  // }
   .method private static hidebysig default void ByRef (object& x)  cil managed 
   {
     .maxstack 8
