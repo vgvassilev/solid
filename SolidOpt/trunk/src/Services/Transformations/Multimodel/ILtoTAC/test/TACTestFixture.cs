@@ -1,8 +1,8 @@
-// /*
-//  * $Id: CFGTestFixture.cs 616 2012-09-03 19:49:39Z apenev $
-//  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
-//  * For further details see the nearest License.txt
-//  */
+/*
+ * $Id: CFGTestFixture.cs 616 2012-09-03 19:49:39Z apenev $
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
 
 using System;
 using Mono.Collections.Generic;
