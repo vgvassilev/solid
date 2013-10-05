@@ -65,6 +65,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
     }
 
     [Test]
+    public void Generics_ReadOnlyPrefixAndConstrainedPrefix() {
+      string testCaseName = "Generics_ReadOnlyPrefixAndConstrainedPrefix";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ReadOnlyAndConstrained"));
+    }
+
+    [Test]
     public void StInd_LdInd() {
       string testCaseName = "StInd_LdInd";
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ByRef"));

@@ -1113,11 +1113,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             simulationStack.Push(tmpVarRef);
             triplets.Add(new Triplet(TripletOpCode.CheckOverflow));
             break;    
-//          case Code.Refanyval:
+//          case Code.Refanyval://tested in RefAnyValMkRefAny.il
           case Code.Ckfinite:
             triplets.Add(new Triplet(TripletOpCode.CheckFinite));
             break;
-//          case Code.Mkrefany:
+//          case Code.Mkrefany://tested in RefAnyTypeMkRefAny.il
           case Code.Ldtoken:
             simulationStack.Push(instr.Operand);
             break;
@@ -1262,7 +1262,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
                           );
             }
             break;
-//          case Code.Constrained:
+//          case Code.Constrained: //tested in Generics_ReadOnlyPrefixAndConstrainedPrefix.il
 //          case Code.Cpblk:
 //          case Code.Initblk:
 //          case Code.No:
@@ -1272,8 +1272,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.SizeOf, tmpVarRef, instr.Operand));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Refanytype:
-//          case Code.Readonly:
+//          case Code.Refanytype: //tested in RefAnyTypeMkRefAny.il
+//          case Code.Readonly: //tested in Generics_ReadOnlyPrefixAndConstrainedPrefix.il
 
           default:
             string msg = String.Format("Unknown instruction: {0}\n", instr.OpCode.ToString());
