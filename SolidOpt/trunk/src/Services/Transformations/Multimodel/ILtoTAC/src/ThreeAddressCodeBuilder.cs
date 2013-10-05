@@ -1181,7 +1181,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             break;
 //          case Code.Sub_Ovf_Un:
 //          case Code.Endfinally:
-//          case Code.Leave:
+//          case Code.Leave: // tested in Leave.il
 //          case Code.Leave_S:
           case Code.Conv_U:
             obj1 = simulationStack.Pop();
@@ -1266,7 +1266,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 //          case Code.Cpblk:
 //          case Code.Initblk:
 //          case Code.No:
-//          case Code.Rethrow:
+//          case Code.Rethrow: //tested in Rethrow.il
           case Code.Sizeof:
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
             triplets.Add(new Triplet(TripletOpCode.SizeOf, tmpVarRef, instr.Operand));
