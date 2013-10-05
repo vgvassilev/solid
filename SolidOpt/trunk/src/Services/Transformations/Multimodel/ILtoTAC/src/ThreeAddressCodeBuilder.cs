@@ -281,98 +281,18 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             else
               triplets.Add(new Triplet(TripletOpCode.Return));
             break;
-          case Code.Br_S:
-            triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand1 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
-          case Code.Brfalse_S:
-            obj1 = simulationStack.Pop();
-            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
-            triplet = new Triplet(TripletOpCode.IfFalse, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
-          case Code.Brtrue_S:
-            obj1 = simulationStack.Pop();
-            //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
-            triplet = new Triplet(TripletOpCode.IfTrue, null, obj1, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
-          case Code.Beq_S:
-            obj2 = simulationStack.Pop();
-            obj1 = simulationStack.Pop();
-            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-              throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
-            triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
-            triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
-          case Code.Bge_S:
-            obj2 = simulationStack.Pop();
-            obj1 = simulationStack.Pop();
-            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-              throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
-            triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
-            triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
-          case Code.Bgt_S:
-            obj2 = simulationStack.Pop();
-            obj1 = simulationStack.Pop();
-            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-              throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
-            triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
-            triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
-          case Code.Ble_S:
-            obj2 = simulationStack.Pop();
-            obj1 = simulationStack.Pop();
-            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-              throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
-            triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
-            triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
-          case Code.Blt_S:
-            obj2 = simulationStack.Pop();
-            obj1 = simulationStack.Pop();
-            if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
-              throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
-            triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
-            triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
-            if (triplet.Operand2 == FixupTriplet)
-              ForwardBranchTriplets[triplet] = instr;
-            triplets.Add(triplet);
-            break;
 //          case Code.Bge_Un_S:
 //          case Code.Bgt_Un_S:
 //          case Code.Ble_Un_S:
 //          case Code.Blt_Un_S:
+          case Code.Br_S: // Intentional fall through
           case Code.Br:
             triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand1 == FixupTriplet)
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Brfalse_S: // Intentional fall through
           case Code.Brfalse:
             obj1 = simulationStack.Pop();
             //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
@@ -381,6 +301,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Brtrue_S: // Intentional fall through
           case Code.Brtrue:
             obj1 = simulationStack.Pop();
             //???if (!Helper.???(obj1)) throw new Exception(InvalidILExceptionString);
@@ -389,6 +310,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Beq_S: // Intentional fall through
           case Code.Beq:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -401,6 +323,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Bge_S: // Intentional fall through
           case Code.Bge:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -413,6 +336,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Bgt_S: // Intentional fall through
           case Code.Bgt:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -425,6 +349,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Ble_S: // Intentional fall through
           case Code.Ble:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -437,6 +362,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Blt_S: // Intentional fall through
           case Code.Blt:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
