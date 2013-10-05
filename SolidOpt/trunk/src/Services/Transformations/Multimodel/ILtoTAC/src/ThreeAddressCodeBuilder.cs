@@ -152,8 +152,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
           case Code.Ldloc_S:
             simulationStack.Push(instr.Operand);
             break;
+          case Code.Ldloca_S: // Intentional fall through
           case Code.Ldloca:
-          case Code.Ldloca_S:
             //TODO: Check - Use reference to GetOperandType(instr.Operand)?
             tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
             triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
