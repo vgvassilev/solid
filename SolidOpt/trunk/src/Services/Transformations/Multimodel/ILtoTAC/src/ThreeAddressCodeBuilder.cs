@@ -130,27 +130,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
           case Code.Stloc_3:
             triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.Variables[3], simulationStack.Pop()));
             break;
-          case Code.Ldarg_S:
-            if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
-              simulationStack.Push(method.Body.ThisParameter);
-            else
-              simulationStack.Push(method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
-            break;
+          case Code.Ldarga_S: // Intentional fall through
           case Code.Ldarga:
-          case Code.Ldarga_S:
             //TODO: Check - Use reference to GetOperandType(instr.Operand)?
             tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
             triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
             simulationStack.Push(tmpVarRef);
-            break;
-          case Code.Starg_S:
-            if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
-              triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.ThisParameter, simulationStack.Pop()));
-            else
-              triplets.Add(new Triplet(TripletOpCode.Assignment, method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
-            break;
-          case Code.Ldloc_S:
-            simulationStack.Push(instr.Operand);
             break;
           case Code.Ldloca_S: // Intentional fall through
           case Code.Ldloca:
@@ -158,9 +143,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
             triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, instr.Operand));
             simulationStack.Push(tmpVarRef);
-            break;
-          case Code.Stloc_S:
-            triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
             break;
           case Code.Ldnull:
             simulationStack.Push(null);
@@ -1150,21 +1132,25 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 //          case Code.Clt_Un:
 //          case Code.Ldftn:
 //          case Code.Ldvirtftn:
+          case Code.Ldarg_S: // Intentional fall through
           case Code.Ldarg:
             if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
               simulationStack.Push(method.Body.ThisParameter);
             else
               simulationStack.Push(method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset]);
             break;
+          case Code.Starg_S: // Intentional fall through
           case Code.Starg:
             if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)
               triplets.Add(new Triplet(TripletOpCode.Assignment, method.Body.ThisParameter, simulationStack.Pop()));
             else
               triplets.Add(new Triplet(TripletOpCode.Assignment, method.Parameters[((ParameterReference)instr.Operand).Index - paramOffset], simulationStack.Pop()));
             break;
+          case Code.Ldloc_S: // Intentional fall through
           case Code.Ldloc:
             simulationStack.Push(instr.Operand);
             break;
+          case Code.Stloc_S: // Intentional fall through
           case Code.Stloc:
             triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, simulationStack.Pop()));
             break;
