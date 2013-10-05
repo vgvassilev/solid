@@ -64,6 +64,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ByRef"));
     }
 
+    [Test]
+    public void StInd_LdInd() {
+      string testCaseName = "StInd_LdInd";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ByRef"));
+    }
+
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)
     {

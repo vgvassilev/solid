@@ -61,7 +61,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     
     // Cast
 
-    /// result = (op1) op2
+    /// result = (op1/type) op2
     Cast,
     
     // Logic
@@ -86,9 +86,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     
     // Methods
 
-    /// result = call op1/method/signature
+    /// result = call op1/method
     Call,
-    /// result = callvirt op1/method/signature
+    /// result = callvirt op1/method
     CallVirt,
     /// pushparam op1
     PushParam,
@@ -97,12 +97,15 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     
     // Object model
 
-    /// result = new op1/method/signature/array_type op2/optional-array_elements
+    /// result = new op1/method
+    /// result = new op1/type[op2/array_elements_count]
     New,
-    /// result = op1 as op2/type/signature
+    /// result = op1 as op2/type
     As,
     /// result = token op1/token
     Token,
+    /// defaultinit op1/memory_to_init op2/type
+    DefaultInit,
 
     // Exceptions handling
     //...
@@ -232,6 +235,10 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
         ArrayElementReference aer = obj as ArrayElementReference;
         return string.Format("{0}[{1}]", aer.Array, aer.Index);
       }
+      if (obj is DeReference) {
+        DeReference der = obj as DeReference;
+        return string.Format("deref {0}", der.AddressTo);
+      }
       if (obj is FieldReference) {
         FieldReference fldRef = (FieldReference)obj;
         return string.Format("{0}.{1}", fldRef.DeclaringType.FullName, fldRef.Name);
@@ -348,6 +355,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
           break;
         case TripletOpCode.CheckFinite:
           sb.Append("checkfinite");
+          break;
+        case TripletOpCode.DefaultInit:
+          sb.AppendFormat("dafaultinit {0} {1}", op(operand1), op(operand2));
           break;
 
         default:

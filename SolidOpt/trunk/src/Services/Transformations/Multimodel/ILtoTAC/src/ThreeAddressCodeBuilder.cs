@@ -484,19 +484,100 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
-//          case Code.Ldind_I1:
-//          case Code.Ldind_U1:
-//          case Code.Ldind_I2:
-//          case Code.Ldind_U2:
-//          case Code.Ldind_I4:
-//          case Code.Ldind_U4:
-//          case Code.Ldind_I8:
-//          case Code.Ldind_I:
-//          case Code.Ldind_R4:
-//          case Code.Ldind_R8:
-//          case Code.Ldind_Ref:
+          case Code.Ldind_I1:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int8TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_U1:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt8TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_I2:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int16TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_U2:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt16TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_I4:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_U4:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_I8:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int64TypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_I:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.IntPtrTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_R4:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.SingleTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_R8:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.DoubleTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldind_Ref:
+            //TODO: Determine result object class by type of address referece in stack
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.ObjectTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
 //          case Code.Stind_Ref:
-//          case Code.Stind_I1:
+//            break;
+          case Code.Stind_I1:
+          case Code.Stind_I2:
+          case Code.Stind_I4:
+          case Code.Stind_I8:
+          case Code.Stind_I:
+          case Code.Stind_R4:
+          case Code.Stind_R8:
+          case Code.Stind_Ref:
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment,
+                                   new DeReference(simulationStack.Pop()),
+                                   obj1)
+                         );
+            break;
 //          case Code.Stind_I2:
 //          case Code.Stind_I4:
 //          case Code.Stind_I8:
@@ -717,8 +798,30 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Cast, tmpVarRef, Helper.UInt64TypeRef, obj1));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Cpobj:
-//          case Code.Ldobj:
+          case Code.Cpobj:
+            TypeReference copyTypeRef = (TypeReference)instr.Operand;
+            if (copyTypeRef.IsValueType) {
+              obj1 = simulationStack.Pop();
+              triplets.Add(new Triplet(TripletOpCode.Assignment,
+                                       new DeReference(simulationStack.Pop()),
+                                       new DeReference(obj1))
+                           );
+            } else {
+              // === ldind+stind?
+              obj1 = simulationStack.Pop();
+              triplets.Add(new Triplet(TripletOpCode.Assignment,
+                                       new DeReference(simulationStack.Pop()),
+                                       new DeReference(obj1))
+                           );
+            }
+            break;
+          case Code.Ldobj:
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
+            triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef,
+                                   new DeReference(simulationStack.Pop()))
+                         );
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Ldstr:
             simulationStack.Push(instr.Operand);
             break;
@@ -1144,7 +1247,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 //          case Code.Unaligned:
 //          case Code.Volatile:
 //          case Code.Tail:
-//          case Code.Initobj:
+          case Code.Initobj:
+            TypeReference initTypeRef = (TypeReference)instr.Operand;
+            if (initTypeRef.IsValueType) {
+              triplets.Add(new Triplet(TripletOpCode.DefaultInit,
+                                       null,
+                                       new DeReference(simulationStack.Pop()),
+                                       initTypeRef)
+                           );
+            } else {
+              triplets.Add(new Triplet(TripletOpCode.Assignment,
+                                      new DeReference(simulationStack.Pop()),
+                                      null)
+                          );
+            }
+            break;
 //          case Code.Constrained:
 //          case Code.Cpblk:
 //          case Code.Initblk:
@@ -1162,7 +1279,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             string msg = String.Format("Unknown instruction: {0}\n", instr.OpCode.ToString());
             if (triplets.Count > 0) {
               ThreeAddressCode partiallyBuiltTac = new ThreeAddressCode(method, triplets[0], triplets, tempVariables);
-              msg = String.Format("\n Model built partially:\n{0}", partiallyBuiltTac);
+              msg += String.Format("\n Model built partially:\n{0}", partiallyBuiltTac);
             }
             throw new NotImplementedException(msg);
         }
