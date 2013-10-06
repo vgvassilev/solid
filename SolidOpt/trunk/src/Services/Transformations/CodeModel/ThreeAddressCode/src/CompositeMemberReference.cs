@@ -10,7 +10,7 @@ using Mono.Cecil;
 
 namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
-  public class CompositeFieldReference
+  public class CompositeMemberReference
   {
     private object instance;
     public object Instance {
@@ -18,15 +18,15 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       set { instance = value; }
     }
 
-    private FieldReference field;
-    public FieldReference Field {
-      get { return field; }
-      set { field = value; }
+    private MemberReference member;
+    public MemberReference Member {
+      get { return member; }
+      set { member = value; }
     }
 
-    public CompositeFieldReference(object instance, FieldReference field) {
+    public CompositeMemberReference(object instance, MemberReference member) {
       this.instance = instance;
-      this.field = field;
+      this.member = member;
     }
   }
 

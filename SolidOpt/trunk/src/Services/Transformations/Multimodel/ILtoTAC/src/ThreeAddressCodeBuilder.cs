@@ -236,7 +236,29 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               simulationStack.Push(tmpVarRef);
             }
             break;
-//          case Code.Calli:
+          case Code.Calli:
+            CallSite callSite = (CallSite)instr.Operand;
+
+            obj1 = simulationStack.Pop();
+
+            Stack<object> calliReverseStack = new Stack<object>();
+            int callSiteHasThis = callSite.HasThis ? 1 : 0;
+            
+            for (int i = callSite.Parameters.Count + callSiteHasThis; i > 0; i--)
+              calliReverseStack.Push(simulationStack.Pop());
+            for (int i = callSite.Parameters.Count + callSiteHasThis; i > 0; i--) {
+              obj2 = calliReverseStack.Pop();
+              triplets.Add(new Triplet(TripletOpCode.PushParam, null, obj2));
+            }
+            if (callSite.ReturnType.FullName == "System.Void") {
+              //???    || ((instr.Next != null) && (instr.Next.OpCode.Code == Code.Pop))) {
+              triplets.Add(new Triplet(TripletOpCode.Call, null, new DeReference(obj1)));
+            } else {
+              tmpVarRef = GenerateTempVar(tempVariables, callSite.ReturnType);
+              triplets.Add(new Triplet(TripletOpCode.Call, tmpVarRef, new DeReference(obj1)));
+              simulationStack.Push(tmpVarRef);
+            }
+            break;
           case Code.Callvirt:
             Stack<object> callVirtReverseStack = new Stack<object>();
             MethodReference callVirtMethod = instr.Operand as MethodReference;
@@ -470,8 +492,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
                          );
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Stind_Ref:
-//            break;
           case Code.Stind_I1:
           case Code.Stind_I2:
           case Code.Stind_I4:
@@ -486,12 +506,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
                                    obj1)
                          );
             break;
-//          case Code.Stind_I2:
-//          case Code.Stind_I4:
-//          case Code.Stind_I8:
-//          case Code.Stind_I:
-//          case Code.Stind_R4:
-//          case Code.Stind_R8:
           case Code.Add:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -823,21 +837,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
             triplets.Add(new Triplet(TripletOpCode.Assignment, tmpVarRef, 
-                                   new CompositeFieldReference(obj1, (FieldReference)instr.Operand)));
+                                   new CompositeMemberReference(obj1, (FieldReference)instr.Operand)));
             simulationStack.Push(tmpVarRef);
             break;
           case Code.Ldflda:
             //TODO: Check - Use reference to GetOperandType(instr.Operand)?
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
-            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, new CompositeFieldReference(obj1, (FieldReference)instr.Operand)));
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, new CompositeMemberReference(obj1, (FieldReference)instr.Operand)));
             simulationStack.Push(tmpVarRef);
             break;
           case Code.Stfld:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
             triplets.Add(new Triplet(TripletOpCode.Assignment, 
-                                     new CompositeFieldReference(obj1, (FieldReference)instr.Operand), obj2));
+                                     new CompositeMemberReference(obj1, (FieldReference)instr.Operand), obj2));
             break;
           case Code.Ldsfld:
             simulationStack.Push(instr.Operand);
@@ -852,8 +866,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             triplets.Add(new Triplet(TripletOpCode.Assignment, instr.Operand, obj1));
             break;
-//          case Code.Stobj:
-//          case Code.Conv_Ovf_I1_Un:
+          case Code.Stobj:
+            //TODO: Check if this implementation is correct with generic types
+            obj1 = simulationStack.Pop();
+            triplets.Add(new Triplet(TripletOpCode.Assignment,
+                                   new DeReference(simulationStack.Pop()),
+                                   obj1)
+                         );
+            break;//          case Code.Conv_Ovf_I1_Un:
 //          case Code.Conv_Ovf_I2_Un:
 //          case Code.Conv_Ovf_I4_Un:
 //          case Code.Conv_Ovf_I8_Un:
@@ -1152,8 +1172,19 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Ldftn:
-//          case Code.Ldvirtftn:
+          case Code.Ldftn:
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, (MethodReference)instr.Operand));
+            simulationStack.Push(tmpVarRef);
+            break;
+          case Code.Ldvirtftn:
+            //TODO: Check - Use reference to GetOperandType(instr.Operand)?
+            obj1 = simulationStack.Pop();
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.PointerTypeRef);
+            triplets.Add(new Triplet(TripletOpCode.AddressOf, tmpVarRef, new CompositeMemberReference(obj1, (MethodReference)instr.Operand)));
+            simulationStack.Push(tmpVarRef);
+            break;
           case Code.Ldarg_S: // Intentional fall through
           case Code.Ldarg:
             if (method.HasThis && ((ParameterReference)instr.Operand).Index == 0)

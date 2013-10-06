@@ -21,7 +21,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     /// result = addressof op
     AddressOf,
     
-    // Array deref etc
+    // Arrays
 
     /// result = length op1
     ArrayLength,
@@ -68,7 +68,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
     /// result = op1 == op2
     Equal,
-    /// result = op1 < op2
+    /// <summary> result = op1 < op2 </summary>
     Less,
     /// result = op1 > op2
     Great,
@@ -92,6 +92,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     CallVirt,
     /// pushparam op1
     PushParam,
+    /// return
     /// return op1
     Return,
     
@@ -214,6 +215,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
     private static string op(object obj)
     {
+      if (obj == null) return "null";
       if (obj is string) return "\"" + obj.ToString() + "\"";  //TODO: Escape string
       if (obj is Triplet) return "L" + ((Triplet)obj).offset;
       if (obj is Triplet[]) {
@@ -227,9 +229,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       }
       if (obj is ParameterReference && (obj as ParameterReference).Index == -1)
         return "this";
-      if (obj is CompositeFieldReference) {
-        CompositeFieldReference cfr = obj as CompositeFieldReference;
-        return string.Format("{0}.{1}", cfr.Instance, cfr.Field.Name);
+      if (obj is CompositeMemberReference) {
+        CompositeMemberReference cfr = obj as CompositeMemberReference;
+        return string.Format("{0}.{1}", cfr.Instance, cfr.Member is FieldReference ? cfr.Member.Name : cfr.Member.FullName);
       }
       if (obj is ArrayElementReference) {
         ArrayElementReference aer = obj as ArrayElementReference;

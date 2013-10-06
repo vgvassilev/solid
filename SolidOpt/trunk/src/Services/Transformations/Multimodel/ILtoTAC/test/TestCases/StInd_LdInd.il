@@ -4,6 +4,66 @@
 .class public auto ansi beforefieldinit TestCase
        extends [mscorlib]System.Object
 {
+
+  //  public static void Main() {
+  //    SByte i8 = 8;
+  //    Int16 i16 = 16;
+  //    Int32 i32 = 32;
+  //    Int64 i64 = 64;
+  //    Byte u8 = 8;
+  //    UInt16 u16 = 16;
+  //    UInt32 u32 = 32;
+  //    UInt64 u64 = 64;
+  //    IntPtr intptr = new IntPtr();
+  //    Single s = 1.1f;
+  //    Double d = 2.2;
+  //    DateTime dt = new DateTime();
+  //    dt = new DateTime(2013, 10, 4);
+  //    Object obj = new Object();
+  //    Random rnd = new Random();
+  //    String str = "test";
+  //
+  //    ByRef(ref i8, ref i16, ref i32, ref i64, ref u8, ref u16, ref u32, ref u64, ref intptr, ref s, ref d, ref dt, ref obj, ref rnd, ref str);
+  //    ByRef(ref i8, ref i16, ref i32, ref i64, ref u8, ref u16, ref u32, ref u64, ref intptr, ref s, ref d, ref dt, ref obj, ref rnd, ref str);
+  //  }
+  //
+  //  public static void ByRef(ref SByte i8, ref Int16 i16, ref Int32 i32, ref Int64 i64,
+  //                           ref Byte u8, ref UInt16 u16, ref UInt32 u32, ref UInt64 u64,
+  //                           ref IntPtr intptr, ref Single s, ref Double d,
+  //                           ref DateTime dt, ref Object obj, ref Random rnd, ref String str) {
+  //    System.Console.WriteLine(i8);
+  //    System.Console.WriteLine(i16);
+  //    System.Console.WriteLine(i32);
+  //    System.Console.WriteLine(i64);
+  //    System.Console.WriteLine(u8);
+  //    System.Console.WriteLine(u16);
+  //    System.Console.WriteLine(u32);
+  //    System.Console.WriteLine(u64);
+  //    System.Console.WriteLine(intptr);
+  //    System.Console.WriteLine(s);
+  //    System.Console.WriteLine(d);
+  //    System.Console.WriteLine(dt);
+  //    System.Console.WriteLine(obj);
+  //    System.Console.WriteLine(rnd);
+  //    System.Console.WriteLine(str);
+  //
+  //    i8 = -8;
+  //    i16 = -16;
+  //    i32 = -32;
+  //    i64 = -64;
+  //    u8 = 8;
+  //    u16 = 16;
+  //    u32 = 32;
+  //    u64 = 64;
+  //    intptr = new IntPtr();
+  //    s = -1.1f;
+  //    d = -2.2;
+  //    dt = new DateTime();
+  //    obj = new Object();
+  //    rnd = new Random();
+  //    str = "best";
+  //  }
+
   .method public static hidebysig default void Main() cil managed
   {
     .entrypoint

@@ -8,11 +8,11 @@
   //   int i = M1(1);
   //   return i;
   // }
-  // 
+  //
   // public int M1(int a) {
   //   return a;
   // }
-  
+
   .method public hidebysig instance void  Main() cil managed
   {
     .maxstack  2
@@ -23,7 +23,7 @@
     IL_0007:  stloc.0
     IL_0008:  ldloc.0
     IL_0009:  ret
-  }  
+  }
 
   .method public hidebysig instance int32  M1(int32 a) cil managed
   {

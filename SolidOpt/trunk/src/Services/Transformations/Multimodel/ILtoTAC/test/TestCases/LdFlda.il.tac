@@ -7,3 +7,4 @@ System.Void TestCase::Main() {
   L5: call System.Void System.Console::WriteLine(System.String)
   L6: return
 }
+
