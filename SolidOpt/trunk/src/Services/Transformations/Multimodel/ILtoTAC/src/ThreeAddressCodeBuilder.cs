@@ -294,7 +294,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
             triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -309,7 +309,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -324,7 +324,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -339,7 +339,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -354,7 +354,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef,
                                   GetLabeledTripletByIL((Instruction)instr.Operand));
