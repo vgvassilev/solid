@@ -622,8 +622,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Reminder, tmpVarRef,
                                  tmpVarRefO1rem ?? obj1, tmpVarRefO2rem ?? obj2));
             simulationStack.Push(tmpVarRef);
-            break;
-            
+            break;       
           case Code.And:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -652,7 +651,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.ShiftLeft, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Shr_Un:
+          case Code.Shr_Un: // Intentional fall through
             // [ECMA-335: 3.60] shr.un - Shift integer right, unsigned
             //
             // stack transition: ..., value, shiftAmount -> ..., result
