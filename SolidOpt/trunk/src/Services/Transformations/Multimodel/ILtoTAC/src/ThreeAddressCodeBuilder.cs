@@ -831,7 +831,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             simulationStack.Push(tmpVarRef);
             break;
 
-//          case Code.Throw:
+//          case Code.Throw: //tested in Throw.il
+            // [ECMA-335: 4.31] throw - Throw an exception
+            //
+            // stack transition: ..., object -> ...
+            //
+            // The throw instruction throws the exception object (type O) on the stack and empties the stack.
+            //
           case Code.Ldfld:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.GetOperandType(instr.Operand));
