@@ -1487,7 +1487,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 
     public static TypeReference ShiftOperations(object op1, object shiftBy)
     {
-      Type resultType = ShiftOperationsResultTypes[GetTypeKind(GetOperandType(op1)), GetTypeKind(GetOperandType(shiftBy))];
+      Type resultType = ShiftOperationsResultTypes[GetTypeKindUn(GetOperandType(op1)), GetTypeKindUn(GetOperandType(shiftBy))];
 
       if (resultType == null) throw new Exception(InvalidILExceptionString);
 
