@@ -18,16 +18,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
   public class ThreeAddressCodeBuilder
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
-    private readonly TypeReference Int32TypeReference;
-    private readonly TypeReference BoolTypeReference;
     private readonly Triplet FixupTriplet;
 
     private MethodDefinition method = null;
     
     public ThreeAddressCodeBuilder(MethodDefinition method) {
       this.method = method;
-      Int32TypeReference = new TypeReference("System", "Int32", null, /*valueType*/true);
-      BoolTypeReference = new TypeReference("System", "Bool", null, /*valueType*/true);
       FixupTriplet = new Triplet(-2, TripletOpCode.Nop);
     }
     
@@ -316,7 +312,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.BoolTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -331,7 +327,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.BoolTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -346,7 +342,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.BoolTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -361,7 +357,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.BoolTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, GetLabeledTripletByIL((Instruction)instr.Operand));
             if (triplet.Operand2 == FixupTriplet)
@@ -376,7 +372,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.BoolTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfTrue, null, tmpVarRef,
                                   GetLabeledTripletByIL((Instruction)instr.Operand));
@@ -390,7 +386,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, BoolTypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.BoolTypeRef);
             triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
             triplet = new Triplet(TripletOpCode.IfFalse, null, tmpVarRef, 
                                   GetLabeledTripletByIL((Instruction)instr.Operand));
@@ -878,7 +874,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
                                    new DeReference(simulationStack.Pop()),
                                    obj1)
                          );
-            break;//          case Code.Conv_Ovf_I1_Un:
+            break;
+//          case Code.Conv_Ovf_I1_Un:
 //          case Code.Conv_Ovf_I2_Un:
 //          case Code.Conv_Ovf_I4_Un:
 //          case Code.Conv_Ovf_I8_Un:
@@ -1153,7 +1150,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
             triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
@@ -1163,7 +1160,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
@@ -1173,7 +1170,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
               throw new Exception(InvalidILExceptionString);
-            tmpVarRef = GenerateTempVar(tempVariables, Int32TypeReference);
+            tmpVarRef = GenerateTempVar(tempVariables, Helper.Int32TypeRef);
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
@@ -1281,6 +1278,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private const string UnsupportedTypeExceptionString = "TAC builder: Unsupported type!";
 
+    public static readonly TypeReference BoolTypeRef;
     public static readonly TypeReference Int8TypeRef;
     public static readonly TypeReference Int16TypeRef;
     public static readonly TypeReference Int32TypeRef;
@@ -1298,6 +1296,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 
     static Helper()
     {
+      BoolTypeRef = new TypeReference("System", "Bool", null, true);
       Int8TypeRef = new TypeReference("System", "Int8", null, true);
       Int16TypeRef = new TypeReference("System", "Int16", null, true);
       Int32TypeRef = new TypeReference("System", "Int32", null, true);
