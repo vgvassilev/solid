@@ -638,14 +638,36 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.ShiftLeft, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
+//          case Code.Shr_Un:
+            // [ECMA-335: 3.60] shr.un - Shift integer right, unsigned
+            //
+            // stack transition: ..., value, shiftAmount -> ..., result
+            //
+            // The shr.un instruction shifts value (int32, int 64 or native int) right by the number of bits
+            // specified by shiftAmount. shiftAmount is of type int32 or native int. The return value is 
+            // unspecified if shiftAmount is greater than or equal to the width of value. shr.un inserts 
+            // a zero bit on each shift.
+            // See Table 6: Shift Operations for details of which operand types are allowed, and their 
+            // corresponding result type.
+            //
           case Code.Shr:
+            // [ECMA-335: 3.59] shr - Shift integer right.
+            //
+            // stack transition: ..., value, shiftAmount -> ..., result
+            //
+            // The shr instruction shifts value (int32, int64 or native int) right by the number of bits 
+            // specified by shiftAmount. shiftAmount is of type int32 or native int. The return value is 
+            // unspecified if shiftAmount is greater than or equal to the width of value. shr replicates
+            // the high order bit on each shift, preserving the sign of the original value in result. 
+            // See Table 6: Shift Operations for details of which operand types are allowed, and their 
+            // corresponding result type.
+            //
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.ShiftOperations(obj1, obj2));
             triplets.Add(new Triplet(TripletOpCode.ShiftRight, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Shr_Un:
           case Code.Neg:
             obj1 = simulationStack.Pop();
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UnaryNumericOperations(obj1));
@@ -1110,6 +1132,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
+//          case Code.Cgt_Un:
           case Code.Cgt:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -1119,7 +1142,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Cgt_Un:
+//          case Code.Clt_Un:
           case Code.Clt:
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
@@ -1129,7 +1152,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Less, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Clt_Un:
 //          case Code.Ldftn:
 //          case Code.Ldvirtftn:
           case Code.Ldarg_S: // Intentional fall through
