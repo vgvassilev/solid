@@ -263,10 +263,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             else
               triplets.Add(new Triplet(TripletOpCode.Return));
             break;
-//          case Code.Bge_Un_S:
-//          case Code.Bgt_Un_S:
-//          case Code.Ble_Un_S:
-//          case Code.Blt_Un_S:
           case Code.Br_S: // Intentional fall through
           case Code.Br:
             triplet = new Triplet(TripletOpCode.Goto, null, GetLabeledTripletByIL((Instruction)instr.Operand));
@@ -305,6 +301,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Bge_Un: // Intentional fall through
+          case Code.Bge_Un_S: // Intentional fall through
           case Code.Bge_S: // Intentional fall through
           case Code.Bge:
             obj2 = simulationStack.Pop();
@@ -318,6 +316,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Bgt_Un: // Intentional fall through
+          case Code.Bgt_Un_S: // Intentional fall through
           case Code.Bgt_S: // Intentional fall through
           case Code.Bgt:
             obj2 = simulationStack.Pop();
@@ -331,6 +331,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Ble_Un_S: // Intentional fall through
+          case Code.Ble_Un: // Intentional fall through
           case Code.Ble_S: // Intentional fall through
           case Code.Ble:
             obj2 = simulationStack.Pop();
@@ -344,6 +346,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
+          case Code.Blt_Un: // Intentional fall through
+          case Code.Blt_Un_S: // Intentional fall through
           case Code.Blt_S: // Intentional fall through
           case Code.Blt:
             obj2 = simulationStack.Pop();
@@ -372,10 +376,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
               ForwardBranchTriplets[triplet] = instr;
             triplets.Add(triplet);
             break;
-//          case Code.Bge_Un:
-//          case Code.Bgt_Un:
-//          case Code.Ble_Un:
-//          case Code.Blt_Un:
           case Code.Switch:
             obj1 = simulationStack.Pop();
             Triplet[] labels = new Triplet[((Instruction[])instr.Operand).Length];
