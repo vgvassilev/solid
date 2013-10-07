@@ -1154,8 +1154,41 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Equal, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Cgt_Un:
+          case Code.Cgt_Un: // Intentional fall through
+            // [ECMA-335: 3.23] cgt.un - Push 1 (of type int32) if value1 > value2, unsigned or unordered,
+            //                           else push 0.
+            //
+            // stack transition: ..., value1, value2 -> ..., result
+            //
+            // The cgt.un instruction compares value1 and value2. A value of 1 (of type int32) is pushed on 
+            // the stack if
+            //   • for floating-point numbers, either value1 is strictly greater than value2, or value1 is
+            //     not ordered with respect to value2.
+            //   • for integer values, value1 is strictly greater than value2 when considered as unsigned 
+            //     numbers. Otherwise, 0 (of type int32) is pushed on the stack.
+            //
+            // As per IEC 60559:1989, infinite values are ordered with respect to normal numbers 
+            // (e.g., +infinity > 5.0 > - infinity).
+            //
+            // The acceptable operand types are encapsulated in Table 4: Binary Comparison or Branch Operations. 
+            //
           case Code.Cgt:
+            // [ECMA-335: 3.22] cgt - Push 1 (of type int32) if value1 > value2, else push 0.
+            //
+            // stack transition: ..., value1, value2 -> ..., result
+            //
+            // The cgt instruction compares value1 and value2. If value1 is strictly greater than value2, 
+            // then 1 (of type int32) is pushed on the stack. Otherwise, 0 (of type int32) is pushed on the 
+            // stack.
+            //
+            // For floating-point numbers, cgt returns 0 if the numbers are unordered (that is, if one or 
+            // both of the arguments are NaN).
+            //
+            // As with IEC 60559:1989, infinite values are ordered with respect to normal numbers 
+            // (e.g., +infinity > 5.0 > - infinity).
+            //
+            // The acceptable operand types are encapsulated in Table 4: Binary Comparison or Branch Operations.
+            //
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
