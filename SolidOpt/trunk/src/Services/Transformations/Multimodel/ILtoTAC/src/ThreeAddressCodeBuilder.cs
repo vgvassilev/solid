@@ -1165,7 +1165,39 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             simulationStack.Push(tmpVarRef);
             break;
 //          case Code.Clt_Un:
+            // [ECMA-335: 3.26] clt.un - Push 1 (of type int32) if value1 < value2, unsigned or unordered, 
+            //                           else push 0.
+            //
+            // stack transition: ..., value1, value2 -> ..., result
+            //
+            // The clt.un instruction compares value1 and value2. A value of 1 (of type int32) is pushed on the 
+            // stack if:
+            //   • for floating-point numbers, either value1 is strictly less than value2, or value1 is not 
+            //     ordered with respect to value2.
+            //   • for integer values, value1 is strictly less than value2 when considered as unsigned numbers.
+            //   Otherwise, 0 (of type int32) is pushed on the stack.
+            //
+            // As per IEC 60559:1989, infinite values are ordered with respect to normal numbers 
+            // (e.g., +infinity > 5.0 > - infinity).
+            //
+            // The acceptable operand types are encapsulated in Table 4: Binary Comparison or Branch Operations.
+            //
           case Code.Clt:
+            // [ECMA-335: 3.25] clt - Push 1 (of type int32) if value1 < value2, else push 0
+            //
+            // stack transition: ..., value1, value2 -> ..., result
+            //
+            // The clt instruction compares value1 and value2. If value1 is strictly less than value2, then 1
+            // (of type int32) is pushed on the stack. Otherwise, 0 (of type int32) is pushed on the stack.
+            //
+            // For floating-point numbers, clt will return 0 if the numbers are unordered (that is, one or 
+            // both of the arguments are NaN).
+            //
+            // As per IEC 60559:1989, infinite values are ordered with respect to normal numbers 
+            // (e.g., +infinity > 5.0 > - infinity).
+            //
+            // The acceptable operand types are encapsulated in Table 4: Binary Comparison or Branch Operations.
+            //
             obj2 = simulationStack.Pop();
             obj1 = simulationStack.Pop();
             if (!Helper.BinaryComparisonOrBranchOperations(obj1, obj2))
@@ -1231,6 +1263,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             break;
 //          case Code.Constrained: //tested in Generics_ReadOnlyPrefixAndConstrainedPrefix.il
 //          case Code.Cpblk:
+            // [ECMA-335: 3.30] cpblk – copy data from memory to memory
+            //
+            // stack transition: ..., destaddr, srcaddr, size -> ...
+            //
+            // The cpblk instruction copies size (of type unsigned int32) bytes from address srcaddr
+            // (of type native int, or &) to address destaddr (of type native int, or &). The behavior 
+            // of cpblk is unspecified if the source and destination areas overlap.
+            //
+            // cpblk assumes that both destaddr and srcaddr are aligned to the natural size of the
+            // machine (but see the unaligned. prefix instruction). The operation of the cpblk instruction
+            // can be altered by an immediately preceding volatile. or unaligned. prefix instruction.
+            //
+            // [Rationale: cpblk is intended for copying structures (rather than arbitrary byte-runs). 
+            // All such structures, allocated by the CLI, are naturally aligned for the current platform. 
+            // Therefore, there is no need for the compiler that generates cpblk instructions to be aware
+            // of whether the code will eventually execute on a 32-bit or 64-bit platform. end rationale]
+            //
 //          case Code.Initblk:
 //          case Code.No:
 //          case Code.Rethrow: //tested in Rethrow.il

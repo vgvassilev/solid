@@ -42,7 +42,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
       // on static init.
     }
 
-
     protected override string GetTestCaseFileExtension()
     {
       return "il";
@@ -56,6 +55,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
     protected override string GetTestCaseDirOffset() 
     {
       return testCasesDirCache;
+    }
+
+    [Test]
+    public void CpblkAndInitblk() {
+      string testCaseName = "CpblkAndInitblk";
+      RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "Init", "Copy"));
     }
 
     [Test]
