@@ -1262,7 +1262,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             }
             break;
 //          case Code.Constrained: //tested in Generics_ReadOnlyPrefixAndConstrainedPrefix.il
-//          case Code.Cpblk:
+//          case Code.Cpblk: // tested in CpblkAndInitblk.il
             // [ECMA-335: 3.30] cpblk – copy data from memory to memory
             //
             // stack transition: ..., destaddr, srcaddr, size -> ...
@@ -1280,7 +1280,23 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             // Therefore, there is no need for the compiler that generates cpblk instructions to be aware
             // of whether the code will eventually execute on a 32-bit or 64-bit platform. end rationale]
             //
-//          case Code.Initblk:
+//          case Code.Initblk: // tested in CpblkAndInitblk.il
+            // [ECMA-335: 3.36] initblk – Set all bytes in a block of memory to a given byte value.
+            //
+            // stack transition: ..., addr, value, size -> ...
+            //
+            // The initblk instruction sets size (of type unsigned int32) bytes starting at addr (of type
+            // native int, or &) to value (of type unsigned int8). initblk assumes that addr is aligned 
+            // to the natural size of the machine (but see the unaligned. prefix instruction).
+            // 
+            // [Rationale: initblk is intended for initializing structures (rather than arbitrary byte-runs).
+            // All such structures, allocated by the CLI, are naturally aligned for the current platform.
+            // Therefore, there is no need for the compiler that generates initblk instructions to be aware
+            // of whether the code will eventually execute on a 32-bit or 64-bit platform. end rationale]
+            //
+            // The operation of the initblk instructions can be altered by an immediately preceding volatile.
+            // or unaligned. prefix instruction.
+            //
 //          case Code.No:
 //          case Code.Rethrow: //tested in Rethrow.il
           case Code.Sizeof:
