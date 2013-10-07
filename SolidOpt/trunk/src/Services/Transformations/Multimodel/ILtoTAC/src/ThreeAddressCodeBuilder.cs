@@ -1164,7 +1164,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             triplets.Add(new Triplet(TripletOpCode.Great, tmpVarRef, obj1, obj2));
             simulationStack.Push(tmpVarRef);
             break;
-//          case Code.Clt_Un:
+          case Code.Clt_Un: // Intentional fall through
             // [ECMA-335: 3.26] clt.un - Push 1 (of type int32) if value1 < value2, unsigned or unordered, 
             //                           else push 0.
             //
@@ -1299,6 +1299,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
             //
 //          case Code.No:
 //          case Code.Rethrow: //tested in Rethrow.il
+            // [ECMA-335: 4.24] rethrow – rethrow the current exception.
+            //
+            // stack transition: ...,  -> ...,
+            //
+            // The rethrow instruction is only permitted within the body of a catch handler 
+            // (see Partition I). It throws the same exception that was caught by this handler. A rethrow 
+            // does not change the stack trace in the object.
+            //
           case Code.Sizeof:
             tmpVarRef = GenerateTempVar(tempVariables, Helper.UInt32TypeRef);
             triplets.Add(new Triplet(TripletOpCode.SizeOf, tmpVarRef, instr.Operand));
