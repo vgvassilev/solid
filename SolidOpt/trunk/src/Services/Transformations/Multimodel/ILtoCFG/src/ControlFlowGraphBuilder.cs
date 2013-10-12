@@ -93,12 +93,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
     #region Fields & Properties
     private IEnumerable<T> instructions;
-    private IEnumerable<T> exceptionHandlers;
     private BasicBlock<T> root = null;
     private HashSet<T> labels;
     private List<BasicBlock<T>> rawBlocks = new List<BasicBlock<T>>();
     //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>) or bool array?
-    private HashSet<int> exceptionData = new HashSet<int>();
     private HashSet<T> exceptionHandlersStarts = new HashSet<T>();
     private HashSet<T> exceptionHandlersEnds = new HashSet<T>();
 
@@ -110,13 +108,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
                                    IEnumerable<T> ehStarts,
                                    IEnumerable<T> ehEnds) {
       this.instructions = instructions;
+      this.exceptionHandlersStarts = new HashSet<T>(ehStarts);
+      this.exceptionHandlersEnds = new HashSet<T>(ehEnds);
     }
 
     public ControlFlowGraph<T> Create()
     {
       CreateBlocks();
       ConnectBlocks();
-      CreateConnectSEHBlocks();
 
       return new ControlFlowGraph<T>(root, rawBlocks);
     }
@@ -136,7 +135,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         curBlock.Add(instr);
 
         if (IsBlockTerminator(instr)) {
-          curBlock.Kind = BlockKind.Structure;
+          if (exceptionHandlersEnds.Contains(instr) || exceptionHandlersStarts.Contains(curBlock.First))
+            curBlock.Kind =  BlockKind.SEH;
+          else
+            curBlock.Kind =  BlockKind.Structure;
           rawBlocks.Add(curBlock);
         }
       }
@@ -147,6 +149,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       if (LinearInstructionAdapter<T>.GetPrevious(i) == null)
         return true;
 
+      // Check whether this was a start of an exception protected area
       if (exceptionHandlersStarts.Contains(i))
         return true;
       
@@ -154,7 +157,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         return true;
   
       // Check whether the instruction has label
-      return HasLabel(i);
+      if (HasLabel(i))
+        return true;
+
+      return false;
     }
     
     bool IsBlockTerminator(T i) {
@@ -162,20 +168,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       switch (LinearInstructionAdapter<T>.GetFlowControl(i)) {
         // Ensures leave and endfinally do not create new block in structure CFG
         case FlowControl.Branch:
-        case FlowControl.Return: {
-          //if ((i.OpCode.Code == Code.Leave) || (i.OpCode.Code == Code.Endfinally))
-          //  return false;
-          //else
-            return true;
-        }
+        case FlowControl.Return:
         case FlowControl.Break:
         case FlowControl.Cond_Branch:
         case FlowControl.Throw:
           return true;
       }
-      
-      if (LinearInstructionAdapter<T>.GetNext(i) != null)
-        return HasLabel(LinearInstructionAdapter<T>.GetNext(i));
+
+      T nextInstr = LinearInstructionAdapter<T>.GetNext(i);
+      if (nextInstr != null)
+        return HasLabel(nextInstr) || exceptionHandlersStarts.Contains(nextInstr) || exceptionHandlersEnds.Contains(nextInstr);
+
       return false;
     }
 
@@ -219,19 +222,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       else {
         foreach (T instr in targets)
           result.Add(instr);
-        
+
         return result;
       }
-  
+
       return result;
     }
-
         
     void ConnectBlocks()
     {
       foreach (BasicBlock<T> node in rawBlocks) {
-        if (node.Kind == BlockKind.Structure)
-          ConnectBlock(node);
+        ConnectBlock(node);
       }
     }
     
@@ -252,7 +253,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
             block.Successors.Add(successor);
             successor.Predecessors.Add(block);
           }
-          
+
           break;
         }
         // treat the call as next
@@ -293,49 +294,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       }
     }
 
-    void CreateConnectSEHBlocks()
-    {
-      /*foreach (ExceptionHandler handler in body.ExceptionHandlers) {
-        BasicBlock<Instruction> TryBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
-        TryBlock.Kind = BlockKind.SEH;
-        Instruction instr = handler.TryStart;
-        if (!exceptionData.Contains(handler.TryEnd.Offset)) {
-          while (instr != handler.TryEnd) {
-            TryBlock.Add(instr);
-            instr = instr.Next;
-          }
-          exceptionData.Add(handler.TryEnd.Offset);
-          rawBlocks.Add(TryBlock);
-        }
-
-        if (handler.HandlerStart != null && handler.HandlerEnd != null) {
-          BasicBlock<Instruction> HandlerBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
-          TryBlock.Successors.Add(HandlerBlock);
-          HandlerBlock.Predecessors.Add(TryBlock);
-          HandlerBlock.Kind = BlockKind.SEH;
-          instr = handler.HandlerStart;
-          while (instr != handler.HandlerEnd) {
-            HandlerBlock.Add(instr);
-            instr = instr.Next;
-          }
-          rawBlocks.Add(HandlerBlock);
-        }
-
-        if (handler.FilterStart != null && handler.FilterEnd != null) {
-          BasicBlock<Instruction> FilterBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
-          TryBlock.Successors.Add(FilterBlock);
-          FilterBlock.Predecessors.Add(TryBlock);
-          FilterBlock.Kind = BlockKind.SEH;
-          instr = handler.FilterStart;
-          while (instr != handler.FilterEnd) {
-            FilterBlock.Add(instr);
-            instr = instr.Next;
-          }
-          rawBlocks.Add(FilterBlock);
-        }
-      }*/
-    }
-    
     BasicBlock<T> GetNodeContaining(T i)
     {
       foreach (BasicBlock<T> block in rawBlocks) {
