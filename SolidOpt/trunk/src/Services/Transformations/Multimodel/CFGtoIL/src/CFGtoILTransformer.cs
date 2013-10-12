@@ -29,7 +29,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
     #region ITransform implementation
     public MethodDefinition Transform (ControlFlowGraph<Instruction> source)
     {
-      var result = CloneMethodWithoutIL(source.Method);
+      var result = CloneMethodWithoutIL(source.MethodDefinition);
       ILProcessor cil = result.Body.GetILProcessor();
       BasicBlock<Instruction> bb = source.Root;
       Instruction instr = null;
@@ -60,7 +60,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.CFGtoIL
       //df.Body = new Mono.Cecil.Cil.MethodBody(df);
       //df.Attributes = method.Attributes;
 
-      /// Attributes
+      //// Attributes
       //public bool IsCompilerControlled {
       //public bool IsPrivate {
       //public bool IsFamilyAndAssembly {

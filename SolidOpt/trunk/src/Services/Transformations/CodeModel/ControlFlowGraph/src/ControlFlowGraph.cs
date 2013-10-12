@@ -33,14 +33,20 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     private List<BasicBlock<T>> rawBlocks = null;
     public List<BasicBlock<T>> RawBlocks {
       get { return this.rawBlocks; }
-    }    
+    }
+
+    private MethodDefinition methodDefinition;
+    public MethodDefinition MethodDefinition {
+      get { return methodDefinition; }
+    }
     
     #endregion
 
-    public ControlFlowGraph(BasicBlock<T> root, List<BasicBlock<T>> rawBlocks)
+    public ControlFlowGraph(BasicBlock<T> root, List<BasicBlock<T>> rawBlocks, MethodDefinition methodDefinition)
     {
       this.root = root;
       this.rawBlocks = rawBlocks;
+      this.methodDefinition = methodDefinition;
     }
 
     public override string ToString ()

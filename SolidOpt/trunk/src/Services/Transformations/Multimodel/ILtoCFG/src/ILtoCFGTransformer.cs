@@ -61,7 +61,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         ehEnds.Add(handler.FilterStart);
       }
 
-      var builder = new ControlFlowGraphBuilder<Instruction>(source.Method.Body.Instructions,
+      var builder = new ControlFlowGraphBuilder<Instruction>(source.Method, 
+                                                             source.Method.Body.Instructions,
                                                              ehStarts, ehEnds);
       return builder.Create();
     }

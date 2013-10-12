@@ -16,7 +16,6 @@ using Mono.Cecil.Cil;
 using Mono.Cecil.Metadata;
 
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
-using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 {
@@ -99,14 +98,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
     //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>) or bool array?
     private HashSet<T> exceptionHandlersStarts = new HashSet<T>();
     private HashSet<T> exceptionHandlersEnds = new HashSet<T>();
+    private MethodDefinition methodDefinition;
 
     #endregion
     
     #region Constructors
     
-    public ControlFlowGraphBuilder(IEnumerable<T> instructions, 
+    public ControlFlowGraphBuilder(MethodDefinition methodDefinition,
+                                   IEnumerable<T> instructions, 
                                    IEnumerable<T> ehStarts,
                                    IEnumerable<T> ehEnds) {
+      this.methodDefinition = methodDefinition;
       this.instructions = instructions;
       this.exceptionHandlersStarts = new HashSet<T>(ehStarts);
       this.exceptionHandlersEnds = new HashSet<T>(ehEnds);
@@ -117,7 +119,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       CreateBlocks();
       ConnectBlocks();
 
-      return new ControlFlowGraph<T>(root, rawBlocks);
+      return new ControlFlowGraph<T>(root, rawBlocks, methodDefinition);
     }
     
     #endregion
@@ -287,10 +289,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
           break;
         default:
           throw new NotSupportedException (
-            string.Format ("Unhandled instruction flow behavior {0}: {1}",
-                           LinearInstructionAdapter<T>.GetFlowControl(i),
-                           i.ToString(),                                                        
-                           i.ToString()));
+            string.Format("Unhandled instruction flow behavior {0}: {1}",
+                          LinearInstructionAdapter<T>.GetFlowControl(i),
+                          i.ToString(),                                                        
+                          i.ToString()));
       }
     }
 
