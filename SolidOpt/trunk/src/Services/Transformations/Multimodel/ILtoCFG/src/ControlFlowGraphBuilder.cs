@@ -16,12 +16,62 @@ using Mono.Cecil.Cil;
 using Mono.Cecil.Metadata;
 
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
+using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 {
+
   /// <summary>
-  /// Control flow graph builder. Builds <seealso cref="ControlFlowGraph"/>ControlFlowGraph of a
-  ///  method body given set of instructions.
+  /// This adapter class is used by the control flow graph builder to build CFG
+  /// out of instructions that don't implement ILinearInstruction interface. 
+  /// For example Mono.Cecil.Cil.Instruction.
+  /// </summary>
+  internal static class LinearInstructionAdapter<T> where T : class {
+    public static T GetPrevious(T instruction) {
+      Instruction cilInst = instruction as Instruction;
+      if (cilInst != null)
+        return cilInst.Previous as T;
+      ILinearInstruction linearInst = instruction as ILinearInstruction;
+      if (linearInst != null)
+        return linearInst.GetPrevious() as T;
+      throw new NotSupportedException(string.Format("Unsupported adaptee"));
+    }
+
+    public static T GetNext(T instruction) {
+      Instruction cilInst = instruction as Instruction;
+      if (cilInst != null)
+        return cilInst.Next as T;
+      ILinearInstruction linearInst = instruction as ILinearInstruction;
+      if (linearInst != null)
+        return linearInst.GetNext() as T;
+      throw new NotSupportedException(string.Format("Unsupported adaptee"));
+    }
+
+    public static object GetOperand(T instruction) {
+      Instruction cilInst = instruction as Instruction;
+      if (cilInst != null)
+        return cilInst.Operand;
+      ILinearInstruction linearInst = instruction as ILinearInstruction;
+      if (linearInst != null)
+        return linearInst.Operand;
+      throw new NotSupportedException(string.Format("Unsupported adaptee"));
+    }
+
+    public static FlowControl GetFlowControl(T instruction) {
+      Instruction cilInst = instruction as Instruction;
+      if (cilInst != null)
+        return cilInst.OpCode.FlowControl;
+      ILinearInstruction linearInst = instruction as ILinearInstruction;
+      if (linearInst != null)
+        return linearInst.FlowControl;
+      throw new NotSupportedException(string.Format("Unsupported adaptee"));
+    }
+  }
+
+  /// <summary>
+  /// Control flow graph builder. Builds 
+  /// <seealso cref="SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph"/>
+  /// ControlFlowGraph of a method body given set of instructions.
   /// </summary>
   /// <description>
   /// Dragon Book [8.4.1]
@@ -39,42 +89,46 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
   /// instructions up to but not including the next leader or the end of the
   /// intermediate program
   /// </description>
-  public class ControlFlowGraphBuilder {
-    
+  public class ControlFlowGraphBuilder<T> where T : class {
+
     #region Fields & Properties
-    MethodBody body;
-    BasicBlock<Instruction> root = null;
-    private List<Instruction> labels = new List<Instruction>();
-    private List<BasicBlock<Instruction>> rawBlocks = new List<BasicBlock<Instruction>>();
+    IEnumerable<T> instructions;
+    //MethodBody body;
+    BasicBlock<T> root = null;
+    private List<object> labels = new List<object>();
+    private List<BasicBlock<T>> rawBlocks = new List<BasicBlock<T>>();
     //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>) or bool array?
     private HashSet<int> exceptionData = new HashSet<int>();
+    private HashSet<T> exceptionHandlersStarts = new HashSet<T>();
+    private HashSet<T> exceptionHandlersEnds = new HashSet<T>();
 
     #endregion
     
     #region Constructors
     
-    public ControlFlowGraphBuilder(MethodDefinition method)
-    {
-      body = method.Body;
+    public ControlFlowGraphBuilder(IEnumerable<T> instructions, 
+                                   IEnumerable<T> ehStarts,
+                                   IEnumerable<T> ehEnds) {
+      this.instructions = instructions;
     }
 
-    public ControlFlowGraph<Instruction> Create()
+    public ControlFlowGraph<T> Create()
     {
       CreateBlocks();
       ConnectBlocks();
       CreateConnectSEHBlocks();
 
-      return new ControlFlowGraph<Instruction>(body.Method, root, rawBlocks);
+      return new ControlFlowGraph<T>(root, rawBlocks);
     }
     
     #endregion
 
     void CreateBlocks()
     {
-      BasicBlock<Instruction> curBlock = null;
-      foreach(Instruction instr in body.Instructions) {
+      BasicBlock<T> curBlock = null;
+      foreach(T instr in instructions) {
         if (IsBlockLeader(instr))
-          curBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
+          curBlock = new BasicBlock<T>(rawBlocks.Count.ToString());
         
         if (root == null)
           root = curBlock;
@@ -88,31 +142,30 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       }
     }
 
-    bool IsBlockLeader(Instruction i)
+    bool IsBlockLeader(T i)
     {
-      if (i.Previous == null)
+      if (LinearInstructionAdapter<T>.GetPrevious(i) == null)
         return true;
 
-      foreach (ExceptionHandler handler in body.ExceptionHandlers)
-        if (handler.HandlerStart == i)
-          return true;
+      if (exceptionHandlersStarts.Contains(i))
+        return true;
       
-      if (IsBlockTerminator(i.Previous))
+      if (IsBlockTerminator(LinearInstructionAdapter<T>.GetPrevious(i)))
         return true;
   
       // Check whether the instruction has label
       return HasLabel(i);
     }
     
-    bool IsBlockTerminator(Instruction i) {
+    bool IsBlockTerminator(T i) {
       // first instruction in the collection starts a block
-      switch (i.OpCode.FlowControl) {
+      switch (LinearInstructionAdapter<T>.GetFlowControl(i)) {
         // Ensures leave and endfinally do not create new block in structure CFG
         case FlowControl.Branch:
         case FlowControl.Return: {
-          if ((i.OpCode.Code == Code.Leave) || (i.OpCode.Code == Code.Endfinally))
-            return false;
-          else
+          //if ((i.OpCode.Code == Code.Leave) || (i.OpCode.Code == Code.Endfinally))
+          //  return false;
+          //else
             return true;
         }
         case FlowControl.Break:
@@ -121,49 +174,48 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
           return true;
       }
       
-      if (i.Next != null)
-        return HasLabel(i.Next);
+      if (LinearInstructionAdapter<T>.GetNext(i) != null)
+        return HasLabel(LinearInstructionAdapter<T>.GetNext(i));
       return false;
     }
-    
-    bool HasLabel(Instruction i)
+
+    bool HasLabel(T i)
     {
-      if (labels != null)
-        ComputeLabels(body.Instructions);
+      if (labels != null) //FIXME: Implement proper lazy calculation.
+        ComputeLabels(instructions);
       
       return labels.Contains(i);
     }
     
-    void ComputeLabels(Collection<Instruction> instructions)
+    void ComputeLabels(IEnumerable<T> instructions)
     {
-      foreach(Instruction inst in instructions) {
-        switch (inst.OpCode.OperandType) {
-          case OperandType.ShortInlineBrTarget:
-          case OperandType.InlineBrTarget:
-        case OperandType.InlineSwitch:
-          var targets = GetTargetInstructions(inst);
-          foreach(Instruction target in targets)
+      foreach(T i in instructions) {
+        switch (LinearInstructionAdapter<T>.GetFlowControl(i)) {
+          case FlowControl.Cond_Branch:
+          case FlowControl.Branch:
+          var targets = GetTargetInstructions(i);
+          foreach(T target in targets)
             labels.Add(target);
           break;        
         }
       }
     }
-    
-    Collection<Instruction> GetTargetInstructions(Instruction i)
+
+    IEnumerable<T> GetTargetInstructions(T i)
     {
-      Collection<Instruction> result = new Collection<Instruction>(1);
+      List<T> result = new List<T>(1);
         
       // if there are more multiple branches
-      Instruction[] targets = i.Operand as Instruction[];
+      T[] targets = LinearInstructionAdapter<T>.GetOperand(i) as T[];
       if (targets == null) {
-        Instruction target = i.Operand as Instruction;
+        T target = LinearInstructionAdapter<T>.GetOperand(i) as T;
         if (target != null) {
           result.Add(target);
            return result;
         }
       }
       else {
-        foreach (Instruction instr in targets)
+        foreach (T instr in targets)
           result.Add(instr);
         
         return result;
@@ -175,26 +227,26 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         
     void ConnectBlocks()
     {
-      foreach (BasicBlock<Instruction> node in rawBlocks) {
+      foreach (BasicBlock<T> node in rawBlocks) {
         if (node.Kind == BlockKind.Structure)
           ConnectBlock(node);
       }
     }
     
-    void ConnectBlock(BasicBlock<Instruction> block)
+    void ConnectBlock(BasicBlock<T> block)
     {
       if (block.Last == null)
-        throw new ArgumentException ("Undelimited node at offset " + block.Last.Offset);
+        throw new ArgumentException ("Undelimited node at " + block.Last);
 
-      Instruction i = block.Last;
-      switch (i.OpCode.FlowControl) {
+      T i = block.Last;
+      switch (LinearInstructionAdapter<T>.GetFlowControl(i)) {
         case FlowControl.Return:
         case FlowControl.Branch: {
           var targets = GetTargetInstructions(i);
           foreach (var target in targets) {
             Debug.Assert(target != null, "Target cannot be null!");
 
-            BasicBlock<Instruction> successor = GetNodeContaining(target);
+            BasicBlock<T> successor = GetNodeContaining(target);
             block.Successors.Add(successor);
             successor.Predecessors.Add(block);
           }
@@ -209,7 +261,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
           foreach (var target in targets) {
             Debug.Assert(target != null, "Target cannot be null!");
 
-            BasicBlock<Instruction> successor = GetNodeContaining(target);
+            BasicBlock<T> successor = GetNodeContaining(target);
             // Check whether the successor already exists. Can happen when having branches pointing
             // to one and the same block. Eg. switch with no break.
             if (block.Successors.IndexOf(successor) < 0) {
@@ -218,8 +270,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
             }
           }
           // Make sure we don't have a branch pointing to the next instruction as a target
-          if (block.Last.Next != null) {
-            BasicBlock<Instruction> successor = GetNodeContaining(block.Last.Next);
+          if (LinearInstructionAdapter<T>.GetNext(block.Last) != null) {
+            BasicBlock<T> successor = GetNodeContaining(LinearInstructionAdapter<T>.GetNext(block.Last));
             if (block.Successors.IndexOf(successor) < 0) {
               block.Successors.Add(successor);
               successor.Predecessors.Add(block);
@@ -233,7 +285,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         default:
           throw new NotSupportedException (
             string.Format ("Unhandled instruction flow behavior {0}: {1}",
-                           i.OpCode.FlowControl,
+                           LinearInstructionAdapter<T>.GetFlowControl(i),
                            i.ToString(),                                                        
                            i.ToString()));
       }
@@ -241,7 +293,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
     void CreateConnectSEHBlocks()
     {
-      foreach (ExceptionHandler handler in body.ExceptionHandlers) {
+      /*foreach (ExceptionHandler handler in body.ExceptionHandlers) {
         BasicBlock<Instruction> TryBlock = new BasicBlock<Instruction>(rawBlocks.Count.ToString());
         TryBlock.Kind = BlockKind.SEH;
         Instruction instr = handler.TryStart;
@@ -279,12 +331,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
           }
           rawBlocks.Add(FilterBlock);
         }
-      }
+      }*/
     }
     
-    BasicBlock<Instruction> GetNodeContaining(Instruction i)
+    BasicBlock<T> GetNodeContaining(T i)
     {
-      foreach (BasicBlock<Instruction> block in rawBlocks) {
+      foreach (BasicBlock<T> block in rawBlocks) {
         if (block.Contains(i))
           return block;
       }

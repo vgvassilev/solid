@@ -50,7 +50,15 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       if (!source.Method.HasBody)
         throw new ArgumentException();
 
-      var builder = new ControlFlowGraphBuilder (source.Method);
+      List<Instruction> ehStarts = new List<Instruction>();
+      List<Instruction> ehEnds = new List<Instruction>();
+      foreach (ExceptionHandler handler in source.ExceptionHandlers) {
+        ehStarts.Add(handler.HandlerStart);
+        ehEnds.Add(handler.HandlerEnd);
+      }
+
+      var builder = new ControlFlowGraphBuilder<Instruction>(source.Method.Body.Instructions,
+                                                             ehStarts, ehEnds);
       return builder.Create();
     }
     

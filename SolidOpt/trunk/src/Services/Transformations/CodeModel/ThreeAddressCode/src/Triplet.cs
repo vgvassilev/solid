@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
+using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph; // For ILinearInstruction
 
+namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {  
   public enum TripletOpCode {
     // Basic
 
@@ -117,7 +118,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Nop
   }
 
-  public class Triplet
+  public class Triplet : ILinearInstruction
   {
     public int offset = 0;
 
@@ -144,6 +145,46 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
       get { return result; }
       set { result = value; }
     }
+
+    #region Implementation of ILinearInstruction
+    ILinearInstruction ILinearInstruction.GetPrevious() {
+      return Previous;
+    }
+    ILinearInstruction ILinearInstruction.GetNext() {
+      return Next;
+    }
+
+    object ILinearInstruction.Operand {
+      get {
+        List<object> operands = new List<object>(2);
+        if (operand1 != null)
+          operands.Add(operand1);
+        if (operand2 != null)
+          operands.Add(operand2);
+        return operands.ToArray();
+      }
+    }
+
+    Mono.Cecil.Cil.FlowControl ILinearInstruction.FlowControl {
+      get {
+        switch (Opcode) {
+          case TripletOpCode.Goto:
+            return Mono.Cecil.Cil.FlowControl.Branch;
+          case TripletOpCode.IfFalse:
+          case TripletOpCode.IfTrue:
+          case TripletOpCode.Switch:
+            return Mono.Cecil.Cil.FlowControl.Cond_Branch;
+          case TripletOpCode.Call:
+          case TripletOpCode.CallVirt:
+            return Mono.Cecil.Cil.FlowControl.Call;
+          case TripletOpCode.Return:
+            return Mono.Cecil.Cil.FlowControl.Return;
+          default:
+            return Mono.Cecil.Cil.FlowControl.Next;
+        }
+      }
+    }
+    #endregion
 
     private object operand1;
     public object Operand1 {
