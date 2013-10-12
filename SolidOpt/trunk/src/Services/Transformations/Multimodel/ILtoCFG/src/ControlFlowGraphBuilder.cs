@@ -92,10 +92,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
   public class ControlFlowGraphBuilder<T> where T : class {
 
     #region Fields & Properties
-    IEnumerable<T> instructions;
-    //MethodBody body;
-    BasicBlock<T> root = null;
-    private List<object> labels = new List<object>();
+    private IEnumerable<T> instructions;
+    private IEnumerable<T> exceptionHandlers;
+    private BasicBlock<T> root = null;
+    private HashSet<T> labels;
     private List<BasicBlock<T>> rawBlocks = new List<BasicBlock<T>>();
     //TODO: HashSet<> is .net 4.0 class. May be we need use some 2.0 class (Dictionary<,>) or bool array?
     private HashSet<int> exceptionData = new HashSet<int>();
@@ -181,7 +181,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
     bool HasLabel(T i)
     {
-      if (labels != null) //FIXME: Implement proper lazy calculation.
+      if (labels == null)
         ComputeLabels(instructions);
       
       return labels.Contains(i);
@@ -189,6 +189,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
     
     void ComputeLabels(IEnumerable<T> instructions)
     {
+      Debug.Assert(labels == null, "Labels must be null");
+      labels = new HashSet<T>();
       foreach(T i in instructions) {
         switch (LinearInstructionAdapter<T>.GetFlowControl(i)) {
           case FlowControl.Cond_Branch:
