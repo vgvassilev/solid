@@ -73,6 +73,9 @@ endmacro( CSHARP_ADD_GUI_EXECUTABLE )
 
 macro( CSHARP_ADD_DEPENDENCY cur_target depends_on )
   if ( TARGET ${depends_on} )
+    #FIXME: note that we use target_name, which doesn't get passed as argument.
+    # It works because the macro define all their 'local' vars on the global 
+    # scope. Thus another macro defined it. This is fragile.
     list(FIND target_name ${depends_on} idx)
     if (idx GREATER -1)
       MESSAGE(STATUS "  ->Depends on[Target/Project]: ${depends_on}")
@@ -171,6 +174,7 @@ macro( CSHARP_ADD_PROJECT type name )
   STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name} )
   STRING( REGEX REPLACE "(\\.exe)[^\\.exe]*$" "" name_we ${name_we} )
   set_property(GLOBAL APPEND PROPERTY target_proj_file_property "${CMAKE_CURRENT_BINARY_DIR}/${name_we}.csproj")
+  set_property(GLOBAL APPEND PROPERTY target_generate_proj_file_property TRUE)
 
 endmacro( CSHARP_ADD_PROJECT )
 
@@ -238,6 +242,8 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
   get_property(target_metas_key GLOBAL PROPERTY target_metas_key_property)
   get_property(target_metas_value GLOBAL PROPERTY target_metas_value_property)
   get_property(target_bin_dir GLOBAL PROPERTY target_bin_dir_property)
+  get_property(target_should_not_skip GLOBAL PROPERTY target_generate_proj_file_property)
+
 
   # Replace the references that are packages.
   while("${target_refs}" MATCHES "#pkg:")
@@ -260,9 +266,11 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
   # Define custom targets and commands
   set( i 0 )
   foreach( name ${target_name} )
+    list( GET target_should_not_skip ${i} should_not_skip )
+
     if (TARGET "${name}")
       # Target is already defined
-    else()
+    elseif (should_not_skip)
       list( GET target_type ${i} type )
       list( GET target_output_type ${i} output_type )
       list( GET target_out ${i} out )

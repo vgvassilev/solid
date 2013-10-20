@@ -217,6 +217,7 @@ macro( CSHARP_SAVE_VS_SOLUTION name )
     get_property(target_src_dir GLOBAL PROPERTY target_src_dir_property)
     get_property(target_bin_dir GLOBAL PROPERTY target_bin_dir_property)
     get_property(target_proj_file GLOBAL PROPERTY target_proj_file_property)
+    get_property(target_generate_proj_file GLOBAL PROPERTY target_generate_proj_file_property)
     get_property(target_guid GLOBAL PROPERTY target_guid_property)
 
     # Set substitution variables
@@ -273,8 +274,12 @@ macro( CSHARP_SAVE_VS_SOLUTION name )
       if (nested_in_guid)
         set( VAR_Solution_NestedProjects "${VAR_Solution_NestedProjects}    {${it}} = {${nested_in_guid}}\n" )
       endif()
-      # Save project
-      csharp_save_project(${i} ${it} ${project_name} ${project_file})
+
+      list( GET target_generate_proj_file ${i} should_generate )
+      if(should_generate)
+        # Save project
+        csharp_save_project(${i} ${it} ${project_name} ${project_file})
+      endif()
 
       math(EXPR i "${i}+1")
     endforeach(it)
