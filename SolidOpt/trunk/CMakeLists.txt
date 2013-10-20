@@ -89,7 +89,9 @@ endif(DELAY_SIGN)
 
 # Suppress the warnings coming from the /doc switch. There is no point warning 
 # about missing documentation for certain methods. We all know about it :)
-list(APPEND CSBUILDFLAGS "/nowarn:1591")
+# 1591 - Missing documentation
+# 1587 - XML comment not placed on a valid language element.
+list(APPEND CSBUILDFLAGS "/nowarn:1591,1587")
 
 #-----------------------------------------------------------------------------
 # Configure Dart testing support.  This should be done before any

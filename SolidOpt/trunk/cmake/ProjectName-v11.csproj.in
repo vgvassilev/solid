@@ -41,7 +41,8 @@
     <ConsolePause>False</ConsolePause>
     <GenerateDocumentation>True</GenerateDocumentation>
     <!-- We don't want warnings for undocumented methods -->
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1591</NoWarn> <!-- Missing documentation -->
+    <NoWarn>1587</NoWarn> <!-- XML comment is not placed on a valid language element -->
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 <!--
