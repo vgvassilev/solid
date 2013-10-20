@@ -49,6 +49,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   #   - DebugType
   #   - <Compile Include="AssemblyInfo.cs" ...
   #   - <EmbeddedResource Include=" ...
+  #   - <Content Include="..
   #   - <None Include="..." ...
   #   - <AssemblyOriginatorKeyFile>...
   string(REGEX REPLACE 
@@ -79,6 +80,11 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   string(REPLACE
     "<EmbeddedResource Include=\""
     "<EmbeddedResource Include=\"${msbuild_path}\\"
+    CSPROJ_FILE "${CSPROJ_FILE}"
+    )
+  string(REPLACE
+    "<Content Include=\""
+    "<Content Include=\"${msbuild_path}\\"
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
   string(REPLACE
