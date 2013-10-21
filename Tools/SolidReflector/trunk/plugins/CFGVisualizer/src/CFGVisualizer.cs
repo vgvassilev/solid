@@ -27,6 +27,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
     private DockItem cfgVisualizingDock = null;
     private DockItem simulationDock = null;
     private ControlFlowGraph<Instruction> currentCfg = null;
+    private CFGPrettyDrawer drawer = null;
+    private TextView outputTextView = new TextView();
 
     public CFGVisualizer() { }
 
@@ -67,7 +69,6 @@ namespace SolidReflector.Plugins.CFGVisualizer
       VBox simulationVBox = new VBox(false, 0);
       simulationTextView = new TextView();
       simulationTextViewWindow.Add(simulationTextView);
-      TextView outputTextView = new TextView();
       Button simulateButton = new Button("Simulate");
       simulateButton.Clicked += HandleClicked;
 
@@ -101,7 +102,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       if (args.definition != null) {
         // Dump the definition
         CFGPrettyPrinter.PrintPretty(args.definition, cfgTextView);
-        CFGPrettyDrawer drawer = new CFGPrettyDrawer(drawingArea);
+        drawer = new CFGPrettyDrawer(drawingArea);
 
         if (args.definition is MethodDefinition) {
           var builder = new ControlFlowGraphBuilder(args.definition as MethodDefinition);
@@ -121,7 +122,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     void HandleClicked(object sender, EventArgs e)
     {
       if (currentCfg != null) {
-        createAssemblyFromCfg(currentCfg);
+        outputTextView.Buffer.Text = createAssemblyFromCfg(currentCfg);
         CFGPrettyDrawer drawer = new CFGPrettyDrawer(drawingArea);
         drawer.DrawTextBlocks(currentCfg);
 
@@ -180,9 +181,9 @@ namespace SolidReflector.Plugins.CFGVisualizer
     /// </summary>
     /// <param name="cfg">Control flow graph</param>
     /// 
-    private void createAssemblyFromCfg(ControlFlowGraph<Instruction> cfg) {
+    private string createAssemblyFromCfg(ControlFlowGraph<Instruction> cfg) {
       ControlFlowGraphToCil cfgTransformer = new ControlFlowGraphToCil();
-      MethodDefinition methodDef = cfgTransformer.Transform(currentCfg);
+      MethodDefinition methodDef = cfgTransformer.Transform(cfg);
       
       AssemblyNameDefinition assemblyName = new AssemblyNameDefinition("Program",
                                                                        new Version("1.0.0.0"));
@@ -244,8 +245,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       assemblyDef.Write(assemblyPath);
       
       Sandbox sandbox = new Sandbox(assemblyPath, trampolineMethod.Name);
-      simulationTextView.Buffer.Clear();
-      simulationTextView.Buffer.Text = sandbox.SimulationMethodOutput;
+      return sandbox.SimulationMethodOutput;
     }
   }
   
