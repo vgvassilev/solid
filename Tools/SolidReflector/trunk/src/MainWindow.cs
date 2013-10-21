@@ -95,8 +95,6 @@ namespace SolidReflector
 
       hbox1.Add(dockFrame);
 
-      dockFrame.HeightRequest = hbox1.Allocation.Height;
-      dockFrame.WidthRequest = hbox1.Allocation.Width;
       dockFrame.CurrentLayout = "BasicLayout";
       dockFrame.HandlePadding = 0;
       dockFrame.HandleSize = 4;
