@@ -3,12 +3,14 @@ using System;
 
 using SolidOpt.Services;
 using SolidReflector.Plugins.AssemblyBrowser;
+using Gtk;
 
 namespace SolidReflector.Plugins.TACVisualizer
 {
   public class TACVisualizer : IPlugin
   {
     private MainWindow mainWindow = null;
+    private Gtk.TextView textView = new Gtk.TextView();
     private DockItem tacVisualizingDock = null;
 
     public TACVisualizer() { }
@@ -22,13 +24,19 @@ namespace SolidReflector.Plugins.TACVisualizer
       browser.SelectionChanged += OnSelectionChanged;
 
       Gtk.Notebook nb = new Gtk.Notebook();
-      nb.AppendPage(new Gtk.TextView(), new Gtk.Label("TAC Text"));
+      nb.AppendPage(textView, new Gtk.Label("TAC Text"));
       nb.ShowAll();
+
+      ScrolledWindow scrollWindow = new ScrolledWindow();
+      Viewport viewport = new Viewport();
+      scrollWindow.Add(viewport);
+      viewport.Add(nb);
+      scrollWindow.ShowAll();
 
       tacVisualizingDock = mainWindow.DockFrame.AddItem("TACVisualizer");
       tacVisualizingDock.DrawFrame = true;
-      tacVisualizingDock.Label = "Three Address Code Visualizer";
-      tacVisualizingDock.Content = nb;
+      tacVisualizingDock.Label = "TAC Visualizer";
+      tacVisualizingDock.Content = scrollWindow;
       tacVisualizingDock.DefaultVisible = true;
       tacVisualizingDock.Visible = true;
     }
@@ -43,8 +51,6 @@ namespace SolidReflector.Plugins.TACVisualizer
     #endregion
 
     private void OnSelectionChanged(object sender, SelectionEventArgs args) {
-      Gtk.Notebook nb = tacVisualizingDock.Content as Gtk.Notebook;
-      Gtk.TextView textView = nb.CurrentPageWidget as Gtk.TextView;
       if (args.definition != null) {
         // Dump the definition
         TACPrettyPrinter.PrintPretty(args.definition, textView);
