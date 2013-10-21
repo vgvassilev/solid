@@ -3,6 +3,7 @@ using System;
 
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
+using Mono.Cecil.Cil;
 
 namespace SolidReflector.Plugins.CFGVisualizer
 {
@@ -45,7 +46,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       textView.Buffer.Clear();
 
       var builder = new ControlFlowGraphBuilder(methodDef);
-      ControlFlowGraph cfg = builder.Create();
+      ControlFlowGraph<Instruction> cfg = builder.Create();
 
       textView.Buffer.Text = cfg.ToString();
     }

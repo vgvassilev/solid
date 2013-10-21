@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
 using SolidV.MVC;
+using Mono.Cecil.Cil;
 
 namespace SolidReflector.Plugins.CFGVisualizer
 {
@@ -22,6 +23,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     View<Context, Model> view = new View<Context, Model>();
     CompositeController<Gdk.Event, Context, Model> controller = new CompositeController<Gdk.Event,
                                                                                 Context, Model>();
+
     private InteractionStateModel interaction = new InteractionStateModel();
 
     public CFGPrettyDrawer(Gtk.DrawingArea drawingArea) {
@@ -91,12 +93,12 @@ namespace SolidReflector.Plugins.CFGVisualizer
       }
     }
 
-    public void DrawTextBlocks(ControlFlowGraph cfg) {
+    public void DrawTextBlocks(ControlFlowGraph<Instruction> cfg) {
       DrawCFG(cfg);
     }
 
-    private void DrawBasicBlock(BasicBlock basicBlock, 
-                                ref Dictionary<BasicBlock, TextBlockShape> visited) {
+    private void DrawBasicBlock(BasicBlock<Instruction> basicBlock, 
+                                ref Dictionary<BasicBlock<Instruction>, TextBlockShape> visited) {
       if (visited.ContainsKey(basicBlock))
         return;
       
@@ -111,8 +113,9 @@ namespace SolidReflector.Plugins.CFGVisualizer
       ConnectorGluePoint gluePointStart = null;
       ConnectorGluePoint gluePointEnd = null;
 
-      foreach (BasicBlock successor in basicBlock.Successors) {
+      foreach (BasicBlock<Instruction> successor in basicBlock.Successors) {
         DrawBasicBlock(successor, ref visited);
+
         gluePointStart = new ConnectorGluePoint(new PointD(visited[basicBlock].Location.X + visited[basicBlock].Width / 2, visited[basicBlock].Location.Y + visited[basicBlock].Height));
         gluePointEnd = new ConnectorGluePoint(new PointD(visited[successor].Location.X + visited[successor].Width / 2, visited[successor].Location.Y));
 
@@ -135,8 +138,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
     /// <param name='cfg'>
     /// The CFG object.
     /// </param>
-    private void DrawCFG(ControlFlowGraph cfg) {
-      var visited = new Dictionary<BasicBlock, TextBlockShape>(10);
+    private void DrawCFG(ControlFlowGraph<Instruction> cfg) {
+      var visited = new Dictionary<BasicBlock<Instruction>, TextBlockShape>(10);
       DrawBasicBlock(cfg.Root, ref visited);
       
       //scene.AutoArrange();

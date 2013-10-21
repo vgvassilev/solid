@@ -5,6 +5,7 @@ using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 using SolidOpt.Services.Transformations.Multimodel.CFGtoTAC;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
+using Mono.Cecil.Cil;
 
 
 namespace SolidReflector.Plugins.TACVisualizer
@@ -28,7 +29,7 @@ namespace SolidReflector.Plugins.TACVisualizer
       textView.Buffer.Clear();
 
       var cfgBuilder = new ControlFlowGraphBuilder(methodDefinition);
-      ControlFlowGraph cfg = cfgBuilder.Create();
+      ControlFlowGraph<Instruction> cfg = cfgBuilder.Create();
 
       var tacBuilder = new ThreeAddressCodeBuilder(cfg);
       ThreeAdressCode tac = tacBuilder.Create();

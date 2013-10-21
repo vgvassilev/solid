@@ -26,7 +26,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     private TextView simulationTextView = new TextView();
     private DockItem cfgVisualizingDock = null;
     private DockItem simulationDock = null;
-    private ControlFlowGraph currentCfg = null;
+    private ControlFlowGraph<Instruction> currentCfg = null;
 
     public CFGVisualizer() { }
 
@@ -137,7 +137,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
     /// <param name="oldSuccessor">Old successor.</param>
     /// <param name="newSuccessor">New successor.</param>
     /// 
-    void swapSuccessors(BasicBlock currentBlock, BasicBlock oldSuccessor, BasicBlock newSuccessor) {
+    void swapSuccessors(BasicBlock<Instruction> currentBlock, BasicBlock<Instruction> oldSuccessor,
+                        BasicBlock<Instruction> newSuccessor) {
       if ((newSuccessor.Last.OpCode.FlowControl != FlowControl.Branch) || 
           (newSuccessor.Last.OpCode.FlowControl != FlowControl.Cond_Branch)) {
         Instruction br = Instruction.Create(OpCodes.Br, newSuccessor.Last.Next);
@@ -146,7 +147,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
         newSuccessor.Add(br);
       }
 
-      BasicBlock block = currentBlock.Successors.Find(x => x.Name == oldSuccessor.Name);
+      BasicBlock<Instruction> block = currentBlock.Successors.Find(x => x.Name == oldSuccessor.Name);
       currentBlock.Successors.Remove(block);
       block.Predecessors.Remove(currentBlock);
       
@@ -161,7 +162,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     /// </summary>
     /// 
     private void fixBranches() {
-      foreach (BasicBlock block in currentCfg.RawBlocks) {
+      foreach (BasicBlock<Instruction> block in currentCfg.RawBlocks) {
         if (block.Successors.Count == 2) {
           if ((block.Last.OpCode.FlowControl == FlowControl.Branch) || 
               (block.Last.OpCode.FlowControl == FlowControl.Cond_Branch)) {
@@ -179,75 +180,75 @@ namespace SolidReflector.Plugins.CFGVisualizer
     /// </summary>
     /// <param name="cfg">Control flow graph</param>
     /// 
-    private void createAssemblyFromCfg(ControlFlowGraph cfg) {
+    private void createAssemblyFromCfg(ControlFlowGraph<Instruction> cfg) {
       ControlFlowGraphToCil cfgTransformer = new ControlFlowGraphToCil();
       MethodDefinition methodDef = cfgTransformer.Transform(currentCfg);
-
+      
       AssemblyNameDefinition assemblyName = new AssemblyNameDefinition("Program",
                                                                        new Version("1.0.0.0"));
-
+      
       AssemblyDefinition assemblyDef = AssemblyDefinition.CreateAssembly(assemblyName, "<Module>",
                                                                          ModuleKind.Console);
-
+      
       TypeReference objTypeRef = assemblyDef.MainModule.Import(typeof(System.Object));
       TypeDefinition typeDef = new TypeDefinition("Simulation", "MainClass", TypeAttributes.Public,
                                                   objTypeRef);
       assemblyDef.Modules[0].Types.Add(typeDef);
-
+      
       // Create the main method: public static void Main ()
       TypeReference voidTypeRef = assemblyDef.MainModule.Import(typeof(void));
       MethodDefinition mainMethodDef = new MethodDefinition("Main", MethodAttributes.Public |
-                                                                    MethodAttributes.HideBySig |
-                                                                    MethodAttributes.Static,
+                                                            MethodAttributes.HideBySig |
+                                                            MethodAttributes.Static,
                                                             voidTypeRef);
-
+      
       // Cannot use methodDef due to it is already in use
       // so we have to create identical MethodDefinition that would be able to be called
       // and we give the method name a "simulated_" prefix
       MethodDefinition trampolineMethod = new MethodDefinition("simulated_" + methodDef.Name,
                                                                methodDef.Attributes,
                                                                methodDef.ReturnType);
-
+      
       // Add the parameters to the callable method
       foreach(ParameterDefinition pDef in methodDef.Parameters)
         trampolineMethod.Parameters.Add(new ParameterDefinition(pDef.Name, pDef.Attributes, 
                                                                 pDef.ParameterType));
-
+      
       // Add the local variables to the callable method
       foreach(VariableDefinition varInfo in methodDef.Body.Variables) {
         trampolineMethod.Body.Variables.Add(varInfo);
       }
-
+      
       // Add the instructions to the callable method
       ILProcessor trampolineCIL = trampolineMethod.Body.GetILProcessor();
       foreach (Instruction instr in methodDef.Body.Instructions) {
         if (instr.OpCode == OpCodes.Call)
           instr.Operand = assemblyDef.MainModule.Import(instr.Operand as MethodReference);
-
+        
         trampolineCIL.Append(instr);
       }
-
+      
       typeDef.Methods.Add(trampolineMethod);
-
+      
       MethodReference importedMRef = assemblyDef.MainModule.Import(methodDef);
-
+      
       // Add call to the simulated method and ret instructions to the Main method
       ILProcessor cil = mainMethodDef.Body.GetILProcessor();
       cil.Append(cil.Create(OpCodes.Call, trampolineMethod));
       cil.Append(cil.Create(OpCodes.Ret));
-
+      
       typeDef.Methods.Add(mainMethodDef);
       assemblyDef.EntryPoint = mainMethodDef;
-
+      
       string assemblyPath = Path.Combine(Path.GetTempPath(), "temp.exe");
       assemblyDef.Write(assemblyPath);
-
+      
       Sandbox sandbox = new Sandbox(assemblyPath, trampolineMethod.Name);
       simulationTextView.Buffer.Clear();
       simulationTextView.Buffer.Text = sandbox.SimulationMethodOutput;
     }
   }
-
+  
   /// <summary>
   /// Loads assembly in separate application domain with restricted permissions.
   /// Currently mono does not support CAS.
@@ -258,7 +259,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     public string SimulationMethodOutput = null;
     public Sandbox() { }
     public Sandbox(string assemblyPath, string method) {
-
+      
       // Gives the loaded assembly the ability to be executed
       PermissionSet permSet = new PermissionSet(PermissionState.None);
       permSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
@@ -267,15 +268,15 @@ namespace SolidReflector.Plugins.CFGVisualizer
       adSetup.ApplicationName = "AppDomainSetup";
       AppDomain domain = AppDomain.CreateDomain("SandboxDomain");
       ObjectHandle handle = Activator.CreateInstanceFrom(domain, 
-                                       typeof(Sandbox).Assembly.ManifestModule.FullyQualifiedName,
-                                       typeof(Sandbox).FullName);
-
+                                                         typeof(Sandbox).Assembly.ManifestModule.FullyQualifiedName,
+                                                         typeof(Sandbox).FullName);
+      
       Sandbox sandboxInstance = (Sandbox) handle.Unwrap();
       SimulationMethodOutput = sandboxInstance.ExecuteAssembly(assemblyPath, "Simulation.MainClass",
                                                                method);
       AppDomain.Unload(domain);
     }
-
+    
     /// <summary>
     /// Executes an assembly in a different and permission restricted app domain.
     /// </summary>
@@ -292,7 +293,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       
       Random r = new Random();
       List<object> sampleArgs = new List<object>();
-
+      
       // Only int parameters are supported for now
       foreach (System.Reflection.ParameterInfo param in parameters) {
         switch (Type.GetTypeCode(param.ParameterType)) {
