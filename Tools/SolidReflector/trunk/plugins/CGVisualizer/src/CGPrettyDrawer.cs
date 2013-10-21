@@ -98,16 +98,15 @@ namespace SolidReflector.Plugins.CGVisualizer
     }
     
     private void DrawCG(CallGraph cg) {
-      var visited = new Dictionary<CGNode, TextBlockShape>();
+      var visited = new Dictionary<CGNode, EllipseShape>();
       DrawMethod(cg.Root, ref visited);
     }
 
-    private void DrawMethod(CGNode node, ref Dictionary<CGNode, TextBlockShape> visited) {
+    private void DrawMethod(CGNode node, ref Dictionary<CGNode, EllipseShape> visited) {
       ArrowShape arrow = null;
       // When autoSize is on the rectangle parameter will be 'ignored'.
-      TextBlockShape blockShape = new TextBlockShape(new Rectangle(1,1,50,50), /*autosize*/true);
-      //blockShape.Title = String.Format("Block Name: {0}", node.Method.Name);
-      blockShape.BlockText = node.Method.Name;
+      EllipseShape blockShape = new EllipseShape(new Rectangle(1,1,70,70));
+      blockShape.Title = String.Format("{0}", node.Method.Name);
       visited.Add(node, blockShape);
       scene.Shapes.Add(blockShape);
       
