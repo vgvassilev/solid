@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Subsystems.Configurator
   /// </summary>
   public class IR2Assembly<TParamName> : ITypeResolver
   {
-    private ConfigurationManager<TParamName> configurator = ConfigurationManager<TParamName>.Instance;
+    //private ConfigurationManager<TParamName> configurator = ConfigurationManager<TParamName>.Instance;
     public IR2Assembly()
     {
       

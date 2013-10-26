@@ -37,7 +37,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Sources
     /// A <see cref="Stream"/>
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     Dictionary<TParamName, object> LoadConfiguration(Stream resStream);
   }

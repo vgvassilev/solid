@@ -36,7 +36,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Targets
     /// Builds configuration format and saves to given URI using Stream Provider Manager. 
     /// </summary>
     /// <param name="configRepresenation">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <returns>
     /// A <see cref="Stream"/>

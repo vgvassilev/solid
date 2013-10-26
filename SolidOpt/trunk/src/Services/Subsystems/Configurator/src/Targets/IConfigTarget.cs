@@ -22,7 +22,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Targets
     /// Serializes the configuration into specified format 
     /// </summary>
     /// <param name="configRepresenation">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <returns>
     /// A <see cref="Stream"/>

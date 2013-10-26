@@ -30,10 +30,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
     /// Triggers the type resolution. 
     /// </summary>
     /// <param name="CIR">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     public Dictionary<TParamName, object> ResolveTypes(Dictionary<TParamName, object> CIR)
     {
@@ -54,10 +54,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.TypeResolvers
     /// Builds new configuration intermediate representation. 
     /// </summary>
     /// <param name="ResolvedCIR">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     private Dictionary<TParamName, object> Build(Dictionary<TParamName, object> ResolvedCIR)
     {

@@ -38,10 +38,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Triggers the mapping, using the mapper list. 
     /// </summary>
     /// <param name="mmCIR">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     public Dictionary<TParamName, object> Map(Dictionary<TParamName, object> mmCIR)
     {
@@ -55,10 +55,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Triggers the unmapping, using the mapper list. 
     /// </summary>
     /// <param name="mmCIR">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     public Dictionary<TParamName, object> UnMap(Dictionary<TParamName, object> mmCIR)
     {
@@ -72,10 +72,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Adds specific mapper. 
     /// </summary>
     /// <param name="mapper">
-    /// A <see cref="Mapper<TParamName>"/>
+    /// A <see cref="Mapper{T}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="MapManager<TParamName>"/>
+    /// A <see cref="MapManager{T}"/>
     /// </returns>
     public MapManager<TParamName> Add(Mapper<TParamName> mapper)
     {
@@ -87,10 +87,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Adds mapper at the first place of the list.  
     /// </summary>
     /// <param name="mapper">
-    /// A <see cref="Mapper<TParamName>"/>
+    /// A <see cref="Mapper{T}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="MapManager<TParamName>"/>
+    /// A <see cref="MapManager{T}"/>
     /// </returns>
     public MapManager<TParamName> AddFirst(Mapper<TParamName> mapper)
     {
@@ -102,10 +102,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Adds mapper at the end of the list. 
     /// </summary>
     /// <param name="mapper">
-    /// A <see cref="Mapper<TParamName>"/>
+    /// A <see cref="Mapper{T}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="MapManager<TParamName>"/>
+    /// A <see cref="MapManager{T}"/>
     /// </returns>
     public MapManager<TParamName> AddLast(Mapper<TParamName> mapper)
     {
@@ -117,7 +117,7 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Removes specific mapper. 
     /// </summary>
     /// <param name="mapper">
-    /// A <see cref="Mapper<TParamName>"/>
+    /// A <see cref="Mapper{T}"/>
     /// </param>
     public void Remove(Mapper<TParamName> mapper)
     {

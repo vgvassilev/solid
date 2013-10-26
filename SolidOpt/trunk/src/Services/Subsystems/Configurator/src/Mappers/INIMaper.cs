@@ -37,10 +37,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// X.Y.b = 'one'
     /// </example>
     /// <param name="mmCIR">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}" />
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     public override Dictionary<TParamName, object> Map(Dictionary<TParamName, object> mmCIR)
     {
@@ -51,13 +51,13 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Recursive function doing the actual mapping. 
     /// </summary>
     /// <param name="mmCIR">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <param name="key">
     /// A <see cref="System.String"/>
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     internal Dictionary<TParamName, object> MapCIR(Dictionary<TParamName, object> mmCIR, string key)
     {
@@ -82,10 +82,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// only when the INI was previosly mapped. Or it is organized so.
     /// </summary>
     /// <param name="mmCIR">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <returns>
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </returns>
     public override Dictionary<TParamName, object> UnMap(Dictionary<TParamName, object> mmCIR)
     {
@@ -102,10 +102,10 @@ namespace SolidOpt.Services.Subsystems.Configurator.Mappers
     /// Recursive function doing the actual unmapping. 
     /// </summary>
     /// <param name="dict">
-    /// A <see cref="Dictionary<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.Dictionary{T, K}"/>
     /// </param>
     /// <param name="item">
-    /// A <see cref="KeyValuePair<TParamName, System.Object>"/>
+    /// A <see cref="System.Collections.Generic.KeyValuePair{T, K}"/>
     /// </param>
     internal void UnMapParam(out Dictionary<TParamName, object> dict, KeyValuePair<TParamName, object> item)
     {
