@@ -22,22 +22,8 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
 
   # Add custom target and command
   MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
-  
-  #
-  list(APPEND MSBUILDFLAGS "/p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}")
-  add_custom_command(
-    COMMENT "MSBuilding: ${MSBUILD} ${MSBUILDFLAGS} ${filename}"
-    OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
-    COMMAND ${MSBUILD}
-    ARGS ${MSBUILDFLAGS} ${filename}
-    WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
-    )
-  add_custom_target(
-    "${name_we}.${output}" ALL
-    DEPENDS ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
-    SOURCES ${filename}
-    )
 
+  # Copy and adapt the file to the CMAKE setup
   file (READ "${filename}" CSPROJ_FILE)
   # We need to replace some the csproj file with the currently active cmake
   # configuration. Thus it is better to copy the file in our build folder and
@@ -68,13 +54,14 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     "<TargetFrameworkVersion>v${CSHARP_FRAMEWORK_VERSION}</TargetFrameworkVersion>"
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
-  #string(REGEX REPLACE "(.*<DebugType>{)(.*)(}</DebugType>.*)" "\\2" ${CMAKE_BUILD_TYPE} "${CSPROJ_FILE}")
   get_filename_component(filename_path "${filename}" PATH)
   file(RELATIVE_PATH rel_filename_path ${CMAKE_SOURCE_DIR} ${filename_path})
-  string(REPLACE "/" "\\" msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}")
+  #set(msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}/")
+  string(REPLACE "/" "\\" msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}/")
+  #string(REGEX REPLACE "(.*<DebugType>{)(.*)(}</DebugType>.*)" "\\2" ${CMAKE_BUILD_TYPE} "${CSPROJ_FILE}")
   string(REPLACE
     "<Compile Include=\""
-    "<Compile Include=\"${msbuild_path}\\"
+    "<Compile Include=\"${msbuild_path}"
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
   string(REPLACE
@@ -146,5 +133,21 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   set_property(GLOBAL APPEND PROPERTY target_proj_file_property "${new_csproj_filename}") 
   set_property(GLOBAL APPEND PROPERTY target_generate_proj_file_property FALSE)
   #set_target_properties("${name_we}.${output}" PROPERTIES csproj "${new_csproj_filename}")
+
+
+  #
+  #list(APPEND MSBUILDFLAGS "/p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}")
+  add_custom_command(
+    COMMENT "MSBuilding: ${MSBUILD} ${MSBUILDFLAGS} ${new_csproj_filename}"
+    OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
+    COMMAND ${MSBUILD}
+    ARGS ${MSBUILDFLAGS} ${new_csproj_filename}
+    WORKING_DIRECTORY ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}
+    )
+  add_custom_target(
+    "${name_we}.${output}" ALL
+    DEPENDS ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
+    SOURCES ${new_csproj_filename}
+    )
 
 endfunction( CSHARP_ADD_MSBUILD_PROJECT)
