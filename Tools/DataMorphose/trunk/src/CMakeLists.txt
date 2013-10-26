@@ -30,6 +30,7 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   Mono.Posix.dll
+  System.Xml
   # Packages
   "pkg:gtk-sharp-2.0"
   )
