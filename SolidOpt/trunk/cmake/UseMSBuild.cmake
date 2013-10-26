@@ -8,6 +8,7 @@
 #
 
 function( CSHARP_ADD_MSBUILD_PROJECT filename )
+  get_filename_component(name ${filename} NAME)
   if ( "${name}" MATCHES "^.*\\.dll$" )
     MESSAGE(FATAL "Do not use CSHARP_ADD_MSBUILD_PROJECT with dlls. For dlls use CSHARP_ADD_LIBRARY_BINARY instead.")
   endif()
@@ -15,7 +16,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   set( TYPE_UPCASE "LIBRARY" )
   set( output "dll" )
 
-  get_filename_component(name ${filename} NAME)
   STRING( REGEX REPLACE "(\\.csproj)[^\\.csproj]*$" "" name_we ${name} )
   STRING( REGEX REPLACE "(\\.sln)[^\\.sln]*$" "" name_we ${name_we} )
 
