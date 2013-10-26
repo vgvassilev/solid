@@ -23,7 +23,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.ConstantPropagatio
   public class ConstantPropagationTransformer : BaseCodeTransformer, IOptimize<AstMethodDefinition>
   {
     
-    private Dictionary<Expression, Expression> substitutions = new Dictionary<Expression, Expression>();
+    //private Dictionary<Expression, Expression> substitutions = new Dictionary<Expression, Expression>();
     
     public ConstantPropagationTransformer()
     {
