@@ -12,18 +12,50 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   if ( "${name}" MATCHES "^.*\\.dll$" )
     MESSAGE(FATAL "Do not use CSHARP_ADD_MSBUILD_PROJECT with dlls. For dlls use CSHARP_ADD_LIBRARY_BINARY instead.")
   endif()
-  # TODO: Check if it was executable and set it properly
-  set( TYPE_UPCASE "LIBRARY" )
-  set( output "dll" )
 
   STRING( REGEX REPLACE "(\\.csproj)[^\\.csproj]*$" "" name_we ${name} )
   STRING( REGEX REPLACE "(\\.sln)[^\\.sln]*$" "" name_we ${name_we} )
+
+  # Some of the csproj have names after the outputs they generate. Eg:
+  # nunit.core.dll.csproj and nunit-console.exe.csproj. 
+  # We need to strip these so that the build system can add 'sane' targets and 
+  # we could do "make nunit.core.dll' and not 'make nunit.core.dll.dll'
+  STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name_we} )
+  STRING( REGEX REPLACE "(\\.exe)[^\\.exe]*$" "" name_we ${name_we} )
+
+  MESSAGE(STATUS "NAME:${name}")
+  MESSAGE(STATUS "NAMEWE:${name_we}")
 
   # Add custom target and command
   MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
 
   # Copy and adapt the file to the CMAKE setup
   file (READ "${filename}" CSPROJ_FILE)
+  # We need to extract:
+  #   - output_type
+  #   - proj_guid
+  #   - type
+  string(REGEX REPLACE 
+    "(.*<ProjectGuid>{)(.*)(}</ProjectGuid>.*)" "\\2" proj_guid "${CSPROJ_FILE}"
+    )
+
+  string(REGEX REPLACE
+    "(.*<OutputType>)(.*)(</OutputType>.*)" "\\2" output_type "${CSPROJ_FILE}"
+    )
+  set(type "${output_type}")
+  string(TOLOWER "${output_type}" output_type)
+  string(TOUPPER ${output_type} TYPE_UPCASE)
+  MESSAGE(STATUS "OUTPUT_TYPE:${output_type}, TYPE_UPCASE:${TYPE_UPCASE}")
+  set( output "${output_type}" )
+  if(TYPE_UPCASE STREQUAL "LIBRARY")
+    set( output "dll" )
+    #TODO: We should think of making CMAKE_LIBRARY_OUTPUT_DIR and 
+    # CMAKE_RUNTIME_OUTPUT_DIR. 
+    # Thus all the Exe->Runtime translations will be removed.
+  elseif(TYPE_UPCASE STREQUAL "EXE")
+    set( TYPE_UPCASE "RUNTIME" )
+  endif()
+
   # We need to replace some the csproj file with the currently active cmake
   # configuration. Thus it is better to copy the file in our build folder and
   # make the substitutions there. 
@@ -86,19 +118,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     "\\1${CSHARP_FRAMEWORK_VERSION}\\3"
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
-
-  # We need to extract:
-  #   - output_type
-  #   - proj_guid
-  #   - type
-  string(REGEX REPLACE 
-    "(.*<ProjectGuid>{)(.*)(}</ProjectGuid>.*)" "\\2" proj_guid "${CSPROJ_FILE}"
-    )
-  string(REGEX REPLACE
-    "(.*<OutputType>)(.*)(</OutputType>.*)" "\\2" output_type "${CSPROJ_FILE}"
-    )
-  set(type "${output_type}")
-  string(TOLOWER output_type "${output_type}")
 
   # Save the new csproj file
   # Create the missing directories
