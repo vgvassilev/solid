@@ -23,9 +23,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name_we} )
   STRING( REGEX REPLACE "(\\.exe)[^\\.exe]*$" "" name_we ${name_we} )
 
-  MESSAGE(STATUS "NAME:${name}")
-  MESSAGE(STATUS "NAMEWE:${name_we}")
-
   # Add custom target and command
   MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
 
@@ -45,7 +42,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   set(type "${output_type}")
   string(TOLOWER "${output_type}" output_type)
   string(TOUPPER ${output_type} TYPE_UPCASE)
-  MESSAGE(STATUS "OUTPUT_TYPE:${output_type}, TYPE_UPCASE:${TYPE_UPCASE}")
   set( output "${output_type}" )
   if(TYPE_UPCASE STREQUAL "LIBRARY")
     set( output "dll" )
