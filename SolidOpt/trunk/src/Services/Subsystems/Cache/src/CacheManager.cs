@@ -86,7 +86,7 @@ namespace SolidOpt.Services.Subsystems.Cache
     /// are executed. There is no difference in the parameter order.
     /// </summary>
     /// <param name="delegates">
-    /// A <see cref="Delegate[]"/>
+    /// A <see cref="System.Delegate"/>
     /// Methods to handle the cache system functionality.
     /// </param>
     public CacheManager(params Delegate[] delegates)
