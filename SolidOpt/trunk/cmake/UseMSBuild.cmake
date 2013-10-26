@@ -56,9 +56,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     )
   get_filename_component(filename_path "${filename}" PATH)
   file(RELATIVE_PATH rel_filename_path ${CMAKE_SOURCE_DIR} ${filename_path})
-  #set(msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}/")
   string(REPLACE "/" "\\" msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}/")
-  #string(REGEX REPLACE "(.*<DebugType>{)(.*)(}</DebugType>.*)" "\\2" ${CMAKE_BUILD_TYPE} "${CSPROJ_FILE}")
   string(REPLACE
     "<Compile Include=\""
     "<Compile Include=\"${msbuild_path}"
