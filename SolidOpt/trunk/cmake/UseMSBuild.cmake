@@ -8,6 +8,9 @@
 #
 
 function( CSHARP_ADD_MSBUILD_PROJECT filename )
+  if ( "${name}" MATCHES "^.*\\.dll$" )
+    MESSAGE(FATAL "Do not use CSHARP_ADD_MSBUILD_PROJECT with dlls. For dlls use CSHARP_ADD_LIBRARY_BINARY instead.")
+  endif()
   # TODO: Check if it was executable and set it properly
   set( TYPE_UPCASE "LIBRARY" )
   set( output "dll" )
@@ -15,10 +18,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   get_filename_component(name ${filename} NAME)
   STRING( REGEX REPLACE "(\\.csproj)[^\\.csproj]*$" "" name_we ${name} )
   STRING( REGEX REPLACE "(\\.sln)[^\\.sln]*$" "" name_we ${name_we} )
-
-  if ( "${name}" MATCHES "^.*\\.dll$" )
-    MESSAGE(FATAL "Do not use CSHARP_ADD_MSBUILD_PROJECT with dlls. For dlls use CSHARP_ADD_LIBRARY_BINARY instead.")
-  endif()
 
   # Add custom target and command
   MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
