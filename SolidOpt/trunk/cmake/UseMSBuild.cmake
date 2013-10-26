@@ -56,6 +56,15 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     set( TYPE_UPCASE "RUNTIME" )
   endif()
 
+  #FIXME: We know that we only build vendors with MSBuild. Thus we can afford to 
+  # decrease the warning level, because we cannot fully control the vendor 
+  # warnings.
+  string(REGEX REPLACE 
+    "<WarningLevel>[0-4]</WarningLevel>" 
+    "<WarningLevel>1</WarningLevel>" 
+    CSPROJ_FILE "${CSPROJ_FILE}"
+    )
+
   # We need to replace some the csproj file with the currently active cmake
   # configuration. Thus it is better to copy the file in our build folder and
   # make the substitutions there. 
@@ -157,6 +166,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
 
   #
   #list(APPEND MSBUILDFLAGS "/p:OutputPath=${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}")
+  string(REPLACE ";" " " MSBUILDFLAGS "${MSBUILDFLAGS}")
   add_custom_command(
     COMMENT "MSBuilding: ${MSBUILD} ${MSBUILDFLAGS} ${new_csproj_filename}"
     OUTPUT ${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}/${name_we}.${output}
