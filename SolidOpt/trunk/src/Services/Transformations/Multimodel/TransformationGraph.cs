@@ -17,7 +17,7 @@ namespace SolidOpt.Services.Transformations.Multimodel
   /// However we should be able to give any two representations of them and we should get a N step
   /// path between them.
   /// The generic template mechanism, which is used in the implementation of the transformers, 
-  /// namely <c>ITransfor<Source, Target></c> implicitly gives us the edges of the nodes, and the 
+  /// namely <c>ITransfor{Source, Target}</c> implicitly gives us the edges of the nodes, and the 
   /// nodes themselves.
   public class TransformationGraph
   {
@@ -29,10 +29,7 @@ namespace SolidOpt.Services.Transformations.Multimodel
     /// <summary>
     /// Finds the path through given set of transformation services.
     /// </summary>
-		/// This is A* based algorithm, see http://en.wikipedia.org/wiki/A*_search_algorithm.
-    /// <param name='serviceProvider'>
-    /// The set of services.
-    /// </param>
+    /// This is A* based algorithm, see http://en.wikipedia.org/wiki/A*_search_algorithm.
     /// <param name='from'>
     /// From which starting node (code representation).
     /// </param>
