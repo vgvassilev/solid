@@ -45,7 +45,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     )
   # FIXME: Extract the file component from the path and put it as postfix 
   string(REGEX REPLACE 
-    "<DocumentationFile>.*</DocumentationFile>" 
+    "<DocumentationFile>.+</DocumentationFile>" 
     "<DocumentationFile>${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}</DocumentationFile>"
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
