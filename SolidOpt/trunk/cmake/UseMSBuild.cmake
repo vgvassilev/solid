@@ -45,7 +45,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     )
   # FIXME: Extract the file component from the path and put it as postfix 
   string(REGEX REPLACE 
-    "<DocumentationFile>.+</DocumentationFile>" 
+    "<DocumentationFile>^[\\r\\n\\t ]+</DocumentationFile>" 
     "<DocumentationFile>${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}</DocumentationFile>"
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
@@ -100,7 +100,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   string(REGEX REPLACE
     "(.*<OutputType>)(.*)(</OutputType>.*)" "\\2" output_type "${CSPROJ_FILE}"
     )
-  set(type "{output_type}")
+  set(type "${output_type}")
   string(TOLOWER output_type "${output_type}")
 
   # Save the new csproj file
@@ -108,7 +108,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   file(RELATIVE_PATH new_csproj_filename ${CMAKE_SOURCE_DIR} ${filename})
   set(new_csproj_filename "${CMAKE_BINARY_DIR}/${new_csproj_filename}")
   file(WRITE "${new_csproj_filename}" "${CSPROJ_FILE}")
-  
 
   # Save project info in global properties
   # Put the dll instead of ${name} because the name ends with csproj and the
