@@ -140,7 +140,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
       
       Visit (node.Body);
       
-      Instruction branch = cil.EmitInstruction(OpCodes.Br, body.Instructions[index]);
+      //Instruction branch = cil.EmitInstruction(OpCodes.Br, body.Instructions[index]);
       fixupBranches.Add(new KeyValuePair<Instruction, int>(conditionalBranch, body.Instructions.Count));        
     }
 
