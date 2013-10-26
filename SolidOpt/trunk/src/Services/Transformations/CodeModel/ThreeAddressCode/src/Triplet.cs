@@ -41,7 +41,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Reminder,
     /// result = - op1
     Negate,
-    /// result = op1 & op2
+    /// result = op1 &amp; op2
     And,
     /// result = op1 | op2
     Or,
@@ -49,7 +49,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
     Xor,
     /// result = ! op1
     Not,
-    /// result = op1 << op2
+    /// result = op1 &lt;&lt; op2
     ShiftLeft,
     /// result = op1 >> op2
     ShiftRight,
@@ -69,7 +69,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
 
     /// result = op1 == op2
     Equal,
-    /// <summary> result = op1 < op2 </summary>
+    /// <summary> result = op1 &lt; op2 </summary>
     Less,
     /// result = op1 > op2
     Great,
