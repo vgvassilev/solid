@@ -534,7 +534,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
     /// A <see cref="AstMethodDefinition"/>
     /// </param>
     /// <returns>
-    /// A <see cref="CodeNodeCollection<Statement>"/>
+    /// A <see cref="CodeNodeCollection{Statement}"/>
     /// </returns>
     private CodeNodeCollection<Statement> 
       InlineExpansion(MethodInvocationExpression mInvoke, Expression target, AstMethodDefinition source)
@@ -648,7 +648,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
       private AstMethodDefinition source;
       private LabeledStatement exitLabel;
       private static int exitNumber = 0;
-      private BlockStatement currentBlock;
+      //private BlockStatement currentBlock;
       private Expression thisSubstitution;
       
       #endregion
@@ -670,7 +670,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
       /// A <see cref="AstMethodDefinition"/>
       /// </param>
       /// <param name="paramVarSubstitution">
-      /// A <see cref="Dictionary<ParameterDefinition, Expression>"/>
+      /// A <see cref="System.Collections.Generic.Dictionary{ParameterDefinition, Expression}"/>
       /// </param>
       /// <param name="thisSubstitution">
       /// A <see cref="Expression"/>
@@ -714,7 +714,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
       /// </returns>
       public override ICodeNode VisitBlockStatement(BlockStatement node)
       {
-        currentBlock = node;
+        //currentBlock = node;
         return base.VisitBlockStatement(node);
       }
       
