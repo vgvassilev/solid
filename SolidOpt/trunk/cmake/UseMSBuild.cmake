@@ -84,6 +84,11 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     "<AssemblyOriginatorKeyFile>${msbuild_path}\\"
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
+  string(REGEX REPLACE 
+    "(.*<Project.*ToolsVersion=\")([0-9]\\.[0-9])(\".*>)" 
+    "\\1${CSHARP_FRAMEWORK_VERSION}\\3"
+    CSPROJ_FILE "${CSPROJ_FILE}"
+    )
 
   # We need to extract:
   #   - output_type
