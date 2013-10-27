@@ -46,14 +46,11 @@ include(VisualStudioGenerator)
 
 # Macros
 
-macro( CSHARP_ADD_LIBRARY_BINARY name)
+function( CSHARP_ADD_LIBRARY_BINARY name)
+  message( STATUS "Copying file: ${name} into ${CMAKE_LIBRARY_OUTPUT_DIR}")
   get_filename_component(filename "${name}" NAME)
-  add_custom_target(${filename})
-  add_custom_command(TARGET ${filename} PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E
-    copy ${name} ${CMAKE_LIBRARY_OUTPUT_DIR}
-    )
-endmacro( CSHARP_ADD_LIBRARY_BINARY )
+  configure_file("${name}" "${CMAKE_LIBRARY_OUTPUT_DIR}/{filename}" COPYONLY)
+endfunction( CSHARP_ADD_LIBRARY_BINARY )
 
 macro( CSHARP_ADD_TEST_LIBRARY name )
   CSHARP_ADD_PROJECT( "test_library" ${name} ${ARGN} )
