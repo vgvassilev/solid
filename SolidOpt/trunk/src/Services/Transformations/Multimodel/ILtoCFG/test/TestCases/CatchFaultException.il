@@ -30,6 +30,8 @@
         IL_0010: stsfld [mscorlib]System.Int32 TestCase::exc_caught
         IL_0015: leave IL_0021
       }
+      // A fault handler that shall be executed if an exception occurs, but not on completion of normal control flow.
+      // I.e like finally but only when exception occurs.
     } fault {
       IL_001a: ldc.i4.1
       IL_001b: stsfld [mscorlib]System.Int32 TestCase::flt_caught

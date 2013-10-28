@@ -33,7 +33,7 @@
       IL_000e: pop
       IL_000f: ldc.i4.1
       IL_0010: endfilter
-    } {
+    } { // The filter handler. Enters here if non 0 on the stack before endfilter.
       IL_0012: ldc.i4.1
       IL_0013: stsfld [mscorlib]System.Int32 TestCase::flt_caught
       IL_0018: leave IL_001d

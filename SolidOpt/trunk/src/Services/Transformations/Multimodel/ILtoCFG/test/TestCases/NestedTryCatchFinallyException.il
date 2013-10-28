@@ -28,6 +28,7 @@
   //  }
   .method public hidebysig static void Main() cil managed
   {
+    .entrypoint
     .locals init (int32 V_0, int32 V_1, int32[] V_2, [mscorlib]DivideByZeroException V_3, [mscorlib]IndexOutOfRangeException V_4)
     IL_0000: ldc.i4.4
     IL_0001: stloc.0

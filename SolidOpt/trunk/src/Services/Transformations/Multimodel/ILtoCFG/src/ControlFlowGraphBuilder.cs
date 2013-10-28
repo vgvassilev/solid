@@ -137,8 +137,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         curBlock.Add(instr);
 
         if (IsBlockTerminator(instr)) {
-          if (exceptionHandlersEnds.Contains(instr) || exceptionHandlersStarts.Contains(curBlock.First))
-            curBlock.Kind =  BlockKind.SEH;
+          T nextInstr = LinearInstructionAdapter<T>.GetNext(instr);
+          if (nextInstr != null && 
+              (exceptionHandlersEnds.Contains(nextInstr)) || exceptionHandlersStarts.Contains(curBlock.First)) {
+            curBlock.Kind = BlockKind.SEH;
+          }
           else
             curBlock.Kind =  BlockKind.Structure;
           rawBlocks.Add(curBlock);
@@ -242,6 +245,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
     {
       if (block.Last == null)
         throw new ArgumentException ("Undelimited node at " + block.Last);
+
+      // FIXME: We should pass in the SEH data better. Now we assume in the implementation,
+      // that the try end and the catch start are at the same instruction.
+      T firstInst = block.First;
+      if (exceptionHandlersStarts.Contains(firstInst) && exceptionHandlersEnds.Contains(firstInst)) {
+        T prevInst = LinearInstructionAdapter<T>.GetPrevious(firstInst);
+        BasicBlock<T> predecessor = GetNodeContaining(prevInst);
+        block.Predecessors.Add(predecessor);
+        predecessor.Successors.Add(block);
+      }
 
       T i = block.Last;
       switch (LinearInstructionAdapter<T>.GetFlowControl(i)) {
