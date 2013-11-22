@@ -110,17 +110,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       string command = lexer.LexUntil('"');
       lexer.Lex(); // Lex the closing quote.
 
+      string arguments = "";
       // Expand the command if known:
       if (command[0] == '@') {
-        if (command == "@ILASM@")
+        if (command == "@ILASM@") {
           command = BuildInformation.BuildInfo.ILASMCompiler;
+          // Set up the output file in the current (build) folder.
+          arguments = " /OUTPUT:" + Path.GetFileNameWithoutExtension(filename) + ".dll";
+        }
         else if (command == "@CSC@")
           command = BuildInformation.BuildInfo.CSCCompiler;
       }
 
       runDir.Command = command;
 
-      string arguments = lexer.LexUntil('\n'); // Practically EOF in our case.
+      arguments += lexer.LexUntil('\n'); // Practically EOF in our case.
       // Expand arguments if known:
       arguments = arguments.Replace("@TEST_CASE@", filename);
       arguments = arguments.Replace("@CMAKE_LIBRARY_OUTPUT_DIR@", BuildInformation.BuildInfo.LibraryOutputDir);

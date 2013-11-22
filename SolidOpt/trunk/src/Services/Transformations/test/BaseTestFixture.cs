@@ -229,7 +229,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       string debugFile = GetTestCaseOutFullPath(testCaseName);
       string invokeFile = debugFile + ".invoke";
       string dllFile 
-        = Path.Combine(GetTestCasesDir(), Path.GetFileNameWithoutExtension(testCaseName) + ".dll");
+        = Path.Combine(GetTestCasesBuildDir(), Path.GetFileNameWithoutExtension(testCaseName) + ".dll");
       if (File.Exists(debugFile))
         File.Delete(debugFile);
       if (File.Exists(invokeFile))
@@ -289,7 +289,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       string sourceFile = GetTestCaseFullPath(testCase);
       Assert.IsTrue(File.Exists(sourceFile), sourceFile + " not found!");
       string testCaseAssemblyName
-          = Path.Combine(GetTestCasesDir(), Path.GetFileNameWithoutExtension(sourceFile)+".dll");
+          = Path.Combine(GetTestCasesBuildDir(), Path.GetFileNameWithoutExtension(sourceFile)+".dll");
 
       TestCaseDirective runDir = directives.Find(d => d.Kind == TestCaseDirective.Kinds.Run);
       Assert.NotNull(runDir, "Are you missing RUN: directive?");
@@ -302,7 +302,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       p.StartInfo.RedirectStandardInput = true;
       p.StartInfo.RedirectStandardError = true;
       p.StartInfo.FileName = runDir.Command;
-      p.StartInfo.WorkingDirectory = GetTestCasesDir();
+      p.StartInfo.WorkingDirectory = GetTestCasesBuildDir();
       // Log the invocation
       LogProcessInvocation(p, testCase);
       p.Start();
