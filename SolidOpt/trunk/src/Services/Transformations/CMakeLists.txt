@@ -4,18 +4,9 @@
 ## For further details see the nearest License.txt
 ##
 
-csharp_add_library(
-  SolidOpt.Services.Transformations.dll
-  ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
-  ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
-  )
-csharp_add_dependencies(
-  SolidOpt.Services.Transformations.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
-  )
-
 add_subdirectory(CodeModel)
 add_subdirectory(Multimodel)
 add_subdirectory(Optimizations)
+add_subdirectory(src)
 add_subdirectory(test)
 
