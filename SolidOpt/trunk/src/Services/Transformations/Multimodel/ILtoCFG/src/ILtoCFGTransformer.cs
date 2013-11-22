@@ -25,7 +25,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
     public CilToControlFlowGraph ()
     {
     }
-    
+
     #endregion
     
     public override object Process (object codeModel)
@@ -58,7 +58,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         ehStarts.Add(handler.FilterStart);
         ehEnds.Add(handler.HandlerEnd);
         ehEnds.Add(handler.TryEnd);
-        ehEnds.Add(handler.FilterStart);
+        ehEnds.Add(handler.FilterEnd);
       }
 
       var builder = new ControlFlowGraphBuilder<Instruction>(source.Method, 
