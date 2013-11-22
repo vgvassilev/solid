@@ -53,12 +53,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       List<Instruction> ehStarts = new List<Instruction>();
       List<Instruction> ehEnds = new List<Instruction>();
       foreach (ExceptionHandler handler in source.ExceptionHandlers) {
-        ehStarts.Add(handler.HandlerStart);
         ehStarts.Add(handler.TryStart);
-        ehStarts.Add(handler.FilterStart);
-        ehEnds.Add(handler.HandlerEnd);
-        ehEnds.Add(handler.TryEnd);
-        ehEnds.Add(handler.FilterEnd);
+        ehEnds.Add(handler.TryEnd.Previous);
+        if (handler.HandlerStart != null) {
+          ehStarts.Add(handler.HandlerStart);
+          ehEnds.Add(handler.HandlerEnd.Previous);
+        }
+        if (handler.FilterStart != null) {
+          ehStarts.Add(handler.FilterStart);
+          ehEnds.Add(handler.FilterEnd.Previous);
+        }
       }
 
       var builder = new ControlFlowGraphBuilder<Instruction>(source.Method, 
