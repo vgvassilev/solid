@@ -137,9 +137,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         curBlock.Add(instr);
 
         if (IsBlockTerminator(instr)) {
-          T nextInstr = LinearInstructionAdapter<T>.GetNext(instr);
-          if (nextInstr != null && 
-              (exceptionHandlersEnds.Contains(nextInstr)) || exceptionHandlersStarts.Contains(curBlock.First)) {
+          if (exceptionHandlersEnds.Contains(instr) || exceptionHandlersStarts.Contains(curBlock.First)) {
             curBlock.Kind = BlockKind.SEH;
           }
           else
@@ -182,7 +180,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
 
       T nextInstr = LinearInstructionAdapter<T>.GetNext(i);
       if (nextInstr != null)
-        return HasLabel(nextInstr) || exceptionHandlersStarts.Contains(nextInstr) || exceptionHandlersEnds.Contains(nextInstr);
+        return HasLabel(nextInstr) || exceptionHandlersStarts.Contains(nextInstr);
 
       return false;
     }
@@ -211,8 +209,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       }
     }
 
-    IEnumerable<T> GetTargetInstructions(T i)
-    {
+    ICollection<T> GetTargetInstructions(T i) {
       List<T> result = new List<T>(1);
         
       // if there are more multiple branches
@@ -246,66 +243,52 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       if (block.Last == null)
         throw new ArgumentException ("Undelimited node at " + block.Last);
 
-      // FIXME: We should pass in the SEH data better. Now we assume in the implementation,
-      // that the try end and the catch start are at the same instruction.
-      T firstInst = block.First;
-      if (exceptionHandlersStarts.Contains(firstInst) && exceptionHandlersEnds.Contains(firstInst)) {
-        T prevInst = LinearInstructionAdapter<T>.GetPrevious(firstInst);
-        BasicBlock<T> predecessor = GetNodeContaining(prevInst);
-        block.Predecessors.Add(predecessor);
-        predecessor.Successors.Add(block);
-      }
+      T lastInst = block.Last;
+      var targets = GetTargetInstructions(lastInst);
 
-      T i = block.Last;
-      switch (LinearInstructionAdapter<T>.GetFlowControl(i)) {
-        case FlowControl.Return:
-        case FlowControl.Branch: {
-          var targets = GetTargetInstructions(i);
-          foreach (var target in targets) {
-            Debug.Assert(target != null, "Target cannot be null!");
-
-            BasicBlock<T> successor = GetNodeContaining(target);
-            block.Successors.Add(successor);
-            successor.Predecessors.Add(block);
-          }
-
-          break;
-        }
+      switch (LinearInstructionAdapter<T>.GetFlowControl(lastInst)) {
         // treat the call as next
-        case FlowControl.Call:
-        case FlowControl.Next:
+        case FlowControl.Call: // intentional fall through
+        case FlowControl.Next: // intentional fall through
         case FlowControl.Cond_Branch: {
-          var targets = GetTargetInstructions(i);
-          foreach (var target in targets) {
-            Debug.Assert(target != null, "Target cannot be null!");
-
-            BasicBlock<T> successor = GetNodeContaining(target);
-            // Check whether the successor already exists. Can happen when having branches pointing
-            // to one and the same block. Eg. switch with no break.
-            if (block.Successors.IndexOf(successor) < 0) {
-              block.Successors.Add(successor);
-              successor.Predecessors.Add(block);
-            }
-          }
-          // Make sure we don't have a branch pointing to the next instruction as a target
-          if (LinearInstructionAdapter<T>.GetNext(block.Last) != null) {
-            BasicBlock<T> successor = GetNodeContaining(LinearInstructionAdapter<T>.GetNext(block.Last));
-            if (block.Successors.IndexOf(successor) < 0) {
-              block.Successors.Add(successor);
-              successor.Predecessors.Add(block);
-            }
-          }
+          // Add the next instruction as a target to the list of targets.
+          targets.Add(LinearInstructionAdapter<T>.GetNext(block.Last));
           break;
         }
 
-        case FlowControl.Throw:
+        case FlowControl.Return: // intentional fall through
+        case FlowControl.Branch: // intentional fall through
+        case FlowControl.Throw: // intentional fall through
           break;
         default:
           throw new NotSupportedException (
             string.Format("Unhandled instruction flow behavior {0}: {1}",
-                          LinearInstructionAdapter<T>.GetFlowControl(i),
-                          i.ToString(),                                                        
-                          i.ToString()));
+                          LinearInstructionAdapter<T>.GetFlowControl(lastInst),
+                          lastInst.ToString(),                                                        
+                          lastInst.ToString()));
+      }
+
+      foreach (var target in targets) {
+        Debug.Assert(target != null, "Target cannot be null!");
+        BasicBlock<T> successor = GetNodeContaining(target);
+        // Check whether the successor already exists. Can happen when having branches pointing
+        // to one and the same block. Eg. switch with no break.
+        if (block.Successors.IndexOf(successor) < 0) {
+          block.Successors.Add(successor);
+          successor.Predecessors.Add(block);
+        }
+      }
+
+      T nextInst = LinearInstructionAdapter<T>.GetNext(lastInst);
+      // Nothing to do, everything is already done, exit early.
+      if (nextInst == null || targets.Contains(nextInst))
+        return;
+      // We need to rule out the end of catch, because it ends with a branch and this would end up
+      // duplicating the successors
+      if (exceptionHandlersEnds.Contains(lastInst)) {
+        BasicBlock<T> successor = GetNodeContaining(nextInst);
+        block.Successors.Add(successor);
+        successor.Predecessors.Add(block);
       }
     }
 
