@@ -61,7 +61,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         }
         if (handler.FilterStart != null) {
           ehStarts.Add(handler.FilterStart);
-          ehEnds.Add(handler.FilterEnd.Previous);
+          // CLI 19.4 Filter Blocks:
+          // The filter code begins at the specified label and ends at the first instruction of the handler block.
+          // (Note that the CLI demands that the filter block shall immediately precede, within the CIL stream,
+          // its corresponding handler block.)
+          //
+          // However this seems to be a bug in this version of Mono.Cecil - the FilterEnd points to the last 
+          // instruction of the filter block, not to the next to the last.
+          ehEnds.Add(handler.FilterEnd);
         }
       }
 
