@@ -3,8 +3,8 @@ using Mono.Cecil;
 
 using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
-using SolidOpt.Services.Transformations.Multimodel.CFGtoTAC;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
+using SolidOpt.Services.Transformations.Multimodel.ILtoTAC;
 using Mono.Cecil.Cil;
 
 
@@ -28,12 +28,7 @@ namespace SolidReflector.Plugins.TACVisualizer
     private static void PrintMethod(MethodDefinition methodDefinition, Gtk.TextView textView) {
       textView.Buffer.Clear();
 
-      var cfgBuilder = new ControlFlowGraphBuilder(methodDefinition);
-      ControlFlowGraph<Instruction> cfg = cfgBuilder.Create();
-
-      var tacBuilder = new ThreeAddressCodeBuilder(cfg);
-      ThreeAdressCode tac = tacBuilder.Create();
-
+      ThreeAddressCode tac = new ILtoTACTransformer().Decompile(methodDefinition);
       textView.Buffer.Text = tac.ToString();
     }
 
