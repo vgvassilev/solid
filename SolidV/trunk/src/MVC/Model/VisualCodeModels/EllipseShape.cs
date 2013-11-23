@@ -12,6 +12,12 @@ namespace SolidV.MVC
   [Serializable]
   public class EllipseShape : Shape
   {
+    private string title = null;
+    public string Title {
+      get { return title; }
+      set { title = value; }
+    }
+
     public EllipseShape(Rectangle rectangle) : base(rectangle) {}
   }
 }
