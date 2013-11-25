@@ -105,8 +105,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
         drawer = new CFGPrettyDrawer(drawingArea);
 
         if (args.definition is MethodDefinition) {
-          var builder = new ControlFlowGraphBuilder(args.definition as MethodDefinition);
-          currentCfg = builder.Create();
+          currentCfg = new CilToControlFlowGraph().Decompile(args.definition as MethodDefinition);
 
           drawer.DrawTextBlocks(currentCfg);
           if (args.module != null) {

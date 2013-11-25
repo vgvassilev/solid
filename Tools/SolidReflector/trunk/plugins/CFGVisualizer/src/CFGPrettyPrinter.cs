@@ -45,8 +45,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     private static void PrintMethod(MethodDefinition methodDef, Gtk.TextView textView) {
       textView.Buffer.Clear();
 
-      var builder = new ControlFlowGraphBuilder<Instruction>(methodDef);
-      ControlFlowGraph<Instruction> cfg = builder.Create();
+      ControlFlowGraph<Instruction> cfg = new CilToControlFlowGraph().Decompile(methodDef);
 
       textView.Buffer.Text = cfg.ToString();
     }
