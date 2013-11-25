@@ -61,6 +61,13 @@ namespace SolidV.MVC
 		  get { return items; }
 		  set { items = value; }
 	  }
+
+    private object describedEntity;
+    public object DescribedEntity {
+      get { return describedEntity; }
+      set { describedEntity = value;}
+    }
+
     public Shape this[int i]
     {
       get { return Items[i]; }

@@ -4,9 +4,11 @@ csharp_add_library(
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Cairo/*.cs
-  ${CMAKE_CURRENT_SOURCE_DIR}/Gtk/ObjectInspector/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Gtk/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Gdk/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Ide/DockLibrary/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector/*.cs   
+  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector.Editors/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/VisualCodeControllers/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Model/*.cs
@@ -22,6 +24,7 @@ csharp_add_dependencies(
   System.Xml.dll
   # Packages
   "pkg:gtk-sharp-2.0"
+  System.Drawing.dll
   )
 csharp_add_project_meta(
   SolidV.dll
