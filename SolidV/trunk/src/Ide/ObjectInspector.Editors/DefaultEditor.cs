@@ -11,12 +11,12 @@ using System.ComponentModel;
 namespace SolidV.Gtk.InspectorGrid.InspectorEditors
 {
   using Gtk = global::Gtk;
-	public class DefaultEditor : InspectorEditorCell
-	{
-		protected override string GetValueMarkup()
-		{
-			return "<span foreground=\"grey\">&lt;" + Inspector.PropertyType.ToString() 
+  public class DefaultEditor : InspectorEditorCell
+  {
+    protected override string GetValueMarkup()
+    {
+      return "<span foreground=\"grey\">&lt;" + Inspector.PropertyType.ToString() 
                                                                     + "&gt;</span>";
-		}
-	}
+    }
+  }
 }

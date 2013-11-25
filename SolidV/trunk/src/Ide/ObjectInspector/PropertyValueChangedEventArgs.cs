@@ -9,31 +9,31 @@ using System.ComponentModel;
 
 namespace SolidV.Gtk.InspectorGrid
 {
-	public class InspectorValueChangedEventArgs
-	{
-		private PropertyDescriptor changedItem;
-		private object oldValue;
-		private object newValue;
+  public class InspectorValueChangedEventArgs
+  {
+    private PropertyDescriptor changedItem;
+    private object oldValue;
+    private object newValue;
 
-		public InspectorValueChangedEventArgs(PropertyDescriptor changedItem, object oldValue, 
+    public InspectorValueChangedEventArgs(PropertyDescriptor changedItem, object oldValue, 
                                                                                   object newValue)
-		{
-			this.changedItem = changedItem;
-			this.oldValue = oldValue;
-			this.newValue = newValue;
-		}
+    {
+      this.changedItem = changedItem;
+      this.oldValue = oldValue;
+      this.newValue = newValue;
+    }
 
-		public object OldValue {
-			get { return oldValue; }
-		}
+    public object OldValue {
+      get { return oldValue; }
+    }
 
-		public object NewValue
-		{
-			get { return newValue; }
-		}
+    public object NewValue
+    {
+      get { return newValue; }
+    }
 
-		public PropertyDescriptor ChangedItem {
-			get { return changedItem; }
-		}
-	}
+    public PropertyDescriptor ChangedItem {
+      get { return changedItem; }
+    }
+  }
 }

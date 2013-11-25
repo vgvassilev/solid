@@ -6,5 +6,5 @@
 
 namespace SolidV.Gtk.InspectorGrid
 {
-	public delegate void InspectorValueChangedEventHandler(object sender, InspectorValueChangedEventArgs e);
+  public delegate void InspectorValueChangedEventHandler(object sender, InspectorValueChangedEventArgs e);
 }
