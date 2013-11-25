@@ -1,9 +1,9 @@
-using MonoDevelop.Components.Docking;
 using System;
+using Gtk;
 
 using SolidOpt.Services;
 using SolidReflector.Plugins.AssemblyBrowser;
-using Gtk;
+using SolidV.Ide.Dock;
 
 namespace SolidReflector.Plugins.TACVisualizer
 {

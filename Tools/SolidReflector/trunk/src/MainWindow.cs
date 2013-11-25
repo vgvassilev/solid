@@ -4,7 +4,7 @@
  * For further details see the nearest License.txt
  */
 
-using MonoDevelop.Components.Docking;
+using SolidV.Ide.Dock;
 using System;
 using System.Collections.Generic;
 using System.IO;

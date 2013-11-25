@@ -15,7 +15,6 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/AssemblyBrowser.dll
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   # GAC

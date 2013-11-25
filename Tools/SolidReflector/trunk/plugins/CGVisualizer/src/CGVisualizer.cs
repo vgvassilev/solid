@@ -1,4 +1,3 @@
-using MonoDevelop.Components.Docking;
 using Gtk;
 using System;
 
@@ -7,6 +6,7 @@ using SolidOpt.Services;
 using SolidOpt.Services.Transformations.CodeModel.CallGraph;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCG;
 using Mono.Cecil;
+using SolidV.Ide.Dock;
 
 namespace SolidReflector.Plugins.CGVisualizer
 {

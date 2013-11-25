@@ -15,7 +15,6 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/AssemblyBrowser.dll
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.ILtoCFG.dll

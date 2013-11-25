@@ -1,12 +1,11 @@
-using Mono.Cecil;
-using MonoDevelop.Components.Docking;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
+using Mono.Cecil;
 using SolidOpt.Services;
+using SolidV.Ide.Dock;
 
 namespace SolidReflector.Plugins.AssemblyBrowser
 {

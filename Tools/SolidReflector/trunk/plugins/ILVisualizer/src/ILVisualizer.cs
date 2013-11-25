@@ -1,9 +1,9 @@
 using Gtk;
-using MonoDevelop.Components.Docking;
 using System;
 
 using SolidOpt.Services;
 using SolidReflector.Plugins.AssemblyBrowser;
+using SolidV.Ide.Dock;
 
 namespace SolidReflector.Plugins.ILVisualizer
 {

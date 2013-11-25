@@ -17,7 +17,7 @@ csharp_add_dependencies(
   SolidReflector.exe
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   Mono.Posix.dll
   System.Xml.dll
   # Packages

@@ -1,7 +1,7 @@
 using Gtk;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using MonoDevelop.Components.Docking;
+using SolidV.Ide.Dock;
 using System;
 using System.Collections;
 using System.Collections.Generic;
