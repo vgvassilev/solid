@@ -8,7 +8,7 @@ csharp_add_dependencies(
   ${CMAKE_RUNTIME_OUTPUT_DIR}/SampleTool.exe
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/MonoDevelop.Dock.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   # GAC
   gtk-sharp.dll
   gdk-sharp.dll

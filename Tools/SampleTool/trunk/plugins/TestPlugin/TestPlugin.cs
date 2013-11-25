@@ -10,7 +10,7 @@ using System;
 using SampleTool;
 using SolidOpt.Services;
 
-using MonoDevelop.Components.Docking;
+using SolidV.Ide.Dock;
 
 namespace TestPlugin
 {

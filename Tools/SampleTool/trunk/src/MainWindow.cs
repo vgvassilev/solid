@@ -3,13 +3,12 @@
  * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
  * For further details see the nearest License.txt
  */
-
-using MonoDevelop.Components.Docking;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
+using SolidV.Ide.Dock;
 using SolidOpt.Services;
 using SampleTool;
 
