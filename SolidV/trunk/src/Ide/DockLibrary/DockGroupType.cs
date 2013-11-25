@@ -1,11 +1,16 @@
+/*
+ * $Id$
+ * It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+ * For further details see the nearest License.txt
+ */
 using System;
 
-namespace MonoDevelop.Components.Docking
+namespace SolidV.Ide.Dock
 {
-	enum DockGroupType
-	{
-		Horizontal,
-		Vertical,
-		Tabbed
-	}
+  enum DockGroupType
+  {
+    Horizontal,
+    Vertical,
+    Tabbed
+  }
 }

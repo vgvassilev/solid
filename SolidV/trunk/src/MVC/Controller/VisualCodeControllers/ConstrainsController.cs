@@ -5,6 +5,7 @@
  */
 using System;
 using Cairo;
+using Gdk;
 
 namespace SolidV.MVC
 {

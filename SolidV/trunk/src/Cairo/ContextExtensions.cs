@@ -8,7 +8,7 @@ using Cairo;
 
 namespace SolidV.Cairo
 {
-  
+  using Cairo = global::Cairo;
   public static class ContextExtensions
   {
     //public ContextExtensions(IntPtr state): base(state) {}
@@ -101,5 +101,9 @@ namespace SolidV.Cairo
                    IdentityMatrix, IdentityMatrix);
     }
 
+    public static Cairo.Color ToCairoColor (this Gdk.Color color)
+    {
+      return new Cairo.Color ((double)color.Red / ushort.MaxValue, (double)color.Green / ushort.MaxValue, (double)color.Blue / ushort.MaxValue);
+    }
   }
 }
