@@ -6,7 +6,7 @@ csharp_add_library(
   ${CMAKE_CURRENT_SOURCE_DIR}/Cairo/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Gtk/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Gdk/*.cs
-  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/DockLibrary/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/DockLibrary/Dock/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector/*.cs   
   ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector.Editors/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/*.cs
