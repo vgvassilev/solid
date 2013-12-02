@@ -25,16 +25,16 @@ namespace TestPlugin
       mainWindow = reflector.GetMainWindow();
 
       Gtk.Notebook nb = new Gtk.Notebook();
-      nb.AppendPage(new TextView(), new Gtk.Label("TestPlugin Visualizer"));
-      nb.AppendPage(new DrawingArea(), new Gtk.Label("TestPlugin Visualizer"));
+      nb.AppendPage(new TextView(), new Gtk.Label("TextEditor Visualizer"));
+      nb.AppendPage(new DrawingArea(), new Gtk.Label("TextEditor Visualizer"));
       nb.ShowAll();
 
-      dockItem = mainWindow.DockFrame.AddItem("TestPlugin Visualizer");
+      dockItem = mainWindow.DockFrame.AddItem("TextEditor Visualizer");
       dockItem.Visible = true;
       dockItem.Behavior = DockItemBehavior.Normal;
       dockItem.Expand = true;
       dockItem.DrawFrame = true;
-      dockItem.Label = "TestPlugin Visualizer";
+      dockItem.Label = "TextEditor Visualizer";
       dockItem.Content = nb;
       dockItem.DefaultVisible = true;
       dockItem.Visible = true;
