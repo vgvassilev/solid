@@ -1,10 +1,10 @@
 csharp_add_library(
-  TextEditor.dll
+  TestPlugin.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
-  TextEditor.dll
+  TestPlugin.dll
   ${CMAKE_RUNTIME_OUTPUT_DIR}/SampleTool.exe
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll

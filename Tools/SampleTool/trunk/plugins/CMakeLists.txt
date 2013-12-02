@@ -4,5 +4,5 @@
 ## For further details see the nearest License.txt
 ##
 
-add_subdirectory(TextEditor)
+add_subdirectory(TestPlugin)
 add_subdirectory(TreeViewPad)
