@@ -24,6 +24,12 @@ namespace TreeViewPad
       ISampleTool SampleTool = context as ISampleTool;
       DockFrame frame = SampleTool.GetMainWindow().DockFrame;
 
+      Gtk.ScrolledWindow scrollWindow = new Gtk.ScrolledWindow();
+      Gtk.Viewport viewport = new Gtk.Viewport();
+      scrollWindow.Add(viewport);
+      viewport.Add(treeView);
+      scrollWindow.ShowAll();
+
       Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
       Gtk.CellRendererText colAssemblyCell = new Gtk.CellRendererText();
       
@@ -46,7 +52,7 @@ namespace TreeViewPad
       treeViewDock.Expand = true;
       treeViewDock.DrawFrame = true;
       treeViewDock.Label = "Files";
-      treeViewDock.Content = treeView;
+      treeViewDock.Content = scrollWindow;
       treeViewDock.DefaultVisible = true;
       treeViewDock.Visible = true;
 
