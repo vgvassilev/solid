@@ -78,6 +78,10 @@ namespace TreeViewPad
       treeView.Model.GetIter(out iter, args.Path);
       string currentDir = Path.GetFullPath((string) treeView.Model.GetValue(iter, 0));
 
+      FileAttributes attr = File.GetAttributes(currentDir);
+      if((attr & FileAttributes.Directory) != FileAttributes.Directory)
+        return;
+
       DirectoryInfo rootDirInfo = new DirectoryInfo(currentDir);
       attachSubTree(treeView.Model, iter, rootDirInfo.GetDirectories(), rootDirInfo.GetFiles());
     }
