@@ -24,11 +24,17 @@ namespace TreeViewPad
       ISampleTool SampleTool = context as ISampleTool;
       DockFrame frame = SampleTool.GetMainWindow().DockFrame;
 
-      Gtk.ScrolledWindow scrollWindow = new Gtk.ScrolledWindow();
-      Gtk.Viewport viewport = new Gtk.Viewport();
-      scrollWindow.Add(viewport);
-      viewport.Add(treeView);
-      scrollWindow.ShowAll();
+      Gtk.ScrolledWindow treeViewScrollWindow = new Gtk.ScrolledWindow();
+      Gtk.Viewport treeViewViewport = new Gtk.Viewport();
+      treeViewScrollWindow.Add(treeViewViewport);
+      treeViewViewport.Add(treeView);
+      treeViewScrollWindow.ShowAll();
+
+      Gtk.ScrolledWindow textEditorScrollWindow = new Gtk.ScrolledWindow();
+      Gtk.Viewport textEditorViewport = new Gtk.Viewport();
+      textEditorScrollWindow.Add(textEditorViewport);
+      textEditorViewport.Add(treeView);
+      textEditorScrollWindow.ShowAll();
 
       Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
       Gtk.CellRendererText colAssemblyCell = new Gtk.CellRendererText();
@@ -52,9 +58,19 @@ namespace TreeViewPad
       treeViewDock.Expand = true;
       treeViewDock.DrawFrame = true;
       treeViewDock.Label = "Files";
-      treeViewDock.Content = scrollWindow;
+      treeViewDock.Content = treeViewScrollWindow;
       treeViewDock.DefaultVisible = true;
       treeViewDock.Visible = true;
+
+      DockItem textEditorwDock = frame.AddItem("TextEditorDock");
+      textEditorwDock.Visible = true;
+      textEditorwDock.Behavior = DockItemBehavior.Normal;
+      textEditorwDock.Expand = true;
+      textEditorwDock.DrawFrame = true;
+      textEditorwDock.Label = "Text Editor";
+      textEditorwDock.Content = textEditorScrollWindow;
+      textEditorwDock.DefaultVisible = true;
+      textEditorwDock.Visible = true;
 
       treeView.ShowAll();
     }
