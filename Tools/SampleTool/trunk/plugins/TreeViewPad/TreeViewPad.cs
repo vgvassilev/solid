@@ -15,7 +15,9 @@ namespace TreeViewPad
 {
   public class TreeViewPad : IPlugin, IPad
   {
+    private Gtk.TextView textView = new Gtk.TextView();
     private Gtk.TreeView treeView = new Gtk.TreeView();
+    private Gtk.Notebook nb = new Gtk.Notebook();
     private Gtk.TreeIter iter;
 
     #region IPlugin implementation
@@ -33,7 +35,7 @@ namespace TreeViewPad
       Gtk.ScrolledWindow textEditorScrollWindow = new Gtk.ScrolledWindow();
       Gtk.Viewport textEditorViewport = new Gtk.Viewport();
       textEditorScrollWindow.Add(textEditorViewport);
-      textEditorViewport.Add(treeView);
+      textEditorViewport.Add(nb);
       textEditorScrollWindow.ShowAll();
 
       Gtk.TreeViewColumn col = new Gtk.TreeViewColumn();
@@ -53,7 +55,6 @@ namespace TreeViewPad
       treeView.RowActivated += HandleRowActivated;
 
       DockItem treeViewDock = frame.AddItem("TreeViewDock");
-      treeViewDock.Visible = true;
       treeViewDock.Behavior = DockItemBehavior.Normal;
       treeViewDock.Expand = true;
       treeViewDock.DrawFrame = true;
@@ -62,17 +63,14 @@ namespace TreeViewPad
       treeViewDock.DefaultVisible = true;
       treeViewDock.Visible = true;
 
-      DockItem textEditorwDock = frame.AddItem("TextEditorDock");
-      textEditorwDock.Visible = true;
-      textEditorwDock.Behavior = DockItemBehavior.Normal;
-      textEditorwDock.Expand = true;
-      textEditorwDock.DrawFrame = true;
-      textEditorwDock.Label = "Text Editor";
-      textEditorwDock.Content = textEditorScrollWindow;
-      textEditorwDock.DefaultVisible = true;
-      textEditorwDock.Visible = true;
-
-      treeView.ShowAll();
+      DockItem textEditorDock = frame.AddItem("TextEditorDock");
+      textEditorDock.Behavior = DockItemBehavior.Normal;
+      textEditorDock.Expand = true;
+      textEditorDock.DrawFrame = true;
+      textEditorDock.Label = "Text Editor";
+      textEditorDock.Content = textEditorScrollWindow;
+      textEditorDock.DefaultVisible = true;
+      textEditorDock.Visible = true;
     }
 
     void IPlugin.UnInit(object context) {
@@ -95,8 +93,14 @@ namespace TreeViewPad
       string currentDir = Path.GetFullPath((string) treeView.Model.GetValue(iter, 0));
 
       FileAttributes attr = File.GetAttributes(currentDir);
-      if((attr & FileAttributes.Directory) != FileAttributes.Directory)
+
+      if ((attr & FileAttributes.Directory) != FileAttributes.Directory) {
+        textView = new Gtk.TextView();
+        textView.Buffer.Text = File.ReadAllText(currentDir);
+        nb.AppendPage(textView, new Gtk.Label(currentDir));
+        nb.ShowAll();
         return;
+      }
 
       DirectoryInfo rootDirInfo = new DirectoryInfo(currentDir);
       attachSubTree(treeView.Model, iter, rootDirInfo.GetDirectories(), rootDirInfo.GetFiles());
