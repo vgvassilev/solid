@@ -71,6 +71,31 @@ namespace TreeViewPad
       textEditorDock.Content = textEditorScrollWindow;
       textEditorDock.DefaultVisible = true;
       textEditorDock.Visible = true;
+
+      Gtk.MenuBar mainMenuBar = SampleTool.GetMainMenu();
+      Gtk.MenuItem fileMenu = null;
+      // Find the File menu if present
+      foreach(Gtk.Widget w in mainMenuBar.Children)
+        if (w.Name == "FileAction")
+          fileMenu = w as Gtk.MenuItem;
+      
+      // If not present - create it
+      if (fileMenu == null) {
+        Gtk.Menu menu = new Gtk.Menu();
+        fileMenu = new Gtk.MenuItem("File");
+        fileMenu.Submenu = menu;
+        mainMenuBar.Append(fileMenu);
+      }
+      
+      // Setting up the Open menu item in File
+      Gtk.MenuItem close = new Gtk.MenuItem("Close");
+      close.Activated += HandleActivated;
+      (fileMenu.Submenu as Gtk.Menu).Prepend(close);
+    }
+
+    void HandleActivated (object sender, EventArgs e)
+    {
+      nb.RemovePage(nb.Page);
     }
 
     void IPlugin.UnInit(object context) {
