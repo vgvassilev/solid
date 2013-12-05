@@ -19,6 +19,7 @@ namespace TreeViewPad
     private Gtk.TreeView treeView = new Gtk.TreeView();
     private Gtk.Notebook nb = new Gtk.Notebook();
     private Gtk.TreeIter iter;
+    private string currentPath = null;
 
     #region IPlugin implementation
 
@@ -87,15 +88,27 @@ namespace TreeViewPad
         mainMenuBar.Append(fileMenu);
       }
       
-      // Setting up the Open menu item in File
+      // Setting up the Close menu item in File
       Gtk.MenuItem close = new Gtk.MenuItem("Close");
       close.Activated += HandleActivated;
       (fileMenu.Submenu as Gtk.Menu).Prepend(close);
+
+      // Setting up the Save menu item in File
+      Gtk.MenuItem save = new Gtk.MenuItem("Save");
+      save.Activated += HandleSaveActivated;
+      (fileMenu.Submenu as Gtk.Menu).Prepend(save);
     }
 
     void HandleActivated (object sender, EventArgs e)
     {
       nb.RemovePage(nb.Page);
+    }
+
+    void HandleSaveActivated (object sender, EventArgs e)
+    {
+      using (StreamWriter file = new System.IO.StreamWriter(currentPath)) {
+        file.Write(textView.Buffer.Text);
+      }
     }
 
     void IPlugin.UnInit(object context) {
@@ -115,19 +128,19 @@ namespace TreeViewPad
     void HandleRowActivated (object o, Gtk.RowActivatedArgs args)
     {
       treeView.Model.GetIter(out iter, args.Path);
-      string currentDir = Path.GetFullPath((string) treeView.Model.GetValue(iter, 0));
+      currentPath = Path.GetFullPath((string) treeView.Model.GetValue(iter, 0));
 
-      FileAttributes attr = File.GetAttributes(currentDir);
+      FileAttributes attr = File.GetAttributes(currentPath);
 
       if ((attr & FileAttributes.Directory) != FileAttributes.Directory) {
         textView = new Gtk.TextView();
-        textView.Buffer.Text = File.ReadAllText(currentDir);
-        nb.AppendPage(textView, new Gtk.Label(currentDir));
+        textView.Buffer.Text = File.ReadAllText(currentPath);
+        nb.AppendPage(textView, new Gtk.Label(currentPath));
         nb.ShowAll();
         return;
       }
 
-      DirectoryInfo rootDirInfo = new DirectoryInfo(currentDir);
+      DirectoryInfo rootDirInfo = new DirectoryInfo(currentPath);
       attachSubTree(treeView.Model, iter, rootDirInfo.GetDirectories(), rootDirInfo.GetFiles());
     }
     
