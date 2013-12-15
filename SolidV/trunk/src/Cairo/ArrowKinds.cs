@@ -10,6 +10,9 @@ namespace SolidV.Cairo
 {
   public delegate void DrawArrowDelegate(Context context);
 
+  /// <summary>
+  /// Set of predefined arrows, ready for use in the visualization.
+  /// </summary>
   public static class ArrowKinds
   {
     public static void NoArrow(Context context) {
