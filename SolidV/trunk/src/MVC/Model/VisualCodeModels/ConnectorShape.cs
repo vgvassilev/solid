@@ -7,6 +7,10 @@ using System;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// Connector shape class, providing gluing functionality.
+  /// </summary>
+  /// 
   [Serializable]
   public class ConnectorShape : BinaryRelationShape 
   {

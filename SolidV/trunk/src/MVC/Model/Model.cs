@@ -6,8 +6,17 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// Our model-view-controller implementation. It consists of three kinds of classes. The model is 
+/// the data, the view is the (on screen) data presentation and the controller defines the way the
+/// system reacts. MVC decouples these three concerns and provides a well-defined communication 
+/// protocol between them by introducing a level of indirection.
+/// </summary>
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// A generic Model class that represents the data in SolidV.
+  /// </summary>
   public class Model : IModel
   {
     private int updateLockCount;
@@ -64,11 +73,18 @@ namespace SolidV.MVC
     {
     }
 
+    /// <summary>
+    /// Begins the update of the Model. This method should be called when an update of the model
+    /// starts.
+    /// </summary>
     public void BeginUpdate()
     {
       updateLockCount++;
     }
-    
+
+    /// <summary>
+    /// Ends the update of the Model.
+    /// </summary>
     public void EndUpdate()
     {
       updateLockCount--;

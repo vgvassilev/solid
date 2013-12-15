@@ -10,6 +10,10 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// 1:N relation shape class.
+  /// </summary>
+  /// 
   [Serializable]
   public class RelationShape : Shape
   {

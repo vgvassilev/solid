@@ -8,6 +8,9 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// A glue point, where connectors can connect to each other.
+  /// </summary>
   [Serializable]
   public class Glue: Shape, IGlue
   {

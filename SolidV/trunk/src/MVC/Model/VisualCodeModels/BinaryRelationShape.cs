@@ -9,6 +9,10 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// 1:1 binary relation shape class.
+  /// </summary>
+  /// 
   [Serializable]
   public class BinaryRelationShape : RelationShape
   {
@@ -28,6 +32,5 @@ namespace SolidV.MVC
         related.Add(from);
         related.Add(to);
     }
-
   }
 }

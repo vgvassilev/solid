@@ -9,6 +9,9 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// A base class for all shapes.
+  /// </summary>
   [Serializable]
   public abstract class Shape
   {
@@ -40,17 +43,31 @@ namespace SolidV.MVC
       set { Rectangle = new Rectangle(Rectangle.X, Rectangle.Y, Width, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the location, (x,y) or the top,left of the bounding rectangle.
+    /// </summary>
+    /// <value>The top,left location.</value>
+    /// 
     public PointD Location {
       get { return new PointD(Rectangle.X, Rectangle.Y); }
       set { rectangle = new Rectangle(value.X, value.Y, Width, Height); }
     }
 
+    /// <summary>
+    /// Gets or sets the center of the bounding rectangle.
+    /// </summary>
+    /// <value>The center of the bounding rectangle.</value>
+    /// 
     public PointD Center {
       get { return new PointD(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2); }
       set { Rectangle = new Rectangle(value.X - Width / 2, value.Y - Height / 2, Width, Height); }
     }
 
-    private Rectangle rectangle;    
+    /// <summary>
+    /// A bounding rectangle.
+    /// </summary>
+    /// 
+    private Rectangle rectangle;
     public virtual Rectangle Rectangle {
       get { return rectangle; }
       set { rectangle = value; }
@@ -80,6 +97,5 @@ namespace SolidV.MVC
       rectangle = rect;
       items = new List<Shape>();
     }
-
   }
 }
