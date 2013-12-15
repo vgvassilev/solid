@@ -7,6 +7,10 @@ using System;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// Scene auto arrange support.
+  /// </summary>
+  /// 
   public interface IAutoArrange
   {
     void Arrange();

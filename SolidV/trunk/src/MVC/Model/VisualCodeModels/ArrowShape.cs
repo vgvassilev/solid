@@ -11,7 +11,7 @@ using SolidV.Cairo;
 namespace SolidV.MVC
 {
   /// <summary>
-  /// Arrow shape.
+  /// Arrow connector.
   /// </summary>
   [Serializable]
   public class ArrowShape : ConnectorShape
