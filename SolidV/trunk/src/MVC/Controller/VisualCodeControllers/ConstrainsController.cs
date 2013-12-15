@@ -15,7 +15,7 @@ namespace SolidV.MVC
     public ConstrainsController(Model model, IView<Context, Model> view) : base(model, view) {}
     
     public override bool Handle(Gdk.Event evnt) {
-      ConstrainsModel constrains = this.Model.GetSubModel<ConstrainsModel>();
+      //ConstrainsModel constrains = this.Model.GetSubModel<ConstrainsModel>();
       //TODO: implementation
       return false;
     }

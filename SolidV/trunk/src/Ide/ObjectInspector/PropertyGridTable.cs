@@ -28,8 +28,8 @@ namespace SolidV.Gtk.InspectorGrid
     Gtk.Widget currentEditor;
     TableRow currentEditorRow;
     bool draggingDivider;
-    Gdk.Pixbuf discloseDown;
-    Gdk.Pixbuf discloseUp;
+    //Gdk.Pixbuf discloseDown;
+    //Gdk.Pixbuf discloseUp;
     bool heightMeasured;
 
     const int CategoryTopBottomPadding = 6;
@@ -522,7 +522,7 @@ namespace SolidV.Gtk.InspectorGrid
       return base.OnMotionNotifyEvent(evnt);
     }
 
-    uint tooltipTimeout;
+//    uint tooltipTimeout;
 //    TooltipPopoverWindow tooltipWindow;
 
 //    void ShowTooltip(EventMotion evnt)
