@@ -324,14 +324,17 @@ namespace SolidV.Gtk.InspectorGrid
         int dx =(int)((double)Allocation.Width * dividerPosition);
         ctx.LineWidth = 1;
         ctx.Rectangle(0, 0, dx, Allocation.Height);
-        ctx.Color = LabelBackgroundColor;
+        ctx.SetSourceRGBA(LabelBackgroundColor.R, LabelBackgroundColor.G, LabelBackgroundColor.B,
+                          LabelBackgroundColor.A);
+
         ctx.Fill();
         ctx.Rectangle(dx, 0, Allocation.Width - dx, Allocation.Height);
-        ctx.Color = new Cairo.Color(1, 1, 1);
+        ctx.SetSourceRGB(1, 1, 1);
         ctx.Fill();
         ctx.MoveTo(dx + 0.5, 0);
         ctx.RelLineTo(0, Allocation.Height);
-        ctx.Color = DividerColor;
+        ctx.SetSourceRGBA(DividerColor.R, DividerColor.G, DividerColor.B, DividerColor.A);
+
         ctx.Stroke();
   
         int y = 0;
@@ -369,11 +372,13 @@ namespace SolidV.Gtk.InspectorGrid
           }
           ctx.MoveTo(0, y + rh - 0.5);
           ctx.LineTo(Allocation.Width, y + rh - 0.5);
-          ctx.Color = DividerColor;
+          ctx.SetSourceRGBA(DividerColor.R, DividerColor.G, DividerColor.B, DividerColor.A);
+
           ctx.Stroke();
 
           ctx.MoveTo(x, y + CategoryTopBottomPadding);
-          ctx.Color = CategoryLabelColor;
+          ctx.SetSourceRGBA(CategoryLabelColor.R, CategoryLabelColor.G, CategoryLabelColor.B, 
+                            CategoryLabelColor.A);
           Pango.CairoHelper.ShowLayout(ctx, layout);
 
           //var img = r.Expanded ? discloseUp : discloseDown;
@@ -391,7 +396,8 @@ namespace SolidV.Gtk.InspectorGrid
           ctx.Rectangle(0, y, dividerX, h + InspectorTopBottomPadding*2);
           ctx.Clip();
           ctx.MoveTo(x, y + InspectorTopBottomPadding);
-          ctx.Color = Style.Text(state).ToCairoColor();
+          Gdk.Color color = Style.Text(state);
+          ctx.SetSourceRGB(color.Red, color.Green, color.Blue);
           Pango.CairoHelper.ShowLayout(ctx, layout);
           ctx.Restore();
 
@@ -418,10 +424,11 @@ namespace SolidV.Gtk.InspectorGrid
             // Repaing the background because the cairo clip doesn't work for gdk primitives
             int dx =(int)((double)Allocation.Width * dividerPosition);
             ctx.Rectangle(0, y, dx, Allocation.Height - y);
-            ctx.Color = LabelBackgroundColor;
+            ctx.SetSourceRGBA(LabelBackgroundColor.R, LabelBackgroundColor.G, 
+                              LabelBackgroundColor.B, LabelBackgroundColor.A);
             ctx.Fill();
             ctx.Rectangle(dx + 1, y, Allocation.Width - dx - 1, Allocation.Height - y);
-            ctx.Color = new Cairo.Color(1, 1, 1);
+            ctx.SetSourceRGB(1, 1, 1);
             ctx.Fill();
           }
         }

@@ -171,7 +171,8 @@ namespace SolidV.Ide.Dock
         Gdk.Rectangle wr = new Gdk.Rectangle (allocation.X, allocation.Y, allocation.Width, allocation.Height);
         using (Cairo.Context ctx = Gdk.CairoHelper.Create (w.GdkWindow)) {
           ctx.Rectangle (wr.X, wr.Y, wr.Width, wr.Height);
-          ctx.Color = lightColor.ToCairoColor ();
+          ctx.SetSourceRGB(((Gdk.Color)lightColor).Red, ((Gdk.Color)lightColor).Green,
+                           ((Gdk.Color)lightColor).Blue);
           ctx.Fill ();
         }
         return;
@@ -216,7 +217,8 @@ namespace SolidV.Ide.Dock
       Gdk.Rectangle r = new Gdk.Rectangle (allocation.X, allocation.Y, allocation.Width, allocation.Height);
       using (Cairo.Context ctx = Gdk.CairoHelper.Create (w.GdkWindow)) {
         ctx.Rectangle (r.X, r.Y, r.Width, r.Height);
-        ctx.Color = lightColor.ToCairoColor ();
+        ctx.SetSourceRGB(((Gdk.Color)lightColor).Red, ((Gdk.Color)lightColor).Green,
+                         ((Gdk.Color)lightColor).Blue);
         ctx.Fill ();
         
         DrawShadow (ctx, r, PositionType.Left, secsL);

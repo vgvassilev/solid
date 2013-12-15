@@ -168,7 +168,7 @@ namespace SolidV.Ide.Dock
           c1 = c;
           c1.L *= 0.7;
           ctx.LineWidth = 1;
-          ctx.Color = c1;
+          ctx.SetSourceRGB(((Gdk.Color)c1).Red, ((Gdk.Color)c1).Green, ((Gdk.Color)c1).Blue);
           ctx.Stroke ();
           
           // Inner line
@@ -182,7 +182,7 @@ namespace SolidV.Ide.Dock
           c1 = c;
           //c1.L *= 0.9;
           ctx.LineWidth = 1;
-          ctx.Color = c1;
+          ctx.SetSourceRGB(((Gdk.Color)c1).Red, ((Gdk.Color)c1).Green, ((Gdk.Color)c1).Blue);
           ctx.Stroke ();
         }
       }
