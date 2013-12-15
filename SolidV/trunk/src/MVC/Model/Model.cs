@@ -17,6 +17,7 @@ namespace SolidV.MVC
   /// <summary>
   /// A generic Model class that represents the data in SolidV.
   /// </summary>
+  ///
   public class Model : IModel
   {
     private int updateLockCount;

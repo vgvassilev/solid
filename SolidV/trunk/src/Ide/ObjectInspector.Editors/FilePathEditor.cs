@@ -21,7 +21,7 @@ namespace SolidV.Gtk.InspectorGrid.InspectorEditors
     
     public override void LaunchDialogue()
     {
-      var kindAtt = this.Inspector.Attributes.OfType<FilePathIsFolderAttribute>().FirstOrDefault();
+      /*var kindAtt = this.Inspector.Attributes.OfType<FilePathIsFolderAttribute>().FirstOrDefault();
       FileChooserAction action;
       string title;
       if(kindAtt == null) {
@@ -36,6 +36,7 @@ namespace SolidV.Gtk.InspectorGrid.InspectorEditors
 //      var fs = new MonoDevelop.Components.SelectFileDialog(title, action);
 //      if(fs.Run())
 //        Inspector.SetValue(Instance, fs.SelectedFile);
+*/
     }
   }
   

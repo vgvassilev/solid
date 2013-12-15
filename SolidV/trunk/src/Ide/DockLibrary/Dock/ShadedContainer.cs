@@ -265,9 +265,9 @@ namespace SolidV.Ide.Dock
         pat.AddColorStop (1, c);
         ctx.NewPath ();
         ctx.Rectangle (r.X, r.Y, r.Width, r.Height);
-        ctx.Pattern = pat;
+        ctx.SetSource (pat);
         ctx.Fill ();
-        pat.Destroy ();
+        pat.Dispose ();
       }
     }
     

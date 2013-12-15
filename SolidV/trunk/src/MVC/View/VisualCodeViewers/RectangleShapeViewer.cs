@@ -20,9 +20,9 @@ namespace SolidV.MVC
       context.Rectangle(shape.Rectangle);
 
       if (view.Mode == ViewMode.Render) {
-        context.Pattern = shape.Style.Fill;
+        context.SetSource(shape.Style.Fill);
         context.FillPreserve();
-        context.Pattern = shape.Style.Border;
+        context.SetSource(shape.Style.Border);
         context.Stroke();
       }
     }

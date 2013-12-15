@@ -31,9 +31,9 @@ namespace SolidV.MVC
       context.ArrowLineTo(p, sh.ArrowKindHead, sh.ArrowKindTail);
 
       if (view.Mode == ViewMode.Render) {
-        context.Pattern = sh.Style.Fill;
+        context.SetSource(sh.Style.Fill);
         context.FillPreserve();
-        context.Pattern = sh.Style.Border;
+        context.SetSource(sh.Style.Border);
         context.LineWidth = 1.5;
         context.Stroke();
       }

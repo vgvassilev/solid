@@ -163,7 +163,7 @@ namespace SolidV.Ide.Dock
           ctx.LineTo (x+w, y+h);
           ctx.LineTo (x, y+h);
           ctx.ClosePath ();
-          ctx.Pattern = pat;
+          ctx.SetSource(pat);
           ctx.FillPreserve ();
           c1 = c;
           c1.L *= 0.7;

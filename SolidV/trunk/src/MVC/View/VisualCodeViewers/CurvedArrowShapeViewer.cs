@@ -33,7 +33,7 @@ namespace SolidV.MVC
       if (view.Mode == ViewMode.Render) {
         //context.Color = shape.Style.FillColor;
         //context.FillPreserve();
-        context.Pattern = sh.Style.Border;
+        context.SetSource(sh.Style.Border);
         context.Stroke();
       }
     }

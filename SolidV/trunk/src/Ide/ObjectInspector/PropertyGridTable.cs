@@ -360,7 +360,7 @@ namespace SolidV.Gtk.InspectorGrid
           Cairo.LinearGradient gr = new LinearGradient(0, y, 0, rh);
           gr.AddColorStop(0, new Cairo.Color(248d/255d, 248d/255d, 248d/255d));
           gr.AddColorStop(1, new Cairo.Color(240d/255d, 240d/255d, 240d/255d));
-          ctx.Pattern = gr;
+          ctx.SetSource (gr);
           ctx.Fill();
 
           if(lastCategory == null || lastCategory.Expanded || lastCategory.AnimatingExpand) {
@@ -376,7 +376,7 @@ namespace SolidV.Gtk.InspectorGrid
           ctx.Color = CategoryLabelColor;
           Pango.CairoHelper.ShowLayout(ctx, layout);
 
-          var img = r.Expanded ? discloseUp : discloseDown;
+          //var img = r.Expanded ? discloseUp : discloseDown;
           //CairoHelper.SetSourcePixbuf(ctx, img, Allocation.Width - img.Width - CategoryTopBottomPadding, y +(rh - img.Height) / 2);
           //ctx.Paint();
 

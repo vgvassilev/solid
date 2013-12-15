@@ -246,9 +246,9 @@ namespace SolidV.Ide.Dock
         cr.RelLineTo (0, -rect.Height);
         cr.ClosePath ();
         Cairo.SolidPattern solidPattern = new Cairo.SolidPattern (gcol);
-        cr.Pattern = solidPattern;
+        cr.SetSource(solidPattern);
         cr.FillPreserve ();
-        solidPattern.Destroy ();
+        solidPattern.Dispose ();
       }
       
       header.GdkWindow.DrawRectangle (frame.Style.DarkGC (Gtk.StateType.Normal), false, rect);
@@ -373,7 +373,7 @@ namespace SolidV.Ide.Dock
           gcol.L -= 0.1;
           if (gcol.L < 0) gcol.L = 0;
           pat.AddColorStop (1, gcol);
-          cr.Pattern = pat;
+          cr.SetSource (pat);
           cr.FillPreserve ();
         }
       }

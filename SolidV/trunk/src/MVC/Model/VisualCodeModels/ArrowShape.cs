@@ -10,6 +10,9 @@ using SolidV.Cairo;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// Arrow shape.
+  /// </summary>
   [Serializable]
   public class ArrowShape : ConnectorShape
   {

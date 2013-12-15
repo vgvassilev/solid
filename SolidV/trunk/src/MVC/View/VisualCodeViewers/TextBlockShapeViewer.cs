@@ -20,10 +20,10 @@ namespace SolidV.MVC
       context.Rectangle(sh.Rectangle);
 
       if (view.Mode == ViewMode.Render) {
-        context.Pattern = sh.Style.Fill;
+        context.SetSource(sh.Style.Fill);
         context.FillPreserve();
 
-        context.Pattern = sh.Style.Border;
+        context.SetSource(sh.Style.Border);
         double lineY = sh.Rectangle.Y + 15;
         double lineX = sh.Rectangle.X + 5;
 
