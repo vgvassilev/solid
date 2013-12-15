@@ -9,10 +9,6 @@ namespace SolidV.MVC
 {
   public class Viewer<C, M> : IViewer<C, M>
   {
-    public Viewer()
-    {
-    }
-    
     public virtual void DrawItem(IView<C, M> view, C context, object item)
     {
     }

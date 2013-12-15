@@ -14,9 +14,6 @@ namespace SolidV.MVC
     public List<Shape> Selected {
       get { return selected; }
       set { selected = value; }
-    }
-    
-    public SelectionModel() {
-    }
+    }    
   }
 }
