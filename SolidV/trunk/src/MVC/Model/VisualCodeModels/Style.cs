@@ -8,6 +8,10 @@ using Cairo;
 
 namespace SolidV.MVC
 {
+  /// <summary>
+  /// Encapsulates the look-and-feel of an object.
+  /// </summary>
+  /// 
   [Serializable]
   public class Style
   {

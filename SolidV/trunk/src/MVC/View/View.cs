@@ -27,10 +27,6 @@ namespace SolidV.MVC
       get { return viewers; }
       set { viewers = value; }
     }
-    
-    public View()
-    {
-    }
 
     public void Draw(C context, M model) {
       DrawItem(context, model);

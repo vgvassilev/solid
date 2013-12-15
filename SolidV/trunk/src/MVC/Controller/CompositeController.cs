@@ -18,10 +18,10 @@ namespace SolidV.MVC
 
     public CompositeController(M model, IView<C, M> view) : base(model, view) {}
 
-    public override bool Handle(Event evnt) {
+    public override bool HandleEvent(Event evnt) {
       bool result = false;
       foreach (IController<Event, C, M> controller in SubControllers) {
-        if (controller.Handle(evnt)) result = true;
+        if (controller.HandleEvent(evnt)) result = true;
       }
       return result;
     }

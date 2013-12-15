@@ -33,7 +33,7 @@ namespace SolidV.MVC
       return null;
     }
 
-    public override bool Handle(Gdk.Event evnt) {
+    public override bool HandleEvent(Gdk.Event evnt) {
       Gdk.EventButton eventButton = evnt as Gdk.EventButton;
       if (eventButton != null) {
         if (eventButton.Type == Gdk.EventType.ButtonPress) {
@@ -121,7 +121,7 @@ namespace SolidV.MVC
         }
       }
 
-      return base.Handle(evnt);
+      return base.HandleEvent(evnt);
     }
   }
 }

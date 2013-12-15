@@ -23,7 +23,7 @@ namespace SolidV.MVC
       set { view = value; }
     }
 
-    public virtual bool Handle(Event evnt)
+    public virtual bool HandleEvent(Event evnt)
     {
       return false;
     }

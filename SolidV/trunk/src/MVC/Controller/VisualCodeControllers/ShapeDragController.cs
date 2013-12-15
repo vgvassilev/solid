@@ -20,7 +20,7 @@ namespace SolidV.MVC
 
     public ShapeDragController(Model model, IView<Context, Model> view) : base(model, view) {}
 
-    public override bool Handle(Gdk.Event evnt) {
+    public override bool HandleEvent(Gdk.Event evnt) {
       Gdk.EventButton eventButton = evnt as Gdk.EventButton;
       if (eventButton != null) {
         if (eventButton.Type == Gdk.EventType.ButtonPress) {

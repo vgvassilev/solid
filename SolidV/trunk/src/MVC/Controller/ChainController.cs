@@ -12,9 +12,9 @@ namespace SolidV.MVC
   { 
     public ChainController(M model, IView<C, M> view) : base(model, view) {}
     
-    public override bool Handle(Event evnt) {
+    public override bool HandleEvent(Event evnt) {
       foreach (IController<Event, C, M> controller in SubControllers) {
-        if (controller.Handle(evnt)) return true;
+        if (controller.HandleEvent(evnt)) return true;
       }
       return false;
     }
