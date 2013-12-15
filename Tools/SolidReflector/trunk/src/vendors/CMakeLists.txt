@@ -11,6 +11,3 @@ add_subdirectory(SolidOpt)
 
 # SolidV
 add_subdirectory(SolidV)
-
-# MonoDevelop Dock (binary vendor library)
-csharp_add_library_binary(${CMAKE_CURRENT_SOURCE_DIR}/MonoDevelop/MonoDevelop.Dock.dll)
