@@ -28,8 +28,6 @@ namespace SolidV.MVC
       return false;
     }
 
-    public AbstractController() {}
-
     public AbstractController(M model, IView<C, M> view) {
       this.Model = model;
       this.View = view;

@@ -9,7 +9,6 @@ namespace SolidV.MVC
 {
   public class SelectionController<Event, C, M> : AbstractController<Event, C, M>
   {
-    public SelectionController() : base() {}
     public SelectionController(M model, IView<C, M> view) : base(model, view) {}
 
     public override bool Handle(Event evnt) {

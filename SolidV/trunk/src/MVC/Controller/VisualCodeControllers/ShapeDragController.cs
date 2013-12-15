@@ -18,7 +18,6 @@ namespace SolidV.MVC
     protected double firstY;
     protected bool moved = false;
 
-    public ShapeDragController() : base() {}
     public ShapeDragController(Model model, IView<Context, Model> view) : base(model, view) {}
 
     public override bool Handle(Gdk.Event evnt) {

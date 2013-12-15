@@ -12,7 +12,6 @@ namespace SolidV.MVC
   
   public class ConstrainsController : AbstractController<Gdk.Event, Context, Model>
   {
-    public ConstrainsController() : base() {}
     public ConstrainsController(Model model, IView<Context, Model> view) : base(model, view) {}
     
     public override bool Handle(Gdk.Event evnt) {

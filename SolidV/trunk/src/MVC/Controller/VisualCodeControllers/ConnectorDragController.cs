@@ -15,7 +15,6 @@ namespace SolidV.MVC
     protected Glue dragGlue = null;
     protected ConnectorShape dragConnector = null;
 
-    public ConnectorDragController() : base() {}
     public ConnectorDragController(Model model, IView<Context, Model> view) : base(model, view) {}
 
     private Glue CheckGlues(PointD point, Context context, params Shape[] glueShapes)

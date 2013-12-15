@@ -10,7 +10,6 @@ namespace SolidV.MVC
 {
   public class ShapeSelectionController : SelectionController<Gdk.Event, Context, Model>
   {
-    public ShapeSelectionController() : base() {}
     public ShapeSelectionController(Model model, IView<Context, Model> view) : base(model, view) {}
 
     public override bool Handle(Gdk.Event evnt) {

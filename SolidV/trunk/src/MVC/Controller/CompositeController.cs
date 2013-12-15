@@ -16,7 +16,6 @@ namespace SolidV.MVC
       set { subControllers = value; }
     }
 
-    public CompositeController() : base() {}
     public CompositeController(M model, IView<C, M> view) : base(model, view) {}
 
     public override bool Handle(Event evnt) {
