@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace SolidV.MVC
 {
   
-  public class ConstrainsModel : BaseStateModel
+  public class ConstrainsModel : StateModel
   {
     private List<IConstrain> constrains = new List<IConstrain>();
     public List<IConstrain> Constrains {

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SolidV.MVC
 {
-  public class InteractionStateModel : BaseStateModel
+  public class InteractionStateModel : StateModel
   {
     private List<Shape> interaction = new List<Shape>();
     public List<Shape> Interaction {

@@ -7,7 +7,11 @@ using System;
 
 namespace SolidV.MVC
 {
-  public class BaseStateModel : Model
+  /// <summary>
+  /// A class modeling different states of the data such as selection.
+  /// </summary>
+  /// 
+  public abstract class StateModel : Model
   {
   }
 }

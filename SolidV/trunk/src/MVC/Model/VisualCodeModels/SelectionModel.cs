@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SolidV.MVC
 {
-  public class SelectionModel : BaseStateModel
+  public class SelectionModel : StateModel
   {
     private List<Shape> selected = new List<Shape>();
     public List<Shape> Selected {
