@@ -120,13 +120,6 @@ if (SLN_GEN_LOCK STREQUAL "SolidV")
   csharp_save_vs_solution(SolidV)
 endif()
 
-#Configure the setenv script.
-configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/setenv.sh.in
-  ${PROJECT_BINARY_DIR}/setenv.sh
-  @ONLY
-  )
-
 #Give the user some instructions how to proceed.
 MESSAGE(STATUS "==============================================================")
 MESSAGE(STATUS "==           Please run: source setenv.sh && make           ==") 
