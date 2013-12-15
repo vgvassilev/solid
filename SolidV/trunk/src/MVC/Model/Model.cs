@@ -33,26 +33,28 @@ namespace SolidV.MVC
       }
       set { subModels = value; }
     }
-    
+
+    /// <summary>
+    /// Gets a sub model if it was already registered.
+    /// </summary>
+    /// <returns>The sub model, null if it wasn't registered.</returns>
+    /// <typeparam name="T">The 1st type parameter.</typeparam>
+    /// 
     public T GetSubModel<T>() where T: class, IModel
     {
       foreach (IModel item in SubModels){
-        
         T result = item as T;
         if( result != null )
           return result;
       }
       return null;
     }
-    
+
     public T UseSubModel<T>() where T: class, IModel, new()
     {
-      foreach (IModel item in SubModels){
-        
-        T result = item as T;
-        if( result != null )
-          return result;
-      }
+      T result = GetSubModel<T>();
+      if (result != null)
+        return result;
       return RegisterSubModel<T>();
     }
     
