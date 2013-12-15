@@ -17,7 +17,7 @@ namespace SolidV.MVC
     
     public override void DrawItem(IView<C, Model> view, C context, object item)
     {
-      foreach (Model model in ((Model)item).SubModels) {
+      foreach (Model model in ((Model)item).GetSubModelsEnumerator()) {
         view.DrawItem(context, model);
       }
     }
