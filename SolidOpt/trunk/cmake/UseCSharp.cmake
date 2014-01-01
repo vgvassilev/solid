@@ -365,13 +365,13 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       endif()
       MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} /doc:${out}.xml ${platform_param} ${CSBUILDFLAGS} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'" )
       # Transform the ;-separated lists into ' '-separated. This helps copy paste of the command on the terminal
-      set(ESCAPED_COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} ${CSHARP_PLATFORM}/platform ${CSBUILDFLAGS} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'")
+      set(ESCAPED_COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${output_type} /out:${out_name} ${platform_param} ${CSBUILDFLAGS} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}'")
       string(REPLACE ";" " " ESCAPED_COMMENT "${ESCAPED_COMMENT}")
       add_custom_command(
         COMMENT "${ESCAPED_COMMENT}"
         OUTPUT ${out}
         COMMAND ${CSHARP_COMPILER}
-        ARGS /t:${output_type} /out:${out} /doc:${out}.xml ${CSHARP_PLATFORM} ${CSBUILDFLAGS} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}
+        ARGS /t:${output_type} /out:${out} /doc:${out}.xml ${platform_param} ${CSBUILDFLAGS} ${CSHARP_SDK_COMPILER} ${separated_embd_resources} ${separated_sources} ${processed_refs}
         WORKING_DIRECTORY ${out_dir}
         DEPENDS ${sources_dep}
       )
