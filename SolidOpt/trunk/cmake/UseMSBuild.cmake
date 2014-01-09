@@ -74,17 +74,32 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   #   - <Content Include="..
   #   - <None Include="..." ...
   #   - <AssemblyOriginatorKeyFile>...
-  string(REGEX REPLACE 
-    "<OutputPath>.*</OutputPath>" 
+
+  # Extract original OutputPath
+  string(REGEX MATCH "<OutputPath>[^<]*</OutputPath>" old_outputpath "${CSPROJ_FILE}")
+  string(REPLACE "<OutputPath>" "" old_outputpath "${old_outputpath}")
+  string(REPLACE "</OutputPath>" "" old_outputpath "${old_outputpath}")
+  # Replace old OutputPath with cmake output dir
+  string(REGEX REPLACE
+    "<OutputPath>[^<]*</OutputPath>"
     "<OutputPath>${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}</OutputPath>"
     CSPROJ_FILE "${CSPROJ_FILE}"
+  )
+  # Extract original DocumentationFile
+  string(REGEX MATCH "<DocumentationFile>[^<]*</DocumentationFile>" docfile "${CSPROJ_FILE}")
+  string(REPLACE "<DocumentationFile>" "" docfile "${docfile}")
+  string(REPLACE "</DocumentationFile>" "" docfile "${docfile}")
+  string(REGEX REPLACE "[\r\n\t ]" "" docfile "${docfile}")
+  # Remove original output path form doc file name
+  string(REPLACE "${old_outputpath}" "" docfile "${docfile}")
+  if (docfile)
+    string(REGEX REPLACE
+      "<DocumentationFile>[^<]*</DocumentationFile>"
+      "<DocumentationFile>${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}${docfile}</DocumentationFile>"
+      CSPROJ_FILE "${CSPROJ_FILE}"
     )
-  # FIXME: Extract the file component from the path and put it as postfix 
-  string(REGEX REPLACE 
-    "<DocumentationFile>^[\\r\\n\\t ]+</DocumentationFile>" 
-    "<DocumentationFile>${CMAKE_${TYPE_UPCASE}_OUTPUT_DIR}</DocumentationFile>"
-    CSPROJ_FILE "${CSPROJ_FILE}"
-    )
+  endif()
+
   string(REGEX REPLACE
     "<TargetFrameworkVersion>.*</TargetFrameworkVersion>"
     "<TargetFrameworkVersion>v${CSHARP_FRAMEWORK_VERSION}</TargetFrameworkVersion>"
