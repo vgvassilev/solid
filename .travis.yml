@@ -1,0 +1,44 @@
+language: csharp
+
+before_install:
+  - echo $LANG
+  - echo $LC_ALL
+
+before_script:
+  - mkdir ../build/ && cd ../build/
+  # SolidOpt
+  - mkdir SolidOptBuild
+  # SolidV
+  - mkdir SolidVBuild
+  # SolidReflector
+  - mkdir SolidReflectorBuild
+  # DataMorphose
+  - mkdir DataMorphoseBuild
+
+
+script:
+  - cd SolidOptBuild/
+  - ../../SolidOpt/trunk/configure
+  - travis_retry make -j4 -k
+
+#  - cd ../SolidVBuild/
+#  - cd ../SolidReflectorBuild/
+#  - cd ../DataMorphoseBuild/
+
+branches:
+  only:
+    - master
+
+# Notify developers when build passed/failed.
+notifications:
+  recipients:
+    - solid-commits@solidopt.org
+    - vvasilev@cern.ch
+  email:
+    on_success: change
+    on_failure: always
+  #irc:
+    #channels:
+    #- "chat.freenode.net#rubinius"
+    template:
+      - "%{repository}/%{branch} (%{commit} - %{author}): %{message}"
