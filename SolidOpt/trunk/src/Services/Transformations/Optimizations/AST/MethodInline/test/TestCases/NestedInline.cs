@@ -1,4 +1,4 @@
-// RUN: "@CSC@" /t:library /out:@TEST_CASE_NAME@.dll /r:System.dll /r:@CMAKE_LIBRARY_OUTPUT_DIR@/SolidOpt.Services.Transformations.Optimizations.Annotations.dll @TEST_CASE@
+// RUN: "@CSC@" /t:library /r:System.dll /r:@CMAKE_LIBRARY_OUTPUT_DIR@/SolidOpt.Services.Transformations.Optimizations.Annotations.dll @TEST_CASE@
 // XFAIL:
 
 using System;

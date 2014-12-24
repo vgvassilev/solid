@@ -117,9 +117,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
           command = BuildInformation.BuildInfo.ILASMCompiler;
           // Set up the output file in the current (build) folder.
           arguments = " /OUTPUT:" + Path.GetFileNameWithoutExtension(filename) + ".dll";
-        }
-        else if (command == "@CSC@")
+        } else if (command == "@CSC@") {
           command = BuildInformation.BuildInfo.CSCCompiler;
+          // Set up the output file in the current (build) folder.
+          arguments = " /OUT:" + Path.GetFileNameWithoutExtension(filename) + ".dll";
+        }
       }
 
       runDir.Command = command;
