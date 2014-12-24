@@ -5,19 +5,21 @@ before_install:
   - echo $LC_ALL
 
 before_script:
-  - mkdir ../build/ && cd ../build/
+  - pwd
+  - mkdir ../build/
   # SolidOpt
-  - mkdir SolidOptBuild
+  - mkdir ../build/SolidOptBuild/
   # SolidV
-  - mkdir SolidVBuild
+  - mkdir ../build/SolidVBuild
   # SolidReflector
-  - mkdir SolidReflectorBuild
+  - mkdir ../build/SolidReflectorBuild
   # DataMorphose
-  - mkdir DataMorphoseBuild
+  - mkdir ../build/DataMorphoseBuild
 
 
 script:
-  - cd SolidOptBuild/
+  - cd ../build/SolidOptBuild/
+  - pwd
   - ../../SolidOpt/trunk/configure
   - travis_retry make -j4 -k
   - ctest --output-on-failure #-j4
