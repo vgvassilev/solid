@@ -393,6 +393,13 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       MESSAGE(STATUS "Add test ${run_test}")
 
       ADD_TEST(${run_test})
+
+      # Since nunit-console is in bin and tests are in lib we need to add those
+      # folders to the MONO_PATH. FIXME: .NET?
+      message( STATUS "Configuring ctest environment by adding ${CMAKE_LIBRARY_OUTPUT_DIR} and ${CMAKE_BINARY_DIR}/bin to MONO_PATH" )
+      SET_PROPERTY(TEST ${name} PROPERTY
+        ENVIRONMENT "MONO_PATH=${CMAKE_LIBRARY_OUTPUT_DIR}:${CMAKE_BINARY_DIR}/bin"
+      )
     endif()
 
     math(EXPR i "${i}+1")
