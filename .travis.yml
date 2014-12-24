@@ -20,7 +20,7 @@ before_script:
 script:
   - cd ../build/SolidOptBuild/
   - pwd
-  - ../../SolidOpt/trunk/configure
+  - ../../solid/SolidOpt/trunk/configure
   - travis_retry make -j4 -k
   - ctest --output-on-failure #-j4
 #  - cd ../SolidVBuild/
