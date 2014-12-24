@@ -20,7 +20,7 @@ script:
   - cd SolidOptBuild/
   - ../../SolidOpt/trunk/configure
   - travis_retry make -j4 -k
-
+  - ctest --output-on-failure #-j4
 #  - cd ../SolidVBuild/
 #  - cd ../SolidReflectorBuild/
 #  - cd ../DataMorphoseBuild/
