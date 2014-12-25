@@ -74,17 +74,17 @@ namespace SolidReflector.Plugins.CGVisualizer
 
     void HandleDrawingArea1ButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
       canvas.GrabFocus();
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
     
     void HandleDrawingArea1MotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args)
     {
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
     
     void HandleDrawingArea1ButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args)
     {
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
     
     void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
