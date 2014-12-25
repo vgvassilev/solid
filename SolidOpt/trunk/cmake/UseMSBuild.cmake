@@ -7,7 +7,16 @@
 # Copyright (c) SolidOpt Team
 #
 
-function( CSHARP_ADD_MSBUILD_PROJECT filename )
+function( CSHARP_ADD_MSBUILD_PROJECT filename optional_filename )
+
+  # Check for optional filename
+  get_filename_component(absolute_filename "${filename}" ABSOLUTE)
+  file(RELATIVE_PATH filename_tail ${CMAKE_CURRENT_SOURCE_DIR} ${absolute_filename})
+  if (NOT EXISTS "${filename}")
+    set(filename "${optional_filename}")
+  endif()
+
+  # Check for some wrong function usage
   get_filename_component(name ${filename} NAME)
   if ( "${name}" MATCHES "^.*\\.dll$" )
     MESSAGE(FATAL_ERROR "Do not use CSHARP_ADD_MSBUILD_PROJECT with dlls. For dlls use CSHARP_ADD_LIBRARY_BINARY instead.")
@@ -106,8 +115,10 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
   get_filename_component(filename_path "${filename}" PATH)
-  file(RELATIVE_PATH rel_filename_path ${CMAKE_SOURCE_DIR} ${filename_path})
-  string(REPLACE "/" "\\" msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}/")
+  #file(RELATIVE_PATH rel_filename_path ${CMAKE_SOURCE_DIR} ${filename_path})
+  #string(REPLACE "/" "\\" msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}/")
+  file(RELATIVE_PATH rel_filename_path ${CMAKE_CURRENT_SOURCE_DIR} ${filename_path})
+  string(REPLACE "/" "\\" msbuild_path "${CMAKE_CURRENT_SOURCE_DIR}/${rel_filename_path}/")
   string(REPLACE
     "<Compile Include=\""
     "<Compile Include=\"${msbuild_path}"
@@ -141,8 +152,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
 
   # Save the new csproj file
   # Create the missing directories
-  file(RELATIVE_PATH new_csproj_filename ${CMAKE_SOURCE_DIR} ${filename})
-  set(new_csproj_filename "${CMAKE_BINARY_DIR}/${new_csproj_filename}")
+  set(new_csproj_filename "${CMAKE_CURRENT_BINARY_DIR}/${filename_tail}")
   file(WRITE "${new_csproj_filename}" "${CSPROJ_FILE}")
 
   # Save project info in global properties
@@ -170,7 +180,7 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   set_property(GLOBAL APPEND PROPERTY target_src_dir_property "${CMAKE_CURRENT_SOURCE_DIR}")
   set_property(GLOBAL APPEND PROPERTY target_bin_dir_property "${CMAKE_CURRENT_BINARY_DIR}")
   # Empty will signal that the csproj is already built
-  set_property(GLOBAL APPEND PROPERTY target_proj_file_property "${new_csproj_filename}") 
+  set_property(GLOBAL APPEND PROPERTY target_proj_file_property "${new_csproj_filename}")
   set_property(GLOBAL APPEND PROPERTY target_generate_proj_file_property FALSE)
   #set_target_properties("${name_we}.${output}" PROPERTIES csproj "${new_csproj_filename}")
 
@@ -191,4 +201,4 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
     SOURCES ${new_csproj_filename}
     )
 
-endfunction( CSHARP_ADD_MSBUILD_PROJECT)
+endfunction( CSHARP_ADD_MSBUILD_PROJECT )

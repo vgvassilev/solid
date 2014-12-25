@@ -6,6 +6,11 @@ cmake_minimum_required(VERSION 2.6.2)
 
 # Tell cmake to look for modules in that path first.
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+if(NOT EXISTS CMAKE_MODULE_PATH)
+  ### TODO: Remove hard dependency to SolidOpt
+  set(CMAKE_MODULE_PATH "../../SolidOpt/trunk/cmake")
+endif()
+get_filename_component(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" ABSOLUTE)
 
 # Disallow insource build since I never test that
 string(COMPARE EQUAL "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}" INSOURCE)
@@ -49,7 +54,7 @@ endif()
 file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIR})
 file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIR})
 
-include(cmake/Version.cmake)
+include(${CMAKE_MODULE_PATH}/Version.cmake)
 
 # If no build type is set it should defaults to debug
 if( NOT CMAKE_BUILD_TYPE )

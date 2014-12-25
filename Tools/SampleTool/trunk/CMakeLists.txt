@@ -1,5 +1,5 @@
 ##
-## $Id: CMakeLists.txt 945 2013-04-15 19:36:32Z mvassilev $
+## $Id$
 ## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
 ## For further details see the nearest License.txt
 ##
@@ -12,6 +12,11 @@ cmake_minimum_required(VERSION 2.6.2)
 
 # Tell cmake to look for modules in that path first.
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+if(NOT EXISTS CMAKE_MODULE_PATH)
+  ### TODO: Remove hard dependency to SolidOpt
+  set(CMAKE_MODULE_PATH "../../../SolidOpt/trunk/cmake")
+endif()
+get_filename_component(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" ABSOLUTE)
 
 # Disallow insource build since I never test that
 string(COMPARE EQUAL "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}" INSOURCE)
@@ -55,12 +60,41 @@ endif()
 file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIR})
 file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIR})
 
-include(Version.cmake)
+include(${CMAKE_MODULE_PATH}/Version.cmake)
+include(${CMAKE_MODULE_PATH}/Vendors.cmake)
 
 # If no build type is set it should defaults to debug
 if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Debug CACHE STRING "Choose a build type: [Debug Release]" FORCE )
 endif()
+
+# Set some default build flags.
+set(CSBUILDFLAGS "")
+set(MSBUILDFLAGS "")
+
+# Set up the compiler flag for Debug/Release mode.
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  list(APPEND CSBUILDFLAGS "/debug:full" "/debug+" "/optimize-")
+  list(APPEND MSBUILDFLAGS "/p:Configuration=Debug")
+else()
+  list(APPEND CSBUILDFLAGS "/debug-" "/optimize+")
+  list(APPEND MSBUILDFLAGS "/p:Configuration=Release")
+endif()
+
+# Define whether to use assembly deleyed signing or not
+set(DELAY_SIGN OFF CACHE BOOL "Enable delayed assembly signing.")
+if(DELAY_SIGN)
+  # The if-stmt converts On Y, YES to bool and from here on we want only a real
+  # true or false.
+  set(DELAY_SIGN "True") 
+  list(APPEND CSBUILDFLAGS "/delaysign+" "/keyfile:${CMAKE_SOURCE_DIR}/public.snk")
+else()
+  set(DELAY_SIGN "False")
+endif(DELAY_SIGN)
+
+# Suppress the warnings coming from the /doc switch. There is no point warning 
+# about missing documentation for certain methods. We all know about it :)
+list(APPEND CSBUILDFLAGS "/nowarn:1591")
 
 #-----------------------------------------------------------------------------
 # Configure Dart testing support.  This should be done before any
@@ -73,6 +107,15 @@ IF(BUILD_TESTING)
 ENDIF(BUILD_TESTING)
 
 # ...
+
+# The lock is used to avoid regeneration of the sln-s and csproj-s if the
+# build system is steered by another one. For example if SolidOpt is embedded
+# as a vendor to say SampleTool.
+get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
+if(NOT SLN_GEN_LOCK)
+  set_property(GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY "SampleTool")
+endif()
+
 add_subdirectory(src)
 add_subdirectory(plugins)
 # FIXME:
@@ -84,8 +127,11 @@ add_subdirectory(doc)
 # Resolve all target dependencies
 csharp_resolve_dependencies()
 
-# Save solution
-csharp_save_vs_solution(SampleTool)
+get_property(SLN_GEN_LOCK GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY)
+if (SLN_GEN_LOCK STREQUAL "SampleTool")
+  # Save solution
+  csharp_save_vs_solution(SampleTool)
+endif()
 
 #Configure the setenv script.
 configure_file(

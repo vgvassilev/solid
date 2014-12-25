@@ -7,7 +7,11 @@
 # Build our vendor drops using MSBuild, CMake, Copy, ...
 
 # SolidOpt
-add_subdirectory(SolidOpt)
+#TODO: Fix vendors
+###add_subdirectory(SolidOpt)
+add_vendor(SolidOpt ../../../../../SolidOpt/trunk)
 
 # SolidV
-add_subdirectory(SolidV)
+#TODO: Fix vendors
+###add_subdirectory(SolidV)
+add_vendor(SolidV ../../../../../SolidV/trunk)
