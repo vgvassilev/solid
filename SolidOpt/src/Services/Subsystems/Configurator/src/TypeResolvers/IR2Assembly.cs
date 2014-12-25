@@ -36,8 +36,8 @@ namespace SolidOpt.Services.Subsystems.Configurator
     
     public void Build(Dictionary<TParamName, object> configRepresenation)
     {
-      Build(configRepresenation, @"D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.dll",
-               @"D:\FMI\Diplomna\SolidOpt\trunk\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.modified.dll");
+      Build(configRepresenation, @"D:\FMI\Diplomna\SolidOpt\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.dll",
+               @"D:\FMI\Diplomna\SolidOpt\Documentation\Demos\Core\Configuration\ConfigDemo\bin\Debug\Config3.modified.dll");
                
     }
     

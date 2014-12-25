@@ -15,6 +15,7 @@ set(SolidOpt_Minor 0)
 set(Project_Title "SolidOpt Optimization Framework")
 set(Project_Description "SolidOpt is ...")
 
+#TODO: Fix to works with GIT repository
 # Get trunk rev number.
 find_program(SVN_EXECUTABLE NAMES svn svn.exe DOC "subversion command line client")
 

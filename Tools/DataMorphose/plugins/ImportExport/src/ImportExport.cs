@@ -85,7 +85,7 @@ namespace DataMorphose.Plugins.ImportExport
                                          Gtk.FileChooserAction.Open, "Cancel", 
                                          Gtk.ResponseType.Cancel, "Import", Gtk.ResponseType.Accept);
       try {
-        fc.SetCurrentFolder("/media/LocalD/SolidProject/Tools/DataMorphose/trunk/plugins/ImportExport/test/DemoDB/Text/");
+        fc.SetCurrentFolder("/media/LocalD/SolidProject/Tools/DataMorphose/plugins/ImportExport/test/DemoDB/Text/");
         // then create a filter for files. For example .csvdb:
         // filter is not necessary if you wish to see all files in the dialog
         Gtk.FileFilter filter = new Gtk.FileFilter();
@@ -120,9 +120,9 @@ namespace DataMorphose.Plugins.ImportExport
       var fc = new Gtk.FileChooserDialog("Save", null, Gtk.FileChooserAction.Save, "Cancel", 
                                  Gtk.ResponseType.Cancel, "Export", Gtk.ResponseType.Accept);
       try {
-        Directory.CreateDirectory("/media/LocalD/SolidProject/Tools/DataMorphose/trunk/plugins/ImportExport/test/DemoDB/Text/ExportedFiles");
+        Directory.CreateDirectory("/media/LocalD/SolidProject/Tools/DataMorphose/plugins/ImportExport/test/DemoDB/Text/ExportedFiles");
 
-        fc.SetCurrentFolder("/media/LocalD/SolidProject/Tools/DataMorphose/trunk/plugins/ImportExport/test/DemoDB/Text/ExportedFiles/");
+        fc.SetCurrentFolder("/media/LocalD/SolidProject/Tools/DataMorphose/plugins/ImportExport/test/DemoDB/Text/ExportedFiles/");
         if (fc.Run() == (int)Gtk.ResponseType.Accept) {
           CSVExporter exporter = new CSVExporter();
           exporter.ExportDatabase(morphose.GetModel().DB, fc.Filename);
