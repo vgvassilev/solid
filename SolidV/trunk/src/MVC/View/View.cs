@@ -39,7 +39,7 @@ namespace SolidV.MVC
 //        return;
 //      }
 
-      IViewer<C, M> viewer;
+      IViewer<C, M> viewer = null;
       Type itemType = item.GetType();
       while (itemType != null && !Viewers.TryGetValue(itemType, out viewer)) {
         itemType = itemType.BaseType;

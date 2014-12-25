@@ -71,7 +71,7 @@ namespace SolidV.MVC
     /// <returns>The registered sub model, null if it already exists.</returns>
     /// <typeparam name="T">The type of the submodel to register.</typeparam>
     /// 
-    private T RegisterSubModel<T>() where T: class, IModel, new() {
+    public T RegisterSubModel<T>() where T: class, IModel, new() {
       return this.RegisterSubModel<T>(new T());
     }
 
@@ -82,7 +82,7 @@ namespace SolidV.MVC
     /// <param name="subModel">The externally created sub model.</param>
     /// <typeparam name="T">The the type of the sub model.</typeparam>
     /// 
-    private T RegisterSubModel<T>(T subModel) where T: class, IModel
+    public T RegisterSubModel<T>(T subModel) where T: class, IModel
     {
       if (GetSubModel<T>() == null){
         subModels.Add(typeof(T), subModel);

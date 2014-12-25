@@ -10,6 +10,8 @@ namespace SolidV.MVC
 {
   public class ChainController<Event, C, M> : CompositeController<Event, C, M>
   { 
+    public ChainController() {}
+    
     public ChainController(M model, IView<C, M> view) : base(model, view) {}
     
     public override bool HandleEvent(Event evnt) {
