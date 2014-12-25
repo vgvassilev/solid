@@ -34,7 +34,7 @@ namespace DataMorphose.Plugins.Visualizer
     private Gtk.DrawingArea drawingArea = null;
     private TreeIter iter;
     private string selectedTable = "";
-    private SolidV.Gtk.ObjectInspector propertyGrid;
+    private SolidV.Gtk.InspectorGrid.InspectorGrid propertyGrid;
 
     public Visualizer() {
     }
@@ -93,7 +93,7 @@ namespace DataMorphose.Plugins.Visualizer
       
       nbLeftDock.Add(scroll);;
       
-      this.propertyGrid = new SolidV.Gtk.ObjectInspector();
+      this.propertyGrid = new SolidV.Gtk.InspectorGrid.InspectorGrid();
       nbLeftDock.AppendPage(propertyGrid, new Label("Properties"));
       nbLeftDock.ShowAll();
     }

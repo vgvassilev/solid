@@ -84,7 +84,7 @@ namespace DataMorphose.Plugins.Visualizer
     }
 
     void HandleConfigureEvent (object o, Gtk.ConfigureEventArgs args) {
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
 
     /// <summary>
@@ -99,25 +99,25 @@ namespace DataMorphose.Plugins.Visualizer
 
     public void HandleDrawingArea1ButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
       canvas.GrabFocus();
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
     
     public void HandleDrawingArea1ButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args) {
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
     
     protected void HandleKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
     {
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
     
     protected void HandleKeyReleaseEvent (object o, Gtk.KeyReleaseEventArgs args)
     {
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
 
     public void HandleDrawingArea1MotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args) {
-      controller.Handle(args.Event);
+      controller.HandleEvent(args.Event);
     }
 
     public void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
