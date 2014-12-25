@@ -8,15 +8,12 @@
 
 ## SolidOpt
 ##TODO: Fix vendors
-####add_subdirectory(SolidOpt)
-#add_vendor(SolidOpt ../../../../../SolidOpt)
+#add_vendor(SolidOpt ../../../../SolidOpt)
 
 # SolidOpt.Serives
 #TODO: Fix vendors
-###add_subdirectory(SolidOpt.Services)
-add_vendor(SolidOpt.Services ../../../../../SolidOpt/src/Services/src)
+add_vendor(SolidOpt.Services ../../../../SolidOpt/src/Services/src)
 
 # SolidV
 #TODO: Fix vendors
-###add_subdirectory(SolidV)
-add_vendor(SolidV ../../../../../SolidV)
+add_vendor(SolidV ../../../../SolidV)

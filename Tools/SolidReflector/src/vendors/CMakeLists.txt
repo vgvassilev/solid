@@ -8,10 +8,8 @@
 
 # SolidOpt
 #TODO: Fix vendors
-###add_subdirectory(SolidOpt)
-add_vendor(SolidOpt ../../../../../SolidOpt)
+add_vendor(SolidOpt ../../../../SolidOpt)
 
 # SolidV
 #TODO: Fix vendors
-###add_subdirectory(SolidV)
-add_vendor(SolidV ../../../../../SolidV)
+add_vendor(SolidV ../../../../SolidV)

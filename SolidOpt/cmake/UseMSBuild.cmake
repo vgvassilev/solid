@@ -7,13 +7,13 @@
 # Copyright (c) SolidOpt Team
 #
 
-function( CSHARP_ADD_MSBUILD_PROJECT filename optional_filename )
+function( CSHARP_ADD_MSBUILD_PROJECT filename )
 
   # Check for optional filename
   get_filename_component(absolute_filename "${filename}" ABSOLUTE)
   file(RELATIVE_PATH filename_tail ${CMAKE_CURRENT_SOURCE_DIR} ${absolute_filename})
   if (NOT EXISTS "${filename}")
-    set(filename "${optional_filename}")
+    set(filename "${ARGV1}")
   endif()
 
   # Check for some wrong function usage
@@ -115,8 +115,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename optional_filename )
     CSPROJ_FILE "${CSPROJ_FILE}"
     )
   get_filename_component(filename_path "${filename}" PATH)
-  #file(RELATIVE_PATH rel_filename_path ${CMAKE_SOURCE_DIR} ${filename_path})
-  #string(REPLACE "/" "\\" msbuild_path "${CMAKE_SOURCE_DIR}/${rel_filename_path}/")
   file(RELATIVE_PATH rel_filename_path ${CMAKE_CURRENT_SOURCE_DIR} ${filename_path})
   string(REPLACE "/" "\\" msbuild_path "${CMAKE_CURRENT_SOURCE_DIR}/${rel_filename_path}/")
   string(REPLACE
