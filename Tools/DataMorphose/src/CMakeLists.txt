@@ -45,6 +45,11 @@ configure_file(
   ${CMAKE_RUNTIME_OUTPUT_DIR}/DataMorphose.exe.config
   @ONLY
 )
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/DataMorphose.exe.sh.in
+  ${CMAKE_RUNTIME_OUTPUT_DIR}/DataMorphose.exe.sh
+  @ONLY
+)
 
 # Plugin config and dev symlink
 configure_file(

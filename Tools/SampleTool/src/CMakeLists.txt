@@ -34,6 +34,11 @@ configure_file(
   ${CMAKE_RUNTIME_OUTPUT_DIR}/SampleTool.exe.config
   @ONLY
 )
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/SampleTool.exe.sh.in
+  ${CMAKE_RUNTIME_OUTPUT_DIR}/SampleTool.exe.sh
+  @ONLY
+)
 
 # Plugin config and dev symlink
 configure_file(
