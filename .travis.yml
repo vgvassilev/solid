@@ -23,7 +23,10 @@ script:
   - ../../solid/SolidOpt/configure
   - travis_retry make -j4 -k
   - ctest --output-on-failure #-j4
-#  - cd ../SolidVBuild/
+  - cd ../SolidVBuild/
+  - pwd
+  - ../../solid/SolidV/configure
+  - travis_retry make -j4 -k
 #  - cd ../SolidReflectorBuild/
 #  - cd ../DataMorphoseBuild/
 
