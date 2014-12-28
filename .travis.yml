@@ -18,7 +18,6 @@ before_script:
   # DataMorphose
   - mkdir ../build/DataMorphoseBuild
 
-
 script:
   - cd ../build/SolidOptBuild/
   - pwd
@@ -30,7 +29,10 @@ script:
   - pwd
   - ../../solid/SolidV/configure
   - travis_retry make -j4 -k
-#  - cd ../SolidReflectorBuild/
+  - cd ../SolidReflectorBuild/
+  - pwd
+  - ../../solid/Tools/SolidReflector/configure
+  - travis_retry make -j4 -k
 #  - cd ../DataMorphoseBuild/
 
 branches:
