@@ -17,6 +17,8 @@ before_script:
   - mkdir ../build/SolidReflectorBuild
   # DataMorphose
   - mkdir ../build/DataMorphoseBuild
+  # SampleTool
+  - mkdir ../build/SampleToolBuild
 
 script:
   - cd ../build/SolidOptBuild/
@@ -36,6 +38,10 @@ script:
   - cd ../DataMorphoseBuild/
   - pwd
   - ../../solid/Tools/DataMorphose/configure
+  - travis_retry make -j4 -k
+  - cd ../SampleToolBuild
+  - pwd
+  - ../../solid/Tools/SampleTool/configure
   - travis_retry make -j4 -k
 
 branches:
