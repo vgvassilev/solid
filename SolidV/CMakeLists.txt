@@ -127,5 +127,5 @@ endif()
 
 #Give the user some instructions how to proceed.
 MESSAGE(STATUS "==============================================================")
-MESSAGE(STATUS "==           Please run: source setenv.sh && make           ==") 
+MESSAGE(STATUS "==           Please run: make                               ==")
 MESSAGE(STATUS "==============================================================")
