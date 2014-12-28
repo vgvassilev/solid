@@ -33,7 +33,10 @@ script:
   - pwd
   - ../../solid/Tools/SolidReflector/configure
   - travis_retry make -j4 -k
-#  - cd ../DataMorphoseBuild/
+  - cd ../DataMorphoseBuild/
+  - pwd
+  - ../../solid/Tools/DataMorphose/configure
+  - travis_retry make -j4 -k
 
 branches:
   only:

@@ -1,0 +1,114 @@
+#!/bin/bash
+##
+## $Id$
+## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
+## For further details see the nearest License.txt
+##
+
+
+
+CMAKE_ARGS=""
+
+#Variables that we can parse
+SET_PREFIX=0
+SET_BUILD_TYPE=0
+
+#Find if cmake is installed
+CMAKE_EXECUTABLE=`which cmake`
+if [ $? -eq 0 ]; then
+  echo "CMake found in $CMAKE_EXECUTABLE"
+else
+  echo "Could not find cmake executable. Please run sudo apt-get install cmake or yum install cmake"
+exit 1
+fi
+
+#Get source directory
+SOURCE_DIR=`dirname $0`
+
+
+#
+### echo %%% Help function
+#
+printhelp() {
+cat <<EOF
+'configure' configures DataMorphose to adapt to many kind of systems.
+
+Usage:     $0 [flag=value]
+
+   FLAG            DESCRIPTION                                  DEFAULT
+   --build         Build configuration [debug, release], if
+                   debug, SLN files will be generated           (debug)
+   --prefix        Installation prefix                          (/usr/local)
+   --srcdir        Sources installation dir                     ($SOURCE_DIR)
+
+feed directly variable to the underlying cmake by:
+  -DCMAKE_VAR=VALUE
+
+Supported Platforms: MacOS, Windows, Linux
+
+Report bugs to <http://bugzilla.solidopt.org/describecomponents.cgi?product=DataMorphose>
+EOF
+}
+
+
+#Process args
+for arg in $@; do
+  #Seperate in key=value pairs
+  arg_name=`echo $arg | cut -d'=' -f1`
+  arg_value=`echo $arg | cut -s -d'=' -f2`
+
+  case "$arg_name" in
+      "--prefix")
+          if [ $SET_PREFIX -eq 0 ]; then
+              CMAKE_ARGS=$CMAKE_ARGS" -DCMAKE_INSTALL_PREFIX:PATH=$arg_value"
+              SET_PREFIX=1
+          else
+              echo "--prefix used twice. Exiting..."
+              exit 1
+          fi
+          ;;
+      "--srcdir")
+          if [ "$SRCDIR_DIR" != "$arg_value" ]; then
+              echo "Overriding the source directory!"
+          fi
+          SOURCE_DIR=$arg_value;
+          ;;
+      "--build")
+          if [ $SET_BUILD_TYPE -eq 0 ]; then
+              if [ $arg_value == "debug" ]; then
+                  CMAKE_ARGS=$CMAKE_ARGS" -DCMAKE_BUILD_TYPE=Debug -DVS10SLN=1"
+              elif [ $arg_value == "release" ]; then
+                  CMAKE_ARGS=$CMAKE_ARGS" -DCMAKE_BUILD_TYPE=Release"
+              fi
+              SET_BUILD_TYPE=1
+          else
+              echo "--build used twice. Exiting..."
+              exit 1
+          fi
+          ;;
+      "--help" | "-h")
+          printhelp ; exit 0;
+          ;;
+      -D*)
+          CMAKE_ARGS=$CMAKE_ARGS" $arg_name=$arg_value"
+          ;;
+      *)
+          echo "Unrecognized argument: $arg_name. Exiting..."
+          exit 1
+          ;;
+  esac
+done
+
+$CMAKE_EXECUTABLE $CMAKE_ARGS $SOURCE_DIR
+CMAKE_EXIT_STATUS=$?
+
+if [ $CMAKE_EXIT_STATUS -ne 0 ]; then
+    echo "Cmake terminated with error code "$CMAKE_EXIT_STATUS
+    exit 1
+fi
+
+#Write config.status script
+echo "#!/bin/sh" > config.status
+echo $CMAKE_EXECUTABLE""$CMAKE_ARGS" "$SOURCE_DIR >> config.status
+chmod +x config.status
+echo "Created config.status"
