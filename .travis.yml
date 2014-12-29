@@ -39,6 +39,7 @@ script:
   - pwd
   - ../../solid/Tools/DataMorphose/configure
   - travis_retry make -j4 -k
+  - ctest --output-on-failure #-j4
   - cd ../SampleToolBuild
   - pwd
   - ../../solid/Tools/SampleTool/configure
