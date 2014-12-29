@@ -25,8 +25,7 @@ script:
   - pwd
   - ../../solid/SolidOpt/configure
   - travis_retry make -j4 -k
-### Temporary disable tests
-###  - ctest --output-on-failure #-j4
+  - ctest --output-on-failure #-j4
   - cd ../SolidVBuild/
   - pwd
   - ../../solid/SolidV/configure
