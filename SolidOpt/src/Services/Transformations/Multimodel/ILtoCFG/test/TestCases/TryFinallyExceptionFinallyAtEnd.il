@@ -6,7 +6,7 @@
 {
   //  public static void Main() {
   //    int a = 4;
-  //    int b = 0;
+  //    int b = 1;
   //
   //    try {
   //      a = a / b;
@@ -20,7 +20,7 @@
     .entrypoint
     IL_0000: ldc.i4.4
     IL_0001: stloc.0
-    IL_0002: ldc.i4.0
+    IL_0002: ldc.i4.1
     IL_0003: stloc.1
     //.try {
       IL_0004: ldloc.0
