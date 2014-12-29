@@ -34,7 +34,7 @@
       IL_000e: ldstr "Finally..."
       IL_0013: call [mscorlib]System.Void [mscorlib]System.Console::WriteLine(System.String)
       IL_0018: endfinally
-      IL_0019:
+      IL_0019: ret
     //}
 
     .try IL_0004 to IL_000d finally handler IL_000e to IL_0019
