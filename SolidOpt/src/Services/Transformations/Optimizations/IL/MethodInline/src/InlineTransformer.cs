@@ -76,7 +76,8 @@ namespace SolidOpt.Services.Transformations.Optimizations.IL.MethodInline
       Instruction instruction = source.Body.Instructions[0];
       while (instruction != null) {
         if (instruction.OpCode.FlowControl == FlowControl.Call) {
-          MethodDefinition inlineMethod = ((MethodReference)instruction.Operand).Resolve();
+          MethodReference mRef = (MethodReference)instruction.Operand;
+          MethodDefinition inlineMethod = source.Module.Import(mRef).Resolve();
           if (IsInlineable(inlineMethod)) {
             Console.WriteLine(source.FullName + " call inline " + inlineMethod.FullName);
             
