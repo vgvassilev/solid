@@ -15,7 +15,7 @@ using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
 {
-  public class ThreeAddressCodeBuilder
+  internal class ThreeAddressCodeBuilder
   {
     private const string InvalidILExceptionString = "TAC builder: Invalid IL!";
     private readonly Triplet FixupTriplet;
