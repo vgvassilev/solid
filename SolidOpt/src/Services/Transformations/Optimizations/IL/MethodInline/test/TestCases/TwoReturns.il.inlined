@@ -1,27 +1,33 @@
 System.Void TestCase::Main(System.String[])
 {
-  .locals init (Byte V_0, Int32 V_1)
-  IL_0000 : ldc.i4.5
-  IL_0001 : stloc.0
-  IL_0002 : ldc.i4.2
-  IL_0003 : stloc.1
-  IL_0004 : ldc.i4.5
-  IL_0005 : starg.s p
-  IL_0007 : ldc.i4.6
-  IL_0008 : starg.s q
-  IL_000a : ldloc.0
-  IL_000b : ldc.i4.6
-  IL_000c : bne.un IL_001b 
-  IL_0011 : ldloc.0
-  IL_0012 : call System.Void System.Console::WriteLine(System.Int32)
-  IL_0017 : ldarg.0
-  IL_0018 : ldarg.1
-  IL_0019 : add
-  IL_001a : ret
-  IL_001b : ldarg.0
-  IL_001c : ldarg.1
-  IL_001d : add
-  IL_001e : call System.Void System.Console::WriteLine(System.Int32)
-  IL_0023 : ldc.i4.s 10
-  IL_0025 : ret
+  IL_0000: nop
+  IL_0001: ldc.i4.1
+  IL_0002: ldc.i4.1
+
+  IL_0003: ldc.i4.5
+  IL_0004: stloc.0
+  IL_0005: ldc.i4.2
+  IL_0006: stloc.1
+  IL_0007: ldc.i4.5
+  IL_0008: starg.s p
+  IL_0010: ldc.i4.6
+  IL_0008: starg.s q
+  IL_000a: ldloc.0
+  IL_000b: ldc.i4.6
+  IL_000c: bne.un IL_001b
+  IL_0011: ldloc.0
+  IL_0012: call System.Void System.Console::WriteLine(System.Int32)
+  IL_0017: ldarg.0
+  IL_0018: ldarg.1
+  IL_0019: add
+  IL_001a: ret
+  IL_001b: ldarg.0
+  IL_001c: ldarg.1
+  IL_001d: add
+  IL_001e: call System.Void System.Console::WriteLine(System.Int32)
+  IL_0023: ldc.i4.s 10
+  IL_0025: ret
+
+  IL_0008: pop
+  IL_0009: ret
 }
