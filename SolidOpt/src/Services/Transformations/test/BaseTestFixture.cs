@@ -90,7 +90,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
                     String.Format("{0} does not exist.", testCaseResultFile));
 
       List<string> seen = new List<string>(); // in case of exception preventing seen to get value.
-      bool testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
+
+      bool testXFail = false;
+      if (directives != null) // in cases where there were no directives in the test at all.
+        testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
         Transformer transformer = new Transformer();
         foreach(Source source in sources) {
@@ -169,7 +172,9 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
       bool match = p.ExitCode == 0;
 
-      bool testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
+      bool testXFail = false;
+      if (directives != null) // in cases where there were no directives in the test at all.
+        testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       if (testXFail && match) {
         //errMsg += "\nUnexpected pass.";
         //Assert.Fail(errMsg);
