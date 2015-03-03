@@ -9,14 +9,18 @@ using Gtk;
 
 namespace DataMorphose
 {
- class MainClass
- {
-  public static void Main (string[] args)
+  class MainClass
   {
-   Application.Init();
-   MainWindow win = new MainWindow();
-   win.Show();
-   Application.Run();
+    public static void Main (string[] args)
+    {
+      Application.Init();
+      MainWindow mainWindow = new MainWindow();
+      // Workaround the problem of not appearing main window on Mac OS X
+      mainWindow.KeepAbove = true;
+      mainWindow.KeepAbove = false;
+      //
+      mainWindow.Show();
+      Application.Run();
+    }
   }
- }
 }
