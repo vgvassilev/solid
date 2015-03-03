@@ -13,7 +13,8 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   get_filename_component(absolute_filename "${filename}" ABSOLUTE)
   file(RELATIVE_PATH filename_tail ${CMAKE_CURRENT_SOURCE_DIR} ${absolute_filename})
   if (NOT EXISTS "${filename}")
-    set(filename "${ARGV1}")
+    #set(filename "${ARGV1}")
+    get_filename_component(filename "${ARGV1}" REALPATH)
   endif()
 
   # Check for some wrong function usage
@@ -31,9 +32,6 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   # we could do "make nunit.core.dll' and not 'make nunit.core.dll.dll'
   STRING( REGEX REPLACE "(\\.dll)[^\\.dll]*$" "" name_we ${name_we} )
   STRING( REGEX REPLACE "(\\.exe)[^\\.exe]*$" "" name_we ${name_we} )
-
-  # Add custom target and command
-  MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
 
   # Copy and adapt the file to the CMAKE setup
   file (READ "${filename}" CSPROJ_FILE)
@@ -60,6 +58,15 @@ function( CSHARP_ADD_MSBUILD_PROJECT filename )
   elseif(TYPE_UPCASE STREQUAL "EXE")
     set( TYPE_UPCASE "RUNTIME" )
   endif()
+
+  # Check and skip target if custom target already exists
+  if (TARGET "${name_we}.${output}")
+    MESSAGE( STATUS "Target project ${filename} already exists - Skip it." )
+    return()
+  endif()
+
+  # Add custom target and command
+  MESSAGE( STATUS "Adding project ${filename} for MSBuild-ing." )
 
   #FIXME: We know that we only build vendors with MSBuild. Thus we can afford to 
   # decrease the warning level, because we cannot fully control the vendor 

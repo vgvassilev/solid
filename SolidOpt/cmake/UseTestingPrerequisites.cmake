@@ -1,4 +1,3 @@
-##
 ## $Id$
 ## It is part of the SolidOpt Copyright Policy (see Copyright.txt)
 ## For further details see the nearest License.txt
@@ -72,6 +71,10 @@ macro( CSHARP_ADD_TEST_CASE name)
       set_property(GLOBAL PROPERTY target_test_results_property "${target_test_results}")
     endif()
   else ()
-    message(WARNING "Project ${name} was not defined!?")
+    get_property(AUTO_SKIPED_PROJECTS GLOBAL PROPERTY AUTO_SKIPED_PROJECTS_PROPERTY)
+    list(FIND AUTO_SKIPED_PROJECTS ${name} auto_skiped)
+    if (auto_skiped EQUAL -1)
+      message(WARNING "Project ${name} was not defined!?")
+    endif()
   endif ()
 endmacro( CSHARP_ADD_TEST_CASE )
