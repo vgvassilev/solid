@@ -20,8 +20,10 @@ else( )
   message(STATUS "ILASM found : ${ILASM}")
 endif( )
 
-set(NUNIT_CONSOLE "${CMAKE_CURRENT_BINARY_DIR}/bin/nunit-console.exe")
-message(STATUS "NUNIT-CONSOLE : ${NUNIT_CONSOLE}")
+if (NOT NUNIT_CONSOLE)
+  set(NUNIT_CONSOLE "${CMAKE_CURRENT_BINARY_DIR}/bin/nunit-console.exe")
+  message(STATUS "NUNIT-CONSOLE : ${NUNIT_CONSOLE}")
+endif()
 
 set(CSC ${CSHARP_COMPILER})
 if ( NOT CSC )

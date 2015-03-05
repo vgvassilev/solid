@@ -55,3 +55,17 @@ execute_process(
 #add_subdirectory(gtk-gui)
 #add_subdirectory(BuildInformation)
 
+#csharp_add_test_library(
+#  DataMorphose.Plugins.ImportExport.Test.dll
+#  ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+#  ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+#)
+#csharp_add_dependencies(
+#  DataMorphose.Plugins.ImportExport.Test.dll
+#  ${CMAKE_LIBRARY_OUTPUT_DIR}/DataMorphose.Plugins.ImportExport.dll
+#  ${CMAKE_RUNTIME_OUTPUT_DIR}/DataMorphose.exe
+#  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.BuildInformation.dll
+#  # External
+#  ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.framework.dll
+#  ${CMAKE_LIBRARY_OUTPUT_DIR}/nunit.core.dll
+#)

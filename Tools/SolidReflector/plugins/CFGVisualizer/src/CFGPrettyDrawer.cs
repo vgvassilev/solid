@@ -48,6 +48,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
       view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
+      view.Viewers.Add(typeof(BezierCurvedArrowShape), new BezierCurvedArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
       view.Viewers.Add(typeof(Glue), new GlueViewer());
@@ -119,7 +120,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
         gluePointStart = new ConnectorGluePoint(new PointD(visited[basicBlock].Location.X + visited[basicBlock].Width / 2, visited[basicBlock].Location.Y + visited[basicBlock].Height));
         gluePointEnd = new ConnectorGluePoint(new PointD(visited[successor].Location.X + visited[successor].Width / 2, visited[successor].Location.Y));
 
-        arrow = new ArrowShape(visited[basicBlock], gluePointStart, visited[successor], gluePointEnd);
+        //arrow = new ArrowShape(visited[basicBlock], gluePointStart, visited[successor], gluePointEnd);
+        arrow = new BezierCurvedArrowShape(visited[basicBlock], gluePointStart, visited[successor], gluePointEnd);
         arrow.ArrowKindHead = SolidV.Cairo.ArrowKinds.TriangleRoundArrow;
         arrow.ArrowKindTail = SolidV.Cairo.ArrowKinds.NoArrow;
 
@@ -145,7 +147,6 @@ namespace SolidReflector.Plugins.CFGVisualizer
       //scene.AutoArrange();
       
       int maxX = 0, maxY = 0;
-      
       foreach (Shape shape in scene.Shapes) {
         if ((shape.Rectangle.X + shape.Rectangle.Width) > maxX)
           maxX = (int)(shape.Rectangle.X + shape.Rectangle.Width);

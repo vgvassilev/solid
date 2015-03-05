@@ -116,6 +116,7 @@ if(NOT SLN_GEN_LOCK)
   set_property(GLOBAL PROPERTY SLN_GEN_LOCK_PROPERTY "SolidReflector")
 endif()
 
+add_subdirectory(${CMAKE_MODULE_PATH}/BuildInformation cmake/BuildInformation)
 add_subdirectory(src)
 add_subdirectory(plugins)
 # FIXME:

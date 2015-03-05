@@ -31,7 +31,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     {
       string path = GetTestCasesDir();
       if (!Directory.Exists(path))
-        throw new DirectoryNotFoundException("Directory not found. Please check testCasesDirCache variable");
+        throw new DirectoryNotFoundException(String.Format("Directory '{0}' not found. Please check testCasesDirCache variable.",path));
       // Cleanup the last invocation.
       string[] testCases = Directory.GetFiles(path, "*." + GetTestCaseFileExtension());
       foreach (string testCaseName in testCases)
