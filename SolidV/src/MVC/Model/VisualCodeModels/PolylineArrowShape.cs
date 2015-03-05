@@ -11,7 +11,7 @@ using Cairo;
 namespace SolidV.MVC
 {
   [Serializable]
-  public class PolylineArrowShape : ConnectorShape
+  public class PolylineArrowShape : ArrowShape
   {
     private List<Distance> points = new List<Distance>();
     public List<Distance> Points {
