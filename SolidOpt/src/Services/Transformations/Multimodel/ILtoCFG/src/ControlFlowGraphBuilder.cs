@@ -182,7 +182,8 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
       if (nextInstr != null)
         return HasLabel(nextInstr) || exceptionHandlersStarts.Contains(nextInstr);
 
-      return false;
+      // The next inst is null which means the end of the body.
+      return true;
     }
 
     bool HasLabel(T i)
@@ -244,15 +245,16 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         throw new ArgumentException ("Undelimited node at " + block.Last);
 
       T lastInst = block.Last;
+      T nextInst = LinearInstructionAdapter<T>.GetNext(lastInst);
       var targets = GetTargetInstructions(lastInst);
-
       switch (LinearInstructionAdapter<T>.GetFlowControl(lastInst)) {
         // treat the call as next
         case FlowControl.Call: // intentional fall through
         case FlowControl.Next: // intentional fall through
         case FlowControl.Cond_Branch: {
-          // Add the next instruction as a target to the list of targets.
-          targets.Add(LinearInstructionAdapter<T>.GetNext(block.Last));
+          if (nextInst != null) // in the cases when it is last and there is no inst.Next
+            // Add the next instruction as a target to the list of targets.
+            targets.Add(nextInst);
           break;
         }
 
@@ -279,7 +281,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCFG
         }
       }
 
-      T nextInst = LinearInstructionAdapter<T>.GetNext(lastInst);
       // Nothing to do, everything is already done, exit early.
       if (nextInst == null || targets.Contains(nextInst))
         return;

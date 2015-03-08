@@ -28,7 +28,7 @@
       IL_0005: ldloc.1
       IL_0006: div
       IL_0007: stloc.0
-      IL_0008: leave IL_000d
+      IL_0008: leave IL_000d // leave would activate the execution of the finally
     //}
     IL_000d: ret
     // ... finally {

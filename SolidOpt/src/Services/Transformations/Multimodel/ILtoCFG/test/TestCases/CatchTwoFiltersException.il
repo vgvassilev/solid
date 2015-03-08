@@ -33,7 +33,7 @@
       IL_000e: pop
       IL_000f: ldc.i4.0
       IL_0010: endfilter
-    } {
+    } { // If !=0 on the top of the stack CLR will pass the control here.
       IL_0012: ldc.i4.1
       IL_0013: stsfld [mscorlib]System.Int32 TestCase::flt_1_caught
       IL_0018: leave IL_002c
