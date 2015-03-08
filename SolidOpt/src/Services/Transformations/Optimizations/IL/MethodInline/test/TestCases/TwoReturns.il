@@ -1,43 +1,34 @@
 // RUN: "@ILASM@" /DLL @TEST_CASE@
 // XFAIL:
-.assembly extern System.Exception {}
+.assembly extern SolidOpt.Services.Transformations.Optimizations.Annotations {}
 .assembly TestCase {}
 
 .class public auto ansi beforefieldinit TestCase
   extends [mscorlib]System.Object
 {
   //  public static void Main(string[] args) {
-  //    CalculateAreaHeron(3, 3, 3);
-  //  }
-  //  [Inlineable]
-  //  public static double CalculateAreaHeron(double a, double b, double c)
-  //  {
-  //    try {
-  //      if (a==0 || b==0 || c==0) return 0;
-  //      
-  //      double p = (a + b + c) / 2 ;
-  //      return Math.Sqrt(p * (p-a) * (p-b) * (p-c));
-  //    }
-  //    catch {
-  //      return -1;
-  //    }
+  //    Inlinee(1, 1);
   //  }
   .method public hidebysig static void Main(string[] args) cil managed
   {
     .entrypoint
     .maxstack 8
     L_0000: nop 
-    L_0001: ldc.i4 1
-    L_000a: ldc.i4 1
-    L_0013: ldc.r8 3
-    L_001c: call float64 TestCase::CalculateAreaHeron(float64, float64, float64)
-    L_0021: pop 
-    L_0022: ret 
+    L_0001: ldc.i4.1
+    L_0002: ldc.i4.1
+    L_0003: call int32 TestCase::Inlinee(int32, int32)
+    L_0008: pop
+    L_0009: ret
   }
   
+  //  [Inlineable]
+  //  public static int Inlinee(int p, int q)
+  //  {
+  //     ???
+  //  }
   .method public hidebysig static int32 Inlinee(int32 p, int32 q) cil managed
   {
-    .custom instance void [SolidOpt.Services.Optimizations.Annotations]SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.InlineableAttribute::.ctor() = (
+    .custom instance void [SolidOpt.Services.Transformations.Optimizations.Annotations]SolidOpt.Services.Transformations.Optimizations.IL.MethodInline.InlineableAttribute::.ctor() = (
       01 00 00 00
     )
     .locals init ([mscorlib]System.Byte V_0, int32 V_1)
