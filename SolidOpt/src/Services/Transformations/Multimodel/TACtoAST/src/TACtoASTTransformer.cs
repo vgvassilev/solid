@@ -6,11 +6,12 @@
 
 using System;
 
+using Mono.Cecil.Cil;
+
 using SolidOpt.Services.Transformations;
 using SolidOpt.Services.Transformations.Multimodel;
 using SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
-
 
 namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST
 {
@@ -26,7 +27,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST
     #region ITransform implementation
 
     AstMethodDefinition ITransform<ThreeAddressCode, AstMethodDefinition>.Transform(ThreeAddressCode source) {
-      throw new NotImplementedException();
+      return ProcessInternal(source);
     }
 
     #endregion
@@ -48,7 +49,29 @@ namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST
     #endregion
 
     private AstMethodDefinition ProcessInternal(ThreeAddressCode codeModel) {
-      AstMethodDefinition result = new AstMethodDefinition();
+
+
+      BlockStatement block = new BlockStatement();
+      foreach (Triplet t in codeModel.RawTriplets) {
+        switch (t.Opcode) {
+          case TripletOpCode.Assignment:
+            SimpleNameExpression lhs = new SimpleNameExpression((t.Result as VariableDefinition).Name);
+            IntegerLiteral rhs = new IntegerLiteral((Int64)t.Operand1);
+            var assignmentStmt = new AssignmentStatement(lhs, AssignmentOperatorKind.Equal, rhs);
+            block.Statements.Add(assignmentStmt);
+            break;
+          case TripletOpCode.Return:
+            var returnExpr = new SimpleNameExpression((t.Operand1 as VariableReference).Name);
+            var returnStmt = new ReturnStatement(returnExpr);
+            block.Statements.Add(returnStmt);
+            break;
+          default:
+            throw new NotImplementedException();
+        }
+      }
+
+      AstMethodDefinition result = new AstMethodDefinition(/*MethodDefinition*/null, block);
+
       /*Triplet t = codeModel.Root;
       //FunctionDeclaration decl = new FunctionDecl();
       do {
