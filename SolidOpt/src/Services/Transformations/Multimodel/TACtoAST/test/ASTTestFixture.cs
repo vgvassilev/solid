@@ -19,7 +19,7 @@ using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 using SolidOpt.Services.Transformations.Multimodel.Test;
 
-namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
+namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST.Test
 {
   [TestFixture]
   public sealed class ASTTestFixture 

@@ -6,5 +6,5 @@
 
 csharp_add_test_case(
   SolidOpt.Services.Transformations.Multimodel.TACtoAST.Test.dll
-  ${CMAKE_CURRENT_SOURCE_DIR}/*.ast
+  ${CMAKE_CURRENT_SOURCE_DIR}/*.tac
   )
