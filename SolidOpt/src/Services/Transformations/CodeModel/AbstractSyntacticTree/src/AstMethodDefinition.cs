@@ -39,45 +39,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
 
     public override string ToString()
     {
-      CodeVisitor codeVisitor = new CodeVisitor();
-      codeVisitor.Visit(block);
-      return codeVisitor.Text;
+      ASTDumper dumper = new ASTDumper();
+      dumper.Visit(block);
+      return dumper.ToString();
     }
-            
-    internal class CodeVisitor : Cecil.Decompiler.Ast.BaseCodeVisitor {
-      private StringBuilder text = new StringBuilder();
-      public string Text {
-        get { return text.ToString(); }
-      }
-      private int indent = 0;
-
-      public override void Visit (ICodeNode node)
-      {
-        if (null == node)
-          return;
-        for(int i = 0; i <= indent; i++)
-          if (i + 1 > indent)
-            text.Append("+--");
-          else
-            text.Append("---");
-
-        text.Append(node.CodeNodeType.ToString());
-
-        if (node is MethodReferenceExpression)
-          text.Append(" " + (node as MethodReferenceExpression).Method.ToString());
-        else if (node is VariableDeclarationExpression)
-          text.AppendFormat(" ({0})", (node as VariableDeclarationExpression).Variable.ToString());
-        else if (node is VariableReferenceExpression)
-          text.AppendFormat(" ({0})", (node as VariableReferenceExpression).Variable.ToString());
-        else if (node is LiteralExpression)
-          text.AppendFormat(" ({0})", (node as LiteralExpression).Value.ToString());
-
-        text.AppendLine();
-          
-        indent++;
-        base.Visit(node);
-        indent--;
-        }
-      }
   }
 }
