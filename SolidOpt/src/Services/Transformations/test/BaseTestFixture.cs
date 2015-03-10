@@ -190,10 +190,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       else {
         if (!match) {
           // if the test wasn't expected to fail write out the what was seen so that one can diff
-          File.WriteAllLines(GetTestCaseOutFullPath(testCaseName), seenLines);
+          File.WriteAllLines(debugFile, seenLines);
         }
         //Assert.IsTrue(match, errMsg);
-        Assert.IsTrue(match, "\nTest failed, see the output to debug");
+        Assert.IsTrue(match, string.Format("\nTest failed, see {0}", debugFile));
         return match;
       }
 
