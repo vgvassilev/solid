@@ -4,29 +4,75 @@
  * For further details see the nearest License.txt
  */
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.Nodes
+namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
 {
+  public enum StatementKinds {
+    Statement,
+    BlockStatement,
+    SimpleNameExpression,
+    IntegerLiteral,
+    ReturnStatement,
+    AssignmentStatement,
+  }
   public abstract class Statement
   {
-    protected Statement() {}
+    public abstract StatementKinds Kind { get; }
+  }
 
-    /// <summary>
-    /// Determines whether this instance is of the specified kind.
-    /// </summary>
-    /// <description>This avoids RTTI requests and going through virtual methods. Subclassess must
-    /// implement it too.
-    /// </description>
-    /// <returns><c>true</c> if this instance is a; otherwise, <c>false</c>.</returns>
-    /// <typeparam name="T">The 1st type parameter.</typeparam>
-    bool IsA<T>() where T : Statement {
-      return typeof(T) != null;
+  public sealed class BlockStatement : Statement {
+    #region implemented abstract members of Statement
+
+    public override StatementKinds Kind {
+      get { return StatementKinds.BlockStatement; }
     }
 
-    T DynCast<T>() where T : Statement {
-      if (typeof(T) == this.GetType())
-          return (T)this;
-      return null;
+    #endregion
+
+    private List<Statement> statements = new List<Statement>();
+
+    public List<Statement> Statements {
+      get { return statements; }
+    }
+
+    public BlockStatement() {
+    }
+  }
+
+  public enum AssignmentOperatorKind {
+    Equal
+  }
+
+  public sealed class AssignmentStatement : Statement {
+    #region implemented abstract members of Statement
+
+    public override StatementKinds Kind {
+      get { return StatementKinds.AssignmentStatement; }
+    }
+
+    #endregion
+
+    private UnaryExpression lhs;
+    public UnaryExpression Lhs {
+      get { return lhs; }
+    }
+
+    private AssignmentOperatorKind opKind;
+    public AssignmentOperatorKind OpKind {
+      get { return opKind; }
+    }
+
+    private Expression rhs;
+    public Expression Rhs {
+      get { return rhs; }
+    }
+
+    public AssignmentStatement(UnaryExpression lhs, AssignmentOperatorKind opKind, Expression rhs) {
+      this.lhs = lhs;
+      this.opKind = opKind;
+      this.rhs = rhs;
     }
   }
 }
