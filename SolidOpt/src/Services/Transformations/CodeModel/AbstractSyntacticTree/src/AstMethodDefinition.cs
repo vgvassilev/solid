@@ -31,10 +31,6 @@ namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
       set { block = value; }
     }
     
-    public AstMethodDefinition()
-    {
-    }
-    
     public AstMethodDefinition(MethodDefinition method, BlockStatement block)
     {
       this.method = method;
