@@ -11,6 +11,7 @@ using Mono.Cecil.Cil;
 using SolidOpt.Services.Transformations;
 using SolidOpt.Services.Transformations.Multimodel;
 using SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree;
+using SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.Nodes;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST

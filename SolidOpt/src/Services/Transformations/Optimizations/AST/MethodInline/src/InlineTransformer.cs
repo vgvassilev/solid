@@ -126,7 +126,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
       blocks.Clear();
       localVarSubstitution.Clear();
       this.source = source;
-      source.Block = (BlockStatement) Visit(source.Block);
+      source.CecilBlock = (BlockStatement) Visit(source.CecilBlock);
       source = fixer.FixUp(source, localVarSubstitution);
       
       return source;
@@ -606,7 +606,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
       }
       
       for (int i = 0; i < ast.Block.Statements.Count; i++ ) {
-        result.Add(ast.Block.Statements[i]);
+        result.Add(ast.CecilBlock.Statements[i]);
       }
       
       return result;
@@ -687,15 +687,15 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
         this.thisSubstitution = thisSubstitution;
         
         exitNumber++;
-        this.exitLabel = this.source.Block.Statements[this.source.Block.Statements.Count-1] as LabeledStatement;
+        this.exitLabel = this.source.CecilBlock.Statements[this.source.Block.Statements.Count-1] as LabeledStatement;
         
         if (exitLabel == null) {
           this.exitLabel = new LabeledStatement("@_exit" + exitNumber);
-          this.source.Block.Statements.Add(exitLabel);
-          this.source.Block = (BlockStatement) Visit(this.source.Block);
+          this.source.CecilBlock.Statements.Add(exitLabel);
+          this.source.CecilBlock = (BlockStatement) Visit(this.source.CecilBlock);
         }
         else {
-          this.source.Block = (BlockStatement) Visit(this.source.Block);  
+          this.source.CecilBlock = (BlockStatement) Visit(this.source.CecilBlock);  
         }
         
         return this.source;
@@ -893,7 +893,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline
         this.source = source;
         this.localVarSubstitution = localVarSubstitution;
         if (localVarSubstitution.Count > 0) {
-          this.source.Block = (BlockStatement) Visit(this.source.Block);
+          this.source.CecilBlock = (BlockStatement) Visit(this.source.CecilBlock);
         }
         return this.source;
       }

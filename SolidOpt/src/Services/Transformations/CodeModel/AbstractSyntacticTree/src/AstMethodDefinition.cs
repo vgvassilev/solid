@@ -7,9 +7,9 @@
 using System;
 using System.Text;
 
-using Mono.Cecil;
+using SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.Nodes;
 
-using Cecil.Decompiler.Ast;
+using Mono.Cecil;
 
 namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
 {
@@ -30,6 +30,9 @@ namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
       get { return block; }
       set { block = value; }
     }
+
+    //FIXME: Until our AST gets mature enough we must keep both.
+    public Cecil.Decompiler.Ast.BlockStatement CecilBlock = null;
     
     public AstMethodDefinition(MethodDefinition method, BlockStatement block)
     {

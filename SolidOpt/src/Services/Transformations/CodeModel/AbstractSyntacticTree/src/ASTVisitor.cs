@@ -6,7 +6,7 @@
 using System;
 using System.Text;
 
-namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
+namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.Nodes
 {
   public class ASTVisitor
   {

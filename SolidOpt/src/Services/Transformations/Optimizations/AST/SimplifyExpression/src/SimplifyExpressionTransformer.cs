@@ -50,7 +50,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.SimplifyExpression
 //      blocks.Clear();
 //      localVarSubstitution.Clear();
 //      this.source = source;
-      source.Block = (BlockStatement) Visit(source.Block);
+      source.CecilBlock = (BlockStatement) Visit(source.CecilBlock);
 //      source = fixer.FixUp(source, localVarSubstitution);
       
       Console.WriteLine("~~~");

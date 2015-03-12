@@ -6,7 +6,7 @@
 
 using System;
 
-namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
+namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.Nodes
 {
   public class ReturnStatement : Statement
   {

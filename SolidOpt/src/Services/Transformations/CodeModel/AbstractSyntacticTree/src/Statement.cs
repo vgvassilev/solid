@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree
+namespace SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.Nodes
 {
   public enum StatementKinds {
     Statement,
