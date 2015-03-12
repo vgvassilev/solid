@@ -13,9 +13,8 @@ csharp_add_dependencies(
   SolidOpt.Services.Transformations.MultiModel.ILtoTAC.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.dll
-  # FIXME: This is necessary for the ILinearInstruction interface. I don't understand quite why do we need it.
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.dll
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll

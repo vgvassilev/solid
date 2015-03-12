@@ -11,7 +11,9 @@ csharp_add_library(
   )
 csharp_add_dependencies(
   SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.dll
-  ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph.dll
+
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   )

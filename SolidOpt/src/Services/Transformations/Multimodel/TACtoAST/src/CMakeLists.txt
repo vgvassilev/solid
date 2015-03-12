@@ -14,11 +14,14 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.MultiModel.dll
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.AbstractSyntacticTree.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode.dll
 
   # Add dependent libraries here
   System.Core.dll
+  # External
+  ${CMAKE_LIBRARY_OUTPUT_DIR}/Mono.Cecil.dll
   )
 csharp_add_project_meta(
   SolidOpt.Services.Transformations.Multimodel.TACtoAST.dll
