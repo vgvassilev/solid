@@ -143,7 +143,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode
       consumeToken();
 
       IsMethod(ref triplets);
-      ThreeAddressCode tac = new ThreeAddressCode(/*methoddef*/null, triplets[0], triplets, null);
+      ThreeAddressCode tac = new ThreeAddressCode(/*methoddef*/null, null, triplets, null);
       return tac;
     }
 
