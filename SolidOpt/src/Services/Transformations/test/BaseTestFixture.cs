@@ -178,13 +178,13 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       if (testXFail && match) {
         //errMsg += "\nUnexpected pass.";
         //Assert.Fail(errMsg);
-        Assert.Fail("\nUnexpected pass, see the output to debug");
+        Assert.Fail("\nUnexpected pass, diff file {0}", debugFile);
         return false;
       }
       else if (testXFail) {
         //errMsg += "\nExpected to fail.";
         //Assert.Ignore(errMsg);
-        Assert.Ignore("\nExpected to fail, see the output to debug");
+        Assert.Ignore("\nExpected to fail, diff file {0}", debugFile);
         return true;
       }
       else {
