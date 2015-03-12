@@ -110,7 +110,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
         }
       }
       finally {
-        Validate(testCaseName, seen.ToArray());
+        Validate(testCaseName, seen.ToArray(), testXFail);
       }
     }
 
@@ -130,7 +130,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// What the algorithm actually produced.
     /// </param>
     /// <returns>True on success.</returns>
-    public bool Validate(string testCaseName, string[] seenLines)
+    public bool Validate(string testCaseName, string[] seenLines, bool testXFail)
     {
       string resultFile = GetTestCaseResultFullPath(testCaseName);
       string debugFile = GetTestCaseOutFullPath(testCaseName);
@@ -172,9 +172,6 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
       bool match = p.ExitCode == 0;
 
-      bool testXFail = false;
-      if (directives != null) // in cases where there were no directives in the test at all.
-        testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       if (testXFail && match) {
         //errMsg += "\nUnexpected pass.";
         //Assert.Fail(errMsg);
