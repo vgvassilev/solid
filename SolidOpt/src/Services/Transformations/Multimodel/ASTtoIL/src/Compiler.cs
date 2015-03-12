@@ -718,6 +718,5 @@ namespace SolidOpt.Services.Transformations.Multimodel.ASTtoIL
       cil.Append(result);
       return result;
     }
-
   }
 }

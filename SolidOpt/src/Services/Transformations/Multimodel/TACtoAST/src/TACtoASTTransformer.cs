@@ -49,6 +49,10 @@ namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST
 
     #endregion
 
+    public AstMethodDefinition Decompile(ThreeAddressCode tac) {
+      return ProcessInternal(tac);
+    }
+
     private AstMethodDefinition ProcessInternal(ThreeAddressCode codeModel) {
 
 
