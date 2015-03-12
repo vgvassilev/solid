@@ -85,21 +85,20 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       System.Threading.Thread.CurrentThread.CurrentCulture =
         System.Globalization.CultureInfo.InvariantCulture; 
 
-      //FIXME: Here we do that and then reconstrunct the same path to source.
+      string testCaseFile = testCaseName;
       testCaseName = Path.GetFileNameWithoutExtension(testCaseName);
-      string testCaseFile = GetTestCaseFullPath(testCaseName);
+
       // Check whether the file exists first.
       Assert.IsTrue(File.Exists(testCaseFile),
                     String.Format("{0} does not exist.", testCaseName));
 
       string testCaseResultFile = GetTestCaseResultFullPath(testCaseName);
-      // Check whether the result file exists first.
-      Assert.IsTrue(File.Exists(testCaseResultFile),
-                    String.Format("{0} does not exist.", testCaseResultFile));
+      // If the result file is missing, ignore the test
+      bool testXFail = !File.Exists(testCaseResultFile);
+      //Assert.IsTrue(File.Exists(testCaseResultFile),
+      //              String.Format("Result file {0} does not exist.", testCaseResultFile));
 
       List<string> seen = new List<string>(); // in case of exception preventing seen to get value.
-
-      bool testXFail = false;
       if (directives != null) // in cases where there were no directives in the test at all.
         testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
