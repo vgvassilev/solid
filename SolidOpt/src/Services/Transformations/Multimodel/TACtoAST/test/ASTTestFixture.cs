@@ -25,13 +25,20 @@ namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST.Test
   public sealed class ASTTestFixture 
     : BaseTestFixture<ThreeAddressCode, AstMethodDefinition, TACtoASTTransformer>
   {
-    private readonly string testCasesDirCache = Path.Combine("src",
+    private readonly string testCasesResultDirCache = Path.Combine("src",
                                                              "Services",
                                                              "Transformations",
                                                              "Multimodel",
                                                              "TACtoAST",
                                                              "test",
                                                              "TestCases");
+    private readonly string testCasesDirCache = Path.Combine("src",
+      "Services",
+      "Transformations",
+      "Multimodel",
+      "ILtoTAC",
+      "test",
+      "TestCases");
 
     public ASTTestFixture()
     {
@@ -54,6 +61,14 @@ namespace SolidOpt.Services.Transformations.Multimodel.TACtoAST.Test
       return testCasesDirCache;
     }
 
+    /// <summary>
+    /// Reimplement to reuse the tests in ILtoTAC transformer.
+    /// </summary>
+    /// <returns>The test case result dir offset.</returns>
+    protected override string GetTestCaseResultDirOffset()
+    {
+      return testCasesResultDirCache;
+    }
 
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)

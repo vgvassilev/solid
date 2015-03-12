@@ -51,13 +51,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// </returns>
     protected IEnumerable GetTestCases()
     {
-      string[] testCases = Directory.GetFiles(GetTestCasesDir(), "*." + GetTestCaseFileExtension());
+      string testCasesDir = GetTestCasesDir();
+      string testCaseFileExt = GetTestCaseFileExtension();
+      List<string> testCases = new List<string>();
+      testCases.AddRange(Directory.GetFiles(testCasesDir, "*." + testCaseFileExt));
+
+      // Check if are reusing tests from somewhere else.
+      if (testCasesDir != GetTestCasesResultDir())
+        testCases.AddRange(Directory.GetFiles(GetTestCasesResultDir(), "*." + testCaseFileExt));
       HashSet<string> excludedTestCases = GetOverridenTestCases();
 
       foreach (string testCase in testCases) {
         if (!excludedTestCases.Contains(Path.GetFileNameWithoutExtension(testCase))) {
           TestCaseData data = new TestCaseData(testCase);
-          data.SetName(Path.GetFileNameWithoutExtension(testCase));
+          // Replace if more than one . in the file name, making the name IDE friendly.
+          data.SetName(Path.GetFileNameWithoutExtension(testCase).Replace('.', '_'));
           yield return data;
         }
       }
@@ -345,6 +353,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       return Path.Combine(BuildInformation.BuildInfo.SourceDir, GetTestCaseDirOffset());
     }
 
+    protected string GetTestCasesResultDir()
+    {
+      return Path.Combine(BuildInformation.BuildInfo.SourceDir, GetTestCaseResultDirOffset());
+    }
+
     protected string GetTestCasesBuildDir()
     {
       return Path.Combine(BuildInformation.BuildInfo.BinaryDir, GetTestCaseDirOffset());
@@ -360,6 +373,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       return "";
     }
 
+    /// <summary>
+    /// In cases where the test cases location differs from the result files location. This could
+    /// happen when we want to reuse tests and avoid copying them over again and again.
+    /// Defaults to GetTestCaseDirOffset().
+    /// </summary>
+    /// <returns>The test case result dir offset.</returns>
+    protected virtual string GetTestCaseResultDirOffset()
+    {
+      return GetTestCaseDirOffset();
+    }
+
     protected string GetTestCaseFullPath(string testCaseName)
     {
       string result = Path.Combine(GetTestCasesDir(), testCaseName);
@@ -369,7 +393,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
     protected string GetTestCaseResultFullPath(string testCaseName)
     {
-      string result = Path.Combine(GetTestCasesDir(), testCaseName);
+      string result = Path.Combine(GetTestCasesResultDir(), testCaseName);
       result = Path.ChangeExtension(result, GetTestCaseResultFileExtension());
       return Path.GetFullPath(result);
     }
