@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Set up the environment. Needed before building or starting.
+
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='macos'
+fi
+
+if [[ $platform == 'linux' ]]; then
+    export MONO_PATH="$MONO_PATH:/usr/lib/cli/gtk-sharp-2.0/:/usr/lib/cli/gdk-sharp-2.0/:/usr/lib/cli/pango-sharp-2.0/"
+    export MONO_PATH="$MONO_PATH:/usr/lib/cli/glib-sharp-2.0/:/usr/lib/cli/glade-sharp-2.0/:/usr/lib/cli/atk-sharp-2.0/"
+    EXE_DIR=`dirname $0`
+    $MONO_FRAMEWORK/bin/mono $MONO_OPTIONS $EXE_DIR/SolidIDE.exe "$@"
+elif [[ $platform == 'macos' ]]; then
+    MONO_FRAMEWORK=/Library/Frameworks/Mono.framework/Versions/Current/
+    export DYLD_FALLBACK_LIBRARY_PATH="$DYLD_FALLBACK_LIBRARY_PATH:$MONO_FRAMEWORK/lib:/usr/local/lib:/usr/lib"
+    export MONO_PATH="$MONO_PATH:$MONO_FRAMEWORK/lib/mono/gtk-sharp-2.0:$MONO_FRAMEWORK/lib"
+    EXE_DIR=`dirname $0`
+    $MONO_FRAMEWORK/bin/mono $MONO_OPTIONS $EXE_DIR/SolidIDE.exe "$@"
+fi
