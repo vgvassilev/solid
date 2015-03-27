@@ -100,6 +100,8 @@ namespace SolidReflector
       dockFrame.HandleSize = 4;
 
       this.ShowAll();
+
+      this.Maximize();
     }
 
     /// <summary>
