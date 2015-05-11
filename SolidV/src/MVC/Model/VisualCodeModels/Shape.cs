@@ -35,12 +35,12 @@ namespace SolidV.MVC
     
     public double Width {
       get { return Rectangle.Width; }
-      set { Rectangle = new Rectangle(Rectangle.X, Rectangle.Y, value, Height); }
+      set { rectangle = new Rectangle(Rectangle.X, Rectangle.Y, value, Height); }
     }
 
     public double Height {
       get { return Rectangle.Height; }
-      set { Rectangle = new Rectangle(Rectangle.X, Rectangle.Y, Width, value); }
+      set { rectangle = new Rectangle(Rectangle.X, Rectangle.Y, Width, value); }
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ namespace SolidV.MVC
     /// 
     public PointD Center {
       get { return new PointD(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2); }
-      set { Rectangle = new Rectangle(value.X - Width / 2, value.Y - Height / 2, Width, Height); }
+      set { rectangle = new Rectangle(value.X - Width / 2, value.Y - Height / 2, Width, Height); }
     }
 
     /// <summary>
@@ -70,7 +70,6 @@ namespace SolidV.MVC
     private Rectangle rectangle;
     public virtual Rectangle Rectangle {
       get { return rectangle; }
-      set { rectangle = value; }
     }
 
 	  private List<Shape> items;

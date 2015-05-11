@@ -102,8 +102,6 @@ namespace SolidV.MVC
       // FIXME: Very strange! The height somehow is not accurate. It is too big. 
       width = maxW;
       height = (h - 4) * LineCount;
-
-      Rectangle = new Rectangle(Location.X, Location.Y, width, height);
     }
   }
 }
