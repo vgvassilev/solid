@@ -16,37 +16,29 @@ namespace SolidV.MVC
 
     public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
-      Label label = (Label)shape;
-      ArrowShape arrow = (ArrowShape)label.Parent;
-      Glue fromGLue = arrow.FromGlue;
-      Glue toGlue = arrow.ToGlue;
+      Label lb = (Label)shape;
+      ArrowShape arrow = (ArrowShape)lb.Parent;
 
       context.Save();
       context.Matrix = shape.Matrix;
 
-      PointD p1 = (fromGLue != null) ?
-        fromGLue.TransformPointToGlobal(fromGLue.Center, context) : arrow.From.Center;
-      p1 = label.TransformPointToLocal(p1, context);
+      PointD pointFrom = (arrow.FromGlue != null) ?
+        arrow.FromGlue.TransformPointToGlobal(arrow.FromGlue.Center, context) : arrow.From.Center;
+      pointFrom = lb.TransformPointToLocal(pointFrom, context);
 
-      PointD p2 = (toGlue != null) ?
-        toGlue.TransformPointToGlobal(toGlue.Center, context) : arrow.To.Center;
-      p2 = label.TransformPointToLocal(p2, context);
+      PointD pointTo = (arrow.ToGlue != null) ?
+        arrow.ToGlue.TransformPointToGlobal(arrow.ToGlue.Center, context) : arrow.To.Center;
+      pointTo = lb.TransformPointToLocal(pointTo, context);
 
-
-
-      double x = Math.Min(p1.X, p2.X) + Math.Abs(p1.X - p2.X)/2;
-      double y = Math.Min(p1.Y, p2.Y) + Math.Abs(p1.Y - p2.Y)/2;
+      double x = Math.Min(pointFrom.X, pointTo.X) + Math.Abs(pointFrom.X - pointTo.X)/2;
+      double y = Math.Min(pointFrom.Y, pointTo.Y) + Math.Abs(pointFrom.Y - pointTo.Y)/2;
 
       PointD p = new PointD(x, y);
 
       context.MoveTo(p);
-
-      context.ShowText(label.TextLabel);
+      context.ShowText(lb.TextLabel);
 
       context.Restore();
-      if (view.Mode == ViewMode.Render) {
-        Console.WriteLine(string.Format("arrow X: {0}, arrow Y: {1}", p.X.ToString(), p.Y.ToString()));
-      }
     }
   }
 }
