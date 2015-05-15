@@ -239,7 +239,7 @@ namespace SolidIDE
     }
 
     protected virtual void PreBuild() {
-      this.Realized += new global::System.EventHandler (this.OnRealized);
+      this.Realized += new global::System.EventHandler(this.OnRealized);
     }
 
     /// <summary>
@@ -278,6 +278,7 @@ namespace SolidIDE
     }
 
     #region ISolidIDE implementation
+
     event EventHandler<EventArgs> ShutDownEvent = null;
 
     /// <summary>
@@ -380,7 +381,6 @@ namespace SolidIDE
     IServiceContainer ISolidIDE.GetServiceContainer() {
       return this.Plugins;
     }
-
 
     #endregion
   }
