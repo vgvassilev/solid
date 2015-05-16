@@ -20,7 +20,9 @@ namespace SolidV.MVC
           using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
             ViewMode oldViewMode = View.Mode;
             View.Mode = ViewMode.Select;
-            foreach (Shape shape in this.Model.GetSubModel<ShapesModel>().Shapes) {
+            //foreach (Shape shape in this.Model.GetSubModel<ShapesModel>().Shapes) {
+            for (int i = this.Model.GetSubModel<ShapesModel>().Shapes.Count - 1; i >=0; i--) {
+              Shape shape = this.Model.GetSubModel<ShapesModel>().Shapes[i];
               if (shape.IsPointInShape(new PointD(eventButton.X, eventButton.Y), context, View)) {
                 if (!selection.Selected.Contains(shape)) {
                   selection.BeginUpdate();

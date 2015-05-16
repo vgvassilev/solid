@@ -9,24 +9,31 @@ using Cairo;
 
 namespace SolidV.MVC
 {
-  public class RectangleShapeViewer : ShapeViewer
+
+  public class FocusRectangleShapeViewer : ShapeViewer
   {
-    public RectangleShapeViewer()
+    public FocusRectangleShapeViewer()
     {
     }
-    
+
     public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
       context.Rectangle(shape.Rectangle);
 
       if (view.Mode == ViewMode.Render) {
+        context.Save();
+
         context.SetSource(shape.Style.Fill);
         context.FillPreserve();
+
+        context.SetDash(new double[]{1.0, 1.0}, 0);
+        context.Operator = Operator.Over;
         context.SetSource(shape.Style.Border);
         context.Stroke();
+
+        context.Restore();
       }
     }
-    
-  }
 
+  }
 }

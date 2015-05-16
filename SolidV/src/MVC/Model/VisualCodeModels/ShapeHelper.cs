@@ -55,6 +55,25 @@ namespace SolidV.MVC
         return (T)bf.Deserialize(ms);
       }
     }
+
+    public static byte[] ToArray(this Object obj)
+    {
+      using (MemoryStream ms = new MemoryStream()) {
+        BinaryFormatter bf = new BinaryFormatter(Surrogates, CloneSC);
+        bf.Serialize(ms, obj);
+        ms.Position = 0;
+        return ms.ToArray();
+      }
+    }
+
+    public static Object FromArray(this byte[] array)
+    {
+        MemoryStream ms = new MemoryStream();
+        BinaryFormatter bf = new BinaryFormatter(Surrogates, CloneSC);
+        ms.Write(array, 0, array.Length);
+        ms.Position = 0;
+        return bf.Deserialize(ms);
+    }
   }
 }
 
