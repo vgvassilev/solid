@@ -65,6 +65,13 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode {
             sb.AppendLine("}");
             return sb.ToString();
         }
-    }
-}
 
+        public static ThreeAddressCode FromString(string code, ref StringBuilder errors)
+        {
+            // parse the string and return...
+            TACParser parser = new TACParser(code, ref errors);
+            return parser.Parse();
+        }
+
+  }
+}

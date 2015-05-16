@@ -4,10 +4,12 @@
  * For further details see the nearest License.txt
  */
 using System;
+using System.Collections.Generic;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
+//using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode;
 
 namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
@@ -43,7 +45,12 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC
         throw new ArgumentNullException ("method");
 
       var builder = new ThreeAddressCodeBuilder(source);
-      return builder.Create();
+      ThreeAddressCode tac = builder.Create();
+      //List<Triplet> nop = new List<Triplet>();
+      //ControlFlowGraphBuilder<Triplet> cfgBuilder = new ControlFlowGraphBuilder<Triplet>(source, tac.RawTriplets, nop, nop);
+      //ControlFlowGraph<Triplet> cfg = cfgBuilder.Create();
+
+      return tac;
     }
 
     public ThreeAddressCode Transform(MethodDefinition source)

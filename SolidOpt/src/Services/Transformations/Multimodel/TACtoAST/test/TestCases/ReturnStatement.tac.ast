@@ -1,0 +1,6 @@
+`<BlockStatement>
+ `<AssignmentStatement kind=Equal>
+  `<SimpleNameExpression name=V_0>
+  `<IntegerLiteral value=2>
+ `<ReturntStatement>
+  `<SimpleNameExpression name=V_0>

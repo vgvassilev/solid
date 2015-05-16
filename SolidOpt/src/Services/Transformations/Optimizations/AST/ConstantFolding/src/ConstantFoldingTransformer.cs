@@ -37,7 +37,7 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.ConstantFolding
     
     public AstMethodDefinition Optimize(AstMethodDefinition source)
     {
-      source.Block = (BlockStatement) Visit(source.Block);
+      source.CecilBlock = (BlockStatement) Visit(source.CecilBlock);
       return source;
     }
     

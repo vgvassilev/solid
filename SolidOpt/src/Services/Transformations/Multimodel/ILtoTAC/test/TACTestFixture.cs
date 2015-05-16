@@ -59,25 +59,25 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoTAC.Test
 
     [Test]
     public void CpblkAndInitblk() {
-      string testCaseName = "CpblkAndInitblk";
+      string testCaseName = GetTestCaseFullPath("CpblkAndInitblk");
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "Init", "Copy"));
     }
 
     [Test]
     public void StInd_RefLdInd_Ref() {
-      string testCaseName = "StInd_RefLdInd_Ref";
+      string testCaseName = GetTestCaseFullPath("StInd_RefLdInd_Ref");
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ByRef"));
     }
 
     [Test]
     public void Generics_ReadOnlyPrefixAndConstrainedPrefix() {
-      string testCaseName = "Generics_ReadOnlyPrefixAndConstrainedPrefix";
+      string testCaseName = GetTestCaseFullPath("Generics_ReadOnlyPrefixAndConstrainedPrefix");
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ReadOnlyAndConstrained"));
     }
 
     [Test]
     public void StInd_LdInd() {
-      string testCaseName = "StInd_LdInd";
+      string testCaseName = GetTestCaseFullPath("StInd_LdInd");
       RunTestCase(testCaseName, LoadTestCaseMethod(testCaseName, "ByRef"));
     }
 

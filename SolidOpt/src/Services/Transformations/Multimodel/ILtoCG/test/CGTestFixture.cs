@@ -58,7 +58,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
       MethodDefinition mDef = LoadTestCaseMethod(testCaseName)[0];
       CallGraph cg = new CallGraphBuilder(mDef).Create(/*maxDepth*/1);
       string[] seen = cg.ToString().Split('\n');
-      Assert.IsTrue(Validate(testCaseName, seen));
+      Assert.IsTrue(Validate(testCaseName, seen, /*testXFail*/false));
     }
 
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/

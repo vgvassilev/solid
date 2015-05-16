@@ -59,7 +59,16 @@ namespace SolidOpt.Services.Transformations.Optimizations.AST.MethodInline.Test
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/
     public void Cases(string filename)
     {
-      RunTestCase(filename, getAstMethodDef(filename));
+      // FIXME: the implementation is raw and throws many NotImplementedExceptions. Should go away
+      // once it matures.
+      AstMethodDefinition[] defs = null;
+      try {
+         defs = getAstMethodDef(filename);
+      }
+      finally {
+        RunTestCase(filename, defs);
+      }
+
     }
   }
 }

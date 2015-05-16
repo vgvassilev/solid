@@ -51,13 +51,21 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// </returns>
     protected IEnumerable GetTestCases()
     {
-      string[] testCases = Directory.GetFiles(GetTestCasesDir(), "*." + GetTestCaseFileExtension());
+      string testCasesDir = GetTestCasesDir();
+      string testCaseFileExt = GetTestCaseFileExtension();
+      List<string> testCases = new List<string>();
+      testCases.AddRange(Directory.GetFiles(testCasesDir, "*." + testCaseFileExt));
+
+      // Check if are reusing tests from somewhere else.
+      if (testCasesDir != GetTestCasesResultDir())
+        testCases.AddRange(Directory.GetFiles(GetTestCasesResultDir(), "*." + testCaseFileExt));
       HashSet<string> excludedTestCases = GetOverridenTestCases();
 
       foreach (string testCase in testCases) {
         if (!excludedTestCases.Contains(Path.GetFileNameWithoutExtension(testCase))) {
           TestCaseData data = new TestCaseData(testCase);
-          data.SetName(Path.GetFileNameWithoutExtension(testCase));
+          // Replace if more than one . in the file name, making the name IDE friendly.
+          data.SetName(Path.GetFileNameWithoutExtension(testCase).Replace('.', '_'));
           yield return data;
         }
       }
@@ -77,20 +85,22 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       System.Threading.Thread.CurrentThread.CurrentCulture =
         System.Globalization.CultureInfo.InvariantCulture; 
 
-      //FIXME: Here we do that and then reconstrunct the same path to source.
+      string testCaseFile = testCaseName;
       testCaseName = Path.GetFileNameWithoutExtension(testCaseName);
-      string testCaseFile = GetTestCaseFullPath(testCaseName);
+
       // Check whether the file exists first.
       Assert.IsTrue(File.Exists(testCaseFile),
                     String.Format("{0} does not exist.", testCaseName));
 
       string testCaseResultFile = GetTestCaseResultFullPath(testCaseName);
-      // Check whether the result file exists first.
-      Assert.IsTrue(File.Exists(testCaseResultFile),
-                    String.Format("{0} does not exist.", testCaseResultFile));
+      // If the result file is missing, ignore the test
+      bool testXFail = !File.Exists(testCaseResultFile);
+      //Assert.IsTrue(File.Exists(testCaseResultFile),
+      //              String.Format("Result file {0} does not exist.", testCaseResultFile));
 
       List<string> seen = new List<string>(); // in case of exception preventing seen to get value.
-      bool testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
+      if (directives != null) // in cases where there were no directives in the test at all.
+        testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       try {
         Transformer transformer = new Transformer();
         foreach(Source source in sources) {
@@ -107,7 +117,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
         }
       }
       finally {
-        Validate(testCaseName, seen.ToArray());
+        Validate(testCaseName, seen.ToArray(), testXFail);
       }
     }
 
@@ -127,7 +137,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
     /// What the algorithm actually produced.
     /// </param>
     /// <returns>True on success.</returns>
-    public bool Validate(string testCaseName, string[] seenLines)
+    public bool Validate(string testCaseName, string[] seenLines, bool testXFail)
     {
       string resultFile = GetTestCaseResultFullPath(testCaseName);
       string debugFile = GetTestCaseOutFullPath(testCaseName);
@@ -169,26 +179,25 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
       bool match = p.ExitCode == 0;
 
-      bool testXFail = directives.Find(d => d.Kind == TestCaseDirective.Kinds.XFail) != null;
       if (testXFail && match) {
         //errMsg += "\nUnexpected pass.";
         //Assert.Fail(errMsg);
-        Assert.Fail("\nUnexpected pass, see the output to debug");
+        Assert.Fail("\nUnexpected pass, diff file {0}", debugFile);
         return false;
       }
       else if (testXFail) {
         //errMsg += "\nExpected to fail.";
         //Assert.Ignore(errMsg);
-        Assert.Ignore("\nExpected to fail, see the output to debug");
+        Assert.Ignore("\nExpected to fail, diff file {0}", debugFile);
         return true;
       }
       else {
         if (!match) {
           // if the test wasn't expected to fail write out the what was seen so that one can diff
-          File.WriteAllLines(GetTestCaseOutFullPath(testCaseName), seenLines);
+          File.WriteAllLines(debugFile, seenLines);
         }
         //Assert.IsTrue(match, errMsg);
-        Assert.IsTrue(match, "\nTest failed, see the output to debug");
+        Assert.IsTrue(match, string.Format("\nTest failed, see {0}", debugFile));
         return match;
       }
 
@@ -343,6 +352,11 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       return Path.Combine(BuildInformation.BuildInfo.SourceDir, GetTestCaseDirOffset());
     }
 
+    protected string GetTestCasesResultDir()
+    {
+      return Path.Combine(BuildInformation.BuildInfo.SourceDir, GetTestCaseResultDirOffset());
+    }
+
     protected string GetTestCasesBuildDir()
     {
       return Path.Combine(BuildInformation.BuildInfo.BinaryDir, GetTestCaseDirOffset());
@@ -358,6 +372,17 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
       return "";
     }
 
+    /// <summary>
+    /// In cases where the test cases location differs from the result files location. This could
+    /// happen when we want to reuse tests and avoid copying them over again and again.
+    /// Defaults to GetTestCaseDirOffset().
+    /// </summary>
+    /// <returns>The test case result dir offset.</returns>
+    protected virtual string GetTestCaseResultDirOffset()
+    {
+      return GetTestCaseDirOffset();
+    }
+
     protected string GetTestCaseFullPath(string testCaseName)
     {
       string result = Path.Combine(GetTestCasesDir(), testCaseName);
@@ -367,7 +392,7 @@ namespace SolidOpt.Services.Transformations.Multimodel.Test
 
     protected string GetTestCaseResultFullPath(string testCaseName)
     {
-      string result = Path.Combine(GetTestCasesDir(), testCaseName);
+      string result = Path.Combine(GetTestCasesResultDir(), testCaseName);
       result = Path.ChangeExtension(result, GetTestCaseResultFileExtension());
       return Path.GetFullPath(result);
     }
