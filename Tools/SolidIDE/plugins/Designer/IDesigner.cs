@@ -9,6 +9,8 @@ using SolidV.MVC;
 
 namespace SolidIDE.Plugins.Designer
 {
+  public delegate void CurrentSheetChangedDelegate(ISheet sheet);
+
   public interface IDesigner : IService
   {
     #region High level interface methods
@@ -25,6 +27,8 @@ namespace SolidIDE.Plugins.Designer
 
     void AttachToolController(IController<Gdk.Event, Cairo.Context, Model> controller);
     void DetachToolController(IController<Gdk.Event, Cairo.Context, Model> controller);
+
+    event CurrentSheetChangedDelegate CurrentSheetChanged;
 
     #endregion
 

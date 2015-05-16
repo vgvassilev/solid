@@ -117,7 +117,12 @@ namespace SolidIDE.Plugins.Designer
 
     ISheet IDesigner.CurrentSheet {
       get { return Sheet; }
-      set { Sheet = value as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>; }
+      set {
+        if (Sheet != value) {
+          Sheet = value as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>;
+
+        }
+      }
     }
 
     ISheet IDesigner.AddSheet(string Label, ISheet sheet) {
@@ -157,6 +162,8 @@ namespace SolidIDE.Plugins.Designer
     Gtk.Notebook IDesigner.GetNotebook() {
       return noteBook;
     }
+
+    public event CurrentSheetChangedDelegate CurrentSheetChanged;
 
     #endregion
 
