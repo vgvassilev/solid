@@ -28,21 +28,26 @@ namespace SolidV.MVC
       context.Matrix = shape.Matrix;
 
       if (view.Mode == ViewMode.Render) {
-        context.SetSourceRGB(.19,.29,.39);
-        context.Fill();
+        context.SetSourceRGB(.31, .31, .31);
+        context.FillPreserve();
+        context.SetSourceRGB(0, 0, 0);
+        context.Stroke();
 
         if (sh.Title != null) {
           // center the title in the box
           double titleX = sh.Rectangle.X + sh.Rectangle.Width / 2 - context.TextExtents(sh.Title).Width / 2;
           double titleY = sh.Rectangle.Y - titleBoxHeight / 2 + context.TextExtents(sh.Title).Height / 2;
-          //context.SetFontSize(sh.FontSize);
-          //context.SelectFontFace("Arial", FontSlant.Normal, FontWeight.Bold) ;
+
+          context.SetSourceRGB(.15, .15, .15);
+          context.SetFontSize(sh.FontSize);
+          context.SelectFontFace("Arial", FontSlant.Normal, FontWeight.Bold) ;
           context.NewPath();
           context.MoveTo(titleX, titleY);
           context.ShowText(sh.Title);
           context.ClosePath();
         }
 
+        context.SetSourceRGB(0, 0, 0);
         context.NewPath();
         // upper right
         context.Arc(sh.Location.X + sh.Width - radius, -titleBoxHeight + sh.Location.Y + radius, radius, 270 * toRadians, 0);
