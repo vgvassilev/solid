@@ -19,21 +19,17 @@ namespace SolidV.MVC
       TextBlockShape sh = (TextBlockShape)shape;
       context.Rectangle(sh.Rectangle);
 
+      int titleBoxHeight = 25;
+      double radius = 9;
+      int textOffsetY = 5;
+      double toRadians = Math.PI / 180;
+
       context.Save();
       context.Matrix = shape.Matrix;
 
       if (view.Mode == ViewMode.Render) {
-        //double radius = sh.Height / 20;
-        double radius = 9;
-
-        int textOffsetY = 5;
-       
         context.SetSourceRGB(.19,.29,.39);
         context.Fill();
-
-
-        // Title box
-        int titleBoxHeight = 25;
 
         if (sh.Title != null) {
           // center the title in the box
@@ -46,8 +42,6 @@ namespace SolidV.MVC
           context.ShowText(sh.Title);
           context.ClosePath();
         }
-
-        double toRadians = Math.PI / 180;
 
         context.NewPath();
         // upper right
