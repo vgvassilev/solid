@@ -61,7 +61,8 @@ namespace SolidV.MVC
       return new Distance(dx,dy);
     }
 
-    public static bool IsPointInShape(this Shape shape, PointD globalPoint, Context context, IView<Context, Model> view) {
+    public static bool IsPointInShape(this Shape shape, PointD globalPoint, Context context,
+                                      IView<Context, Model> view) {
       context.Save();
       PointD point = shape.TransformPointToLocal(globalPoint, context);
       ViewMode oldViewMode = view.Mode;

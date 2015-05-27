@@ -20,6 +20,9 @@ namespace SolidV.MVC
     {
       ArrowShape sh = (ArrowShape)shape;
 
+      context.Save();
+      context.Matrix = shape.Matrix;
+
       PointD p = (sh.FromGlue != null) ?
         sh.FromGlue.TransformPointToGlobal(sh.FromGlue.Center, context) : sh.From.TransformPointToGlobal(sh.From.Center, context);
       p = sh.TransformPointToLocal(p, context);
@@ -37,6 +40,8 @@ namespace SolidV.MVC
         context.LineWidth = 1.5;
         context.Stroke();
       }
+
+      context.Restore();
     }
   }
 }

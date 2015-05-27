@@ -102,11 +102,11 @@ namespace SolidReflector.Plugins.CFGVisualizer
       if (args.definition != null) {
         // Dump the definition
         CFGPrettyPrinter.PrintPretty(args.definition, cfgTextView);
-        drawer = new CFGPrettyDrawer(drawingArea);
-
-        if (args.definition is MethodDefinition) {
+        if (args.definition is MethodDefinition)
           currentCfg = new CilToControlFlowGraph().Decompile(args.definition as MethodDefinition);
 
+        if ((drawer == null) && (currentCfg != null)) {
+          drawer = new CFGPrettyDrawer(drawingArea);
           drawer.DrawTextBlocks(currentCfg);
           if (args.module != null) {
             // Dump the module
@@ -122,8 +122,10 @@ namespace SolidReflector.Plugins.CFGVisualizer
     {
       if (currentCfg != null) {
         outputTextView.Buffer.Text = createAssemblyFromCfg(currentCfg);
-        CFGPrettyDrawer drawer = new CFGPrettyDrawer(drawingArea);
-        drawer.DrawTextBlocks(currentCfg);
+        if (drawer == null) {
+          drawer = new CFGPrettyDrawer(drawingArea);
+          drawer.DrawTextBlocks(currentCfg);
+        }
 
         simulationTextView.Buffer.Clear();
         simulationTextView.Buffer.Text = currentCfg.ToString();
