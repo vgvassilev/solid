@@ -20,9 +20,7 @@ namespace SolidV.MVC
       context.Rectangle(sh.Rectangle);
 
       int titleBoxHeight = 25;
-      double radius = 9;
       int textOffsetY = 5;
-      double toRadians = Math.PI / 180;
 
       context.Save();
       context.Matrix = shape.Matrix;
@@ -34,9 +32,11 @@ namespace SolidV.MVC
         context.Stroke();
 
         if (sh.Title != null) {
+          double titleWidth = context.TextExtents(sh.Title).Width;
+          double titleHeight = context.TextExtents(sh.Title).Height;
           // center the title in the box
-          double titleX = sh.Rectangle.X + sh.Rectangle.Width / 2 - context.TextExtents(sh.Title).Width / 2;
-          double titleY = sh.Rectangle.Y - titleBoxHeight / 2 + context.TextExtents(sh.Title).Height / 2;
+          double titleX = sh.Rectangle.X + sh.Rectangle.Width / 2 - titleWidth / 2;
+          double titleY = sh.Rectangle.Y - titleBoxHeight / 2 + titleHeight / 2;
 
           context.SetSourceRGB(.15, .15, .15);
           context.SetFontSize(sh.FontSize);
@@ -47,16 +47,45 @@ namespace SolidV.MVC
           context.ClosePath();
         }
 
+        double toRadians = Math.PI / 180;
+        // arc data
+        double xCoord, yCoord, radius, arcStart, arcEnd;
+
         context.SetSourceRGB(0, 0, 0);
         context.NewPath();
+
         // upper right
-        context.Arc(sh.Location.X + sh.Width - radius, -titleBoxHeight + sh.Location.Y + radius, radius, 270 * toRadians, 0);
+        radius = 9;
+        xCoord = sh.Location.X + sh.Width - radius;
+        yCoord = -titleBoxHeight + sh.Location.Y + radius;
+        arcStart = 270 * toRadians;
+        arcEnd = 0;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
         // lower right
-        context.Arc(sh.Location.X + sh.Width - 0, -titleBoxHeight + sh.Location.Y + titleBoxHeight - 0, 0, 0, 90 * toRadians);
+        radius = 0;
+        xCoord = sh.Location.X + sh.Width;
+        yCoord = sh.Location.Y;
+        arcStart = 0;
+        arcEnd = 90 * toRadians;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
         // lower left
-        context.Arc(sh.Location.X + 0, -titleBoxHeight + sh.Location.Y + titleBoxHeight - 0, 0, 90 * toRadians, 180 * toRadians);
+        radius = 0;
+        xCoord = sh.Location.X;
+        yCoord = sh.Location.Y;
+        arcStart = 90 * toRadians;
+        arcEnd = 180 * toRadians;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
         // upper left
-        context.Arc(sh.Location.X + radius, -titleBoxHeight + sh.Location.Y + radius, radius, 180 * toRadians, 270 * toRadians);
+        radius = 9;
+        xCoord = sh.Location.X + radius;
+        yCoord = -titleBoxHeight + sh.Location.Y + radius;
+        arcStart = 180 * toRadians;
+        arcEnd = 270 * toRadians;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
         context.ClosePath();
         context.Stroke();
 
