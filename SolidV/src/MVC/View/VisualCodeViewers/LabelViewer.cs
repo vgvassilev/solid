@@ -36,7 +36,62 @@ namespace SolidV.MVC
 
         PointD p = new PointD(x, y);
 
+        double titleWidth = context.TextExtents(lb.TextLabel).Width;
+        double titleHeight = context.TextExtents(lb.TextLabel).Height;
+
+        double titleX = p.X - titleWidth / 2;
+        double titleY = p.Y - titleHeight * 2;
+
+        double titleBoxWidth = 2 * titleWidth;
+        double titleBoxHeight = 3 * titleHeight;
+
+        double toRadians = Math.PI / 180;
+        // arc data
+        double xCoord, yCoord, radius, arcStart, arcEnd;
+
+        context.SetSourceRGB(0, 0, 0);
+        context.NewPath();
+
+        // upper right
+        radius = 5;
+        xCoord = p.X - radius + titleBoxWidth;
+        yCoord = -titleBoxHeight / 2 + p.Y + radius;
+        arcStart = 270 * toRadians;
+        arcEnd = 0;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
+        // lower right
+        radius = 5;
+        xCoord = p.X - radius + titleBoxWidth;
+        yCoord = p.Y;
+        arcStart = 0;
+        arcEnd = 90 * toRadians;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
+        // lower left
+        radius = 5;
+        xCoord = p.X + radius - titleBoxWidth / 2;
+        yCoord = p.Y;
+        arcStart = 90 * toRadians;
+        arcEnd = 180 * toRadians;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
+        // upper left
+        radius = 5;
+        xCoord = p.X + radius - titleBoxWidth / 2;
+        yCoord = -titleBoxHeight / 2 + p.Y + radius;
+        arcStart = 180 * toRadians;
+        arcEnd = 270 * toRadians;
+        context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
+
+        context.ClosePath();
+        context.SetSourceRGB(.4, .4, .4);
+        context.Stroke();
+
         context.MoveTo(p);
+        context.SetFontSize(12);
+        context.SetSourceRGB(.2, .2, .2);
+        context.SelectFontFace("Arial", FontSlant.Normal, FontWeight.Bold) ;
         context.ShowText(lb.TextLabel);
 
         context.Restore();
