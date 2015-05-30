@@ -101,7 +101,7 @@ namespace SolidV.MVC
 
       // FIXME: Very strange! The height somehow is not accurate. It is too big. 
       Width = maxW;
-      Height = (h - 4) * LineCount;
+      Height = Title.ToString() != null ? (h - 4) * LineCount + 25 : (h - 4) * LineCount;
     }
   }
 }

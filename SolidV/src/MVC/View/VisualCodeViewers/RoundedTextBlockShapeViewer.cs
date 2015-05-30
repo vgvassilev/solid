@@ -17,11 +17,12 @@ namespace SolidV.MVC
     public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
       TextBlockShape sh = (TextBlockShape)shape;
-      context.Rectangle(sh.Rectangle);
 
       int titleBoxHeight = 25;
       int textOffsetY = 5;
 
+      context.Rectangle(sh.Location.X, sh.Location.Y + titleBoxHeight, sh.Width,
+                        sh.Height - titleBoxHeight);
       context.Save();
       context.Matrix = shape.Matrix;
 
@@ -36,7 +37,7 @@ namespace SolidV.MVC
           double titleHeight = context.TextExtents(sh.Title).Height;
           // center the title in the box
           double titleX = sh.Rectangle.X + sh.Rectangle.Width / 2 - titleWidth / 2;
-          double titleY = sh.Rectangle.Y - titleBoxHeight / 2 + titleHeight / 2;
+          double titleY = sh.Rectangle.Y + titleBoxHeight / 2 + titleHeight / 2;
 
           context.SetSourceRGB(.15, .15, .15);
           context.SetFontSize(sh.FontSize);
@@ -57,7 +58,7 @@ namespace SolidV.MVC
         // upper right
         radius = 9;
         xCoord = sh.Location.X + sh.Width - radius;
-        yCoord = -titleBoxHeight + sh.Location.Y + radius;
+        yCoord = sh.Location.Y + radius;
         arcStart = 270 * toRadians;
         arcEnd = 0;
         context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
@@ -65,7 +66,7 @@ namespace SolidV.MVC
         // lower right
         radius = 0;
         xCoord = sh.Location.X + sh.Width;
-        yCoord = sh.Location.Y;
+        yCoord = titleBoxHeight + sh.Location.Y;
         arcStart = 0;
         arcEnd = 90 * toRadians;
         context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
@@ -73,7 +74,7 @@ namespace SolidV.MVC
         // lower left
         radius = 0;
         xCoord = sh.Location.X;
-        yCoord = sh.Location.Y;
+        yCoord = titleBoxHeight + sh.Location.Y;
         arcStart = 90 * toRadians;
         arcEnd = 180 * toRadians;
         context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
@@ -81,7 +82,7 @@ namespace SolidV.MVC
         // upper left
         radius = 9;
         xCoord = sh.Location.X + radius;
-        yCoord = -titleBoxHeight + sh.Location.Y + radius;
+        yCoord = sh.Location.Y + radius;
         arcStart = 180 * toRadians;
         arcEnd = 270 * toRadians;
         context.Arc(xCoord, yCoord, radius, arcStart, arcEnd);
@@ -95,7 +96,7 @@ namespace SolidV.MVC
         context.SetSourceRGB(1, 0.6, 0.2);
 
         double instrBoxHeight = 0;
-        double lineY = sh.Rectangle.Y  + 15;
+        double lineY = sh.Rectangle.Y + titleBoxHeight + 15;
         double lineX = sh.Rectangle.X + 5;
 
         foreach (string line in sh.Lines) {
