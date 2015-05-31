@@ -8,6 +8,7 @@ namespace SolidIDE
 		private global::Gtk.UIManager UIManager;
 		private global::Gtk.Action FileAction;
 		private global::Gtk.Action ExitAction;
+		private global::Gtk.Action ViewAction;
 		private global::Gtk.Action HelpAction;
 		private global::Gtk.Action AboutAction;
 		private global::Gtk.Action PluginsAction;
@@ -15,6 +16,8 @@ namespace SolidIDE
 		private global::Gtk.Action RemoveAction;
 		private global::Gtk.VBox vbox1;
 		private global::Gtk.MenuBar MainMenuBar;
+		private global::Gtk.Toolbar Toolbar;
+		private global::Gtk.Statusbar Statusbar;
 		private global::Gtk.HBox hbox1;
 		
 		protected virtual void Build ()
@@ -29,6 +32,9 @@ namespace SolidIDE
 			this.ExitAction = new global::Gtk.Action ("ExitAction", global::Mono.Unix.Catalog.GetString ("Exit"), null, "gtk-quit");
 			this.ExitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Exit");
 			w1.Add (this.ExitAction, null);
+			this.ViewAction = new global::Gtk.Action ("ViewAction", global::Mono.Unix.Catalog.GetString ("View"), null, null);
+			this.ViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("View");
+			w1.Add (this.ViewAction, null);
 			this.HelpAction = new global::Gtk.Action ("HelpAction", global::Mono.Unix.Catalog.GetString ("Help"), null, null);
 			this.HelpAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Help");
 			w1.Add (this.HelpAction, null);
@@ -52,7 +58,7 @@ namespace SolidIDE
 			// Container child MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox ();
 			this.vbox1.Name = "vbox1";
-			this.vbox1.Spacing = 6;
+			this.vbox1.Spacing = 0;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString ("<ui><menubar name='MainMenuBar'><menu name='FileAction' action='FileAction'><menuitem name='ExitAction' action='ExitAction'/></menu><menu name='PluginsAction' action='PluginsAction'><menuitem name='AddAction' action='AddAction'/><menuitem name='RemoveAction' action='RemoveAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
 			this.MainMenuBar = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/MainMenuBar")));
@@ -63,12 +69,31 @@ namespace SolidIDE
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
+			this.UIManager.AddUiFromString ("<ui><toolbar name='Toolbar'/></ui>");
+			this.Toolbar = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/Toolbar")));
+			this.Toolbar.Name = "Toolbar";
+			this.Toolbar.ShowArrow = false;
+			this.vbox1.Add (this.Toolbar);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.Toolbar]));
+			w3.Position = 1;
+			w3.Expand = false;
+			w3.Fill = false;
+			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
+			this.hbox1.Spacing = 0;
 			this.vbox1.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
-			w3.Position = 1;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
+			w4.Position = 2;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.Statusbar = new global::Gtk.Statusbar ();
+			this.Statusbar.Name = "Statusbar";
+			this.Statusbar.Spacing = 6;
+			this.vbox1.Add (this.Statusbar);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.Statusbar]));
+			w5.Position = 3;
+			w5.Expand = false;
+			w5.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

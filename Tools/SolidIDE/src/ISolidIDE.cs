@@ -28,8 +28,8 @@ namespace SolidIDE
     /// Gets the current user configuration directory.
     /// </summary>
     /// <description>
-    /// On Unix it is /home/<user>/.config/SolidIDE
-    /// On Mac it is /Users/<user>/.config/SolidIDE
+    /// On Unix it is /home/&lt;user&gt;/.config/SolidIDE
+    /// On Mac it is /Users/&lt;user&gt;/.config/SolidIDE
     /// On Windows it is in AppData
     /// </description>
     /// <returns>
@@ -56,6 +56,15 @@ namespace SolidIDE
     /// </returns>
     /// 
     Gtk.MenuBar GetMainMenu();
+
+    /// <summary>
+    /// Gets the application toolbar.
+    /// </summary>
+    /// <returns>
+    /// The toolbar.
+    /// </returns>
+    /// 
+    Gtk.Toolbar GetToolbar();
 
     /// <summary>
     /// Gets the currently loaded plugins in the application.
@@ -85,5 +94,21 @@ namespace SolidIDE
     /// <param name="menuNames">Last param is menu item name, other are sub menu path names.</param>
     /// <typeparam name="MenuItemType">The type of menu item.</typeparam>
     MenuItemType GetMenuItem<MenuItemType>(params string[] menuNames) where MenuItemType : Gtk.MenuItem, new();
+
+    /// <summary>
+    /// Gets the toolbar item.
+    /// </summary>
+    /// <returns>The toolbar item.</returns>
+    /// <param name="toolbarNames">Last param is toolbar item name, other are sub toolbar groups.</param>
+    /// <typeparam name="ToolbarItemType">The type of toolbar item.</typeparam>
+    ToolItemType GetToolbarItem<ToolItemType>(params string[] toolbarNames) where ToolItemType : Gtk.ToolItem, new();
+
+    /// <summary>
+    /// Gets the toolbar item.
+    /// </summary>
+    /// <returns>The toolbar item.</returns>
+    /// <param name="newItem">New item.</param>
+    /// <param name="toolbarNames">Toolbar names.</param>
+    Gtk.ToolItem GetToolbarItem(Gtk.ToolItem newItem, params string[] toolbarNames);
   }
 }

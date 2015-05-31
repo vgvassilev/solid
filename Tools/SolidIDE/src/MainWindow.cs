@@ -109,6 +109,7 @@ namespace SolidIDE
       dockFrame.CurrentLayout = "BasicLayout";
       dockFrame.HandlePadding = 0;
       dockFrame.HandleSize = 4;
+      dockFrame.Spacing = 0;
 
       this.ShowAll();
     }
@@ -319,6 +320,10 @@ namespace SolidIDE
       return this.MainMenuBar;
     }
 
+    Gtk.Toolbar ISolidIDE.GetToolbar() {
+      return this.Toolbar;
+    }
+
     /// <summary>
     /// Gets the main window (MainWindow).
     /// </summary>
@@ -372,6 +377,20 @@ namespace SolidIDE
         }
       }
       return item as MenuItemType;
+    }
+
+    ToolItemType ISolidIDE.GetToolbarItem<ToolItemType>(params string[] toolbarNames) {
+      //TODO: Find for existing toolbar item
+      Gtk.ToolItem item = new ToolItemType();
+      item.Name = toolbarNames[0];
+      this.Toolbar.Add(item);
+      return item as ToolItemType;
+    }
+
+    Gtk.ToolItem ISolidIDE.GetToolbarItem(Gtk.ToolItem newItem, params string[] toolbarNames) {
+      //TODO: Find for existing toolbar item
+      this.Toolbar.Add(newItem);
+      return newItem;
     }
 
     void ISolidIDE.DisableQuit(bool disable) {
