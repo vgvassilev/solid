@@ -31,7 +31,7 @@ namespace SolidV.MVC
     public ConnectorShape(Shape from, Glue fromGlue, Shape to, Glue toGlue): base(from, to)
     {
       this.fromGlue = fromGlue; 
-      this.toGlue = toGlue; 
+      this.toGlue = toGlue;
     }
   }
 }

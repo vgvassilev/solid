@@ -5,6 +5,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cairo;
 
 namespace SolidV.MVC
@@ -17,7 +18,7 @@ namespace SolidV.MVC
 
     public ConnectorDragController(Model model, IView<Context, Model> view) : base(model, view) {}
 
-    private Glue CheckGlues(PointD point, Context context, params Shape[] glueShapes)
+    private Glue CheckGlues(PointD point, Context context, params Glue[] glueShapes)
     {
       foreach (Shape g in glueShapes) {
         if (g != null && g is Glue && g.IsPointInShape(point, context, View)) return g as Glue;
@@ -25,7 +26,7 @@ namespace SolidV.MVC
       return null;
     }
 
-    private Glue CheckGlues(PointD point, Context context, List<Shape> glueShapes)
+    private Glue CheckGlues(PointD point, Context context, List<Glue> glueShapes)
     {
       foreach (Shape g in glueShapes) {
         if (g != null && g is Glue && g.IsPointInShape(point, context, View)) return g as Glue;
@@ -52,10 +53,13 @@ namespace SolidV.MVC
                   ConnectorShape interDragConnector = dragConnector.DeepCopy();
                   interState.Interaction.Add(interDragConnector);
                   Glue interDragGlue = dragGlue.DeepCopy();
-                  if (dragGlue == dragConnector.FromGlue)
+                  if (dragGlue == dragConnector.FromGlue) {
                     interDragConnector.FromGlue = interDragGlue;
-                  else
+                    interState.Interaction.AddRange(interDragConnector.From.Glues());
+                  } else {
                     interDragConnector.ToGlue = interDragGlue;
+                    interState.Interaction.AddRange(interDragConnector.To.Glues());
+                  }
                   interDragGlue.Parent = null;
                   interDragGlue.Matrix.InitIdentity();
                   interDragGlue.Center = new PointD(eventButton.X, eventButton.Y);
@@ -63,7 +67,7 @@ namespace SolidV.MVC
                   this.Model.EndUpdate();
                   //
                   return true;
-                }
+                } 
               }
             }
           }
@@ -74,14 +78,14 @@ namespace SolidV.MVC
           if (dragGlue != null) {
             using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
               foreach (Shape shape in this.Model.GetSubModel<ShapesModel>().Shapes) {
-                List<Shape> glues = new List<Shape>();
-                foreach (Shape subShape in shape.Items) {
-                  if (subShape is Glue) glues.Add(subShape);
-                }
+                List<Glue> glues = shape.Glues().ToList<Glue>();
+                //List<Shape> glues = new List<Shape>();
+                //foreach (Shape subShape in shape.Items) {
+                //  if (subShape is Glue) glues.Add(subShape);
+                //}
                 Glue g = CheckGlues(new PointD(eventButton.X, eventButton.Y), context, glues);
                 if (g != null) {
                   this.Model.BeginUpdate();
-                  
                   if (dragGlue == dragConnector.FromGlue) {
                     dragConnector.FromGlue = g;
                     dragConnector.From = g.Parent;
@@ -89,7 +93,6 @@ namespace SolidV.MVC
                     dragConnector.ToGlue = g;
                     dragConnector.To = g.Parent;
                   }
-
                   this.Model.EndUpdate();
 
                   break;
