@@ -9,7 +9,7 @@ using Cairo;
 
 namespace SolidV.MVC
 {
-  public class ShapeViewer : Viewer<Context, Model>
+  public class ShapeViewer : Viewer<Context, Model>, SolidOpt.Services.IService
   {
     public ShapeViewer()
     {
