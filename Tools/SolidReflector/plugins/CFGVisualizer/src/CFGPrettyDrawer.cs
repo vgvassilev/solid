@@ -21,8 +21,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     ShapesModel scene = new ShapesModel();
     SelectionModel selection = new SelectionModel();
     View<Context, Model> view = new View<Context, Model>();
-    CompositeController<Gdk.Event, Context, Model> controller = new CompositeController<Gdk.Event,
-                                                                                Context, Model>();
+    CompositeController<Gdk.Event, Context, Model> controller;
 
     private InteractionStateModel interaction = new InteractionStateModel();
 
@@ -48,12 +47,13 @@ namespace SolidReflector.Plugins.CFGVisualizer
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
       view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
-      view.Viewers.Add(typeof(BezierCurvedArrowShape), new BezierCurvedArrowShapeViewer());
-      view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
+      view.Viewers.Add(typeof(Label), new LabelViewer());
+      view.Viewers.Add(typeof(TextBlockShape), new RoundedTextBlockShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
       view.Viewers.Add(typeof(Glue), new GlueViewer());
       view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
 
+      controller = new CompositeController<Gdk.Event, Context, Model>(model, view);
       controller.SubControllers.Add(new ShapeSelectionController(model, view));
       ChainController<Gdk.Event, Context, SolidV.MVC.Model> cc = 
         new ChainController<Gdk.Event, Context, SolidV.MVC.Model>();
@@ -104,6 +104,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
         return;
       
       ArrowShape arrow = null;
+      string labelText = "";
       // When autoSize is on the rectangle parameter will be 'ignored'.
       TextBlockShape blockShape = new TextBlockShape(new Rectangle(1,1,50,50), /*autosize*/true);
       blockShape.Title = String.Format("Block Name: {0}", basicBlock.Name);
@@ -113,6 +114,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
       
       ConnectorGluePoint gluePointStart = null;
       ConnectorGluePoint gluePointEnd = null;
+
+      SolidV.MVC.Label lb = null;
 
       foreach (BasicBlock<Instruction> successor in basicBlock.Successors) {
         DrawBasicBlock(successor, ref visited);
@@ -128,7 +131,24 @@ namespace SolidReflector.Plugins.CFGVisualizer
         gluePointEnd.Parent = visited[successor];
         gluePointStart.Parent = visited[basicBlock];
 
-        scene.Shapes.Add(arrow);
+        switch (basicBlock.Last.OpCode.FlowControl) {
+          case FlowControl.Cond_Branch:
+            if ((basicBlock.Last.Operand as Instruction).Offset == successor.First.Offset)
+              labelText = "IfTrue";
+            else
+              labelText = "IfFalse";
+            break;
+          default:
+            labelText = "branch";
+            break;
+        }
+
+        lb = new SolidV.MVC.Label(arrow, labelText);
+        lb.Parent = arrow;
+        arrow.Items.Add(lb);
+
+        blockShape.Items.Add(arrow);
+
         visited[basicBlock].Items.Add(gluePointStart);
         visited[successor].Items.Add(gluePointEnd);
       }

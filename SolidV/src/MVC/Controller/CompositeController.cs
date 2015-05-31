@@ -23,7 +23,8 @@ namespace SolidV.MVC
     public override bool HandleEvent(Event evnt) {
       bool result = false;
       foreach (IController<Event, C, M> controller in SubControllers) {
-        if (controller.HandleEvent(evnt)) result = true;
+        if (controller.HandleEvent(evnt))
+          result = true;
       }
       return result;
     }

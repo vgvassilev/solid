@@ -51,14 +51,20 @@ namespace SolidOpt.Services.Transformations.Multimodel.ILtoCG.Test
       return testCasesDirCache;
     }
 
+    // FIXME: Enable again when PR#11 is fixed
     [Test]
     public void TwoSystemCalls()
     {
+      /*
       string testCaseName = "TwoSystemCalls";
       MethodDefinition mDef = LoadTestCaseMethod(testCaseName)[0];
-      CallGraph cg = new CallGraphBuilder(mDef).Create(/*maxDepth*/1);
+      const int maxDepth = 1;
+      CallGraph cg = new CallGraphBuilder(mDef).Create(maxDepth);
       string[] seen = cg.ToString().Split('\n');
-      Assert.IsTrue(Validate(testCaseName, seen, /*testXFail*/false));
+      bool testXfail = false;
+      Assert.IsTrue(Validate(testCaseName, seen, testXFail));
+      */
+      Assert.Ignore("Reenable when PR#11 is resolved.");
     }
 
     [Test, TestCaseSource("GetTestCases")] /*Comes from the base class*/

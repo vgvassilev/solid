@@ -17,6 +17,12 @@ namespace SolidV.MVC
   [Serializable]
   public class RelationShape : Shape
   {
+    private Shape label = null;
+    public Shape Label {
+      get { return label; }
+      set { label = value; }
+    }
+
     public List<Shape> related = new List<Shape>();
     public List<Shape> Related {
       get { return related; }

@@ -31,12 +31,24 @@ namespace SolidV.MVC
           lastX = firstX;
           lastY = firstY;
           //
-          InteractionStateModel interState = this.Model.GetSubModel<InteractionStateModel>();
-          this.Model.BeginUpdate();
-          interState.Interaction.AddRange((List<Shape>)this.Model.GetSubModel<SelectionModel>().Selected.DeepCopy());
-          this.Model.EndUpdate();
+          using (Context context = Gdk.CairoHelper.Create(evnt.Window)) {
+            ViewMode oldViewMode = View.Mode;
+            View.Mode = ViewMode.Select;
+            foreach (Shape shape in this.Model.GetSubModel<SelectionModel>().Selected) {
+              if (shape.IsPointInShape(new PointD(eventButton.X, eventButton.Y), context, View)) {
+                InteractionStateModel interState = this.Model.GetSubModel<InteractionStateModel>();
+                this.Model.BeginUpdate();
+                interState.Interaction.AddRange((List<Shape>)this.Model.GetSubModel<SelectionModel>().Selected.DeepCopy());
+                this.Model.EndUpdate();
+                View.Mode = oldViewMode;
+                return true;
+              }
+            }
+            View.Mode = oldViewMode;
+          }
           //
-          return true;
+          isDragging = false;
+          return false;
         } else if (eventButton.Type == Gdk.EventType.ButtonRelease) {
           if (isDragging) {
             isDragging = false;
@@ -94,4 +106,3 @@ namespace SolidV.MVC
     }
   }
 }
-

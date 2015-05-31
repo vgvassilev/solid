@@ -94,7 +94,7 @@ namespace DataMorphose.Plugins.Visualizer
       nbLeftDock.Add(scroll);;
       
       this.propertyGrid = new SolidV.Gtk.InspectorGrid.InspectorGrid();
-      nbLeftDock.AppendPage(propertyGrid, new Label("Properties"));
+      nbLeftDock.AppendPage(propertyGrid, new Gtk.Label("Properties"));
       nbLeftDock.ShowAll();
     }
 

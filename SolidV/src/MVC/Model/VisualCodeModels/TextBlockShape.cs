@@ -100,10 +100,8 @@ namespace SolidV.MVC
       layout.GetPixelSize(out w, out h);
 
       // FIXME: Very strange! The height somehow is not accurate. It is too big. 
-      width = maxW;
-      height = (h - 4) * LineCount;
-
-      Rectangle = new Rectangle(Location.X, Location.Y, width, height);
+      Width = maxW;
+      Height = Title.ToString() != null ? (h - 4) * LineCount + 25 : (h - 4) * LineCount;
     }
   }
 }
