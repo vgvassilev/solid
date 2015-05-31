@@ -11,11 +11,10 @@ using SolidIDE;
 namespace SolidIDE.Domains
 {
   /// <summary>
-  /// Exposes methods and events a domain has to implement in order to be compatible with
-  /// the SolidIDE's Domains
+  /// Universe domain
   /// </summary>
   /// 
-  public interface IDomain
+  public interface IUniverseDomain : IDomain
   {
   }
 

@@ -19,21 +19,14 @@ namespace SolidIDE.Plugins.Toolbox
       set { newShape = value; }
     }
 
-    private IDesigner designer;
-    public IDesigner Designer {
-      get { return designer; }
-      set { designer = value; }
-    }
-
     public AddNewShapeCommand() {}
 
-    public AddNewShapeCommand(IDesigner designer, Shape newShape) {
-      this.designer = designer;
+    public AddNewShapeCommand(Shape newShape) {
       this.newShape = newShape;
     }
 
     public virtual void Do() {
-      designer.AddShapes(NewShape.DeepCopy());
+      Toolbox.designer.AddShapes(NewShape.DeepCopy());
     }
   }
 
