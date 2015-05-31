@@ -23,6 +23,11 @@
         <property name="StockId">gtk-quit</property>
         <signal name="Activated" handler="OnExitActionActivated" />
       </action>
+      <action id="ViewAction">
+        <property name="Type">View</property>
+        <property name="Label" translatable="yes">View</property>
+        <property name="ShortLabel" translatable="yes">View</property>
+      </action>
       <action id="HelpAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Help</property>
@@ -58,7 +63,7 @@
     <child>
       <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
+        <property name="Spacing">0</property>
         <child>
           <widget class="Gtk.MenuBar" id="MainMenuBar">
             <property name="MemberName" />
@@ -69,6 +74,8 @@
               <node type="Menu" action="PluginsAction">
                 <node type="Menuitem" action="AddAction" />
                 <node type="Menuitem" action="RemoveAction" />
+              </node>
+              <node type="Menu" action="ViewAction">
               </node>
               <node type="Menu" action="HelpAction">
                 <node type="Menuitem" action="AboutAction" />
@@ -83,7 +90,33 @@
           </packing>
         </child>
         <child>
+            <widget class="Gtk.Toolbar" id="Toolbar">
+                <property name="MemberName" />
+                <property name="ShowArrow">False</property>
+                <node name="Toolbar" type="Toolbar" />
+            </widget>
+            <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+            </packing>
+        </child>
+        <child>
           <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Spacing">0</property>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Statusbar" id="Statusbar">
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
@@ -91,8 +124,10 @@
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">False</property>
+            <property name="Position">3</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
