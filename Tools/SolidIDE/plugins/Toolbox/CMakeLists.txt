@@ -7,6 +7,7 @@
 csharp_add_library(
   Toolbox.dll
   ${CMAKE_CURRENT_SOURCE_DIR}/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/*.png
   ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
   )
 csharp_add_dependencies(
