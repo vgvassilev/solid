@@ -19,6 +19,7 @@ csharp_add_dependencies(
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
   Mono.Posix.dll
+  Mono.Cairo.dll
   # GAC
   pkg:gtk-sharp-2.0
   System.Xml.dll
