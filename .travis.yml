@@ -48,7 +48,8 @@ script:
   - cd ../SolidIDEBuild
   - pwd
   - ../../solid/Tools/SolidIDE/configure
-  - travis_retry make -j4 -k
+#  - travis_retry make -j4 -k
+  - travis_retry make -k
 
 branches:
   only:
