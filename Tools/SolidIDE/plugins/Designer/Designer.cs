@@ -25,7 +25,7 @@ namespace SolidIDE.Plugins.Designer
     private DockItem designerDockItem;
     private Gtk.Notebook noteBook;
 
-    private Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model> Sheet;
+    private Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model> currentSheet;
     private DrawingArea Canvas;
 
     private CompositeController<Gdk.Event, Cairo.Context, Model> controller;
@@ -78,6 +78,7 @@ namespace SolidIDE.Plugins.Designer
       view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
       view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
+      view.Viewers.Add(typeof(DiamondShape), new DiamondShapeViewer());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
       view.Viewers.Add(typeof(BezierCurvedArrowShape), new BezierCurvedArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
@@ -85,8 +86,6 @@ namespace SolidIDE.Plugins.Designer
       view.Viewers.Add(typeof(Glue), new GlueViewer());
       view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
       view.Viewers.Add(typeof(FocusRectangleShape), new FocusRectangleShapeViewer());
-
-      //scene.Shapes.Add(new RectangleShape(new Rectangle(0,0,100,50)));
 
       controller.SubControllers.Add(new ShapeSelectionController(model, view));
       chainController = new ChainController<Gdk.Event, Cairo.Context, Model>();
@@ -110,23 +109,23 @@ namespace SolidIDE.Plugins.Designer
     #region IDesigner
 
     void IDesigner.AddShapes(params Shape[] shapes) {
-      Sheet.Model.BeginUpdate();
-      Sheet.Model.GetSubModel<ShapesModel>().Shapes.AddRange(shapes);
-      Sheet.Model.EndUpdate();
+      currentSheet.Model.BeginUpdate();
+      currentSheet.Model.GetSubModel<ShapesModel>().Shapes.AddRange(shapes);
+      currentSheet.Model.EndUpdate();
     }
 
-    ISheet IDesigner.CurrentSheet {
-      get { return Sheet; }
+    public ISheet CurrentSheet {
+      get { return currentSheet; }
       set {
-        if (Sheet != value) {
-          Sheet = value as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>;
-
+        if (currentSheet != value) {
+          currentSheet = value as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>;
+          //
         }
       }
     }
 
     ISheet IDesigner.AddSheet(string Label, ISheet sheet) {
-      if (this.Sheet == null) {
+      if (this.currentSheet == null) {
         Canvas = new DrawingArea();
         Canvas.AddEvents((int)Gdk.EventMask.ButtonPressMask);
         Canvas.AddEvents((int)Gdk.EventMask.ButtonReleaseMask);
@@ -138,7 +137,9 @@ namespace SolidIDE.Plugins.Designer
         Canvas.MotionNotifyEvent += HandleMotionNotifyEvent;
         Gtk.Drag.DestSet(
           Canvas,
-          DestDefaults.All, new Gtk.TargetEntry[] { new Gtk.TargetEntry("application/x-solidide.shape", Gtk.TargetFlags.App, 0) },
+          DestDefaults.All, new Gtk.TargetEntry[] {
+            new Gtk.TargetEntry("application/x-solidide.shape", Gtk.TargetFlags.App, 0)
+          },
           Gdk.DragAction.Copy
         );
         Canvas.DragDataReceived += HandleCanvasDragDataReceived;
@@ -146,7 +147,7 @@ namespace SolidIDE.Plugins.Designer
         noteBook.AppendPage(Canvas, new Gtk.Label(Label));
         noteBook.ShowAll(); //Canvas.Show();
       }
-      this.Sheet = sheet as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>;
+      CurrentSheet = sheet as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>;
       return sheet;
     }
 
@@ -174,22 +175,22 @@ namespace SolidIDE.Plugins.Designer
 
     private void HandleButtonPressEvent(object o, Gtk.ButtonPressEventArgs args) {
       Canvas.GrabFocus();
-      Sheet.Controller.HandleEvent(args.Event);
+      currentSheet.Controller.HandleEvent(args.Event);
     }
 
     private void HandleMotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args)
     {
-      Sheet.Controller.HandleEvent(args.Event);
+      currentSheet.Controller.HandleEvent(args.Event);
     }
 
     private void HandleButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args)
     {
-      Sheet.Controller.HandleEvent(args.Event);
+      currentSheet.Controller.HandleEvent(args.Event);
     }
 
     private void HandleExposeEvent(object o, Gtk.ExposeEventArgs args) {
       using (Cairo.Context context = Gdk.CairoHelper.Create((o as DrawingArea).GdkWindow)) {
-        Sheet.View.Draw(context, Sheet.Model);
+        currentSheet.View.Draw(context, currentSheet.Model);
       }
     }
 
@@ -207,9 +208,11 @@ namespace SolidIDE.Plugins.Designer
     {
       if (args.SelectionData.Target.Name == "application/x-solidide.shape") {
         Shape shape = (Shape)args.SelectionData.Data.FromArray();
-        shape.Matrix.Translate(args.X, args.Y);
-        (this as IDesigner).AddShapes(shape);
-        Gtk.Drag.Finish(args.Context, true, false, args.Time);
+        if (shape != null) {
+          shape.Matrix.Translate(args.X, args.Y);
+          (this as IDesigner).AddShapes(shape);
+          Gtk.Drag.Finish(args.Context, true, false, args.Time);
+        }
       }
 
       Gtk.Drag.Finish(args.Context, false, false, args.Time);
