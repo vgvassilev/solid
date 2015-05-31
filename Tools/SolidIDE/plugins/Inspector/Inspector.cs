@@ -28,6 +28,7 @@ namespace SolidIDE.Plugins.Inspector
     private SolidV.Gtk.InspectorGrid.InspectorGrid inspectorGrid;
 
     private SelectionModel currentSelectionModel;
+    private ShapesModel currentShapeModel;
 
     #region IPlugin implementation
 
@@ -40,6 +41,8 @@ namespace SolidIDE.Plugins.Inspector
       Gtk.Viewport inspectorGridViewport = new Gtk.Viewport();
       inspectorGridScrollWindow.Add(inspectorGridViewport);
       inspectorGrid = new SolidV.Gtk.InspectorGrid.InspectorGrid();
+      inspectorGrid.ShowToolbar = false;
+      inspectorGrid.Changed += HandleInspectorGridChanged;
       inspectorGridViewport.Add(inspectorGrid);
       inspectorGridScrollWindow.ShowAll();
 
@@ -55,6 +58,7 @@ namespace SolidIDE.Plugins.Inspector
       IServiceContainer plugins = solidIDE.GetServiceContainer();
       IDesigner designer = plugins.GetService<IDesigner>();
       designer.CurrentSheetChanged += HandleDesignerCurrentSheetChanged;
+      HandleDesignerCurrentSheetChanged(designer.CurrentSheet);
 
       // Menu
       var viewMenuItem = solidIDE.GetMenuItem<Gtk.ImageMenuItem>("View");
@@ -85,12 +89,25 @@ namespace SolidIDE.Plugins.Inspector
     }
 
     protected void HandleDesignerCurrentSheetChanged(ISheet sheet) {
-      SelectionModel selection = (sheet as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>).Model.GetSubModel<SelectionModel>();
-      if (selection != currentSelectionModel) {
+      if (currentSelectionModel != null) {
         currentSelectionModel.ModelChanged -= HandleSelectionModelChanged;
+        currentSelectionModel = null;
+        currentShapeModel.ModelChanged -= HandleShapeModelModelChanged;
+        currentShapeModel = null;
       }
-      currentSelectionModel = selection;
-      currentSelectionModel.ModelChanged += HandleSelectionModelChanged;  
+      if (sheet != null) {
+        currentSelectionModel = (sheet as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>)
+          .Model.GetSubModel<SelectionModel>();
+        currentSelectionModel.ModelChanged += HandleSelectionModelChanged;
+        currentShapeModel = (sheet as Sheet<Gdk.Event, Cairo.Context, SolidV.MVC.Model>)
+          .Model.GetSubModel<ShapesModel>();
+        currentShapeModel.ModelChanged += HandleShapeModelModelChanged;
+      }
+    }
+
+    protected void HandleShapeModelModelChanged(object model) {
+      inspectorGrid.Refresh();
+      inspectorGrid.QueueDraw();
     }
 
     protected void HandleSelectionModelChanged(object model) {
@@ -99,10 +116,15 @@ namespace SolidIDE.Plugins.Inspector
         var selected = selectionModel.Selected[0];
         // FIXME: Handle when more than one.
         inspectorGrid.CurrentObject = selected;
-        //inspectorGrid.Populate();
       } else {
-        inspectorGrid.CurrentObject = null;
+        inspectorGrid.CurrentObject = new object();
       }
     }
+
+    protected void HandleInspectorGridChanged(object sender, EventArgs e)
+    {
+      //
+    }
+
   }
 }
