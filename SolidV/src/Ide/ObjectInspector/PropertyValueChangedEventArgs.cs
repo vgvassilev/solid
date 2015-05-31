@@ -16,7 +16,7 @@ namespace SolidV.Gtk.InspectorGrid
     private object newValue;
 
     public InspectorValueChangedEventArgs(PropertyDescriptor changedItem, object oldValue, 
-                                                                                  object newValue)
+                                                                          object newValue)
     {
       this.changedItem = changedItem;
       this.oldValue = oldValue;

@@ -22,7 +22,11 @@ namespace SolidV.Gtk.InspectorGrid.InspectorEditors
     protected override void Initialize()
     {
       IComponent comp = Instance as IComponent;
-      evtBind =(IEventBindingService) comp.Site.GetService(typeof(IEventBindingService));
+      if (comp != null) {
+        evtBind = (IEventBindingService)comp.Site.GetService(typeof(IEventBindingService));
+      } else {
+        evtBind = null;
+      }
       base.Initialize();
     }
     

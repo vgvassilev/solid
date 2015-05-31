@@ -65,19 +65,20 @@ namespace SolidV.Gtk.InspectorGrid
       catButton = new RadioButton((Gtk.RadioButton)null);
       catButton.DrawIndicator = false;
       catButton.Relief = ReliefStyle.None;
-//      Gdk.Pixbuf pixbuf = null;
-//      try {
-//        pixbuf = new Gdk.Pixbuf(typeof(InspectorGrid).Assembly, "MonoDevelop.Components.InspectorGrid.SortByCat.png");
-//      } catch(Exception e) {
-//        LoggingService.LogError("Can't create pixbuf from resource: MonoDevelop.Components.InspectorGrid.SortByCat.png", e);
-//      }
-//      if(pixbuf != null) {
-//        catButton.Image = new Gtk.Image(pixbuf);
-//        catButton.Image.Show();
-//      }
-//      catButton.TooltipText = GettextCatalog.GetString("Sort in categories");
-//      catButton.Toggled += new EventHandler(toolbarClick);
-//      toolbar.Insert(catButton, 0);
+      //Gdk.Pixbuf pixbuf = null;
+      //try {
+        //pixbuf = new Gdk.Pixbuf(typeof(InspectorGrid).Assembly, "MonoDevelop.Components.InspectorGrid.SortByCat.png");
+      Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(typeof(InspectorGrid).Assembly, "Ide.ObjectInspector.GrpoutByCategory.png");
+      //} catch(Exception e) {
+        //LoggingService.LogError("Can't create pixbuf from resource: MonoDevelop.Components.InspectorGrid.SortByCat.png", e);
+      //}
+      //if(pixbuf != null) {
+        catButton.Image = new Gtk.Image(pixbuf);
+        catButton.Image.Show();
+      //}
+      catButton.TooltipText = "Sort in categories"; //GettextCatalog.GetString("Sort in categories");
+      catButton.Toggled += new EventHandler(toolbarClick);
+      toolbar.Insert(catButton, 0);
       
       alphButton = new RadioButton(catButton);
       alphButton.DrawIndicator = false;
