@@ -330,7 +330,7 @@ macro( CSHARP_RESOLVE_DEPENDENCIES )
       set(separated_embd_resources)
       set(separated_copy_resources)
       foreach(s ${sources})
-        if ("${s}" MATCHES "\\.(stetic)$")
+        if ("${s}" MATCHES "(\\.stetic|\\.png)$")
           # Expand wildcards
           FILE( GLOB s_glob ${s} )
           foreach (res ${s_glob})
