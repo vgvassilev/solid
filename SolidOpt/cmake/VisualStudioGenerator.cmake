@@ -138,7 +138,7 @@ macro( CSHARP_SAVE_PROJECT proj_ix proj_guid proj_name proj_file )
       #TODO: Detect item type: Compile, EmbeddedResource, None, Folder, ...
       if (it MATCHES "CMakeLists\\.txt$")
         set(item_type "None")
-      elseif (it MATCHES "\\.stetic$")
+      elseif (it MATCHES "(\\.stetic|\\.png)$")
         set(item_type "EmbeddedResource")
       else()
         set(item_type "Compile")
