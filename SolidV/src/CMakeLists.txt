@@ -7,8 +7,10 @@ csharp_add_library(
   ${CMAKE_CURRENT_SOURCE_DIR}/Gtk/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Gdk/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/Ide/DockLibrary/Dock/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/DockLibrary/Dock/*.png
   ${CMAKE_CURRENT_SOURCE_DIR}/Ide/DockLibrary/Pads/*.cs
-  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector/*.cs   
+  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector/*.cs
+  ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector/*.png
   ${CMAKE_CURRENT_SOURCE_DIR}/Ide/ObjectInspector.Editors/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/*.cs
   ${CMAKE_CURRENT_SOURCE_DIR}/MVC/Controller/VisualCodeControllers/*.cs
@@ -23,6 +25,7 @@ csharp_add_dependencies(
   Mono.Cairo.dll
   Mono.Posix.dll
   System.Xml.dll
+  SolidOpt.Services.dll
   # Packages
   "pkg:gtk-sharp-2.0"
   System.Drawing.dll

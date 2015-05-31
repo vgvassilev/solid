@@ -37,9 +37,9 @@ namespace SolidV.Ide.Dock
     static DockItemContainer ()
     {
       try {
-        pixClose = Gdk.Pixbuf.LoadFromResource ("stock-close-12.png");
-        pixAutoHide = Gdk.Pixbuf.LoadFromResource ("stock-auto-hide.png");
-        pixDock = Gdk.Pixbuf.LoadFromResource ("stock-dock.png");
+        pixClose = Gdk.Pixbuf.LoadFromResource ("Ide.DockLibrary.Dock.stock-close-12.png");
+        pixAutoHide = Gdk.Pixbuf.LoadFromResource ("Ide.DockLibrary.Dock.stock-auto-hide.png");
+        pixDock = Gdk.Pixbuf.LoadFromResource ("Ide.DockLibrary.Dock.stock-dock.png");
       } catch (Exception) {
       }
     }
@@ -61,14 +61,14 @@ namespace SolidV.Ide.Dock
       btnDock = new Button (new Gtk.Image (pixAutoHide));
       btnDock.Relief = ReliefStyle.None;
       btnDock.CanFocus = false;
-      btnDock.WidthRequest = btnDock.HeightRequest = 17;
+      btnDock.WidthRequest = btnDock.HeightRequest = 22;
       btnDock.Clicked += OnClickDock;
       
       btnClose = new Button (new Gtk.Image (pixClose));
       btnClose.TooltipText = Catalog.GetString ("Hide");
       btnClose.Relief = ReliefStyle.None;
       btnClose.CanFocus = false;
-      btnClose.WidthRequest = btnClose.HeightRequest = 17;
+      btnClose.WidthRequest = btnClose.HeightRequest = 22;
       btnClose.Clicked += delegate {
         item.Visible = false;
       };

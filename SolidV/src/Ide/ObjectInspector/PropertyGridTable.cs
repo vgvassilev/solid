@@ -28,8 +28,8 @@ namespace SolidV.Gtk.InspectorGrid
     Gtk.Widget currentEditor;
     TableRow currentEditorRow;
     bool draggingDivider;
-    //Gdk.Pixbuf discloseDown;
-    //Gdk.Pixbuf discloseUp;
+    Gdk.Pixbuf discloseDown;
+    Gdk.Pixbuf discloseUp;
     bool heightMeasured;
 
     const int CategoryTopBottomPadding = 6;
@@ -76,8 +76,8 @@ namespace SolidV.Gtk.InspectorGrid
       CanFocus = true;
       resizeCursor = new Cursor(CursorType.SbHDoubleArrow);
       handCursor = new Cursor(CursorType.Hand1);
-//      discloseDown = Gdk.Pixbuf.LoadFromResource("disclose-arrow-down.png");
-//      discloseUp = Gdk.Pixbuf.LoadFromResource("disclose-arrow-up.png");
+      discloseDown = Gdk.Pixbuf.LoadFromResource("Ide.ObjectInspector.DiscloseArrowDown.png");
+      discloseUp = Gdk.Pixbuf.LoadFromResource("Ide.ObjectInspector.DiscloseArrowUp.png");
     }
 
     protected override void OnDestroyed()
@@ -381,9 +381,9 @@ namespace SolidV.Gtk.InspectorGrid
                             CategoryLabelColor.A);
           Pango.CairoHelper.ShowLayout(ctx, layout);
 
-          //var img = r.Expanded ? discloseUp : discloseDown;
-          //CairoHelper.SetSourcePixbuf(ctx, img, Allocation.Width - img.Width - CategoryTopBottomPadding, y +(rh - img.Height) / 2);
-          //ctx.Paint();
+          var img = r.Expanded ? discloseUp : discloseDown;
+          CairoHelper.SetSourcePixbuf(ctx, img, Allocation.Width - img.Width - CategoryTopBottomPadding, y +(rh - img.Height) / 2);
+          ctx.Paint();
 
           y += rh;
           lastCategory = r;
