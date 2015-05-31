@@ -19,6 +19,8 @@ before_script:
   - mkdir ../build/DataMorphoseBuild
   # SampleTool
   - mkdir ../build/SampleToolBuild
+  # SilidIDE
+  - mkdir ../build/SolidIDEBuild
 
 script:
   - cd ../build/SolidOptBuild/
@@ -42,6 +44,10 @@ script:
   - cd ../SampleToolBuild
   - pwd
   - ../../solid/Tools/SampleTool/configure
+  - travis_retry make -j4 -k
+  - cd ../SolidIDEBuild
+  - pwd
+  - ../../solid/Tools/SolidIDE/configure
   - travis_retry make -j4 -k
 
 branches:
