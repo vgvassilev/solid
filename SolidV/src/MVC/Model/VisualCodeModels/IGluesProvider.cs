@@ -4,12 +4,14 @@
  * For further details see the nearest License.txt
  */
 using System;
+using System.Collections.Generic;
 
 namespace SolidV.MVC
 {
-  public interface IGlue: IConstrain
+
+  public interface IGluesProvider
   {
-    //TODO: define glue interface
+    IEnumerable<Glue> GetGlues();
   }
 
 }

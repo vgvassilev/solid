@@ -7,13 +7,15 @@ using System;
 using System.Collections.Generic;
 using Cairo;
 
+using SolidOpt.Services;
+
 namespace SolidV.MVC
 {
   /// <summary>
   /// A base class for all shapes.
   /// </summary>
   [Serializable]
-  public abstract class Shape
+  public abstract class Shape: IService
   {
     private Shape parent;
     public Shape Parent {
@@ -73,7 +75,7 @@ namespace SolidV.MVC
     }
 
 	  private List<Shape> items;
-	  public List<Shape> Items {
+    public List<Shape> Items {
 		  get { return items; }
 		  set { items = value; }
 	  }
@@ -90,11 +92,18 @@ namespace SolidV.MVC
       set { Items[i] = value; }
     }
     
-    public Shape(Rectangle rect)
-    {
-      style = Style.DefaultStyle;
-      rectangle = rect;
-      items = new List<Shape>();
+    public Shape(Rectangle rect, Shape parent = null) {
+      this.style = Style.DefaultStyle;
+      this.rectangle = rect;
+      this.items = new List<Shape>();
+      this.parent = parent;
     }
+
+    public void Add(Shape subShape)
+    {
+      subShape.Parent = this;
+      Items.Add(subShape);
+    }
+
   }
 }
