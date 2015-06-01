@@ -12,7 +12,7 @@ csharp_add_library(
 csharp_add_dependencies(
   ControlFlowDomain.dll
   ${CMAKE_RUNTIME_OUTPUT_DIR}/SolidIDE.exe
-  ${CMAKE_RUNTIME_OUTPUT_DIR}/Toolbox.dll
+  ${CMAKE_RUNTIME_OUTPUT_DIR}/plugins/Toolbox.dll
   # External
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidOpt.Services.dll
   ${CMAKE_LIBRARY_OUTPUT_DIR}/SolidV.dll
