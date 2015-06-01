@@ -26,35 +26,29 @@ script:
   - cd ../build/SolidOptBuild/
   - pwd
   - ../../solid/SolidOpt/configure
-#  - travis_retry make -j4 -k
-  - travis_retry make -k
+  - travis_retry make -j4 -k
   - ctest --output-on-failure #-j4
   - cd ../SolidVBuild/
   - pwd
   - ../../solid/SolidV/configure
-#  - travis_retry make -j4 -k
-  - travis_retry make -k
+  - travis_retry make -j4 -k
   - cd ../SolidReflectorBuild/
   - pwd
   - ../../solid/Tools/SolidReflector/configure
-#  - travis_retry make -j4 -k
-  - travis_retry make -k
+  - travis_retry make -j4 -k
   - cd ../DataMorphoseBuild/
   - pwd
   - ../../solid/Tools/DataMorphose/configure
-#  - travis_retry make -j4 -k
-  - travis_retry make -k
+  - travis_retry make -j4 -k
   - ctest --output-on-failure #-j4
   - cd ../SampleToolBuild
   - pwd
   - ../../solid/Tools/SampleTool/configure
-#  - travis_retry make -j4 -k
-  - travis_retry make -k
+  - travis_retry make -j4 -k
   - cd ../SolidIDEBuild
   - pwd
   - ../../solid/Tools/SolidIDE/configure
-#  - travis_retry make -j4 -k
-  - travis_retry make -k
+  - travis_retry make -j4 -k
 
 branches:
   only:
