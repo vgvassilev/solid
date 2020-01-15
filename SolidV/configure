@@ -22,6 +22,15 @@ else
 exit 1
 fi
 
+#Find if pkg-config is installed
+PKG_EXECUTABLE=`which pkg-config`
+if [ $? -eq 0 ]; then
+  echo "pkg-config found in $PKG_EXECUTABLE"
+else
+  echo "Could not find pkg-config executable. Please run brew install pkgconfig or apt install pkgconfig or yum install cmake"
+exit 1
+fi
+
 #Get source directory
 SOURCE_DIR=`dirname $0`
 

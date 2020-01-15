@@ -14,7 +14,7 @@ namespace SolidOpt.Services.Transformations.CodeModel.ThreeAddressCode
   /// <summary>
   /// A TAC-specific token.
   /// </summary>
-  internal struct Token {
+  internal class Token {
     public enum TokenKind {
       Unknown,
       Ident,

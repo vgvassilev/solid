@@ -65,5 +65,12 @@ namespace SolidV.Cairo
       context.RelLineTo(0, 5);
       context.ClosePath();
     }
+    public static void SharpArrow(Context context) {
+      context.RelLineTo(10, 2);
+      context.RelLineTo(0, -4);
+      context.RelLineTo(-10, 2);
+      //context.ClosePath();
+    }
+    
   }
 }
