@@ -119,7 +119,7 @@ namespace SolidReflector.Plugins.CGVisualizer
         gluePointEnd = new ConnectorGluePoint(new PointD(visited[child].Location.X + visited[child].Width / 2, visited[child].Location.Y));
         
         arrow = new ArrowShape(visited[node], gluePointStart, visited[child], gluePointEnd);
-        arrow.ArrowKindHead = SolidV.Cairo.ArrowKinds.TriangleRoundArrow;
+        arrow.ArrowKindHead = SolidV.Cairo.ArrowKinds.SharpArrow;
         arrow.ArrowKindTail = SolidV.Cairo.ArrowKinds.NoArrow;
         
         gluePointEnd.Parent = visited[child];

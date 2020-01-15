@@ -125,7 +125,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
         //arrow = new ArrowShape(visited[basicBlock], gluePointStart, visited[successor], gluePointEnd);
         arrow = new BezierCurvedArrowShape(visited[basicBlock], gluePointStart, visited[successor], gluePointEnd);
-        arrow.ArrowKindHead = SolidV.Cairo.ArrowKinds.TriangleRoundArrow;
+        arrow.ArrowKindHead = SolidV.Cairo.ArrowKinds.SharpArrow;
         arrow.ArrowKindTail = SolidV.Cairo.ArrowKinds.NoArrow;
 
         gluePointEnd.Parent = visited[successor];
