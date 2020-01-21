@@ -25,7 +25,7 @@ namespace SolidReflector.Plugins.CGVisualizer
       textView.Buffer.Clear();
 
       var builder = new CallGraphBuilder(methodDefinition);
-      CallGraph callGraph = builder.Create(5);
+      CallGraph callGraph = builder.Create(2);
 
       textView.Buffer.Text = callGraph.ToString();
     }
