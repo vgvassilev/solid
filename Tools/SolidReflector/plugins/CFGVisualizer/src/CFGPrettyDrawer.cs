@@ -19,6 +19,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     Gtk.DrawingArea canvas = null;
     Model model = new Model();
     ShapesModel scene = new ShapesModel();
+    ShapesModel annotation = new ShapesModel();
     SelectionModel selection = new SelectionModel();
     View<Context, Model> view = new View<Context, Model>();
     CompositeController<Gdk.Event, Context, Model> controller;
@@ -39,6 +40,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
       model.RegisterSubModel<ShapesModel>(scene);
       model.RegisterSubModel<SelectionModel>(selection);
+      model.RegisterSubModel<ShapesModel>(annotation);
       model.RegisterSubModel<InteractionStateModel>(interaction);
       model.ModelChanged += HandleModelChanged;
 
@@ -52,6 +54,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
       view.Viewers.Add(typeof(Glue), new GlueViewer());
       view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
+      view.Viewers.Add(typeof(HeatMapShape), new HeatMapShapeViewer());
 
       controller = new CompositeController<Gdk.Event, Context, Model>(model, view);
       controller.SubControllers.Add(new ShapeSelectionController(model, view));
@@ -90,7 +93,35 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
     void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
       using (Cairo.Context context = Gdk.CairoHelper.Create(((Gtk.DrawingArea)o).GdkWindow)) {
+        context.Antialias = Antialias.Subpixel;
         view.Draw(context, model);
+      }
+
+      // PNG
+      using (var surface = new ImageSurface(Cairo.Format.ARGB32, 595, 842)) {
+        using (var context = new Context(surface)) {
+          context.Antialias = Antialias.Subpixel;
+          view.Draw(context, model);
+          surface.WriteToPng("test.png");
+        }
+      }
+
+      // PDF
+      using (var surface = new Cairo.PdfSurface("test.pdf", 595, 842 /*A4*/)) {
+        using (var context = new Cairo.Context(surface)) {
+          context.Antialias = Antialias.Subpixel;
+          view.Draw(context, model);
+          context.ShowPage();
+        }
+      }
+
+      // SVG
+      using (var surface = new Cairo.SvgSurface("test.svg", 595, 842 /*A4*/)) {
+        using (var context = new Cairo.Context(surface)) {
+          context.Antialias = Antialias.Subpixel;
+          view.Draw(context, model);
+          context.ShowPage();
+        }
       }
     }
 
@@ -111,6 +142,8 @@ namespace SolidReflector.Plugins.CFGVisualizer
       blockShape.BlockText = basicBlock.ToString();
       visited.Add(basicBlock, blockShape);
       scene.Shapes.Add(blockShape);
+//test
+      annotation.Shapes.Add(new HeatMapShape(new Rectangle(1,1,canvas.WidthRequest, canvas.HeightRequest)));
       
       ConnectorGluePoint gluePointStart = null;
       ConnectorGluePoint gluePointEnd = null;
