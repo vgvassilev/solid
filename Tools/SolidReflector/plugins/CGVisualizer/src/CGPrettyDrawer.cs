@@ -47,7 +47,7 @@ namespace SolidReflector.Plugins.CGVisualizer
       view.Viewers.Add(typeof(Model), new ModelViewer<Context>());
       view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
-      view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
+      view.Viewers.Add(typeof(EllipseShape), new RoundedRectangleShapeViewer ());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
