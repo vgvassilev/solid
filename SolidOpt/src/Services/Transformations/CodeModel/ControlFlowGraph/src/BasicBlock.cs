@@ -117,11 +117,25 @@ namespace SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph
     public override string ToString() {
       StringBuilder sb = new StringBuilder();
 
-      foreach (T instr in body) {
-        sb.AppendLine(instr.ToString());
+      if (body.Count >= 4) {
+        sb.AppendLine (body [0].ToString ());
+        sb.AppendLine (body [1].ToString ());
+        sb.AppendLine ("...");
+        sb.AppendLine (body [body.Count - 2].ToString ());
+        sb.AppendLine (body [body.Count - 1].ToString ());
+      } else if ((body.Count > 1) && (body.Count < 4)) {
+        sb.AppendLine (body [0].ToString ());
+        sb.AppendLine ("...");
+        sb.AppendLine (body [body.Count - 1].ToString ());
+      } else if (body.Count == 1) {
+        sb.AppendLine (body [0].ToString ());
       }
 
-      return sb.ToString();
+        // foreach (T instr in body) {
+        //   sb.AppendLine(instr.ToString());
+        // }
+
+        return sb.ToString();
     }
   }
 }
