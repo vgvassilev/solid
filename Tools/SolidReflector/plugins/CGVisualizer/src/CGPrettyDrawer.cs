@@ -105,8 +105,12 @@ namespace SolidReflector.Plugins.CGVisualizer
     private void DrawMethod(CGNode node, ref Dictionary<CGNode, EllipseShape> visited) {
       ArrowShape arrow = null;
       // When autoSize is on the rectangle parameter will be 'ignored'.
-      EllipseShape blockShape = new EllipseShape(new Rectangle(1,1,70,70));
-      blockShape.Title = String.Format("{0}", node.Method.Name);
+      EllipseShape blockShape = new EllipseShape(new Rectangle(1,1,180,40));
+      if (node.Method.IsConstructor) {
+        blockShape.Title = String.Format ("{0} {1}", node.Method.DeclaringType.ToString().Split('.')[node.Method.DeclaringType.ToString ().Split ('.').Length-1], node.Method.Name);
+      } else {
+        blockShape.Title = String.Format ("{0}", node.Method.Name);
+      }
       visited.Add(node, blockShape);
       scene.Shapes.Add(blockShape);
       
