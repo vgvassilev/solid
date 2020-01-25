@@ -72,7 +72,7 @@ namespace SolidV.MVC
     private Rectangle rectangle;
     public virtual Rectangle Rectangle {
       get { return rectangle; }
-	  set { rectangle = value; }
+      set { rectangle = value; }
     }
 
 	  private List<Shape> items;
