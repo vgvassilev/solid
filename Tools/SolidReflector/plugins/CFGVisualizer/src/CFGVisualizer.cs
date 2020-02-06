@@ -87,6 +87,28 @@ namespace SolidReflector.Plugins.CFGVisualizer
       simulationDock.Content = simulationVBox;
       simulationDock.DefaultVisible = true;
       simulationDock.Visible = true;
+
+
+      // TODO: Move ot plugins
+      // Menu
+      var analisisMenuItem = reflector.GetMenuItem<Gtk.ImageMenuItem>("Analysis");
+      var cyclomaticMenuItem = reflector.GetMenuItem<Gtk.ImageMenuItem> ("Analysis", "Cyclomatic Complexity");
+      cyclomaticMenuItem.Activated += CyclomaticClicked;
+      var linesofcodeMenuItem = reflector.GetMenuItem<Gtk.ImageMenuItem> ("Analysis", "Lines of code (IL)");
+      linesofcodeMenuItem.Activated += LinesOfCodeClicked;
+
+      //TODO: Implement
+      reflector.GetMenuItem<Gtk.ImageMenuItem> ("Analysis", "Depth of Class Inheritance");
+      reflector.GetMenuItem<Gtk.ImageMenuItem> ("Analysis", "Class Coupling");
+      reflector.GetMenuItem<Gtk.ImageMenuItem> ("Analysis", "Maintainability Index");
+
+      /*
+       * // Toolbar
+      var tb1 = reflector.GetToolbarItem<Gtk.SeparatorToolItem>("");
+      var cyclomaticTool = (Gtk.ToolButton)reflector.GetToolbarItem(new Gtk.ToolButton("gtk-execute"), "Calculate Cyclomatic Complexity");
+      cyclomaticTool.Clicked += CyclomaticClicked;
+      var tb2 = reflector.GetToolbarItem<Gtk.SeparatorToolItem>("");
+      */
     }
 
     void IPlugin.UnInit(object context)
@@ -248,8 +270,62 @@ namespace SolidReflector.Plugins.CFGVisualizer
       Sandbox sandbox = new Sandbox(assemblyPath, trampolineMethod.Name);
       return sandbox.SimulationMethodOutput;
     }
-  }
+
+    protected void CyclomaticClicked(object sender, EventArgs e)
+    {
+      if (currentCfg != null) {
+        int nodes = currentCfg.RawBlocks.Count;
+        int edges = 0;
+        int ifnodes = 0;
+        foreach (var block in currentCfg.RawBlocks) {
+          edges += block.Successors.Count;
+          if (block.Kind == BlockKind.Structure && block.Successors.Count > 1)
+            ifnodes++;
+        }
+
+        int cyclomaticComplexity = edges - nodes + 2; // ifnodes + 1;
+        string message;
+        if (cyclomaticComplexity < 11) message = "Good (High Testability)";
+        else if (cyclomaticComplexity < 21) message = "Average (Medium Testability)";
+        else if (cyclomaticComplexity < 41) message = "Bad (Low Testability)";
+        else message = "Very Bad (Not at all testable)";
   
+        Gtk.MessageDialog md = new Gtk.MessageDialog(mainWindow,
+          Gtk.DialogFlags.DestroyWithParent | Gtk.DialogFlags.Modal,
+          Gtk.MessageType.Info,
+          Gtk.ButtonsType.Close,
+          "Cyclomatic Complexity: {0} - {1}", cyclomaticComplexity, message);
+        md.Run();
+        md.Destroy();
+      }
+      //ControlFlowGraph<Instruction> currentCfg = null;//
+    }
+
+    protected void LinesOfCodeClicked (object sender, EventArgs e)
+    {
+      if (currentCfg != null) {
+        int liveLines = 0;
+        int allLines = currentCfg.MethodDefinition.Body.Instructions.Count;
+        foreach (var block in currentCfg.RawBlocks) {
+          Instruction i = block.First;
+          while (i != null) {
+            liveLines++;
+            i = i.Next;
+          }
+        }
+
+        Gtk.MessageDialog md = new Gtk.MessageDialog (mainWindow,
+          Gtk.DialogFlags.DestroyWithParent | Gtk.DialogFlags.Modal,
+          Gtk.MessageType.Info,
+          Gtk.ButtonsType.Close,
+          "Lines of code (IL): live={0}, all={1}", liveLines, allLines);
+        md.Run ();
+        md.Destroy ();
+      }
+      //ControlFlowGraph<Instruction> currentCfg = null;//
+    }
+  }
+
   /// <summary>
   /// Loads assembly in separate application domain with restricted permissions.
   /// Currently mono does not support CAS.

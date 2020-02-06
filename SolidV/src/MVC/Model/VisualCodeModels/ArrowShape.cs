@@ -16,7 +16,7 @@ namespace SolidV.MVC
   [Serializable]
   public class ArrowShape : ConnectorShape
   {
-    private DrawArrowDelegate arrowKindHead = ArrowKinds.TriangleRoundArrow;
+    private DrawArrowDelegate arrowKindHead = ArrowKinds.SharpArrow;
     public DrawArrowDelegate ArrowKindHead {
       get { return arrowKindHead; }
       set { arrowKindHead = value; }

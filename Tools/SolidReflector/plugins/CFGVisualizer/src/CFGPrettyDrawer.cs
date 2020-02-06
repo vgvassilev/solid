@@ -7,6 +7,7 @@ using SolidOpt.Services.Transformations.CodeModel.ControlFlowGraph;
 using SolidOpt.Services.Transformations.Multimodel.ILtoCFG;
 using SolidV.MVC;
 using Mono.Cecil.Cil;
+using SolidV.Cairo;
 
 namespace SolidReflector.Plugins.CFGVisualizer
 {
@@ -19,7 +20,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     Gtk.DrawingArea canvas = null;
     Model model = new Model();
     ShapesModel scene = new ShapesModel();
-    ShapesModel annotation = new ShapesModel();
+    AnnotationModel annotation = new AnnotationModel();
     SelectionModel selection = new SelectionModel();
     View<Context, Model> view = new View<Context, Model>();
     CompositeController<Gdk.Event, Context, Model> controller;
@@ -40,12 +41,13 @@ namespace SolidReflector.Plugins.CFGVisualizer
 
       model.RegisterSubModel<ShapesModel>(scene);
       model.RegisterSubModel<SelectionModel>(selection);
-      model.RegisterSubModel<ShapesModel>(annotation);
+      model.RegisterSubModel<AnnotationModel>(annotation);
       model.RegisterSubModel<InteractionStateModel>(interaction);
       model.ModelChanged += HandleModelChanged;
 
       view.Viewers.Add(typeof(Model), new ModelViewer<Context>());
       view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
+      view.Viewers.Add(typeof(AnnotationModel), new ShapeModelViewer());
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
       view.Viewers.Add(typeof(EllipseShape), new EllipseShapeViewer());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
@@ -62,7 +64,11 @@ namespace SolidReflector.Plugins.CFGVisualizer
         new ChainController<Gdk.Event, Context, SolidV.MVC.Model>();
       cc.SubControllers.Add(new ConnectorDragController(model, view));
       cc.SubControllers.Add(new ShapeDragController(model, view));
+      cc.SubControllers.Add(new AnnotationController(model, view));
       controller.SubControllers.Add(cc);
+
+      Shape hm = new HeatMapShape(new Rectangle(1, 1, 1000, 1000));
+      annotation.Shapes.Add(hm);
     }
 
     /// <summary>
@@ -82,7 +88,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
     }
 
     void HandleDrawingArea1MotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args)
-    {
+    { 
       controller.HandleEvent(args.Event);
     }
 
@@ -96,7 +102,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
         context.Antialias = Antialias.Subpixel;
         view.Draw(context, model);
       }
-
+/*
       // PNG
       using (var surface = new ImageSurface(Cairo.Format.ARGB32, 595, 842)) {
         using (var context = new Context(surface)) {
@@ -105,24 +111,25 @@ namespace SolidReflector.Plugins.CFGVisualizer
           surface.WriteToPng("test.png");
         }
       }
-
+*/
       // PDF
-      using (var surface = new Cairo.PdfSurface("test.pdf", 595, 842 /*A4*/)) {
+      using (var surface = new Cairo.PdfSurface("test.pdf", 595, 842)) {
         using (var context = new Cairo.Context(surface)) {
           context.Antialias = Antialias.Subpixel;
           view.Draw(context, model);
           context.ShowPage();
         }
       }
-
+/*
       // SVG
-      using (var surface = new Cairo.SvgSurface("test.svg", 595, 842 /*A4*/)) {
+      using (var surface = new Cairo.SvgSurface("test.svg", 595, 842)) {
         using (var context = new Cairo.Context(surface)) {
           context.Antialias = Antialias.Subpixel;
           view.Draw(context, model);
           context.ShowPage();
         }
       }
+*/
     }
 
     public void DrawTextBlocks(ControlFlowGraph<Instruction> cfg) {
@@ -142,9 +149,7 @@ namespace SolidReflector.Plugins.CFGVisualizer
       blockShape.BlockText = basicBlock.ToString();
       visited.Add(basicBlock, blockShape);
       scene.Shapes.Add(blockShape);
-//test
-      annotation.Shapes.Add(new HeatMapShape(new Rectangle(1,1,canvas.WidthRequest, canvas.HeightRequest)));
-      
+
       ConnectorGluePoint gluePointStart = null;
       ConnectorGluePoint gluePointEnd = null;
 

@@ -23,7 +23,7 @@ namespace SolidV.MVC
       foreach (Distance d in sh.Points) {
         context.RelLineTo(d);
       }
-      context.ArrowLineTo(sh.To.Location, ArrowKinds.TriangleRoundArrow, null);
+      context.ArrowLineTo(sh.To.Location, ArrowKinds.SharpArrow, null);
 
       if (view.Mode == ViewMode.Render) {
         //context.Color = shape.Style.FillColor;

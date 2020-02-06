@@ -59,5 +59,13 @@ namespace SolidReflector.Plugins
     /// </returns>
     /// 
     PluginServiceContainer GetPlugins();
+
+    /// <summary>
+    /// Gets the menu or menu item.
+    /// </summary>
+    /// <returns>The menu item.</returns>
+    /// <param name="menuNames">Last param is menu item name, other are sub menu path names.</param>
+    /// <typeparam name="MenuItemType">The type of menu item.</typeparam>
+    MenuItemType GetMenuItem<MenuItemType>(params string[] menuNames) where MenuItemType : Gtk.MenuItem, new();
   }
 }

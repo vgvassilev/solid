@@ -11,7 +11,7 @@ namespace SolidV.MVC
   [Serializable]
   public class Label : Shape
   {
-    private string textLabel = null;
+    private string textLabel = "";
     public string TextLabel {
       get { return textLabel; }
       set { textLabel = value; }

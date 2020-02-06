@@ -17,6 +17,7 @@ namespace SolidV.MVC
     public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
       Label lb = (Label)shape;
+      if (lb == null) return;
       ArrowShape arrow = (ArrowShape)lb.Parent;
 
       if (view.Mode == ViewMode.Render) {

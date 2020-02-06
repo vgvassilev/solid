@@ -20,10 +20,10 @@ namespace SolidReflector.Plugins.CGVisualizer
     Gtk.DrawingArea canvas = null;
     Model model = new Model();
     ShapesModel scene = new ShapesModel();
+    AnnotationModel annotation = new AnnotationModel ();
     SelectionModel selection = new SelectionModel();
     View<Context, Model> view = new View<Context, Model>();
-    CompositeController<Gdk.Event, Context, Model> controller = new CompositeController<Gdk.Event,
-    Context, Model>();
+    CompositeController<Gdk.Event, Context, Model> controller;
     private InteractionStateModel interaction = new InteractionStateModel();
 
     public CGPrettyDrawer(Gtk.DrawingArea drawingArea) {
@@ -37,28 +37,36 @@ namespace SolidReflector.Plugins.CGVisualizer
       canvas.ButtonReleaseEvent += HandleDrawingArea1ButtonReleaseEvent;
       canvas.ExposeEvent += HandleDrawingArea1ExposeEvent;
       canvas.MotionNotifyEvent += HandleDrawingArea1MotionNotifyEvent;
-      
+
       model.RegisterSubModel<ShapesModel>(scene);
       model.RegisterSubModel<SelectionModel>(selection);
+      model.RegisterSubModel<AnnotationModel> (annotation);
       model.RegisterSubModel<InteractionStateModel>(interaction);
 
       model.ModelChanged += HandleModelChanged;
       
       view.Viewers.Add(typeof(Model), new ModelViewer<Context>());
       view.Viewers.Add(typeof(ShapesModel), new ShapeModelViewer());
+      view.Viewers.Add(typeof(AnnotationModel), new ShapeModelViewer());
       view.Viewers.Add(typeof(RectangleShape), new RectangleShapeViewer());
       view.Viewers.Add(typeof(EllipseShape), new RoundedRectangleShapeViewer ());
       view.Viewers.Add(typeof(ArrowShape), new ArrowShapeViewer());
       view.Viewers.Add(typeof(TextBlockShape), new TextBlockShapeViewer());
       view.Viewers.Add(typeof(SelectionModel), new SelectionModelViewer());
       view.Viewers.Add(typeof(InteractionStateModel), new InteractionStateModelViewer());
-      
+      view.Viewers.Add(typeof(HeatMapShape), new HeatMapShapeViewer());
+
+      controller = new CompositeController<Gdk.Event, Context, Model>(model, view);
       controller.SubControllers.Add(new ShapeSelectionController(model, view));
       ChainController<Gdk.Event, Context, SolidV.MVC.Model> cc = 
         new ChainController<Gdk.Event, Context, SolidV.MVC.Model>();
       cc.SubControllers.Add(new ConnectorDragController(model, view));
       cc.SubControllers.Add(new ShapeDragController(model, view));
+      cc.SubControllers.Add(new AnnotationController(model, view));
       controller.SubControllers.Add(cc);
+
+      Shape hm = new HeatMapShape(new Rectangle(1, 1, 1000, 1000));
+      annotation.Shapes.Add(hm);
     }
 
     /// <summary>
@@ -89,6 +97,7 @@ namespace SolidReflector.Plugins.CGVisualizer
     
     void HandleDrawingArea1ExposeEvent(object o, Gtk.ExposeEventArgs args) {
       using (Cairo.Context context = Gdk.CairoHelper.Create(((Gtk.DrawingArea)o).GdkWindow)) {
+        context.Antialias = Antialias.Subpixel;
         view.Draw(context, model);
       }
     }

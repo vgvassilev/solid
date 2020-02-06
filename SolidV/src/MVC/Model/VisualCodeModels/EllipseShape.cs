@@ -13,7 +13,7 @@ namespace SolidV.MVC
   [Serializable]
   public class EllipseShape : Shape, IGluesProvider
   {
-    private string title = null;
+    private string title = "";
     public string Title {
       get { return title; }
       set { title = value; }
