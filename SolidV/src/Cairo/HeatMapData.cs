@@ -12,9 +12,15 @@ namespace SolidV.Cairo
 {
   using Cairo = global::Cairo;
 
+  [Serializable]
   public class HeatMapData : IEnumerable<HeatMapDataPoint>
   {
     private HeatMapDataPoint[] data;
+
+    public HeatMapData(long size = 0)
+    {
+      data = new HeatMapDataPoint[size];
+    }
 
     public IEnumerator<HeatMapDataPoint> GetEnumerator()
     {
@@ -24,6 +30,12 @@ namespace SolidV.Cairo
     IEnumerator IEnumerable.GetEnumerator()
     {
       return GetEnumerator();
+    }
+
+    public void AddPoint(HeatMapDataPoint p)
+    {
+      Array.Resize(ref data, data.Length + 1);
+      data[data.Length - 1] = p;
     }
   }
 }

@@ -8,9 +8,16 @@ using Cairo;
 
 namespace SolidV.Cairo
 {
+  [Serializable]
   public struct HeatMapDataPoint
   {
     public PointD Point;
     public float Height;
+    
+    public HeatMapDataPoint(PointD point, float height)
+    {
+        Point = point;
+        Height = height;
+    }
   }
 }

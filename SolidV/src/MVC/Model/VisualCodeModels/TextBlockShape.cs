@@ -55,7 +55,7 @@ namespace SolidV.MVC
       set { autoSize = value; }
     }
 
-    private string title = null;
+    private string title = "";
     public string Title {
       get { return title; }
       set { title = value; }

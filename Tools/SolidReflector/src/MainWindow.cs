@@ -330,6 +330,38 @@ namespace SolidReflector
     PluginServiceContainer SolidReflector.Plugins.ISolidReflector.GetPlugins() {
       return this.plugins;
     }
+        ///
+    MenuItemType ISolidReflector.GetMenuItem<MenuItemType>(params string[] names) {
+      Gtk.MenuShell menu = (this as ISolidReflector).GetMainMenu();
+      Gtk.MenuItem item = null;
+      for (int i=0; i<names.Length; i++) {
+        item = null;
+        foreach (Gtk.Widget w in menu.Children) {
+          if (w.Name == names[i] + "Action") {
+            item = w as Gtk.ImageMenuItem;
+            if (i < names.Length - 1) {
+              if (item.Submenu == null)
+                item.Submenu = new Gtk.Menu();
+              menu = item.Submenu as Gtk.MenuShell;
+            }
+            break;
+          }
+        }
+        if (item == null) {
+          item = new MenuItemType();
+          Gtk.AccelLabel accelLabel = new Gtk.AccelLabel("");
+          accelLabel.TextWithMnemonic = names[i];
+          accelLabel.SetAlignment(0f, 0.5f);
+          item.Add(accelLabel);
+          accelLabel.AccelWidget = item;
+          item.Name = names[i] + "Action";
+          menu.Append(item);
+          if (i<names.Length-1) item.Submenu = new Gtk.Menu();
+          menu = item.Submenu as Gtk.MenuShell;
+        }
+      }
+      return item as MenuItemType;
+    }
     #endregion
   }
 }

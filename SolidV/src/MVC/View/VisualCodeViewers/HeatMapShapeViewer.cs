@@ -18,29 +18,12 @@ namespace SolidV.MVC
     
     public override void DrawShape(IView<Context, Model> view, Context context, Shape shape)
     {
-      HeatMapShape hms = (HeatMapShape) shape;
+      HeatMapShape hms = (HeatMapShape)shape;
       context.Rectangle(hms.Rectangle);
 
       if (view.Mode == ViewMode.Render) {
-        foreach (var item in hms.HeatMap) {
-        }
-        context.Save();
-        context.Scale(shape.Width, shape.Height);
-        context.NewPath();
-        context.Arc(shape.Location.X / shape.Width + 0.5, shape.Location.Y/shape.Height + 0.5, 0.5, 0, 2 * Math.PI);
-        context.ClosePath();
-        context.Restore();
-
-//        context.SetSource(shape.Style.Fill);
-//        context.FillPreserve();
-//        context.SetSource(shape.Style.Border);
-//
-//        context.Stroke();
-
-//        context.NewPath();
-//        context.MoveTo(titleX, titleY);
-//        context.ShowText(es.Title);
-        //context.ClosePath();
+        context.HeatMap(0, 0, hms.HeatMap, (int)hms.Width, (int)hms.Height,
+          hms.BlurFactor, hms.Alpha, hms.ColorScheme);
       }
     }
   }

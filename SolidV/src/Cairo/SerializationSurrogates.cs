@@ -20,9 +20,10 @@ namespace SolidV.Cairo
       ss.AddSurrogate(typeof(global::Cairo.Matrix), CloneSC, new CairoMatrixSerializationSurrogate());
       ss.AddSurrogate(typeof(global::Cairo.SolidPattern), CloneSC, new CairoSolidPatternSerializationSurrogate());
       ss.AddSurrogate(typeof(global::Cairo.Color), CloneSC, new CairoColorSerializationSurrogate());
+      ss.AddSurrogate(typeof(global::Cairo.PointD), CloneSC, new CairoPointDSerializationSurrogate());
     }
 
-    public sealed class CairoRectangleSerializationSurrogate: ISerializationSurrogate 
+    internal sealed class CairoRectangleSerializationSurrogate: ISerializationSurrogate 
     {
       public void GetObjectData(Object obj, SerializationInfo info, StreamingContext context) 
       {
@@ -45,7 +46,7 @@ namespace SolidV.Cairo
       }
     }
 
-    public sealed class CairoMatrixSerializationSurrogate: ISerializationSurrogate 
+    internal sealed class CairoMatrixSerializationSurrogate: ISerializationSurrogate 
     {
       public void GetObjectData(Object obj, SerializationInfo info, StreamingContext context) 
       {
@@ -99,6 +100,21 @@ namespace SolidV.Cairo
       public Object SetObjectData(Object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
       {
         return new global::Cairo.Color(info.GetDouble("R"), info.GetDouble("G"), info.GetDouble("B"), info.GetDouble("A"));
+      }
+    }
+    
+    internal sealed class CairoPointDSerializationSurrogate: ISerializationSurrogate 
+    {
+      public void GetObjectData(Object obj, SerializationInfo info, StreamingContext context) 
+      {
+        global::Cairo.PointD o = (global::Cairo.PointD)obj;
+        info.AddValue("X", o.X);
+        info.AddValue("Y", o.Y);
+      }
+      
+      public Object SetObjectData(Object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
+      {
+        return new global::Cairo.PointD(info.GetDouble("X"), info.GetDouble("Y"));
       }
     }
   }
